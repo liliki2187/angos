@@ -1,0 +1,168 @@
+# 事件脚本示例（3 个事件配置 + 期望体验）
+
+> 来源：方玥 2026-03-17
+> 用途：给程序/策划对齐落地形态与体验目标。
+> 覆盖：`single / combined / split`、对手对抗、纯数值/骰子双模式、分档结果（可选）。
+
+## 示例 1：单属性检定（single）——"封面临时改题"
+
+### 事件描述（给编剧/策划）
+
+截稿前 6 小时，社内有人提议把封面从"稳妥民生"改成"爆点丑闻"。你决定是否强推。
+
+### EventCheck（主表一行）
+
+```json
+{
+  "event_id": "EVT_COVER_001",
+  "option_id": "OPT_PUSH",
+  "check_id": "CHK_COVER_001_PUSH",
+  "check_type": "single",
+  "difficulty_id": "normal",
+  "delta_p": -0.05,
+  "show_mode_default": "numeric",
+  "show_probability": true,
+  "has_opponent": true,
+  "enemy_attr_source": "fixed",
+  "enemy_attr_fixed": 3,
+
+  "attr_a_id": "social",
+  "attr_a_source": "player",
+  "attr_a_fixed": 0,
+
+  "k": 4
+}
+```
+
+### 期望体验
+
+- **纯数值模式**：玩家看到"成功率约 XX%（不稳定/高风险）"，能理解这是一把赌局。
+- **骰子模式**：
+  - 先投出 `n = 社交` 颗（表现为一排 ✓/×）
+  - "对手回合"出现，抵消 3 颗骰子变成 `—`
+  - 玩家明确感受到"舆论/对手在削弱你的把握"，而不是单纯脸黑。
+
+---
+
+## 示例 2：综合多属性检定（combined）——"拿下核心广告主"
+
+### 事件描述
+
+你要在本期发行前说服一家大品牌投放封底广告：既要讲数据（智慧），也要搞关系（社交）。对方市场总监很强势。
+
+### EventCheck（主表一行）
+
+```json
+{
+  "event_id": "EVT_AD_002",
+  "option_id": "OPT_PITCH",
+  "check_id": "CHK_AD_002_PITCH",
+  "check_type": "combined",
+  "difficulty_id": "hard",
+  "delta_p": 0.00,
+  "show_mode_default": "dice",
+  "show_probability": true,
+  "has_opponent": true,
+  "enemy_attr_source": "npc_attr",
+  "enemy_attr_fixed": 0,
+
+  "attr_a_id": "wisdom",
+  "attr_a_source": "player",
+  "attr_b_id": "social",
+  "attr_b_source": "player",
+  "combine_formula": "SUM",
+  "attr_a_weight": 1.0,
+  "attr_b_weight": 1.0,
+
+  "k": 6
+}
+```
+
+> 程序侧：当 `enemy_attr_source = npc_attr` 时，运行时从 NPC 身上读 `enemyAttr`（例如市场总监的"影响力/谈判力"）。
+
+### 可选：CheckBand（分档结果）
+
+```json
+[
+  { "check_id": "CHK_AD_002_PITCH", "band_id": "B1", "min_success": 0,  "max_success": 5,  "result_tier": "fail",          "result_text_key": "TXT_AD_002_FAIL" },
+  { "check_id": "CHK_AD_002_PITCH", "band_id": "B2", "min_success": 6,  "max_success": 7,  "result_tier": "minor_success",  "result_text_key": "TXT_AD_002_MINOR" },
+  { "check_id": "CHK_AD_002_PITCH", "band_id": "B3", "min_success": 8,  "max_success": -1, "result_tier": "major_success", "result_text_key": "TXT_AD_002_MAJOR" }
+]
+```
+
+### 期望体验
+
+- **综合属性带来的爽点**：玩家会直觉理解"我智慧+社交都高，所以骰子总数更多，更稳"。
+- **对手存在感**：对方强势会抵消一部分骰子（在骰子模式里可见）。
+- **分档奖励**（可选）：同一次谈判不是非黑即白，命中多会带来"更好的合同条款"。
+
+---
+
+## 示例 3：分别多属性检定（split）——"暗访偷拍 + 当场圆谎"
+
+### 事件描述
+
+记者夜里潜入拍到关键材料（隐匿），但被保安抓到盘问，需要当场圆过去（社交）。两关都过是完美脱身；只过一关也许能保住一部分成果。
+
+### EventCheck（主表一行）
+
+```json
+{
+  "event_id": "EVT_INVEST_003",
+  "option_id": "OPT_INFILTRATE",
+  "check_id": "CHK_INVEST_003_INFILTRATE",
+  "check_type": "split",
+  "difficulty_id": "normal",
+  "delta_p": 0.00,
+  "show_mode_default": "dice",
+  "show_probability": true,
+  "has_opponent": true,
+  "enemy_attr_source": "fixed",
+  "enemy_attr_fixed": 2,
+
+  "attr_a_id": "conceal",
+  "attr_a_source": "player",
+  "attr_b_id": "social",
+  "attr_b_source": "player",
+
+  "k_a": 3,
+  "k_b": 2,
+  "split_combine_logic": "BANDS",
+  "opponent_split_policy": "PROPORTIONAL"
+}
+```
+
+### split 的结果映射（策划规则）
+
+- **大成功**：A、B 都通过
+- **小成功**：仅 A 或仅 B 通过
+- **失败**：都不通过
+
+> 程序输出时 `tier = major_success / minor_success / fail`，并走对应分支。
+
+### 期望体验
+
+- **两段能力的紧张感**：玩家知道"潜入"和"圆谎"是两道坎。
+- **骰子模式的戏剧性**：
+  - 先投完 A、B 两组骰子
+  - 对手回合按比例分摊抵消（A 抵消 1、B 抵消 1）
+  - 玩家会明显感到"对手在关键点上把你那点优势给抹掉了"
+- **结果非二元**：小成功能保住"素材"但可能丢掉"名声/关系"，适合经营叙事。
+
+---
+
+## 交付程序的"期望落地要点"
+
+### 1) 统一结算输出结构
+
+- 无论 `single / combined / split`，建议统一返回同一套结果字段（含 `enemyAttr`、`negatedIndices`、`tier`），UI 才容易做、日志也好查。
+
+### 2) 骰子模式必须"两段式"
+
+- 先投完，再抵消；抵消逐个发生。否则对手存在感会很弱，玩家会觉得"对手属性只是后台算数"。
+
+### 3) split 的概率展示建议升级（可选）
+
+- 纯展示"至少一项通过"会丢失决策信息。更推荐展示：
+  - **大成功概率 / 小成功概率 / 失败概率**
+  - 方便玩家理解"搏大成功值不值"。

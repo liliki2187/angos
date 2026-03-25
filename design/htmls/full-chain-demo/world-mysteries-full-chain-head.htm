@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>世界未解之谜周刊 · 全链条 Demo</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap");
+    :root {
+      --bg: #0d1117; --panel: #161b22; --border: #30363d; --text: #e6edf3; --muted: #8b949e;
+      --gold: #d4a853; --gold-dim: #8a7038; --danger: #f85149; --ok: #3fb950; --mystic: #a371f7; --sci: #58a6ff;
+      --line: #334155; --soft: #94a3b8; --primary: #3b82f6; --good: #22c55e; --bad: #ef4444;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh;
+      font-family: "Noto Serif SC", "Songti SC", Georgia, serif;
+      background: radial-gradient(ellipse at 50% 0%, #1a2332 0%, var(--bg) 55%);
+      color: var(--text); line-height: 1.5;
+    }
+    #app { max-width: 1320px; margin: 0 auto; padding: 1rem 1.25rem 2rem; min-height: 100vh; }
+    h1 { font-size: 1.35rem; font-weight: 700; letter-spacing: 0.06em; color: var(--gold); margin: 0 0 0.25rem; }
+    .sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.75rem; }
+    .bar-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; margin-bottom: 1rem; }
+    @media (max-width: 720px) { .bar-row { grid-template-columns: repeat(2, 1fr); } }
+    .stat { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 0.45rem 0.55rem; font-size: 0.75rem; }
+    .stat b { display: block; color: var(--gold); font-size: 0.7rem; }
+    .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.1rem; margin-bottom: 1rem; }
+    .panel h2 { margin: 0 0 0.6rem; font-size: 1rem; color: var(--gold-dim); font-weight: 600; }
+    .row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    button, .btn {
+      font-family: inherit; cursor: pointer; border-radius: 6px; border: 1px solid var(--border);
+      background: linear-gradient(180deg, #2d333b, #21262d); color: var(--text); padding: 0.45rem 0.85rem; font-size: 0.85rem;
+    }
+    button:hover { border-color: var(--gold-dim); color: var(--gold); }
+    button.primary { background: linear-gradient(180deg, #4a3f1a, #2d2610); border-color: var(--gold-dim); color: var(--gold); }
+    button:disabled { opacity: 0.45; cursor: not-allowed; }
+    button.nm-btn { background: linear-gradient(180deg, #2563eb, #1d4ed8); border-color: #1d4ed8; color: #fff; }
+    button.nm-sec { background: #1e293b; border-color: #475569; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .tag { font-size: 0.72rem; padding: 0.2rem 0.45rem; border-radius: 4px; border: 1px solid var(--border); color: var(--muted); }
+    .tag.on { border-color: var(--gold); color: var(--gold); background: rgba(212, 168, 83, 0.08); }
+    .map-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.65rem; }
+    .region {
+      border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem;
+      background: linear-gradient(145deg, #1c2128, #13171c); cursor: pointer;
+    }
+    .region:hover:not(.locked) { border-color: var(--gold-dim); box-shadow: 0 0 0 1px rgba(212, 168, 83, 0.2); }
+    .region.locked { opacity: 0.55; cursor: not-allowed; }
+    .region .name { font-weight: 700; color: var(--gold); font-size: 0.95rem; }
+    .region .hint { font-size: 0.75rem; color: var(--muted); margin-top: 0.35rem; }
+    .pulse { animation: pulse 1.6s ease-in-out infinite; }
+    @keyframes pulse { 50% { box-shadow: 0 0 12px 2px rgba(163, 113, 247, 0.35); } }
+    .nodes { display: flex; flex-direction: column; gap: 0.5rem; }
+    .node { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; padding: 0.65rem 0.75rem; border-radius: 8px; border: 1px solid var(--border); background: #12161c; }
+    .node:hover { border-color: var(--mystic); }
+    .node.hidden-node { border-style: dashed; opacity: 0.92; }
+    .node .meta { font-size: 0.72rem; color: var(--muted); }
+    .badge { font-size: 0.65rem; padding: 0.15rem 0.35rem; border-radius: 3px; border: 1px solid var(--border); white-space: nowrap; }
+    .badge.perm { color: var(--sci); border-color: rgba(88, 166, 255, 0.4); }
+    .badge.temp { color: var(--danger); border-color: rgba(248, 81, 73, 0.4); }
+    .badge.hid { color: var(--mystic); border-color: rgba(163, 113, 247, 0.45); }
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; }
+    .staff-card { border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem 0.55rem; font-size: 0.78rem; cursor: pointer; background: #0f1318; }
+    .staff-card.selected { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(212, 168, 83, 0.35); }
+    .staff-card .t { font-weight: 700; margin-bottom: 0.25rem; }
+    .staff-card dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 0.1rem 0.35rem; font-size: 0.72rem; color: var(--muted); }
+    .log { font-size: 0.8rem; color: var(--muted); max-height: 160px; overflow-y: auto; }
+    .log p { margin: 0.35rem 0; border-left: 2px solid var(--border); padding-left: 0.5rem; }
+    .prob-box { font-size: 0.78rem; color: var(--muted); background: #0f1318; border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem 0.75rem; margin-top: 0.5rem; }
+    .mode-toggle { display: inline-flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+    .mode-toggle button { border: none; border-radius: 0; background: #21262d; }
+    .mode-toggle button.on { background: #2d2610; color: var(--gold); }
+    .dice-pool h3 { margin: 0 0 0.35rem; font-size: 0.85rem; color: var(--gold-dim); }
+    .dice-row { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .die { width: 2rem; height: 2rem; border-radius: 6px; border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; font-size: 0.95rem; font-weight: 700; background: #0d1117; }
+    .die.hit { border-color: var(--ok); color: var(--ok); }
+    .die.miss { border-color: #6e7681; color: #6e7681; }
+    .die.void { border-style: dashed; color: var(--muted); text-decoration: line-through; opacity: 0.75; }
+    .phase-label { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.35rem; }
+    .result-banner { font-size: 1.1rem; font-weight: 700; color: var(--gold); margin: 0.75rem 0 0.35rem; }
+    .hidden { display: none !important; }
+    .tip-inline { font-size: 0.78rem; color: var(--muted); }
+    footer { margin-top: 1rem; font-size: 0.72rem; color: var(--muted); text-align: center; }
+
+    /* 报刊组版（与 docs/报刊结算出版玩法设计文档.md / index.html 对齐） */
+    .nm-wrap { font-family: "Segoe UI", system-ui, sans-serif; }
+    .nm-grid { display: grid; grid-template-columns: 1.05fr 1fr 0.95fr; gap: 14px; }
+    @media (max-width: 1100px) { .nm-grid { grid-template-columns: 1fr; } }
+    .nm-card {
+      background: linear-gradient(180deg, #111827, #0b1220); border: 1px solid var(--line); border-radius: 12px; padding: 12px;
+    }
+    .nm-card h2 { margin: 0 0 10px; font-size: 18px; color: var(--text); }
+    .nm-stories { max-height: 520px; overflow: auto; display: grid; gap: 8px; margin-top: 10px; }
+    .nm-story {
+      border: 1px solid #334155; background: #0b1220; border-radius: 10px; padding: 8px; cursor: grab; display: grid; gap: 6px;
+    }
+    .nm-story:active { cursor: grabbing; }
+    .nm-story.dragging { opacity: 0.5; border-color: #60a5fa; }
+    .nm-story.synergy { border-color: #22c55e; box-shadow: 0 0 0 1px #166534 inset; background: #0a1a12; }
+    .nm-story-title { font-size: 14px; font-weight: 600; }
+    .nm-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+    .nm-chip { font-size: 11px; border: 1px solid #475569; border-radius: 999px; padding: 2px 8px; color: #cbd5e1; background: #111827; }
+    .nm-chip.ex { border-color: var(--gold); color: var(--gold); }
+    .nm-slot-grid { display: grid; gap: 8px; }
+    .nm-slot {
+      border: 1px dashed #64748b; border-radius: 10px; padding: 8px; background: #0b1220; display: grid; gap: 6px; min-height: 100px;
+    }
+    .nm-slot.drag-over { border-color: #60a5fa; box-shadow: 0 0 0 1px #60a5fa inset; background: #0c1730; }
+    .nm-slot.good-preview { border-color: #22c55e; box-shadow: 0 0 0 1px #22c55e inset; }
+    .nm-slot.bad-preview { border-color: #ef4444; box-shadow: 0 0 0 1px #ef4444 inset; }
+    .nm-slot.synergy { border-color: #22c55e; box-shadow: 0 0 0 1px #22c55e inset; background: #0a1a12; }
+    .nm-slot-header { display: flex; justify-content: space-between; font-size: 12px; color: #cbd5e1; }
+    .nm-sum-grid { display: grid; grid-template-columns: 1fr auto; gap: 6px 10px; font-size: 13px; align-items: center; }
+    .nm-sum-grid .k { color: #cbd5e1; }
+    .nm-sum-grid .v { text-align: right; font-variant-numeric: tabular-nums; }
+    .nm-divider { border-top: 1px solid #334155; margin: 8px 0; }
+    .nm-big { font-size: 26px; font-weight: 700; margin: 4px 0; font-variant-numeric: tabular-nums; }
+    .nm-tip { margin-top: 8px; font-size: 12px; color: var(--soft); line-height: 1.4; background: #0b1220; border: 1px solid #334155; border-radius: 8px; padding: 8px; }
+    .nm-toast {
+      position: fixed; right: 16px; top: 16px; background: #0b1220; border: 1px solid #475569; color: #e2e8f0;
+      padding: 10px 12px; border-radius: 10px; box-shadow: 0 12px 28px rgba(0,0,0,0.35); z-index: 1000; display: none; gap: 8px; align-items: center; font-size: 13px;
+    }
+    .nm-toast.show { display: inline-flex; }
+    .nm-impact { font-size: 12px; border-radius: 8px; padding: 6px 8px; border: 1px solid #334155; background: #0b1220; color: #cbd5e1; }
+    .nm-impact.good { border-color: #166534; color: #86efac; }
+    .nm-impact.bad { border-color: #991b1b; color: #fca5a5; }
+    .nm-impact.warn { border-color: #92400e; color: #fcd34d; }
+    .nm-impact-list { display: grid; gap: 4px; }
+    .nm-impact-row { display: flex; justify-content: space-between; gap: 8px; }
+    .nm-ok { color: var(--good); }
+    .nm-warn { color: #f59e0b; }
+    .nm-bad { color: var(--bad); }
+    .sum-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; margin-top: 0.75rem; }
+    .sum-panel h2 { color: var(--gold); font-size: 1rem; margin-bottom: 0.5rem; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="phase-explore">
+      <header>
+        <h1>《世界未解之谜周刊》· 全链条 Demo</h1>
+        <p class="sub">
+          <strong>探索</strong>（地图/骰子）→ <strong>线索成稿</strong> → <strong>拖拽组版</strong> → <strong>结算本期</strong>（与
+          <code>docs/报刊结算出版玩法设计文档.md</code> 公式一致）
+        </p>
+      </header>
+      <div class="bar-row" id="macro"></div>
+      <div class="row" style="margin-bottom: 0.75rem; justify-content: space-between;">
+        <div class="row">
+          <strong id="weekLabel"></strong>
+          <span id="dayLabel" style="color: var(--muted); font-size: 0.85rem;"></span>
+        </div>
+        <button type="button" id="btnEndWeek" class="primary" title="进入编辑部组版与结算">结束探索周 · 进入编辑部</button>
+      </div>
+      <div id="view-weekStart" class="panel hidden"></div>
+      <div id="view-global" class="panel hidden"></div>
+      <div id="view-region" class="panel hidden"></div>
+      <div id="view-setup" class="panel hidden"></div>
+      <div id="view-result" class="panel hidden"></div>
+      <div class="panel">
+        <h2>行动日志</h2>
+        <div class="log" id="log"></div>
+      </div>
+    </div>
+
+    <div id="phase-editorial" class="hidden nm-wrap">
+      <h1 style="font-family: inherit;">编辑部 · 报刊组版</h1>
+      <p class="sub" id="editorialSub">将本周探索得到的线索稿与补充稿件拖入版位，点击「结算本期」。</p>
+      <div class="nm-grid">
+        <section class="nm-card">
+          <h2>1) 本期故事库</h2>
+          <div class="row">
+            <button type="button" class="nm-btn" id="regenBtn">重新生成故事库</button>
+            <label>数量
+              <select id="storyCount">
+                <option value="8">8</option>
+                <option value="10" selected>10</option>
+                <option value="12">12</option>
+              </select>
+            </label>
+          </div>
+          <p class="tip-inline">探索稿带「探索稿」标签；不足条数用随机都市报道补足（与原型一致）。</p>
+          <div class="nm-stories" id="storyList"></div>
+        </section>
+        <section class="nm-card">
+          <h2>2) 当期版面</h2>
+          <div class="nm-slot-grid" id="slotList"></div>
+          <div class="nm-divider"></div>
+          <div class="row">
+            <button type="button" class="nm-sec" id="clearBtn">清空版面</button>
+            <button type="button" class="nm-btn" id="settleBtn">结算本期</button>
+          </div>
+        </section>
+        <section class="nm-card">
+          <h2>3) 结算面板</h2>
+          <div class="nm-sum-grid" id="liveStats"></div>
+          <div class="nm-divider"></div>
+          <div id="resultBox">
+            <div class="k">尚未结算</div>
+            <div class="nm-tip">拖拽报道到版位后点击「结算本期」。</div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div id="phase-summary" class="hidden sum-panel">
+      <h2>本周流程完成</h2>
+      <p id="summaryText" style="color: var(--muted); font-size: 0.9rem;"></p>
+      <p style="margin-top: 0.75rem;"><button type="button" class="primary" id="btnNextWeek">进入下一周 · 继续探索</button></p>
+    </div>
+
+    <div class="nm-toast" id="toast"></div>
+    <footer>本地单机 · 双击打开 · 无外部依赖</footer>
+  </div>
+  <script>

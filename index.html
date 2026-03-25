@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>报刊结算原型</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --panel-2: #1f2937;
+      --text: #e5e7eb;
+      --soft: #94a3b8;
+      --line: #334155;
+      --primary: #3b82f6;
+      --good: #22c55e;
+      --warn: #f59e0b;
+      --bad: #ef4444;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #1e293b 0%, var(--bg) 45%, #020617 100%);
+      color: var(--text);
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+    .wrap {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 { margin: 0 0 8px; font-size: 28px; }
+    .sub { margin: 0 0 16px; color: var(--soft); }
+    .grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr 0.95fr;
+      gap: 14px;
+    }
+    .card {
+      background: linear-gradient(180deg, var(--panel), #0b1220);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .card h2 { margin: 0 0 10px; font-size: 18px; }
+    .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    button, select, input {
+      background: #0b1220;
+      border: 1px solid #475569;
+      color: var(--text);
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 13px;
+    }
+    button {
+      cursor: pointer;
+      background: linear-gradient(180deg, #2563eb, #1d4ed8);
+      border-color: #1d4ed8;
+    }
+    button.secondary {
+      background: #1e293b;
+      border-color: #475569;
+    }
+    .stories {
+      max-height: 560px;
+      overflow: auto;
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+      padding-right: 2px;
+    }
+    .story {
+      border: 1px solid #334155;
+      background: #0b1220;
+      border-radius: 10px;
+      padding: 8px;
+      display: grid;
+      gap: 6px;
+      cursor: grab;
+    }
+    .story:active { cursor: grabbing; }
+    .story.dragging { opacity: 0.5; border-color: #60a5fa; }
+    .story.synergy {
+      border-color: #22c55e;
+      box-shadow: 0 0 0 1px #166534 inset, 0 0 16px rgba(34, 197, 94, 0.3);
+      background: #0a1a12;
+    }
+    .story-title { font-size: 14px; font-weight: 600; }
+    .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+    .chip {
+      font-size: 11px;
+      border: 1px solid #475569;
+      border-radius: 999px;
+      padding: 2px 8px;
+      color: #cbd5e1;
+      background: #111827;
+    }
+    .slot-grid {
+      display: grid;
+      gap: 8px;
+    }
+    .slot {
+      border: 1px dashed #64748b;
+      border-radius: 10px;
+      padding: 8px;
+      background: #0b1220;
+      display: grid;
+      gap: 6px;
+      min-height: 100px;
+    }
+    .slot.drag-over {
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 1px #60a5fa inset;
+      background: #0c1730;
+    }
+    .slot.good-preview {
+      border-color: #22c55e;
+      box-shadow: 0 0 0 1px #22c55e inset;
+    }
+    .slot.bad-preview {
+      border-color: #ef4444;
+      box-shadow: 0 0 0 1px #ef4444 inset;
+    }
+    .slot.synergy {
+      border-color: #22c55e;
+      box-shadow: 0 0 0 1px #22c55e inset;
+      background: #0a1a12;
+    }
+    .slot-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #cbd5e1;
+    }
+    .slot-name { font-weight: 600; }
+    .slot-empty { font-size: 12px; color: #94a3b8; }
+    .sum-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 6px 10px;
+      font-size: 13px;
+      align-items: center;
+    }
+    .sum-grid .k { color: #cbd5e1; }
+    .sum-grid .v { text-align: right; font-variant-numeric: tabular-nums; }
+    .divider { border-top: 1px solid #334155; margin: 8px 0; }
+    .ok { color: var(--good); }
+    .warn { color: var(--warn); }
+    .bad { color: var(--bad); }
+    .big {
+      font-size: 26px;
+      font-weight: 700;
+      margin: 4px 0;
+      font-variant-numeric: tabular-nums;
+    }
+    .tip {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--soft);
+      line-height: 1.4;
+      background: #0b1220;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 8px;
+    }
+    .toast {
+      position: fixed;
+      right: 16px;
+      top: 16px;
+      background: #0b1220;
+      border: 1px solid #475569;
+      color: #e2e8f0;
+      padding: 10px 12px;
+      border-radius: 10px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+      z-index: 1000;
+      display: none;
+      gap: 8px;
+      align-items: center;
+      font-size: 13px;
+    }
+    .toast.show { display: inline-flex; }
+    .toast button {
+      padding: 4px 8px;
+      font-size: 12px;
+    }
+    .impact {
+      font-size: 12px;
+      border-radius: 8px;
+      padding: 6px 8px;
+      border: 1px solid #334155;
+      background: #0b1220;
+      color: #cbd5e1;
+    }
+    .impact.good { border-color: #166534; color: #86efac; }
+    .impact.bad { border-color: #991b1b; color: #fca5a5; }
+    .impact.warn { border-color: #92400e; color: #fcd34d; }
+    .impact-list { display: grid; gap: 4px; }
+    .impact-row { display: flex; justify-content: space-between; gap: 8px; }
+    .impact-row .name { color: #cbd5e1; }
+    .impact-row .delta { font-variant-numeric: tabular-nums; }
+    .impact-row.pos .delta { color: #86efac; }
+    .impact-row.neg .delta { color: #fca5a5; }
+    .impact-row.neu .delta { color: #cbd5e1; }
+    @media (max-width: 1100px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>报刊结算原型</h1>
+    <p class="sub">随机故事 -> 填入版面 -> 结算销量与利润（已省略士气/债务/法律风险）</p>
+
+    <div class="grid">
+      <section class="card">
+        <h2>1) 本期故事库</h2>
+        <div class="row">
+          <button id="regenBtn">随机刷新故事库</button>
+          <label>数量
+            <select id="storyCount">
+              <option value="8">8</option>
+              <option value="10" selected>10</option>
+              <option value="12">12</option>
+            </select>
+          </label>
+        </div>
+        <div class="stories" id="storyList"></div>
+      </section>
+
+      <section class="card">
+        <h2>2) 当期版面</h2>
+        <div class="slot-grid" id="slotList"></div>
+        <div class="divider"></div>
+        <div class="row">
+          <button class="secondary" id="clearBtn">清空版面</button>
+          <button id="settleBtn">结算本期</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>3) 结算面板</h2>
+        <div class="sum-grid" id="liveStats"></div>
+        <div class="divider"></div>
+        <div id="resultBox">
+          <div class="k">尚未结算</div>
+          <div class="tip">先从左侧挑选故事并填到版面，再点“结算本期”。</div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const TAGS = ["Politics", "Military", "Economy", "Sport", "Gossip", "Pets", "Humor", "Shopping"];
+    const QUALITY = [
+      { key: "Bronze", value: 150 },
+      { key: "Silver", value: 300 },
+      { key: "Gold", value: 450 }
+    ];
+    const NEGATIVE_TYPES = ["sloppy_writing", "thin_source", "late_edit", "bias_overreach", "fabrication"];
+    const LOCATIONS = ["曼哈顿", "布鲁克林", "皇后区", "布朗克斯", "华尔街", "港口区", "市政厅", "唐人街"];
+    const ORGS = ["市议会", "警署", "港务局", "联邦调查局", "工商总会", "市政厅", "消防总队", "联邦法院"];
+    const SUBJECTS = {
+      Politics: ["预算案", "选举资金", "政务听证", "议会表决", "市政采购"],
+      Military: ["边境演训", "军备采购", "驻防调整", "联合作战", "国防听证"],
+      Economy: ["失业数据", "工厂裁员", "商贸指数", "税收政策", "物价走势"],
+      Sport: ["职业联赛", "主场改造", "球员转会", "拳击挑战赛", "青训计划"],
+      Gossip: ["名流绯闻", "晚宴风波", "婚约传闻", "社交圈密谈", "明星合约"],
+      Pets: ["流浪犬收容", "宠物医疗", "猫狗领养潮", "宠物用品短缺", "社区遛犬纠纷"],
+      Humor: ["讽刺专栏", "街头趣闻", "本周笑料", "漫画连载", "荒诞榜单"],
+      Shopping: ["百货促销", "新品抢购", "消费榜单", "折扣季", "商场扩建"]
+    };
+    const ACTIONS = ["引发争议", "进入调查", "通过审议", "宣布升级", "出现反转", "再起波澜", "确认落地", "紧急叫停"];
+
+    const slots = [
+      { id: "front-main", name: "头版头条", weight: 1.0, desc: "最高曝光，约 3.0x" },
+      { id: "front-side", name: "头版次条", weight: 0.7, desc: "高曝光，约 2.4x" },
+      { id: "feature-1", name: "重点专题 A", weight: 0.45, desc: "中高曝光，约 1.9x" },
+      { id: "feature-2", name: "重点专题 B", weight: 0.4, desc: "中高曝光，约 1.8x" },
+      { id: "inner-1", name: "内页 A", weight: 0.2, desc: "标准曝光，约 1.4x" },
+      { id: "inner-2", name: "内页 B", weight: 0.2, desc: "标准曝光，约 1.4x" }
+    ];
+
+    const state = {
+      stories: [],
+      placed: Object.fromEntries(slots.map((s) => [s.id, null])),
+      baseDemand: 3200,
+      coverPrice: 0.3,
+      adSlots: 2,
+      adMatchBase: 0.6,
+      paperPackCost: 210,
+      salaryCost: 980,
+      opsCost: 260,
+      printCapacity: 4200,
+      subscribers: 1200,
+      subUnitValue: 0.18,
+      draggingStoryId: null,
+      editorialProfile: 0,
+      lastReplaceAction: null,
+      undoTimer: null
+    };
+
+    const el = {
+      storyList: document.getElementById("storyList"),
+      slotList: document.getElementById("slotList"),
+      regenBtn: document.getElementById("regenBtn"),
+      storyCount: document.getElementById("storyCount"),
+      clearBtn: document.getElementById("clearBtn"),
+      settleBtn: document.getElementById("settleBtn"),
+      liveStats: document.getElementById("liveStats"),
+      resultBox: document.getElementById("resultBox"),
+      toast: document.getElementById("toast")
+    };
+
+    function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+    function randomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+    function fmtMoney(v) { return `${v >= 0 ? "+" : ""}$${Math.round(v).toLocaleString("zh-CN")}`; }
+
+    const PUBLIC_AFFAIRS = new Set(["Politics", "Military", "Economy"]);
+    const MASS_APPEAL = new Set(["Sport", "Shopping"]);
+    const LIFESTYLE_LIGHT = new Set(["Gossip", "Pets", "Humor"]);
+
+    function clamp(v, min, max) {
+      return Math.max(min, Math.min(max, v));
+    }
+
+    function toZhTag(tag) {
+      const map = {
+        Politics: "时政",
+        Military: "军事",
+        Economy: "经济",
+        Sport: "体育",
+        Gossip: "花边新闻",
+        Pets: "猫狗",
+        Humor: "幽默",
+        Shopping: "购物"
+      };
+      return map[tag] || tag;
+    }
+
+    function buildNewsTitle(tags) {
+      const mainTag = tags[0];
+      const secondTag = tags[1];
+      const location = rand(LOCATIONS);
+      const org = rand(ORGS);
+      const subject = rand(SUBJECTS[mainTag] || ["焦点事件"]);
+      const action = rand(ACTIONS);
+      if (secondTag) {
+        return `${location}${org}就${subject}${action}，${toZhTag(secondTag)}线索同步浮现`;
+      }
+      return `${location}${org}${subject}${action}`;
+    }
+
+    function buildStory(id) {
+      const tag1 = rand(TAGS);
+      const tag2 = Math.random() < 0.55 ? rand(TAGS.filter((t) => t !== tag1)) : null;
+      const quality = rand(QUALITY);
+      const negativeCount = Math.random() < 0.28 ? randomInt(1, 2) : 0;
+      const negatives = [];
+      for (let i = 0; i < negativeCount; i++) negatives.push(rand(NEGATIVE_TYPES));
+      return {
+        id,
+        title: buildNewsTitle(tag2 ? [tag1, tag2] : [tag1]),
+        tags: tag2 ? [tag1, tag2] : [tag1],
+        quality: quality.key,
+        baseValue: quality.value,
+        negatives
+      };
+    }
+
+    function regenStories() {
+      const count = Number(el.storyCount.value);
+      state.stories = Array.from({ length: count }, (_, i) => buildStory(i + 1));
+      renderStories();
+      renderLiveStats();
+    }
+
+    function placeStory(slotId, storyId) {
+      const story = state.stories.find((s) => s.id === Number(storyId));
+      state.placed[slotId] = story || null;
+      renderSlots();
+      renderLiveStats();
+    }
+
+    function clearSlots() {
+      for (const s of slots) state.placed[s.id] = null;
+      renderSlots();
+      renderLiveStats();
+      el.resultBox.innerHTML = `<div class="k">尚未结算</div><div class="tip">版面已清空，请重新选择故事。</div>`;
+    }
+
+    function getAllPlaced() {
+      return slots.map((s) => ({ slot: s, story: state.placed[s.id] })).filter((x) => x.story);
+    }
+
+    function calculate(isSettle = false) {
+      const placed = getAllPlaced();
+      const emptySlots = slots.length - placed.length;
+      const totalBaseValue = placed.reduce((acc, x) => acc + x.story.baseValue, 0);
+      const allTags = placed.flatMap((x) => x.story.tags);
+      const uniqueTags = new Set(allTags).size;
+      const negPenaltyPoints = placed.reduce((acc, x) => acc + x.story.negatives.length, 0);
+
+      const tagCountMap = {};
+      for (const t of allTags) tagCountMap[t] = (tagCountMap[t] || 0) + 1;
+      const comboRaw = Object.values(tagCountMap).reduce((acc, n) => acc + Math.pow(Math.max(0, n - 1), 0.8), 0);
+
+      const linkedTags = Object.entries(tagCountMap)
+        .filter(([, count]) => count >= 2 && count <= 3)
+        .map(([tag]) => tag);
+      const linkCount = linkedTags.length;
+
+      const publicCount = allTags.filter((t) => PUBLIC_AFFAIRS.has(t)).length;
+      const massCount = allTags.filter((t) => MASS_APPEAL.has(t)).length;
+      const lightCount = allTags.filter((t) => LIFESTYLE_LIGHT.has(t)).length;
+      const totalTagCount = allTags.length || 1;
+      const publicRatio = publicCount / totalTagCount;
+      const massRatio = massCount / totalTagCount;
+      const lightRatio = lightCount / totalTagCount;
+      const dominantRatio = Math.max(publicRatio, massRatio, lightRatio);
+      const dominantType = dominantRatio === publicRatio ? "public" : dominantRatio === massRatio ? "mass" : "light";
+      const profileNormalized = (state.editorialProfile + 100) / 200;
+
+      const frontWeight = placed.reduce((acc, x) => acc + x.slot.weight, 0) / 2.95;
+
+      const mQuality = Math.min(1.85, 1 + 0.0008 * totalBaseValue);
+      const comboBase = Math.min(1.35, 1 + 0.06 * Math.log(1 + comboRaw));
+      const comboProfileBoost = 1 + 0.2 * Math.max(0, profileNormalized - 0.5);
+      const mCombo = Math.min(1.45, comboBase * comboProfileBoost);
+      const mDiversityBase = Math.min(1.3, 1 + 0.05 * Math.log(1 + uniqueTags));
+      // 信息型定位越高，多样性收益越大；热度型时回归基础值。
+      const diversityStyleBoost = 1 + 0.25 * Math.max(0, 0.5 - profileNormalized) * publicRatio;
+      const mDiversity = Math.min(1.45, mDiversityBase * diversityStyleBoost);
+      const mLayout = 1 + 1.2 * frontWeight;
+      const mEmpty = Math.max(0.7, 1 - 0.06 * emptySlots);
+      const mPenalty = Math.max(0.6, 1 - 0.025 * negPenaltyPoints);
+      const mLink = Math.min(1.25, 1 + 0.05 * linkCount);
+      let mBias = 1;
+      if (dominantRatio > 0.7) {
+        const overflow = (dominantRatio - 0.7) / 0.3;
+        mBias = Math.max(0.75, 1 - 0.25 * overflow);
+      }
+      const mBalance = publicRatio >= 0.25 && publicRatio <= 0.55 && lightRatio >= 0.2 && lightRatio <= 0.5 ? 1.06 : 1;
+
+      const demand = state.baseDemand * mQuality * mCombo * mDiversity * mLayout * mEmpty * mPenalty * mLink * mBalance * mBias;
+      const sold = Math.min(Math.round(demand), state.printCapacity);
+      const stockoutRate = demand <= 0 ? 0 : Math.max(0, (demand - sold) / demand);
+
+      const circulationRevenue = sold * state.coverPrice;
+      const newSubRate = 0.004 + 0.0008 * uniqueTags + 0.0006 * Math.sqrt(Math.max(1, totalBaseValue / 150));
+      const churnRate = 0.003 + 0.0012 * negPenaltyPoints + 0.002 * stockoutRate;
+      const newSubs = sold * newSubRate;
+      const lostSubs = state.subscribers * churnRate;
+      const subDelta = Math.round(newSubs - lostSubs);
+      const nextSubs = Math.max(0, state.subscribers + subDelta);
+      const subscriptionRevenue = nextSubs * state.subUnitValue;
+
+      const adProfileBonus = 1 + 0.15 * (1 - Math.abs(state.editorialProfile) / 100);
+      const adMatch = Math.min(1, (state.adMatchBase + uniqueTags * 0.05 - negPenaltyPoints * 0.03) * adProfileBonus);
+      const adUnit = 180 + 320 * adMatch;
+      const adsRevenue = state.adSlots * adUnit;
+
+      const paperPacks = Math.ceil(state.printCapacity / 1000);
+      const paperCost = paperPacks * state.paperPackCost;
+      const totalCost = paperCost + state.salaryCost + state.opsCost;
+      const grossRevenue = circulationRevenue + subscriptionRevenue + adsRevenue;
+      const profit = grossRevenue - totalCost;
+
+      if (isSettle) state.subscribers = nextSubs;
+
+      return {
+        placedCount: placed.length,
+        emptySlots,
+        totalBaseValue,
+        uniqueTags,
+        comboRaw,
+        publicRatio,
+        massRatio,
+        lightRatio,
+        dominantRatio,
+        dominantType,
+        editorialProfile: state.editorialProfile,
+        linkedTags,
+        linkCount,
+        negPenaltyPoints,
+        multipliers: {
+          mQuality,
+          comboBase,
+          comboProfileBoost,
+          mCombo,
+          mDiversityBase,
+          diversityStyleBoost,
+          mDiversity,
+          mLayout,
+          mEmpty,
+          mPenalty,
+          mLink,
+          mBalance,
+          mBias
+        },
+        demand,
+        sold,
+        stockoutRate,
+        circulationRevenue,
+        subscriptionRevenue,
+        adsRevenue,
+        grossRevenue,
+        costs: { paperCost, salaryCost: state.salaryCost, opsCost: state.opsCost, totalCost },
+        profit,
+        nextSubs
+      };
+    }
+
+    function calculateWithPlacement(slotId, storyId) {
+      const old = state.placed[slotId];
+      const story = state.stories.find((s) => s.id === Number(storyId));
+      state.placed[slotId] = story || null;
+      const result = calculate(false);
+      state.placed[slotId] = old;
+      return result;
+    }
+
+    function getTagCountFromPlacedStories(placedStories) {
+      const map = {};
+      for (const st of placedStories) {
+        for (const tag of st.tags) map[tag] = (map[tag] || 0) + 1;
+      }
+      return map;
+    }
+
+    function analyzeTagEffects(placedStories) {
+      const map = {};
+      for (const st of placedStories) {
+        for (const tag of st.tags) {
+          map[tag] = (map[tag] || 0) + 1;
+        }
+      }
+      const repeated = Object.entries(map).filter(([, count]) => count >= 2).map(([tag]) => tag);
+      const linked = Object.entries(map).filter(([, count]) => count >= 2 && count <= 3).map(([tag]) => tag);
+      const tags = Object.entries(map).flatMap(([tag, count]) => Array.from({ length: count }, () => tag));
+      const publicCount = tags.filter((t) => PUBLIC_AFFAIRS.has(t)).length;
+      const massCount = tags.filter((t) => MASS_APPEAL.has(t)).length;
+      const lightCount = tags.filter((t) => LIFESTYLE_LIGHT.has(t)).length;
+      const total = tags.length || 1;
+      const publicRatio = publicCount / total;
+      const massRatio = massCount / total;
+      const lightRatio = lightCount / total;
+      const dominantRatio = Math.max(publicRatio, massRatio, lightRatio);
+      let dominantType = "公共事务";
+      if (dominantRatio === massRatio) dominantType = "大众关注";
+      if (dominantRatio === lightRatio) dominantType = "轻内容";
+      return { repeated, linked, publicRatio, massRatio, lightRatio, dominantRatio, dominantType };
+    }
+
+    function renderStories() {
+      el.storyList.innerHTML = "";
+      for (const story of state.stories) {
+        const card = document.createElement("div");
+        card.className = "story";
+        card.draggable = true;
+        card.dataset.storyId = String(story.id);
+        const negatives = story.negatives.length
+          ? `<span class="chip bad">负面:${story.negatives.join("/")}</span>`
+          : `<span class="chip ok">负面:无</span>`;
+
+        card.innerHTML = `
+          <div class="story-title">${story.title}</div>
+          <div class="chips">
+            <span class="chip">标签:${story.tags.map(toZhTag).join(" / ")}</span>
+            <span class="chip">质量:${story.quality}</span>
+            <span class="chip">基础值:${story.baseValue}</span>
+            ${negatives}
+          </div>
+        `;
+        const row = document.createElement("div");
+        row.className = "tip";
+        row.textContent = "拖动此报道到右侧版位（可覆盖已有报道）";
+        card.appendChild(row);
+
+        card.addEventListener("dragstart", (ev) => {
+          state.draggingStoryId = story.id;
+          ev.dataTransfer.setData("text/plain", String(story.id));
+          ev.dataTransfer.effectAllowed = "move";
+          card.classList.add("dragging");
+        });
+        card.addEventListener("dragend", () => {
+          state.draggingStoryId = null;
+          card.classList.remove("dragging");
+          clearDropPreview();
+        });
+        el.storyList.appendChild(card);
+      }
+    }
+
+    function clearDropPreview() {
+      el.slotList.querySelectorAll(".slot").forEach((node) => {
+        node.classList.remove("drag-over", "good-preview", "bad-preview", "synergy");
+      });
+      el.slotList.querySelectorAll("[data-impact]").forEach((n) => n.textContent = "拖入报道可预览该版位影响");
+    }
+
+    function applySynergyHighlights(projectedLinkedTags) {
+      const linkSet = new Set(projectedLinkedTags || []);
+
+      el.slotList.querySelectorAll(".slot").forEach((node) => {
+        const slotId = node.dataset.slotId;
+        const story = state.placed[slotId];
+        if (!story) return;
+        const hasLink = story.tags.some((t) => linkSet.has(t));
+        node.classList.toggle("synergy", hasLink);
+      });
+    }
+
+    function renderImpactRows(baseline, projected, extraText) {
+      const core = [
+        { name: "预计利润", delta: Math.round(projected.profit - baseline.profit), suffix: "" },
+        { name: "预计销量", delta: projected.sold - baseline.sold, suffix: "份" },
+        { name: "关键原因", delta: 0, text: extraText || "无明显变化" }
+      ];
+      const detail = [
+        { name: "连携题材数", delta: projected.linkCount - baseline.linkCount, suffix: "" },
+        { name: "多样性乘数", delta: projected.multipliers.mDiversity - baseline.multipliers.mDiversity, suffix: "x", fixed: 2 },
+        { name: "偏科惩罚乘数", delta: projected.multipliers.mBias - baseline.multipliers.mBias, suffix: "x", fixed: 2 },
+        { name: "负面惩罚点", delta: projected.negPenaltyPoints - baseline.negPenaltyPoints, suffix: "" }
+      ];
+
+      const renderRow = (d) => {
+        if (d.text) {
+          return `<div class="impact-row neu"><span class="name">${d.name}</span><span class="delta">${d.text}</span></div>`;
+        }
+        const cls = d.delta > 0 ? "pos" : d.delta < 0 ? "neg" : "neu";
+        const abs = d.fixed != null ? Math.abs(d.delta).toFixed(d.fixed) : Math.abs(d.delta);
+        const prefix = d.delta > 0 ? "+" : d.delta < 0 ? "-" : "±";
+        return `<div class="impact-row ${cls}"><span class="name">${d.name}</span><span class="delta">${prefix}${abs}${d.suffix}</span></div>`;
+      };
+      return `
+        <div class="impact-list">${core.map(renderRow).join("")}</div>
+        <details style="margin-top:6px;">
+          <summary style="cursor:pointer;color:#94a3b8;font-size:12px;">详情</summary>
+          <div class="impact-list" style="margin-top:6px;">${detail.map(renderRow).join("")}</div>
+        </details>
+      `;
+    }
+
+    function showReplaceToast(prevStory, newStory, slotId) {
+      if (state.undoTimer) {
+        clearTimeout(state.undoTimer);
+        state.undoTimer = null;
+      }
+      el.toast.innerHTML = `
+        <span>已替换：${prevStory.title} -> ${newStory.title}</span>
+        <button class="secondary" id="undoBtn">撤销</button>
+      `;
+      el.toast.classList.add("show");
+      const undoBtn = document.getElementById("undoBtn");
+      undoBtn.onclick = () => {
+        if (!state.lastReplaceAction) return;
+        state.placed[state.lastReplaceAction.slotId] = state.lastReplaceAction.prevStory;
+        state.lastReplaceAction = null;
+        el.toast.classList.remove("show");
+        renderSlots();
+        renderLiveStats();
+      };
+      state.undoTimer = setTimeout(() => {
+        state.lastReplaceAction = null;
+        el.toast.classList.remove("show");
+      }, 2000);
+    }
+
+    function renderSlots() {
+      el.slotList.innerHTML = "";
+      const baseline = calculate(false);
+      for (const slot of slots) {
+        const current = state.placed[slot.id];
+        const div = document.createElement("div");
+        div.className = "slot";
+        div.dataset.slotId = slot.id;
+        const removeBtn = current ? `<button class="secondary" data-remove="${slot.id}">移除</button>` : "";
+        div.innerHTML = `
+          <div class="slot-header">
+            <span class="slot-name">${slot.name}</span>
+            <span>加成: ${(1 + 2 * slot.weight).toFixed(1)}x</span>
+          </div>
+          <div class="slot-empty">${slot.desc}</div>
+          ${current ? `
+            <div><strong>${current.title}</strong></div>
+            <div class="chips">
+              <span class="chip">标签:${current.tags.map(toZhTag).join(" / ")}</span>
+              <span class="chip">质量:${current.quality}</span>
+              <span class="chip">基础值:${current.baseValue}</span>
+            </div>` : `<div class="slot-empty">暂无故事</div>`}
+          <div class="impact" data-impact="1">拖入报道可预览该版位影响</div>
+          <div>${removeBtn}</div>
+        `;
+
+        div.addEventListener("dragover", (ev) => {
+          if (!state.draggingStoryId) return;
+          ev.preventDefault();
+          div.classList.add("drag-over");
+          const projected = calculateWithPlacement(slot.id, state.draggingStoryId);
+          const profitDelta = Math.round(projected.profit - baseline.profit);
+          const impactEl = div.querySelector("[data-impact]");
+          const placedStories = slots
+            .map((s) => s.id === slot.id
+              ? state.stories.find((x) => x.id === Number(state.draggingStoryId))
+              : state.placed[s.id])
+            .filter(Boolean);
+          const effects = analyzeTagEffects(placedStories);
+          const extra = [];
+          if (effects.linked.length) extra.push(`连携奖励: ${effects.linked.map(toZhTag).join("、")}`);
+          if (effects.dominantRatio > 0.7) extra.push(`偏科减益: ${effects.dominantType}占比${Math.round(effects.dominantRatio * 100)}%`);
+          if (state.editorialProfile < -10) extra.push(`信息型定位: 多样性收益增强`);
+          if (state.editorialProfile > 10) extra.push(`热度型定位: 连携收益增强`);
+          if (state.placed[slot.id]) extra.push(`将替换: ${state.placed[slot.id].title}`);
+          impactEl.innerHTML = renderImpactRows(baseline, projected, extra.join("；"));
+          impactEl.className = `impact ${profitDelta > 0 ? "good" : profitDelta < 0 ? "bad" : "warn"}`;
+          div.classList.toggle("good-preview", profitDelta > 0);
+          div.classList.toggle("bad-preview", profitDelta < 0);
+          applySynergyHighlights(projected.linkedTags);
+        });
+
+        div.addEventListener("dragleave", () => {
+          div.classList.remove("drag-over", "good-preview", "bad-preview", "synergy");
+          const impactEl = div.querySelector("[data-impact]");
+          impactEl.textContent = "拖入报道可预览该版位影响";
+          impactEl.className = "impact";
+        });
+
+        div.addEventListener("drop", (ev) => {
+          ev.preventDefault();
+          const storyId = ev.dataTransfer.getData("text/plain") || String(state.draggingStoryId || "");
+          if (!storyId) return;
+          const newStory = state.stories.find((s) => s.id === Number(storyId));
+          const prevStory = state.placed[slot.id];
+          if (prevStory && newStory) {
+            state.lastReplaceAction = { slotId: slot.id, prevStory };
+            showReplaceToast(prevStory, newStory, slot.id);
+          }
+          placeStory(slot.id, storyId);
+          clearDropPreview();
+        });
+
+        el.slotList.appendChild(div);
+      }
+
+      el.slotList.querySelectorAll("[data-remove]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-remove");
+          state.placed[id] = null;
+          renderSlots();
+          renderLiveStats();
+        });
+      });
+    }
+
+    function renderLiveStats() {
+      const r = calculate(false);
+      const effects = analyzeTagEffects(getAllPlaced().map((x) => x.story));
+      const profileLabel = r.editorialProfile <= -35 ? "信息型"
+        : r.editorialProfile >= 35 ? "热度型"
+          : "平衡型";
+      el.liveStats.innerHTML = `
+        <div class="k">已填版位</div><div class="v">${r.placedCount}/${slots.length}</div>
+        <div class="k">编辑定位</div><div class="v">${profileLabel} (${Math.round(r.editorialProfile)})</div>
+        <div class="k">独特标签数</div><div class="v">${r.uniqueTags}</div>
+        <div class="k">重复成组分</div><div class="v">${r.comboRaw.toFixed(2)}</div>
+        <div class="k">连携题材(2-3条)</div><div class="v ${effects.linked.length ? "ok" : "warn"}">${effects.linked.length ? effects.linked.map(toZhTag).join("、") : "无"}</div>
+        <div class="k">三轴占比(P/M/L)</div><div class="v ${effects.dominantRatio > 0.7 ? "bad" : "ok"}">${Math.round(effects.publicRatio * 100)} / ${Math.round(effects.massRatio * 100)} / ${Math.round(effects.lightRatio * 100)}%</div>
+        <div class="k">信息型多样性加权</div><div class="v ${r.multipliers.diversityStyleBoost > 1 ? "ok" : "warn"}">${r.multipliers.diversityStyleBoost.toFixed(2)}x</div>
+        <div class="k">负面惩罚点</div><div class="v ${r.negPenaltyPoints > 2 ? "bad" : "warn"}">${r.negPenaltyPoints}</div>
+        <div class="k">预计需求</div><div class="v">${Math.round(r.demand).toLocaleString("zh-CN")}</div>
+        <div class="k">印刷上限</div><div class="v">${state.printCapacity.toLocaleString("zh-CN")}</div>
+        <div class="k">订阅基数</div><div class="v">${state.subscribers.toLocaleString("zh-CN")}</div>
+      `;
+    }
+
+    function settle() {
+      const r = calculate(true);
+      const placed = getAllPlaced().map((x) => x.story);
+      const axis = analyzeTagEffects(placed);
+      // 跨期定位累积：公共事务推向信息型(负向)，轻内容推向热度型(正向)，大众关注作缓冲。
+      const profileDelta = (axis.lightRatio - axis.publicRatio) * 24 - axis.massRatio * 4;
+      state.editorialProfile = clamp(state.editorialProfile + profileDelta, -100, 100);
+      const profitClass = r.profit >= 0 ? "ok" : "bad";
+      el.resultBox.innerHTML = `
+        <div class="k">本期净利润</div>
+        <div class="big ${profitClass}">${fmtMoney(r.profit)}</div>
+        <div class="sum-grid">
+          <div class="k">卖报收入</div><div class="v">${fmtMoney(r.circulationRevenue)}</div>
+          <div class="k">订阅收入</div><div class="v">${fmtMoney(r.subscriptionRevenue)}</div>
+          <div class="k">广告收入</div><div class="v">${fmtMoney(r.adsRevenue)}</div>
+          <div class="k">总收入</div><div class="v">${fmtMoney(r.grossRevenue)}</div>
+          <div class="k">纸张成本</div><div class="v bad">${fmtMoney(-r.costs.paperCost)}</div>
+          <div class="k">工资成本</div><div class="v bad">${fmtMoney(-r.costs.salaryCost)}</div>
+          <div class="k">运营成本</div><div class="v bad">${fmtMoney(-r.costs.opsCost)}</div>
+          <div class="k">总成本</div><div class="v bad">${fmtMoney(-r.costs.totalCost)}</div>
+          <div class="k">实际销量</div><div class="v">${r.sold.toLocaleString("zh-CN")} 份</div>
+          <div class="k">订阅（下期）</div><div class="v">${r.nextSubs.toLocaleString("zh-CN")}</div>
+        </div>
+        <div class="divider"></div>
+        <div class="tip">
+          关键乘数：
+          质量 ${r.multipliers.mQuality.toFixed(2)}x /
+          重复基础 ${r.multipliers.comboBase.toFixed(2)}x /
+          定位连携加权 ${r.multipliers.comboProfileBoost.toFixed(2)}x /
+          重复最终 ${r.multipliers.mCombo.toFixed(2)}x /
+          多样性基础 ${r.multipliers.mDiversityBase.toFixed(2)}x /
+          信息型加权 ${r.multipliers.diversityStyleBoost.toFixed(2)}x /
+          多样性最终 ${r.multipliers.mDiversity.toFixed(2)}x /
+          版位 ${r.multipliers.mLayout.toFixed(2)}x /
+          空版 ${r.multipliers.mEmpty.toFixed(2)}x /
+          负面 ${r.multipliers.mPenalty.toFixed(2)}x /
+          连携 ${r.multipliers.mLink.toFixed(2)}x /
+          均衡 ${r.multipliers.mBalance.toFixed(2)}x /
+          偏科 ${r.multipliers.mBias.toFixed(2)}x
+        </div>
+      `;
+      renderLiveStats();
+    }
+
+    el.regenBtn.addEventListener("click", regenStories);
+    el.storyCount.addEventListener("change", regenStories);
+    el.clearBtn.addEventListener("click", clearSlots);
+    el.settleBtn.addEventListener("click", settle);
+
+    regenStories();
+    renderSlots();
+    renderLiveStats();
+  </script>
+</body>
+</html>

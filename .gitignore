@@ -1,0 +1,20 @@
+# OS
+Thumbs.db
+Desktop.ini
+
+# Editor / IDE
+.cursor/
+.vscode/
+*.swp
+*.swo
+
+# Logs & temp
+*.log
+*.tmp
+~$*
+
+# Optional: if you add Node later
+node_modules/
+
+# MCP local (if any)
+mcps/

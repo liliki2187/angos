@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANGUS - 事件检定系统</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #0a0e14; --bg2: #111922; --bg3: #1a2430; --bg4: #222e3c;
+  --gold: #d4864e; --gold-dim: #8a5530;
+  --red: #c03030; --green: #2d8b4f; --purple: #7b4fb0; --cyan: #3a8a9e;
+  --neon: #39ff85; --text: #d8dce4; --text-dim: #6a7a8a; --text-bright: #f0f2f5;
+  --border: #2a3444; --border-light: #3a4a5a;
+  --dice-hit: #2d8b4f; --dice-miss: #c03030; --dice-negate: #555;
+}
+body { font-family: 'Georgia', 'SimSun', serif; background: var(--bg); color: var(--text); width: 100vw; height: 100vh; overflow: hidden; }
+.container { display: grid; grid-template-columns: 320px 1fr 340px; grid-template-rows: 50px 1fr; height: 100vh; }
+
+/* Header */
+.header { grid-column: 1/-1; background: linear-gradient(180deg, var(--bg3), var(--bg2)); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 20px; gap: 16px; }
+.header .title { font-size: 18px; font-weight: bold; color: var(--gold); flex: 1; }
+.header .subtitle { font-size: 12px; color: var(--text-dim); }
+
+/* Left Panel - Config */
+.left-panel { background: var(--bg2); border-right: 1px solid var(--border); overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.section-title { font-size: 11px; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+.form-row { display: flex; align-items: center; gap: 8px; }
+.form-row label { font-size: 12px; min-width: 60px; color: var(--text-dim); }
+.form-row select, .form-row input[type="number"] { flex: 1; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 4px 8px; border-radius: 3px; font-size: 12px; font-family: inherit; }
+.form-row select:focus, .form-row input:focus { outline: none; border-color: var(--gold); }
+.form-row input[type="number"] { width: 60px; flex: none; }
+.form-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--gold); }
+.toggle-row { display: flex; gap: 6px; }
+.toggle-btn { flex: 1; padding: 6px; font-size: 11px; text-align: center; border: 1px solid var(--border); background: var(--bg); color: var(--text-dim); cursor: pointer; border-radius: 3px; font-family: inherit; }
+.toggle-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(212,134,78,0.1); }
+.action-btn { width: 100%; padding: 10px; font-size: 14px; font-weight: bold; background: linear-gradient(135deg, var(--gold-dim), var(--gold)); border: none; color: #fff; cursor: pointer; border-radius: 4px; letter-spacing: 2px; font-family: inherit; margin-top: 4px; }
+.action-btn:hover { filter: brightness(1.15); }
+.action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.prob-display { text-align: center; padding: 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; }
+.prob-label { font-size: 11px; color: var(--text-dim); }
+.prob-value { font-size: 28px; font-weight: bold; color: var(--neon); }
+.prob-bars { display: flex; flex-direction: column; gap: 4px; margin-top: 8px; }
+.prob-bar-row { display: flex; align-items: center; gap: 6px; font-size: 10px; }
+.prob-bar-label { min-width: 55px; color: var(--text-dim); }
+.prob-bar-track { flex: 1; height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+.prob-bar-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+.prob-bar-val { min-width: 40px; text-align: right; color: var(--text-dim); }
+.example-btn { padding: 4px 8px; font-size: 10px; border: 1px solid var(--border); background: var(--bg); color: var(--text-dim); cursor: pointer; border-radius: 3px; font-family: inherit; }
+.example-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+/* Center Panel - Display */
+.center-panel { background: var(--bg); display: flex; flex-direction: column; overflow: hidden; }
+.display-area { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 20px; }
+.check-type-badge { font-size: 13px; color: var(--gold); padding: 4px 16px; border: 1px solid var(--gold-dim); border-radius: 20px; letter-spacing: 2px; }
+.result-display { font-size: 32px; font-weight: bold; min-height: 44px; }
+.result-pass { color: var(--neon); }
+.result-fail { color: var(--red); }
+.result-major { color: var(--gold); }
+.result-waiting { color: var(--text-dim); font-size: 16px; }
+
+/* Dice Area */
+.dice-area { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 700px; }
+.dice-group { display: flex; flex-direction: column; gap: 4px; }
+.dice-group-label { font-size: 11px; color: var(--text-dim); }
+.dice-row { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
+.die { width: 36px; height: 36px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold; border: 2px solid var(--border); background: var(--bg2); transition: all 0.15s; position: relative; }
+.die.hit { border-color: var(--dice-hit); color: var(--dice-hit); background: rgba(45,139,79,0.15); }
+.die.miss { border-color: var(--dice-miss); color: var(--dice-miss); background: rgba(192,48,48,0.1); }
+.die.negated { border-color: var(--dice-negate); color: var(--dice-negate); background: rgba(85,85,85,0.15); text-decoration: line-through; opacity: 0.5; transform: scale(0.9); }
+.die.pending { border-color: var(--border); color: var(--text-dim); }
+.die.opponent-marker::after { content: ''; position: absolute; top: -2px; right: -2px; width: 10px; height: 10px; background: var(--red); border-radius: 50%; }
+.threshold-info { font-size: 12px; color: var(--text-dim); text-align: center; padding: 6px; background: var(--bg2); border-radius: 4px; border: 1px solid var(--border); }
+.threshold-info .val { color: var(--gold); font-weight: bold; }
+
+/* Right Panel - Debug */
+.right-panel { background: var(--bg2); border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+.debug-header { padding: 8px 12px; font-size: 11px; color: var(--text-dim); letter-spacing: 2px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.debug-clear { font-size: 10px; color: var(--text-dim); cursor: pointer; border: 1px solid var(--border); background: none; padding: 2px 8px; border-radius: 3px; font-family: inherit; }
+.debug-clear:hover { border-color: var(--red); color: var(--red); }
+.debug-log { flex: 1; overflow-y: auto; padding: 8px; font-family: 'Consolas', 'Monaco', monospace; font-size: 11px; line-height: 1.6; }
+.debug-entry { padding: 2px 0; border-bottom: 1px solid rgba(42,52,68,0.3); }
+.debug-time { color: var(--text-dim); font-size: 9px; }
+.debug-tag { font-weight: bold; padding: 0 4px; border-radius: 2px; font-size: 10px; }
+.debug-tag-config { color: var(--cyan); background: rgba(58,138,158,0.1); }
+.debug-tag-calc { color: var(--gold); background: rgba(212,134,78,0.1); }
+.debug-tag-roll { color: var(--green); background: rgba(45,139,79,0.1); }
+.debug-tag-opponent { color: var(--red); background: rgba(192,48,48,0.1); }
+.debug-tag-result { color: var(--purple); background: rgba(123,79,176,0.1); }
+.debug-tag-prob { color: var(--neon); background: rgba(57,255,133,0.1); }
+.debug-formula { color: var(--gold); }
+.debug-num { color: var(--neon); }
+.debug-warn { color: var(--red); }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="title">🎲 事件检定系统</div>
+    <div class="subtitle">ANGUS — 复刻《苏丹的游戏》检定机制</div>
+  </div>
+
+  <!-- Left: Config -->
+  <div class="left-panel">
+    <div class="section-title">事件预设</div>
+    <div style="display:flex;gap:4px;flex-wrap:wrap">
+      <button class="example-btn" onclick="loadExample(0)">封面临时改题</button>
+      <button class="example-btn" onclick="loadExample(1)">拿下广告主</button>
+      <button class="example-btn" onclick="loadExample(2)">暗访偷拍+圆谎</button>
+    </div>
+
+    <div class="section-title">检定配置</div>
+    <div class="toggle-row" id="typeToggle">
+      <button class="toggle-btn active" onclick="setCheckType('single')">single</button>
+      <button class="toggle-btn" onclick="setCheckType('combined')">combined</button>
+      <button class="toggle-btn" onclick="setCheckType('split')">split</button>
+    </div>
+
+    <div class="section-title">难度</div>
+    <div class="toggle-row" id="diffToggle">
+      <button class="toggle-btn" onclick="setDifficulty('easy')">easy(0.6)</button>
+      <button class="toggle-btn active" onclick="setDifficulty('normal')">normal(0.5)</button>
+      <button class="toggle-btn" onclick="setDifficulty('hard')">hard(⅓)</button>
+    </div>
+
+    <div class="section-title">属性 A</div>
+    <div class="form-row"><label>属性</label><select id="attrA"><option value="wisdom">智慧</option><option value="social">社交</option><option value="combat">战斗</option><option value="conceal">隐匿</option><option value="imagination">想象</option><option value="rationality">理性</option><option value="writing">笔力</option><option value="courage">胆识</option><option value="insight">灵视</option><option value="perception">洞察</option></select></div>
+    <div class="form-row"><label>值</label><input type="number" id="attrAVal" value="7" min="0" max="30"></div>
+
+    <div id="attrBSection" style="display:none">
+      <div class="section-title">属性 B</div>
+      <div class="form-row"><label>属性</label><select id="attrB"><option value="wisdom">智慧</option><option value="social" selected>社交</option><option value="combat">战斗</option><option value="conceal">隐匿</option><option value="imagination">想象</option><option value="rationality">理性</option><option value="writing">笔力</option><option value="courage">胆识</option><option value="insight">灵视</option><option value="perception">洞察</option></select></div>
+      <div class="form-row"><label>值</label><input type="number" id="attrBVal" value="5" min="0" max="30"></div>
+    </div>
+
+    <div class="section-title">阈值</div>
+    <div class="form-row" id="kRow"><label>k</label><input type="number" id="kVal" value="3" min="0" max="30"></div>
+    <div id="kSplitRow" style="display:none">
+      <div class="form-row"><label>kA</label><input type="number" id="kAVal" value="3" min="0" max="30"><label style="min-width:30px;text-align:center">kB</label><input type="number" id="kBVal" value="2" min="0" max="30"></div>
+    </div>
+
+    <div class="section-title">修正</div>
+    <div class="form-row"><label>Δp</label><input type="number" id="deltaP" value="0" step="0.01" min="-0.5" max="0.5" style="width:80px"></div>
+
+    <div class="section-title">对抗</div>
+    <div class="form-row"><label>启用</label><input type="checkbox" id="hasOpponent" checked></div>
+    <div class="form-row"><label>对手值</label><input type="number" id="enemyAttr" value="3" min="0" max="30"></div>
+
+    <div class="section-title">显示模式</div>
+    <div class="toggle-row" id="modeToggle">
+      <button class="toggle-btn active" onclick="setMode('numeric')">纯数值</button>
+      <button class="toggle-btn" onclick="setMode('dice')">骰子模式</button>
+    </div>
+
+    <button class="action-btn" id="execBtn" onclick="executeCheck()">🎲 执行检定</button>
+
+    <div class="prob-display" id="probPanel">
+      <div class="prob-label">理论成功率</div>
+      <div class="prob-value" id="probValue">—</div>
+      <div class="prob-bars" id="probBars"></div>
+    </div>
+  </div>
+
+  <!-- Center: Display -->
+  <div class="center-panel">
+    <div class="display-area" id="displayArea">
+      <div class="check-type-badge" id="typeBadge">SINGLE · NORMAL</div>
+      <div class="result-display result-waiting">配置参数后点击「执行检定」</div>
+      <div class="dice-area" id="diceArea"></div>
+      <div class="threshold-info" id="thresholdInfo"></div>
+    </div>
+  </div>
+
+  <!-- Right: Debug -->
+  <div class="right-panel">
+    <div class="debug-header">
+      <span>🐛 DEBUG</span>
+      <button class="debug-clear" onclick="clearDebug()">清除</button>
+    </div>
+    <div class="debug-log" id="debugLog"></div>
+  </div>
+</div>
+
+<script>
+// ========== MATH ==========
+function binomialCoeff(n, k) { if (k < 0 || k > n) return 0; if (k === 0 || k === n) return 1; let r = 1; for (let i = 0; i < Math.min(k, n-k); i++) r = r * (n-i) / (i+1); return r; }
+function binomialPMF(n, k, p) { return binomialCoeff(n, k) * Math.pow(p, k) * Math.pow(1-p, n-k); }
+function binomialCDF_ge(n, k, p) { let s = 0; for (let i = k; i <= n; i++) s += binomialPMF(n, i, p); return Math.min(1, Math.max(0, s)); }
+function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+function fact(n) { let r = 1; for (let i = 2; i <= n; i++) r *= i; return r; }
+
+// ========== STATE ==========
+let state = { type: 'single', difficulty: 'normal', mode: 'numeric', animating: false };
+const DIFF_MAP = { easy: 0.60, normal: 0.50, hard: 1/3 };
+
+// ========== DEBUG ==========
+let debugLines = [];
+function debug(tag, msg) {
+  const now = new Date();
+  const ts = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}.${String(now.getMilliseconds()).padStart(3,'0')}`;
+  const el = document.createElement('div');
+  el.className = 'debug-entry';
+  el.innerHTML = `<span class="debug-time">${ts}</span> <span class="debug-tag debug-tag-${tag}">${tag.toUpperCase()}</span> ${msg}`;
+  const log = document.getElementById('debugLog');
+  log.appendChild(el);
+  log.scrollTop = log.scrollHeight;
+}
+function clearDebug() { document.getElementById('debugLog').innerHTML = ''; }
+
+// ========== UI CONTROLS ==========
+function setCheckType(t) {
+  state.type = t;
+  document.querySelectorAll('#typeToggle .toggle-btn').forEach((b,i) => {
+    b.classList.toggle('active', ['single','combined','split'][i] === t);
+  });
+  document.getElementById('attrBSection').style.display = t !== 'single' ? '' : 'none';
+  document.getElementById('kRow').style.display = t !== 'split' ? '' : 'none';
+  document.getElementById('kSplitRow').style.display = t === 'split' ? '' : 'none';
+  document.getElementById('typeBadge').textContent = `${t.toUpperCase()} · ${state.difficulty.toUpperCase()}`;
+  updateProb();
+}
+
+function setDifficulty(d) {
+  state.difficulty = d;
+  document.querySelectorAll('#diffToggle .toggle-btn').forEach((b,i) => {
+    b.classList.toggle('active', ['easy','normal','hard'][i] === d);
+  });
+  document.getElementById('typeBadge').textContent = `${state.type.toUpperCase()} · ${d.toUpperCase()}`;
+  updateProb();
+}
+
+function setMode(m) {
+  state.mode = m;
+  document.querySelectorAll('#modeToggle .toggle-btn').forEach((b,i) => {
+    b.classList.toggle('active', ['numeric','dice'][i] === m);
+  });
+}
+
+function getConfig() {
+  const p_base = DIFF_MAP[state.difficulty];
+  const dp = parseFloat(document.getElementById('deltaP').value) || 0;
+  const p = clamp(p_base + dp, 0, 1);
+  const attrA = parseInt(document.getElementById('attrAVal').value) || 0;
+  const attrB = parseInt(document.getElementById('attrBVal').value) || 0;
+  const k = parseInt(document.getElementById('kVal').value) || 0;
+  const kA = parseInt(document.getElementById('kAVal').value) || 0;
+  const kB = parseInt(document.getElementById('kBVal').value) || 0;
+  const hasOpponent = document.getElementById('hasOpponent').checked;
+  const enemyAttr = parseInt(document.getElementById('enemyAttr').value) || 0;
+  return { ...state, p_base, delta_p: dp, p, attrA, attrB, k, kA, kB, hasOpponent, enemyAttr };
+}
+
+// ========== PROBABILITY ==========
+function updateProb() {
+  const c = getConfig();
+  const panel = document.getElementById('probBars');
+  panel.innerHTML = '';
+  document.getElementById('probValue').textContent = '—';
+
+  if (c.type === 'single' || c.type === 'combined') {
+    const n = c.type === 'single' ? c.attrA : c.attrA + c.attrB;
+    const n_eff = c.hasOpponent ? Math.max(0, n - c.enemyAttr) : n;
+    const k_clamped = clamp(c.k, 0, n_eff);
+    const prob = n_eff > 0 ? binomialCDF_ge(n_eff, k_clamped, c.p) : 0;
+    document.getElementById('probValue').textContent = (prob * 100).toFixed(1) + '%';
+    panel.innerHTML = `<div class="prob-bar-row"><span class="prob-bar-label">成功</span><div class="prob-bar-track"><div class="prob-bar-fill" style="width:${prob*100}%;background:var(--green)"></div></div><span class="prob-bar-val">${(prob*100).toFixed(1)}%</span></div>`;
+    debug('prob', `P(X≥${k_clamped}) where X~Bin(<span class="debug-num">${n_eff}</span>, <span class="debug-num">${c.p.toFixed(4)}</span>) = <span class="debug-num">${(prob*100).toFixed(2)}%</span>`);
+  } else {
+    const nA = c.attrA, nB = c.attrB;
+    let enemyA = 0, enemyB = 0;
+    if (c.hasOpponent && c.enemyAttr > 0 && (nA + nB) > 0) {
+      enemyA = Math.floor(c.enemyAttr * nA / (nA + nB));
+      enemyB = c.enemyAttr - enemyA;
+    }
+    const nA_eff = Math.max(0, nA - enemyA);
+    const nB_eff = Math.max(0, nB - enemyB);
+    const kA_c = clamp(c.kA, 0, nA_eff);
+    const kB_c = clamp(c.kB, 0, nB_eff);
+    const pA = nA_eff > 0 ? binomialCDF_ge(nA_eff, kA_c, c.p) : 0;
+    const pB = nB_eff > 0 ? binomialCDF_ge(nB_eff, kB_c, c.p) : 0;
+    const pMajor = pA * pB;
+    const pMinor = pA*(1-pB) + (1-pA)*pB;
+    const pFail = (1-pA)*(1-pB);
+    document.getElementById('probValue').textContent = (pMajor * 100).toFixed(1) + '%';
+    panel.innerHTML = `
+      <div class="prob-bar-row"><span class="prob-bar-label">大成功</span><div class="prob-bar-track"><div class="prob-bar-fill" style="width:${pMajor*100}%;background:var(--gold)"></div></div><span class="prob-bar-val">${(pMajor*100).toFixed(1)}%</span></div>
+      <div class="prob-bar-row"><span class="prob-bar-label">小成功</span><div class="prob-bar-track"><div class="prob-bar-fill" style="width:${pMinor*100}%;background:var(--cyan)"></div></div><span class="prob-bar-val">${(pMinor*100).toFixed(1)}%</span></div>
+      <div class="prob-bar-row"><span class="prob-bar-label">失败</span><div class="prob-bar-track"><div class="prob-bar-fill" style="width:${pFail*100}%;background:var(--red)"></div></div><span class="prob-bar-val">${(pFail*100).toFixed(1)}%</span></div>`;
+    debug('prob', `split: P_A=${(pA*100).toFixed(2)}% P_B=${(pB*100).toFixed(2)}% → 大=${(pMajor*100).toFixed(2)}% 小=${(pMinor*100).toFixed(2)}% 败=${(pFail*100).toFixed(2)}%`);
+  }
+}
+
+// ========== ROLL ENGINE ==========
+function rollDice(n, p) {
+  const results = [];
+  for (let i = 0; i < n; i++) results.push(Math.random() < p);
+  return results;
+}
+
+function randomNegateIndices(total, count) {
+  const indices = Array.from({length: total}, (_, i) => i);
+  for (let i = indices.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i+1)); [indices[i], indices[j]] = [indices[j], indices[i]]; }
+  return indices.slice(0, count);
+}
+
+// ========== EXECUTE ==========
+async function executeCheck() {
+  if (state.animating) return;
+  state.animating = true;
+  document.getElementById('execBtn').disabled = true;
+  clearDebug();
+
+  const c = getConfig();
+  debug('config', `检定类型: <span class="debug-formula">${c.type}</span> | 难度: <span class="debug-formula">${c.difficulty}</span> | 模式: <span class="debug-formula">${c.mode}</span>`);
+  debug('config', `p_base=<span class="debug-num">${c.p_base}</span> Δp=<span class="debug-num">${c.delta_p}</span> → p=<span class="debug-num">${clamp(c.p_base+c.delta_p,0,1).toFixed(4)}</span>`);
+  debug('config', `attrA=<span class="debug-num">${c.attrA}</span>(${document.getElementById('attrA').value}) ${c.type!=='single'?`attrB=<span class="debug-num">${c.attrB}</span>(${document.getElementById('attrB').value})`:''} ${c.type!=='split'?`k=<span class="debug-num">${c.k}</span>`:`kA=<span class="debug-num">${c.kA}</span> kB=<span class="debug-num">${c.kB}</span>`}`);
+
+  // Reset display
+  const displayArea = document.getElementById('displayArea');
+  const diceArea = document.getElementById('diceArea');
+  const thresholdInfo = document.getElementById('thresholdInfo');
+  document.querySelector('.result-display.result-pass,.result-display.result-fail,.result-display.result-major')?.classList.replace?.(/result-(pass|fail|major)/,'result-waiting');
+  diceArea.innerHTML = '';
+  thresholdInfo.innerHTML = '';
+
+  if (c.type === 'single' || c.type === 'combined') await executeSingleCombined(c);
+  else await executeSplit(c);
+
+  state.animating = false;
+  document.getElementById('execBtn').disabled = false;
+}
+
+async function executeSingleCombined(c) {
+  const n = c.type === 'single' ? c.attrA : c.attrA + c.attrB;
+  const isCombined = c.type === 'combined';
+
+  debug('calc', `骰子数 n = ${isCombined ? `attrA(${c.attrA}) + attrB(${c.attrB})` : `attrA(${c.attrA})`} = <span class="debug-num">${n}</span>`);
+
+  let enemyAttr = c.hasOpponent ? c.enemyAttr : 0;
+  let n_eff = Math.max(0, n - enemyAttr);
+  let k = clamp(c.k, 0, n_eff);
+
+  if (c.hasOpponent) {
+    debug('opponent', `对抗扣减: enemyAttr=<span class="debug-num">${enemyAttr}</span>`);
+    debug('opponent', `n_eff = max(0, ${n} - ${enemyAttr}) = <span class="debug-num">${n_eff}</span>`);
+  }
+
+  debug('calc', `k = clamp(${c.k}, 0, ${n_eff}) = <span class="debug-num">${k}</span>`);
+
+  // Boundary checks
+  if (n_eff === 0) {
+    if (k === 0) { debug('calc', `<span class="debug-warn">⚠ n_eff=0, k=0 → 必成功</span>`); }
+    else { debug('calc', `<span class="debug-warn">⚠ n_eff=0, k=${k} → 必失败（对手完全压制）</span>`); }
+  }
+  if (k > n_eff && n_eff > 0) { debug('calc', `<span class="debug-warn">⚠ k(${k}) > n_eff(${n_eff}) → 必失败</span>`); }
+
+  const prob = n_eff > 0 ? binomialCDF_ge(n_eff, k, c.p) : 0;
+  debug('prob', `P(X≥${k}) = Σ C(${n_eff},i)×${c.p.toFixed(4)}^i×${(1-c.p).toFixed(4)}^(${n_eff}-i), i=${k}..${n_eff} = <span class="debug-num">${(prob*100).toFixed(2)}%</span>`);
+
+  // Roll
+  const dice = rollDice(n, c.p);
+  debug('roll', `投出 ${n} 颗骰子 (p=${c.p.toFixed(4)}): [${dice.map(d => d ? '<span style="color:var(--dice-hit)">✓</span>' : '<span style="color:var(--dice-miss)">✗</span>').join(' ')}]`);
+
+  let successCount = dice.filter(Boolean).length;
+  debug('roll', `原始命中数: <span class="debug-num">${successCount}</span> / ${n}`);
+
+  // Render dice
+  const diceArea = document.getElementById('diceArea');
+  const groupLabel = isCombined ? `综合 (智慧${c.attrA}+社交${c.attrB})` : document.getElementById('attrA').value;
+  let groupHtml = `<div class="dice-group"><div class="dice-group-label">${groupLabel} — 玩家回合</div><div class="dice-row" id="diceRow">`;
+  for (let i = 0; i < n; i++) groupHtml += `<div class="die ${dice[i]?'hit':'miss'}" id="die${i}">${dice[i]?'✓':'✗'}</div>`;
+  groupHtml += `</div></div>`;
+  diceArea.innerHTML = groupHtml;
+
+  if (c.hasOpponent && enemyAttr > 0 && c.mode === 'dice') {
+    await sleep(500);
+    const negateCount = Math.min(enemyAttr, n);
+    const negatedIdx = randomNegateIndices(n, negateCount);
+    debug('opponent', `对手回合: 随机作废 ${negateCount} 颗 → 索引 [${negatedIdx.join(', ')}]`);
+
+    for (let i = 0; i < negatedIdx.length; i++) {
+      const idx = negatedIdx[i];
+      const die = document.getElementById(`die${idx}`);
+      die.classList.remove('hit', 'miss');
+      die.classList.add('negated', 'opponent-marker');
+      debug('opponent', `作废 die[${idx}] (原: ${dice[idx]?'✓':'✗'}) → <span style="color:var(--dice-negate)">—</span>`);
+      await sleep(100);
+    }
+
+    // Recount
+    const aliveIdx = Array.from({length: n}, (_, i) => i).filter(i => !negatedIdx.includes(i));
+    successCount = aliveIdx.filter(i => dice[i]).length;
+    debug('calc', `有效骰子: ${aliveIdx.length} 颗, 未作废命中: ${aliveIdx.filter(i=>dice[i]).map(i=>'✓').join('')} → 最终命中数=<span class="debug-num">${successCount}</span>`);
+    debug('result', `${successCount} ≥ ${k} → <span class="debug-num">${successCount >= k ? '成功 ✓' : '失败 ✗'}</span>`);
+  } else if (c.hasOpponent) {
+    const negateCount = Math.min(enemyAttr, n);
+    const negatedIdx = randomNegateIndices(n, negateCount);
+    const aliveIdx = Array.from({length: n}, (_, i) => i).filter(i => !negatedIdx.includes(i));
+    successCount = aliveIdx.filter(i => dice[i]).length;
+    debug('opponent', `[数值模式] 作废 ${negateCount} 颗, 有效命中=<span class="debug-num">${successCount}</span>`);
+    debug('result', `${successCount} ≥ ${k} → <span class="debug-num">${successCount >= k ? '成功 ✓' : '失败 ✗'}</span>`);
+  } else {
+    debug('result', `${successCount} ≥ ${k} → <span class="debug-num">${successCount >= k ? '成功 ✓' : '失败 ✗'}</span>`);
+  }
+
+  const pass = successCount >= k;
+  showResult(pass ? 'pass' : 'fail', pass ? `成功！命中 ${successCount} ≥ ${k}` : `失败！命中 ${successCount} < ${k}`);
+  document.getElementById('thresholdInfo').innerHTML = `命中数 <span class="val">${successCount}</span> / 阈值 <span class="val">${k}</span> | 有效骰子 <span class="val">${n_eff}</span> / 原始 <span class="val">${n}</span>`;
+}
+
+async function executeSplit(c) {
+  debug('calc', `A组: attrA=<span class="debug-num">${c.attrA}</span>(${document.getElementById('attrA').value}) kA=<span class="debug-num">${c.kA}</span>`);
+  debug('calc', `B组: attrB=<span class="debug-num">${c.attrB}</span>(${document.getElementById('attrB').value}) kB=<span class="debug-num">${c.kB}</span>`);
+
+  // Opponent split
+  let enemyA = 0, enemyB = 0;
+  if (c.hasOpponent && c.enemyAttr > 0) {
+    const nTotal = c.attrA + c.attrB;
+    if (nTotal > 0) {
+      enemyA = Math.floor(c.enemyAttr * c.attrA / nTotal);
+      enemyB = c.enemyAttr - enemyA;
+    }
+    debug('opponent', `对抗分摊 (PROPORTIONAL): total=${nTotal}`);
+    debug('opponent', `enemyA = floor(${c.enemyAttr} × ${c.attrA} / ${nTotal}) = floor(${(c.enemyAttr*c.attrA/nTotal).toFixed(4)}) = <span class="debug-num">${enemyA}</span>`);
+    debug('opponent', `enemyB = ${c.enemyAttr} - ${enemyA} = <span class="debug-num">${enemyB}</span> (验证: ${enemyA}+${enemyB}=${enemyA+enemyB}${enemyA+enemyB===c.enemyAttr?' ✓':' ✗'})`);
+  }
+
+  const nA_eff = Math.max(0, c.attrA - enemyA);
+  const nB_eff = Math.max(0, c.attrB - enemyB);
+  const kA = clamp(c.kA, 0, nA_eff);
+  const kB = clamp(c.kB, 0, nB_eff);
+
+  debug('calc', `nA_eff = max(0, ${c.attrA} - ${enemyA}) = <span class="debug-num">${nA_eff}</span>, kA = clamp(${c.kA}, 0, ${nA_eff}) = <span class="debug-num">${kA}</span>`);
+  debug('calc', `nB_eff = max(0, ${c.attrB} - ${enemyB}) = <span class="debug-num">${nB_eff}</span>, kB = clamp(${c.kB}, 0, ${nB_eff}) = <span class="debug-num">${kB}</span>`);
+
+  // Probability
+  const pA = nA_eff > 0 ? binomialCDF_ge(nA_eff, kA, c.p) : 0;
+  const pB = nB_eff > 0 ? binomialCDF_ge(nB_eff, kB, c.p) : 0;
+  const pMajor = pA * pB, pMinor = pA*(1-pB)+(1-pA)*pB, pFail = (1-pA)*(1-pB);
+  debug('prob', `P_A = P(X_A≥${kA}) = <span class="debug-num">${(pA*100).toFixed(2)}%</span> | P_B = P(X_B≥${kB}) = <span class="debug-num">${(pB*100).toFixed(2)}%</span>`);
+  debug('prob', `大成功=P_A×P_B=<span class="debug-num">${(pMajor*100).toFixed(2)}%</span> | 小成功=<span class="debug-num">${(pMinor*100).toFixed(2)}%</span> | 失败=<span class="debug-num">${(pFail*100).toFixed(2)}%</span>`);
+
+  // Roll
+  const diceA = rollDice(c.attrA, c.p);
+  const diceB = rollDice(c.attrB, c.p);
+  debug('roll', `A组投出 ${c.attrA} 颗: [${diceA.map(d => d ? '<span style="color:var(--dice-hit)">✓</span>' : '<span style="color:var(--dice-miss)">✗</span>').join(' ')}]`);
+  debug('roll', `B组投出 ${c.attrB} 颗: [${diceB.map(d => d ? '<span style="color:var(--dice-hit)">✓</span>' : '<span style="color:var(--dice-miss)">✗</span>').join(' ')}]`);
+
+  let hitA = diceA.filter(Boolean).length;
+  let hitB = diceB.filter(Boolean).length;
+  debug('roll', `A原始命中=<span class="debug-num">${hitA}</span>/${c.attrA} | B原始命中=<span class="debug-num">${hitB}</span>/${c.attrB}`);
+
+  // Render
+  const diceArea = document.getElementById('diceArea');
+  let html = `<div class="dice-group"><div class="dice-group-label">A组 — ${document.getElementById('attrA').value} (${c.attrA}颗)</div><div class="dice-row">`;
+  for (let i = 0; i < c.attrA; i++) html += `<div class="die ${diceA[i]?'hit':'miss'}" id="dieA${i}">${diceA[i]?'✓':'✗'}</div>`;
+  html += `</div></div>`;
+  html += `<div class="dice-group"><div class="dice-group-label">B组 — ${document.getElementById('attrB').value} (${c.attrB}颗)</div><div class="dice-row">`;
+  for (let i = 0; i < c.attrB; i++) html += `<div class="die ${diceB[i]?'hit':'miss'}" id="dieB${i}">${diceB[i]?'✓':'✗'}</div>`;
+  html += `</div></div>`;
+  diceArea.innerHTML = html;
+
+  // Opponent negate (animated in dice mode)
+  if (c.hasOpponent && (enemyA > 0 || enemyB > 0)) {
+    if (c.mode === 'dice') {
+      await sleep(500);
+      debug('opponent', `对手回合开始...`);
+      const negIdxA = randomNegateIndices(c.attrA, Math.min(enemyA, c.attrA));
+      const negIdxB = randomNegateIndices(c.attrB, Math.min(enemyB, c.attrB));
+      debug('opponent', `A组作废 ${negIdxA.length} 颗: [${negIdxA.join(',')}]`);
+      debug('opponent', `B组作废 ${negIdxB.length} 颗: [${negIdxB.join(',')}]`);
+
+      for (const idx of negIdxA) {
+        const el = document.getElementById(`dieA${idx}`); el.classList.remove('hit','miss'); el.classList.add('negated','opponent-marker');
+        debug('opponent', `A[${idx}] → —`);
+        await sleep(100);
+      }
+      for (const idx of negIdxB) {
+        const el = document.getElementById(`dieB${idx}`); el.classList.remove('hit','miss'); el.classList.add('negated','opponent-marker');
+        debug('opponent', `B[${idx}] → —`);
+        await sleep(100);
+      }
+
+      const aliveA = Array.from({length:c.attrA},(_,i)=>i).filter(i=>!negIdxA.includes(i));
+      const aliveB = Array.from({length:c.attrB},(_,i)=>i).filter(i=>!negIdxB.includes(i));
+      hitA = aliveA.filter(i=>diceA[i]).length;
+      hitB = aliveB.filter(i=>diceB[i]).length;
+      debug('calc', `A有效命中=<span class="debug-num">${hitA}</span>/${aliveA.length} | B有效命中=<span class="debug-num">${hitB}</span>/${aliveB.length}`);
+    } else {
+      const negIdxA = randomNegateIndices(c.attrA, Math.min(enemyA, c.attrA));
+      const negIdxB = randomNegateIndices(c.attrB, Math.min(enemyB, c.attrB));
+      const aliveA = Array.from({length:c.attrA},(_,i)=>i).filter(i=>!negIdxA.includes(i));
+      const aliveB = Array.from({length:c.attrB},(_,i)=>i).filter(i=>!negIdxB.includes(i));
+      hitA = aliveA.filter(i=>diceA[i]).length;
+      hitB = aliveB.filter(i=>diceB[i]).length;
+      debug('opponent', `[数值模式] A作废${negIdxA.length} B作废${negIdxB.length} → A命中=${hitA} B命中=${hitB}`);
+    }
+  }
+
+  const passA = hitA >= kA, passB = hitB >= kB;
+  debug('result', `A: ${hitA} ≥ ${kA} → <span class="debug-num">${passA?'✓':'✗'}</span> | B: ${hitB} ≥ ${kB} → <span class="debug-num">${passB?'✓':'✗'}</span>`);
+
+  let tier, tierText;
+  if (passA && passB) { tier = 'major'; tierText = `🎉 大成功！A(${hitA}≥${kA}) B(${hitB}≥${kB}) 全部通过`; }
+  else if (passA || passB) { tier = 'minor'; tierText = `👍 小成功 — ${passA?`A通过(${hitA}≥${kA})`:'A失败'} ${passB?`B通过(${hitB}≥${kB})`:'B失败'}`; }
+  else { tier = 'fail'; tierText = `💀 失败 — A(${hitA}<${kA}) B(${hitB}<${kB})`; }
+
+  debug('result', `BANDS组合: ${passA?'✓':'✗'} ∧ ${passB?'✓':'✗'} → <span class="debug-num">${tier.toUpperCase()}</span>`);
+
+  showResult(tier, tierText);
+  document.getElementById('thresholdInfo').innerHTML = `A: <span class="val">${hitA}</span> / <span class="val">${kA}</span> ${passA?'✓':'✗'} &nbsp;|&nbsp; B: <span class="val">${hitB}</span> / <span class="val">${kB}</span> ${passB?'✓':'✗'}`;
+}
+
+function showResult(type, text) {
+  const el = document.querySelector('.result-display');
+  el.className = 'result-display';
+  if (type === 'pass') el.classList.add('result-pass');
+  else if (type === 'fail') el.classList.add('result-fail');
+  else if (type === 'major') el.classList.add('result-major');
+  else if (type === 'minor') el.classList.add('result-pass');
+  el.textContent = text;
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// ========== EXAMPLES ==========
+function loadExample(idx) {
+  clearDebug();
+  if (idx === 0) {
+    setCheckType('single'); setDifficulty('normal');
+    document.getElementById('attrA').value = 'social'; document.getElementById('attrAVal').value = 7;
+    document.getElementById('deltaP').value = '-0.05';
+    document.getElementById('hasOpponent').checked = true; document.getElementById('enemyAttr').value = 3;
+    document.getElementById('kVal').value = 4;
+    debug('config', `加载示例: 封面临时改题 (single/normal/社交7/k4/对手3/Δp-0.05)`);
+  } else if (idx === 1) {
+    setCheckType('combined'); setDifficulty('hard');
+    document.getElementById('attrA').value = 'wisdom'; document.getElementById('attrAVal').value = 6;
+    document.getElementById('attrB').value = 'social'; document.getElementById('attrBVal').value = 5;
+    document.getElementById('deltaP').value = '0';
+    document.getElementById('hasOpponent').checked = true; document.getElementById('enemyAttr').value = 3;
+    document.getElementById('kVal').value = 6;
+    debug('config', `加载示例: 拿下广告主 (combined/hard/智慧6+社交5/k6/对手3)`);
+  } else {
+    setCheckType('split'); setDifficulty('normal');
+    document.getElementById('attrA').value = 'conceal'; document.getElementById('attrAVal').value = 8;
+    document.getElementById('attrB').value = 'social'; document.getElementById('attrBVal').value = 4;
+    document.getElementById('deltaP').value = '0';
+    document.getElementById('hasOpponent').checked = true; document.getElementById('enemyAttr').value = 2;
+    document.getElementById('kAVal').value = 3; document.getElementById('kBVal').value = 2;
+    debug('config', `加载示例: 暗访偷拍+圆谎 (split/normal/隐匿8+社交4/kA3kB2/对手2)`);
+  }
+  updateProb();
+}
+
+// Init
+updateProb();
+</script>
+</body>
+</html>

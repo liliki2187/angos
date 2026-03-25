@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>世界未解之谜周刊 · 探索 + 骰子判定 Demo</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap");
+
+    :root {
+      --bg: #0d1117;
+      --panel: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --gold: #d4a853;
+      --gold-dim: #8a7038;
+      --danger: #f85149;
+      --ok: #3fb950;
+      --mystic: #a371f7;
+      --sci: #58a6ff;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Noto Serif SC", "Songti SC", Georgia, serif;
+      background: radial-gradient(ellipse at 50% 0%, #1a2332 0%, var(--bg) 55%);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    #app { max-width: 980px; margin: 0 auto; padding: 1.25rem; min-height: 100vh; }
+
+    h1 {
+      font-size: 1.35rem; font-weight: 700; letter-spacing: 0.08em;
+      color: var(--gold); margin: 0 0 0.25rem;
+      text-shadow: 0 0 24px rgba(212, 168, 83, 0.25);
+    }
+    .sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem; }
+
+    .bar-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; margin-bottom: 1rem; }
+    @media (max-width: 720px) { .bar-row { grid-template-columns: repeat(2, 1fr); } }
+
+    .stat {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 6px;
+      padding: 0.45rem 0.55rem; font-size: 0.75rem;
+    }
+    .stat b { display: block; color: var(--gold); font-size: 0.7rem; letter-spacing: 0.06em; }
+    .stat span { font-variant-numeric: tabular-nums; }
+
+    .panel {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+      padding: 1rem 1.1rem; margin-bottom: 1rem;
+    }
+    .panel h2 {
+      margin: 0 0 0.6rem; font-size: 1rem; color: var(--gold-dim);
+      font-weight: 600; letter-spacing: 0.06em;
+    }
+
+    .row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+
+    button, .btn {
+      font-family: inherit; cursor: pointer; border-radius: 6px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, #2d333b, #21262d);
+      color: var(--text); padding: 0.45rem 0.85rem; font-size: 0.85rem;
+    }
+    button:hover, .btn:hover { border-color: var(--gold-dim); color: var(--gold); }
+    button.primary {
+      background: linear-gradient(180deg, #4a3f1a, #2d2610);
+      border-color: var(--gold-dim); color: var(--gold);
+    }
+    button:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .tag {
+      font-size: 0.72rem; padding: 0.2rem 0.45rem; border-radius: 4px;
+      border: 1px solid var(--border); color: var(--muted);
+    }
+    .tag.on { border-color: var(--gold); color: var(--gold); background: rgba(212, 168, 83, 0.08); }
+
+    .map-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.65rem;
+    }
+    .region {
+      border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem;
+      background: linear-gradient(145deg, #1c2128, #13171c); cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .region:hover:not(.locked) {
+      border-color: var(--gold-dim);
+      box-shadow: 0 0 0 1px rgba(212, 168, 83, 0.2);
+    }
+    .region.locked { opacity: 0.55; cursor: not-allowed; }
+    .region .name { font-weight: 700; color: var(--gold); font-size: 0.95rem; }
+    .region .hint { font-size: 0.75rem; color: var(--muted); margin-top: 0.35rem; }
+    .pulse { animation: pulse 1.6s ease-in-out infinite; }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(212, 168, 83, 0); }
+      50% { box-shadow: 0 0 12px 2px rgba(163, 113, 247, 0.35); }
+    }
+
+    .nodes { display: flex; flex-direction: column; gap: 0.5rem; }
+    .node {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 0.75rem; padding: 0.65rem 0.75rem; border-radius: 8px;
+      border: 1px solid var(--border); background: #12161c; cursor: pointer;
+    }
+    .node:hover { border-color: var(--mystic); }
+    .node.hidden-node { border-style: dashed; opacity: 0.92; }
+    .node .meta { font-size: 0.72rem; color: var(--muted); }
+    .badge {
+      font-size: 0.65rem; padding: 0.15rem 0.35rem; border-radius: 3px;
+      border: 1px solid var(--border); white-space: nowrap;
+    }
+    .badge.perm { color: var(--sci); border-color: rgba(88, 166, 255, 0.4); }
+    .badge.temp { color: var(--danger); border-color: rgba(248, 81, 73, 0.4); }
+    .badge.hid { color: var(--mystic); border-color: rgba(163, 113, 247, 0.45); }
+
+    .cards {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem;
+    }
+    .card {
+      border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem 0.55rem;
+      font-size: 0.78rem; cursor: pointer; background: #0f1318;
+    }
+    .card.selected { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(212, 168, 83, 0.35); }
+    .card .t { font-weight: 700; color: var(--text); margin-bottom: 0.25rem; }
+    .card dl {
+      margin: 0; display: grid; grid-template-columns: auto 1fr;
+      gap: 0.1rem 0.35rem; font-size: 0.72rem; color: var(--muted);
+    }
+    .card dt { color: #6e7681; }
+
+    .log {
+      font-size: 0.8rem; color: var(--muted); max-height: 180px;
+      overflow-y: auto; padding-right: 0.25rem;
+    }
+    .log p { margin: 0.35rem 0; border-left: 2px solid var(--border); padding-left: 0.5rem; }
+
+    .prob-box {
+      font-size: 0.78rem; color: var(--muted);
+      background: #0f1318; border: 1px solid var(--border); border-radius: 8px;
+      padding: 0.6rem 0.75rem; margin-top: 0.5rem;
+    }
+    .prob-box strong { color: var(--gold); }
+
+    .mode-toggle {
+      display: inline-flex; gap: 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+    }
+    .mode-toggle button {
+      border: none; border-radius: 0; background: #21262d;
+    }
+    .mode-toggle button.on { background: #2d2610; color: var(--gold); border-color: var(--gold-dim); }
+
+    .dice-board { margin-top: 0.75rem; }
+    .dice-pool { margin-bottom: 0.75rem; }
+    .dice-pool h3 {
+      margin: 0 0 0.35rem; font-size: 0.85rem; color: var(--gold-dim);
+    }
+    .dice-row {
+      display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center;
+    }
+    .die {
+      width: 2rem; height: 2rem; border-radius: 6px; border: 1px solid var(--border);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 0.95rem; font-weight: 700; background: #0d1117;
+      font-variant-numeric: tabular-nums;
+    }
+    .die.hit { border-color: var(--ok); color: var(--ok); background: rgba(63, 185, 80, 0.12); }
+    .die.miss { border-color: #6e7681; color: #6e7681; }
+    .die.void {
+      border-style: dashed; color: var(--muted); background: #161b22;
+      text-decoration: line-through; opacity: 0.75;
+    }
+    .phase-label { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.35rem; }
+
+    .result-banner {
+      font-size: 1.1rem; font-weight: 700; color: var(--gold); margin: 0.75rem 0 0.35rem;
+    }
+
+    footer {
+      margin-top: 1.5rem; font-size: 0.72rem; color: var(--muted); text-align: center;
+    }
+
+    .hidden { display: none !important; }
+
+    .tip-inline { font-size: 0.78rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>《世界未解之谜周刊》· 探索 + 骰子判定</h1>
+      <p class="sub">
+        7 日一回合 · 全球/区域探索 · <strong>分别多属性检定（split）</strong>：调查池 + 现场池 · 对手抵消骰子 · 与
+        <code>docs/骰子判定玩法_最终版.md</code> 一致
+      </p>
+    </header>
+
+    <div class="bar-row" id="macro"></div>
+
+    <div class="row" style="margin-bottom: 0.75rem; justify-content: space-between;">
+      <div class="row">
+        <strong id="weekLabel"></strong>
+        <span id="dayLabel" style="color: var(--muted); font-size: 0.85rem;"></span>
+      </div>
+      <button type="button" id="btnEndWeek" class="primary" title="剩余天数将用于编辑部赶稿">结束本周并发刊</button>
+    </div>
+
+    <div id="view-weekStart" class="panel hidden"></div>
+    <div id="view-global" class="panel hidden"></div>
+    <div id="view-region" class="panel hidden"></div>
+    <div id="view-setup" class="panel hidden"></div>
+    <div id="view-result" class="panel hidden"></div>
+    <div id="view-publish" class="panel hidden"></div>
+
+    <div class="panel">
+      <h2>行动日志</h2>
+      <div class="log" id="log"></div>
+    </div>
+
+    <footer>
+      本地单机 · 探索结算使用二项分布 + 对手作废骰子（两阶段展示）· 可切换纯数值 / 骰子模式 · 双击本文件即可游玩
+    </footer>
+  </div>
+
+  <script>
+(function () {
+  "use strict";
+
+  /** 难度 → 单骰成功率 p（与《苏丹的游戏》公开设定一致） */
+  const DIFFICULTY_P = { easy: 0.6, normal: 0.5, hard: 1 / 3 };
+
+  const macro = { 公信: 42, 诡名: 38, 声望: 45, 守序: 48, 狂性: 22 };
+
+  const state = {
+    week: 1,
+    day: 7,
+    view: "weekStart",
+    regionId: null,
+    mission: null,
+    selectedStaffIds: [],
+    clues: [],
+    log: [],
+    filters: { sci: true, occult: true, pop: true },
+    weekEvent: null,
+    /** @type {"dice"|"numeric"} */
+    displayMode: "dice",
+    /** 最近一次检定原始数据（用于结果页复现） */
+    lastCheck: null,
+  };
+
+  const REGIONS = [
+    {
+      id: "us",
+      name: "北美禁区带",
+      unlocked: true,
+      pulse: false,
+      hint: "初始解锁。都市传说与禁区并存。",
+      nodes: [
+        {
+          id: "n51",
+          kind: "permanent",
+          name: "51 区外围公路",
+          days: 2,
+          need: { 探索: 4, 生存: 2 },
+          tags: ["sci", "pop"],
+          difficulty: "normal",
+          enemyAttr: 2,
+          chain: null,
+        },
+        {
+          id: "skin",
+          kind: "permanent",
+          name: "罗斯威尔档案残页",
+          days: 1,
+          need: { 探索: 3, 洞察: 3 },
+          tags: ["sci", "occult"],
+          difficulty: "normal",
+          enemyAttr: 1,
+          chain: null,
+        },
+        {
+          id: "temp_ufo",
+          kind: "temp",
+          name: "突发：雷达异常光点",
+          days: 2,
+          need: { 探索: 5, 生存: 3 },
+          tags: ["sci", "pop"],
+          deadlineDay: 4,
+          difficulty: "hard",
+          enemyAttr: 3,
+          chain: null,
+        },
+        {
+          id: "hidden_gate",
+          kind: "hidden",
+          name: "灵视：黑色方尖碑的回声",
+          days: 3,
+          need: { 探索: 4, 诡思: 4, 生存: 2 },
+          tags: ["occult"],
+          difficulty: "normal",
+          enemyAttr: 4,
+          unlock: (m) => m.狂性 >= 35 && m.诡名 >= 40,
+          chain: null,
+        },
+      ],
+    },
+    {
+      id: "east_asia",
+      name: "东亚神秘地带",
+      unlocked: false,
+      pulse: false,
+      hint: "需要：声望≥55 或 完成「罗斯威尔档案残页」。",
+      nodes: [
+        {
+          id: "shen",
+          kind: "permanent",
+          name: "神农架毛发样本采集",
+          days: 3,
+          need: { 探索: 5, 生存: 4 },
+          tags: ["sci", "pop"],
+          difficulty: "hard",
+          enemyAttr: 3,
+          chain: null,
+        },
+        {
+          id: "chainA",
+          kind: "permanent",
+          name: "模糊：未解锁的链式线索",
+          days: 2,
+          need: { 探索: 6, 洞察: 4 },
+          tags: ["sci"],
+          difficulty: "normal",
+          enemyAttr: 2,
+          chain: "locked",
+          chainTitle: "链式调查 · 第二阶段",
+        },
+      ],
+    },
+    {
+      id: "pacific",
+      name: "太平洋岛屿群",
+      unlocked: false,
+      pulse: false,
+      hint: "需要：公信≥60（观测合作）或 守序≥60（许可）。",
+      nodes: [
+        {
+          id: "easter",
+          kind: "permanent",
+          name: "复活节岛石像热异常",
+          days: 3,
+          need: { 探索: 4, 理性: 3 },
+          tags: ["sci"],
+          difficulty: "normal",
+          enemyAttr: 2,
+          chain: null,
+        },
+      ],
+    },
+  ];
+
+  const STAFF = [
+    { id: "s1", name: "外勤·阿黎", 探索: 3, 生存: 2, 洞察: 2, 诡思: 1, 理性: 2 },
+    { id: "s2", name: "调查·老魏", 探索: 2, 生存: 3, 洞察: 3, 诡思: 0, 理性: 3 },
+    { id: "s3", name: "神秘版·伊芙", 探索: 1, 生存: 1, 洞察: 2, 诡思: 4, 理性: 1 },
+    { id: "s4", name: "实习生·小赵", 探索: 2, 生存: 1, 洞察: 1, 诡思: 1, 理性: 2 },
+  ];
+
+  const TAG_LABEL = { sci: "科学纪实", occult: "神秘玄学", pop: "世俗流量" };
+
+  function clamp(v, a, b) {
+    return Math.max(a, Math.min(b, v));
+  }
+
+  function log(msg) {
+    state.log.unshift(`[第${state.week}周 余${state.day}日] ${msg}`);
+    if (state.log.length > 40) state.log.pop();
+    renderLog();
+  }
+
+  function renderLog() {
+    const el = document.getElementById("log");
+    el.innerHTML = state.log.map((t) => `<p>${escapeHtml(t)}</p>`).join("");
+  }
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function renderMacro() {
+    const el = document.getElementById("macro");
+    const keys = ["公信", "诡名", "声望", "守序", "狂性"];
+    el.innerHTML = keys
+      .map((k) => `<div class="stat"><b>${k}</b><span>${macro[k]}</span></div>`)
+      .join("");
+  }
+
+  function setView(name) {
+    state.view = name;
+    ["weekStart", "global", "region", "setup", "result", "publish"].forEach((v) => {
+      document.getElementById("view-" + v).classList.toggle("hidden", v !== name);
+    });
+  }
+
+  /** 二项分布 P(X >= k)，n 不大时用直接求和 */
+  function binomialPAtLeast(n, p, k) {
+    if (k <= 0) return 1;
+    if (k > n) return 0;
+    let sum = 0;
+    for (let x = k; x <= n; x++) {
+      sum += binomialPMF(n, p, x);
+    }
+    return clamp(sum, 0, 1);
+  }
+
+  function binomialPMF(n, p, x) {
+    if (x < 0 || x > n) return 0;
+    return binom(n, x) * Math.pow(p, x) * Math.pow(1 - p, n - x);
+  }
+
+  function binom(n, k) {
+    if (k < 0 || k > n) return 0;
+    k = Math.min(k, n - k);
+    let r = 1;
+    for (let i = 1; i <= k; i++) r = (r * (n - k + i)) / i;
+    return r;
+  }
+
+  function meetsNeed(need, staffList) {
+    const sum = staffSum(staffList);
+    return Object.keys(need).every((k) => (sum[k] || 0) >= need[k]);
+  }
+
+  function staffSum(staffList) {
+    const sum = {};
+    staffList.forEach((id) => {
+      const p = STAFF.find((x) => x.id === id);
+      if (!p) return;
+      ["探索", "生存", "洞察", "诡思", "理性"].forEach((k) => {
+        sum[k] = (sum[k] || 0) + p[k];
+      });
+    });
+    return sum;
+  }
+
+  /** 调查池：探索+洞察+诡思；现场池：生存+理性 */
+  function poolSizes(staffList) {
+    const s = staffSum(staffList);
+    const nA = (s.探索 || 0) + (s.洞察 || 0) + (s.诡思 || 0);
+    const nB = (s.生存 || 0) + (s.理性 || 0);
+    return { nA, nB };
+  }
+
+  function needThresholds(need) {
+    const kA =
+      (need.探索 || 0) +
+      (need.洞察 || 0) +
+      (need.诡思 || 0);
+    const kB = (need.生存 || 0) + (need.理性 || 0);
+    return { kA, kB };
+  }
+
+  function computeExplorationP(mission, staffList) {
+    const pBase = DIFFICULTY_P[mission.difficulty || "normal"] ?? 0.5;
+    let deltaP = 0;
+    if (!meetsNeed(mission.need, staffList)) deltaP -= 0.15;
+    if (mission.kind === "temp" && state.day < (mission.deadlineDay || 0)) deltaP += 0.05;
+    if (mission.kind === "hidden") deltaP -= 0.05;
+    const p = clamp(pBase + deltaP, 0, 1);
+
+    const { nA, nB } = poolSizes(staffList);
+    const { kA, kB } = needThresholds(mission.need);
+    const enemyAttr = mission.enemyAttr | 0;
+
+    const nTot = nA + nB;
+    const enemyA = nTot > 0 ? Math.floor((enemyAttr * nA) / nTot) : 0;
+    const enemyB = enemyAttr - enemyA;
+    const nAe = Math.max(0, nA - enemyA);
+    const nBe = Math.max(0, nB - enemyB);
+
+    function passProb(n, k) {
+      if (k <= 0) return 1;
+      if (n <= 0) return 0;
+      return binomialPAtLeast(n, p, k);
+    }
+
+    const pA = passProb(nAe, kA);
+    const pB = passProb(nBe, kB);
+
+    const pBig = pA * pB;
+    const pSmall = pA * (1 - pB) + (1 - pA) * pB;
+    const pBothFail = (1 - pA) * (1 - pB);
+
+    return {
+      p,
+      pBase,
+      deltaP,
+      nA,
+      nB,
+      kA,
+      kB,
+      enemyAttr,
+      enemyA,
+      enemyB,
+      nAe,
+      nBe,
+      pA,
+      pB,
+      pBig,
+      pSmall,
+      pBothFail,
+    };
+  }
+
+  /** 随机无放回选取 idx 个位置 */
+  function pickRandomIndices(len, count) {
+    const arr = Array.from({ length: len }, (_, i) => i);
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return new Set(arr.slice(0, Math.min(count, len)));
+  }
+
+  /**
+   * split 检定：先投满池，再随机作废对手骰子，统计命中（与文档 4.2 一致）
+   * @returns {{ hitsA, hitsB, passA, passB, tier, rollsA, rollsB, voidA, voidB, p }}
+   */
+  function runSplitCheck(mission, staffList) {
+    const meta = computeExplorationP(mission, staffList);
+    const p = meta.p;
+    const { nA, nB } = poolSizes(staffList);
+    const { kA, kB } = needThresholds(mission.need);
+    const enemyAttr = mission.enemyAttr | 0;
+    const nTot = nA + nB;
+    const enemyA = nTot > 0 ? Math.floor((enemyAttr * nA) / nTot) : 0;
+    const enemyB = enemyAttr - enemyA;
+
+    const rollHit = () => Math.random() < p;
+
+    const rollsA = Array.from({ length: nA }, rollHit);
+    const rollsB = Array.from({ length: nB }, rollHit);
+
+    const voidA = pickRandomIndices(nA, enemyA);
+    const voidB = pickRandomIndices(nB, enemyB);
+
+    let hitsA = 0;
+    for (let i = 0; i < nA; i++) {
+      if (!voidA.has(i) && rollsA[i]) hitsA++;
+    }
+    let hitsB = 0;
+    for (let i = 0; i < nB; i++) {
+      if (!voidB.has(i) && rollsB[i]) hitsB++;
+    }
+
+    const passA = kA <= 0 ? true : hitsA >= kA;
+    const passB = kB <= 0 ? true : hitsB >= kB;
+
+    let tier;
+    if (passA && passB) tier = "大成功";
+    else if (passA || passB) tier = "小成功";
+    else {
+      const totalHits = hitsA + hitsB;
+      const needSum = kA + kB;
+      const cata =
+        nA + nB >= 4 &&
+        totalHits <= 1 &&
+        needSum >= 4;
+      tier = cata ? "大失败" : "失败";
+    }
+
+    return {
+      ...meta,
+      hitsA,
+      hitsB,
+      passA,
+      passB,
+      tier,
+      rollsA,
+      rollsB,
+      voidA,
+      voidB,
+      enemyA,
+      enemyB,
+    };
+  }
+
+  function randomWeekEvent() {
+    const pool = [
+      { title: "回合随机：线人爆料", body: "有人在暗网兜售「禁区坐标碎片」。诡名+1 或 守序-1（若你回应炒作）。" },
+      { title: "回合随机：科学会通告", body: "科学会邀请你参加线上辟谣会。公信小幅波动取决于下周报道倾向。" },
+      { title: "回合随机：印刷厂延误", body: "本周「结束本周」时，声望结算 -3（模拟外部噪音）。" },
+      { title: "回合随机：读者来信潮", body: "都市传说类订阅上升。世俗流量类线索在地图上高亮。" },
+    ];
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  function unlockRegions() {
+    REGIONS.forEach((r) => {
+      if (r.id === "us") {
+        r.unlocked = true;
+        return;
+      }
+      if (r.id === "east_asia") {
+        const done = state.clues.some((c) => c.title.includes("罗斯威尔")) || macro.声望 >= 55;
+        r.unlocked = done;
+        r.pulse = done && state.week <= 2;
+        return;
+      }
+      if (r.id === "pacific") {
+        r.unlocked = macro.公信 >= 60 || macro.守序 >= 60;
+        r.pulse = r.unlocked;
+      }
+    });
+  }
+
+  function nodeVisible(node) {
+    if (node.kind !== "hidden") return true;
+    if (typeof node.unlock === "function") return node.unlock(macro);
+    return true;
+  }
+
+  function filterNodeTags(node) {
+    const t = node.tags || [];
+    if (state.filters.sci && t.includes("sci")) return true;
+    if (state.filters.occult && t.includes("occult")) return true;
+    if (state.filters.pop && t.includes("pop")) return true;
+    return false;
+  }
+
+  function renderWeekStart() {
+    if (!state.weekEvent) state.weekEvent = randomWeekEvent();
+    const el = document.getElementById("view-weekStart");
+    el.innerHTML = `
+      <h2>回合起始</h2>
+      <p><strong>${escapeHtml(state.weekEvent.title)}</strong></p>
+      <p style="color:var(--muted);font-size:0.9rem;">${escapeHtml(state.weekEvent.body)}</p>
+      <p style="font-size:0.85rem;">四大势力本周提示：<strong>政府</strong>希望你控制社会风险；<strong>科学会</strong>盯紧造假；<strong>密教会</strong>想看到「更深的洞」；<strong>财团</strong>只关心转化率。</p>
+      <button type="button" class="primary" id="btnEnterGlobal">进入全球地图</button>
+    `;
+    document.getElementById("btnEnterGlobal").onclick = () => {
+      setView("global");
+      renderGlobal();
+    };
+    setView("weekStart");
+  }
+
+  function renderGlobal() {
+    unlockRegions();
+    const el = document.getElementById("view-global");
+    const filterHtml = ["sci", "occult", "pop"]
+      .map((k) => {
+        const on = state.filters[k];
+        return `<button type="button" class="tag ${on ? "on" : ""}" data-filter="${k}">${TAG_LABEL[k]}</button>`;
+      })
+      .join(" ");
+
+    el.innerHTML = `
+      <h2>全球地图</h2>
+      <p style="font-size:0.85rem;color:var(--muted);">线索筛选（多选）：与《News Tower》地球仪筛选类似。探索结算使用<strong>分别多属性检定</strong>（调查池 / 现场池）。</p>
+      <div class="tags" id="filterTags">${filterHtml}</div>
+      <p style="margin:0.75rem 0 0.5rem;font-size:0.85rem;">
+        <button type="button" id="btnRecycle">回收噪音线索</button>
+        <span style="color:var(--muted);font-size:0.8rem;margin-left:0.5rem;">效果：诡名 -2，声望 +1</span>
+      </p>
+      <div class="map-grid" id="regionGrid"></div>
+      <p style="margin-top:0.75rem;"><button type="button" id="backFromGlobal">返回回合简报</button></p>
+    `;
+
+    document.querySelectorAll("#filterTags .tag").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const k = btn.getAttribute("data-filter");
+        if (k === "sci") state.filters.sci = !state.filters.sci;
+        if (k === "occult") state.filters.occult = !state.filters.occult;
+        if (k === "pop") state.filters.pop = !state.filters.pop;
+        renderGlobal();
+      });
+    });
+
+    document.getElementById("btnRecycle").onclick = () => {
+      macro.诡名 = Math.max(0, macro.诡名 - 2);
+      macro.声望 = Math.min(100, macro.声望 + 1);
+      log("回收噪音线索：诡名 -2，声望 +1。");
+      renderMacro();
+    };
+
+    const grid = document.getElementById("regionGrid");
+    grid.innerHTML = REGIONS.map((r) => {
+      const visibleNodes = r.nodes.filter(nodeVisible).filter(filterNodeTags);
+      const has = visibleNodes.length > 0;
+      const cls = r.unlocked ? (r.pulse && has ? "region pulse" : "region") : "region locked";
+      return `
+        <div class="${cls}" data-region="${r.id}">
+          <div class="name">${escapeHtml(r.name)}${r.unlocked && has ? " · 可探索目标 " + visibleNodes.length : ""}</div>
+          <div class="hint">${escapeHtml(r.hint)}</div>
+        </div>`;
+    }).join("");
+
+    grid.querySelectorAll(".region:not(.locked)").forEach((div) => {
+      div.addEventListener("click", () => {
+        const id = div.getAttribute("data-region");
+        const r = REGIONS.find((x) => x.id === id);
+        if (!r || !r.unlocked) return;
+        state.regionId = id;
+        renderRegion();
+        setView("region");
+      });
+    });
+
+    document.getElementById("backFromGlobal").onclick = () => {
+      state.weekEvent = null;
+      renderWeekStart();
+    };
+  }
+
+  function renderRegion() {
+    const r = REGIONS.find((x) => x.id === state.regionId);
+    const el = document.getElementById("view-region");
+    if (!r) return;
+
+    const list = r.nodes
+      .filter(nodeVisible)
+      .map((n) => {
+        const match = filterNodeTags(n);
+        const hiddenCls = n.kind === "hidden" ? "hidden-node" : "";
+        const deadline =
+          n.kind === "temp" && n.deadlineDay != null
+            ? `<span class="meta">截止：本回合第 ${n.deadlineDay} 天结束前完成首次调查</span>`
+            : "";
+        const chain = n.chain === "locked" ? `<span class="meta">未解锁：需完成链式前置</span>` : "";
+        const style = match ? "" : 'style="opacity:0.35"';
+        const diff = n.difficulty || "normal";
+        const diffZh = diff === "easy" ? "简单" : diff === "hard" ? "困难" : "普通";
+        return `
+          <div class="node ${hiddenCls}" data-node="${n.id}" ${style}>
+            <div>
+              <div style="display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap;">
+                <strong>${escapeHtml(n.name)}</strong>
+                <span class="badge ${n.kind === "permanent" ? "perm" : n.kind === "temp" ? "temp" : "hid"}">
+                  ${n.kind === "permanent" ? "常驻" : n.kind === "temp" ? "临时" : "隐藏"}
+                </span>
+                <span class="badge" style="color:var(--muted)">难度 ${diffZh}</span>
+              </div>
+              <div class="meta">耗时 ${n.days} 天 · 需求 ${Object.entries(n.need)
+                .map(([k, v]) => k + v)
+                .join(" / ")} · 对手骰 ${n.enemyAttr | 0}</div>
+              ${deadline}
+              ${chain}
+            </div>
+            <button type="button" class="primary" ${!match || n.chain === "locked" ? "disabled" : ""}>配置队伍</button>
+          </div>`;
+      })
+      .join("");
+
+    el.innerHTML = `
+      <h2>${escapeHtml(r.name)}</h2>
+      <p style="font-size:0.85rem;color:var(--muted);">检定为<strong>调查池</strong>（探索+洞察+诡思）与<strong>现场池</strong>（生存+理性）分别投骰；对手从已投骰子中随机作废。</p>
+      <div class="nodes">${list}</div>
+      <p><button type="button" id="backRegion">返回全球</button></p>
+    `;
+
+    el.querySelectorAll(".node").forEach((nodeEl) => {
+      const btn = nodeEl.querySelector("button.primary");
+      if (btn && !btn.disabled) {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const nid = nodeEl.getAttribute("data-node");
+          const n = r.nodes.find((x) => x.id === nid);
+          if (!n || n.chain === "locked") return;
+          state.mission = { regionId: r.id, ...n };
+          state.selectedStaffIds = [];
+          renderSetup();
+          setView("setup");
+        });
+      }
+    });
+
+    document.getElementById("backRegion").onclick = () => {
+      renderGlobal();
+      setView("global");
+    };
+  }
+
+  function renderSetup() {
+    const m = state.mission;
+    const el = document.getElementById("view-setup");
+    if (!m) return;
+
+    const needText = Object.entries(m.need)
+      .map(([k, v]) => `${k}≥${v}`)
+      .join("，");
+    const ok = meetsNeed(m.need, state.selectedStaffIds);
+    const prob = computeExplorationP(m, state.selectedStaffIds);
+    const { nA, nB, kA, kB } = prob;
+
+    el.innerHTML = `
+      <h2>探索配置 · ${escapeHtml(m.name)}</h2>
+      <p style="font-size:0.9rem;">需求（累计）：${needText}</p>
+      <p style="font-size:0.85rem;color:var(--muted);">
+        本节点难度：<strong>${m.difficulty === "easy" ? "简单" : m.difficulty === "hard" ? "困难" : "普通"}</strong>
+        · 单骰基础成功率 p<sub>0</sub>=${(DIFFICULTY_P[m.difficulty || "normal"] * 100).toFixed(1)}%
+        · 对手抵消 <strong>${m.enemyAttr | 0}</strong> 颗骰子（按两池比例分摊）
+      </p>
+      <div class="prob-box">
+        <div>调查池骰数 <strong>${nA}</strong>，成功次数需求 <strong>${kA}</strong> · P(A)≈${(prob.pA * 100).toFixed(1)}%</div>
+        <div>现场池骰数 <strong>${nB}</strong>，成功次数需求 <strong>${kB}</strong> · P(B)≈${(prob.pB * 100).toFixed(1)}%</div>
+        <div style="margin-top:0.35rem;">
+          理论档位：大成功 <strong>${(prob.pBig * 100).toFixed(1)}%</strong> · 小成功 <strong>${(prob.pSmall * 100).toFixed(1)}%</strong> · 双失败 <strong>${(prob.pBothFail * 100).toFixed(1)}%</strong>
+        </div>
+        <div style="margin-top:0.35rem;font-size:0.72rem;">事件修正后 p=${(prob.p * 100).toFixed(1)}%（已含门槛/临时/隐藏修正）${ok ? "" : " · 未满足门槛：p 额外 -15%"}</div>
+      </div>
+      <p style="font-size:0.85rem;margin-top:0.5rem;">表现模式：
+        <span class="mode-toggle" id="modeToggle">
+          <button type="button" data-mode="dice" class="${state.displayMode === "dice" ? "on" : ""}">骰子</button>
+          <button type="button" data-mode="numeric" class="${state.displayMode === "numeric" ? "on" : ""}">纯数值</button>
+        </span>
+        <span class="tip-inline">（随机逻辑相同，仅展示不同）</span>
+      </p>
+      <div class="cards" id="staffPick"></div>
+      <p class="row" style="margin-top:0.75rem;">
+        <button type="button" id="btnRun" class="primary" ${state.selectedStaffIds.length === 0 || m.days > state.day ? "disabled" : ""}>执行探索（-${m.days} 天）</button>
+        <button type="button" id="btnCancelSetup">返回区域</button>
+      </p>
+      ${m.days > state.day ? `<p style="color:var(--danger);font-size:0.85rem;">剩余天数不足。</p>` : ""}
+    `;
+
+    document.querySelectorAll("#modeToggle button").forEach((b) => {
+      b.onclick = () => {
+        state.displayMode = b.getAttribute("data-mode");
+        renderSetup();
+      };
+    });
+
+    const pick = document.getElementById("staffPick");
+    pick.innerHTML = STAFF.map((p) => {
+      const sel = state.selectedStaffIds.includes(p.id);
+      return `
+        <div class="card ${sel ? "selected" : ""}" data-staff="${p.id}">
+          <div class="t">${escapeHtml(p.name)}</div>
+          <dl>
+            <dt>探索</dt><dd>${p.探索}</dd>
+            <dt>生存</dt><dd>${p.生存}</dd>
+            <dt>洞察</dt><dd>${p.洞察}</dd>
+            <dt>诡思</dt><dd>${p.诡思}</dd>
+            <dt>理性</dt><dd>${p.理性}</dd>
+          </dl>
+        </div>`;
+    }).join("");
+
+    pick.querySelectorAll(".card").forEach((c) => {
+      c.addEventListener("click", () => {
+        const id = c.getAttribute("data-staff");
+        const i = state.selectedStaffIds.indexOf(id);
+        if (i >= 0) state.selectedStaffIds.splice(i, 1);
+        else {
+          if (state.selectedStaffIds.length >= 3) state.selectedStaffIds.shift();
+          state.selectedStaffIds.push(id);
+        }
+        renderSetup();
+      });
+    });
+
+    document.getElementById("btnRun").onclick = () => {
+      if (!state.mission || state.selectedStaffIds.length === 0) return;
+      if (state.mission.days > state.day) return;
+      runMission();
+    };
+
+    document.getElementById("btnCancelSetup").onclick = () => {
+      renderRegion();
+      setView("region");
+    };
+  }
+
+  function renderDiceRow(rolls, voidSet, label) {
+    if (!rolls.length) return `<div class="tip-inline">${label}：无骰</div>`;
+    const cells = rolls
+      .map((hit, i) => {
+        const v = voidSet.has(i);
+        const cls = v ? "die void" : hit ? "die hit" : "die miss";
+        const ch = v ? "—" : hit ? "✓" : "×";
+        return `<span class="${cls}" title="${v ? "作废" : hit ? "成功" : "失败"}">${ch}</span>`;
+      })
+      .join("");
+    return `<div class="dice-pool"><h3>${label}</h3><div class="dice-row">${cells}</div></div>`;
+  }
+
+  function runMission() {
+    const m = state.mission;
+    if (!m) return;
+    const check = runSplitCheck(m, state.selectedStaffIds);
+    state.lastCheck = check;
+    state.day -= m.days;
+
+    const tier = check.tier;
+    const lines = [];
+
+    if (tier === "大成功") {
+      macro.声望 = Math.min(100, macro.声望 + 6);
+      macro.公信 += m.tags.includes("sci") ? 4 : 0;
+      macro.诡名 += m.tags.includes("occult") ? 5 : 2;
+      if (m.kind === "hidden") macro.狂性 = Math.min(100, macro.狂性 + 4);
+      lines.push("大成功：调查与现场均达标，获得高质量线索与额外素材。");
+      state.clues.push({ title: m.name + " · 深度特稿素材", type: m.tags[0] || "pop", tier: 3 });
+    } else if (tier === "小成功") {
+      macro.声望 = Math.min(100, macro.声望 + 4);
+      macro.诡名 += 1;
+      lines.push("小成功：一侧达标，线索入库（档位介于深度与常规之间）。");
+      state.clues.push({ title: m.name + " · 常规稿件素材", type: m.tags[0] || "pop", tier: 2 });
+    } else if (tier === "失败") {
+      macro.声望 = Math.max(0, macro.声望 - 2);
+      lines.push("失败：双池均未达标，仅得碎片化信息。");
+      state.clues.push({ title: m.name + " · 碎片线索", type: m.tags[0] || "pop", tier: 1 });
+    } else {
+      macro.守序 = Math.max(0, macro.守序 - 3);
+      macro.狂性 = Math.min(100, macro.狂性 + 3);
+      lines.push("大失败：双池溃败且现场灾难性失控。守序下降，狂性上升。");
+    }
+
+    ["公信", "诡名", "声望", "守序", "狂性"].forEach((k) => {
+      macro[k] = Math.max(0, Math.min(100, macro[k]));
+    });
+
+    log(
+      `${m.name} → split 检定：调查命中 ${check.hitsA}/${check.nAe}（需≥${check.kA}）· 现场命中 ${check.hitsB}/${check.nBe}（需≥${check.kB}）→「${tier}」`
+    );
+
+    const el = document.getElementById("view-result");
+    const showDice = state.displayMode === "dice";
+
+    const diceBlock = showDice
+      ? `
+      <div class="dice-board">
+        <div class="phase-label">阶段 1：玩家投骰（✓ 成功 / × 失败）</div>
+        ${renderDiceRow(check.rollsA, new Set(), "调查池")}
+        ${renderDiceRow(check.rollsB, new Set(), "现场池")}
+        <div class="phase-label" style="margin-top:0.75rem;">阶段 2：对手随机作废 ${check.enemyAttr} 颗（不计入命中）</div>
+        ${renderDiceRow(check.rollsA, check.voidA, "调查池（作废后）")}
+        ${renderDiceRow(check.rollsB, check.voidB, "现场池（作废后）")}
+      </div>`
+      : `
+      <div class="prob-box" style="margin-top:0.5rem;">
+        纯数值模式省略骰面。最终：调查命中 <strong>${check.hitsA}</strong> / 有效骰 ${check.nAe}（需≥${check.kA}）；
+        现场命中 <strong>${check.hitsB}</strong> / 有效骰 ${check.nBe}（需≥${check.kB}）。
+      </div>`;
+
+    el.innerHTML = `
+      <h2>探索结算（骰子判定）</h2>
+      <p style="font-size:0.85rem;color:var(--muted);">单次检定 = 二项分布 · 对手抵消 = 随机作废 · 档位 = 双池是否分别达标（见 docs/骰子判定玩法_最终版.md §3.3）</p>
+      <div class="result-banner">${escapeHtml(tier)}</div>
+      ${diceBlock}
+      <p style="font-size:0.9rem;color:var(--muted);">${lines.map(escapeHtml).join("<br/>")}</p>
+      <p style="font-size:0.85rem;">剩余天数：<strong>${state.day}</strong></p>
+      <button type="button" class="primary" id="btnAfterResult">继续</button>
+    `;
+
+    document.getElementById("btnAfterResult").onclick = () => {
+      state.mission = null;
+      state.selectedStaffIds = [];
+      state.lastCheck = null;
+      renderMacro();
+      if (state.day <= 0) {
+        endWeek();
+      } else {
+        renderRegion();
+        setView("region");
+      }
+    };
+
+    setView("result");
+    renderMacro();
+  }
+
+  function endWeek() {
+    setView("publish");
+    const el = document.getElementById("view-publish");
+    const n = state.clues.length;
+    const base = 40 + macro.声望 * 0.35 + n * 8;
+    const sales = Math.round(base + Math.random() * 18);
+
+    el.innerHTML = `
+      <h2>发刊结算（极简）</h2>
+      <p style="font-size:0.9rem;">本期收集素材 <strong>${n}</strong> 条。剩余天数已用于编辑部排版与印刷（Demo 自动折算）。</p>
+      <ul style="font-size:0.88rem;color:var(--muted);padding-left:1.2rem;">
+        ${state.clues.map((c) => `<li>${escapeHtml(c.title)}（${TAG_LABEL[c.type] || "素材"} · T${c.tier}）</li>`).join("")}
+        ${n === 0 ? "<li>（无素材，销量承压）</li>" : ""}
+      </ul>
+      <p>模拟销量指数：<strong style="color:var(--gold);">${sales}</strong></p>
+      <p style="font-size:0.85rem;color:var(--muted);">下一周将刷新「回合起始」与临时节点。狂性不会自动下降。</p>
+      <button type="button" class="primary" id="btnNextWeek">进入下一周</button>
+    `;
+
+    macro.声望 = Math.min(100, macro.声望 + Math.min(5, Math.floor(n / 2)));
+
+    document.getElementById("btnNextWeek").onclick = () => {
+      state.week += 1;
+      state.day = 7;
+      state.clues = [];
+      state.weekEvent = null;
+      log("———— 新的一周 ————");
+      renderMacro();
+      renderWeekStart();
+    };
+  }
+
+  document.getElementById("btnEndWeek").onclick = () => {
+    if (state.view === "publish") return;
+    log("手动结束本周：剩余 " + state.day + " 天折算为编辑部工时。");
+    state.day = 0;
+    endWeek();
+  };
+
+  function tickHeader() {
+    document.getElementById("weekLabel").textContent = `第 ${state.week} 周`;
+    document.getElementById("dayLabel").textContent = `剩余 ${state.day} / 7 日`;
+  }
+
+  function init() {
+    renderMacro();
+    tickHeader();
+    setInterval(tickHeader, 500);
+    log("Demo 开始：探索使用「分别多属性检定」+ 对手作废骰子。可在配置页切换 纯数值/骰子 展示。");
+    renderWeekStart();
+  }
+
+  init();
+})();
+  </script>
+</body>
+</html>

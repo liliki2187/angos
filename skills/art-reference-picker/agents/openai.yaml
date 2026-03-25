@@ -1,0 +1,4 @@
+interface:
+  display_name: "Art Reference Picker"
+  short_description: "Select Angus-ready art refs from local image batches."
+  default_prompt: "Use $art-reference-picker to select local art reference images for Angus, explain why they fit the project, and optionally send each pick to Feishu."

@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="1480" viewBox="0 0 2200 1480">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5ead6" />
+      <stop offset="45%" stop-color="#eadcbf" />
+      <stop offset="100%" stop-color="#d7c29f" />
+    </linearGradient>
+    <linearGradient id="header" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#273043" />
+      <stop offset="100%" stop-color="#3e4c67" />
+    </linearGradient>
+    <linearGradient id="nodeA" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#324a5f" />
+      <stop offset="100%" stop-color="#233241" />
+    </linearGradient>
+    <linearGradient id="nodeB" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#81603c" />
+      <stop offset="100%" stop-color="#5f4428" />
+    </linearGradient>
+    <linearGradient id="panel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fffaf0" />
+      <stop offset="100%" stop-color="#f5ecd9" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#493422" flood-opacity="0.18" />
+    </filter>
+    <marker id="arrowDark" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto">
+      <path d="M0,0 L14,7 L0,14 Z" fill="#3a2d22" />
+    </marker>
+    <marker id="arrowGold" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto">
+      <path d="M0,0 L14,7 L0,14 Z" fill="#8a5e22" />
+    </marker>
+    <style>
+      .title { font: 700 54px 'Microsoft YaHei UI','Microsoft YaHei','PingFang SC','Segoe UI',sans-serif; fill: #fffaf1; }
+      .subtitle { font: 400 22px 'Microsoft YaHei UI','Microsoft YaHei','PingFang SC','Segoe UI',sans-serif; fill: #e7dccd; }
+      .section { font: 700 28px 'Microsoft YaHei UI','Microsoft YaHei','PingFang SC','Segoe UI',sans-serif; fill: #2c261f; }
+      .nodeTitle { font: 700 28px 'Microsoft YaHei UI','Microsoft YaHei','PingFang SC','Segoe UI',sans-serif; fill: #fff7ea; }
+      .nodeBody { font: 400 19px 'Microsoft YaHei UI','Microsoft YaHei','PingFang SC','Segoe UI',sans-serif; fill: #f2e7d4; }
+      .panelTitle { font: 700 24px 'Microsoft YaHei UI','Microsoft YaHei','PingFang SC','Segoe UI',sans-serif; fill: #2e2923; }
+      .panelText { font: 400 18px 'Microsoft YaHei UI','Microsoft YaHei','PingFang SC','Segoe UI',sans-serif; fill: #44392e; }
+      .smallCaps { font: 700 18px 'Microsoft YaHei UI','Microsoft YaHei','PingFang SC','Segoe UI',sans-serif; fill: #6c5435; letter-spacing: 1px; }
+      .arrowText { font: 700 18px 'Microsoft YaHei UI','Microsoft YaHei','PingFang SC','Segoe UI',sans-serif; fill: #65451d; }
+      .loopText { font: 700 20px 'Microsoft YaHei UI','Microsoft YaHei','PingFang SC','Segoe UI',sans-serif; fill: #3e3428; }
+    </style>
+  </defs>
+
+  <rect width="2200" height="1480" fill="url(#bg)" />
+  <rect x="48" y="40" width="2104" height="126" rx="30" fill="url(#header)" filter="url(#shadow)" />
+  <text x="98" y="115" class="title">Angus 整体游戏流程图</text>
+  <text x="98" y="150" class="subtitle">当前主设计基线：回合起始 → 探索 → 事件检定 → 线索入库 → 编辑组版 → 经济结算 → 下一周</text>
+
+  <rect x="60" y="214" width="312" height="1188" rx="30" fill="url(#panel)" stroke="#b59464" stroke-width="3" filter="url(#shadow)" />
+  <text x="92" y="280" class="section">长期状态层</text>
+  <text x="92" y="322" class="smallCaps">WEEKLY STATE</text>
+  <text x="92" y="392" class="panelTitle">跨周保留</text>
+  <text x="92" y="432" class="panelText">• 周序号 week 与剩余天数 day</text>
+  <text x="92" y="468" class="panelText">• 周刊五维：公信 / 诡名 / 声望 / 守序 / 狂性</text>
+  <text x="92" y="504" class="panelText">• 订阅数、编辑定位 editorialProfile</text>
+  <text x="92" y="540" class="panelText">• 已解锁区域、剧情标记、势力状态</text>
+  <text x="92" y="610" class="panelTitle">周内临时</text>
+  <text x="92" y="650" class="panelText">• 随机简报与临时探索节点</text>
+  <text x="92" y="686" class="panelText">• 当周线索池 / 故事库</text>
+  <text x="92" y="722" class="panelText">• 临时污染、风险与调查结果</text>
+  <text x="92" y="792" class="panelTitle">设计约束</text>
+  <text x="92" y="832" class="panelText">• 规则以 Godot 统一状态为中心</text>
+  <text x="92" y="868" class="panelText">• 不再让网页原型与游戏逻辑长期分叉</text>
+  <text x="92" y="904" class="panelText">• 所有阶段都要能回写或消费这层状态</text>
+
+  <rect x="432" y="214" width="1680" height="1188" rx="30" fill="#fdf9ef" stroke="#bea06f" stroke-width="3" filter="url(#shadow)" />
+  <text x="476" y="280" class="section">周循环主流程</text>
+  <text x="476" y="322" class="smallCaps">CORE LOOP</text>
+
+  <g filter="url(#shadow)">
+    <rect x="486" y="380" width="288" height="204" rx="28" fill="url(#nodeA)" />
+    <text x="520" y="440" class="nodeTitle">1. 回合起始</text>
+    <text x="520" y="482" class="nodeBody">刷新周简报、势力提示</text>
+    <text x="520" y="516" class="nodeBody">生成临时节点与目标压力</text>
+    <text x="520" y="550" class="nodeBody">初始化本周可操作资源</text>
+
+    <rect x="844" y="380" width="288" height="204" rx="28" fill="url(#nodeA)" />
+    <text x="878" y="440" class="nodeTitle">2. 全球 / 区域探索</text>
+    <text x="878" y="482" class="nodeBody">选择区域、筛选线索方向</text>
+    <text x="878" y="516" class="nodeBody">查看常驻 / 临时 / 隐藏节点</text>
+    <text x="878" y="550" class="nodeBody">消耗天数并决定派遣策略</text>
+
+    <rect x="1202" y="380" width="288" height="204" rx="28" fill="url(#nodeA)" />
+    <text x="1236" y="440" class="nodeTitle">3. 派遣与事件检定</text>
+    <text x="1236" y="482" class="nodeBody">1-3 名职员执行节点任务</text>
+    <text x="1236" y="516" class="nodeBody">使用 single / combined / split</text>
+    <text x="1236" y="550" class="nodeBody">对手抵消影响最终成功档位</text>
+
+    <rect x="1560" y="380" width="288" height="204" rx="28" fill="url(#nodeB)" />
+    <text x="1594" y="440" class="nodeTitle">4. 线索入库</text>
+    <text x="1594" y="482" class="nodeBody">产出 title / type / tier</text>
+    <text x="1594" y="516" class="nodeBody">记录来源区域与风险标签</text>
+    <text x="1594" y="550" class="nodeBody">累计当周线索池</text>
+
+    <rect x="486" y="770" width="288" height="204" rx="28" fill="url(#nodeB)" />
+    <text x="520" y="830" class="nodeTitle">5. 线索转故事</text>
+    <text x="520" y="872" class="nodeBody">type 映射题材标签</text>
+    <text x="520" y="906" class="nodeBody">tier 映射质量与 baseValue</text>
+    <text x="520" y="940" class="nodeBody">系统补足 filler 稿件</text>
+
+    <rect x="844" y="770" width="288" height="204" rx="28" fill="url(#nodeB)" />
+    <text x="878" y="830" class="nodeTitle">6. 编辑部组版</text>
+    <text x="878" y="872" class="nodeBody">固定 6 版位拖拽排版</text>
+    <text x="878" y="906" class="nodeBody">实时预览收益、偏科与连携</text>
+    <text x="878" y="940" class="nodeBody">避免空版与低质量组合</text>
+
+    <rect x="1202" y="770" width="288" height="204" rx="28" fill="url(#nodeA)" />
+    <text x="1236" y="830" class="nodeTitle">7. 经济结算</text>
+    <text x="1236" y="872" class="nodeBody">统计 demand、sold、profit</text>
+    <text x="1236" y="906" class="nodeBody">结算广告、订阅、成本</text>
+    <text x="1236" y="940" class="nodeBody">计算 mQuality / mBalance 等乘数</text>
+
+    <rect x="1560" y="770" width="288" height="204" rx="28" fill="url(#nodeA)" />
+    <text x="1594" y="830" class="nodeTitle">8. 下一周开始</text>
+    <text x="1594" y="872" class="nodeBody">回写订阅、属性与解锁状态</text>
+    <text x="1594" y="906" class="nodeBody">清空周内临时线索与故事库</text>
+    <text x="1594" y="940" class="nodeBody">进入新的调查与发行循环</text>
+  </g>
+
+  <path d="M774 482 H832" stroke="#3a2d22" stroke-width="6" fill="none" marker-end="url(#arrowDark)" />
+  <path d="M1132 482 H1190" stroke="#3a2d22" stroke-width="6" fill="none" marker-end="url(#arrowDark)" />
+  <path d="M1490 482 H1548" stroke="#3a2d22" stroke-width="6" fill="none" marker-end="url(#arrowDark)" />
+  <path d="M1704 596 V656 C1704 684 1682 706 1656 706 H678 C650 706 630 726 630 756" stroke="#8a5e22" stroke-width="6" fill="none" marker-end="url(#arrowGold)" />
+  <path d="M774 872 H832" stroke="#3a2d22" stroke-width="6" fill="none" marker-end="url(#arrowDark)" />
+  <path d="M1132 872 H1190" stroke="#3a2d22" stroke-width="6" fill="none" marker-end="url(#arrowDark)" />
+  <path d="M1490 872 H1548" stroke="#3a2d22" stroke-width="6" fill="none" marker-end="url(#arrowDark)" />
+  <path d="M1704 990 V1088 C1704 1142 1660 1186 1606 1186 H694 C640 1186 596 1142 596 1088 V1006" stroke="#6f5537" stroke-width="6" fill="none" marker-end="url(#arrowDark)" />
+
+  <text x="1260" y="696" class="arrowText">天数耗尽或主动收束后进入编辑阶段</text>
+  <text x="1102" y="1236" class="loopText">周结算结果回写长期状态，并成为下一周探索与发行的输入</text>
+
+  <rect x="486" y="1080" width="442" height="242" rx="26" fill="url(#panel)" stroke="#b69056" stroke-width="3" />
+  <text x="522" y="1140" class="panelTitle">探索阶段关键输入 / 输出</text>
+  <text x="522" y="1180" class="panelText">输入：区域解锁、职员属性、节点需求、难度与敌方对抗值</text>
+  <text x="522" y="1216" class="panelText">输出：线索 title / type / tier、风险标记、属性变化</text>
+  <text x="522" y="1252" class="panelText">目标：把“外采现场”稳定喂给编辑部，而不是停在独立原型</text>
+
+  <rect x="962" y="1080" width="442" height="242" rx="26" fill="url(#panel)" stroke="#b69056" stroke-width="3" />
+  <text x="998" y="1140" class="panelTitle">编辑与结算关键指标</text>
+  <text x="998" y="1180" class="panelText">版位：front-main / front-side / feature / inner</text>
+  <text x="998" y="1216" class="panelText">中间量：totalBaseValue、uniqueTags、combo、三轴占比</text>
+  <text x="998" y="1252" class="panelText">结果：销量、订阅、广告、利润、editorialProfile</text>
+
+  <rect x="1438" y="1080" width="410" height="242" rx="26" fill="url(#panel)" stroke="#b69056" stroke-width="3" />
+  <text x="1474" y="1140" class="panelTitle">当前 Godot 落地优先级</text>
+  <text x="1474" y="1180" class="panelText">1. 统一状态层与周循环骨架</text>
+  <text x="1474" y="1216" class="panelText">2. 探索节点接入现有事件检定</text>
+  <text x="1474" y="1252" class="panelText">3. 线索转故事 + 固定 6 槽组版 + 结算</text>
+  <text x="1474" y="1288" class="panelText">4. 再逐步配置化与扩内容</text>
+</svg>

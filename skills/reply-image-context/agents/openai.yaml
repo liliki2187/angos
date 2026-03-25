@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reply Image Context"
+  short_description: "Use replied-message images in IM bridge tasks."
+  default_prompt: "Use $reply-image-context to handle an image task that refers to a replied IM message and work from the downloaded local image files."

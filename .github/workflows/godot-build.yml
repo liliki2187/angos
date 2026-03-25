@@ -1,0 +1,61 @@
+name: Godot Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Windows
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.3
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download export templates
+        run: |
+          wget -q https://github.com/godotengine/godot-builds/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz -O /tmp/templates.tpz
+          unzip -o /tmp/templates.tpz -d /tmp/tpl
+          TPL_DIR="${HOME}/.local/share/godot/export_templates/4.3.stable"
+          mkdir -p "$TPL_DIR"
+          cp -v /tmp/tpl/templates/* "$TPL_DIR"/
+
+      - name: Make Windows preset CI-safe
+        run: |
+          if [ ! -f export_presets.cfg ]; then
+            echo "::error::export_presets.cfg not found"
+            exit 1
+          fi
+          tmp_file="/tmp/export_presets.ci.cfg"
+          : > "$tmp_file"
+          while IFS= read -r line || [ -n "$line" ]; do
+            case "$line" in
+              application/*) ;;
+              *) printf '%s\n' "$line" >> "$tmp_file" ;;
+            esac
+          done < export_presets.cfg
+          mv "$tmp_file" export_presets.cfg
+
+      - name: Build Windows (release + debug)
+        run: |
+          mkdir -p build/release build/debug
+          godot --headless --export-release "Windows Desktop" build/release/Angus.exe
+          godot --headless --export-debug "Windows Desktop" build/debug/Angus.exe
+          echo "=== build/debug files ==="
+          ls -la build/debug
+          if ! ls build/debug/*console*.exe >/dev/null 2>&1; then
+            echo "::warning::No Windows console wrapper found in debug export."
+          fi
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Build-Windows
+          path: build/
+          retention-days: 14

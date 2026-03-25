@@ -1,0 +1,2746 @@
+(function () {
+  "use strict";
+
+  const DIFFICULTY_P = { easy: 0.6, normal: 0.5, hard: 1 / 3 };
+  const macro = { 公信: 42, 诡名: 38, 声望: 45, 守序: 48, 狂性: 22 };
+
+  const state = {
+    week: 1,
+    day: 7,
+    view: "weekStart",
+    regionId: null,
+    mission: null,
+    selectedStaffIds: [],
+    clues: [],
+    pendingClues: [],
+    pendingReports: [],
+    log: [],
+    filters: { sci: true, occult: true, pop: true },
+    weekEvent: null,
+    displayMode: "dice",
+    lastCheck: null,
+    phase: "explore",
+    stories: [],
+    placed: {},
+    subscribers: 1200,
+    editorialProfile: 0,
+    nextStoryId: 1,
+    draggingStoryId: null,
+    lastReplaceAction: null,
+    undoTimer: null,
+    baseDemand: 3200,
+    coverPrice: 0.3,
+    adSlots: 2,
+    adMatchBase: 0.6,
+    paperPackCost: 210,
+    salaryCost: 980,
+    opsCost: 260,
+    printCapacity: 4200,
+    subUnitValue: 0.18,
+    synthTab: "phenomenon",
+    synthRecipe: "r1",
+    synthSelection: [],
+    synthPollution: 0,
+    phenomenonCards: [],
+    intelCards: [],
+    cognitionCards: [],
+    toolCards: [],
+    craftedReports: [],
+    nextCardId: 1,
+    weekEventResolved: false,
+    staffEffects: [],
+    dynamicNodes: [],
+    debugShowEventEffects: false,
+    weekEventResult: "",
+    regionLeadEvents: {},
+    missionResolving: false,
+    regionLinkedTarget: null,
+    activeMissions: [],
+    todayResolutionQueue: [],
+    processingDayTick: false,
+    dayResolutionInfo: null,
+    paperLayoutMode: "fixed",
+    paperLabMode: false,
+    paperVisualMode: "normal",
+  };
+
+  const TAGS = ["Politics", "Military", "Economy", "Sport", "Gossip", "Pets", "Humor", "Shopping"];
+  const QUALITY = [
+    { key: "Bronze", value: 150 },
+    { key: "Silver", value: 300 },
+    { key: "Gold", value: 450 },
+  ];
+  const NEGATIVE_TYPES = ["sloppy_writing", "thin_source", "late_edit", "bias_overreach", "fabrication"];
+  const LOCATIONS = ["曼哈顿", "布鲁克林", "皇后区", "布朗克斯", "华尔街", "港口区", "市政厅", "唐人街"];
+  const ORGS = ["市议会", "警署", "港务局", "联邦调查局", "工商总会", "市政厅", "消防总队", "联邦法院"];
+  const SUBJECTS = {
+    Politics: ["预算案", "选举资金", "政务听证", "议会表决", "市政采购"],
+    Military: ["边境演训", "军备采购", "驻防调整", "联合作战", "国防听证"],
+    Economy: ["失业数据", "工厂裁员", "商贸指数", "税收政策", "物价走势"],
+    Sport: ["职业联赛", "主场改造", "球员转会", "拳击挑战赛", "青训计划"],
+    Gossip: ["名流绯闻", "晚宴风波", "婚约传闻", "社交圈密谈", "明星合约"],
+    Pets: ["流浪犬收容", "宠物医疗", "猫狗领养潮", "宠物用品短缺", "社区遛犬纠纷"],
+    Humor: ["讽刺专栏", "街头趣闻", "本周笑料", "漫画连载", "荒诞榜单"],
+    Shopping: ["百货促销", "新品抢购", "消费榜单", "折扣季", "商场扩建"],
+  };
+  const ACTIONS = ["引发争议", "进入调查", "通过审议", "宣布升级", "出现反转", "再起波澜", "确认落地", "紧急叫停"];
+  const PUBLIC_AFFAIRS = new Set(["Politics", "Military", "Economy"]);
+  const MASS_APPEAL = new Set(["Sport", "Shopping"]);
+  const LIFESTYLE_LIGHT = new Set(["Gossip", "Pets", "Humor"]);
+
+  const slots = [
+    { id: "front-main", name: "头版头条", weight: 1.0, desc: "最高曝光，约 3.0x" },
+    { id: "front-side", name: "头版次条", weight: 0.7, desc: "高曝光，约 2.4x" },
+    { id: "feature-1", name: "重点专题 A", weight: 0.45, desc: "中高曝光，约 1.9x" },
+    { id: "feature-2", name: "重点专题 B", weight: 0.4, desc: "中高曝光，约 1.8x" },
+    { id: "inner-1", name: "内页 A", weight: 0.2, desc: "标准曝光，约 1.4x" },
+    { id: "inner-2", name: "内页 B", weight: 0.2, desc: "标准曝光，约 1.4x" },
+  ];
+
+  state.placed = Object.fromEntries(slots.map((s) => [s.id, null]));
+
+  const REGIONS = [
+    {
+      id: "us",
+      name: "北美禁区带",
+      unlocked: true,
+      pulse: false,
+      hint: "初始解锁。都市传说与禁区并存。",
+      nodes: [
+        { id: "n51", kind: "permanent", name: "51 区外围公路", days: 2, need: { 探索: 4, 生存: 2 }, tags: ["sci", "pop"], difficulty: "normal", enemyAttr: 2, chain: null },
+        { id: "skin", kind: "permanent", name: "罗斯威尔档案残页", days: 1, need: { 探索: 3, 洞察: 3 }, tags: ["sci", "occult"], difficulty: "normal", enemyAttr: 1, chain: null },
+        { id: "temp_ufo", kind: "temp", name: "突发：雷达异常光点", days: 2, need: { 探索: 5, 生存: 3 }, tags: ["sci", "pop"], deadlineDay: 4, difficulty: "hard", enemyAttr: 3, chain: null },
+        {
+          id: "hidden_gate",
+          kind: "hidden",
+          name: "灵视：黑色方尖碑的回声",
+          days: 3,
+          need: { 探索: 4, 诡思: 4, 生存: 2 },
+          tags: ["occult"],
+          difficulty: "normal",
+          enemyAttr: 4,
+          unlock: (m) => m.狂性 >= 35 && m.诡名 >= 40,
+          chain: null,
+        },
+      ],
+    },
+    {
+      id: "east_asia",
+      name: "东亚神秘地带",
+      unlocked: false,
+      pulse: false,
+      hint: "需要：声望≥55 或 完成「罗斯威尔档案残页」。",
+      nodes: [
+        { id: "shen", kind: "permanent", name: "神农架毛发样本采集", days: 3, need: { 探索: 5, 生存: 4 }, tags: ["sci", "pop"], difficulty: "hard", enemyAttr: 3, chain: null },
+        { id: "chainA", kind: "permanent", name: "模糊：未解锁的链式线索", days: 2, need: { 探索: 6, 洞察: 4 }, tags: ["sci"], difficulty: "normal", enemyAttr: 2, chain: "locked", chainTitle: "链式调查 · 第二阶段" },
+      ],
+    },
+    {
+      id: "pacific",
+      name: "太平洋岛屿群",
+      unlocked: false,
+      pulse: false,
+      hint: "需要：公信≥60（观测合作）或 守序≥60（许可）。",
+      nodes: [{ id: "easter", kind: "permanent", name: "复活节岛石像热异常", days: 3, need: { 探索: 4, 理性: 3 }, tags: ["sci"], difficulty: "normal", enemyAttr: 2, chain: null }],
+    },
+  ];
+  const REGION_MAP_POS = {
+    us: { x: 20, y: 35, label: "北美禁区带" },
+    east_asia: { x: 78, y: 44, label: "东亚神秘地带" },
+    pacific: { x: 56, y: 54, label: "太平洋岛屿群" },
+  };
+  const NODE_MAP_POS = {
+    us: { n51: { x: 22, y: 28 }, skin: { x: 54, y: 46 }, temp_ufo: { x: 73, y: 25 }, hidden_gate: { x: 67, y: 70 } },
+    east_asia: { shen: { x: 32, y: 40 }, chainA: { x: 68, y: 58 } },
+    pacific: { easter: { x: 48, y: 46 } },
+  };
+  function makeAvatar(label, c1, c2) {
+    const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 180'>
+      <defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop stop-color='${c1}'/><stop offset='1' stop-color='${c2}'/></linearGradient></defs>
+      <rect width='240' height='180' fill='url(#g)'/>
+      <circle cx='120' cy='72' r='28' fill='rgba(255,255,255,0.82)'/>
+      <rect x='68' y='106' width='104' height='44' rx='18' fill='rgba(255,255,255,0.72)'/>
+      <text x='120' y='166' text-anchor='middle' font-size='18' fill='#0b1220' font-family='Segoe UI,Arial'>${label}</text>
+    </svg>`;
+    return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+  }
+
+  const STAFF = [
+    { id: "s1", name: "外勤·阿黎", avatar: makeAvatar("外勤·阿黎", "#1d4ed8", "#0ea5e9"), 探索: 3, 生存: 2, 洞察: 2, 诡思: 1, 理性: 2 },
+    { id: "s2", name: "调查·老魏", avatar: makeAvatar("调查·老魏", "#14532d", "#22c55e"), 探索: 2, 生存: 3, 洞察: 3, 诡思: 0, 理性: 3 },
+    { id: "s3", name: "神秘版·伊芙", avatar: makeAvatar("神秘版·伊芙", "#4c1d95", "#a855f7"), 探索: 1, 生存: 1, 洞察: 2, 诡思: 4, 理性: 1 },
+    { id: "s4", name: "实习生·小赵", avatar: makeAvatar("实习生·小赵", "#7c2d12", "#f97316"), 探索: 2, 生存: 1, 洞察: 1, 诡思: 1, 理性: 2 },
+    { id: "s5", name: "档案员·沈墨", avatar: makeAvatar("档案员·沈墨", "#0f766e", "#14b8a6"), 探索: 1, 生存: 1, 洞察: 4, 诡思: 1, 理性: 3 },
+    { id: "s6", name: "摄影师·鲁卡", avatar: makeAvatar("摄影师·鲁卡", "#4338ca", "#6366f1"), 探索: 3, 生存: 2, 洞察: 2, 诡思: 1, 理性: 2 },
+    { id: "s7", name: "联络员·宁言", avatar: makeAvatar("联络员·宁言", "#7f1d1d", "#ef4444"), 探索: 2, 生存: 2, 洞察: 3, 诡思: 0, 理性: 3 },
+    { id: "s8", name: "法医顾问·白鹿", avatar: makeAvatar("法医顾问·白鹿", "#374151", "#9ca3af"), 探索: 1, 生存: 2, 洞察: 3, 诡思: 2, 理性: 4 },
+  ];
+
+  const TAG_LABEL = { sci: "科学纪实", occult: "神秘玄学", pop: "世俗流量" };
+  const TYPE_TO_TAG = { sci: "Politics", occult: "Gossip", pop: "Shopping" };
+  const COGNITION_NAME_POOL = ["局部重力异常假说", "群体记忆偏移假说", "生态能量流理论", "低频共振干预理论", "时空弯曲第一法则", "超个体意识假说"];
+  const TOOL_NAME_POOL = ["DNA测序工具组", "光谱分析仪", "口述档案检索器", "夜视相机组"];
+  const ROLL_FACES = ["✓", "×", "?", "", "", ""];
+
+  const el = {
+    synInventory: null,
+    synSlotPreview: null,
+    synReports: null,
+    synthesisHint: null,
+    storyList: null,
+    slotList: null,
+    liveStats: null,
+    resultBox: null,
+    toast: null,
+  };
+
+  function clamp(v, a, b) {
+    return Math.max(a, Math.min(b, v));
+  }
+  function rand(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+  function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  function fmtMoney(v) {
+    return `${v >= 0 ? "+" : ""}$${Math.round(v).toLocaleString("zh-CN")}`;
+  }
+
+  function addMacro(delta) {
+    Object.keys(delta || {}).forEach((k) => {
+      if (typeof macro[k] !== "number") return;
+      macro[k] = clamp(macro[k] + delta[k], 0, 100);
+    });
+  }
+
+  function addStaffEffect(staffId, stat, delta, duration, isPermanent) {
+    state.staffEffects.push({
+      id: `se_${Date.now()}_${Math.floor(Math.random() * 1e6)}`,
+      staffId,
+      stat,
+      delta,
+      duration: isPermanent ? "permanent" : duration || "week",
+      startWeek: state.week,
+    });
+  }
+
+  function cleanupWeekScopedEffects() {
+    state.staffEffects = state.staffEffects.filter((e) => e.duration === "permanent" || e.startWeek >= state.week);
+    state.dynamicNodes = state.dynamicNodes.filter((x) => x.expireWeek >= state.week);
+  }
+
+  function getStaffValue(person, stat) {
+    let v = person[stat] || 0;
+    for (const eff of state.staffEffects) {
+      if (eff.staffId === person.id && eff.stat === stat) v += eff.delta;
+    }
+    return Math.max(0, v);
+  }
+
+  function addDynamicNode(regionId, node, durationWeeks) {
+    state.dynamicNodes.push({
+      regionId,
+      expireWeek: state.week + Math.max(0, (durationWeeks || 1) - 1),
+      node: { ...node },
+    });
+  }
+
+  function getRegionNodes(region) {
+    const dyn = state.dynamicNodes.filter((x) => x.regionId === region.id).map((x) => x.node);
+    return [...region.nodes, ...dyn];
+  }
+
+  function initRegionLeadEvents() {
+    state.regionLeadEvents = {};
+    for (const r of REGIONS) {
+      const pool = [
+        {
+          id: `lead_${r.id}_${state.week}_1`,
+          title: `${r.name} 民间传言：异常目击`,
+          reliability: 0.52,
+          investigated: false,
+          assigned: false,
+          result: "",
+          spawn: () => ({
+            id: `leadnode_${r.id}_${state.week}_1`,
+            kind: "temp",
+            name: `线索追查：${r.name}临时异动`,
+            days: 2,
+            need: { 探索: 4, 洞察: 3 },
+            tags: ["pop", "occult"],
+            difficulty: "normal",
+            enemyAttr: 2,
+            deadlineDay: 4,
+            chain: null,
+          }),
+          durationWeeks: 1,
+        },
+        {
+          id: `lead_${r.id}_${state.week}_2`,
+          title: `${r.name} 非正式研究记录`,
+          reliability: 0.65,
+          investigated: false,
+          assigned: false,
+          result: "",
+          spawn: () => ({
+            id: `leadnode_${r.id}_${state.week}_2`,
+            kind: "permanent",
+            name: `新常驻：${r.name}研究遗址`,
+            days: 3,
+            need: { 探索: 5, 理性: 3 },
+            tags: ["sci"],
+            difficulty: "hard",
+            enemyAttr: 3,
+            chain: null,
+          }),
+          durationWeeks: 6,
+        },
+      ];
+      state.regionLeadEvents[r.id] = [rand(pool)];
+    }
+  }
+
+  function investigateRegionLead(regionId, leadId) {
+    const leads = state.regionLeadEvents[regionId] || [];
+    const lead = leads.find((x) => x.id === leadId);
+    if (!lead || lead.investigated || state.missionResolving || state.processingDayTick) return;
+    if (lead.assigned) {
+      const queued = findActiveMissionByLead(regionId, leadId);
+      if (queued) openQueuedMission(queued);
+      return;
+    }
+    state.mission = {
+      id: `lead_mission_${lead.id}`,
+      kind: "lead",
+      missionType: "leadInvestigation",
+      regionId,
+      leadId: lead.id,
+      name: `线索调查：${lead.title}`,
+      days: lead.days || 2,
+      need: lead.need || { 探索: 4, 洞察: 3 },
+      tags: lead.tags || ["sci", "occult"],
+      difficulty: lead.difficulty || (lead.reliability >= 0.65 ? "normal" : "hard"),
+      enemyAttr: lead.enemyAttr != null ? lead.enemyAttr : (lead.reliability >= 0.65 ? 2 : 3),
+      chain: null,
+    };
+    lead.assigned = true;
+    state.selectedStaffIds = [];
+    renderSetup();
+    setView("setup");
+  }
+
+  function log(msg) {
+    state.log.unshift(`[第${state.week}周 余${state.day}日] ${msg}`);
+    if (state.log.length > 40) state.log.pop();
+    const logEl = document.getElementById("log");
+    if (logEl) logEl.innerHTML = state.log.map((t) => `<p>${escapeHtml(t)}</p>`).join("");
+  }
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function renderMacro() {
+    const elM = document.getElementById("macro");
+    if (!elM) return;
+    const keys = ["公信", "诡名", "声望", "守序", "狂性"];
+    elM.innerHTML = keys.map((k) => `<div class="stat"><b>${k}</b><span>${macro[k]}</span></div>`).join("");
+  }
+
+  function setView(name) {
+    state.view = name;
+    ["weekStart", "global", "region", "setup", "result"].forEach((v) => {
+      const node = document.getElementById("view-" + v);
+      if (node) node.classList.toggle("hidden", v !== name);
+    });
+  }
+
+  function binomialPAtLeast(n, p, k) {
+    if (k <= 0) return 1;
+    if (k > n) return 0;
+    let sum = 0;
+    for (let x = k; x <= n; x++) sum += binomialPMF(n, p, x);
+    return clamp(sum, 0, 1);
+  }
+  function binomialPMF(n, p, x) {
+    if (x < 0 || x > n) return 0;
+    return binom(n, x) * Math.pow(p, x) * Math.pow(1 - p, n - x);
+  }
+  function binom(n, k) {
+    if (k < 0 || k > n) return 0;
+    k = Math.min(k, n - k);
+    let r = 1;
+    for (let i = 1; i <= k; i++) r = (r * (n - k + i)) / i;
+    return r;
+  }
+
+  function meetsNeed(need, staffList) {
+    const sum = staffSum(staffList);
+    return Object.keys(need).every((k) => (sum[k] || 0) >= need[k]);
+  }
+  function staffSum(staffList) {
+    const sum = {};
+    staffList.forEach((id) => {
+      const p = STAFF.find((x) => x.id === id);
+      if (!p) return;
+      ["探索", "生存", "洞察", "诡思", "理性"].forEach((k) => {
+        sum[k] = (sum[k] || 0) + getStaffValue(p, k);
+      });
+    });
+    return sum;
+  }
+  function poolSizes(staffList) {
+    const s = staffSum(staffList);
+    return { nA: (s.探索 || 0) + (s.洞察 || 0) + (s.诡思 || 0), nB: (s.生存 || 0) + (s.理性 || 0) };
+  }
+  function needThresholds(need) {
+    return { kA: (need.探索 || 0) + (need.洞察 || 0) + (need.诡思 || 0), kB: (need.生存 || 0) + (need.理性 || 0) };
+  }
+
+  function computeExplorationP(mission, staffList) {
+    const pBase = DIFFICULTY_P[mission.difficulty || "normal"] ?? 0.5;
+    let deltaP = 0;
+    if (!meetsNeed(mission.need, staffList)) deltaP -= 0.15;
+    if (mission.kind === "temp" && state.day < (mission.deadlineDay || 0)) deltaP += 0.05;
+    if (mission.kind === "hidden") deltaP -= 0.05;
+    const p = clamp(pBase + deltaP, 0, 1);
+    const { nA, nB } = poolSizes(staffList);
+    const { kA, kB } = needThresholds(mission.need);
+    const enemyAttr = mission.enemyAttr | 0;
+    const nTot = nA + nB;
+    const enemyA = nTot > 0 ? Math.floor((enemyAttr * nA) / nTot) : 0;
+    const enemyB = enemyAttr - enemyA;
+    const nAe = Math.max(0, nA - enemyA);
+    const nBe = Math.max(0, nB - enemyB);
+    function passProb(n, k) {
+      if (k <= 0) return 1;
+      if (n <= 0) return 0;
+      return binomialPAtLeast(n, p, k);
+    }
+    const pA = passProb(nAe, kA);
+    const pB = passProb(nBe, kB);
+    return {
+      p,
+      pBase,
+      deltaP,
+      nA,
+      nB,
+      kA,
+      kB,
+      enemyAttr,
+      enemyA,
+      enemyB,
+      nAe,
+      nBe,
+      pA,
+      pB,
+      pBig: pA * pB,
+      pSmall: pA * (1 - pB) + (1 - pA) * pB,
+      pBothFail: (1 - pA) * (1 - pB),
+    };
+  }
+
+  function pickRandomIndices(len, count) {
+    const arr = Array.from({ length: len }, (_, i) => i);
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return new Set(arr.slice(0, Math.min(count, len)));
+  }
+
+  function runSplitCheck(mission, staffList) {
+    const meta = computeExplorationP(mission, staffList);
+    const p = meta.p;
+    const { nA, nB } = poolSizes(staffList);
+    const { kA, kB } = needThresholds(mission.need);
+    const enemyAttr = mission.enemyAttr | 0;
+    const nTot = nA + nB;
+    const enemyA = nTot > 0 ? Math.floor((enemyAttr * nA) / nTot) : 0;
+    const enemyB = enemyAttr - enemyA;
+    const rollHit = () => Math.random() < p;
+    const rollsA = Array.from({ length: nA }, rollHit);
+    const rollsB = Array.from({ length: nB }, rollHit);
+    const voidA = pickRandomIndices(nA, enemyA);
+    const voidB = pickRandomIndices(nB, enemyB);
+    let hitsA = 0;
+    for (let i = 0; i < nA; i++) if (!voidA.has(i) && rollsA[i]) hitsA++;
+    let hitsB = 0;
+    for (let i = 0; i < nB; i++) if (!voidB.has(i) && rollsB[i]) hitsB++;
+    const passA = kA <= 0 ? true : hitsA >= kA;
+    const passB = kB <= 0 ? true : hitsB >= kB;
+    let tier;
+    if (passA && passB) tier = "大成功";
+    else if (passA || passB) tier = "小成功";
+    else {
+      const totalHits = hitsA + hitsB;
+      const needSum = kA + kB;
+      tier = nA + nB >= 4 && totalHits <= 1 && needSum >= 4 ? "大失败" : "失败";
+    }
+    return { ...meta, hitsA, hitsB, passA, passB, tier, rollsA, rollsB, voidA, voidB, enemyA, enemyB };
+  }
+
+  function pickWeekEvent() {
+    const pool = [
+      {
+        id: "evt_passive_tipoff",
+        type: "passive",
+        title: "线人爆料",
+        body: "匿名线人送来一份禁区坐标碎片，你的编辑部获得了额外线索。",
+        condition: () => true,
+        apply: () => {
+          state.clues.push({ title: "匿名坐标碎片 · 临时线索", type: "occult", tier: 1 });
+          addMacro({ 诡名: 1 });
+          log("随机事件：获得临时线索「匿名坐标碎片」。");
+        },
+      },
+      {
+        id: "evt_passive_grant",
+        type: "passive",
+        title: "学术资助",
+        body: "公信较高引来研究基金，本周调查组状态提升。",
+        condition: () => macro.公信 >= 55,
+        apply: () => {
+          addMacro({ 公信: 2, 声望: 1 });
+          addStaffEffect("s2", "洞察", 1, "week", false);
+          log("随机事件：老魏本周 洞察 +1（临时）。");
+        },
+      },
+      {
+        id: "evt_choice_occult",
+        type: "choice",
+        title: "深夜电台异响",
+        body: "诡名与狂性持续走高，深夜频道出现疑似“呼唤信号”。你要怎么处理？",
+        condition: () => macro.诡名 >= 45 && macro.狂性 >= 25,
+        options: [
+          {
+            text: "公开追踪信号（激进）",
+            desc: "诡名 +4，公信 -2，追加一条临时 occult 事件点",
+            apply: () => {
+              addMacro({ 诡名: 4, 公信: -2 });
+              addDynamicNode("us", {
+                id: `dyn_radio_${state.week}`,
+                kind: "temp",
+                name: "临时：深夜电台信号源",
+                days: 2,
+                need: { 探索: 4, 诡思: 3 },
+                tags: ["occult", "pop"],
+                difficulty: "hard",
+                enemyAttr: 3,
+                deadlineDay: 3,
+                chain: null,
+              }, 1);
+            },
+          },
+          {
+            text: "秘密监听（稳妥）",
+            desc: "公信 +1，诡名 +1，调查·老魏本周 理性 +1",
+            apply: () => {
+              addMacro({ 公信: 1, 诡名: 1 });
+              addStaffEffect("s2", "理性", 1, "week", false);
+            },
+          },
+          {
+            text: "切断频道（保守）",
+            desc: "守序 +2，狂性 -1，失去一次潜在线索机会",
+            apply: () => {
+              addMacro({ 守序: 2, 狂性: -1 });
+            },
+          },
+        ],
+      },
+      {
+        id: "evt_choice_order",
+        type: "choice",
+        title: "市政协作提案",
+        body: "你收到一份跨部门调查提案，可借此扩展行动能力。",
+        condition: () => macro.守序 >= 55 || macro.公信 >= 60,
+        options: [
+          {
+            text: "签署官方协作",
+            desc: "公信 +3，声望 +2，新增太平洋临时科学节点",
+            apply: () => {
+              addMacro({ 公信: 3, 声望: 2 });
+              addDynamicNode("pacific", {
+                id: `dyn_ocean_${state.week}`,
+                kind: "temp",
+                name: "临时：深海浮标异常",
+                days: 2,
+                need: { 探索: 4, 理性: 4 },
+                tags: ["sci"],
+                difficulty: "normal",
+                enemyAttr: 2,
+                deadlineDay: 4,
+                chain: null,
+              }, 1);
+            },
+          },
+          {
+            text: "只拿设备不公开站队",
+            desc: "获得临时科技线索，诡名 +1",
+            apply: () => {
+              state.clues.push({ title: "协作设备清单 · 临时线索", type: "sci", tier: 1 });
+              addMacro({ 诡名: 1 });
+            },
+          },
+          {
+            text: "拒绝提案",
+            desc: "守序 +1，声望 -1",
+            apply: () => addMacro({ 守序: 1, 声望: -1 }),
+          },
+        ],
+      },
+      {
+        id: "evt_choice_public",
+        type: "choice",
+        title: "读者来信潮",
+        body: "一批读者要求“更刺激”或“更严谨”的内容，你需要选择编辑方向。",
+        condition: () => true,
+        options: [
+          {
+            text: "迎合热点",
+            desc: "诡名 +2，声望 +1，实习生·小赵 探索 +1（永久）",
+            apply: () => {
+              addMacro({ 诡名: 2, 声望: 1 });
+              addStaffEffect("s4", "探索", 1, "permanent", true);
+            },
+          },
+          {
+            text: "坚持纪实",
+            desc: "公信 +2，守序 +1，神秘版·伊芙 诡思 -1（本周）",
+            apply: () => {
+              addMacro({ 公信: 2, 守序: 1 });
+              addStaffEffect("s3", "诡思", -1, "week", false);
+            },
+          },
+          {
+            text: "平衡两端",
+            desc: "公信 +1，诡名 +1，获得临时情报线索",
+            apply: () => {
+              addMacro({ 公信: 1, 诡名: 1 });
+              state.clues.push({ title: "读者投稿拼图 · 临时线索", type: "pop", tier: 1 });
+            },
+          },
+        ],
+      },
+    ];
+    const available = pool.filter((e) => {
+      try {
+        return e.condition();
+      } catch (_) {
+        return false;
+      }
+    });
+    return rand(available.length ? available : pool);
+  }
+
+  function applyWeekEventDefault() {
+    if (!state.weekEvent || state.weekEventResolved) return;
+    if (state.weekEvent.type === "passive" && typeof state.weekEvent.apply === "function") {
+      state.weekEvent.apply();
+      state.weekEventResult = "默认事件已生效。";
+      state.weekEventResolved = true;
+      renderMacro();
+    }
+  }
+
+  function applyWeekEventChoice(index) {
+    if (!state.weekEvent || state.weekEventResolved || state.weekEvent.type !== "choice") return;
+    const op = state.weekEvent.options?.[index];
+    if (!op) return;
+    if (typeof op.apply === "function") op.apply();
+    state.weekEventResult = op.desc || "该选择已生效。";
+    state.weekEventResolved = true;
+    log(`随机事件选择：${state.weekEvent.title} -> ${op.text}`);
+    renderMacro();
+  }
+
+  function unlockRegions() {
+    REGIONS.forEach((r) => {
+      if (r.id === "us") {
+        r.unlocked = true;
+        return;
+      }
+      if (r.id === "east_asia") {
+        const done = state.clues.some((c) => c.title.includes("罗斯威尔")) || macro.声望 >= 55;
+        r.unlocked = done;
+        r.pulse = done && state.week <= 2;
+        return;
+      }
+      if (r.id === "pacific") {
+        r.unlocked = macro.公信 >= 60 || macro.守序 >= 60;
+        r.pulse = r.unlocked;
+      }
+    });
+  }
+
+  function nodeVisible(node) {
+    if (node.kind !== "hidden") return true;
+    if (typeof node.unlock === "function") return node.unlock(macro);
+    return true;
+  }
+
+  function filterNodeTags(node) {
+    const t = node.tags || [];
+    if (state.filters.sci && t.includes("sci")) return true;
+    if (state.filters.occult && t.includes("occult")) return true;
+    if (state.filters.pop && t.includes("pop")) return true;
+    return false;
+  }
+
+  function renderWeekStart() {
+    if (!state.weekEvent) state.weekEvent = pickWeekEvent();
+    const elW = document.getElementById("view-weekStart");
+    const eventBlock = state.weekEvent.type === "choice"
+      ? `<div class="prob-box">
+          <div style="margin-bottom:0.35rem;"><strong>请选择处理方案：</strong></div>
+          ${(state.weekEvent.options || []).map((op, idx) => `
+            <div style="margin:0.35rem 0;display:flex;gap:8px;align-items:flex-start;">
+              <button type="button" data-evt-op="${idx}" ${state.weekEventResolved ? "disabled" : ""}>${escapeHtml(op.text)}</button>
+              <span class="tip-inline">${state.debugShowEventEffects ? escapeHtml(op.desc || "") : "后果未知"}</span>
+            </div>`).join("")}
+         </div>`
+      : `<div class="prob-box">${state.weekEventResolved ? "事件已处理。" : "默认事件：点击确认后生效。"} </div>`;
+    const resultBlock = state.weekEventResolved && state.weekEventResult
+      ? `<div class="prob-box" style="margin-top:0.45rem;border-color:#1d4ed8;">结果：${escapeHtml(state.weekEventResult)}</div>`
+      : "";
+    elW.innerHTML = `
+      <h2>回合起始</h2>
+      <p><strong>${escapeHtml(state.weekEvent.title)}</strong></p>
+      <p style="color:var(--muted);font-size:0.9rem;">${escapeHtml(state.weekEvent.body)}</p>
+      <label class="evt-debug"><input type="checkbox" id="evtDebugToggle" ${state.debugShowEventEffects ? "checked" : ""}/> 调试：显示全部选项后果</label>
+      ${eventBlock}
+      ${resultBlock}
+      ${state.weekEvent.type === "passive" ? `<button type="button" id="btnResolveEvent" ${state.weekEventResolved ? "disabled" : ""}>确认事件</button>` : ""}
+      <button type="button" class="primary" id="btnEnterGlobal">进入全球地图</button>`;
+    const dbg = document.getElementById("evtDebugToggle");
+    if (dbg) {
+      dbg.onchange = () => {
+        state.debugShowEventEffects = !!dbg.checked;
+        renderWeekStart();
+      };
+    }
+    if (state.weekEvent.type === "passive") {
+      const btn = document.getElementById("btnResolveEvent");
+      if (btn) btn.onclick = () => {
+        applyWeekEventDefault();
+        renderWeekStart();
+      };
+    } else {
+      elW.querySelectorAll("[data-evt-op]").forEach((btn) => {
+        btn.onclick = () => {
+          applyWeekEventChoice(Number(btn.getAttribute("data-evt-op")));
+          renderWeekStart();
+        };
+      });
+    }
+    document.getElementById("btnEnterGlobal").onclick = () => {
+      setView("global");
+      renderGlobal();
+    };
+    setView("weekStart");
+  }
+
+  function renderGlobal() {
+    unlockRegions();
+    const elG = document.getElementById("view-global");
+    const filterHtml = ["sci", "occult", "pop"]
+      .map((k) => `<button type="button" class="tag ${state.filters[k] ? "on" : ""}" data-filter="${k}">${TAG_LABEL[k]}</button>`)
+      .join(" ");
+    elG.innerHTML = `
+      <h2>全球地图</h2>
+      <div class="tags" id="filterTags">${filterHtml}</div>
+      <p style="margin:0.75rem 0 0.5rem;"><button type="button" id="btnRecycle">回收噪音线索</button>
+      <span style="color:var(--muted);font-size:0.8rem;margin-left:0.5rem;">诡名 -2，声望 +1</span></p>
+      <div class="world-region-host" id="regionGrid"></div>
+      <p style="margin-top:0.75rem;"><button type="button" id="backFromGlobal">返回回合简报</button></p>`;
+    document.querySelectorAll("#filterTags .tag").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const k = btn.getAttribute("data-filter");
+        if (k === "sci") state.filters.sci = !state.filters.sci;
+        if (k === "occult") state.filters.occult = !state.filters.occult;
+        if (k === "pop") state.filters.pop = !state.filters.pop;
+        renderGlobal();
+      });
+    });
+    document.getElementById("btnRecycle").onclick = () => {
+      macro.诡名 = Math.max(0, macro.诡名 - 2);
+      macro.声望 = Math.min(100, macro.声望 + 1);
+      log("回收噪音线索：诡名 -2，声望 +1。");
+      renderMacro();
+    };
+    const grid = document.getElementById("regionGrid");
+    const regionData = REGIONS.map((r) => {
+      const visibleNodes = getRegionNodes(r).filter(nodeVisible).filter(filterNodeTags);
+      const leads = (state.regionLeadEvents[r.id] || []).filter((lead) => !lead.investigated);
+      const eventCount = r.unlocked ? (visibleNodes.length + leads.length) : 0;
+      const has = visibleNodes.length > 0;
+      return { r, visibleNodes, leads, eventCount, has };
+    });
+    const pointsHtml = regionData.map(({ r, visibleNodes, eventCount, has }) => {
+      const pos = REGION_MAP_POS[r.id] || { x: 50, y: 50, label: r.name };
+      const cls = `map-point ${r.unlocked ? "" : "locked"} ${r.pulse && has ? "pulse" : ""} ${eventCount > 0 ? "has-event" : ""}`;
+      const hint = `${r.unlocked ? "可进入" : "未解锁"}${r.unlocked && has ? ` · 目标${visibleNodes.length}` : ""}${eventCount > 0 ? ` · 事件${eventCount}` : ""}`;
+      return `<button type="button" class="${cls}" data-region="${r.id}" style="left:${pos.x}%;top:${pos.y}%;" title="${escapeHtml(hint)}">${escapeHtml(pos.label)}${eventCount > 0 ? `<span class="event-dot">${eventCount > 9 ? "9+" : eventCount}</span>` : ""}</button>`;
+    }).join("");
+    const listHtml = regionData.map(({ r, visibleNodes, eventCount }) => `
+      <div class="entry ${eventCount > 0 ? "has-event" : ""}">
+        <div><strong>${escapeHtml(r.name)}</strong> ${r.unlocked ? "" : "（未解锁）"}</div>
+        <div style="color:#94a3b8;margin-top:3px;">${escapeHtml(r.hint)}</div>
+        <div style="margin-top:3px;color:#cbd5e1;">可见目标：${visibleNodes.length}${eventCount > 0 ? `<span class="event-hint">事件 ${eventCount}</span>` : ""}</div>
+      </div>`).join("");
+    grid.innerHTML = `
+      <div class="world-map-wrap">
+        <div class="world-map">${pointsHtml}</div>
+        <div class="map-side">
+          <h3>区域情报</h3>
+          ${listHtml}
+          <div class="region-actions">
+            <button type="button" id="btnNextDayGlobal" class="next-day-big"><span class="arrow" aria-hidden="true"></span><span>下一天</span></button>
+          </div>
+        </div>
+      </div>`;
+    grid.querySelectorAll(".map-point:not(.locked)").forEach((div) => {
+      div.addEventListener("click", () => {
+        const id = div.getAttribute("data-region");
+        const r = REGIONS.find((x) => x.id === id);
+        if (!r || !r.unlocked) return;
+        state.regionId = id;
+        renderRegion();
+        setView("region");
+      });
+    });
+    const ndg = document.getElementById("btnNextDayGlobal");
+    if (ndg) ndg.onclick = () => advanceOneDay();
+    document.getElementById("backFromGlobal").onclick = () => renderWeekStart();
+  }
+
+  function findActiveMission(predicate) {
+    return state.activeMissions.find((x) => x.status === "running" && predicate(x));
+  }
+
+  function findActiveMissionByNode(regionId, nodeId) {
+    return findActiveMission((x) => x.regionId === regionId && x.mission && x.mission.id === nodeId);
+  }
+
+  function findActiveMissionByLead(regionId, leadId) {
+    return findActiveMission((x) => x.regionId === regionId && x.mission && x.mission.missionType === "leadInvestigation" && x.mission.leadId === leadId);
+  }
+
+  function staffAvatarsHtml(ids) {
+    if (!ids || !ids.length) return "";
+    const maxVisible = 4;
+    const visible = ids.slice(0, maxVisible);
+    return `<span class="assigned-avatars">${visible
+      .map((id, idx) => {
+        const st = STAFF.find((s) => s.id === id);
+        if (!st) return "";
+        const cut = idx === maxVisible - 1 && ids.length > maxVisible ? "cut-tail" : "";
+        return `<img class="${cut}" src="${st.avatar}" title="${escapeHtml(st.name)}" alt="${escapeHtml(st.name)}"/>`;
+      })
+      .join("")}</span>`;
+  }
+
+  function missionHeaderHtml(m, staffIds) {
+    const region = REGIONS.find((x) => x.id === m.regionId);
+    const regionName = region ? region.name : "未知区域";
+    const typeLead = m.missionType === "leadInvestigation";
+    const typeTag = typeLead ? "线索调查" : "探索任务";
+    const typeCls = typeLead ? "lead" : "normal";
+    const prog = state.dayResolutionInfo
+      ? `当日结算 ${state.dayResolutionInfo.current}/${state.dayResolutionInfo.total}`
+      : "单任务结算";
+    const needText = Object.keys(m.need || {})
+      .map((k) => `${k}${m.need[k] | 0}`)
+      .join(" / ");
+    const staffHtml = (staffIds || []).map((id) => {
+      const st = STAFF.find((s) => s.id === id);
+      if (!st) return "";
+      return `<span class="mission-staff-chip" data-staff-preview="${st.id}"><img src="${st.avatar}" alt="${escapeHtml(st.name)}"/><span class="nm">${escapeHtml(st.name)}</span></span>`;
+    }).join("");
+    return `<div class="mission-head">
+      <div class="mission-head-top">
+        <div class="mission-main">
+          <span class="mission-tag ${typeCls}">${typeTag}</span>
+          <span class="mission-name">${escapeHtml(m.name)}</span>
+        </div>
+        <span class="mission-prog">${prog}</span>
+      </div>
+      <div class="mission-meta">
+        <span><b>区域</b>：${escapeHtml(regionName)}</span>
+        <span><b>耗时</b>：${m.days | 0}天</span>
+        <span><b>难度</b>：${m.difficulty === "hard" ? "困难" : m.difficulty === "easy" ? "简单" : "普通"}</span>
+        <span><b>对手骰</b>：${m.enemyAttr | 0}</span>
+        <span><b>需求</b>：${escapeHtml(needText || "无")}</span>
+      </div>
+      <div class="mission-staff">
+        <span class="mission-staff-label">派遣队员</span>
+        <div class="mission-staff-list">${staffHtml || `<span class="tip-inline">未配置</span>`}</div>
+      </div>
+    </div>`;
+  }
+
+  function bindMissionStaffHover(root) {
+    const card = document.getElementById("staffHoverCard");
+    if (!card || !root) return;
+    const chips = root.querySelectorAll("[data-staff-preview]");
+    if (!chips.length) return;
+    const renderCard = (st) => {
+      card.innerHTML = `<div class="staff-hover-head">
+        <img src="${st.avatar}" alt="${escapeHtml(st.name)}"/>
+        <div class="staff-hover-name">${escapeHtml(st.name)}</div>
+      </div>
+      <div class="staff-hover-grid">
+        <span>探索 ${st.探索}</span>
+        <span>生存 ${st.生存}</span>
+        <span>洞察 ${st.洞察}</span>
+        <span>诡思 ${st.诡思}</span>
+        <span>理性 ${st.理性}</span>
+      </div>`;
+    };
+    const place = (ev) => {
+      const x = Math.min(window.innerWidth - 270, ev.clientX + 14);
+      const y = Math.min(window.innerHeight - 170, ev.clientY + 12);
+      card.style.left = `${Math.max(8, x)}px`;
+      card.style.top = `${Math.max(8, y)}px`;
+    };
+    chips.forEach((chip) => {
+      chip.addEventListener("mouseenter", (ev) => {
+        const st = STAFF.find((s) => s.id === chip.getAttribute("data-staff-preview"));
+        if (!st) return;
+        renderCard(st);
+        card.classList.remove("hidden");
+        place(ev);
+      });
+      chip.addEventListener("mousemove", place);
+      chip.addEventListener("mouseleave", () => card.classList.add("hidden"));
+    });
+  }
+
+  function assignedStaffSet() {
+    const s = new Set();
+    state.activeMissions.forEach((m) => {
+      if (m && m.status !== "resolved") (m.staffIds || []).forEach((id) => s.add(id));
+    });
+    return s;
+  }
+
+  function isStaffAssigned(id, allowQueueId) {
+    if (!id) return false;
+    for (const m of state.activeMissions) {
+      if (!m || m.status === "resolved") continue;
+      if (allowQueueId && m.id === allowQueueId) continue;
+      if ((m.staffIds || []).includes(id)) return true;
+    }
+    return false;
+  }
+
+  function openQueuedMission(rec) {
+    if (!rec || !rec.mission) return;
+    state.mission = { ...rec.mission, missionQueueId: rec.id };
+    state.selectedStaffIds = rec.staffIds.slice();
+    renderSetup();
+    setView("setup");
+  }
+
+  function openNodeMission(regionId, node) {
+    if (!node || node.chain === "locked") return;
+    const queued = findActiveMissionByNode(regionId, node.id);
+    if (queued) {
+      openQueuedMission(queued);
+      return;
+    }
+    state.mission = { regionId, ...node };
+    state.selectedStaffIds = [];
+    renderSetup();
+    setView("setup");
+  }
+
+  function renderRegion() {
+    const r = REGIONS.find((x) => x.id === state.regionId);
+    const elR = document.getElementById("view-region");
+    if (!r) return;
+    const regionNodes = getRegionNodes(r);
+    const leads = state.regionLeadEvents[r.id] || [];
+    const nodePos = NODE_MAP_POS[r.id] || {};
+    const pointHtmlNodes = regionNodes
+      .filter(nodeVisible)
+      .map((n) => {
+        const match = filterNodeTags(n);
+        const hiddenCls = n.kind === "hidden" ? "hidden-node" : "";
+        const pos = nodePos[n.id] || { x: 20 + Math.random() * 60, y: 20 + Math.random() * 60 };
+        const diff = n.difficulty || "normal";
+        const diffZh = diff === "easy" ? "简单" : diff === "hard" ? "困难" : "普通";
+        const urgent = n.kind === "temp" || /突发/.test(n.name);
+        const kindCls = `${n.kind === "temp" ? "temp" : ""} ${urgent ? "urgent" : ""} ${hiddenCls}`.trim();
+        const marker = urgent ? "!" : n.kind === "hidden" ? "隐" : "常";
+        const disabled = !match || n.chain === "locked";
+        const queued = findActiveMissionByNode(r.id, n.id);
+        return `<button type="button" class="region-point ${kindCls}" data-point-type="node" data-point-id="${n.id}" data-node="${n.id}" style="left:${pos.x}%;top:${pos.y}%;" ${disabled ? "disabled" : ""} title="${escapeHtml(n.name)} · ${diffZh}">
+          <span class="point-mark">${marker}</span>${escapeHtml(n.name)}${queued ? `<span class="assigned-mark" title="已派遣">派</span>` : ""}
+        </button>`;
+      })
+      .join("");
+    const pointHtmlLeads = leads
+      .map((lead, idx) => {
+        const pos = nodePos[`lead_${lead.id}`] || { x: 16 + (idx % 3) * 20, y: 18 + Math.floor(idx / 3) * 16 };
+        const queued = findActiveMissionByLead(r.id, lead.id);
+        return `<button type="button" class="region-point lead" data-point-type="lead" data-point-id="${lead.id}" data-lead="${lead.id}" style="left:${pos.x}%;top:${pos.y}%;" title="${escapeHtml(lead.title)}">
+          <span class="point-mark">?</span>${escapeHtml(lead.title)}${queued ? `<span class="assigned-mark" title="已派遣">派</span>` : ""}
+        </button>`;
+      })
+      .join("");
+    const pointHtml = pointHtmlNodes + pointHtmlLeads;
+    const leadHtml = leads
+      .map((lead) => {
+        const queued = findActiveMissionByLead(r.id, lead.id);
+        return `<div class="lead-item event-clue interactive" data-side-type="lead" data-side-id="${lead.id}">
+        <div class="event-card">
+          <div class="event-thumb" title="线索事件默认图">?</div>
+          <div>
+            <div><strong>${escapeHtml(lead.title)}</strong></div>
+            <div style="color:#94a3b8;margin-top:2px;">线索事件 · 可靠度未知</div>
+            <div class="event-meta-row">
+              <div>${queued ? staffAvatarsHtml(queued.staffIds) : ""}</div>
+              <button type="button" data-lead-investigate="${lead.id}" ${lead.investigated ? "disabled" : ""}>${queued ? "查看派遣" : "配置队伍并调查"}</button>
+            </div>
+            ${lead.result ? `<div style="margin-top:6px;color:#cbd5e1;">${escapeHtml(lead.result)}</div>` : ""}
+          </div>
+        </div>
+      </div>`;
+      })
+      .join("");
+    const sideHtml = regionNodes
+      .filter(nodeVisible)
+      .map((n) => {
+        const match = filterNodeTags(n);
+        const diff = n.difficulty || "normal";
+        const diffZh = diff === "easy" ? "简单" : diff === "hard" ? "困难" : "普通";
+        const deadline = n.kind === "temp" && n.deadlineDay != null ? ` · 截止 第${n.deadlineDay}天前` : "";
+        const chain = n.chain === "locked" ? " · 链式未解锁" : "";
+        const urgent = n.kind === "temp" || /突发/.test(n.name);
+        const eventCls = urgent ? "event-urgent" : "";
+        const thumbText = n.kind === "temp" || /突发/.test(n.name) ? "!" : n.kind === "hidden" ? "隐" : "常";
+        const queued = findActiveMissionByNode(r.id, n.id);
+        return `<div class="region-node-item ${eventCls} interactive" data-side-type="node" data-side-id="${n.id}" style="${match ? "" : "opacity:0.45;"}">
+          <div class="event-card">
+            <div class="event-thumb">${thumbText}</div>
+            <div>
+              <div><strong>${escapeHtml(n.name)}</strong></div>
+              <div style="color:#94a3b8;margin-top:2px;">${n.kind === "permanent" ? "常驻" : n.kind === "temp" ? "临时" : "隐藏"} · ${diffZh} · 耗时${n.days}天 · 对手骰${n.enemyAttr | 0}${deadline}${chain}</div>
+              <div class="event-meta-row">
+                <div>${queued ? staffAvatarsHtml(queued.staffIds) : ""}</div>
+                <button type="button" data-node-open="${n.id}" ${n.chain === "locked" ? "disabled" : ""}>${queued ? "查看派遣" : "配置队伍并派遣"}</button>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      })
+      .join("");
+    elR.innerHTML = `<h2>${escapeHtml(r.name)}</h2>
+      <div class="region-map-wrap">
+        <div class="region-map">${pointHtml}</div>
+        <div class="region-node-side">
+          <h3>区域节点情报</h3>
+          ${leadHtml}${sideHtml}
+          <div class="region-actions">
+            <button type="button" id="btnNextDayRegion" class="next-day-big"><span class="arrow" aria-hidden="true"></span><span>下一天</span></button>
+          </div>
+        </div>
+      </div>
+      <p><button type="button" id="backRegion">返回全球</button></p>`;
+    elR.querySelectorAll(".region-point").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const pointType = btn.getAttribute("data-point-type");
+        const pointId = btn.getAttribute("data-point-id");
+        state.regionLinkedTarget = `${pointType}:${pointId}`;
+        syncRegionLinkedState(elR, state.regionLinkedTarget);
+        if (pointType === "lead") {
+          investigateRegionLead(r.id, pointId);
+          return;
+        }
+        if (pointType !== "node") return;
+        const nid = btn.getAttribute("data-node");
+        const n = regionNodes.find((x) => x.id === nid);
+        openNodeMission(r.id, n);
+      });
+    });
+    elR.querySelectorAll("[data-lead-investigate]").forEach((btn) => {
+      btn.onclick = () => investigateRegionLead(r.id, btn.getAttribute("data-lead-investigate"));
+    });
+    elR.querySelectorAll("[data-node-open]").forEach((btn) => {
+      btn.onclick = () => {
+        const n = regionNodes.find((x) => x.id === btn.getAttribute("data-node-open"));
+        openNodeMission(r.id, n);
+      };
+    });
+    elR.querySelectorAll(".region-node-item[data-side-type='node']").forEach((row) => {
+      row.addEventListener("click", (ev) => {
+        if (ev.target && ev.target.closest && ev.target.closest("button")) return;
+        const n = regionNodes.find((x) => x.id === row.getAttribute("data-side-id"));
+        openNodeMission(r.id, n);
+      });
+    });
+    elR.querySelectorAll(".lead-item[data-side-type='lead']").forEach((row) => {
+      row.addEventListener("click", (ev) => {
+        if (ev.target && ev.target.closest && ev.target.closest("button")) return;
+        investigateRegionLead(r.id, row.getAttribute("data-side-id"));
+      });
+    });
+    bindRegionLinking(elR);
+    const nd = document.getElementById("btnNextDayRegion");
+    if (nd) nd.onclick = () => advanceOneDay();
+    document.getElementById("backRegion").onclick = () => {
+      renderGlobal();
+      setView("global");
+    };
+  }
+
+  function syncRegionLinkedState(root, key) {
+    root.querySelectorAll(".region-point, .region-node-item, .lead-item").forEach((el) => el.classList.remove("is-linked"));
+    if (!key) return;
+    const split = key.indexOf(":");
+    if (split < 0) return;
+    const t = key.slice(0, split);
+    const id = key.slice(split + 1);
+    const p = root.querySelector(`.region-point[data-point-type="${t}"][data-point-id="${id}"]`);
+    const s = root.querySelector(`[data-side-type="${t}"][data-side-id="${id}"]`);
+    if (p) p.classList.add("is-linked");
+    if (s) s.classList.add("is-linked");
+  }
+
+  function bindRegionLinking(root) {
+    const setLinked = (key) => syncRegionLinkedState(root, key || state.regionLinkedTarget);
+    root.querySelectorAll("[data-side-type]").forEach((el) => {
+      const t = el.getAttribute("data-side-type");
+      const id = el.getAttribute("data-side-id");
+      const key = `${t}:${id}`;
+      el.addEventListener("mouseenter", () => setLinked(key));
+      el.addEventListener("mouseleave", () => setLinked(null));
+      el.addEventListener("click", (ev) => {
+        if (ev.target && ev.target.closest && ev.target.closest("button[data-lead-investigate]")) return;
+        state.regionLinkedTarget = key;
+        syncRegionLinkedState(root, key);
+      });
+    });
+    root.querySelectorAll(".region-point").forEach((el) => {
+      const t = el.getAttribute("data-point-type");
+      const id = el.getAttribute("data-point-id");
+      const key = `${t}:${id}`;
+      el.addEventListener("mouseenter", () => setLinked(key));
+      el.addEventListener("mouseleave", () => setLinked(null));
+    });
+    syncRegionLinkedState(root, state.regionLinkedTarget);
+  }
+
+  function renderSetup() {
+    const m = state.mission;
+    const elS = document.getElementById("view-setup");
+    if (!m) return;
+    const ok = meetsNeed(m.need, state.selectedStaffIds);
+    const prob = computeExplorationP(m, state.selectedStaffIds);
+    elS.innerHTML = `
+      <h2>${m.missionType === "leadInvestigation" ? "线索调查配置" : "探索配置"} · ${escapeHtml(m.name)}</h2>
+      <div class="prob-box">
+        <div>调查池 ${prob.nA} 骰 · 需 ${prob.kA} 成功 · P(A)≈${(prob.pA * 100).toFixed(1)}%</div>
+        <div>现场池 ${prob.nB} 骰 · 需 ${prob.kB} 成功 · P(B)≈${(prob.pB * 100).toFixed(1)}%</div>
+        <div style="margin-top:0.35rem;">大成功 ${(prob.pBig * 100).toFixed(1)}% · 小成功 ${(prob.pSmall * 100).toFixed(1)}% · 双败 ${(prob.pBothFail * 100).toFixed(1)}%</div>
+        <div style="margin-top:0.35rem;font-size:0.72rem;">p=${(prob.p * 100).toFixed(1)}% ${ok ? "" : "· 未达门槛 -15%"}</div>
+      </div>
+      <p style="font-size:0.85rem;margin-top:0.5rem;">展示：
+        <span class="mode-toggle" id="modeToggle">
+          <button type="button" data-mode="dice" class="${state.displayMode === "dice" ? "on" : ""}">骰子</button>
+          <button type="button" data-mode="numeric" class="${state.displayMode === "numeric" ? "on" : ""}">纯数值</button>
+        </span></p>
+      <div class="cards" id="staffPick"></div>
+      <p class="row" style="margin-top:0.75rem;">
+        <button type="button" id="btnRun" class="primary" ${state.selectedStaffIds.length === 0 || m.days > state.day || state.missionResolving || state.processingDayTick ? "disabled" : ""}>${state.missionResolving ? "执行中..." : `${m.missionType === "leadInvestigation" ? "派遣线索调查" : "派遣探索任务"}（预计 ${m.days} 天后判定）`}</button>
+        ${m.missionQueueId ? `<button type="button" id="btnUndoDispatch">撤销派遣</button>` : ""}
+        <button type="button" id="btnCancelSetup">返回区域</button>
+      </p>
+      ${m.days > state.day ? `<p style="color:var(--danger);font-size:0.85rem;">剩余天数不足，无法在本周内完成。</p>` : ""}
+      <p class="tip-inline" style="margin-top:0.5rem;">已派遣待判定任务：${state.activeMissions.length}。点击右下角「下一天」推进并触发到期判定。</p>`;
+    document.querySelectorAll("#modeToggle button").forEach((b) => {
+      b.onclick = () => {
+        state.displayMode = b.getAttribute("data-mode");
+        renderSetup();
+      };
+    });
+    const pick = document.getElementById("staffPick");
+    const allowQueueId = m && m.missionQueueId ? m.missionQueueId : null;
+    const staffList = STAFF.filter((p) => !isStaffAssigned(p.id, allowQueueId) || state.selectedStaffIds.includes(p.id));
+    pick.innerHTML = staffList.map((p) => {
+      const sel = state.selectedStaffIds.includes(p.id);
+      const exp = {
+        探索: getStaffValue(p, "探索"),
+        生存: getStaffValue(p, "生存"),
+        洞察: getStaffValue(p, "洞察"),
+        诡思: getStaffValue(p, "诡思"),
+        理性: getStaffValue(p, "理性"),
+      };
+      return `<div class="staff-card ${sel ? "selected" : ""}" data-staff="${p.id}">
+        <img class="portrait" src="${p.avatar}" alt="${escapeHtml(p.name)}"/>
+        <div class="t">${escapeHtml(p.name)}</div>
+        <dl><dt>探索</dt><dd>${exp.探索}</dd><dt>生存</dt><dd>${exp.生存}</dd><dt>洞察</dt><dd>${exp.洞察}</dd><dt>诡思</dt><dd>${exp.诡思}</dd><dt>理性</dt><dd>${exp.理性}</dd></dl></div>`;
+    }).join("");
+    pick.querySelectorAll(".staff-card").forEach((c) => {
+      c.addEventListener("click", () => {
+        const id = c.getAttribute("data-staff");
+        const i = state.selectedStaffIds.indexOf(id);
+        if (i >= 0) state.selectedStaffIds.splice(i, 1);
+        else {
+          if (state.selectedStaffIds.length >= 5) state.selectedStaffIds.shift();
+          state.selectedStaffIds.push(id);
+        }
+        renderSetup();
+      });
+    });
+    document.getElementById("btnRun").onclick = async () => {
+      if (!state.mission || state.selectedStaffIds.length === 0) return;
+      if (state.mission.days > state.day) return;
+      if (state.missionResolving) return;
+      enqueueCurrentMission();
+      renderRegion();
+      setView("region");
+    };
+    const undoBtn = document.getElementById("btnUndoDispatch");
+    if (undoBtn) {
+      undoBtn.onclick = () => {
+        const idx = state.activeMissions.findIndex((x) => x.id === m.missionQueueId);
+        if (idx >= 0) {
+          const rec = state.activeMissions[idx];
+          if (rec.mission && rec.mission.missionType === "leadInvestigation") {
+            const leads = state.regionLeadEvents[rec.regionId] || [];
+            const lead = leads.find((x) => x.id === rec.mission.leadId);
+            if (lead && !lead.investigated) lead.assigned = false;
+          }
+          state.activeMissions.splice(idx, 1);
+          log(`已撤销派遣：${m.name}`);
+        }
+        state.mission = null;
+        state.selectedStaffIds = [];
+        renderRegion();
+        setView("region");
+      };
+    }
+    document.getElementById("btnCancelSetup").onclick = () => {
+      if (state.mission && state.mission.missionType === "leadInvestigation" && !state.mission.missionQueueId) {
+        const leads = state.regionLeadEvents[state.mission.regionId] || [];
+        const lead = leads.find((x) => x.id === state.mission.leadId);
+        if (lead && !lead.investigated) lead.assigned = false;
+      }
+      state.mission = null;
+      state.selectedStaffIds = [];
+      renderRegion();
+      setView("region");
+    };
+  }
+
+  function renderDiceRow(rolls, voidSet, label) {
+    if (!rolls.length) return `<div class="tip-inline">${label}：无骰</div>`;
+    const cells = rolls
+      .map((hit, i) => {
+        const v = voidSet.has(i);
+        const cls = v ? "die void" : hit ? "die hit" : "die miss";
+        const ch = v ? "" : hit ? "✓" : "×";
+        return `<span class="${cls}">${ch}</span>`;
+      })
+      .join("");
+    return `<div class="dice-pool"><h3>${label}</h3><div class="dice-row">${cells}</div></div>`;
+  }
+
+  function enqueueCurrentMission() {
+    const m = state.mission;
+    if (!m) return;
+    if (m.missionQueueId) {
+      const idx = state.activeMissions.findIndex((x) => x.id === m.missionQueueId);
+      if (idx >= 0) {
+        if (state.selectedStaffIds.some((id) => isStaffAssigned(id, m.missionQueueId))) {
+          log("派遣更新失败：队员已被其他任务占用。");
+          return;
+        }
+        state.activeMissions[idx].staffIds = state.selectedStaffIds.slice();
+        log(`已更新派遣：${m.name}（仍需 ${state.activeMissions[idx].remainingDays} 天判定）`);
+      }
+      state.mission = null;
+      state.selectedStaffIds = [];
+      updateNextDayButton();
+      return;
+    }
+    const rec = {
+      id: `q_${Date.now()}_${Math.floor(Math.random() * 10000)}`,
+      mission: { ...m },
+      staffIds: state.selectedStaffIds.slice(),
+      remainingDays: m.days | 0,
+      regionId: m.regionId,
+      status: "running",
+    };
+    if (rec.staffIds.some((id) => isStaffAssigned(id, null))) {
+      log("派遣失败：队员已被其他任务占用。");
+      return;
+    }
+    state.activeMissions.push(rec);
+    log(`已派遣：${m.name}（预计 ${rec.remainingDays} 天后判定）`);
+    state.mission = null;
+    state.selectedStaffIds = [];
+    updateNextDayButton();
+  }
+
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  function calcAnimPace(check) {
+    const total = check.rollsA.length + check.rollsB.length;
+    const warmupDelay = total >= 24 ? 760 : total >= 16 ? 860 : 980;
+    const stepDelay = total >= 24 ? 84 : total >= 16 ? 96 : 108;
+    const revealStepA = 1;
+    const revealStepB = 1;
+    const voidStep = Math.max(1, Math.ceil((check.voidA.size + check.voidB.size) / 5));
+    const settleDelay = total >= 24 ? 520 : 620;
+    return { warmupDelay, stepDelay, revealStepA, revealStepB, voidStep, settleDelay };
+  }
+
+  function finalStateFromRoll(hit, isVoid) {
+    if (isVoid) return { text: "", cls: "die void" };
+    return hit ? { text: "✓", cls: "die hit reveal-pop" } : { text: "×", cls: "die miss reveal-pop" };
+  }
+
+  function randomRollFace() {
+    return ROLL_FACES[Math.floor(Math.random() * ROLL_FACES.length)];
+  }
+
+  function setRollingFace(el, face) {
+    el.textContent = face || "";
+    if (face === "✓") {
+      el.style.color = "#22c55e";
+      el.style.borderColor = "#22c55e";
+      el.style.boxShadow = "0 0 0 1px rgba(34,197,94,0.22) inset, 0 0 12px rgba(34,197,94,0.32)";
+    } else if (face === "×") {
+      el.style.color = "#ef4444";
+      el.style.borderColor = "#ef4444";
+      el.style.boxShadow = "0 0 0 1px rgba(239,68,68,0.2) inset, 0 0 12px rgba(239,68,68,0.28)";
+    } else if (face === "?") {
+      el.style.color = "#60a5fa";
+      el.style.borderColor = "#60a5fa";
+      el.style.boxShadow = "0 0 0 1px rgba(96,165,250,0.25) inset, 0 0 12px rgba(59,130,246,0.35)";
+    } else {
+      el.style.color = "#93c5fd";
+      el.style.borderColor = "#94a3b8";
+      el.style.boxShadow = "0 0 0 1px rgba(148,163,184,0.16) inset, 0 0 9px rgba(148,163,184,0.22)";
+    }
+  }
+
+  function setFinalFace(el, text, cls) {
+    el.style.color = "";
+    el.style.borderColor = "";
+    el.style.boxShadow = "";
+    el.className = cls;
+    el.textContent = text || "";
+  }
+
+  function createRollingDiceRow(container, label, count) {
+    const pool = document.createElement("div");
+    pool.className = "dice-pool";
+    const h3 = document.createElement("h3");
+    h3.textContent = label;
+    pool.appendChild(h3);
+    if (!count) {
+      const tip = document.createElement("div");
+      tip.className = "tip-inline";
+      tip.textContent = `${label}：无骰`;
+      pool.appendChild(tip);
+      container.appendChild(pool);
+      return [];
+    }
+    const row = document.createElement("div");
+    row.className = "dice-row";
+    const els = [];
+    for (let i = 0; i < count; i++) {
+      const span = document.createElement("span");
+      span.className = "die rolling";
+      setRollingFace(span, randomRollFace());
+      row.appendChild(span);
+      els.push(span);
+    }
+    pool.appendChild(row);
+    container.appendChild(pool);
+    return els;
+  }
+
+  async function animateDiceReveal(_elRes, check) {
+    const holder = document.getElementById("diceAnim");
+    if (!holder) return;
+    const pace = calcAnimPace(check);
+    holder.innerHTML = `<div class="dice-rolling-hint"><span class="dice-spinner"></span><span id="dicePhaseText">摇骰中...</span></div><div id="diceRowsHost"></div>`;
+    const host = document.getElementById("diceRowsHost");
+    if (!host) return;
+    const aEls = createRollingDiceRow(host, "调查池", check.rollsA.length);
+    const bEls = createRollingDiceRow(host, "现场池", check.rollsB.length);
+    const phaseText = () => document.getElementById("dicePhaseText");
+    const ticker = window.setInterval(() => {
+      const dice = holder.querySelectorAll(".die.rolling");
+      dice.forEach((d) => setRollingFace(d, randomRollFace()));
+    }, 92);
+    await sleep(pace.warmupDelay);
+
+    for (let i = 0; i < aEls.length; i += pace.revealStepA) {
+      const end = Math.min(aEls.length, i + pace.revealStepA);
+      const p = phaseText();
+      if (p) p.textContent = `调查池停骰 ${end}/${aEls.length}`;
+      for (let k = i; k < end; k++) {
+        const d = finalStateFromRoll(check.rollsA[k], false);
+        setFinalFace(aEls[k], d.text, d.cls);
+      }
+      await sleep(pace.stepDelay);
+    }
+    for (let i = 0; i < bEls.length; i += pace.revealStepB) {
+      const end = Math.min(bEls.length, i + pace.revealStepB);
+      const p = phaseText();
+      if (p) p.textContent = `现场池停骰 ${end}/${bEls.length}`;
+      for (let k = i; k < end; k++) {
+        const d = finalStateFromRoll(check.rollsB[k], false);
+        setFinalFace(bEls[k], d.text, d.cls);
+      }
+      await sleep(pace.stepDelay);
+    }
+
+    const pDone = phaseText();
+    if (pDone) pDone.textContent = "基础结果已揭示";
+    await sleep(260);
+
+    // 对手作废阶段：按顺序逐颗作废
+    const voidSeq = [];
+    for (const idx of check.voidA) voidSeq.push({ pool: "A", idx });
+    for (const idx of check.voidB) voidSeq.push({ pool: "B", idx });
+    for (let i = 0; i < voidSeq.length; i += pace.voidStep) {
+      const end = Math.min(voidSeq.length, i + pace.voidStep);
+      const p = phaseText();
+      if (p) p.textContent = `对手作废中... ${end}/${voidSeq.length}`;
+      for (let k = i; k < end; k++) {
+        const s = voidSeq[k];
+        const d = s.pool === "A"
+          ? finalStateFromRoll(check.rollsA[s.idx], true)
+          : finalStateFromRoll(check.rollsB[s.idx], true);
+        const target = s.pool === "A" ? aEls[s.idx] : bEls[s.idx];
+        if (target) setFinalFace(target, d.text, d.cls);
+      }
+      await sleep(pace.stepDelay + 18);
+    }
+    window.clearInterval(ticker);
+
+    // 最终态面板
+    holder.innerHTML = `<div>
+      ${renderDiceRow(check.rollsA, new Set(), "调查池（基础）")}
+      ${renderDiceRow(check.rollsB, new Set(), "现场池（基础）")}
+      <div class="phase-label" style="margin-top:0.5rem;">对手作废 ${check.enemyAttr} 颗</div>
+      ${renderDiceRow(check.rollsA, check.voidA, "调查·作废后")}
+      ${renderDiceRow(check.rollsB, check.voidB, "现场·作废后")}
+    </div>`;
+    await sleep(pace.settleDelay);
+  }
+
+  async function runMission(onContinue) {
+    const m = state.mission;
+    if (!m) return;
+    const check = runSplitCheck(m, state.selectedStaffIds);
+    const tier = check.tier;
+    const lines = [];
+    const rewards = [];
+    if (m.missionType === "leadInvestigation") {
+      const lead = (state.regionLeadEvents[m.regionId] || []).find((x) => x.id === m.leadId);
+      if (lead && !lead.investigated) {
+        lead.investigated = true;
+        lead.assigned = false;
+        if (tier === "大成功" || tier === "小成功") {
+          const node = lead.spawn();
+          addDynamicNode(m.regionId, node, lead.durationWeeks || 1);
+          lead.result = `调查${tier}：发现真实事件点「${node.name}」。`;
+          lines.push(`线索调查${tier}：已解锁新事件点。`);
+          rewards.push({ icon: "🗺", title: `新事件点：${node.name}`, desc: "已加入区域地图，可继续派遣探索。" });
+          log(`线索事件成功：${lead.title} -> ${node.name}`);
+          macro.声望 = Math.min(100, macro.声望 + (tier === "大成功" ? 2 : 1));
+        } else {
+          lead.result = `调查${tier}：线索不可靠，未发现有效事件。`;
+          lines.push(`线索调查${tier}：未发现有效事件。`);
+          log(`线索事件失败：${lead.title}`);
+          macro.声望 = Math.max(0, macro.声望 - (tier === "大失败" ? 2 : 1));
+        }
+      }
+    } else if (tier === "大成功") {
+      macro.声望 = Math.min(100, macro.声望 + 6);
+      macro.公信 += m.tags.includes("sci") ? 4 : 0;
+      macro.诡名 += m.tags.includes("occult") ? 5 : 2;
+      if (m.kind === "hidden") macro.狂性 = Math.min(100, macro.狂性 + 4);
+      lines.push("大成功：高质量线索。");
+      const clue = { title: m.name + " · 深度特稿素材", type: m.tags[0] || "pop", tier: 3 };
+      state.clues.push(clue);
+      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：高（Tier 3）" });
+    } else if (tier === "小成功") {
+      macro.声望 = Math.min(100, macro.声望 + 4);
+      macro.诡名 += 1;
+      lines.push("小成功：常规稿件素材。");
+      const clue = { title: m.name + " · 常规稿件素材", type: m.tags[0] || "pop", tier: 2 };
+      state.clues.push(clue);
+      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：中（Tier 2）" });
+    } else if (tier === "失败") {
+      macro.声望 = Math.max(0, macro.声望 - 2);
+      lines.push("失败：碎片线索。");
+      const clue = { title: m.name + " · 碎片线索", type: m.tags[0] || "pop", tier: 1 };
+      state.clues.push(clue);
+      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：低（Tier 1）" });
+    } else {
+      macro.守序 = Math.max(0, macro.守序 - 3);
+      macro.狂性 = Math.min(100, macro.狂性 + 3);
+      lines.push("大失败。");
+    }
+    ["公信", "诡名", "声望", "守序", "狂性"].forEach((k) => {
+      macro[k] = Math.max(0, Math.min(100, macro[k]));
+    });
+    log(`${m.name} → 「${tier}」`);
+    const elRes = document.getElementById("view-result");
+    const showDice = state.displayMode === "dice";
+    const missionHead = missionHeaderHtml(m, state.selectedStaffIds);
+    elRes.innerHTML = `
+      <h2>${m.missionType === "leadInvestigation" ? "线索调查结算" : "探索结算"}</h2>
+      ${missionHead}
+      <div class="result-banner" id="tierBanner">判定中...</div>
+      ${showDice ? `<div id="diceAnim"><div class="dice-rolling-hint"><span class="dice-spinner"></span><span>摇骰中...</span></div></div>`
+        : `<div class="prob-box" id="diceAnim">计算中...</div>`}
+      <p style="font-size:0.9rem;color:var(--muted);">${lines.map(escapeHtml).join("<br/>")}</p>
+      <p>剩余 <strong>${state.day}</strong> 日</p>
+      <button type="button" class="primary" id="btnAfterResult" disabled>继续</button>`;
+    bindMissionStaffHover(elRes);
+    setView("result");
+    renderMacro();
+    if (showDice) {
+      await animateDiceReveal(elRes, check);
+    } else {
+      await sleep(450);
+      const h = document.getElementById("diceAnim");
+      if (h) h.innerHTML = `<div class="prob-box">调查 ${check.hitsA}/${check.nAe}（≥${check.kA}）· 现场 ${check.hitsB}/${check.nBe}（≥${check.kB}）</div>`;
+    }
+    await showRewardsPopup(rewards);
+    const tb = document.getElementById("tierBanner");
+    if (tb) tb.textContent = tier;
+    const goBtn = document.getElementById("btnAfterResult");
+    if (goBtn) goBtn.disabled = false;
+    document.getElementById("btnAfterResult").onclick = () => {
+      state.mission = null;
+      state.selectedStaffIds = [];
+      renderMacro();
+      if (typeof onContinue === "function") {
+        onContinue();
+        return;
+      }
+      if (state.day <= 0) enterSynthesisPhase();
+      else {
+        renderRegion();
+        setView("region");
+      }
+    };
+  }
+
+  function resolveQueuedMissions() {
+    if (!state.todayResolutionQueue.length) {
+      state.processingDayTick = false;
+      state.dayResolutionInfo = null;
+      updateNextDayButton();
+      if (state.day <= 0) {
+        enterSynthesisPhase();
+      } else {
+        // 每日判定队列结束后，统一回到全球地图，方便继续派遣
+        renderGlobal();
+        setView("global");
+      }
+      return;
+    }
+    const total = state.dayResolutionInfo ? state.dayResolutionInfo.total : state.todayResolutionQueue.length;
+    const next = state.todayResolutionQueue.shift();
+    state.dayResolutionInfo = { current: total - state.todayResolutionQueue.length, total };
+    state.mission = { ...next.mission };
+    state.selectedStaffIds = next.staffIds.slice();
+    state.missionResolving = true;
+    runMission(() => {
+      next.status = "resolved";
+      state.activeMissions = state.activeMissions.filter((x) => x.id !== next.id);
+      state.missionResolving = false;
+      resolveQueuedMissions();
+    }).catch(() => {
+      state.missionResolving = false;
+      state.processingDayTick = false;
+      updateNextDayButton();
+    });
+  }
+
+  async function advanceOneDay() {
+    if (state.phase !== "explore" || state.processingDayTick) return;
+    if (state.day <= 0) {
+      enterSynthesisPhase();
+      return;
+    }
+    const runningCount = state.activeMissions.filter((x) => x.status === "running").length;
+    if (runningCount <= 0) {
+      const ok = await showConfirmPopup(
+        "未进行探索",
+        "<p style=\"margin:0;\">您未进行任何探索，是否进入下一天？</p>",
+        dayDateLabel()
+      );
+      if (!ok) return;
+    }
+    state.processingDayTick = true;
+    state.day -= 1;
+    for (const rec of state.activeMissions) {
+      if (rec.status === "running") rec.remainingDays -= 1;
+    }
+    const due = state.activeMissions.filter((x) => x.status === "running" && x.remainingDays <= 0);
+    due.forEach((x) => { x.status = "due"; });
+    state.todayResolutionQueue = due.slice();
+    log(`推进至下一天：当前剩余 ${state.day} 日。${due.length ? `到期任务 ${due.length} 项，开始判定。` : "暂无到期任务。"}`);
+    tickHeader();
+    updateNextDayButton();
+    await showDayPopup();
+    if (!due.length) {
+      state.processingDayTick = false;
+      updateNextDayButton();
+      // 当天没有到期判定，也统一回到全球地图
+      renderGlobal();
+      setView("global");
+      if (state.day <= 0) enterSynthesisPhase();
+      return;
+    }
+    state.dayResolutionInfo = { current: 0, total: due.length };
+    resolveQueuedMissions();
+  }
+
+  function dayIndexInWeek() {
+    return Math.max(1, Math.min(7, 8 - state.day));
+  }
+
+  function dayDateLabel() {
+    return `第 ${state.week} 周 · 第 ${dayIndexInWeek()} 天（余 ${state.day} / 7 日）`;
+  }
+
+  function randomDayFlavor() {
+    const pool = [
+      ["咖啡渍在版面上扩散。", "你把杯子挪开，假装什么都没发生。"],
+      ["深夜电话响了三次才接通。", "对方只说：\"别去港口区。\""],
+      ["打印机吐出一张空白纸。", "纸上却有淡淡的指纹，像刚从雨里捞出来。"],
+      ["实习生递来一袋热乎的甜甜圈。", "你突然觉得今天也许不会太糟。"],
+      ["电台播报的声音忽远忽近。", "你听到其中夹着一句不属于任何语言的低语。"],
+      ["编辑部的灯闪了两下。", "每个人都下意识看向地图。"],
+      ["邮筒里多了一封没有寄件人的信。", "你拆开，里面只有一小片金属。"],
+      ["街角的猫盯着你看。", "它眨了眨眼，像是在确认某个答案。"],
+    ];
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    return `<p style="margin:0 0 0.35rem;">${escapeHtml(pick[0])}</p><p style="margin:0;color:#94a3b8;">${escapeHtml(pick[1])}</p>`;
+  }
+
+  function showDayPopup() {
+    const wrap = document.getElementById("dayPopup");
+    const body = document.getElementById("dayPopupBody");
+    const date = document.getElementById("dayPopupDate");
+    const ok = document.getElementById("dayPopupOk");
+    if (!wrap || !body || !date || !ok) return Promise.resolve();
+    date.textContent = dayDateLabel();
+    body.innerHTML = randomDayFlavor();
+    wrap.classList.remove("hidden");
+    return new Promise((resolve) => {
+      const done = () => {
+        wrap.classList.add("hidden");
+        ok.removeEventListener("click", done);
+        wrap.removeEventListener("click", onMask);
+        resolve();
+      };
+      const onMask = (ev) => {
+        if (ev.target === wrap) done();
+      };
+      ok.addEventListener("click", done);
+      wrap.addEventListener("click", onMask);
+    });
+  }
+
+  function showConfirmPopup(title, bodyHtml, dateText) {
+    const wrap = document.getElementById("confirmPopup");
+    const body = document.getElementById("confirmPopupBody");
+    const date = document.getElementById("confirmPopupDate");
+    const ttl = document.getElementById("confirmPopupTitle");
+    const ok = document.getElementById("confirmPopupOk");
+    const cancel = document.getElementById("confirmPopupCancel");
+    if (!wrap || !body || !date || !ttl || !ok || !cancel) return Promise.resolve(false);
+    ttl.textContent = title || "提示";
+    date.textContent = dateText || "";
+    body.innerHTML = bodyHtml || "";
+    wrap.classList.remove("hidden");
+    return new Promise((resolve) => {
+      const done = (v) => {
+        wrap.classList.add("hidden");
+        ok.removeEventListener("click", onOk);
+        cancel.removeEventListener("click", onCancel);
+        wrap.removeEventListener("click", onMask);
+        resolve(v);
+      };
+      const onOk = () => done(true);
+      const onCancel = () => done(false);
+      const onMask = (ev) => { if (ev.target === wrap) done(false); };
+      ok.addEventListener("click", onOk);
+      cancel.addEventListener("click", onCancel);
+      wrap.addEventListener("click", onMask);
+    });
+  }
+
+  function rewardIconByType(type) {
+    if (type === "sci") return "🔬";
+    if (type === "occult") return "✦";
+    if (type === "pop") return "🗞";
+    return "🎁";
+  }
+
+  function showRewardsPopup(rewards) {
+    const list = rewards && rewards.length ? rewards : [{ icon: "…", title: "未获得额外奖励", desc: "本次仅完成任务判定。" }];
+    const wrap = document.getElementById("rewardPopup");
+    const body = document.getElementById("rewardPopupBody");
+    const step = document.getElementById("rewardPopupStep");
+    const next = document.getElementById("rewardPopupNext");
+    if (!wrap || !body || !step || !next) return Promise.resolve();
+    let idx = 0;
+    const render = () => {
+      const r = list[idx] || list[0];
+      step.textContent = `${idx + 1}/${list.length}`;
+      body.innerHTML = `<div class="reward-box">
+        <div class="reward-icon">${escapeHtml(r.icon || "🎁")}</div>
+        <div>
+          <div class="reward-title">${escapeHtml(r.title || "奖励")}</div>
+          <div class="reward-desc">${escapeHtml(r.desc || "")}</div>
+        </div>
+      </div>`;
+      next.textContent = idx >= list.length - 1 ? "完成" : "下一项";
+    };
+    wrap.classList.remove("hidden");
+    render();
+    return new Promise((resolve) => {
+      const onNext = () => {
+        if (idx >= list.length - 1) {
+          wrap.classList.add("hidden");
+          next.removeEventListener("click", onNext);
+          resolve();
+          return;
+        }
+        idx += 1;
+        render();
+      };
+      next.addEventListener("click", onNext);
+    });
+  }
+
+  function updateNextDayButton() {
+    const btns = [document.getElementById("btnNextDay"), document.getElementById("btnNextDayRegion"), document.getElementById("btnNextDayGlobal")].filter(Boolean);
+    if (!btns.length) return;
+    const disabled = state.phase !== "explore" || state.processingDayTick || state.missionResolving || state.view === "result";
+    btns.forEach((btn) => {
+      btn.disabled = disabled;
+      const label = btn.querySelector("span:last-child");
+      if (label) label.textContent = state.processingDayTick ? "结算中..." : "下一天";
+      else btn.textContent = state.processingDayTick ? "结算中..." : "下一天";
+    });
+  }
+
+  function newCardId() {
+    return `c${state.nextCardId++}`;
+  }
+
+  function qualityFromScore(score) {
+    if (score >= 220) return QUALITY[2];
+    if (score >= 140) return QUALITY[1];
+    return QUALITY[0];
+  }
+
+  function initSynthesisFromClues() {
+    state.phenomenonCards = [];
+    state.intelCards = [];
+    state.cognitionCards = [];
+    state.toolCards = [];
+    state.craftedReports = [];
+    state.synthSelection = [];
+    state.synthRecipe = "r1";
+    state.synthTab = "phenomenon";
+    state.synthPollution = 0;
+    for (const clue of state.pendingClues) {
+      state.phenomenonCards.push({
+        id: newCardId(),
+        kind: "phenomenon",
+        name: clue.title.replace("·", "样本·"),
+        domain: clue.type,
+        evidenceValue: 35 + clue.tier * 16,
+        mysteryBias: clue.type === "occult" ? 70 : clue.type === "pop" ? 45 : 30,
+        tier: clue.tier,
+      });
+      state.intelCards.push({
+        id: newCardId(),
+        kind: "intel",
+        name: `${clue.title.split("·")[0]} 相关情报`,
+        sourceType: clue.type,
+        evidenceValue: 25 + clue.tier * 10,
+        rumorValue: clue.type === "pop" ? 32 : 18,
+        tier: clue.tier,
+      });
+      state.cognitionCards.push({
+        id: newCardId(),
+        kind: "cognition",
+        name: rand(COGNITION_NAME_POOL),
+        level: Math.max(1, clue.tier),
+        sourceType: clue.type,
+        credibilityBonus: clue.type === "sci" ? 16 : 8,
+        mysteryBonus: clue.type === "occult" ? 18 : 9,
+      });
+    }
+    const toolN = Math.max(1, Math.min(3, Math.floor(state.pendingClues.length / 2)));
+    for (let i = 0; i < toolN; i++) {
+      state.toolCards.push({
+        id: newCardId(),
+        kind: "tool",
+        name: rand(TOOL_NAME_POOL),
+        durability: 2,
+        bonus: 8 + randomInt(0, 6),
+      });
+    }
+  }
+
+  function getInventoryByTab(tab) {
+    if (tab === "phenomenon") return state.phenomenonCards;
+    if (tab === "intel") return state.intelCards;
+    if (tab === "cognition") return state.cognitionCards;
+    return state.toolCards;
+  }
+
+  function selectedCards() {
+    const all = [...state.phenomenonCards, ...state.intelCards, ...state.cognitionCards, ...state.toolCards];
+    const set = new Set(state.synthSelection);
+    return all.filter((c) => set.has(c.id));
+  }
+
+  function recipeLabel(recipe) {
+    if (recipe === "r1") return "类型1 抢先报道（现象+情报）";
+    if (recipe === "r2") return "类型2 纪实揭秘（认知+现象，可带工具）";
+    if (recipe === "r3") return "类型3 猎奇假想（认知+认知）";
+    return "类型4 生硬编造（认知+现象）";
+  }
+
+  function validateRecipe(recipe, cards) {
+    const nPhen = cards.filter((c) => c.kind === "phenomenon").length;
+    const nIntel = cards.filter((c) => c.kind === "intel").length;
+    const nCog = cards.filter((c) => c.kind === "cognition").length;
+    const nTool = cards.filter((c) => c.kind === "tool").length;
+    if (recipe === "r1") return nPhen >= 1 && nIntel >= 1;
+    if (recipe === "r2") return nPhen >= 1 && nCog >= 1;
+    if (recipe === "r3") return nCog >= 2;
+    if (recipe === "r4") return nPhen >= 1 && nCog >= 1;
+    return false;
+  }
+
+  function recipeBaseSuccess(recipe) {
+    if (recipe === "r1") return 0.85;
+    if (recipe === "r2") return 0.75;
+    if (recipe === "r3") return 0.65;
+    return 0.55;
+  }
+
+  function buildSynthPreview(recipe, cards) {
+    if (!cards.length) return "尚未选择素材。请在左侧点击卡牌后执行合成。";
+    const names = cards.map((c) => c.name).join(" + ");
+    const valid = validateRecipe(recipe, cards);
+    const toolBonus = cards.filter((c) => c.kind === "tool").reduce((a, b) => a + b.bonus, 0);
+    const successRate = clamp(recipeBaseSuccess(recipe) + toolBonus / 100 - Math.max(0, cards.length - 3) * 0.05, 0.15, 0.95);
+    return `${recipeLabel(recipe)}\n素材：${names}\n预计成功率：${(successRate * 100).toFixed(1)}%\n${valid ? "配方合法，可执行合成。" : "配方不合法，请调整素材组合。"}\n当前失实风险：${state.synthPollution}`;
+  }
+
+  function consumeCards(ids) {
+    const remove = new Set(ids);
+    state.phenomenonCards = state.phenomenonCards.filter((c) => !remove.has(c.id));
+    state.intelCards = state.intelCards.filter((c) => !remove.has(c.id));
+    state.cognitionCards = state.cognitionCards.filter((c) => !remove.has(c.id));
+    state.toolCards = state.toolCards
+      .map((t) => (remove.has(t.id) ? { ...t, durability: t.durability - 1 } : t))
+      .filter((t) => t.durability > 0);
+  }
+
+  function synthToStory(recipe, cards) {
+    const hasSci = cards.some((c) => c.sourceType === "sci" || c.domain === "sci");
+    const hasOccult = cards.some((c) => c.sourceType === "occult" || c.domain === "occult");
+    const hasPop = cards.some((c) => c.sourceType === "pop" || c.domain === "pop");
+    const tags = [];
+    if (hasSci) tags.push("Politics");
+    if (hasOccult) tags.push("Gossip");
+    if (hasPop || !tags.length) tags.push("Shopping");
+    if (tags.length === 1 && Math.random() < 0.5) tags.push(rand(TAGS.filter((t) => t !== tags[0])));
+    const evidence = cards.reduce((a, c) => a + (c.evidenceValue || 0), 0);
+    const mystery = cards.reduce((a, c) => a + (c.mysteryBias || c.mysteryBonus || 0), 0);
+    const cognitionLv = cards.reduce((a, c) => a + (c.level || 0), 0);
+    const sensational = recipe === "r3" ? 78 : recipe === "r4" ? 86 : recipe === "r1" ? 64 : 56;
+    const credibility = clamp(evidence * 0.65 + cognitionLv * 4 - (recipe === "r4" ? 45 : recipe === "r3" ? 22 : 0), 8, 95);
+    const mysteryScore = clamp(mystery * 0.7 + (recipe === "r3" ? 20 : 0), 10, 95);
+    const gaze = clamp((recipe === "r4" ? 26 : 12) + Math.round(mysteryScore * 0.25) + Math.round(cognitionLv * 0.8), 6, 90);
+    const qualityScore = sensational + credibility + mysteryScore + gaze;
+    const q = qualityFromScore(qualityScore);
+    const negatives = [];
+    if (recipe === "r3" && Math.random() < 0.45) negatives.push("thin_source");
+    if (recipe === "r4") {
+      if (Math.random() < 0.8) negatives.push("fabrication");
+      if (Math.random() < 0.4) negatives.push("bias_overreach");
+    }
+    if (credibility < 40 && Math.random() < 0.35) negatives.push("sloppy_writing");
+    const titlePrefix = recipe === "r2" ? "纪实揭秘" : recipe === "r3" ? "猎奇假想" : recipe === "r4" ? "争议爆料" : "抢先快讯";
+    const title = `${titlePrefix}：${cards[0]?.name?.replace("样本", "").replace("相关情报", "") || buildNewsTitle(tags)}`;
+    return {
+      id: state.nextStoryId++,
+      title,
+      tags,
+      quality: q.key,
+      baseValue: q.value,
+      negatives,
+      fromExplore: true,
+      attrs: { sensational, credibility, mystery: mysteryScore, gaze },
+      recipeType: recipe,
+    };
+  }
+
+  function renderSynthInventory() {
+    const list = getInventoryByTab(state.synthTab);
+    if (!el.synInventory) return;
+    if (!list.length) {
+      el.synInventory.innerHTML = `<div class="syn-help">当前分类暂无卡牌。</div>`;
+      return;
+    }
+    el.synInventory.innerHTML = list
+      .map((c) => {
+        const on = state.synthSelection.includes(c.id) ? "on" : "";
+        const badge = c.kind === "tool"
+          ? `<span class="syn-badge">耐久 ${c.durability}</span><span class="syn-badge">加成 +${c.bonus}%</span>`
+          : c.kind === "cognition"
+            ? `<span class="syn-badge">等级 ${c.level}</span>`
+            : `<span class="syn-badge">证据 ${c.evidenceValue || 0}</span>`;
+        return `<div class="syn-item ${on}" data-card="${c.id}">
+          <strong>${escapeHtml(c.name)}</strong>
+          <div class="syn-badges"><span class="syn-badge">${c.kind}</span>${badge}</div>
+        </div>`;
+      })
+      .join("");
+    el.synInventory.querySelectorAll("[data-card]").forEach((node) => {
+      node.onclick = () => {
+        const id = node.getAttribute("data-card");
+        const idx = state.synthSelection.indexOf(id);
+        if (idx >= 0) state.synthSelection.splice(idx, 1);
+        else {
+          if (state.synthSelection.length >= 4) state.synthSelection.shift();
+          state.synthSelection.push(id);
+        }
+        renderSynthesis();
+      };
+    });
+  }
+
+  function renderSynthReports() {
+    if (!el.synReports) return;
+    if (!state.craftedReports.length) {
+      el.synReports.innerHTML = `<div class="syn-help">尚未合成报道。至少制作 1 篇后可进入组版。</div>`;
+      return;
+    }
+    el.synReports.innerHTML = state.craftedReports
+      .map((r) => `<div class="syn-report">
+        <strong>${escapeHtml(r.title)}</strong>
+        <div class="syn-badges" style="margin-top:4px;">
+          <span class="syn-badge">类型 ${r.recipeType}</span>
+          <span class="syn-badge">质量 ${r.quality}</span>
+          <span class="syn-badge">基础值 ${r.baseValue}</span>
+          <span class="syn-badge">轰动 ${r.attrs.sensational}</span>
+          <span class="syn-badge">可信 ${r.attrs.credibility}</span>
+          <span class="syn-badge">神秘 ${r.attrs.mystery}</span>
+          <span class="syn-badge">诡视 ${r.attrs.gaze}</span>
+        </div>
+      </div>`)
+      .join("");
+  }
+
+  function renderSynthesis() {
+    renderSynthInventory();
+    const cards = selectedCards();
+    if (el.synSlotPreview) el.synSlotPreview.textContent = buildSynthPreview(state.synthRecipe, cards);
+    if (el.synthesisHint) {
+      el.synthesisHint.textContent = `配方说明：${recipeLabel(state.synthRecipe)}。本周探索线索 ${state.pendingClues.length} 条，已合成报道 ${state.craftedReports.length} 条。`;
+    }
+    renderSynthReports();
+  }
+
+  function craftReport() {
+    const cards = selectedCards();
+    const recipe = state.synthRecipe;
+    if (!validateRecipe(recipe, cards)) {
+      log("合成失败：素材不满足当前配方。");
+      renderSynthesis();
+      return;
+    }
+    const toolBonus = cards.filter((c) => c.kind === "tool").reduce((a, b) => a + b.bonus, 0);
+    const successRate = clamp(recipeBaseSuccess(recipe) + toolBonus / 100 - Math.max(0, cards.length - 3) * 0.05, 0.15, 0.95);
+    if (Math.random() > successRate) {
+      const toConsume = cards.slice(1).map((c) => c.id);
+      consumeCards(toConsume);
+      state.synthSelection = [];
+      state.synthPollution += recipe === "r4" ? 5 : recipe === "r3" ? 2 : 0;
+      log(`合成失败：${recipeLabel(recipe)}（成功率 ${(successRate * 100).toFixed(1)}%）。`);
+      renderSynthesis();
+      return;
+    }
+    const story = synthToStory(recipe, cards);
+    state.craftedReports.push(story);
+    const consumeIds = cards.map((c) => c.id);
+    consumeCards(consumeIds);
+    state.synthSelection = [];
+    if (recipe === "r3") state.synthPollution += 4;
+    if (recipe === "r4") state.synthPollution += 10;
+    log(`合成成功：${story.title}（${story.quality}）。`);
+    renderSynthesis();
+  }
+
+  function researchPhenomenon() {
+    const selected = selectedCards();
+    const phen = selected.find((c) => c.kind === "phenomenon");
+    if (!phen) {
+      log("研究失败：请先选择 1 张现象牌。");
+      return;
+    }
+    const newCog = {
+      id: newCardId(),
+      kind: "cognition",
+      name: rand(COGNITION_NAME_POOL),
+      level: clamp((phen.tier || 1) + randomInt(0, 2), 1, 10),
+      sourceType: phen.domain,
+      credibilityBonus: phen.evidenceValue > 60 ? 16 : 10,
+      mysteryBonus: phen.mysteryBias > 55 ? 16 : 8,
+    };
+    state.cognitionCards.push(newCog);
+    state.phenomenonCards = state.phenomenonCards.filter((c) => c.id !== phen.id);
+    state.synthSelection = [];
+    log(`研究完成：获得认知牌「${newCog.name}」（Lv.${newCog.level}）。`);
+    renderSynthesis();
+  }
+
+  function enterSynthesisPhase() {
+    state.phase = "synthesis";
+    state.pendingClues = state.clues.slice();
+    state.clues = [];
+    initSynthesisFromClues();
+    document.getElementById("phase-explore").classList.add("hidden");
+    document.getElementById("phase-synthesis").classList.remove("hidden");
+    document.getElementById("phase-editorial").classList.add("hidden");
+    document.getElementById("phase-summary").classList.add("hidden");
+    document.getElementById("synthesisSub").textContent = `第 ${state.week} 周 · 已带入探索线索 ${state.pendingClues.length} 条。请先合成报道，再进入组版。`;
+    el.synInventory = document.getElementById("synInventory");
+    el.synSlotPreview = document.getElementById("synSlotPreview");
+    el.synReports = document.getElementById("synReports");
+    el.synthesisHint = document.getElementById("synthesisHint");
+    renderSynthesis();
+    log("进入故事合成台：现象/认知/情报可合成报道。");
+  }
+
+  function toZhTag(tag) {
+    const map = { Politics: "时政", Military: "军事", Economy: "经济", Sport: "体育", Gossip: "花边新闻", Pets: "猫狗", Humor: "幽默", Shopping: "购物" };
+    return map[tag] || tag;
+  }
+
+  function buildNewsTitle(tags) {
+    const mainTag = tags[0];
+    const secondTag = tags[1];
+    const location = rand(LOCATIONS);
+    const org = rand(ORGS);
+    const subject = rand(SUBJECTS[mainTag] || ["焦点事件"]);
+    const action = rand(ACTIONS);
+    if (secondTag) return `${location}${org}就${subject}${action}，${toZhTag(secondTag)}线索同步浮现`;
+    return `${location}${org}${subject}${action}`;
+  }
+
+  function buildStory(id) {
+    const tag1 = rand(TAGS);
+    const tag2 = Math.random() < 0.55 ? rand(TAGS.filter((t) => t !== tag1)) : null;
+    const quality = rand(QUALITY);
+    const negativeCount = Math.random() < 0.28 ? randomInt(1, 2) : 0;
+    const negatives = [];
+    for (let i = 0; i < negativeCount; i++) negatives.push(rand(NEGATIVE_TYPES));
+    return {
+      id,
+      title: buildNewsTitle(tag2 ? [tag1, tag2] : [tag1]),
+      tags: tag2 ? [tag1, tag2] : [tag1],
+      quality: quality.key,
+      baseValue: quality.value,
+      negatives,
+      fromExplore: false,
+    };
+  }
+
+  function clueToStory(clue, id) {
+    const main = TYPE_TO_TAG[clue.type] || "Politics";
+    const second = Math.random() < 0.45 ? rand(TAGS.filter((t) => t !== main)) : null;
+    const tier = clue.tier || 2;
+    const q = tier >= 3 ? QUALITY[2] : tier >= 2 ? QUALITY[1] : QUALITY[0];
+    const negN = tier === 1 ? (Math.random() < 0.35 ? randomInt(1, 2) : 0) : Math.random() < 0.12 ? 1 : 0;
+    const negatives = [];
+    for (let i = 0; i < negN; i++) negatives.push(rand(NEGATIVE_TYPES));
+    return {
+      id,
+      title: clue.title,
+      tags: second ? [main, second] : [main],
+      quality: q.key,
+      baseValue: q.value,
+      negatives,
+      fromExplore: true,
+    };
+  }
+
+  function buildEditorialPool() {
+    const craftedBase = (state.pendingReports && state.pendingReports.length) ? state.pendingReports : [];
+    const target = Math.max(Number(document.getElementById("storyCount").value), craftedBase.length || state.pendingClues.length);
+    let cur = state.nextStoryId;
+    const exploreStories = craftedBase.length
+      ? craftedBase.map((r) => ({ ...r, id: cur++ }))
+      : state.pendingClues.map((c) => clueToStory(c, cur++));
+    const filler = [];
+    while (exploreStories.length + filler.length < target) filler.push(buildStory(cur++));
+    state.nextStoryId = cur;
+    state.stories = [...exploreStories, ...filler];
+    for (const s of slots) state.placed[s.id] = null;
+  }
+
+  function enterEditorialPhase() {
+    state.phase = "editorial";
+    buildEditorialPool();
+    document.getElementById("phase-synthesis").classList.add("hidden");
+    document.getElementById("phase-explore").classList.add("hidden");
+    document.getElementById("phase-editorial").classList.remove("hidden");
+    document.getElementById("phase-summary").classList.add("hidden");
+    document.getElementById("editorialSub").textContent = `第 ${state.week} 周 · 已导入合成报道 ${state.pendingReports.length || state.pendingClues.length} 条，请组版后结算。`;
+    el.storyList = document.getElementById("storyList");
+    el.slotList = document.getElementById("slotList");
+    el.liveStats = document.getElementById("liveStats");
+    el.resultBox = document.getElementById("resultBox");
+    el.toast = document.getElementById("toast");
+    renderStories();
+    renderSlots();
+    updatePaperModeButton();
+    renderLiveStats();
+    el.resultBox.innerHTML = `<div class="k">尚未结算</div><div class="nm-tip">拖拽报道到版位，再点「结算本期」。</div>`;
+    log("进入编辑部：拖拽组版，结算与 docs/报刊结算出版玩法设计文档.md 一致。");
+  }
+
+  function getAllPlaced() {
+    return slots.map((s) => ({ slot: s, story: state.placed[s.id] })).filter((x) => x.story);
+  }
+
+  function calculate(isSettle) {
+    const placed = getAllPlaced();
+    const emptySlots = slots.length - placed.length;
+    const totalBaseValue = placed.reduce((acc, x) => acc + x.story.baseValue, 0);
+    const allTags = placed.flatMap((x) => x.story.tags);
+    const uniqueTags = new Set(allTags).size;
+    const negPenaltyPoints = placed.reduce((acc, x) => acc + x.story.negatives.length, 0);
+    const tagCountMap = {};
+    for (const t of allTags) tagCountMap[t] = (tagCountMap[t] || 0) + 1;
+    const comboRaw = Object.values(tagCountMap).reduce((acc, n) => acc + Math.pow(Math.max(0, n - 1), 0.8), 0);
+    const linkedTags = Object.entries(tagCountMap)
+      .filter(([, count]) => count >= 2 && count <= 3)
+      .map(([tag]) => tag);
+    const linkCount = linkedTags.length;
+    const publicCount = allTags.filter((t) => PUBLIC_AFFAIRS.has(t)).length;
+    const massCount = allTags.filter((t) => MASS_APPEAL.has(t)).length;
+    const lightCount = allTags.filter((t) => LIFESTYLE_LIGHT.has(t)).length;
+    const totalTagCount = allTags.length || 1;
+    const publicRatio = publicCount / totalTagCount;
+    const massRatio = massCount / totalTagCount;
+    const lightRatio = lightCount / totalTagCount;
+    const dominantRatio = Math.max(publicRatio, massRatio, lightRatio);
+    const profileNormalized = (state.editorialProfile + 100) / 200;
+    const frontWeight = placed.reduce((acc, x) => acc + x.slot.weight, 0) / 2.95;
+    const mQuality = Math.min(1.85, 1 + 0.0008 * totalBaseValue);
+    const comboBase = Math.min(1.35, 1 + 0.06 * Math.log(1 + comboRaw));
+    const comboProfileBoost = 1 + 0.2 * Math.max(0, profileNormalized - 0.5);
+    const mCombo = Math.min(1.45, comboBase * comboProfileBoost);
+    const mDiversityBase = Math.min(1.3, 1 + 0.05 * Math.log(1 + uniqueTags));
+    const diversityStyleBoost = 1 + 0.25 * Math.max(0, 0.5 - profileNormalized) * publicRatio;
+    const mDiversity = Math.min(1.45, mDiversityBase * diversityStyleBoost);
+    const mLayout = 1 + 1.2 * frontWeight;
+    const mEmpty = Math.max(0.7, 1 - 0.06 * emptySlots);
+    const mPenalty = Math.max(0.6, 1 - 0.025 * negPenaltyPoints);
+    const mLink = Math.min(1.25, 1 + 0.05 * linkCount);
+    let mBias = 1;
+    if (dominantRatio > 0.7) {
+      const overflow = (dominantRatio - 0.7) / 0.3;
+      mBias = Math.max(0.75, 1 - 0.25 * overflow);
+    }
+    const mBalance = publicRatio >= 0.25 && publicRatio <= 0.55 && lightRatio >= 0.2 && lightRatio <= 0.5 ? 1.06 : 1;
+    const demand = state.baseDemand * mQuality * mCombo * mDiversity * mLayout * mEmpty * mPenalty * mLink * mBalance * mBias;
+    const sold = Math.min(Math.round(demand), state.printCapacity);
+    const stockoutRate = demand <= 0 ? 0 : Math.max(0, (demand - sold) / demand);
+    const circulationRevenue = sold * state.coverPrice;
+    const newSubRate = 0.004 + 0.0008 * uniqueTags + 0.0006 * Math.sqrt(Math.max(1, totalBaseValue / 150));
+    const churnRate = 0.003 + 0.0012 * negPenaltyPoints + 0.002 * stockoutRate;
+    const newSubs = sold * newSubRate;
+    const lostSubs = state.subscribers * churnRate;
+    const subDelta = Math.round(newSubs - lostSubs);
+    const nextSubs = Math.max(0, state.subscribers + subDelta);
+    const subscriptionRevenue = nextSubs * state.subUnitValue;
+    const adProfileBonus = 1 + 0.15 * (1 - Math.abs(state.editorialProfile) / 100);
+    const adMatch = Math.min(1, (state.adMatchBase + uniqueTags * 0.05 - negPenaltyPoints * 0.03) * adProfileBonus);
+    const adUnit = 180 + 320 * adMatch;
+    const adsRevenue = state.adSlots * adUnit;
+    const paperPacks = Math.ceil(state.printCapacity / 1000);
+    const paperCost = paperPacks * state.paperPackCost;
+    const totalCost = paperCost + state.salaryCost + state.opsCost;
+    const grossRevenue = circulationRevenue + subscriptionRevenue + adsRevenue;
+    const profit = grossRevenue - totalCost;
+    if (isSettle) state.subscribers = nextSubs;
+    return {
+      placedCount: placed.length,
+      emptySlots,
+      totalBaseValue,
+      uniqueTags,
+      comboRaw,
+      publicRatio,
+      massRatio,
+      lightRatio,
+      dominantRatio,
+      linkedTags,
+      linkCount,
+      negPenaltyPoints,
+      multipliers: { mQuality, comboBase, comboProfileBoost, mCombo, mDiversityBase, diversityStyleBoost, mDiversity, mLayout, mEmpty, mPenalty, mLink, mBalance, mBias },
+      demand,
+      sold,
+      stockoutRate,
+      circulationRevenue,
+      subscriptionRevenue,
+      adsRevenue,
+      grossRevenue,
+      costs: { paperCost, salaryCost: state.salaryCost, opsCost: state.opsCost, totalCost },
+      profit,
+      nextSubs,
+    };
+  }
+
+  function calculateWithPlacement(slotId, storyId) {
+    const old = state.placed[slotId];
+    const story = state.stories.find((s) => s.id === Number(storyId));
+    state.placed[slotId] = story || null;
+    const result = calculate(false);
+    state.placed[slotId] = old;
+    return result;
+  }
+
+  function analyzeTagEffects(placedStories) {
+    const map = {};
+    for (const st of placedStories) {
+      for (const tag of st.tags) map[tag] = (map[tag] || 0) + 1;
+    }
+    const linked = Object.entries(map)
+      .filter(([, count]) => count >= 2 && count <= 3)
+      .map(([tag]) => tag);
+    const tags = Object.entries(map).flatMap(([tag, count]) => Array.from({ length: count }, () => tag));
+    const publicCount = tags.filter((t) => PUBLIC_AFFAIRS.has(t)).length;
+    const massCount = tags.filter((t) => MASS_APPEAL.has(t)).length;
+    const lightCount = tags.filter((t) => LIFESTYLE_LIGHT.has(t)).length;
+    const total = tags.length || 1;
+    const publicRatio = publicCount / total;
+    const massRatio = massCount / total;
+    const lightRatio = lightCount / total;
+    const dominantRatio = Math.max(publicRatio, massRatio, lightRatio);
+    let dominantType = "轻内容";
+    if (dominantRatio === publicRatio) dominantType = "公共事务";
+    else if (dominantRatio === massRatio) dominantType = "大众关注";
+    return { linked, publicRatio, massRatio, lightRatio, dominantRatio, dominantType };
+  }
+
+  function placeStory(slotId, storyId) {
+    const story = state.stories.find((s) => s.id === Number(storyId));
+    state.placed[slotId] = story || null;
+    renderSlots();
+    renderLiveStats();
+  }
+
+  function renderStories() {
+    el.storyList.innerHTML = "";
+    for (const story of state.stories) {
+      const card = document.createElement("div");
+      card.className = "nm-story";
+      card.draggable = true;
+      card.dataset.storyId = String(story.id);
+      const negatives = story.negatives.length
+        ? `<span class="nm-chip" style="color:#fca5a5">负面:${story.negatives.join("/")}</span>`
+        : `<span class="nm-chip">负面:无</span>`;
+      const ex = story.fromExplore ? `<span class="nm-chip ex">探索稿</span>` : "";
+      card.innerHTML = `
+        <div class="nm-story-title">${escapeHtml(story.title)}</div>
+        <div class="nm-chips">
+          ${ex}
+          <span class="nm-chip">标签:${story.tags.map(toZhTag).join(" / ")}</span>
+          <span class="nm-chip">质量:${story.quality}</span>
+          <span class="nm-chip">基础值:${story.baseValue}</span>
+          ${negatives}
+        </div>`;
+      const tip = document.createElement("div");
+      tip.className = "nm-tip";
+      tip.textContent = "拖到中间版位";
+      card.appendChild(tip);
+      card.addEventListener("dragstart", (ev) => {
+        state.draggingStoryId = story.id;
+        ev.dataTransfer.setData("text/plain", String(story.id));
+        card.classList.add("dragging");
+      });
+      card.addEventListener("dragend", () => {
+        state.draggingStoryId = null;
+        card.classList.remove("dragging");
+        clearDropPreview();
+      });
+      el.storyList.appendChild(card);
+    }
+  }
+
+  function clearDropPreview() {
+    el.slotList.querySelectorAll(".nm-slot").forEach((node) => {
+      node.classList.remove("drag-over", "good-preview", "bad-preview", "synergy");
+    });
+    el.slotList.querySelectorAll("[data-impact]").forEach((n) => {
+      n.textContent = "拖入报道可预览该版位影响";
+    });
+  }
+
+  function applySynergyHighlights(projectedLinkedTags) {
+    const linkSet = new Set(projectedLinkedTags || []);
+    el.slotList.querySelectorAll(".nm-slot").forEach((node) => {
+      const slotId = node.dataset.slotId;
+      const story = state.placed[slotId];
+      if (!story) return;
+      node.classList.toggle("synergy", story.tags.some((t) => linkSet.has(t)));
+    });
+  }
+
+  function renderImpactRows(baseline, projected, extraText) {
+    const core = [
+      { name: "预计利润", delta: Math.round(projected.profit - baseline.profit), suffix: "" },
+      { name: "预计销量", delta: projected.sold - baseline.sold, suffix: "份" },
+      { name: "关键原因", delta: 0, text: extraText || "无明显变化" },
+    ];
+    const detail = [
+      { name: "连携题材数", delta: projected.linkCount - baseline.linkCount, suffix: "" },
+      { name: "多样性乘数", delta: projected.multipliers.mDiversity - baseline.multipliers.mDiversity, suffix: "x", fixed: 2 },
+      { name: "偏科惩罚乘数", delta: projected.multipliers.mBias - baseline.multipliers.mBias, suffix: "x", fixed: 2 },
+      { name: "负面惩罚点", delta: projected.negPenaltyPoints - baseline.negPenaltyPoints, suffix: "" },
+    ];
+    const renderRow = (d) => {
+      if (d.text) return `<div class="nm-impact-row neu"><span class="name">${d.name}</span><span class="delta">${d.text}</span></div>`;
+      const cls = d.delta > 0 ? "pos" : d.delta < 0 ? "neg" : "neu";
+      const abs = d.fixed != null ? Math.abs(d.delta).toFixed(d.fixed) : Math.abs(d.delta);
+      const prefix = d.delta > 0 ? "+" : d.delta < 0 ? "-" : "±";
+      return `<div class="nm-impact-row ${cls}"><span class="name">${d.name}</span><span class="delta">${prefix}${abs}${d.suffix}</span></div>`;
+    };
+    return `<div class="nm-impact-list">${core.map(renderRow).join("")}</div>
+      <details style="margin-top:6px;"><summary style="cursor:pointer;color:#94a3b8;font-size:12px;">详情</summary>
+      <div class="nm-impact-list" style="margin-top:6px;">${detail.map(renderRow).join("")}</div></details>`;
+  }
+
+  function showReplaceToast(prevStory, newStory) {
+    if (state.undoTimer) {
+      clearTimeout(state.undoTimer);
+      state.undoTimer = null;
+    }
+    el.toast.innerHTML = `<span>已替换：${escapeHtml(prevStory.title)} → ${escapeHtml(newStory.title)}</span>
+      <button class="nm-sec" id="undoBtn">撤销</button>`;
+    el.toast.classList.add("show");
+    document.getElementById("undoBtn").onclick = () => {
+      if (!state.lastReplaceAction) return;
+      state.placed[state.lastReplaceAction.slotId] = state.lastReplaceAction.prevStory;
+      state.lastReplaceAction = null;
+      el.toast.classList.remove("show");
+      renderSlots();
+      renderLiveStats();
+    };
+    state.undoTimer = setTimeout(() => {
+      state.lastReplaceAction = null;
+      el.toast.classList.remove("show");
+    }, 2000);
+  }
+
+  function renderSlots() {
+    el.slotList.innerHTML = "";
+    const baseline = calculate(false);
+
+    const layout = [
+      { page: 1, kind: "main", slotId: "front-main", label: "头版" },
+      { page: 1, kind: "subL", slotId: "front-side", label: "子版 A" },
+      { page: 1, kind: "subR", slotId: "feature-1", label: "子版 B" },
+      { page: 2, kind: "main", slotId: "feature-2", label: "次头版" },
+      { page: 2, kind: "subL", slotId: "inner-1", label: "子版 C" },
+      { page: 2, kind: "subR", slotId: "inner-2", label: "子版 D" },
+    ];
+
+    const attrsDots = (story) => {
+      const tags = (story && story.tags) || [];
+      const dots = [];
+      for (let i = 0; i < Math.min(4, tags.length); i++) dots.push(`<span class="paper-attr t${(i % 4) + 1}" title="${escapeHtml(toZhTag(tags[i]))}"></span>`);
+      if (story && story.negatives && story.negatives.length) dots.push(`<span class="paper-attr t1" title="负面词条"></span>`);
+      return `<div class="paper-attrs">${dots.join("")}</div>`;
+    };
+
+    const bodyMask = () => `<div class="paper-body">
+      <span>**** **** **** **** **** ****</span>
+      <span>**** **** **** **** **** ****</span>
+      <span>**** **** **** **** **** ****</span>
+      <span>**** **** **** **** **** ****</span>
+    </div>`;
+
+    const renderSlotInner = (slot, isMain, labelText) => {
+      const current = state.placed[slot.id];
+      const mult = (1 + 2 * slot.weight).toFixed(1);
+      if (!current) {
+        const multHint = slot.id === "front-main"
+          ? `<div class="paper-multi empty">头版奖励系数 x${mult}</div>`
+          : `<div class="paper-multi">系数 x${mult}</div>`;
+        return `
+          <div class="paper-slot-header"><span>${escapeHtml(labelText)}</span>${multHint}</div>
+          <div class="paper-empty">拖拽报道到此处</div>
+        `;
+      }
+      const titleCls = isMain ? "" : "small";
+      const removeBtn = `<button class="nm-sec" data-remove="${slot.id}" style="justify-self:end;">移除</button>`;
+      return `
+        <div class="paper-slot-header">
+          <span>${escapeHtml(labelText)}</span>
+          <span class="paper-multi">系数 x${mult}</span>
+        </div>
+        <div>
+          <div class="paper-story-title ${titleCls}">${escapeHtml(current.title)}</div>
+          ${attrsDots(current)}
+        </div>
+        <div class="paper-img" aria-label="报道图片占位"></div>
+        ${bodyMask()}
+        ${removeBtn}
+      `;
+    };
+
+    const slotById = Object.fromEntries(slots.map((s) => [s.id, s]));
+    const page = (num) => {
+      const items = layout.filter((x) => x.page === num);
+      const main = items.find((x) => x.kind === "main");
+      const subL = items.find((x) => x.kind === "subL");
+      const subR = items.find((x) => x.kind === "subR");
+      const header = num === 1
+        ? `<div class="paper-header"><div class="paper-name">DOG NEWS</div><div class="paper-meta"><span>1930年3月</span><span>第${state.week}周</span><span>第${num}页</span></div></div>`
+        : `<div class="paper-header"><div class="paper-name" style="font-size:18px;letter-spacing:0.06em;">DOG NEWS</div><div class="paper-meta"><span>1930年3月</span><span>第${state.week}周</span><span>第${num}页</span></div></div>`;
+      return `<section class="paper-page">
+        ${header}
+        <div class="paper-grid">
+          <div class="paper-slot" data-slot="${main.slotId}">${renderSlotInner(slotById[main.slotId], true, main.label)}</div>
+          <div class="paper-row2">
+            <div class="paper-slot" data-slot="${subL.slotId}">${renderSlotInner(slotById[subL.slotId], false, subL.label)}</div>
+            <div class="paper-slot" data-slot="${subR.slotId}">${renderSlotInner(slotById[subR.slotId], false, subR.label)}</div>
+          </div>
+        </div>
+      </section>`;
+    };
+
+    const modeCls = state.paperLayoutMode === "fluid" ? "paper-mode-fluid" : "paper-mode-fixed";
+    const visualCls = state.paperVisualMode === "enhanced" ? "paper-visual-enhanced" : "paper-visual-normal";
+    el.slotList.innerHTML = `<div class="paper-spread ${modeCls} ${visualCls}">${page(1)}${page(2)}</div>`;
+
+    // drag/drop handlers
+    el.slotList.querySelectorAll(".paper-slot").forEach((div) => {
+      const slotId = div.getAttribute("data-slot");
+      const slot = slotById[slotId];
+      if (!slot) return;
+      div.addEventListener("dragover", (ev) => {
+        if (!state.draggingStoryId) return;
+        ev.preventDefault();
+        div.classList.add("drag-over");
+        const projected = calculateWithPlacement(slot.id, state.draggingStoryId);
+        const profitDelta = Math.round(projected.profit - baseline.profit);
+        div.classList.toggle("good-preview", profitDelta > 0);
+        div.classList.toggle("bad-preview", profitDelta < 0);
+        applySynergyHighlights(projected.linkedTags);
+      });
+      div.addEventListener("dragleave", () => {
+        div.classList.remove("drag-over", "good-preview", "bad-preview", "synergy");
+      });
+      div.addEventListener("drop", (ev) => {
+        ev.preventDefault();
+        const storyId = ev.dataTransfer.getData("text/plain") || String(state.draggingStoryId || "");
+        if (!storyId) return;
+        const newStory = state.stories.find((s) => s.id === Number(storyId));
+        const prevStory = state.placed[slot.id];
+        if (prevStory && newStory) {
+          state.lastReplaceAction = { slotId: slot.id, prevStory };
+          showReplaceToast(prevStory, newStory);
+        }
+        placeStory(slot.id, storyId);
+        clearDropPreview();
+      });
+    });
+
+    el.slotList.querySelectorAll("[data-remove]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.placed[btn.getAttribute("data-remove")] = null;
+        renderSlots();
+        renderLiveStats();
+      });
+    });
+  }
+
+  function updatePaperModeButton() {
+    const btn = document.getElementById("paperModeToggle");
+    const visualBtn = document.getElementById("paperVisualToggle");
+    if (!btn) return;
+    if (!state.paperLabMode) {
+      btn.style.display = "none";
+      if (visualBtn) visualBtn.style.display = "none";
+      return;
+    }
+    btn.style.display = "";
+    if (visualBtn) visualBtn.style.display = "";
+    btn.textContent = state.paperLayoutMode === "fixed" ? "切换为流式版面" : "切换为定高版面";
+    btn.title = state.paperLayoutMode === "fixed"
+      ? "当前：定高（保持报纸形状）"
+      : "当前：流式（随内容拉伸）";
+    if (visualBtn) {
+      visualBtn.textContent = state.paperVisualMode === "enhanced" ? "拟物增强：开" : "拟物增强：关";
+      visualBtn.title = state.paperVisualMode === "enhanced" ? "当前：拟物增强模式" : "当前：正常模式";
+    }
+  }
+
+  function renderLiveStats() {
+    const r = calculate(false);
+    const effects = analyzeTagEffects(getAllPlaced().map((x) => x.story));
+    const profileLabel = state.editorialProfile <= -35 ? "信息型" : state.editorialProfile >= 35 ? "热度型" : "平衡型";
+    el.liveStats.innerHTML = `
+      <div class="k">已填版位</div><div class="v">${r.placedCount}/${slots.length}</div>
+      <div class="k">编辑定位</div><div class="v">${profileLabel} (${Math.round(state.editorialProfile)})</div>
+      <div class="k">独特标签数</div><div class="v">${r.uniqueTags}</div>
+      <div class="k">重复成组分</div><div class="v">${r.comboRaw.toFixed(2)}</div>
+      <div class="k">连携题材</div><div class="v ${effects.linked.length ? "nm-ok" : "nm-warn"}">${effects.linked.length ? effects.linked.map(toZhTag).join("、") : "无"}</div>
+      <div class="k">三轴 P/M/L</div><div class="v ${effects.dominantRatio > 0.7 ? "nm-bad" : "nm-ok"}">${Math.round(effects.publicRatio * 100)}/${Math.round(effects.massRatio * 100)}/${Math.round(effects.lightRatio * 100)}%</div>
+      <div class="k">预计需求</div><div class="v">${Math.round(r.demand).toLocaleString("zh-CN")}</div>
+      <div class="k">订阅基数</div><div class="v">${state.subscribers.toLocaleString("zh-CN")}</div>`;
+  }
+
+  function settlePaper() {
+    const r = calculate(true);
+    const placed = getAllPlaced().map((x) => x.story);
+    const axis = analyzeTagEffects(placed);
+    const profileDelta = (axis.lightRatio - axis.publicRatio) * 24 - axis.massRatio * 4;
+    state.editorialProfile = clamp(state.editorialProfile + profileDelta, -100, 100);
+    macro.声望 = Math.min(100, macro.声望 + Math.min(5, Math.floor(state.pendingClues.length / 2)));
+    const profitClass = r.profit >= 0 ? "nm-ok" : "nm-bad";
+    el.resultBox.innerHTML = `
+      <div class="k">本期净利润</div>
+      <div class="nm-big ${profitClass}">${fmtMoney(r.profit)}</div>
+      <div class="nm-sum-grid">
+        <div class="k">卖报</div><div class="v">${fmtMoney(r.circulationRevenue)}</div>
+        <div class="k">订阅</div><div class="v">${fmtMoney(r.subscriptionRevenue)}</div>
+        <div class="k">广告</div><div class="v">${fmtMoney(r.adsRevenue)}</div>
+        <div class="k">总成本</div><div class="v">${fmtMoney(-r.costs.totalCost)}</div>
+        <div class="k">实际销量</div><div class="v">${r.sold.toLocaleString("zh-CN")}</div>
+        <div class="k">订阅（下期）</div><div class="v">${r.nextSubs.toLocaleString("zh-CN")}</div>
+      </div>
+      <div class="nm-tip">乘数：质量 ${r.multipliers.mQuality.toFixed(2)} / 重复 ${r.multipliers.mCombo.toFixed(2)} / 多样性 ${r.multipliers.mDiversity.toFixed(2)} / 版位 ${r.multipliers.mLayout.toFixed(2)} / 偏科 ${r.multipliers.mBias.toFixed(2)}</div>`;
+    renderLiveStats();
+    document.getElementById("summaryText").innerHTML = `
+      第 <strong>${state.week}</strong> 周报刊已结算：净利润 <strong>${fmtMoney(r.profit)}</strong>，
+      下期订阅 <strong>${r.nextSubs.toLocaleString("zh-CN")}</strong>。
+      本周合成稿件 <strong>${(state.pendingReports && state.pendingReports.length) || state.pendingClues.length}</strong> 条（已计入故事库）。`;
+    document.getElementById("phase-editorial").classList.add("hidden");
+    document.getElementById("phase-summary").classList.remove("hidden");
+    log(`报刊结算完成：利润 ${Math.round(r.profit)}`);
+  }
+
+  function nextWeek() {
+    state.week += 1;
+    state.day = 7;
+    state.weekEvent = null;
+    state.weekEventResolved = false;
+    state.weekEventResult = "";
+    state.activeMissions = [];
+    state.todayResolutionQueue = [];
+    state.processingDayTick = false;
+    state.dayResolutionInfo = null;
+    state.pendingClues = [];
+    state.pendingReports = [];
+    cleanupWeekScopedEffects();
+    initRegionLeadEvents();
+    state.phase = "explore";
+    document.getElementById("phase-explore").classList.remove("hidden");
+    document.getElementById("phase-synthesis").classList.add("hidden");
+    document.getElementById("phase-summary").classList.add("hidden");
+    log("———— 新的一周 ————");
+    renderMacro();
+    renderWeekStart();
+  }
+
+  function tickHeader() {
+    const wl = document.getElementById("weekLabel");
+    const dl = document.getElementById("dayLabel");
+    if (wl) wl.textContent = `第 ${state.week} 周`;
+    if (dl) dl.textContent = `剩余 ${state.day} / 7 日`;
+    updateNextDayButton();
+  }
+
+  function bindEditorialUi() {
+    document.getElementById("regenBtn").onclick = () => {
+      buildEditorialPool();
+      renderStories();
+      renderSlots();
+      renderLiveStats();
+    };
+    document.getElementById("storyCount").onchange = () => {
+      buildEditorialPool();
+      renderStories();
+      renderSlots();
+      renderLiveStats();
+    };
+    document.getElementById("clearBtn").onclick = () => {
+      for (const s of slots) state.placed[s.id] = null;
+      renderSlots();
+      renderLiveStats();
+      el.resultBox.innerHTML = `<div class="k">尚未结算</div><div class="nm-tip">版面已清空。</div>`;
+    };
+    const modeBtn = document.getElementById("paperModeToggle");
+    if (modeBtn) {
+      modeBtn.onclick = () => {
+        state.paperLayoutMode = state.paperLayoutMode === "fixed" ? "fluid" : "fixed";
+        renderSlots();
+        updatePaperModeButton();
+      };
+    }
+    const visualBtn = document.getElementById("paperVisualToggle");
+    if (visualBtn) {
+      visualBtn.onclick = () => {
+        state.paperVisualMode = state.paperVisualMode === "enhanced" ? "normal" : "enhanced";
+        renderSlots();
+        updatePaperModeButton();
+      };
+    }
+    document.getElementById("settleBtn").onclick = settlePaper;
+    document.getElementById("btnNextWeek").onclick = nextWeek;
+  }
+
+  function bindSynthesisUi() {
+    document.getElementById("tabPhenomenon").onclick = () => {
+      state.synthTab = "phenomenon";
+      renderSynthesis();
+    };
+    document.getElementById("tabIntel").onclick = () => {
+      state.synthTab = "intel";
+      renderSynthesis();
+    };
+    document.getElementById("tabCognition").onclick = () => {
+      state.synthTab = "cognition";
+      renderSynthesis();
+    };
+    document.getElementById("tabTool").onclick = () => {
+      state.synthTab = "tool";
+      renderSynthesis();
+    };
+    document.getElementById("recipe1").onclick = () => {
+      state.synthRecipe = "r1";
+      renderSynthesis();
+    };
+    document.getElementById("recipe2").onclick = () => {
+      state.synthRecipe = "r2";
+      renderSynthesis();
+    };
+    document.getElementById("recipe3").onclick = () => {
+      state.synthRecipe = "r3";
+      renderSynthesis();
+    };
+    document.getElementById("recipe4").onclick = () => {
+      state.synthRecipe = "r4";
+      renderSynthesis();
+    };
+    document.getElementById("clearSelection").onclick = () => {
+      state.synthSelection = [];
+      renderSynthesis();
+    };
+    document.getElementById("researchBtn").onclick = researchPhenomenon;
+    document.getElementById("craftBtn").onclick = craftReport;
+    document.getElementById("toEditorialBtn").onclick = () => {
+      state.pendingReports = state.craftedReports.slice();
+      if (!state.pendingReports.length) {
+        log("未合成报道，系统将使用探索线索自动转稿。");
+      }
+      enterEditorialPhase();
+    };
+  }
+
+  document.getElementById("btnEndWeek").onclick = () => {
+    if (state.phase !== "explore") return;
+    log("结束探索周，进入故事合成台。");
+    state.day = 0;
+    enterSynthesisPhase();
+  };
+  document.getElementById("btnNextDay").onclick = () => advanceOneDay();
+
+  function createPaperLabReports() {
+    const mk = (title, tags, quality, baseValue, negatives, attrs, recipeType) => ({
+      id: state.nextStoryId++,
+      title,
+      tags,
+      quality,
+      baseValue,
+      negatives,
+      fromExplore: true,
+      attrs,
+      recipeType,
+    });
+    return [
+      mk("塔夫脱辞去大法官职务：历史性领导层更迭", ["Politics", "Economy"], "Gold", 450, [], { sensational: 64, credibility: 88, mystery: 28, gaze: 18 }, "r2"),
+      mk("港务局夜间封锁：三号码头出现异常回波", ["Military", "Gossip"], "Silver", 300, ["thin_source"], { sensational: 72, credibility: 55, mystery: 52, gaze: 34 }, "r1"),
+      mk("东区剧院失踪档案重现：署名来自未来日期", ["Gossip", "Humor"], "Silver", 300, [], { sensational: 76, credibility: 48, mystery: 67, gaze: 46 }, "r3"),
+      mk("市政预算暗线曝光：采购名单出现重复身份", ["Politics", "Shopping"], "Gold", 450, ["bias_overreach"], { sensational: 68, credibility: 79, mystery: 35, gaze: 24 }, "r2"),
+      mk("复活节岛热异常追踪：石像群温差超出历史记录", ["Economy", "Sport"], "Silver", 300, [], { sensational: 58, credibility: 74, mystery: 44, gaze: 23 }, "r1"),
+      mk("夜班电台误播神秘频段：听众报告同频耳鸣", ["Gossip", "Pets"], "Bronze", 150, ["sloppy_writing"], { sensational: 70, credibility: 38, mystery: 62, gaze: 41 }, "r3"),
+      mk("法庭速记员匿名口供：判词在宣读前已泄露", ["Politics", "Military"], "Gold", 450, [], { sensational: 66, credibility: 86, mystery: 31, gaze: 20 }, "r2"),
+      mk("雨夜轨道尽头的白灯：巡检员口供互相矛盾", ["Sport", "Humor"], "Bronze", 150, ["fabrication"], { sensational: 81, credibility: 27, mystery: 71, gaze: 52 }, "r4"),
+      mk("联邦仓库短时断电：监控画面出现空白帧", ["Economy", "Gossip"], "Silver", 300, [], { sensational: 63, credibility: 66, mystery: 49, gaze: 29 }, "r1"),
+      mk("午夜来信附带金属碎片：材质与军标不匹配", ["Military", "Shopping"], "Silver", 300, ["thin_source"], { sensational: 74, credibility: 52, mystery: 59, gaze: 37 }, "r3"),
+    ];
+  }
+
+  function maybeEnterPaperLabMode() {
+    const p = new URLSearchParams(window.location.search || "");
+    const enabled = p.get("paperlab") === "1" || (window.location.hash || "").toLowerCase() === "#paperlab";
+    if (!enabled) return false;
+    state.paperLabMode = true;
+    state.paperLayoutMode = "fixed";
+    state.paperVisualMode = "normal";
+    state.phase = "editorial";
+    state.pendingReports = createPaperLabReports();
+    state.pendingClues = [];
+    state.clues = [];
+    log("已进入报纸填充实验模式：跳过全流程，直接体验两页六版位组版。");
+    enterEditorialPhase();
+    return true;
+  }
+
+  function init() {
+    renderMacro();
+    tickHeader();
+    setInterval(tickHeader, 500);
+    initRegionLeadEvents();
+    bindSynthesisUi();
+    bindEditorialUi();
+    log("全链条开始：探索 → 故事合成 → 编辑部组版 → 结算。");
+    if (!maybeEnterPaperLabMode()) {
+      renderWeekStart();
+      updateNextDayButton();
+    }
+  }
+
+  init();
+})();

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Feishu Send"
+  short_description: "Send plain text to a Feishu chat_id from Codex."
+  default_prompt: "Use $feishu-send to send plain text to a Feishu chat_id."

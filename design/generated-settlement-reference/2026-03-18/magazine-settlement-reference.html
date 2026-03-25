@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANGUS - 杂志结算页参考图</title>
+<link rel="stylesheet" href="./magazine-settlement-reference.css">
+</head>
+<body>
+  <div id="artboard" class="artboard">
+    <div class="ambient-map"></div>
+    <div class="ambient-ring"></div>
+    <div class="ambient-string s1"></div>
+    <div class="ambient-string s2"></div>
+    <div class="ambient-string s3"></div>
+    <div class="ambient-stamp a" id="ambientStampA">ARCHIVE</div>
+    <div class="ambient-stamp b" id="ambientStampB">REDACTED</div>
+    <div class="ambient-glyph" id="ambientGlyph">✶</div>
+
+    <header class="topline">
+      <section class="masthead">
+        <div class="kicker">ANGUS / Weekly Mystery Gazette / Issue Settlement Reference</div>
+        <div class="title-line">
+          <h1 id="variantTitle"></h1>
+          <div class="variant-code" id="variantCode"></div>
+        </div>
+        <div class="subtitle" id="variantSubtitle"></div>
+      </section>
+      <section class="header-metrics" id="headerMetrics"></section>
+    </header>
+
+    <main class="main-grid">
+      <section class="paper cover-panel">
+        <div class="panel-header">
+          <div class="panel-title">本期成刊</div>
+          <div class="panel-chip" id="coverChip"></div>
+        </div>
+        <div class="cover-sheet">
+          <div class="cover-visual">
+            <div class="cover-grid"></div>
+            <div class="cover-orbit"></div>
+            <div class="cover-node n1"></div>
+            <div class="cover-node n2"></div>
+            <div class="cover-node n3"></div>
+            <div class="cover-mark" id="coverMark"></div>
+            <div class="cover-copy">
+              <div class="cover-label" id="coverLabel"></div>
+              <div class="cover-headline" id="coverHeadline"></div>
+              <div class="cover-deck" id="coverDeck"></div>
+            </div>
+          </div>
+          <div class="truth-bars" id="truthBars"></div>
+          <div class="story-strip" id="storyStrip"></div>
+        </div>
+      </section>
+
+      <section class="paper center-panel">
+        <div class="panel-header">
+          <div class="panel-title">版面与叙事联动</div>
+          <div class="panel-chip" id="centerChip"></div>
+        </div>
+        <div class="layout-board">
+          <div class="layout-column" id="slotColumn"></div>
+          <div class="layout-column" id="deltaColumn"></div>
+        </div>
+        <div class="insight-cluster" id="insightCluster"></div>
+      </section>
+
+      <aside class="paper score-panel">
+        <div class="panel-header">
+          <div class="panel-title">发行结果</div>
+          <div class="panel-chip" id="scoreChip"></div>
+        </div>
+        <div class="score-stack">
+          <div class="delta-card">
+            <div class="panel-chip small-chip">销量 / 营收 / 版面收益</div>
+            <div id="scoreRows"></div>
+          </div>
+          <div class="delta-card">
+            <div class="panel-chip small-chip">五维属性变化</div>
+            <div class="attribute-grid" id="attributeGrid"></div>
+          </div>
+        </div>
+        <div class="faction-list" id="factionList"></div>
+        <div class="unlock-list" id="unlockList"></div>
+      </aside>
+    </main>
+
+    <footer class="footer-bar">
+      <div class="reader-box">
+        <div class="reader-kicker">读者反馈 / Reader Echo</div>
+        <div class="reader-text" id="readerText"></div>
+      </div>
+      <div class="footer-note">
+        <div class="note-kicker">下期钩子</div>
+        <div class="note-text" id="nextIssueText"></div>
+      </div>
+      <div class="seal-box">
+        <div class="seal-text" id="sealText"></div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="./magazine-settlement-reference.data.js"></script>
+  <script src="./magazine-settlement-reference.app.js"></script>
+</body>
+</html>
