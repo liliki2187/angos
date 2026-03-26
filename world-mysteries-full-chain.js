@@ -62,7 +62,21 @@
     paperLayoutMode: "fixed",
     paperLabMode: false,
     paperVisualMode: "normal",
+    /** 第 1 周软引导：已关闭过的 key，本局内不再弹出；新周目从第 1 周开始时随页面或 nextWeek 清空 */
+    tutorialSoftW1: {},
   };
+
+  const LAB_FULL_GUIDE_HTML = `<p style="margin:0 0 0.55rem;line-height:1.55;">本页为<strong>报刊组版实验模式</strong>（已跳过探索与合成）。下列与正式全链条第 1 周软引导一致，便于你在此专注练手。</p>
+<ul style="margin:0 0 0.55rem;padding-left:1.15rem;line-height:1.55;color:var(--text);">
+<li><strong>探索（主入口）</strong>：回合简报 → 全球地图 → 区域；<strong>下一天</strong>在全球/区域/左下角悬浮均可推进，到期任务会依次判定。</li>
+<li><strong>故事合成台</strong>：现象/情报/认知/工具按配方合成报道，再进入组版。</li>
+       <li><strong>报刊组版</strong>：左侧<strong>故事库</strong>卡片拖到中间<strong>拟物报纸</strong>版位（头版系数最高），再点「结算本期」。</li>
+</ul>
+<p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">关闭本窗后将打开<strong>填入演示</strong>（与正式全链条第一周所用相同：拟物报纸 + 效果 B + 1 秒自动重播）。刷新页面前本引导只出现一次。</p>`;
+
+  const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道：港区异常回波</div>
+<div class="nm-chips"><span class="nm-chip ex">探索稿</span><span class="nm-chip">标签:时政 / 经济</span><span class="nm-chip">质量:Gold</span></div>
+<div class="nm-tip" style="margin-top:6px;font-size:11px;padding:6px;">拖到中间头版版位</div>`;
 
   const TAGS = ["Politics", "Military", "Economy", "Sport", "Gossip", "Pets", "Humor", "Shopping"];
   const QUALITY = [
@@ -166,14 +180,14 @@
   }
 
   const STAFF = [
-    { id: "s1", name: "外勤·阿黎", avatar: makeAvatar("外勤·阿黎", "#1d4ed8", "#0ea5e9"), 探索: 3, 生存: 2, 洞察: 2, 诡思: 1, 理性: 2 },
-    { id: "s2", name: "调查·老魏", avatar: makeAvatar("调查·老魏", "#14532d", "#22c55e"), 探索: 2, 生存: 3, 洞察: 3, 诡思: 0, 理性: 3 },
-    { id: "s3", name: "神秘版·伊芙", avatar: makeAvatar("神秘版·伊芙", "#4c1d95", "#a855f7"), 探索: 1, 生存: 1, 洞察: 2, 诡思: 4, 理性: 1 },
-    { id: "s4", name: "实习生·小赵", avatar: makeAvatar("实习生·小赵", "#7c2d12", "#f97316"), 探索: 2, 生存: 1, 洞察: 1, 诡思: 1, 理性: 2 },
-    { id: "s5", name: "档案员·沈墨", avatar: makeAvatar("档案员·沈墨", "#0f766e", "#14b8a6"), 探索: 1, 生存: 1, 洞察: 4, 诡思: 1, 理性: 3 },
-    { id: "s6", name: "摄影师·鲁卡", avatar: makeAvatar("摄影师·鲁卡", "#4338ca", "#6366f1"), 探索: 3, 生存: 2, 洞察: 2, 诡思: 1, 理性: 2 },
-    { id: "s7", name: "联络员·宁言", avatar: makeAvatar("联络员·宁言", "#7f1d1d", "#ef4444"), 探索: 2, 生存: 2, 洞察: 3, 诡思: 0, 理性: 3 },
-    { id: "s8", name: "法医顾问·白鹿", avatar: makeAvatar("法医顾问·白鹿", "#374151", "#9ca3af"), 探索: 1, 生存: 2, 洞察: 3, 诡思: 2, 理性: 4 },
+    { id: "s1", name: "印第安纳穷死", avatar: "Assets/avatars/s1_indiana.png", 探索: 3, 生存: 2, 洞察: 2, 诡思: 1, 理性: 2 },
+    { id: "s2", name: "末日时钟", avatar: "Assets/avatars/s2_doomclock.png", 探索: 2, 生存: 3, 洞察: 3, 诡思: 0, 理性: 3 },
+    { id: "s3", name: "火鸡科学家", avatar: "Assets/avatars/s3_turkey_scientist.png", 探索: 1, 生存: 1, 洞察: 2, 诡思: 4, 理性: 1 },
+    { id: "s4", name: "薛定谔", avatar: "Assets/avatars/s4_schrodinger.png", 探索: 2, 生存: 1, 洞察: 1, 诡思: 1, 理性: 2 },
+    { id: "s5", name: "主角", avatar: "Assets/avatars/s5_protagonist.png", 探索: 1, 生存: 1, 洞察: 4, 诡思: 1, 理性: 3 },
+    { id: "s6", name: "伪人", avatar: "Assets/avatars/s6_impostor.png", 探索: 3, 生存: 2, 洞察: 2, 诡思: 1, 理性: 2 },
+    { id: "s7", name: "娜娜", avatar: "Assets/avatars/s7_nana.png", 探索: 2, 生存: 2, 洞察: 3, 诡思: 0, 理性: 3 },
+    { id: "s8", name: "艾灵", avatar: "Assets/avatars/s8_ailing.png", 探索: 1, 生存: 2, 洞察: 3, 诡思: 2, 理性: 4 },
   ];
 
   const TAG_LABEL = { sci: "科学纪实", occult: "神秘玄学", pop: "世俗流量" };
@@ -343,6 +357,214 @@
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
+  }
+
+  function week1TutorialActive() {
+    return state.week === 1 && !state.paperLabMode;
+  }
+
+  function showSoftTutorialModal(key, title, bodyHtml, gateFn) {
+    return new Promise((resolve) => {
+      if (!gateFn() || state.tutorialSoftW1[key]) {
+        resolve();
+        return;
+      }
+      const wrap = document.getElementById("tutorialSoftModal");
+      const ttl = document.getElementById("tutorialSoftTitle");
+      const body = document.getElementById("tutorialSoftBody");
+      const ok = document.getElementById("tutorialSoftOk");
+      if (!wrap || !ttl || !body || !ok) {
+        resolve();
+        return;
+      }
+      ttl.textContent = title || "提示";
+      body.innerHTML = bodyHtml || "";
+      wrap.classList.remove("hidden");
+      const done = () => {
+        wrap.classList.add("hidden");
+        state.tutorialSoftW1[key] = true;
+        ok.removeEventListener("click", onOk);
+        wrap.removeEventListener("click", onMask);
+        resolve();
+      };
+      const onOk = () => done();
+      const onMask = (ev) => {
+        if (ev.target === wrap) done();
+      };
+      ok.addEventListener("click", onOk);
+      wrap.addEventListener("click", onMask);
+    });
+  }
+
+  function showWeek1SoftTutorialModal(key, title, bodyHtml) {
+    return showSoftTutorialModal(key, title, bodyHtml, week1TutorialActive);
+  }
+
+  async function runPaperLabOnboarding() {
+    if (!state.paperLabMode) return;
+    await showSoftTutorialModal("lab_fullGuide", "新手引导 · 报刊组版实验", LAB_FULL_GUIDE_HTML, () => state.paperLabMode);
+    openPaperDemoLab();
+  }
+
+  async function runWeek1EditorialOnboarding() {
+    if (!week1TutorialActive() || state.phase !== "editorial" || state.paperLabMode) return;
+    await showWeek1SoftTutorialModal(
+      "w1_editorial",
+      "第一周 · 报刊组版（软引导）",
+      `<p style="margin:0 0 0.6rem;line-height:1.55;">从左侧故事库<strong>按住拖到</strong>中间<strong>拟物报纸版位</strong>即可填入；头版与内页影响曝光系数。填完后点<strong>结算本期</strong>查看利润构成。</p>
+       <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">关闭本窗后将<strong>自动播放填入动画演示</strong>（效果 B，播完间隔 1 秒循环）；也可随时点「报刊填入演示」重看。本周内本提示不再出现。</p>`,
+    );
+    if (!week1TutorialActive() || state.phase !== "editorial" || state.paperLabMode) return;
+    openPaperDemoLab();
+  }
+
+  function scheduleWeek1SoftTutorial(key, title, bodyHtml) {
+    if (!week1TutorialActive() || state.tutorialSoftW1[key]) return;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (!week1TutorialActive() || state.tutorialSoftW1[key]) return;
+        showWeek1SoftTutorialModal(key, title, bodyHtml);
+      });
+    });
+  }
+
+  let paperDemoRaf = null;
+  let paperDemoGen = 0;
+  let paperDemoAutoTimer = null;
+  const PAPER_DEMO_AUTO_INTERVAL_MS = 1000;
+
+  function cancelPaperDemoAnim() {
+    if (paperDemoRaf != null) {
+      cancelAnimationFrame(paperDemoRaf);
+      paperDemoRaf = null;
+    }
+  }
+
+  function clearPaperDemoAutoTimer() {
+    if (paperDemoAutoTimer != null) {
+      clearTimeout(paperDemoAutoTimer);
+      paperDemoAutoTimer = null;
+    }
+  }
+
+  function schedulePaperDemoAutoReplay() {
+    clearPaperDemoAutoTimer();
+    const wrap = document.getElementById("paperDemoLabModal");
+    if (!wrap || wrap.classList.contains("hidden")) return;
+    paperDemoAutoTimer = window.setTimeout(() => {
+      paperDemoAutoTimer = null;
+      const w = document.getElementById("paperDemoLabModal");
+      if (!w || w.classList.contains("hidden")) return;
+      playPaperDemoLab();
+    }, PAPER_DEMO_AUTO_INTERVAL_MS);
+  }
+
+  function playPaperDemoLab() {
+    const stage = document.getElementById("paperDemoStage");
+    const flyer = document.getElementById("paperDemoFlyer");
+    const slot = document.getElementById("paperDemoTargetSlot");
+    const chip = document.getElementById("paperDemoSourceChip");
+    const emptyHint = document.getElementById("paperDemoEmptyHint");
+    const landed = document.getElementById("paperDemoLandedBlock");
+    if (!stage || !flyer || !slot || !chip) return;
+    clearPaperDemoAutoTimer();
+    chip.innerHTML = PAPER_DEMO_SOURCE_INNER_HTML;
+    if (emptyHint) emptyHint.classList.remove("hidden");
+    if (landed) landed.classList.add("hidden");
+    cancelPaperDemoAnim();
+    stage.classList.remove("paper-demo-fx-b", "paper-demo-running");
+    flyer.classList.remove("paper-demo-flyer-visible", "paper-demo-flyer-b");
+    slot.classList.remove("paper-demo-slot-flash", "paper-demo-slot-filled");
+    chip.classList.remove("paper-demo-source-pulse");
+    flyer.innerHTML = `<div class="nm-story-title" style="font-size:12px;line-height:1.3;">示例报道：港区异常回波</div>`;
+    flyer.style.transform = "";
+    flyer.style.opacity = "";
+    void stage.offsetWidth;
+
+    const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      slot.classList.add("paper-demo-slot-filled");
+      if (emptyHint) emptyHint.classList.add("hidden");
+      if (landed) landed.classList.remove("hidden");
+      schedulePaperDemoAutoReplay();
+      return;
+    }
+
+    const myGen = ++paperDemoGen;
+    stage.classList.add("paper-demo-fx-b");
+    const sr = stage.getBoundingClientRect();
+    const cr = chip.getBoundingClientRect();
+    const targetEl = emptyHint && emptyHint.isConnected ? emptyHint : slot;
+    const tr = targetEl.getBoundingClientRect();
+    const x0 = cr.left - sr.left + cr.width / 2;
+    const y0 = cr.top - sr.top + cr.height / 2;
+    const x1 = tr.left - sr.left + tr.width / 2;
+    const y1 = tr.top - sr.top + tr.height / 2;
+    flyer.classList.add("paper-demo-flyer-visible", "paper-demo-flyer-b");
+    chip.classList.add("paper-demo-source-pulse");
+    const t0 = performance.now();
+    const dur = 880;
+    const ease = (t) => 1 - Math.pow(1 - t, 3);
+
+    const finishLand = () => {
+      chip.classList.remove("paper-demo-source-pulse");
+      slot.classList.add("paper-demo-slot-flash", "paper-demo-slot-filled");
+      if (emptyHint) emptyHint.classList.add("hidden");
+      if (landed) landed.classList.remove("hidden");
+    };
+
+    const step = (now) => {
+      if (myGen !== paperDemoGen) return;
+      const t = Math.min(1, (now - t0) / dur);
+      const e = ease(t);
+      const x = x0 + (x1 - x0) * e;
+      const y = y0 + (y1 - y0) * e;
+      const sc = 1 - 0.14 * e;
+      flyer.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${sc})`;
+      flyer.style.opacity = String(0.38 + 0.62 * e);
+      if (t < 1) {
+        paperDemoRaf = requestAnimationFrame(step);
+      } else {
+        paperDemoRaf = null;
+        finishLand();
+        schedulePaperDemoAutoReplay();
+      }
+    };
+    flyer.style.transform = `translate(${x0}px, ${y0}px) translate(-50%, -50%) scale(1)`;
+    flyer.style.opacity = "1";
+    paperDemoRaf = requestAnimationFrame(step);
+  }
+
+  function openPaperDemoLab() {
+    const wrap = document.getElementById("paperDemoLabModal");
+    if (!wrap) return;
+    clearPaperDemoAutoTimer();
+    cancelPaperDemoAnim();
+    wrap.classList.remove("hidden");
+    requestAnimationFrame(() => playPaperDemoLab());
+  }
+
+  function closePaperDemoLab() {
+    const wrap = document.getElementById("paperDemoLabModal");
+    if (wrap) wrap.classList.add("hidden");
+    clearPaperDemoAutoTimer();
+    cancelPaperDemoAnim();
+    paperDemoGen += 1;
+  }
+
+  let paperDemoLabBound = false;
+  function bindPaperDemoLabUi() {
+    if (paperDemoLabBound) return;
+    const wrap = document.getElementById("paperDemoLabModal");
+    const replay = document.getElementById("paperDemoReplay");
+    const closeBtn = document.getElementById("paperDemoClose");
+    if (!wrap || !replay || !closeBtn) return;
+    paperDemoLabBound = true;
+    replay.onclick = () => playPaperDemoLab();
+    closeBtn.onclick = () => closePaperDemoLab();
+    wrap.addEventListener("click", (ev) => {
+      if (ev.target === wrap) closePaperDemoLab();
+    });
   }
 
   function renderMacro() {
@@ -744,6 +966,12 @@
       renderGlobal();
     };
     setView("weekStart");
+    scheduleWeek1SoftTutorial(
+      "w1_weekStart",
+      "第一周 · 回合简报（软引导）",
+      `<p style="margin:0 0 0.6rem;line-height:1.55;">每周从<strong>随机事件</strong>开始：被动事件点「确认」，多选项事件请任选其一。处理完后点<strong>进入全球地图</strong>开始探索。</p>
+       <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">此为软引导，点「知道了」或空白处即可关闭；本周内不会重复弹出。新周目第 1 周会再次显示。</p>`,
+    );
   }
 
   function renderGlobal() {
@@ -818,6 +1046,13 @@
     const ndg = document.getElementById("btnNextDayGlobal");
     if (ndg) ndg.onclick = () => advanceOneDay();
     document.getElementById("backFromGlobal").onclick = () => renderWeekStart();
+    scheduleWeek1SoftTutorial(
+      "w1_global",
+      "第一周 · 全球地图（软引导）",
+      `<p style="margin:0 0 0.6rem;line-height:1.55;">点地图上的<strong>区域</strong>进入节点；右侧情报与地图点位<strong>联动高亮</strong>。顶部标签可筛选 <strong>科学 / 秘闻 / 大众</strong> 类事件。</p>
+       <p style="margin:0 0 0.6rem;line-height:1.55;"><strong>下一天</strong>：本页右侧大按钮、区域内同样位置，以及探索阶段<strong>左下角悬浮按钮</strong>均可推进天数；到期任务会依次判定。</p>
+       <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">关闭后本周内不再弹出本提示。</p>`,
+    );
   }
 
   function findActiveMission(predicate) {
@@ -1099,6 +1334,12 @@
       renderGlobal();
       setView("global");
     };
+    scheduleWeek1SoftTutorial(
+      "w1_region",
+      "第一周 · 区域探索（软引导）",
+      `<p style="margin:0 0 0.6rem;line-height:1.55;">地图上「常/隐/!」分别对应常驻、隐藏与临时事件；已派遣会标<strong>派</strong>。右侧卡片可配置队伍：需满足<strong>调查池</strong>与<strong>现场池</strong>骰数门槛。</p>
+       <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">线索事件走调查流程，成功可能解锁新节点。关闭后本周内不再弹出。</p>`,
+    );
   }
 
   function syncRegionLinkedState(root, key) {
@@ -1239,6 +1480,13 @@
       renderRegion();
       setView("region");
     };
+    scheduleWeek1SoftTutorial(
+      "w1_setup",
+      "第一周 · 队伍与检定（软引导）",
+      `<p style="margin:0 0 0.6rem;line-height:1.55;">点击队员卡片组成小队（最多 5 人）。面板上的概率为 split 检定参考；可切换<strong>骰子 / 纯数值</strong>展示。</p>
+       <p style="margin:0 0 0.6rem;line-height:1.55;">点<strong>派遣</strong>后任务会占用天数；到期待定需用<strong>下一天</strong>推进。无需强制点按本窗口外的按钮即可完成引导。</p>
+       <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">关闭后本周内不再弹出。</p>`,
+    );
   }
 
   function renderDiceRow(rolls, voidSet, label) {
@@ -1526,6 +1774,14 @@
       if (h) h.innerHTML = `<div class="prob-box">调查 ${check.hitsA}/${check.nAe}（≥${check.kA}）· 现场 ${check.hitsB}/${check.nBe}（≥${check.kB}）</div>`;
     }
     await showRewardsPopup(rewards);
+    if (week1TutorialActive() && !state.tutorialSoftW1.w1_result) {
+      await showWeek1SoftTutorialModal(
+        "w1_result",
+        "第一周 · 探索结算（软引导）",
+        `<p style="margin:0 0 0.6rem;line-height:1.55;">上方为<strong>split 检定</strong>结果：调查池与现场池各自达标情况决定大成功 / 小成功 / 失败 / 大失败。奖励弹窗可逐条浏览。</p>
+         <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">点「继续」返回区域或进入合成阶段（若本周天数已用尽）。关闭本提示后本周内不再弹出。</p>`,
+      );
+    }
     const tb = document.getElementById("tierBanner");
     if (tb) tb.textContent = tier;
     const goBtn = document.getElementById("btnAfterResult");
@@ -2045,6 +2301,12 @@
     el.synthesisHint = document.getElementById("synthesisHint");
     renderSynthesis();
     log("进入故事合成台：现象/认知/情报可合成报道。");
+    scheduleWeek1SoftTutorial(
+      "w1_synthesis",
+      "第一周 · 故事合成台（软引导）",
+      `<p style="margin:0 0 0.6rem;line-height:1.55;">用<strong>现象 / 情报 / 认知 / 工具</strong>牌按配方合成报道；可先「研究现象」生成认知。合成结果会进入列表，再点<strong>进入组版</strong>。</p>
+       <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">关闭后本周内不再弹出。</p>`,
+    );
   }
 
   function toZhTag(tag) {
@@ -2133,6 +2395,18 @@
     renderLiveStats();
     el.resultBox.innerHTML = `<div class="k">尚未结算</div><div class="nm-tip">拖拽报道到版位，再点「结算本期」。</div>`;
     log("进入编辑部：拖拽组版，结算与 docs/报刊结算出版玩法设计文档.md 一致。");
+    const btnDemo = document.getElementById("btnPaperDemoLab");
+    if (btnDemo) {
+      btnDemo.style.display = state.paperLabMode || state.week === 1 ? "inline-block" : "none";
+      btnDemo.onclick = () => openPaperDemoLab();
+    }
+    if (week1TutorialActive() && !state.paperLabMode) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          void runWeek1EditorialOnboarding();
+        });
+      });
+    }
   }
 
   function getAllPlaced() {
@@ -2561,6 +2835,7 @@
   }
 
   function nextWeek() {
+    state.tutorialSoftW1 = {};
     state.week += 1;
     state.day = 7;
     state.weekEvent = null;
@@ -2718,13 +2993,14 @@
     if (!enabled) return false;
     state.paperLabMode = true;
     state.paperLayoutMode = "fixed";
-    state.paperVisualMode = "normal";
+    state.paperVisualMode = "enhanced";
     state.phase = "editorial";
     state.pendingReports = createPaperLabReports();
     state.pendingClues = [];
     state.clues = [];
-    log("已进入报纸填充实验模式：跳过全流程，直接体验两页六版位组版。");
+    log("已进入报纸填充实验模式：拟物增强版面 + 新手引导与填入演示（效果 B）。");
     enterEditorialPhase();
+    requestAnimationFrame(() => runPaperLabOnboarding());
     return true;
   }
 
@@ -2735,6 +3011,7 @@
     initRegionLeadEvents();
     bindSynthesisUi();
     bindEditorialUi();
+    bindPaperDemoLabUi();
     log("全链条开始：探索 → 故事合成 → 编辑部组版 → 结算。");
     if (!maybeEnterPaperLabMode()) {
       renderWeekStart();

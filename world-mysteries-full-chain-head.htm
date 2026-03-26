@@ -542,13 +542,20 @@
     .badge.perm { color: var(--sci); border-color: rgba(88, 166, 255, 0.4); }
     .badge.temp { color: var(--danger); border-color: rgba(248, 81, 73, 0.4); }
     .badge.hid { color: var(--mystic); border-color: rgba(163, 113, 247, 0.45); }
-    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(136px, 1fr)); gap: 0.5rem; }
     .staff-card { border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem 0.55rem; font-size: 0.78rem; cursor: pointer; background: #0f1318; }
     .staff-card.selected { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(212, 168, 83, 0.35); }
     .staff-card .t { font-weight: 700; margin-bottom: 0.25rem; }
     .staff-card .portrait {
-      width: 100%; aspect-ratio: 4 / 3; border-radius: 8px; border: 1px solid #334155; margin-bottom: 0.35rem;
-      object-fit: cover; display: block; background: #0b1220;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      margin-bottom: 0.35rem;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      background: #f3f3f3;
     }
     .staff-card dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 0.1rem 0.35rem; font-size: 0.72rem; color: var(--muted); }
     .log { font-size: 0.8rem; color: var(--muted); max-height: 160px; overflow-y: auto; }
@@ -913,6 +920,105 @@
     .syn-reports { max-height: 260px; overflow: auto; display: grid; gap: 8px; }
     .syn-report { border: 1px solid #334155; border-radius: 8px; padding: 0.5rem; background: #0b1220; font-size: 0.8rem; }
     .syn-help { font-size: 0.8rem; color: var(--muted); line-height: 1.45; }
+
+    /* 第一周软引导 */
+    #tutorialSoftModal .modal-card { max-width: 420px; }
+    #tutorialSoftBody { font-size: 0.9rem; line-height: 1.5; color: var(--text); }
+
+    /* 报纸填入演示实验：与正式组版一致的 nm-story + 拟物报纸（效果 B） */
+    #paperDemoLabModal .modal-card { max-width: 720px; }
+    .paper-demo-stage-real {
+      position: relative;
+      margin-top: 0.45rem;
+      padding: 12px;
+      background: linear-gradient(180deg, #111827, #0b1220);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .paper-demo-real-row {
+      display: grid;
+      grid-template-columns: minmax(200px, 0.95fr) minmax(260px, 1.1fr);
+      gap: 14px;
+      align-items: start;
+    }
+    @media (max-width: 640px) {
+      .paper-demo-real-row { grid-template-columns: 1fr; }
+    }
+    .paper-demo-section-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 8px;
+    }
+    .paper-demo-source-card.nm-story {
+      cursor: default;
+      max-width: 100%;
+    }
+    .paper-demo-source-pulse {
+      animation: paperDemoSourcePulse 0.42s ease-in-out infinite alternate;
+    }
+    @keyframes paperDemoSourcePulse {
+      from { box-shadow: 0 0 0 0 rgba(212, 168, 83, 0); border-color: #334155; }
+      to { box-shadow: 0 0 0 2px rgba(212, 168, 83, 0.28); border-color: rgba(212, 168, 83, 0.75); }
+    }
+    #paperDemoLabModal .paper-demo-spread-single {
+      display: block;
+      max-width: 100%;
+    }
+    #paperDemoLabModal .paper-demo-spread-single .paper-page {
+      min-height: 0;
+      min-width: 0;
+      max-width: 340px;
+    }
+    #paperDemoLabModal .paper-demo-spread-single .paper-name {
+      font-size: 22px;
+    }
+    #paperDemoLabModal .paper-demo-spread-single .paper-grid {
+      grid-template-rows: 1fr;
+      min-height: 160px;
+      padding: 8px 10px 12px;
+    }
+    #paperDemoLabModal .paper-demo-spread-single .paper-slot {
+      min-height: 140px;
+    }
+    #paperDemoLabModal .paper-demo-spread-single .paper-empty {
+      min-height: 72px;
+    }
+    .paper-demo-landed {
+      display: grid;
+      gap: 6px;
+    }
+    .paper-demo-landed .paper-story-title { margin: 0; }
+    .paper-demo-slot-flash.paper-slot {
+      animation: paperDemoPaperSlotFlash 0.6s ease-out 1;
+    }
+    @keyframes paperDemoPaperSlotFlash {
+      0%, 100% { box-shadow: inherit; }
+      40% {
+        box-shadow: 0 0 0 2px rgba(180, 120, 50, 0.55) inset, 0 0 12px rgba(212, 168, 83, 0.25);
+      }
+    }
+    .paper-demo-slot-filled.paper-slot .paper-slot-header { opacity: 1; }
+    .paper-demo-flyer {
+      position: absolute;
+      left: 0;
+      top: 0;
+      pointer-events: none;
+      z-index: 8;
+      width: max-content;
+      max-width: 200px;
+      padding: 8px 10px;
+      background: #0b1220;
+      border: 1px solid #475569;
+      border-radius: 10px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+      opacity: 0;
+      visibility: hidden;
+      will-change: transform, opacity;
+    }
+    .paper-demo-flyer-visible { visibility: visible; }
+    .paper-demo-flyer-b { transition: none; }
   </style>
 </head>
 <body>
@@ -983,6 +1089,86 @@
       </div>
     </div>
 
+    <div id="tutorialSoftModal" class="modal-mask hidden" role="dialog" aria-modal="true" aria-labelledby="tutorialSoftTitle">
+      <div class="modal-card">
+        <div class="modal-title">
+          <h3 id="tutorialSoftTitle">提示</h3>
+        </div>
+        <div class="modal-body" id="tutorialSoftBody"></div>
+        <div class="modal-actions">
+          <button type="button" class="primary" id="tutorialSoftOk">知道了</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="paperDemoLabModal" class="modal-mask hidden" role="dialog" aria-modal="true" aria-labelledby="paperDemoLabTitle">
+      <div class="modal-card">
+        <div class="modal-title">
+          <h3 id="paperDemoLabTitle">报刊填入演示（实验）</h3>
+        </div>
+        <div class="modal-body">
+          <p style="margin:0 0 0.55rem;font-size:0.88rem;color:var(--muted);line-height:1.55;">
+            与正式全链条<strong>第一周组版</strong>所用演示相同：<strong>左侧故事库卡片</strong> + <strong>拟物增强报纸头版槽位</strong>；<strong>效果 B</strong>（来源高亮 + 插值飞入）；<strong>每次播完间隔 1 秒自动重播</strong>。也可点「重播」立即重来；正式流程中可在组版工具栏点「报刊填入演示」再次打开。
+          </p>
+          <div class="paper-demo-stage paper-demo-stage-real" id="paperDemoStage">
+            <div class="paper-demo-real-row">
+              <div class="paper-demo-lib-col">
+                <div class="paper-demo-section-label">1）本期故事库（与主界面相同控件样式）</div>
+                <div class="nm-story paper-demo-source-card" id="paperDemoSourceChip">
+                  <div class="nm-story-title">示例报道：港区异常回波</div>
+                  <div class="nm-chips">
+                    <span class="nm-chip ex">探索稿</span>
+                    <span class="nm-chip">标签:时政 / 经济</span>
+                    <span class="nm-chip">质量:Gold</span>
+                  </div>
+                  <div class="nm-tip" style="margin-top:6px;font-size:11px;padding:6px;">拖到中间头版版位</div>
+                </div>
+              </div>
+              <div class="paper-demo-paper-col">
+                <div class="paper-demo-section-label">2）拟物报纸 · 头版（与组版「当期版面」一致主题）</div>
+                <div class="paper-spread paper-mode-fixed paper-visual-enhanced paper-demo-spread-single">
+                  <section class="paper-page">
+                    <div class="paper-header">
+                      <div class="paper-name">DOG NEWS</div>
+                      <div class="paper-meta">
+                        <span>1930年3月</span><span>第1周</span><span>演示页</span>
+                      </div>
+                    </div>
+                    <div class="paper-grid">
+                      <div class="paper-slot" id="paperDemoTargetSlot">
+                        <div class="paper-slot-header">
+                          <span>头版</span>
+                          <div class="paper-multi empty">头版奖励系数 x3.0</div>
+                        </div>
+                        <div class="paper-empty" id="paperDemoEmptyHint">拖拽报道到此处</div>
+                        <div class="paper-demo-landed hidden" id="paperDemoLandedBlock">
+                          <div class="paper-story-title">示例报道：港区异常回波</div>
+                          <div class="paper-attrs">
+                            <span class="paper-attr t1" title="时政"></span>
+                            <span class="paper-attr t2" title="经济"></span>
+                          </div>
+                          <div class="paper-img" aria-hidden="true"></div>
+                          <div class="paper-body">
+                            <span>**** **** **** ****</span>
+                            <span>**** **** **** ****</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+            <div class="paper-demo-flyer" id="paperDemoFlyer" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="paperDemoReplay">重播</button>
+          <button type="button" class="primary" id="paperDemoClose">关闭</button>
+        </div>
+      </div>
+    </div>
+
     <div id="phase-synthesis" class="hidden">
       <h1>编辑部 · 故事合成台</h1>
       <p class="sub" id="synthesisSub">将探索获得的素材与认知进行合成，产出可刊登报道。</p>
@@ -1047,6 +1233,7 @@
           <div class="nm-slot-grid" id="slotList"></div>
           <div class="nm-divider"></div>
           <div class="row">
+            <button type="button" class="nm-sec" id="btnPaperDemoLab" style="display:none">报刊填入演示</button>
             <button type="button" class="nm-sec" id="clearBtn">清空版面</button>
             <button type="button" class="nm-sec" id="paperModeToggle">切换版面模式</button>
             <button type="button" class="nm-sec" id="paperVisualToggle">拟物增强：关</button>
