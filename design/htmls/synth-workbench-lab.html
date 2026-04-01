@@ -113,7 +113,7 @@
   <div id="app">
     <h1>故事合成台 · 独立实验</h1>
     <div class="lab-banner">
-      本页与正式合成台对齐：<strong>抢先快讯 / 深度报道 / 个人专栏 / 爆炸性新闻（需爆料卡）/ 内审定调（蓝色）</strong>。假素材可「重新载入」。
+      本页与正式合成台对齐：<strong>抢先快讯 / 深度报道 / 个人专栏 / 爆炸性新闻（需爆料卡）/ 内审定调（蓝色）</strong>。公开合成<strong>不消耗现象与认知</strong>，<strong>情报为材料会消耗</strong>；同题材本周多篇上版时报纸结算基础值递减。假素材可「重新载入」。
       完整流程请打开仓库根目录 <code>world-mysteries-full-chain.html</code>。
     </div>
     <div class="syn-grid">
@@ -207,6 +207,8 @@
     synthPollution: 0,
     nextCardId: 1,
     nextStoryId: 1,
+    nextTopicSeq: 1,
+    topicSynthOrder: {},
   };
 
   const el = {
@@ -229,6 +231,10 @@
     return `c${state.nextCardId++}`;
   }
 
+  function newTopicKey() {
+    return `topic_${state.nextTopicSeq++}`;
+  }
+
   function qualityFromScore(score) {
     if (score >= 220) return QUALITY[2];
     if (score >= 140) return QUALITY[1];
@@ -236,19 +242,23 @@
   }
 
   function seedMock() {
+    state.nextTopicSeq = 1;
+    const tRos = newTopicKey();
+    const tPort = newTopicKey();
+    const tTun = newTopicKey();
     state.phenomenonCards = [
-      { id: newCardId(), kind: "phenomenon", name: "罗斯威尔样本·民间传言", domain: "sci", evidenceValue: 72, mysteryBias: 35, tier: 3 },
-      { id: newCardId(), kind: "phenomenon", name: "港区回波·目击样本", domain: "pop", evidenceValue: 55, mysteryBias: 48, tier: 2 },
-      { id: newCardId(), kind: "phenomenon", name: "隧道低频·秘闻样本", domain: "occult", evidenceValue: 48, mysteryBias: 68, tier: 2 },
+      { id: newCardId(), kind: "phenomenon", name: "罗斯威尔样本·民间传言", domain: "sci", evidenceValue: 72, mysteryBias: 35, tier: 3, topicKey: tRos },
+      { id: newCardId(), kind: "phenomenon", name: "港区回波·目击样本", domain: "pop", evidenceValue: 55, mysteryBias: 48, tier: 2, topicKey: tPort },
+      { id: newCardId(), kind: "phenomenon", name: "隧道低频·秘闻样本", domain: "occult", evidenceValue: 48, mysteryBias: 68, tier: 2, topicKey: tTun },
     ];
     state.intelCards = [
-      { id: newCardId(), kind: "intel", name: "罗斯威尔 相关情报", sourceType: "sci", evidenceValue: 52, rumorValue: 18, tier: 3 },
-      { id: newCardId(), kind: "intel", name: "港区 相关情报", sourceType: "pop", evidenceValue: 40, rumorValue: 30, tier: 2 },
+      { id: newCardId(), kind: "intel", name: "罗斯威尔 相关情报", sourceType: "sci", evidenceValue: 52, rumorValue: 18, tier: 3, topicKey: tRos },
+      { id: newCardId(), kind: "intel", name: "港区 相关情报", sourceType: "pop", evidenceValue: 40, rumorValue: 30, tier: 2, topicKey: tPort },
     ];
     state.cognitionCards = [
-      { id: newCardId(), kind: "cognition", name: rand(COGNITION_NAME_POOL), level: 3, sourceType: "sci", credibilityBonus: 14, mysteryBonus: 8 },
-      { id: newCardId(), kind: "cognition", name: rand(COGNITION_NAME_POOL), level: 2, sourceType: "occult", credibilityBonus: 8, mysteryBonus: 16 },
-      { id: newCardId(), kind: "cognition", name: rand(COGNITION_NAME_POOL), level: 4, sourceType: "pop", credibilityBonus: 10, mysteryBonus: 10 },
+      { id: newCardId(), kind: "cognition", name: rand(COGNITION_NAME_POOL), level: 3, sourceType: "sci", credibilityBonus: 14, mysteryBonus: 8, topicKey: tRos },
+      { id: newCardId(), kind: "cognition", name: rand(COGNITION_NAME_POOL), level: 2, sourceType: "occult", credibilityBonus: 8, mysteryBonus: 16, topicKey: tTun },
+      { id: newCardId(), kind: "cognition", name: rand(COGNITION_NAME_POOL), level: 4, sourceType: "pop", credibilityBonus: 10, mysteryBonus: 10, topicKey: tPort },
     ];
     state.toolCards = [
       { id: newCardId(), kind: "tool", name: rand(TOOL_NAME_POOL), durability: 2, bonus: 10 },
@@ -263,6 +273,7 @@
       },
     ];
     state.craftedReports = [];
+    state.topicSynthOrder = {};
     state.synthPollution = 0;
     state.synthRecipe = "r1";
     initSynthSlotsForRecipe("r1");
@@ -397,7 +408,7 @@
       if (!cards.length) return "内审定调：将 1 张现象牌拖入蓝色卡槽，再点「生成认知」。不上版、不进下方报道列表。";
       const names = cards.map((c) => c.name).join(" + ");
       const ok = validateRecipe(recipe, cards);
-      return `${recipeLabel(recipe)}\n槽内：${names}\n${ok ? "可执行：消耗现象，生成 1 张认知牌。" : "需且仅需 1 张现象牌。"}`;
+      return `${recipeLabel(recipe)}\n槽内：${names}\n${ok ? "可执行：不消耗现象牌，生成 1 张同题材认知牌。" : "需且仅需 1 张现象牌。"}`;
     }
     if (!cards.length) {
       return "尚未放入素材。红色必要槽、金色虚线工具（可选）。爆炸性新闻需「爆料卡」分类中的特殊牌。";
@@ -406,7 +417,16 @@
     const valid = validateRecipe(recipe, cards);
     const toolBonus = cards.filter((c) => c.kind === "tool").reduce((a, b) => a + b.bonus, 0);
     const successRate = clamp(recipeBaseSuccess(recipe) + toolBonus / 100 - Math.max(0, cards.length - 3) * 0.05, 0.15, 0.95);
-    return `${recipeLabel(recipe)}\n素材：${names}\n预计成功率：${(successRate * 100).toFixed(1)}%\n${valid ? "配方合法，可执行合成。" : "配方不合法，请调整素材组合。"}\n当前失实风险：${state.synthPollution}`;
+    const substanceForTopic = cards.filter((c) => c.kind !== "tipoff" && c.kind !== "tool");
+    const phenCard = substanceForTopic.find((c) => c.kind === "phenomenon");
+    const pk = phenCard?.topicKey || substanceForTopic.find((c) => c.topicKey)?.topicKey;
+    const prevN = pk ? state.topicSynthOrder[pk] || 0 : 0;
+    const nextOrd = prevN + 1;
+    let topicLine = "\n公开合成：现象、认知不消耗；情报消耗；爆料与工具按规则消耗。";
+    if (pk && prevN > 0) {
+      topicLine += `\n该题材本周已合成 ${prevN} 篇公开稿；若本次成功，本条为第 ${nextOrd} 篇（上版结算基础值将打折）。`;
+    }
+    return `${recipeLabel(recipe)}\n素材：${names}\n预计成功率：${(successRate * 100).toFixed(1)}%\n${valid ? "配方合法，可执行合成。" : "配方不合法，请调整素材组合。"}\n当前失实风险：${state.synthPollution}${topicLine}`;
   }
 
   function consumeCards(ids) {
@@ -418,6 +438,35 @@
       .map((t) => (remove.has(t.id) ? { ...t, durability: t.durability - 1 } : t))
       .filter((t) => t.durability > 0);
     state.tipOffCards = state.tipOffCards.filter((c) => !remove.has(c.id));
+  }
+
+  function consumePublicSynthMaterials(cards) {
+    const ids = [];
+    for (const c of cards) {
+      if (c.kind === "intel" || c.kind === "tipoff") ids.push(c.id);
+      if (c.kind === "tool") ids.push(c.id);
+    }
+    consumeCards(ids);
+  }
+
+  const TOPIC_REPEAT_BASE_MULT = 0.72;
+  const TOPIC_DEEP_NOT_FIRST_MULT = 0.9;
+
+  function shortTopicLabel(topicKey) {
+    if (!topicKey) return "";
+    return topicKey.startsWith("topic_") ? `#${topicKey.slice(6)}` : topicKey;
+  }
+
+  function effectiveStoryBase(story) {
+    if (!story) return 0;
+    const intrinsic = story.intrinsicBaseValue != null ? story.intrinsicBaseValue : story.baseValue;
+    if (!story.fromExplore || !story.primaryTopicKey) return intrinsic;
+    const order = story.synthTopicOrder || 0;
+    if (order <= 0) return intrinsic;
+    let m = 1;
+    if (order >= 2) m *= TOPIC_REPEAT_BASE_MULT;
+    if (order >= 2 && (story.recipeType === "r2" || story.recipeType === "r3" || story.recipeType === "r4")) m *= TOPIC_DEEP_NOT_FIRST_MULT;
+    return Math.max(1, Math.round(intrinsic * m));
   }
 
   function synthToStory(recipe, cards) {
@@ -452,12 +501,20 @@
       recipe === "r2" ? "深度报道" : recipe === "r3" ? "个人专栏" : recipe === "r4" ? "爆炸性新闻" : "抢先快讯";
     const titleSeed = substance[0] || cards[0];
     const title = `${titlePrefix}：${(titleSeed && titleSeed.name && titleSeed.name.replace("样本", "").replace("相关情报", "")) || buildNewsTitle(tags)}`;
+    const substanceForTopic = cards.filter((c) => c.kind !== "tipoff" && c.kind !== "tool");
+    const topicKeys = [...new Set(substanceForTopic.map((c) => c.topicKey).filter(Boolean))];
+    const phenCard = substanceForTopic.find((c) => c.kind === "phenomenon");
+    const primaryTopicKey = phenCard?.topicKey || substanceForTopic.find((c) => c.topicKey)?.topicKey || null;
     return {
       id: state.nextStoryId++,
       title,
       tags,
       quality: q.key,
       baseValue: q.value,
+      intrinsicBaseValue: q.value,
+      primaryTopicKey,
+      topicKeys,
+      synthTopicOrder: null,
       negatives,
       fromExplore: true,
       attrs: { sensational, credibility, mystery: mysteryScore, gaze },
@@ -480,6 +537,10 @@
     el.synInventory.innerHTML = list
       .map((c) => {
         const placed = isCardPlacedInSynth(c.id);
+        const topicChip =
+          c.topicKey && (c.kind === "phenomenon" || c.kind === "intel" || c.kind === "cognition")
+            ? `<span class="syn-badge">题材${shortTopicLabel(c.topicKey)}</span>`
+            : "";
         const badge =
           c.kind === "tool"
             ? `<span class="syn-badge">耐久 ${c.durability}</span><span class="syn-badge">加成 +${c.bonus}%</span>`
@@ -490,7 +551,7 @@
                 : `<span class="syn-badge">证据 ${c.evidenceValue || 0}</span>`;
         return `<div class="syn-item syn-item-draggable${placed ? " syn-item-slotted" : ""}" draggable="true" data-card="${c.id}" data-kind="${c.kind}" title="拖到右侧卡槽">
           <strong>${escapeHtml(c.name)}</strong>
-          <div class="syn-badges"><span class="syn-badge">${c.kind}</span>${badge}</div>
+          <div class="syn-badges"><span class="syn-badge">${c.kind}</span>${topicChip}${badge}</div>
           ${placed ? `<div class="syn-slotted-hint">已在槽位</div>` : ""}
         </div>`;
       })
@@ -571,14 +632,28 @@
       return;
     }
     el.synReports.innerHTML = state.craftedReports
-      .map((r) => `<div class="syn-report">
+      .map((r) => {
+        const pk = r.primaryTopicKey;
+        const ord = r.synthTopicOrder;
+        const topicLine =
+          pk && ord
+            ? `<span class="syn-badge">题材${shortTopicLabel(pk)}</span><span class="syn-badge">本周第${ord}篇</span>`
+            : pk
+              ? `<span class="syn-badge">题材${shortTopicLabel(pk)}</span>`
+              : "";
+        const eff = effectiveStoryBase(r);
+        const intr = r.intrinsicBaseValue != null ? r.intrinsicBaseValue : r.baseValue;
+        const effLine = intr !== eff ? `<span class="syn-badge">上版有效基础 ${eff}</span>` : `<span class="syn-badge">基础 ${intr}</span>`;
+        return `<div class="syn-report">
         <strong>${escapeHtml(r.title)}</strong>
         <div class="syn-badges" style="margin-top:4px;">
+          ${topicLine}
           <span class="syn-badge">${r.recipeType}</span>
           <span class="syn-badge">${r.quality}</span>
-          <span class="syn-badge">基础 ${r.baseValue}</span>
+          ${effLine}
         </div>
-      </div>`)
+      </div>`;
+      })
       .join("");
   }
 
@@ -590,9 +665,9 @@
     if (el.synthesisHint) {
       if (state.synthRecipe === "internal") {
         el.synthesisHint.textContent =
-          "蓝色为内审定调（非公开）：消耗现象生成认知。爆炸性新闻需爆料卡；点「重新载入假数据」可补全示例牌。";
+          "蓝色为内审定调（非公开）：不消耗现象，生成同题材认知。公开侧情报为消耗材料；爆炸性新闻需爆料卡。";
       } else {
-        el.synthesisHint.textContent = `配方说明：${recipeLabel(state.synthRecipe)}。红/金槽规则与正式 Demo 一致。`;
+        el.synthesisHint.textContent = `配方：${recipeLabel(state.synthRecipe)}。现象与认知可反复使用；情报每次合成消耗；同题材多篇上版时基础值递减。`;
       }
     }
     const craftBtn = document.getElementById("craftBtn");
@@ -618,10 +693,10 @@
       sourceType: phen.domain,
       credibilityBonus: phen.evidenceValue > 60 ? 16 : 10,
       mysteryBonus: phen.mysteryBias > 55 ? 16 : 8,
+      topicKey: phen.topicKey || null,
     };
     state.cognitionCards.push(newCog);
-    state.phenomenonCards = state.phenomenonCards.filter((c) => c.id !== phen.id);
-    log(`内审定调完成：认知牌「${newCog.name}」Lv.${newCog.level}`);
+    log(`内审定调完成：认知牌「${newCog.name}」Lv.${newCog.level}，现象牌仍保留`);
   }
 
   function craftReport() {
@@ -647,8 +722,7 @@
     const toolBonus = cards.filter((c) => c.kind === "tool").reduce((a, b) => a + b.bonus, 0);
     const successRate = clamp(recipeBaseSuccess(recipe) + toolBonus / 100 - Math.max(0, cards.length - 3) * 0.05, 0.15, 0.95);
     if (Math.random() > successRate) {
-      const toConsume = cards.slice(1).map((c) => c.id);
-      consumeCards(toConsume);
+      consumePublicSynthMaterials(cards);
       initSynthSlotsForRecipe(recipe);
       state.synthPollution += recipe === "r4" ? 5 : recipe === "r3" ? 2 : 0;
       log(`合成失败（概率）：${recipeLabel(recipe)} · 成功率约 ${(successRate * 100).toFixed(1)}%`);
@@ -656,8 +730,14 @@
       return;
     }
     const story = synthToStory(recipe, cards);
+    if (story.primaryTopicKey) {
+      state.topicSynthOrder[story.primaryTopicKey] = (state.topicSynthOrder[story.primaryTopicKey] || 0) + 1;
+      story.synthTopicOrder = state.topicSynthOrder[story.primaryTopicKey];
+    } else {
+      story.synthTopicOrder = null;
+    }
     state.craftedReports.push(story);
-    consumeCards(cards.map((c) => c.id));
+    consumePublicSynthMaterials(cards);
     initSynthSlotsForRecipe(recipe);
     if (recipe === "r3") state.synthPollution += 4;
     if (recipe === "r4") state.synthPollution += 10;

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>涓栫晫鏈В涔嬭皽鍛ㄥ垔 路 鍏ㄩ摼鏉?Demo</title>
+  <title>世界未解之谜周刊 · 全链条 Demo</title>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap");
     :root {
@@ -633,7 +633,7 @@
     }
     footer { margin-top: 1rem; font-size: 0.72rem; color: var(--muted); text-align: center; }
 
-    /* 鎶ュ垔缁勭増锛堜笌 docs/鎶ュ垔缁撶畻鍑虹増鐜╂硶璁捐鏂囨。.md / index.html 瀵归綈锛?*/
+    /* 报刊组版（与 docs/报刊结算出版玩法设计文档.md / index.html 对齐） */
     .nm-wrap { font-family: "Segoe UI", system-ui, sans-serif; }
     .nm-grid { display: grid; grid-template-columns: 0.9fr 1.55fr 0.85fr; gap: 14px; }
     @media (max-width: 1100px) { .nm-grid { grid-template-columns: 1fr; } }
@@ -676,7 +676,7 @@
     .nm-impact.good { border-color: #166534; color: #86efac; }
     .nm-impact.bad { border-color: #991b1b; color: #fca5a5; }
     .nm-impact.warn { border-color: #92400e; color: #fcd34d; }
-    /* 鎷熺墿鎶ョ焊鐗堥潰锛? 涓増浣嶏細涓ら〉 x (澶寸増澶т綅 + 涓や釜瀛愪綅)锛?*/
+    /* 拟物报纸版面（6 个版位：两页 x (头版大位 + 两个子位)） */
     .paper-spread {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -910,7 +910,7 @@
     .sum-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; margin-top: 0.75rem; }
     .sum-panel h2 { color: var(--gold); font-size: 1rem; margin-bottom: 0.5rem; }
 
-    /* 鏁呬簨鍚堟垚鍙?*/
+    /* 故事合成台 */
     .syn-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; }
     @media (max-width: 980px) { .syn-grid { grid-template-columns: 1fr; } }
     .syn-card { background: #0f1318; border: 1px solid var(--border); border-radius: 10px; padding: 0.8rem; }
@@ -993,7 +993,7 @@
     .syn-report { border: 1px solid #334155; border-radius: 8px; padding: 0.5rem; background: #0b1220; font-size: 0.8rem; }
     .syn-help { font-size: 0.8rem; color: var(--muted); line-height: 1.45; }
 
-    /* 鍚堟垚鍙版紨绀?Modal */
+    /* 合成台演示 Modal */
     #synthDemoLabModal .modal-card { max-width: 640px; }
     .synth-demo-stage {
       position: relative; margin-top: 0.45rem; padding: 12px; background: linear-gradient(180deg, #111827, #0b1220);
@@ -1033,11 +1033,11 @@
       40% { opacity: 1; filter: brightness(1.25); text-shadow: 0 0 12px rgba(212, 168, 83, 0.45); }
     }
 
-    /* 绗竴鍛ㄨ蒋寮曞 */
+    /* 第一周软引导 */
     #tutorialSoftModal .modal-card { max-width: 420px; }
     #tutorialSoftBody { font-size: 0.9rem; line-height: 1.5; color: var(--text); }
 
-    /* 鎶ョ焊濉叆婕旂ず瀹為獙锛氫笌姝ｅ紡缁勭増涓€鑷寸殑 nm-story + 鎷熺墿鎶ョ焊锛堟晥鏋?B锛?*/
+    /* 报纸填入演示实验：与正式组版一致的 nm-story + 拟物报纸（效果 B） */
     #paperDemoLabModal .modal-card { max-width: 720px; }
     .paper-demo-stage-real {
       position: relative;
@@ -1137,10 +1137,10 @@
   <div id="app">
     <div id="phase-explore">
       <header>
-        <h1>銆婁笘鐣屾湭瑙ｄ箣璋滃懆鍒娿€嬄?鍏ㄩ摼鏉?Demo</h1>
+        <h1>《世界未解之谜周刊》· 全链条 Demo</h1>
         <p class="sub">
-          <strong>鎺㈢储</strong>锛堝湴鍥?楠板瓙锛夆啋 <strong>绾跨储鎴愮</strong> 鈫?<strong>鎷栨嫿缁勭増</strong> 鈫?<strong>缁撶畻鏈湡</strong>锛堜笌
-          <code>docs/鎶ュ垔缁撶畻鍑虹増鐜╂硶璁捐鏂囨。.md</code> 鍏紡涓€鑷达級
+          <strong>探索</strong>（地图/骰子）→ <strong>线索成稿</strong> → <strong>拖拽组版</strong> → <strong>结算本期</strong>（与
+          <code>docs/报刊结算出版玩法设计文档.md</code> 公式一致）
         </p>
       </header>
       <div class="bar-row" id="macro"></div>
@@ -1149,7 +1149,7 @@
           <strong id="weekLabel"></strong>
           <span id="dayLabel" style="color: var(--muted); font-size: 0.85rem;"></span>
         </div>
-        <button type="button" id="btnEndWeek" class="primary" title="杩涘叆缂栬緫閮ㄧ粍鐗堜笌缁撶畻">缁撴潫鎺㈢储鍛?路 杩涘叆缂栬緫閮?/button>
+        <button type="button" id="btnEndWeek" class="primary" title="进入编辑部组版与结算">结束探索周 · 进入编辑部</button>
       </div>
       <div id="view-weekStart" class="panel hidden"></div>
       <div id="view-global" class="panel hidden"></div>
@@ -1157,33 +1157,33 @@
       <div id="view-setup" class="panel hidden"></div>
       <div id="view-result" class="panel hidden"></div>
       <div class="panel">
-        <h2>琛屽姩鏃ュ織</h2>
+        <h2>行动日志</h2>
         <div class="log" id="log"></div>
       </div>
-      <button type="button" id="btnNextDay" class="next-day-fab">涓嬩竴澶?/button>
+      <button type="button" id="btnNextDay" class="next-day-fab">下一天</button>
     </div>
     <div id="dayPopup" class="modal-mask hidden" role="dialog" aria-modal="true" aria-labelledby="dayPopupTitle">
       <div class="modal-card">
         <div class="modal-title">
-          <h3 id="dayPopupTitle">鏂扮殑涓€澶?/h3>
+          <h3 id="dayPopupTitle">新的一天</h3>
           <div class="modal-date" id="dayPopupDate"></div>
         </div>
         <div class="modal-body" id="dayPopupBody"></div>
         <div class="modal-actions">
-          <button type="button" class="primary" id="dayPopupOk">缁х画</button>
+          <button type="button" class="primary" id="dayPopupOk">继续</button>
         </div>
       </div>
     </div>
     <div id="confirmPopup" class="modal-mask hidden" role="dialog" aria-modal="true" aria-labelledby="confirmPopupTitle">
       <div class="modal-card">
         <div class="modal-title">
-          <h3 id="confirmPopupTitle">鎻愮ず</h3>
+          <h3 id="confirmPopupTitle">提示</h3>
           <div class="modal-date" id="confirmPopupDate"></div>
         </div>
         <div class="modal-body" id="confirmPopupBody"></div>
         <div class="modal-actions">
-          <button type="button" id="confirmPopupCancel">鍙栨秷</button>
-          <button type="button" class="primary" id="confirmPopupOk">纭</button>
+          <button type="button" id="confirmPopupCancel">取消</button>
+          <button type="button" class="primary" id="confirmPopupOk">确认</button>
         </div>
       </div>
     </div>
@@ -1191,12 +1191,12 @@
     <div id="rewardPopup" class="modal-mask hidden" role="dialog" aria-modal="true" aria-labelledby="rewardPopupTitle">
       <div class="modal-card">
         <div class="modal-title">
-          <h3 id="rewardPopupTitle">缁撶畻濂栧姳</h3>
+          <h3 id="rewardPopupTitle">结算奖励</h3>
           <div class="modal-date" id="rewardPopupStep"></div>
         </div>
         <div class="modal-body" id="rewardPopupBody"></div>
         <div class="modal-actions">
-          <button type="button" class="primary" id="rewardPopupNext">涓嬩竴椤?/button>
+          <button type="button" class="primary" id="rewardPopupNext">下一项</button>
         </div>
       </div>
     </div>
@@ -1204,11 +1204,11 @@
     <div id="tutorialSoftModal" class="modal-mask hidden" role="dialog" aria-modal="true" aria-labelledby="tutorialSoftTitle">
       <div class="modal-card">
         <div class="modal-title">
-          <h3 id="tutorialSoftTitle">鎻愮ず</h3>
+          <h3 id="tutorialSoftTitle">提示</h3>
         </div>
         <div class="modal-body" id="tutorialSoftBody"></div>
         <div class="modal-actions">
-          <button type="button" class="primary" id="tutorialSoftOk">鐭ラ亾浜?/button>
+          <button type="button" class="primary" id="tutorialSoftOk">知道了</button>
         </div>
       </div>
     </div>
@@ -1216,48 +1216,48 @@
     <div id="paperDemoLabModal" class="modal-mask hidden" role="dialog" aria-modal="true" aria-labelledby="paperDemoLabTitle">
       <div class="modal-card">
         <div class="modal-title">
-          <h3 id="paperDemoLabTitle">鎶ュ垔濉叆婕旂ず锛堝疄楠岋級</h3>
+          <h3 id="paperDemoLabTitle">报刊填入演示（实验）</h3>
         </div>
         <div class="modal-body">
           <p style="margin:0 0 0.55rem;font-size:0.88rem;color:var(--muted);line-height:1.55;">
-            涓庢寮忓叏閾炬潯<strong>绗竴鍛ㄧ粍鐗?/strong>鎵€鐢ㄦ紨绀虹浉鍚岋細<strong>宸︿晶鏁呬簨搴撳崱鐗?/strong> + <strong>鎷熺墿澧炲己鎶ョ焊澶寸増妲戒綅</strong>锛?strong>鏁堟灉 B</strong>锛堟潵婧愰珮浜?+ 鎻掑€奸鍏ワ級锛?strong>姣忔鎾畬闂撮殧 1 绉掕嚜鍔ㄩ噸鎾?/strong>銆備篃鍙偣銆岄噸鎾€嶇珛鍗抽噸鏉ワ紱姝ｅ紡娴佺▼涓彲鍦ㄧ粍鐗堝伐鍏锋爮鐐广€屾姤鍒婂～鍏ユ紨绀恒€嶅啀娆℃墦寮€銆?
+            与正式全链条<strong>第一周组版</strong>所用演示相同：<strong>左侧故事库卡片</strong> + <strong>拟物增强报纸头版槽位</strong>；<strong>效果 B</strong>（来源高亮 + 插值飞入）；<strong>每次播完间隔 1 秒自动重播</strong>。也可点「重播」立即重来；正式流程中可在组版工具栏点「报刊填入演示」再次打开。
           </p>
           <div class="paper-demo-stage paper-demo-stage-real" id="paperDemoStage">
             <div class="paper-demo-real-row">
               <div class="paper-demo-lib-col">
-                <div class="paper-demo-section-label">1锛夋湰鏈熸晠浜嬪簱锛堜笌涓荤晫闈㈢浉鍚屾帶浠舵牱寮忥級</div>
+                <div class="paper-demo-section-label">1）本期故事库（与主界面相同控件样式）</div>
                 <div class="nm-story paper-demo-source-card" id="paperDemoSourceChip">
-                  <div class="nm-story-title">绀轰緥鎶ラ亾锛氭腐鍖哄紓甯稿洖娉?/div>
+                  <div class="nm-story-title">示例报道：港区异常回波</div>
                   <div class="nm-chips">
-                    <span class="nm-chip ex">鎺㈢储绋?/span>
-                    <span class="nm-chip">鏍囩:鏃舵斂 / 缁忔祹</span>
-                    <span class="nm-chip">璐ㄩ噺:Gold</span>
+                    <span class="nm-chip ex">探索稿</span>
+                    <span class="nm-chip">标签:时政 / 经济</span>
+                    <span class="nm-chip">质量:Gold</span>
                   </div>
-                  <div class="nm-tip" style="margin-top:6px;font-size:11px;padding:6px;">鎷栧埌涓棿澶寸増鐗堜綅</div>
+                  <div class="nm-tip" style="margin-top:6px;font-size:11px;padding:6px;">拖到中间头版版位</div>
                 </div>
               </div>
               <div class="paper-demo-paper-col">
-                <div class="paper-demo-section-label">2锛夋嫙鐗╂姤绾?路 澶寸増锛堜笌缁勭増銆屽綋鏈熺増闈€嶄竴鑷翠富棰橈級</div>
+                <div class="paper-demo-section-label">2）拟物报纸 · 头版（与组版「当期版面」一致主题）</div>
                 <div class="paper-spread paper-mode-fixed paper-visual-enhanced paper-demo-spread-single">
                   <section class="paper-page">
                     <div class="paper-header">
                       <div class="paper-name">DOG NEWS</div>
                       <div class="paper-meta">
-                        <span>1930骞?鏈?/span><span>绗?鍛?/span><span>婕旂ず椤?/span>
+                        <span>1930年3月</span><span>第1周</span><span>演示页</span>
                       </div>
                     </div>
                     <div class="paper-grid">
                       <div class="paper-slot" id="paperDemoTargetSlot">
                         <div class="paper-slot-header">
-                          <span>澶寸増</span>
-                          <div class="paper-multi empty">澶寸増濂栧姳绯绘暟 x3.0</div>
+                          <span>头版</span>
+                          <div class="paper-multi empty">头版奖励系数 x3.0</div>
                         </div>
-                        <div class="paper-empty" id="paperDemoEmptyHint">鎷栨嫿鎶ラ亾鍒版澶?/div>
+                        <div class="paper-empty" id="paperDemoEmptyHint">拖拽报道到此处</div>
                         <div class="paper-demo-landed hidden" id="paperDemoLandedBlock">
-                          <div class="paper-story-title">绀轰緥鎶ラ亾锛氭腐鍖哄紓甯稿洖娉?/div>
+                          <div class="paper-story-title">示例报道：港区异常回波</div>
                           <div class="paper-attrs">
-                            <span class="paper-attr t1" title="鏃舵斂"></span>
-                            <span class="paper-attr t2" title="缁忔祹"></span>
+                            <span class="paper-attr t1" title="时政"></span>
+                            <span class="paper-attr t2" title="经济"></span>
                           </div>
                           <div class="paper-img" aria-hidden="true"></div>
                           <div class="paper-body">
@@ -1275,8 +1275,8 @@
           </div>
         </div>
         <div class="modal-actions">
-          <button type="button" id="paperDemoReplay">閲嶆挱</button>
-          <button type="button" class="primary" id="paperDemoClose">鍏抽棴</button>
+          <button type="button" id="paperDemoReplay">重播</button>
+          <button type="button" class="primary" id="paperDemoClose">关闭</button>
         </div>
       </div>
     </div>
@@ -1284,33 +1284,33 @@
     <div id="synthDemoLabModal" class="modal-mask hidden" role="dialog" aria-modal="true" aria-labelledby="synthDemoLabTitle">
       <div class="modal-card">
         <div class="modal-title">
-          <h3 id="synthDemoLabTitle">鍚堟垚鍙版嫋鎷芥紨绀?/h3>
+          <h3 id="synthDemoLabTitle">合成台拖拽演示</h3>
         </div>
         <div class="modal-body">
           <p style="margin:0 0 0.55rem;font-size:0.88rem;color:var(--muted);line-height:1.55;">
-            涓庢寮忓悎鎴愬彴涓€鑷达細<strong>绾㈣壊鑳屾澘</strong>涓哄繀瑕佹Ы锛?strong>閲戣壊铏氱嚎</strong>涓哄彲閫夊伐鍏锋Ы銆傜ず鎰忛『搴忎负鐜拌薄 鈫?鎯呮姤 鈫?鍚堟垚绀烘剰锛涙挱瀹岄棿闅旂害 2 绉掕嚜鍔ㄩ噸鎾紝涔熷彲鐐广€岄噸鎾€嶃€?
+            与正式合成台一致：<strong>红色背板</strong>为必要槽，<strong>金色虚线</strong>为可选工具槽。示意顺序为现象 → 情报 → 合成示意；播完间隔约 2 秒自动重播，也可点「重播」。
           </p>
           <div class="synth-demo-stage" id="synthDemoStage">
             <div class="synth-demo-row">
               <div>
-                <div class="synth-demo-label">绱犳潗锛堢ず鎰忥級</div>
-                <div class="synth-demo-mini-card" id="synthDemoCardPhen">鐜拌薄鏍锋湰 路 婕旂ず</div>
-                <div class="synth-demo-mini-card" id="synthDemoCardIntel">鎯呮姤鎽樿 路 婕旂ず</div>
+                <div class="synth-demo-label">素材（示意）</div>
+                <div class="synth-demo-mini-card" id="synthDemoCardPhen">现象样本 · 演示</div>
+                <div class="synth-demo-mini-card" id="synthDemoCardIntel">情报摘要 · 演示</div>
               </div>
               <div>
-                <div class="synth-demo-label">鍗℃Ы锛堢被鍨? 鎶㈠厛鎶ラ亾锛?/div>
+                <div class="synth-demo-label">卡槽（类型1 抢先报道）</div>
                 <div class="synth-demo-slots-wrap">
                   <div class="syn-slot-cell syn-slot-required syn-demo-cell">
-                    <div class="syn-slot-label">鐜拌薄锛堝繀瑕侊級</div>
-                    <div class="syn-drop-slot" id="synthDemoDropPhen"><span class="syn-demo-placeholder">鎷栧叆鐜拌薄</span></div>
+                    <div class="syn-slot-label">现象（必要）</div>
+                    <div class="syn-drop-slot" id="synthDemoDropPhen"><span class="syn-demo-placeholder">拖入现象</span></div>
                   </div>
                   <div class="syn-slot-cell syn-slot-required syn-demo-cell">
-                    <div class="syn-slot-label">鎯呮姤锛堝繀瑕侊級</div>
-                    <div class="syn-drop-slot" id="synthDemoDropIntel"><span class="syn-demo-placeholder">鎷栧叆鎯呮姤</span></div>
+                    <div class="syn-slot-label">情报（必要）</div>
+                    <div class="syn-drop-slot" id="synthDemoDropIntel"><span class="syn-demo-placeholder">拖入情报</span></div>
                   </div>
                   <div class="syn-slot-cell syn-slot-optional syn-demo-cell">
-                    <div class="syn-slot-label">宸ュ叿锛堝彲閫夛級</div>
-                    <div class="syn-drop-slot" id="synthDemoDropTool"><span class="syn-demo-placeholder">鍙€?/span></div>
+                    <div class="syn-slot-label">工具（可选）</div>
+                    <div class="syn-drop-slot" id="synthDemoDropTool"><span class="syn-demo-placeholder">可选</span></div>
                   </div>
                 </div>
               </div>
@@ -1320,67 +1320,67 @@
           </div>
         </div>
         <div class="modal-actions">
-          <button type="button" id="synthDemoReplay">閲嶆挱</button>
-          <button type="button" class="primary" id="synthDemoClose">鍏抽棴</button>
+          <button type="button" id="synthDemoReplay">重播</button>
+          <button type="button" class="primary" id="synthDemoClose">关闭</button>
         </div>
       </div>
     </div>
 
     <div id="phase-synthesis" class="hidden">
-      <h1>缂栬緫閮?路 鏁呬簨鍚堟垚鍙?/h1>
+      <h1>编辑部 · 故事合成台</h1>
       <div class="row" style="margin-bottom:0.65rem;flex-wrap:wrap;gap:10px;align-items:center;">
-        <p class="sub" id="synthesisSub" style="margin:0;flex:1;min-width:220px;">灏嗘帰绱㈣幏寰楃殑绱犳潗涓庤鐭ヨ繘琛屽悎鎴愶紝浜у嚭鍙垔鐧绘姤閬撱€?/p>
-        <button type="button" class="nm-sec" id="btnSynthDemoLab">鍚堟垚鎷栨嫿婕旂ず</button>
+        <p class="sub" id="synthesisSub" style="margin:0;flex:1;min-width:220px;">将探索获得的素材与认知进行合成，产出可刊登报道。</p>
+        <button type="button" class="nm-sec" id="btnSynthDemoLab">合成拖拽演示</button>
       </div>
       <div class="syn-grid">
         <section class="syn-card">
-          <h3>1) 绱犳潗浠?/h3>
-          <p class="syn-help" style="margin:0 0 0.5rem;">鎷栨嫿鍗＄墝鍒板彸渚у崱妲姐€傚叕寮€鎶ラ亾鐢?strong>绾?閲?/strong>妲斤紱<strong>鐖嗘枡鍗?/strong>浠呯敤浜庛€岀垎鐐告€ф柊闂汇€嶏紝涓嶅彲鍚堟垚鑾峰緱銆?/p>
+          <h3>1) 素材仓</h3>
+          <p class="syn-help" style="margin:0 0 0.5rem;">拖拽卡牌到右侧卡槽。公开报道用<strong>红/金</strong>槽；<strong>爆料卡</strong>仅用于「爆炸性新闻」，不可合成获得。</p>
           <div class="row" style="margin-bottom:0.5rem;">
-            <button type="button" id="tabPhenomenon">鐜拌薄鐗?/button>
-            <button type="button" id="tabIntel">鎯呮姤鐗?/button>
-            <button type="button" id="tabCognition">璁ょ煡鐗?/button>
-            <button type="button" id="tabTool">宸ュ叿鐗?/button>
-            <button type="button" id="tabTipOff">鐖嗘枡鍗?/button>
+            <button type="button" id="tabPhenomenon">现象牌</button>
+            <button type="button" id="tabIntel">情报牌</button>
+            <button type="button" id="tabCognition">认知牌</button>
+            <button type="button" id="tabTool">工具牌</button>
+            <button type="button" id="tabTipOff">爆料卡</button>
           </div>
           <div id="synInventory" class="syn-list syn-list-deck"></div>
           <div class="syn-actions">
-            <button type="button" id="clearSelection">娓呯┖鍗℃Ы</button>
+            <button type="button" id="clearSelection">清空卡槽</button>
           </div>
         </section>
         <section class="syn-card">
-          <h3>2) 鎶ラ亾绫诲瀷涓庡崱妲?/h3>
+          <h3>2) 报道类型与卡槽</h3>
           <div class="row" style="margin-bottom:0.5rem;align-items:stretch;">
-            <button type="button" class="primary" id="recipe1">鎶㈠厛蹇</button>
-            <button type="button" id="recipe2">娣卞害鎶ラ亾</button>
-            <button type="button" id="recipe3">涓汉涓撴爮</button>
-            <button type="button" id="recipe4">鐖嗙偢鎬ф柊闂?/button>
-            <button type="button" class="syn-recipe-internal" id="recipeInternal">鍐呭瀹氳皟</button>
+            <button type="button" class="primary" id="recipe1">抢先快讯</button>
+            <button type="button" id="recipe2">深度报道</button>
+            <button type="button" id="recipe3">个人专栏</button>
+            <button type="button" id="recipe4">爆炸性新闻</button>
+            <button type="button" class="syn-recipe-internal" id="recipeInternal">内审定调</button>
           </div>
           <div id="synWorkbench" class="syn-workbench-host" aria-live="polite"></div>
           <pre class="syn-preview-pre" id="synSynthPreview"></pre>
           <div class="syn-actions">
-            <button type="button" class="primary" id="craftBtn">鎵ц鍚堟垚</button>
-            <button type="button" id="toEditorialBtn">杩涘叆缁勭増</button>
+            <button type="button" class="primary" id="craftBtn">执行合成</button>
+            <button type="button" id="toEditorialBtn">进入组版</button>
           </div>
           <p class="syn-help" id="synthesisHint"></p>
         </section>
       </div>
       <section class="syn-card" style="margin-top:10px;">
-        <h3>3) 鏈懆宸插悎鎴愭姤閬?/h3>
+        <h3>3) 本周已合成报道</h3>
         <div id="synReports" class="syn-reports"></div>
       </section>
     </div>
 
     <div id="phase-editorial" class="hidden nm-wrap">
-      <h1 style="font-family: inherit;">缂栬緫閮?路 鎶ュ垔缁勭増</h1>
-      <p class="sub" id="editorialSub">灏嗘湰鍛ㄦ帰绱㈠緱鍒扮殑绾跨储绋夸笌琛ュ厖绋夸欢鎷栧叆鐗堜綅锛岀偣鍑汇€岀粨绠楁湰鏈熴€嶃€?/p>
+      <h1 style="font-family: inherit;">编辑部 · 报刊组版</h1>
+      <p class="sub" id="editorialSub">将本周探索得到的线索稿与补充稿件拖入版位，点击「结算本期」。</p>
       <div class="nm-grid">
         <section class="nm-card">
-          <h2>1) 鏈湡鏁呬簨搴?/h2>
+          <h2>1) 本期故事库</h2>
           <div class="row">
-            <button type="button" class="nm-btn" id="regenBtn">閲嶆柊鐢熸垚鏁呬簨搴?/button>
-            <label>鏁伴噺
+            <button type="button" class="nm-btn" id="regenBtn">重新生成故事库</button>
+            <label>数量
               <select id="storyCount">
                 <option value="8">8</option>
                 <option value="10" selected>10</option>
@@ -1388,48 +1388,48 @@
               </select>
             </label>
           </div>
-          <p class="tip-inline">鎺㈢储绋垮甫銆屾帰绱㈢銆嶆爣绛撅紱涓嶈冻鏉℃暟鐢ㄩ殢鏈洪兘甯傛姤閬撹ˉ瓒筹紙涓庡師鍨嬩竴鑷达級銆?/p>
+          <p class="tip-inline">探索稿带「探索稿」标签；不足条数用随机都市报道补足（与原型一致）。</p>
           <div class="nm-stories" id="storyList"></div>
         </section>
         <section class="nm-card">
-          <h2>2) 褰撴湡鐗堥潰</h2>
+          <h2>2) 当期版面</h2>
           <div class="nm-slot-grid" id="slotList"></div>
           <div class="nm-divider"></div>
           <div class="row">
-            <button type="button" class="nm-sec" id="btnPaperDemoLab" style="display:none">鎶ュ垔濉叆婕旂ず</button>
-            <button type="button" class="nm-sec" id="clearBtn">娓呯┖鐗堥潰</button>
-            <button type="button" class="nm-sec" id="paperModeToggle">鍒囨崲鐗堥潰妯″紡</button>
-            <button type="button" class="nm-sec" id="paperVisualToggle">鎷熺墿澧炲己锛氬叧</button>
-            <button type="button" class="nm-btn" id="settleBtn">缁撶畻鏈湡</button>
+            <button type="button" class="nm-sec" id="btnPaperDemoLab" style="display:none">报刊填入演示</button>
+            <button type="button" class="nm-sec" id="clearBtn">清空版面</button>
+            <button type="button" class="nm-sec" id="paperModeToggle">切换版面模式</button>
+            <button type="button" class="nm-sec" id="paperVisualToggle">拟物增强：关</button>
+            <button type="button" class="nm-btn" id="settleBtn">结算本期</button>
           </div>
         </section>
         <section class="nm-card">
-          <h2>3) 缁撶畻闈㈡澘</h2>
+          <h2>3) 结算面板</h2>
           <div class="nm-sum-grid" id="liveStats"></div>
           <div class="nm-divider"></div>
           <div id="resultBox">
-            <div class="k">灏氭湭缁撶畻</div>
-            <div class="nm-tip">鎷栨嫿鎶ラ亾鍒扮増浣嶅悗鐐瑰嚮銆岀粨绠楁湰鏈熴€嶃€?/div>
+            <div class="k">尚未结算</div>
+            <div class="nm-tip">拖拽报道到版位后点击「结算本期」。</div>
           </div>
         </section>
       </div>
     </div>
 
     <div id="phase-summary" class="hidden sum-panel">
-      <h2>鏈懆娴佺▼瀹屾垚</h2>
+      <h2>本周流程完成</h2>
       <p id="summaryText" style="color: var(--muted); font-size: 0.9rem;"></p>
-      <p style="margin-top: 0.75rem;"><button type="button" class="primary" id="btnNextWeek">杩涘叆涓嬩竴鍛?路 缁х画鎺㈢储</button></p>
+      <p style="margin-top: 0.75rem;"><button type="button" class="primary" id="btnNextWeek">进入下一周 · 继续探索</button></p>
     </div>
 
     <div class="nm-toast" id="toast"></div>
-    <footer>鏈湴鍗曟満 路 鍙屽嚮鎵撳紑 路 鏃犲閮ㄤ緷璧?/footer>
+    <footer>本地单机 · 双击打开 · 无外部依赖</footer>
   </div>
   <script>
 (function () {
   "use strict";
 
   const DIFFICULTY_P = { easy: 0.6, normal: 0.5, hard: 1 / 3 };
-  const macro = { 鍏俊: 42, 璇″悕: 38, 澹版湜: 45, 瀹堝簭: 48, 鐙傛€? 22 };
+  const macro = { 公信: 42, 诡名: 38, 声望: 45, 守序: 48, 狂性: 22 };
 
   const state = {
     week: 1,
@@ -1475,6 +1475,10 @@
     tipOffCards: [],
     craftedReports: [],
     nextCardId: 1,
+    /** 每条线索唯一题材键，自增 */
+    nextTopicSeq: 1,
+    /** 本周公开合成成功次数，按 primaryTopicKey 计数（合成阶段重置） */
+    topicSynthOrder: {},
     weekEventResolved: false,
     staffEffects: [],
     dynamicNodes: [],
@@ -1490,21 +1494,21 @@
     paperLayoutMode: "fixed",
     paperLabMode: false,
     paperVisualMode: "normal",
-    /** 绗?1 鍛ㄨ蒋寮曞锛氬凡鍏抽棴杩囩殑 key锛屾湰灞€鍐呬笉鍐嶅脊鍑猴紱鏂板懆鐩粠绗?1 鍛ㄥ紑濮嬫椂闅忛〉闈㈡垨 nextWeek 娓呯┖ */
+    /** 第 1 周软引导：已关闭过的 key，本局内不再弹出；新周目从第 1 周开始时随页面或 nextWeek 清空 */
     tutorialSoftW1: {},
   };
 
-  const LAB_FULL_GUIDE_HTML = `<p style="margin:0 0 0.55rem;line-height:1.55;">鏈〉涓?strong>鎶ュ垔缁勭増瀹為獙妯″紡</strong>锛堝凡璺宠繃鎺㈢储涓庡悎鎴愶級銆備笅鍒椾笌姝ｅ紡鍏ㄩ摼鏉＄ 1 鍛ㄨ蒋寮曞涓€鑷达紝渚夸簬浣犲湪姝や笓娉ㄧ粌鎵嬨€?/p>
+  const LAB_FULL_GUIDE_HTML = `<p style="margin:0 0 0.55rem;line-height:1.55;">本页为<strong>报刊组版实验模式</strong>（已跳过探索与合成）。下列与正式全链条第 1 周软引导一致，便于你在此专注练手。</p>
 <ul style="margin:0 0 0.55rem;padding-left:1.15rem;line-height:1.55;color:var(--text);">
-<li><strong>鎺㈢储锛堜富鍏ュ彛锛?/strong>锛氬洖鍚堢畝鎶?鈫?鍏ㄧ悆鍦板浘 鈫?鍖哄煙锛?strong>涓嬩竴澶?/strong>鍦ㄥ叏鐞?鍖哄煙/宸︿笅瑙掓偓娴潎鍙帹杩涳紝鍒版湡浠诲姟浼氫緷娆″垽瀹氥€?/li>
-<li><strong>鏁呬簨鍚堟垚鍙?/strong>锛氬洓绉嶇被鍨嬬殑鍏紑鎶ラ亾 + 钃濊壊<strong>鍐呭瀹氳皟</strong>锛堢幇璞♀啋璁ょ煡锛夛紱鐖嗙偢鎬ф柊闂婚渶<strong>鐖嗘枡鍗?/strong>銆?/li>
-       <li><strong>鎶ュ垔缁勭増</strong>锛氬乏渚?strong>鏁呬簨搴?/strong>鍗＄墖鎷栧埌涓棿<strong>鎷熺墿鎶ョ焊</strong>鐗堜綅锛堝ご鐗堢郴鏁版渶楂橈級锛屽啀鐐广€岀粨绠楁湰鏈熴€嶃€?/li>
+<li><strong>探索（主入口）</strong>：回合简报 → 全球地图 → 区域；<strong>下一天</strong>在全球/区域/左下角悬浮均可推进，到期任务会依次判定。</li>
+<li><strong>故事合成台</strong>：四种类型的公开报道 + 蓝色<strong>内审定调</strong>（不消耗现象，生成同题材认知）；公开合成消耗<strong>情报</strong>作材料，现象与认知可复用；爆炸性新闻需<strong>爆料卡</strong>。</li>
+       <li><strong>报刊组版</strong>：左侧<strong>故事库</strong>卡片拖到中间<strong>拟物报纸</strong>版位（头版系数最高），再点「结算本期」。</li>
 </ul>
-<p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">鍏抽棴鏈獥鍚庡皢鎵撳紑<strong>濉叆婕旂ず</strong>锛堜笌姝ｅ紡鍏ㄩ摼鏉＄涓€鍛ㄦ墍鐢ㄧ浉鍚岋細鎷熺墿鎶ョ焊 + 鏁堟灉 B + 1 绉掕嚜鍔ㄩ噸鎾級銆傚埛鏂伴〉闈㈠墠鏈紩瀵煎彧鍑虹幇涓€娆°€?/p>`;
+<p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">关闭本窗后将打开<strong>填入演示</strong>（与正式全链条第一周所用相同：拟物报纸 + 效果 B + 1 秒自动重播）。刷新页面前本引导只出现一次。</p>`;
 
-  const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">绀轰緥鎶ラ亾锛氭腐鍖哄紓甯稿洖娉?/div>
-<div class="nm-chips"><span class="nm-chip ex">鎺㈢储绋?/span><span class="nm-chip">鏍囩:鏃舵斂 / 缁忔祹</span><span class="nm-chip">璐ㄩ噺:Gold</span></div>
-<div class="nm-tip" style="margin-top:6px;font-size:11px;padding:6px;">鎷栧埌涓棿澶寸増鐗堜綅</div>`;
+  const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道：港区异常回波</div>
+<div class="nm-chips"><span class="nm-chip ex">探索稿</span><span class="nm-chip">标签:时政 / 经济</span><span class="nm-chip">质量:Gold</span></div>
+<div class="nm-tip" style="margin-top:6px;font-size:11px;padding:6px;">拖到中间头版版位</div>`;
 
   const TAGS = ["Politics", "Military", "Economy", "Sport", "Gossip", "Pets", "Humor", "Shopping"];
   const QUALITY = [
@@ -1513,83 +1517,87 @@
     { key: "Gold", value: 450 },
   ];
   const NEGATIVE_TYPES = ["sloppy_writing", "thin_source", "late_edit", "bias_overreach", "fabrication"];
-  const LOCATIONS = ["鏇煎搱椤?, "甯冮瞾鍏嬫灄", "鐨囧悗鍖?, "甯冩湕鍏嬫柉", "鍗庡皵琛?, "娓彛鍖?, "甯傛斂鍘?, "鍞愪汉琛?];
-  const ORGS = ["甯傝浼?, "璀︾讲", "娓姟灞€", "鑱旈偊璋冩煡灞€", "宸ュ晢鎬讳細", "甯傛斂鍘?, "娑堥槻鎬婚槦", "鑱旈偊娉曢櫌"];
+  const LOCATIONS = ["曼哈顿", "布鲁克林", "皇后区", "布朗克斯", "华尔街", "港口区", "市政厅", "唐人街"];
+  const ORGS = ["市议会", "警署", "港务局", "联邦调查局", "工商总会", "市政厅", "消防总队", "联邦法院"];
   const SUBJECTS = {
-    Politics: ["棰勭畻妗?, "閫変妇璧勯噾", "鏀垮姟鍚瘉", "璁細琛ㄥ喅", "甯傛斂閲囪喘"],
-    Military: ["杈瑰婕旇", "鍐涘閲囪喘", "椹婚槻璋冩暣", "鑱斿悎浣滄垬", "鍥介槻鍚瘉"],
-    Economy: ["澶变笟鏁版嵁", "宸ュ巶瑁佸憳", "鍟嗚锤鎸囨暟", "绋庢敹鏀跨瓥", "鐗╀环璧板娍"],
-    Sport: ["鑱屼笟鑱旇禌", "涓诲満鏀归€?, "鐞冨憳杞細", "鎷冲嚮鎸戞垬璧?, "闈掕璁″垝"],
-    Gossip: ["鍚嶆祦缁椈", "鏅氬椋庢尝", "濠氱害浼犻椈", "绀句氦鍦堝瘑璋?, "鏄庢槦鍚堢害"],
-    Pets: ["娴佹氮鐘敹瀹?, "瀹犵墿鍖荤枟", "鐚嫍棰嗗吇娼?, "瀹犵墿鐢ㄥ搧鐭己", "绀惧尯閬涚姮绾犵悍"],
-    Humor: ["璁藉埡涓撴爮", "琛楀ご瓒ｉ椈", "鏈懆绗戞枡", "婕敾杩炶浇", "鑽掕癁姒滃崟"],
-    Shopping: ["鐧捐揣淇冮攢", "鏂板搧鎶㈣喘", "娑堣垂姒滃崟", "鎶樻墸瀛?, "鍟嗗満鎵╁缓"],
+    Politics: ["预算案", "选举资金", "政务听证", "议会表决", "市政采购"],
+    Military: ["边境演训", "军备采购", "驻防调整", "联合作战", "国防听证"],
+    Economy: ["失业数据", "工厂裁员", "商贸指数", "税收政策", "物价走势"],
+    Sport: ["职业联赛", "主场改造", "球员转会", "拳击挑战赛", "青训计划"],
+    Gossip: ["名流绯闻", "晚宴风波", "婚约传闻", "社交圈密谈", "明星合约"],
+    Pets: ["流浪犬收容", "宠物医疗", "猫狗领养潮", "宠物用品短缺", "社区遛犬纠纷"],
+    Humor: ["讽刺专栏", "街头趣闻", "本周笑料", "漫画连载", "荒诞榜单"],
+    Shopping: ["百货促销", "新品抢购", "消费榜单", "折扣季", "商场扩建"],
   };
-  const ACTIONS = ["寮曞彂浜夎", "杩涘叆璋冩煡", "閫氳繃瀹¤", "瀹ｅ竷鍗囩骇", "鍑虹幇鍙嶈浆", "鍐嶈捣娉㈡緶", "纭钀藉湴", "绱ф€ュ彨鍋?];
+  const ACTIONS = ["引发争议", "进入调查", "通过审议", "宣布升级", "出现反转", "再起波澜", "确认落地", "紧急叫停"];
   const PUBLIC_AFFAIRS = new Set(["Politics", "Military", "Economy"]);
   const MASS_APPEAL = new Set(["Sport", "Shopping"]);
   const LIFESTYLE_LIGHT = new Set(["Gossip", "Pets", "Humor"]);
 
   const slots = [
-    { id: "front-main", name: "澶寸増澶存潯", weight: 1.0, desc: "鏈€楂樻洕鍏夛紝绾?3.0x" },
-    { id: "front-side", name: "澶寸増娆℃潯", weight: 0.7, desc: "楂樻洕鍏夛紝绾?2.4x" },
-    { id: "feature-1", name: "閲嶇偣涓撻 A", weight: 0.45, desc: "涓珮鏇濆厜锛岀害 1.9x" },
-    { id: "feature-2", name: "閲嶇偣涓撻 B", weight: 0.4, desc: "涓珮鏇濆厜锛岀害 1.8x" },
-    { id: "inner-1", name: "鍐呴〉 A", weight: 0.2, desc: "鏍囧噯鏇濆厜锛岀害 1.4x" },
-    { id: "inner-2", name: "鍐呴〉 B", weight: 0.2, desc: "鏍囧噯鏇濆厜锛岀害 1.4x" },
+    { id: "front-main", name: "头版头条", weight: 1.0, desc: "最高曝光，约 3.0x" },
+    { id: "front-side", name: "头版次条", weight: 0.7, desc: "高曝光，约 2.4x" },
+    { id: "feature-1", name: "重点专题 A", weight: 0.45, desc: "中高曝光，约 1.9x" },
+    { id: "feature-2", name: "重点专题 B", weight: 0.4, desc: "中高曝光，约 1.8x" },
+    { id: "inner-1", name: "内页 A", weight: 0.2, desc: "标准曝光，约 1.4x" },
+    { id: "inner-2", name: "内页 B", weight: 0.2, desc: "标准曝光，约 1.4x" },
   ];
 
   state.placed = Object.fromEntries(slots.map((s) => [s.id, null]));
 
+  function newTopicKey() {
+    return `topic_${state.nextTopicSeq++}`;
+  }
+
   const REGIONS = [
     {
       id: "us",
-      name: "鍖楃編绂佸尯甯?,
+      name: "北美禁区带",
       unlocked: true,
       pulse: false,
-      hint: "鍒濆瑙ｉ攣銆傞兘甯備紶璇翠笌绂佸尯骞跺瓨銆?,
+      hint: "初始解锁。都市传说与禁区并存。",
       nodes: [
-        { id: "n51", kind: "permanent", name: "51 鍖哄鍥村叕璺?, days: 2, need: { 鎺㈢储: 4, 鐢熷瓨: 2 }, tags: ["sci", "pop"], difficulty: "normal", enemyAttr: 2, chain: null },
-        { id: "skin", kind: "permanent", name: "缃楁柉濞佸皵妗ｆ娈嬮〉", days: 1, need: { 鎺㈢储: 3, 娲炲療: 3 }, tags: ["sci", "occult"], difficulty: "normal", enemyAttr: 1, chain: null },
-        { id: "temp_ufo", kind: "temp", name: "绐佸彂锛氶浄杈惧紓甯稿厜鐐?, days: 2, need: { 鎺㈢储: 5, 鐢熷瓨: 3 }, tags: ["sci", "pop"], deadlineDay: 4, difficulty: "hard", enemyAttr: 3, chain: null },
+        { id: "n51", kind: "permanent", name: "51 区外围公路", days: 2, need: { 探索: 4, 生存: 2 }, tags: ["sci", "pop"], difficulty: "normal", enemyAttr: 2, chain: null },
+        { id: "skin", kind: "permanent", name: "罗斯威尔档案残页", days: 1, need: { 探索: 3, 洞察: 3 }, tags: ["sci", "occult"], difficulty: "normal", enemyAttr: 1, chain: null },
+        { id: "temp_ufo", kind: "temp", name: "突发：雷达异常光点", days: 2, need: { 探索: 5, 生存: 3 }, tags: ["sci", "pop"], deadlineDay: 4, difficulty: "hard", enemyAttr: 3, chain: null },
         {
           id: "hidden_gate",
           kind: "hidden",
-          name: "鐏佃锛氶粦鑹叉柟灏栫鐨勫洖澹?,
+          name: "灵视：黑色方尖碑的回声",
           days: 3,
-          need: { 鎺㈢储: 4, 璇℃€? 4, 鐢熷瓨: 2 },
+          need: { 探索: 4, 诡思: 4, 生存: 2 },
           tags: ["occult"],
           difficulty: "normal",
           enemyAttr: 4,
-          unlock: (m) => m.鐙傛€?>= 35 && m.璇″悕 >= 40,
+          unlock: (m) => m.狂性 >= 35 && m.诡名 >= 40,
           chain: null,
         },
       ],
     },
     {
       id: "east_asia",
-      name: "涓滀簹绁炵鍦板甫",
+      name: "东亚神秘地带",
       unlocked: false,
       pulse: false,
-      hint: "闇€瑕侊細澹版湜鈮?5 鎴?瀹屾垚銆岀綏鏂▉灏旀。妗堟畫椤点€嶃€?,
+      hint: "需要：声望≥55 或 完成「罗斯威尔档案残页」。",
       nodes: [
-        { id: "shen", kind: "permanent", name: "绁炲啘鏋舵瘺鍙戞牱鏈噰闆?, days: 3, need: { 鎺㈢储: 5, 鐢熷瓨: 4 }, tags: ["sci", "pop"], difficulty: "hard", enemyAttr: 3, chain: null },
-        { id: "chainA", kind: "permanent", name: "妯＄硦锛氭湭瑙ｉ攣鐨勯摼寮忕嚎绱?, days: 2, need: { 鎺㈢储: 6, 娲炲療: 4 }, tags: ["sci"], difficulty: "normal", enemyAttr: 2, chain: "locked", chainTitle: "閾惧紡璋冩煡 路 绗簩闃舵" },
+        { id: "shen", kind: "permanent", name: "神农架毛发样本采集", days: 3, need: { 探索: 5, 生存: 4 }, tags: ["sci", "pop"], difficulty: "hard", enemyAttr: 3, chain: null },
+        { id: "chainA", kind: "permanent", name: "模糊：未解锁的链式线索", days: 2, need: { 探索: 6, 洞察: 4 }, tags: ["sci"], difficulty: "normal", enemyAttr: 2, chain: "locked", chainTitle: "链式调查 · 第二阶段" },
       ],
     },
     {
       id: "pacific",
-      name: "澶钩娲嬪矝灞跨兢",
+      name: "太平洋岛屿群",
       unlocked: false,
       pulse: false,
-      hint: "闇€瑕侊細鍏俊鈮?0锛堣娴嬪悎浣滐級鎴?瀹堝簭鈮?0锛堣鍙級銆?,
-      nodes: [{ id: "easter", kind: "permanent", name: "澶嶆椿鑺傚矝鐭冲儚鐑紓甯?, days: 3, need: { 鎺㈢储: 4, 鐞嗘€? 3 }, tags: ["sci"], difficulty: "normal", enemyAttr: 2, chain: null }],
+      hint: "需要：公信≥60（观测合作）或 守序≥60（许可）。",
+      nodes: [{ id: "easter", kind: "permanent", name: "复活节岛石像热异常", days: 3, need: { 探索: 4, 理性: 3 }, tags: ["sci"], difficulty: "normal", enemyAttr: 2, chain: null }],
     },
   ];
   const REGION_MAP_POS = {
-    us: { x: 20, y: 35, label: "鍖楃編绂佸尯甯? },
-    east_asia: { x: 78, y: 44, label: "涓滀簹绁炵鍦板甫" },
-    pacific: { x: 56, y: 54, label: "澶钩娲嬪矝灞跨兢" },
+    us: { x: 20, y: 35, label: "北美禁区带" },
+    east_asia: { x: 78, y: 44, label: "东亚神秘地带" },
+    pacific: { x: 56, y: 54, label: "太平洋岛屿群" },
   };
   const NODE_MAP_POS = {
     us: { n51: { x: 22, y: 28 }, skin: { x: 54, y: 46 }, temp_ufo: { x: 73, y: 25 }, hidden_gate: { x: 67, y: 70 } },
@@ -1608,21 +1616,21 @@
   }
 
   const STAFF = [
-    { id: "s1", name: "鍗扮瀹夌撼绌锋", avatar: "Assets/avatars/s1_indiana.png", 鎺㈢储: 3, 鐢熷瓨: 2, 娲炲療: 2, 璇℃€? 1, 鐞嗘€? 2 },
-    { id: "s2", name: "鏈棩鏃堕挓", avatar: "Assets/avatars/s2_doomclock.png", 鎺㈢储: 2, 鐢熷瓨: 3, 娲炲療: 3, 璇℃€? 0, 鐞嗘€? 3 },
-    { id: "s3", name: "鐏浮绉戝瀹?, avatar: "Assets/avatars/s3_turkey_scientist.png", 鎺㈢储: 1, 鐢熷瓨: 1, 娲炲療: 2, 璇℃€? 4, 鐞嗘€? 1 },
-    { id: "s4", name: "钖涘畾璋?, avatar: "Assets/avatars/s4_schrodinger.png", 鎺㈢储: 2, 鐢熷瓨: 1, 娲炲療: 1, 璇℃€? 1, 鐞嗘€? 2 },
-    { id: "s5", name: "涓昏", avatar: "Assets/avatars/s5_protagonist.png", 鎺㈢储: 1, 鐢熷瓨: 1, 娲炲療: 4, 璇℃€? 1, 鐞嗘€? 3 },
-    { id: "s6", name: "浼汉", avatar: "Assets/avatars/s6_impostor.png", 鎺㈢储: 3, 鐢熷瓨: 2, 娲炲療: 2, 璇℃€? 1, 鐞嗘€? 2 },
-    { id: "s7", name: "濞滃", avatar: "Assets/avatars/s7_nana.png", 鎺㈢储: 2, 鐢熷瓨: 2, 娲炲療: 3, 璇℃€? 0, 鐞嗘€? 3 },
-    { id: "s8", name: "鑹剧伒", avatar: "Assets/avatars/s8_ailing.png", 鎺㈢储: 1, 鐢熷瓨: 2, 娲炲療: 3, 璇℃€? 2, 鐞嗘€? 4 },
+    { id: "s1", name: "印第安纳穷死", avatar: "Assets/avatars/s1_indiana.png", 探索: 3, 生存: 2, 洞察: 2, 诡思: 1, 理性: 2 },
+    { id: "s2", name: "末日时钟", avatar: "Assets/avatars/s2_doomclock.png", 探索: 2, 生存: 3, 洞察: 3, 诡思: 0, 理性: 3 },
+    { id: "s3", name: "火鸡科学家", avatar: "Assets/avatars/s3_turkey_scientist.png", 探索: 1, 生存: 1, 洞察: 2, 诡思: 4, 理性: 1 },
+    { id: "s4", name: "薛定谔", avatar: "Assets/avatars/s4_schrodinger.png", 探索: 2, 生存: 1, 洞察: 1, 诡思: 1, 理性: 2 },
+    { id: "s5", name: "主角", avatar: "Assets/avatars/s5_protagonist.png", 探索: 1, 生存: 1, 洞察: 4, 诡思: 1, 理性: 3 },
+    { id: "s6", name: "伪人", avatar: "Assets/avatars/s6_impostor.png", 探索: 3, 生存: 2, 洞察: 2, 诡思: 1, 理性: 2 },
+    { id: "s7", name: "娜娜", avatar: "Assets/avatars/s7_nana.png", 探索: 2, 生存: 2, 洞察: 3, 诡思: 0, 理性: 3 },
+    { id: "s8", name: "艾灵", avatar: "Assets/avatars/s8_ailing.png", 探索: 1, 生存: 2, 洞察: 3, 诡思: 2, 理性: 4 },
   ];
 
-  const TAG_LABEL = { sci: "绉戝绾疄", occult: "绁炵鐜勫", pop: "涓栦織娴侀噺" };
+  const TAG_LABEL = { sci: "科学纪实", occult: "神秘玄学", pop: "世俗流量" };
   const TYPE_TO_TAG = { sci: "Politics", occult: "Gossip", pop: "Shopping" };
-  const COGNITION_NAME_POOL = ["灞€閮ㄩ噸鍔涘紓甯稿亣璇?, "缇や綋璁板繂鍋忕Щ鍋囪", "鐢熸€佽兘閲忔祦鐞嗚", "浣庨鍏辨尟骞查鐞嗚", "鏃剁┖寮洸绗竴娉曞垯", "瓒呬釜浣撴剰璇嗗亣璇?];
-  const TOOL_NAME_POOL = ["DNA娴嬪簭宸ュ叿缁?, "鍏夎氨鍒嗘瀽浠?, "鍙ｈ堪妗ｆ妫€绱㈠櫒", "澶滆鐩告満缁?];
-  const ROLL_FACES = ["鉁?, "脳", "?", "", "", ""];
+  const COGNITION_NAME_POOL = ["局部重力异常假说", "群体记忆偏移假说", "生态能量流理论", "低频共振干预理论", "时空弯曲第一法则", "超个体意识假说"];
+  const TOOL_NAME_POOL = ["DNA测序工具组", "光谱分析仪", "口述档案检索器", "夜视相机组"];
+  const ROLL_FACES = ["✓", "×", "?", "", "", ""];
 
   const el = {
     synInventory: null,
@@ -1700,7 +1708,7 @@
       const pool = [
         {
           id: `lead_${r.id}_${state.week}_1`,
-          title: `${r.name} 姘戦棿浼犺█锛氬紓甯哥洰鍑籤,
+          title: `${r.name} 民间传言：异常目击`,
           reliability: 0.52,
           investigated: false,
           assigned: false,
@@ -1708,9 +1716,9 @@
           spawn: () => ({
             id: `leadnode_${r.id}_${state.week}_1`,
             kind: "temp",
-            name: `绾跨储杩芥煡锛?{r.name}涓存椂寮傚姩`,
+            name: `线索追查：${r.name}临时异动`,
             days: 2,
-            need: { 鎺㈢储: 4, 娲炲療: 3 },
+            need: { 探索: 4, 洞察: 3 },
             tags: ["pop", "occult"],
             difficulty: "normal",
             enemyAttr: 2,
@@ -1721,7 +1729,7 @@
         },
         {
           id: `lead_${r.id}_${state.week}_2`,
-          title: `${r.name} 闈炴寮忕爺绌惰褰昤,
+          title: `${r.name} 非正式研究记录`,
           reliability: 0.65,
           investigated: false,
           assigned: false,
@@ -1729,9 +1737,9 @@
           spawn: () => ({
             id: `leadnode_${r.id}_${state.week}_2`,
             kind: "permanent",
-            name: `鏂板父椹伙細${r.name}鐮旂┒閬楀潃`,
+            name: `新常驻：${r.name}研究遗址`,
             days: 3,
-            need: { 鎺㈢储: 5, 鐞嗘€? 3 },
+            need: { 探索: 5, 理性: 3 },
             tags: ["sci"],
             difficulty: "hard",
             enemyAttr: 3,
@@ -1759,9 +1767,9 @@
       missionType: "leadInvestigation",
       regionId,
       leadId: lead.id,
-      name: `绾跨储璋冩煡锛?{lead.title}`,
+      name: `线索调查：${lead.title}`,
       days: lead.days || 2,
-      need: lead.need || { 鎺㈢储: 4, 娲炲療: 3 },
+      need: lead.need || { 探索: 4, 洞察: 3 },
       tags: lead.tags || ["sci", "occult"],
       difficulty: lead.difficulty || (lead.reliability >= 0.65 ? "normal" : "hard"),
       enemyAttr: lead.enemyAttr != null ? lead.enemyAttr : (lead.reliability >= 0.65 ? 2 : 3),
@@ -1774,7 +1782,7 @@
   }
 
   function log(msg) {
-    state.log.unshift(`[绗?{state.week}鍛?浣?{state.day}鏃 ${msg}`);
+    state.log.unshift(`[第${state.week}周 余${state.day}日] ${msg}`);
     if (state.log.length > 40) state.log.pop();
     const logEl = document.getElementById("log");
     if (logEl) logEl.innerHTML = state.log.map((t) => `<p>${escapeHtml(t)}</p>`).join("");
@@ -1806,7 +1814,7 @@
         resolve();
         return;
       }
-      ttl.textContent = title || "鎻愮ず";
+      ttl.textContent = title || "提示";
       body.innerHTML = bodyHtml || "";
       wrap.classList.remove("hidden");
       const done = () => {
@@ -1831,7 +1839,7 @@
 
   async function runPaperLabOnboarding() {
     if (!state.paperLabMode) return;
-    await showSoftTutorialModal("lab_fullGuide", "鏂版墜寮曞 路 鎶ュ垔缁勭増瀹為獙", LAB_FULL_GUIDE_HTML, () => state.paperLabMode);
+    await showSoftTutorialModal("lab_fullGuide", "新手引导 · 报刊组版实验", LAB_FULL_GUIDE_HTML, () => state.paperLabMode);
     openPaperDemoLab();
   }
 
@@ -1839,9 +1847,9 @@
     if (!week1TutorialActive() || state.phase !== "editorial" || state.paperLabMode) return;
     await showWeek1SoftTutorialModal(
       "w1_editorial",
-      "绗竴鍛?路 鎶ュ垔缁勭増锛堣蒋寮曞锛?,
-      `<p style="margin:0 0 0.6rem;line-height:1.55;">浠庡乏渚ф晠浜嬪簱<strong>鎸変綇鎷栧埌</strong>涓棿<strong>鎷熺墿鎶ョ焊鐗堜綅</strong>鍗冲彲濉叆锛涘ご鐗堜笌鍐呴〉褰卞搷鏇濆厜绯绘暟銆傚～瀹屽悗鐐?strong>缁撶畻鏈湡</strong>鏌ョ湅鍒╂鼎鏋勬垚銆?/p>
-       <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">鍏抽棴鏈獥鍚庡皢<strong>鑷姩鎾斁濉叆鍔ㄧ敾婕旂ず</strong>锛堟晥鏋?B锛屾挱瀹岄棿闅?1 绉掑惊鐜級锛涗篃鍙殢鏃剁偣銆屾姤鍒婂～鍏ユ紨绀恒€嶉噸鐪嬨€傛湰鍛ㄥ唴鏈彁绀轰笉鍐嶅嚭鐜般€?/p>`,
+      "第一周 · 报刊组版（软引导）",
+      `<p style="margin:0 0 0.6rem;line-height:1.55;">从左侧故事库<strong>按住拖到</strong>中间<strong>拟物报纸版位</strong>即可填入；头版与内页影响曝光系数。填完后点<strong>结算本期</strong>查看利润构成。</p>
+       <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">关闭本窗后将<strong>自动播放填入动画演示</strong>（效果 B，播完间隔 1 秒循环）；也可随时点「报刊填入演示」重看。本周内本提示不再出现。</p>`,
     );
     if (!week1TutorialActive() || state.phase !== "editorial" || state.paperLabMode) return;
     openPaperDemoLab();
@@ -1851,10 +1859,10 @@
     if (!week1TutorialActive() || state.phase !== "synthesis" || state.paperLabMode) return;
     await showWeek1SoftTutorialModal(
       "w1_synthesis",
-      "绗竴鍛?路 鏁呬簨鍚堟垚鍙帮紙杞紩瀵硷級",
-      `<p style="margin:0 0 0.6rem;line-height:1.55;">鐢?strong>鎷栨嫿</strong>鎶婂乏渚х礌鏉愭斁杩涘彸渚у崱妲斤細<strong>绾㈣壊</strong>涓哄叕寮€鎶ラ亾蹇呰绱犳潗锛?strong>閲戣壊铏氱嚎</strong>涓哄伐鍏凤紙鍙€夛級銆傜偣閫?strong>钃濊壊銆屽唴瀹″畾璋冦€?/strong>鏃讹紝鐢ㄨ摑鑹叉Ы鏀剧幇璞★紝鐐广€岀敓鎴愯鐭ャ€嶅仛缂栬緫閮ㄥ畾璋冿紙涓嶄笂鐗堬級銆?/p>
-       <p style="margin:0 0 0.6rem;line-height:1.55;"><strong>鐖嗙偢鎬ф柊闂?/strong>闇€銆岀垎鏂欏崱銆嶏紙宸︿晶銆岀垎鏂欏崱銆嶅垎绫伙紝鎺㈢储杩涘悎鎴愬彴鏃跺彲鑳藉彂鏀撅紝涓嶅彲鍚堟垚浜у嚭锛夈€?/p>
-       <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">鍏抽棴鏈獥鍚庡皢<strong>鑷姩鎾斁鍚堟垚鍙版嫋鎷界ず鎰?/strong>锛堝惊鐜級锛涗篃鍙偣銆屽悎鎴愭嫋鎷芥紨绀恒€嶉噸鐪嬨€傛湰鍛ㄥ唴鏈彁绀轰笉鍐嶅嚭鐜般€?/p>`,
+      "第一周 · 故事合成台（软引导）",
+      `<p style="margin:0 0 0.6rem;line-height:1.55;">用<strong>拖拽</strong>把左侧素材放进右侧卡槽：<strong>红色</strong>为公开报道必要素材，<strong>金色虚线</strong>为工具（可选）。点选<strong>蓝色「内审定调」</strong>时，用蓝色槽放现象，点「生成认知」做编辑部定调（不上版）。</p>
+       <p style="margin:0 0 0.6rem;line-height:1.55;"><strong>爆炸性新闻</strong>需「爆料卡」（左侧「爆料卡」分类，探索进合成台时可能发放，不可合成产出）。</p>
+       <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">关闭本窗后将<strong>自动播放合成台拖拽示意</strong>（循环）；也可点「合成拖拽演示」重看。本周内本提示不再出现。</p>`,
     );
     if (!week1TutorialActive() || state.phase !== "synthesis" || state.paperLabMode) return;
     openSynthDemoLab();
@@ -1918,7 +1926,7 @@
     flyer.classList.remove("paper-demo-flyer-visible", "paper-demo-flyer-b");
     slot.classList.remove("paper-demo-slot-flash", "paper-demo-slot-filled");
     chip.classList.remove("paper-demo-source-pulse");
-    flyer.innerHTML = `<div class="nm-story-title" style="font-size:12px;line-height:1.3;">绀轰緥鎶ラ亾锛氭腐鍖哄紓甯稿洖娉?/div>`;
+    flyer.innerHTML = `<div class="nm-story-title" style="font-size:12px;line-height:1.3;">示例报道：港区异常回波</div>`;
     flyer.style.transform = "";
     flyer.style.opacity = "";
     void stage.offsetWidth;
@@ -2052,9 +2060,9 @@
     if (!stage || !flyer || !phenCard || !intelCard || !slotPhen || !slotIntel) return;
     clearSynthDemoAutoTimer();
     cancelSynthDemoAnim();
-    slotPhen.innerHTML = `<span class="syn-demo-placeholder">鎷栧叆鐜拌薄</span>`;
-    slotIntel.innerHTML = `<span class="syn-demo-placeholder">鎷栧叆鎯呮姤</span>`;
-    if (slotTool) slotTool.innerHTML = `<span class="syn-demo-placeholder">宸ュ叿锛堝彲閫夛級</span>`;
+    slotPhen.innerHTML = `<span class="syn-demo-placeholder">拖入现象</span>`;
+    slotIntel.innerHTML = `<span class="syn-demo-placeholder">拖入情报</span>`;
+    if (slotTool) slotTool.innerHTML = `<span class="syn-demo-placeholder">工具（可选）</span>`;
     if (resultEl) {
       resultEl.textContent = "";
       resultEl.classList.remove("synth-demo-result-flash");
@@ -2069,10 +2077,10 @@
 
     const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
-      slotPhen.innerHTML = `<div class="syn-demo-chip">鐜拌薄鏍锋湰</div>`;
-      slotIntel.innerHTML = `<div class="syn-demo-chip">鎯呮姤鎽樿</div>`;
+      slotPhen.innerHTML = `<div class="syn-demo-chip">现象样本</div>`;
+      slotIntel.innerHTML = `<div class="syn-demo-chip">情报摘要</div>`;
       if (resultEl) {
-        resultEl.textContent = "鎵ц鍚堟垚 路 绀烘剰锛堟紨绀轰笉娑堣€楃湡瀹炵礌鏉愶級";
+        resultEl.textContent = "执行合成 · 示意（演示不消耗真实素材）";
         resultEl.classList.add("synth-demo-result-flash");
       }
       scheduleSynthDemoAutoReplay();
@@ -2119,10 +2127,10 @@
       synthDemoRaf = requestAnimationFrame(step);
     };
 
-    runFly(phenCard, slotPhen, "鐜拌薄鏍锋湰", () => {
-      runFly(intelCard, slotIntel, "鎯呮姤鎽樿", () => {
+    runFly(phenCard, slotPhen, "现象样本", () => {
+      runFly(intelCard, slotIntel, "情报摘要", () => {
         if (resultEl) {
-          resultEl.textContent = "鎵ц鍚堟垚 路 绀烘剰锛堟紨绀轰笉娑堣€楃礌鏉愶級";
+          resultEl.textContent = "执行合成 · 示意（演示不消耗素材）";
           resultEl.classList.add("synth-demo-result-flash");
         }
         scheduleSynthDemoAutoReplay();
@@ -2165,7 +2173,7 @@
   function renderMacro() {
     const elM = document.getElementById("macro");
     if (!elM) return;
-    const keys = ["鍏俊", "璇″悕", "澹版湜", "瀹堝簭", "鐙傛€?];
+    const keys = ["公信", "诡名", "声望", "守序", "狂性"];
     elM.innerHTML = keys.map((k) => `<div class="stat"><b>${k}</b><span>${macro[k]}</span></div>`).join("");
   }
 
@@ -2205,7 +2213,7 @@
     staffList.forEach((id) => {
       const p = STAFF.find((x) => x.id === id);
       if (!p) return;
-      ["鎺㈢储", "鐢熷瓨", "娲炲療", "璇℃€?, "鐞嗘€?].forEach((k) => {
+      ["探索", "生存", "洞察", "诡思", "理性"].forEach((k) => {
         sum[k] = (sum[k] || 0) + getStaffValue(p, k);
       });
     });
@@ -2213,10 +2221,10 @@
   }
   function poolSizes(staffList) {
     const s = staffSum(staffList);
-    return { nA: (s.鎺㈢储 || 0) + (s.娲炲療 || 0) + (s.璇℃€?|| 0), nB: (s.鐢熷瓨 || 0) + (s.鐞嗘€?|| 0) };
+    return { nA: (s.探索 || 0) + (s.洞察 || 0) + (s.诡思 || 0), nB: (s.生存 || 0) + (s.理性 || 0) };
   }
   function needThresholds(need) {
-    return { kA: (need.鎺㈢储 || 0) + (need.娲炲療 || 0) + (need.璇℃€?|| 0), kB: (need.鐢熷瓨 || 0) + (need.鐞嗘€?|| 0) };
+    return { kA: (need.探索 || 0) + (need.洞察 || 0) + (need.诡思 || 0), kB: (need.生存 || 0) + (need.理性 || 0) };
   }
 
   function computeExplorationP(mission, staffList) {
@@ -2292,12 +2300,12 @@
     const passA = kA <= 0 ? true : hitsA >= kA;
     const passB = kB <= 0 ? true : hitsB >= kB;
     let tier;
-    if (passA && passB) tier = "澶ф垚鍔?;
-    else if (passA || passB) tier = "灏忔垚鍔?;
+    if (passA && passB) tier = "大成功";
+    else if (passA || passB) tier = "小成功";
     else {
       const totalHits = hitsA + hitsB;
       const needSum = kA + kB;
-      tier = nA + nB >= 4 && totalHits <= 1 && needSum >= 4 ? "澶уけ璐? : "澶辫触";
+      tier = nA + nB >= 4 && totalHits <= 1 && needSum >= 4 ? "大失败" : "失败";
     }
     return { ...meta, hitsA, hitsB, passA, passB, tier, rollsA, rollsB, voidA, voidB, enemyA, enemyB };
   }
@@ -2307,45 +2315,45 @@
       {
         id: "evt_passive_tipoff",
         type: "passive",
-        title: "绾夸汉鐖嗘枡",
-        body: "鍖垮悕绾夸汉閫佹潵涓€浠界鍖哄潗鏍囩鐗囷紝浣犵殑缂栬緫閮ㄨ幏寰椾簡棰濆绾跨储銆?,
+        title: "线人爆料",
+        body: "匿名线人送来一份禁区坐标碎片，你的编辑部获得了额外线索。",
         condition: () => true,
         apply: () => {
-          state.clues.push({ title: "鍖垮悕鍧愭爣纰庣墖 路 涓存椂绾跨储", type: "occult", tier: 1 });
-          addMacro({ 璇″悕: 1 });
-          log("闅忔満浜嬩欢锛氳幏寰椾复鏃剁嚎绱€屽尶鍚嶅潗鏍囩鐗囥€嶃€?);
+          state.clues.push({ title: "匿名坐标碎片 · 临时线索", type: "occult", tier: 1, topicKey: newTopicKey() });
+          addMacro({ 诡名: 1 });
+          log("随机事件：获得临时线索「匿名坐标碎片」。");
         },
       },
       {
         id: "evt_passive_grant",
         type: "passive",
-        title: "瀛︽湳璧勫姪",
-        body: "鍏俊杈冮珮寮曟潵鐮旂┒鍩洪噾锛屾湰鍛ㄨ皟鏌ョ粍鐘舵€佹彁鍗囥€?,
-        condition: () => macro.鍏俊 >= 55,
+        title: "学术资助",
+        body: "公信较高引来研究基金，本周调查组状态提升。",
+        condition: () => macro.公信 >= 55,
         apply: () => {
-          addMacro({ 鍏俊: 2, 澹版湜: 1 });
-          addStaffEffect("s2", "娲炲療", 1, "week", false);
-          log("闅忔満浜嬩欢锛氳€侀瓘鏈懆 娲炲療 +1锛堜复鏃讹級銆?);
+          addMacro({ 公信: 2, 声望: 1 });
+          addStaffEffect("s2", "洞察", 1, "week", false);
+          log("随机事件：老魏本周 洞察 +1（临时）。");
         },
       },
       {
         id: "evt_choice_occult",
         type: "choice",
-        title: "娣卞鐢靛彴寮傚搷",
-        body: "璇″悕涓庣媯鎬ф寔缁蛋楂橈紝娣卞棰戦亾鍑虹幇鐤戜技鈥滃懠鍞や俊鍙封€濄€備綘瑕佹€庝箞澶勭悊锛?,
-        condition: () => macro.璇″悕 >= 45 && macro.鐙傛€?>= 25,
+        title: "深夜电台异响",
+        body: "诡名与狂性持续走高，深夜频道出现疑似“呼唤信号”。你要怎么处理？",
+        condition: () => macro.诡名 >= 45 && macro.狂性 >= 25,
         options: [
           {
-            text: "鍏紑杩借釜淇″彿锛堟縺杩涳級",
-            desc: "璇″悕 +4锛屽叕淇?-2锛岃拷鍔犱竴鏉′复鏃?occult 浜嬩欢鐐?,
+            text: "公开追踪信号（激进）",
+            desc: "诡名 +4，公信 -2，追加一条临时 occult 事件点",
             apply: () => {
-              addMacro({ 璇″悕: 4, 鍏俊: -2 });
+              addMacro({ 诡名: 4, 公信: -2 });
               addDynamicNode("us", {
                 id: `dyn_radio_${state.week}`,
                 kind: "temp",
-                name: "涓存椂锛氭繁澶滅數鍙颁俊鍙锋簮",
+                name: "临时：深夜电台信号源",
                 days: 2,
-                need: { 鎺㈢储: 4, 璇℃€? 3 },
+                need: { 探索: 4, 诡思: 3 },
                 tags: ["occult", "pop"],
                 difficulty: "hard",
                 enemyAttr: 3,
@@ -2355,18 +2363,18 @@
             },
           },
           {
-            text: "绉樺瘑鐩戝惉锛堢ǔ濡ワ級",
-            desc: "鍏俊 +1锛岃鍚?+1锛岃皟鏌ヂ疯€侀瓘鏈懆 鐞嗘€?+1",
+            text: "秘密监听（稳妥）",
+            desc: "公信 +1，诡名 +1，调查·老魏本周 理性 +1",
             apply: () => {
-              addMacro({ 鍏俊: 1, 璇″悕: 1 });
-              addStaffEffect("s2", "鐞嗘€?, 1, "week", false);
+              addMacro({ 公信: 1, 诡名: 1 });
+              addStaffEffect("s2", "理性", 1, "week", false);
             },
           },
           {
-            text: "鍒囨柇棰戦亾锛堜繚瀹堬級",
-            desc: "瀹堝簭 +2锛岀媯鎬?-1锛屽け鍘讳竴娆℃綔鍦ㄧ嚎绱㈡満浼?,
+            text: "切断频道（保守）",
+            desc: "守序 +2，狂性 -1，失去一次潜在线索机会",
             apply: () => {
-              addMacro({ 瀹堝簭: 2, 鐙傛€? -1 });
+              addMacro({ 守序: 2, 狂性: -1 });
             },
           },
         ],
@@ -2374,21 +2382,21 @@
       {
         id: "evt_choice_order",
         type: "choice",
-        title: "甯傛斂鍗忎綔鎻愭",
-        body: "浣犳敹鍒颁竴浠借法閮ㄩ棬璋冩煡鎻愭锛屽彲鍊熸鎵╁睍琛屽姩鑳藉姏銆?,
-        condition: () => macro.瀹堝簭 >= 55 || macro.鍏俊 >= 60,
+        title: "市政协作提案",
+        body: "你收到一份跨部门调查提案，可借此扩展行动能力。",
+        condition: () => macro.守序 >= 55 || macro.公信 >= 60,
         options: [
           {
-            text: "绛剧讲瀹樻柟鍗忎綔",
-            desc: "鍏俊 +3锛屽０鏈?+2锛屾柊澧炲お骞虫磱涓存椂绉戝鑺傜偣",
+            text: "签署官方协作",
+            desc: "公信 +3，声望 +2，新增太平洋临时科学节点",
             apply: () => {
-              addMacro({ 鍏俊: 3, 澹版湜: 2 });
+              addMacro({ 公信: 3, 声望: 2 });
               addDynamicNode("pacific", {
                 id: `dyn_ocean_${state.week}`,
                 kind: "temp",
-                name: "涓存椂锛氭繁娴锋诞鏍囧紓甯?,
+                name: "临时：深海浮标异常",
                 days: 2,
-                need: { 鎺㈢储: 4, 鐞嗘€? 4 },
+                need: { 探索: 4, 理性: 4 },
                 tags: ["sci"],
                 difficulty: "normal",
                 enemyAttr: 2,
@@ -2398,49 +2406,49 @@
             },
           },
           {
-            text: "鍙嬁璁惧涓嶅叕寮€绔欓槦",
-            desc: "鑾峰緱涓存椂绉戞妧绾跨储锛岃鍚?+1",
+            text: "只拿设备不公开站队",
+            desc: "获得临时科技线索，诡名 +1",
             apply: () => {
-              state.clues.push({ title: "鍗忎綔璁惧娓呭崟 路 涓存椂绾跨储", type: "sci", tier: 1 });
-              addMacro({ 璇″悕: 1 });
+              state.clues.push({ title: "协作设备清单 · 临时线索", type: "sci", tier: 1, topicKey: newTopicKey() });
+              addMacro({ 诡名: 1 });
             },
           },
           {
-            text: "鎷掔粷鎻愭",
-            desc: "瀹堝簭 +1锛屽０鏈?-1",
-            apply: () => addMacro({ 瀹堝簭: 1, 澹版湜: -1 }),
+            text: "拒绝提案",
+            desc: "守序 +1，声望 -1",
+            apply: () => addMacro({ 守序: 1, 声望: -1 }),
           },
         ],
       },
       {
         id: "evt_choice_public",
         type: "choice",
-        title: "璇昏€呮潵淇℃疆",
-        body: "涓€鎵硅鑰呰姹傗€滄洿鍒烘縺鈥濇垨鈥滄洿涓ヨ皑鈥濈殑鍐呭锛屼綘闇€瑕侀€夋嫨缂栬緫鏂瑰悜銆?,
+        title: "读者来信潮",
+        body: "一批读者要求“更刺激”或“更严谨”的内容，你需要选择编辑方向。",
         condition: () => true,
         options: [
           {
-            text: "杩庡悎鐑偣",
-            desc: "璇″悕 +2锛屽０鏈?+1锛屽疄涔犵敓路灏忚档 鎺㈢储 +1锛堟案涔咃級",
+            text: "迎合热点",
+            desc: "诡名 +2，声望 +1，实习生·小赵 探索 +1（永久）",
             apply: () => {
-              addMacro({ 璇″悕: 2, 澹版湜: 1 });
-              addStaffEffect("s4", "鎺㈢储", 1, "permanent", true);
+              addMacro({ 诡名: 2, 声望: 1 });
+              addStaffEffect("s4", "探索", 1, "permanent", true);
             },
           },
           {
-            text: "鍧氭寔绾疄",
-            desc: "鍏俊 +2锛屽畧搴?+1锛岀绉樼増路浼婅姍 璇℃€?-1锛堟湰鍛級",
+            text: "坚持纪实",
+            desc: "公信 +2，守序 +1，神秘版·伊芙 诡思 -1（本周）",
             apply: () => {
-              addMacro({ 鍏俊: 2, 瀹堝簭: 1 });
-              addStaffEffect("s3", "璇℃€?, -1, "week", false);
+              addMacro({ 公信: 2, 守序: 1 });
+              addStaffEffect("s3", "诡思", -1, "week", false);
             },
           },
           {
-            text: "骞宠　涓ょ",
-            desc: "鍏俊 +1锛岃鍚?+1锛岃幏寰椾复鏃舵儏鎶ョ嚎绱?,
+            text: "平衡两端",
+            desc: "公信 +1，诡名 +1，获得临时情报线索",
             apply: () => {
-              addMacro({ 鍏俊: 1, 璇″悕: 1 });
-              state.clues.push({ title: "璇昏€呮姇绋挎嫾鍥?路 涓存椂绾跨储", type: "pop", tier: 1 });
+              addMacro({ 公信: 1, 诡名: 1 });
+              state.clues.push({ title: "读者投稿拼图 · 临时线索", type: "pop", tier: 1, topicKey: newTopicKey() });
             },
           },
         ],
@@ -2460,7 +2468,7 @@
     if (!state.weekEvent || state.weekEventResolved) return;
     if (state.weekEvent.type === "passive" && typeof state.weekEvent.apply === "function") {
       state.weekEvent.apply();
-      state.weekEventResult = "榛樿浜嬩欢宸茬敓鏁堛€?;
+      state.weekEventResult = "默认事件已生效。";
       state.weekEventResolved = true;
       renderMacro();
     }
@@ -2471,9 +2479,9 @@
     const op = state.weekEvent.options?.[index];
     if (!op) return;
     if (typeof op.apply === "function") op.apply();
-    state.weekEventResult = op.desc || "璇ラ€夋嫨宸茬敓鏁堛€?;
+    state.weekEventResult = op.desc || "该选择已生效。";
     state.weekEventResolved = true;
-    log(`闅忔満浜嬩欢閫夋嫨锛?{state.weekEvent.title} -> ${op.text}`);
+    log(`随机事件选择：${state.weekEvent.title} -> ${op.text}`);
     renderMacro();
   }
 
@@ -2484,13 +2492,13 @@
         return;
       }
       if (r.id === "east_asia") {
-        const done = state.clues.some((c) => c.title.includes("缃楁柉濞佸皵")) || macro.澹版湜 >= 55;
+        const done = state.clues.some((c) => c.title.includes("罗斯威尔")) || macro.声望 >= 55;
         r.unlocked = done;
         r.pulse = done && state.week <= 2;
         return;
       }
       if (r.id === "pacific") {
-        r.unlocked = macro.鍏俊 >= 60 || macro.瀹堝簭 >= 60;
+        r.unlocked = macro.公信 >= 60 || macro.守序 >= 60;
         r.pulse = r.unlocked;
       }
     });
@@ -2515,26 +2523,26 @@
     const elW = document.getElementById("view-weekStart");
     const eventBlock = state.weekEvent.type === "choice"
       ? `<div class="prob-box">
-          <div style="margin-bottom:0.35rem;"><strong>璇烽€夋嫨澶勭悊鏂规锛?/strong></div>
+          <div style="margin-bottom:0.35rem;"><strong>请选择处理方案：</strong></div>
           ${(state.weekEvent.options || []).map((op, idx) => `
             <div style="margin:0.35rem 0;display:flex;gap:8px;align-items:flex-start;">
               <button type="button" data-evt-op="${idx}" ${state.weekEventResolved ? "disabled" : ""}>${escapeHtml(op.text)}</button>
-              <span class="tip-inline">${state.debugShowEventEffects ? escapeHtml(op.desc || "") : "鍚庢灉鏈煡"}</span>
+              <span class="tip-inline">${state.debugShowEventEffects ? escapeHtml(op.desc || "") : "后果未知"}</span>
             </div>`).join("")}
          </div>`
-      : `<div class="prob-box">${state.weekEventResolved ? "浜嬩欢宸插鐞嗐€? : "榛樿浜嬩欢锛氱偣鍑荤‘璁ゅ悗鐢熸晥銆?} </div>`;
+      : `<div class="prob-box">${state.weekEventResolved ? "事件已处理。" : "默认事件：点击确认后生效。"} </div>`;
     const resultBlock = state.weekEventResolved && state.weekEventResult
-      ? `<div class="prob-box" style="margin-top:0.45rem;border-color:#1d4ed8;">缁撴灉锛?{escapeHtml(state.weekEventResult)}</div>`
+      ? `<div class="prob-box" style="margin-top:0.45rem;border-color:#1d4ed8;">结果：${escapeHtml(state.weekEventResult)}</div>`
       : "";
     elW.innerHTML = `
-      <h2>鍥炲悎璧峰</h2>
+      <h2>回合起始</h2>
       <p><strong>${escapeHtml(state.weekEvent.title)}</strong></p>
       <p style="color:var(--muted);font-size:0.9rem;">${escapeHtml(state.weekEvent.body)}</p>
-      <label class="evt-debug"><input type="checkbox" id="evtDebugToggle" ${state.debugShowEventEffects ? "checked" : ""}/> 璋冭瘯锛氭樉绀哄叏閮ㄩ€夐」鍚庢灉</label>
+      <label class="evt-debug"><input type="checkbox" id="evtDebugToggle" ${state.debugShowEventEffects ? "checked" : ""}/> 调试：显示全部选项后果</label>
       ${eventBlock}
       ${resultBlock}
-      ${state.weekEvent.type === "passive" ? `<button type="button" id="btnResolveEvent" ${state.weekEventResolved ? "disabled" : ""}>纭浜嬩欢</button>` : ""}
-      <button type="button" class="primary" id="btnEnterGlobal">杩涘叆鍏ㄧ悆鍦板浘</button>`;
+      ${state.weekEvent.type === "passive" ? `<button type="button" id="btnResolveEvent" ${state.weekEventResolved ? "disabled" : ""}>确认事件</button>` : ""}
+      <button type="button" class="primary" id="btnEnterGlobal">进入全球地图</button>`;
     const dbg = document.getElementById("evtDebugToggle");
     if (dbg) {
       dbg.onchange = () => {
@@ -2563,9 +2571,9 @@
     setView("weekStart");
     scheduleWeek1SoftTutorial(
       "w1_weekStart",
-      "绗竴鍛?路 鍥炲悎绠€鎶ワ紙杞紩瀵硷級",
-      `<p style="margin:0 0 0.6rem;line-height:1.55;">姣忓懆浠?strong>闅忔満浜嬩欢</strong>寮€濮嬶細琚姩浜嬩欢鐐广€岀‘璁ゃ€嶏紝澶氶€夐」浜嬩欢璇蜂换閫夊叾涓€銆傚鐞嗗畬鍚庣偣<strong>杩涘叆鍏ㄧ悆鍦板浘</strong>寮€濮嬫帰绱€?/p>
-       <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">姝や负杞紩瀵硷紝鐐广€岀煡閬撲簡銆嶆垨绌虹櫧澶勫嵆鍙叧闂紱鏈懆鍐呬笉浼氶噸澶嶅脊鍑恒€傛柊鍛ㄧ洰绗?1 鍛ㄤ細鍐嶆鏄剧ず銆?/p>`,
+      "第一周 · 回合简报（软引导）",
+      `<p style="margin:0 0 0.6rem;line-height:1.55;">每周从<strong>随机事件</strong>开始：被动事件点「确认」，多选项事件请任选其一。处理完后点<strong>进入全球地图</strong>开始探索。</p>
+       <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">此为软引导，点「知道了」或空白处即可关闭；本周内不会重复弹出。新周目第 1 周会再次显示。</p>`,
     );
   }
 
@@ -2577,14 +2585,14 @@
       .join(" ");
     elG.innerHTML = `
       <div class="view-title-row">
-        <h2>鍏ㄧ悆鍦板浘</h2>
+        <h2>全球地图</h2>
         ${dispatchCountSpanHtml()}
       </div>
       <div class="tags" id="filterTags">${filterHtml}</div>
-      <p style="margin:0.75rem 0 0.5rem;"><button type="button" id="btnRecycle">鍥炴敹鍣煶绾跨储</button>
-      <span style="color:var(--muted);font-size:0.8rem;margin-left:0.5rem;">璇″悕 -2锛屽０鏈?+1</span></p>
+      <p style="margin:0.75rem 0 0.5rem;"><button type="button" id="btnRecycle">回收噪音线索</button>
+      <span style="color:var(--muted);font-size:0.8rem;margin-left:0.5rem;">诡名 -2，声望 +1</span></p>
       <div class="world-region-host" id="regionGrid"></div>
-      <p style="margin-top:0.75rem;"><button type="button" id="backFromGlobal">杩斿洖鍥炲悎绠€鎶?/button></p>`;
+      <p style="margin-top:0.75rem;"><button type="button" id="backFromGlobal">返回回合简报</button></p>`;
     document.querySelectorAll("#filterTags .tag").forEach((btn) => {
       btn.addEventListener("click", () => {
         const k = btn.getAttribute("data-filter");
@@ -2595,9 +2603,9 @@
       });
     });
     document.getElementById("btnRecycle").onclick = () => {
-      macro.璇″悕 = Math.max(0, macro.璇″悕 - 2);
-      macro.澹版湜 = Math.min(100, macro.澹版湜 + 1);
-      log("鍥炴敹鍣煶绾跨储锛氳鍚?-2锛屽０鏈?+1銆?);
+      macro.诡名 = Math.max(0, macro.诡名 - 2);
+      macro.声望 = Math.min(100, macro.声望 + 1);
+      log("回收噪音线索：诡名 -2，声望 +1。");
       renderMacro();
     };
     const grid = document.getElementById("regionGrid");
@@ -2611,23 +2619,23 @@
     const pointsHtml = regionData.map(({ r, visibleNodes, eventCount, has }) => {
       const pos = REGION_MAP_POS[r.id] || { x: 50, y: 50, label: r.name };
       const cls = `map-point ${r.unlocked ? "" : "locked"} ${r.pulse && has ? "pulse" : ""} ${eventCount > 0 ? "has-event" : ""}`;
-      const hint = `${r.unlocked ? "鍙繘鍏? : "鏈В閿?}${r.unlocked && has ? ` 路 鐩爣${visibleNodes.length}` : ""}${eventCount > 0 ? ` 路 浜嬩欢${eventCount}` : ""}`;
+      const hint = `${r.unlocked ? "可进入" : "未解锁"}${r.unlocked && has ? ` · 目标${visibleNodes.length}` : ""}${eventCount > 0 ? ` · 事件${eventCount}` : ""}`;
       return `<button type="button" class="${cls}" data-region="${r.id}" style="left:${pos.x}%;top:${pos.y}%;" title="${escapeHtml(hint)}">${escapeHtml(pos.label)}${eventCount > 0 ? `<span class="event-dot">${eventCount > 9 ? "9+" : eventCount}</span>` : ""}</button>`;
     }).join("");
     const listHtml = regionData.map(({ r, visibleNodes, eventCount }) => `
       <div class="entry ${eventCount > 0 ? "has-event" : ""}">
-        <div><strong>${escapeHtml(r.name)}</strong> ${r.unlocked ? "" : "锛堟湭瑙ｉ攣锛?}</div>
+        <div><strong>${escapeHtml(r.name)}</strong> ${r.unlocked ? "" : "（未解锁）"}</div>
         <div style="color:#94a3b8;margin-top:3px;">${escapeHtml(r.hint)}</div>
-        <div style="margin-top:3px;color:#cbd5e1;">鍙鐩爣锛?{visibleNodes.length}${eventCount > 0 ? `<span class="event-hint">浜嬩欢 ${eventCount}</span>` : ""}</div>
+        <div style="margin-top:3px;color:#cbd5e1;">可见目标：${visibleNodes.length}${eventCount > 0 ? `<span class="event-hint">事件 ${eventCount}</span>` : ""}</div>
       </div>`).join("");
     grid.innerHTML = `
       <div class="world-map-wrap">
         <div class="world-map">${pointsHtml}</div>
         <div class="map-side">
-          <h3>鍖哄煙鎯呮姤</h3>
+          <h3>区域情报</h3>
           ${listHtml}
           <div class="region-actions">
-            <button type="button" id="btnNextDayGlobal" class="next-day-big"><span class="arrow" aria-hidden="true"></span><span>涓嬩竴澶?/span></button>
+            <button type="button" id="btnNextDayGlobal" class="next-day-big"><span class="arrow" aria-hidden="true"></span><span>下一天</span></button>
           </div>
         </div>
       </div>`;
@@ -2646,10 +2654,10 @@
     document.getElementById("backFromGlobal").onclick = () => renderWeekStart();
     scheduleWeek1SoftTutorial(
       "w1_global",
-      "绗竴鍛?路 鍏ㄧ悆鍦板浘锛堣蒋寮曞锛?,
-      `<p style="margin:0 0 0.6rem;line-height:1.55;">鐐瑰湴鍥句笂鐨?strong>鍖哄煙</strong>杩涘叆鑺傜偣锛涘彸渚ф儏鎶ヤ笌鍦板浘鐐逛綅<strong>鑱斿姩楂樹寒</strong>銆傞《閮ㄦ爣绛惧彲绛涢€?<strong>绉戝 / 绉橀椈 / 澶т紬</strong> 绫讳簨浠躲€?/p>
-       <p style="margin:0 0 0.6rem;line-height:1.55;"><strong>涓嬩竴澶?/strong>锛氭湰椤靛彸渚уぇ鎸夐挳銆佸尯鍩熷唴鍚屾牱浣嶇疆锛屼互鍙婃帰绱㈤樁娈?strong>宸︿笅瑙掓偓娴寜閽?/strong>鍧囧彲鎺ㄨ繘澶╂暟锛涘埌鏈熶换鍔′細渚濇鍒ゅ畾銆?/p>
-       <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">鍏抽棴鍚庢湰鍛ㄥ唴涓嶅啀寮瑰嚭鏈彁绀恒€?/p>`,
+      "第一周 · 全球地图（软引导）",
+      `<p style="margin:0 0 0.6rem;line-height:1.55;">点地图上的<strong>区域</strong>进入节点；右侧情报与地图点位<strong>联动高亮</strong>。顶部标签可筛选 <strong>科学 / 秘闻 / 大众</strong> 类事件。</p>
+       <p style="margin:0 0 0.6rem;line-height:1.55;"><strong>下一天</strong>：本页右侧大按钮、区域内同样位置，以及探索阶段<strong>左下角悬浮按钮</strong>均可推进天数；到期任务会依次判定。</p>
+       <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">关闭后本周内不再弹出本提示。</p>`,
     );
   }
 
@@ -2681,13 +2689,13 @@
 
   function missionHeaderHtml(m, staffIds) {
     const region = REGIONS.find((x) => x.id === m.regionId);
-    const regionName = region ? region.name : "鏈煡鍖哄煙";
+    const regionName = region ? region.name : "未知区域";
     const typeLead = m.missionType === "leadInvestigation";
-    const typeTag = typeLead ? "绾跨储璋冩煡" : "鎺㈢储浠诲姟";
+    const typeTag = typeLead ? "线索调查" : "探索任务";
     const typeCls = typeLead ? "lead" : "normal";
     const prog = state.dayResolutionInfo
-      ? `褰撴棩缁撶畻 ${state.dayResolutionInfo.current}/${state.dayResolutionInfo.total}`
-      : "鍗曚换鍔＄粨绠?;
+      ? `当日结算 ${state.dayResolutionInfo.current}/${state.dayResolutionInfo.total}`
+      : "单任务结算";
     const needText = Object.keys(m.need || {})
       .map((k) => `${k}${m.need[k] | 0}`)
       .join(" / ");
@@ -2705,15 +2713,15 @@
         <span class="mission-prog">${prog}</span>
       </div>
       <div class="mission-meta">
-        <span><b>鍖哄煙</b>锛?{escapeHtml(regionName)}</span>
-        <span><b>鑰楁椂</b>锛?{m.days | 0}澶?/span>
-        <span><b>闅惧害</b>锛?{m.difficulty === "hard" ? "鍥伴毦" : m.difficulty === "easy" ? "绠€鍗? : "鏅€?}</span>
-        <span><b>瀵规墜楠?/b>锛?{m.enemyAttr | 0}</span>
-        <span><b>闇€姹?/b>锛?{escapeHtml(needText || "鏃?)}</span>
+        <span><b>区域</b>：${escapeHtml(regionName)}</span>
+        <span><b>耗时</b>：${m.days | 0}天</span>
+        <span><b>难度</b>：${m.difficulty === "hard" ? "困难" : m.difficulty === "easy" ? "简单" : "普通"}</span>
+        <span><b>对手骰</b>：${m.enemyAttr | 0}</span>
+        <span><b>需求</b>：${escapeHtml(needText || "无")}</span>
       </div>
       <div class="mission-staff">
-        <span class="mission-staff-label">娲鹃仯闃熷憳</span>
-        <div class="mission-staff-list">${staffHtml || `<span class="tip-inline">鏈厤缃?/span>`}</div>
+        <span class="mission-staff-label">派遣队员</span>
+        <div class="mission-staff-list">${staffHtml || `<span class="tip-inline">未配置</span>`}</div>
       </div>
     </div>`;
   }
@@ -2729,11 +2737,11 @@
         <div class="staff-hover-name">${escapeHtml(st.name)}</div>
       </div>
       <div class="staff-hover-grid">
-        <span>鎺㈢储 ${st.鎺㈢储}</span>
-        <span>鐢熷瓨 ${st.鐢熷瓨}</span>
-        <span>娲炲療 ${st.娲炲療}</span>
-        <span>璇℃€?${st.璇℃€潁</span>
-        <span>鐞嗘€?${st.鐞嗘€</span>
+        <span>探索 ${st.探索}</span>
+        <span>生存 ${st.生存}</span>
+        <span>洞察 ${st.洞察}</span>
+        <span>诡思 ${st.诡思}</span>
+        <span>理性 ${st.理性}</span>
       </div>`;
     };
     const place = (ev) => {
@@ -2781,7 +2789,7 @@
 
   function dispatchCountSpanHtml() {
     const { available, total } = dispatchStaffCounts();
-    return `<span class="dispatch-count" title="褰撳墠鍙淳閬ｄ汉鏁?/ 闃熷憳鎬讳汉鏁?>锛?{available}/${total}锛?/span>`;
+    return `<span class="dispatch-count" title="当前可派遣人数 / 队员总人数">（${available}/${total}）</span>`;
   }
 
   function openQueuedMission(rec) {
@@ -2823,14 +2831,14 @@
         const hiddenCls = n.kind === "hidden" ? "hidden-node" : "";
         const pos = nodePos[n.id] || { x: 20 + Math.random() * 60, y: 20 + Math.random() * 60 };
         const diff = n.difficulty || "normal";
-        const diffZh = diff === "easy" ? "绠€鍗? : diff === "hard" ? "鍥伴毦" : "鏅€?;
-        const urgent = n.kind === "temp" || /绐佸彂/.test(n.name);
+        const diffZh = diff === "easy" ? "简单" : diff === "hard" ? "困难" : "普通";
+        const urgent = n.kind === "temp" || /突发/.test(n.name);
         const kindCls = `${n.kind === "temp" ? "temp" : ""} ${urgent ? "urgent" : ""} ${hiddenCls}`.trim();
-        const marker = urgent ? "!" : n.kind === "hidden" ? "闅? : "甯?;
+        const marker = urgent ? "!" : n.kind === "hidden" ? "隐" : "常";
         const disabled = !match || n.chain === "locked";
         const queued = findActiveMissionByNode(r.id, n.id);
-        return `<button type="button" class="region-point ${kindCls}" data-point-type="node" data-point-id="${n.id}" data-node="${n.id}" style="left:${pos.x}%;top:${pos.y}%;" ${disabled ? "disabled" : ""} title="${escapeHtml(n.name)} 路 ${diffZh}">
-          <span class="point-mark">${marker}</span>${escapeHtml(n.name)}${queued ? `<span class="assigned-mark" title="宸叉淳閬?>娲?/span>` : ""}
+        return `<button type="button" class="region-point ${kindCls}" data-point-type="node" data-point-id="${n.id}" data-node="${n.id}" style="left:${pos.x}%;top:${pos.y}%;" ${disabled ? "disabled" : ""} title="${escapeHtml(n.name)} · ${diffZh}">
+          <span class="point-mark">${marker}</span>${escapeHtml(n.name)}${queued ? `<span class="assigned-mark" title="已派遣">派</span>` : ""}
         </button>`;
       })
       .join("");
@@ -2839,7 +2847,7 @@
         const pos = nodePos[`lead_${lead.id}`] || { x: 16 + (idx % 3) * 20, y: 18 + Math.floor(idx / 3) * 16 };
         const queued = findActiveMissionByLead(r.id, lead.id);
         return `<button type="button" class="region-point lead" data-point-type="lead" data-point-id="${lead.id}" data-lead="${lead.id}" style="left:${pos.x}%;top:${pos.y}%;" title="${escapeHtml(lead.title)}">
-          <span class="point-mark">?</span>${escapeHtml(lead.title)}${queued ? `<span class="assigned-mark" title="宸叉淳閬?>娲?/span>` : ""}
+          <span class="point-mark">?</span>${escapeHtml(lead.title)}${queued ? `<span class="assigned-mark" title="已派遣">派</span>` : ""}
         </button>`;
       })
       .join("");
@@ -2849,13 +2857,13 @@
         const queued = findActiveMissionByLead(r.id, lead.id);
         return `<div class="lead-item event-clue interactive" data-side-type="lead" data-side-id="${lead.id}">
         <div class="event-card">
-          <div class="event-thumb" title="绾跨储浜嬩欢榛樿鍥?>?</div>
+          <div class="event-thumb" title="线索事件默认图">?</div>
           <div>
             <div><strong>${escapeHtml(lead.title)}</strong></div>
-            <div style="color:#94a3b8;margin-top:2px;">绾跨储浜嬩欢 路 鍙潬搴︽湭鐭?/div>
+            <div style="color:#94a3b8;margin-top:2px;">线索事件 · 可靠度未知</div>
             <div class="event-meta-row">
               <div>${queued ? staffAvatarsHtml(queued.staffIds) : ""}</div>
-              <button type="button" data-lead-investigate="${lead.id}" ${lead.investigated ? "disabled" : ""}>${queued ? "鏌ョ湅娲鹃仯" : "閰嶇疆闃熶紞骞惰皟鏌?}</button>
+              <button type="button" data-lead-investigate="${lead.id}" ${lead.investigated ? "disabled" : ""}>${queued ? "查看派遣" : "配置队伍并调查"}</button>
             </div>
             ${lead.result ? `<div style="margin-top:6px;color:#cbd5e1;">${escapeHtml(lead.result)}</div>` : ""}
           </div>
@@ -2868,22 +2876,22 @@
       .map((n) => {
         const match = filterNodeTags(n);
         const diff = n.difficulty || "normal";
-        const diffZh = diff === "easy" ? "绠€鍗? : diff === "hard" ? "鍥伴毦" : "鏅€?;
-        const deadline = n.kind === "temp" && n.deadlineDay != null ? ` 路 鎴 绗?{n.deadlineDay}澶╁墠` : "";
-        const chain = n.chain === "locked" ? " 路 閾惧紡鏈В閿? : "";
-        const urgent = n.kind === "temp" || /绐佸彂/.test(n.name);
+        const diffZh = diff === "easy" ? "简单" : diff === "hard" ? "困难" : "普通";
+        const deadline = n.kind === "temp" && n.deadlineDay != null ? ` · 截止 第${n.deadlineDay}天前` : "";
+        const chain = n.chain === "locked" ? " · 链式未解锁" : "";
+        const urgent = n.kind === "temp" || /突发/.test(n.name);
         const eventCls = urgent ? "event-urgent" : "";
-        const thumbText = n.kind === "temp" || /绐佸彂/.test(n.name) ? "!" : n.kind === "hidden" ? "闅? : "甯?;
+        const thumbText = n.kind === "temp" || /突发/.test(n.name) ? "!" : n.kind === "hidden" ? "隐" : "常";
         const queued = findActiveMissionByNode(r.id, n.id);
         return `<div class="region-node-item ${eventCls} interactive" data-side-type="node" data-side-id="${n.id}" style="${match ? "" : "opacity:0.45;"}">
           <div class="event-card">
             <div class="event-thumb">${thumbText}</div>
             <div>
               <div><strong>${escapeHtml(n.name)}</strong></div>
-              <div style="color:#94a3b8;margin-top:2px;">${n.kind === "permanent" ? "甯搁┗" : n.kind === "temp" ? "涓存椂" : "闅愯棌"} 路 ${diffZh} 路 鑰楁椂${n.days}澶?路 瀵规墜楠?{n.enemyAttr | 0}${deadline}${chain}</div>
+              <div style="color:#94a3b8;margin-top:2px;">${n.kind === "permanent" ? "常驻" : n.kind === "temp" ? "临时" : "隐藏"} · ${diffZh} · 耗时${n.days}天 · 对手骰${n.enemyAttr | 0}${deadline}${chain}</div>
               <div class="event-meta-row">
                 <div>${queued ? staffAvatarsHtml(queued.staffIds) : ""}</div>
-                <button type="button" data-node-open="${n.id}" ${n.chain === "locked" ? "disabled" : ""}>${queued ? "鏌ョ湅娲鹃仯" : "閰嶇疆闃熶紞骞舵淳閬?}</button>
+                <button type="button" data-node-open="${n.id}" ${n.chain === "locked" ? "disabled" : ""}>${queued ? "查看派遣" : "配置队伍并派遣"}</button>
               </div>
             </div>
           </div>
@@ -2897,14 +2905,14 @@
       <div class="region-map-wrap">
         <div class="region-map">${pointHtml}</div>
         <div class="region-node-side">
-          <h3>鍖哄煙鑺傜偣鎯呮姤</h3>
+          <h3>区域节点情报</h3>
           ${leadHtml}${sideHtml}
           <div class="region-actions">
-            <button type="button" id="btnNextDayRegion" class="next-day-big"><span class="arrow" aria-hidden="true"></span><span>涓嬩竴澶?/span></button>
+            <button type="button" id="btnNextDayRegion" class="next-day-big"><span class="arrow" aria-hidden="true"></span><span>下一天</span></button>
           </div>
         </div>
       </div>
-      <p><button type="button" id="backRegion">杩斿洖鍏ㄧ悆</button></p>`;
+      <p><button type="button" id="backRegion">返回全球</button></p>`;
     elR.querySelectorAll(".region-point").forEach((btn) => {
       btn.addEventListener("click", () => {
         const pointType = btn.getAttribute("data-point-type");
@@ -2952,9 +2960,9 @@
     };
     scheduleWeek1SoftTutorial(
       "w1_region",
-      "绗竴鍛?路 鍖哄煙鎺㈢储锛堣蒋寮曞锛?,
-      `<p style="margin:0 0 0.6rem;line-height:1.55;">鍦板浘涓娿€屽父/闅?!銆嶅垎鍒搴斿父椹汇€侀殣钘忎笌涓存椂浜嬩欢锛涘凡娲鹃仯浼氭爣<strong>娲?/strong>銆傚彸渚у崱鐗囧彲閰嶇疆闃熶紞锛氶渶婊¤冻<strong>璋冩煡姹?/strong>涓?strong>鐜板満姹?/strong>楠版暟闂ㄦ銆?/p>
-       <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">绾跨储浜嬩欢璧拌皟鏌ユ祦绋嬶紝鎴愬姛鍙兘瑙ｉ攣鏂拌妭鐐广€傚叧闂悗鏈懆鍐呬笉鍐嶅脊鍑恒€?/p>`,
+      "第一周 · 区域探索（软引导）",
+      `<p style="margin:0 0 0.6rem;line-height:1.55;">地图上「常/隐/!」分别对应常驻、隐藏与临时事件；已派遣会标<strong>派</strong>。右侧卡片可配置队伍：需满足<strong>调查池</strong>与<strong>现场池</strong>骰数门槛。</p>
+       <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">线索事件走调查流程，成功可能解锁新节点。关闭后本周内不再弹出。</p>`,
     );
   }
 
@@ -3002,26 +3010,26 @@
     const ok = meetsNeed(m.need, state.selectedStaffIds);
     const prob = computeExplorationP(m, state.selectedStaffIds);
     elS.innerHTML = `
-      <h2>${m.missionType === "leadInvestigation" ? "绾跨储璋冩煡閰嶇疆" : "鎺㈢储閰嶇疆"} 路 ${escapeHtml(m.name)}</h2>
+      <h2>${m.missionType === "leadInvestigation" ? "线索调查配置" : "探索配置"} · ${escapeHtml(m.name)}</h2>
       <div class="prob-box">
-        <div>璋冩煡姹?${prob.nA} 楠?路 闇€ ${prob.kA} 鎴愬姛 路 P(A)鈮?{(prob.pA * 100).toFixed(1)}%</div>
-        <div>鐜板満姹?${prob.nB} 楠?路 闇€ ${prob.kB} 鎴愬姛 路 P(B)鈮?{(prob.pB * 100).toFixed(1)}%</div>
-        <div style="margin-top:0.35rem;">澶ф垚鍔?${(prob.pBig * 100).toFixed(1)}% 路 灏忔垚鍔?${(prob.pSmall * 100).toFixed(1)}% 路 鍙岃触 ${(prob.pBothFail * 100).toFixed(1)}%</div>
-        <div style="margin-top:0.35rem;font-size:0.72rem;">p=${(prob.p * 100).toFixed(1)}% ${ok ? "" : "路 鏈揪闂ㄦ -15%"}</div>
+        <div>调查池 ${prob.nA} 骰 · 需 ${prob.kA} 成功 · P(A)≈${(prob.pA * 100).toFixed(1)}%</div>
+        <div>现场池 ${prob.nB} 骰 · 需 ${prob.kB} 成功 · P(B)≈${(prob.pB * 100).toFixed(1)}%</div>
+        <div style="margin-top:0.35rem;">大成功 ${(prob.pBig * 100).toFixed(1)}% · 小成功 ${(prob.pSmall * 100).toFixed(1)}% · 双败 ${(prob.pBothFail * 100).toFixed(1)}%</div>
+        <div style="margin-top:0.35rem;font-size:0.72rem;">p=${(prob.p * 100).toFixed(1)}% ${ok ? "" : "· 未达门槛 -15%"}</div>
       </div>
-      <p style="font-size:0.85rem;margin-top:0.5rem;">灞曠ず锛?
+      <p style="font-size:0.85rem;margin-top:0.5rem;">展示：
         <span class="mode-toggle" id="modeToggle">
-          <button type="button" data-mode="dice" class="${state.displayMode === "dice" ? "on" : ""}">楠板瓙</button>
-          <button type="button" data-mode="numeric" class="${state.displayMode === "numeric" ? "on" : ""}">绾暟鍊?/button>
+          <button type="button" data-mode="dice" class="${state.displayMode === "dice" ? "on" : ""}">骰子</button>
+          <button type="button" data-mode="numeric" class="${state.displayMode === "numeric" ? "on" : ""}">纯数值</button>
         </span></p>
       <div class="cards" id="staffPick"></div>
       <p class="row" style="margin-top:0.75rem;">
-        <button type="button" id="btnRun" class="primary" ${state.selectedStaffIds.length === 0 || m.days > state.day || state.missionResolving || state.processingDayTick ? "disabled" : ""}>${state.missionResolving ? "鎵ц涓?.." : `${m.missionType === "leadInvestigation" ? "娲鹃仯绾跨储璋冩煡" : "娲鹃仯鎺㈢储浠诲姟"}锛堥璁?${m.days} 澶╁悗鍒ゅ畾锛塦}</button>
-        ${m.missionQueueId ? `<button type="button" id="btnUndoDispatch">鎾ら攢娲鹃仯</button>` : ""}
-        <button type="button" id="btnCancelSetup">杩斿洖鍖哄煙</button>
+        <button type="button" id="btnRun" class="primary" ${state.selectedStaffIds.length === 0 || m.days > state.day || state.missionResolving || state.processingDayTick ? "disabled" : ""}>${state.missionResolving ? "执行中..." : `${m.missionType === "leadInvestigation" ? "派遣线索调查" : "派遣探索任务"}（预计 ${m.days} 天后判定）`}</button>
+        ${m.missionQueueId ? `<button type="button" id="btnUndoDispatch">撤销派遣</button>` : ""}
+        <button type="button" id="btnCancelSetup">返回区域</button>
       </p>
-      ${m.days > state.day ? `<p style="color:var(--danger);font-size:0.85rem;">鍓╀綑澶╂暟涓嶈冻锛屾棤娉曞湪鏈懆鍐呭畬鎴愩€?/p>` : ""}
-      <p class="tip-inline" style="margin-top:0.5rem;">宸叉淳閬ｅ緟鍒ゅ畾浠诲姟锛?{state.activeMissions.length}銆傜偣鍑诲彸涓嬭銆屼笅涓€澶┿€嶆帹杩涘苟瑙﹀彂鍒版湡鍒ゅ畾銆?/p>`;
+      ${m.days > state.day ? `<p style="color:var(--danger);font-size:0.85rem;">剩余天数不足，无法在本周内完成。</p>` : ""}
+      <p class="tip-inline" style="margin-top:0.5rem;">已派遣待判定任务：${state.activeMissions.length}。点击右下角「下一天」推进并触发到期判定。</p>`;
     document.querySelectorAll("#modeToggle button").forEach((b) => {
       b.onclick = () => {
         state.displayMode = b.getAttribute("data-mode");
@@ -3034,16 +3042,16 @@
     pick.innerHTML = staffList.map((p) => {
       const sel = state.selectedStaffIds.includes(p.id);
       const exp = {
-        鎺㈢储: getStaffValue(p, "鎺㈢储"),
-        鐢熷瓨: getStaffValue(p, "鐢熷瓨"),
-        娲炲療: getStaffValue(p, "娲炲療"),
-        璇℃€? getStaffValue(p, "璇℃€?),
-        鐞嗘€? getStaffValue(p, "鐞嗘€?),
+        探索: getStaffValue(p, "探索"),
+        生存: getStaffValue(p, "生存"),
+        洞察: getStaffValue(p, "洞察"),
+        诡思: getStaffValue(p, "诡思"),
+        理性: getStaffValue(p, "理性"),
       };
       return `<div class="staff-card ${sel ? "selected" : ""}" data-staff="${p.id}">
         <img class="portrait" src="${p.avatar}" alt="${escapeHtml(p.name)}"/>
         <div class="t">${escapeHtml(p.name)}</div>
-        <dl><dt>鎺㈢储</dt><dd>${exp.鎺㈢储}</dd><dt>鐢熷瓨</dt><dd>${exp.鐢熷瓨}</dd><dt>娲炲療</dt><dd>${exp.娲炲療}</dd><dt>璇℃€?/dt><dd>${exp.璇℃€潁</dd><dt>鐞嗘€?/dt><dd>${exp.鐞嗘€</dd></dl></div>`;
+        <dl><dt>探索</dt><dd>${exp.探索}</dd><dt>生存</dt><dd>${exp.生存}</dd><dt>洞察</dt><dd>${exp.洞察}</dd><dt>诡思</dt><dd>${exp.诡思}</dd><dt>理性</dt><dd>${exp.理性}</dd></dl></div>`;
     }).join("");
     pick.querySelectorAll(".staff-card").forEach((c) => {
       c.addEventListener("click", () => {
@@ -3077,7 +3085,7 @@
             if (lead && !lead.investigated) lead.assigned = false;
           }
           state.activeMissions.splice(idx, 1);
-          log(`宸叉挙閿€娲鹃仯锛?{m.name}`);
+          log(`已撤销派遣：${m.name}`);
         }
         state.mission = null;
         state.selectedStaffIds = [];
@@ -3098,20 +3106,20 @@
     };
     scheduleWeek1SoftTutorial(
       "w1_setup",
-      "绗竴鍛?路 闃熶紞涓庢瀹氾紙杞紩瀵硷級",
-      `<p style="margin:0 0 0.6rem;line-height:1.55;">鐐瑰嚮闃熷憳鍗＄墖缁勬垚灏忛槦锛堟渶澶?5 浜猴級銆傞潰鏉夸笂鐨勬鐜囦负 split 妫€瀹氬弬鑰冿紱鍙垏鎹?strong>楠板瓙 / 绾暟鍊?/strong>灞曠ず銆?/p>
-       <p style="margin:0 0 0.6rem;line-height:1.55;">鐐?strong>娲鹃仯</strong>鍚庝换鍔′細鍗犵敤澶╂暟锛涘埌鏈熷緟瀹氶渶鐢?strong>涓嬩竴澶?/strong>鎺ㄨ繘銆傛棤闇€寮哄埗鐐规寜鏈獥鍙ｅ鐨勬寜閽嵆鍙畬鎴愬紩瀵笺€?/p>
-       <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">鍏抽棴鍚庢湰鍛ㄥ唴涓嶅啀寮瑰嚭銆?/p>`,
+      "第一周 · 队伍与检定（软引导）",
+      `<p style="margin:0 0 0.6rem;line-height:1.55;">点击队员卡片组成小队（最多 5 人）。面板上的概率为 split 检定参考；可切换<strong>骰子 / 纯数值</strong>展示。</p>
+       <p style="margin:0 0 0.6rem;line-height:1.55;">点<strong>派遣</strong>后任务会占用天数；到期待定需用<strong>下一天</strong>推进。无需强制点按本窗口外的按钮即可完成引导。</p>
+       <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">关闭后本周内不再弹出。</p>`,
     );
   }
 
   function renderDiceRow(rolls, voidSet, label) {
-    if (!rolls.length) return `<div class="tip-inline">${label}锛氭棤楠?/div>`;
+    if (!rolls.length) return `<div class="tip-inline">${label}：无骰</div>`;
     const cells = rolls
       .map((hit, i) => {
         const v = voidSet.has(i);
         const cls = v ? "die void" : hit ? "die hit" : "die miss";
-        const ch = v ? "" : hit ? "鉁? : "脳";
+        const ch = v ? "" : hit ? "✓" : "×";
         return `<span class="${cls}">${ch}</span>`;
       })
       .join("");
@@ -3125,11 +3133,11 @@
       const idx = state.activeMissions.findIndex((x) => x.id === m.missionQueueId);
       if (idx >= 0) {
         if (state.selectedStaffIds.some((id) => isStaffAssigned(id, m.missionQueueId))) {
-          log("娲鹃仯鏇存柊澶辫触锛氶槦鍛樺凡琚叾浠栦换鍔″崰鐢ㄣ€?);
+          log("派遣更新失败：队员已被其他任务占用。");
           return;
         }
         state.activeMissions[idx].staffIds = state.selectedStaffIds.slice();
-        log(`宸叉洿鏂版淳閬ｏ細${m.name}锛堜粛闇€ ${state.activeMissions[idx].remainingDays} 澶╁垽瀹氾級`);
+        log(`已更新派遣：${m.name}（仍需 ${state.activeMissions[idx].remainingDays} 天判定）`);
       }
       state.mission = null;
       state.selectedStaffIds = [];
@@ -3145,11 +3153,11 @@
       status: "running",
     };
     if (rec.staffIds.some((id) => isStaffAssigned(id, null))) {
-      log("娲鹃仯澶辫触锛氶槦鍛樺凡琚叾浠栦换鍔″崰鐢ㄣ€?);
+      log("派遣失败：队员已被其他任务占用。");
       return;
     }
     state.activeMissions.push(rec);
-    log(`宸叉淳閬ｏ細${m.name}锛堥璁?${rec.remainingDays} 澶╁悗鍒ゅ畾锛塦);
+    log(`已派遣：${m.name}（预计 ${rec.remainingDays} 天后判定）`);
     state.mission = null;
     state.selectedStaffIds = [];
     updateNextDayButton();
@@ -3172,7 +3180,7 @@
 
   function finalStateFromRoll(hit, isVoid) {
     if (isVoid) return { text: "", cls: "die void" };
-    return hit ? { text: "鉁?, cls: "die hit reveal-pop" } : { text: "脳", cls: "die miss reveal-pop" };
+    return hit ? { text: "✓", cls: "die hit reveal-pop" } : { text: "×", cls: "die miss reveal-pop" };
   }
 
   function randomRollFace() {
@@ -3181,11 +3189,11 @@
 
   function setRollingFace(el, face) {
     el.textContent = face || "";
-    if (face === "鉁?) {
+    if (face === "✓") {
       el.style.color = "#22c55e";
       el.style.borderColor = "#22c55e";
       el.style.boxShadow = "0 0 0 1px rgba(34,197,94,0.22) inset, 0 0 12px rgba(34,197,94,0.32)";
-    } else if (face === "脳") {
+    } else if (face === "×") {
       el.style.color = "#ef4444";
       el.style.borderColor = "#ef4444";
       el.style.boxShadow = "0 0 0 1px rgba(239,68,68,0.2) inset, 0 0 12px rgba(239,68,68,0.28)";
@@ -3217,7 +3225,7 @@
     if (!count) {
       const tip = document.createElement("div");
       tip.className = "tip-inline";
-      tip.textContent = `${label}锛氭棤楠癭;
+      tip.textContent = `${label}：无骰`;
       pool.appendChild(tip);
       container.appendChild(pool);
       return [];
@@ -3241,11 +3249,11 @@
     const holder = document.getElementById("diceAnim");
     if (!holder) return;
     const pace = calcAnimPace(check);
-    holder.innerHTML = `<div class="dice-rolling-hint"><span class="dice-spinner"></span><span id="dicePhaseText">鎽囬涓?..</span></div><div id="diceRowsHost"></div>`;
+    holder.innerHTML = `<div class="dice-rolling-hint"><span class="dice-spinner"></span><span id="dicePhaseText">摇骰中...</span></div><div id="diceRowsHost"></div>`;
     const host = document.getElementById("diceRowsHost");
     if (!host) return;
-    const aEls = createRollingDiceRow(host, "璋冩煡姹?, check.rollsA.length);
-    const bEls = createRollingDiceRow(host, "鐜板満姹?, check.rollsB.length);
+    const aEls = createRollingDiceRow(host, "调查池", check.rollsA.length);
+    const bEls = createRollingDiceRow(host, "现场池", check.rollsB.length);
     const phaseText = () => document.getElementById("dicePhaseText");
     const ticker = window.setInterval(() => {
       const dice = holder.querySelectorAll(".die.rolling");
@@ -3256,7 +3264,7 @@
     for (let i = 0; i < aEls.length; i += pace.revealStepA) {
       const end = Math.min(aEls.length, i + pace.revealStepA);
       const p = phaseText();
-      if (p) p.textContent = `璋冩煡姹犲仠楠?${end}/${aEls.length}`;
+      if (p) p.textContent = `调查池停骰 ${end}/${aEls.length}`;
       for (let k = i; k < end; k++) {
         const d = finalStateFromRoll(check.rollsA[k], false);
         setFinalFace(aEls[k], d.text, d.cls);
@@ -3266,7 +3274,7 @@
     for (let i = 0; i < bEls.length; i += pace.revealStepB) {
       const end = Math.min(bEls.length, i + pace.revealStepB);
       const p = phaseText();
-      if (p) p.textContent = `鐜板満姹犲仠楠?${end}/${bEls.length}`;
+      if (p) p.textContent = `现场池停骰 ${end}/${bEls.length}`;
       for (let k = i; k < end; k++) {
         const d = finalStateFromRoll(check.rollsB[k], false);
         setFinalFace(bEls[k], d.text, d.cls);
@@ -3275,17 +3283,17 @@
     }
 
     const pDone = phaseText();
-    if (pDone) pDone.textContent = "鍩虹缁撴灉宸叉彮绀?;
+    if (pDone) pDone.textContent = "基础结果已揭示";
     await sleep(260);
 
-    // 瀵规墜浣滃簾闃舵锛氭寜椤哄簭閫愰浣滃簾
+    // 对手作废阶段：按顺序逐颗作废
     const voidSeq = [];
     for (const idx of check.voidA) voidSeq.push({ pool: "A", idx });
     for (const idx of check.voidB) voidSeq.push({ pool: "B", idx });
     for (let i = 0; i < voidSeq.length; i += pace.voidStep) {
       const end = Math.min(voidSeq.length, i + pace.voidStep);
       const p = phaseText();
-      if (p) p.textContent = `瀵规墜浣滃簾涓?.. ${end}/${voidSeq.length}`;
+      if (p) p.textContent = `对手作废中... ${end}/${voidSeq.length}`;
       for (let k = i; k < end; k++) {
         const s = voidSeq[k];
         const d = s.pool === "A"
@@ -3298,13 +3306,13 @@
     }
     window.clearInterval(ticker);
 
-    // 鏈€缁堟€侀潰鏉?
+    // 最终态面板
     holder.innerHTML = `<div>
-      ${renderDiceRow(check.rollsA, new Set(), "璋冩煡姹狅紙鍩虹锛?)}
-      ${renderDiceRow(check.rollsB, new Set(), "鐜板満姹狅紙鍩虹锛?)}
-      <div class="phase-label" style="margin-top:0.5rem;">瀵规墜浣滃簾 ${check.enemyAttr} 棰?/div>
-      ${renderDiceRow(check.rollsA, check.voidA, "璋冩煡路浣滃簾鍚?)}
-      ${renderDiceRow(check.rollsB, check.voidB, "鐜板満路浣滃簾鍚?)}
+      ${renderDiceRow(check.rollsA, new Set(), "调查池（基础）")}
+      ${renderDiceRow(check.rollsB, new Set(), "现场池（基础）")}
+      <div class="phase-label" style="margin-top:0.5rem;">对手作废 ${check.enemyAttr} 颗</div>
+      ${renderDiceRow(check.rollsA, check.voidA, "调查·作废后")}
+      ${renderDiceRow(check.rollsB, check.voidB, "现场·作废后")}
     </div>`;
     await sleep(pace.settleDelay);
   }
@@ -3321,64 +3329,64 @@
       if (lead && !lead.investigated) {
         lead.investigated = true;
         lead.assigned = false;
-        if (tier === "澶ф垚鍔? || tier === "灏忔垚鍔?) {
+        if (tier === "大成功" || tier === "小成功") {
           const node = lead.spawn();
           addDynamicNode(m.regionId, node, lead.durationWeeks || 1);
-          lead.result = `璋冩煡${tier}锛氬彂鐜扮湡瀹炰簨浠剁偣銆?{node.name}銆嶃€俙;
-          lines.push(`绾跨储璋冩煡${tier}锛氬凡瑙ｉ攣鏂颁簨浠剁偣銆俙);
-          rewards.push({ icon: "馃椇", title: `鏂颁簨浠剁偣锛?{node.name}`, desc: "宸插姞鍏ュ尯鍩熷湴鍥撅紝鍙户缁淳閬ｆ帰绱€? });
-          log(`绾跨储浜嬩欢鎴愬姛锛?{lead.title} -> ${node.name}`);
-          macro.澹版湜 = Math.min(100, macro.澹版湜 + (tier === "澶ф垚鍔? ? 2 : 1));
+          lead.result = `调查${tier}：发现真实事件点「${node.name}」。`;
+          lines.push(`线索调查${tier}：已解锁新事件点。`);
+          rewards.push({ icon: "🗺", title: `新事件点：${node.name}`, desc: "已加入区域地图，可继续派遣探索。" });
+          log(`线索事件成功：${lead.title} -> ${node.name}`);
+          macro.声望 = Math.min(100, macro.声望 + (tier === "大成功" ? 2 : 1));
         } else {
-          lead.result = `璋冩煡${tier}锛氱嚎绱笉鍙潬锛屾湭鍙戠幇鏈夋晥浜嬩欢銆俙;
-          lines.push(`绾跨储璋冩煡${tier}锛氭湭鍙戠幇鏈夋晥浜嬩欢銆俙);
-          log(`绾跨储浜嬩欢澶辫触锛?{lead.title}`);
-          macro.澹版湜 = Math.max(0, macro.澹版湜 - (tier === "澶уけ璐? ? 2 : 1));
+          lead.result = `调查${tier}：线索不可靠，未发现有效事件。`;
+          lines.push(`线索调查${tier}：未发现有效事件。`);
+          log(`线索事件失败：${lead.title}`);
+          macro.声望 = Math.max(0, macro.声望 - (tier === "大失败" ? 2 : 1));
         }
       }
-    } else if (tier === "澶ф垚鍔?) {
-      macro.澹版湜 = Math.min(100, macro.澹版湜 + 6);
-      macro.鍏俊 += m.tags.includes("sci") ? 4 : 0;
-      macro.璇″悕 += m.tags.includes("occult") ? 5 : 2;
-      if (m.kind === "hidden") macro.鐙傛€?= Math.min(100, macro.鐙傛€?+ 4);
-      lines.push("澶ф垚鍔燂細楂樿川閲忕嚎绱€?);
-      const clue = { title: m.name + " 路 娣卞害鐗圭绱犳潗", type: m.tags[0] || "pop", tier: 3 };
+    } else if (tier === "大成功") {
+      macro.声望 = Math.min(100, macro.声望 + 6);
+      macro.公信 += m.tags.includes("sci") ? 4 : 0;
+      macro.诡名 += m.tags.includes("occult") ? 5 : 2;
+      if (m.kind === "hidden") macro.狂性 = Math.min(100, macro.狂性 + 4);
+      lines.push("大成功：高质量线索。");
+      const clue = { title: m.name + " · 深度特稿素材", type: m.tags[0] || "pop", tier: 3, topicKey: newTopicKey() };
       state.clues.push(clue);
-      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "绾跨储鍝佽川锛氶珮锛圱ier 3锛? });
-    } else if (tier === "灏忔垚鍔?) {
-      macro.澹版湜 = Math.min(100, macro.澹版湜 + 4);
-      macro.璇″悕 += 1;
-      lines.push("灏忔垚鍔燂細甯歌绋夸欢绱犳潗銆?);
-      const clue = { title: m.name + " 路 甯歌绋夸欢绱犳潗", type: m.tags[0] || "pop", tier: 2 };
+      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：高（Tier 3）" });
+    } else if (tier === "小成功") {
+      macro.声望 = Math.min(100, macro.声望 + 4);
+      macro.诡名 += 1;
+      lines.push("小成功：常规稿件素材。");
+      const clue = { title: m.name + " · 常规稿件素材", type: m.tags[0] || "pop", tier: 2, topicKey: newTopicKey() };
       state.clues.push(clue);
-      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "绾跨储鍝佽川锛氫腑锛圱ier 2锛? });
-    } else if (tier === "澶辫触") {
-      macro.澹版湜 = Math.max(0, macro.澹版湜 - 2);
-      lines.push("澶辫触锛氱鐗囩嚎绱€?);
-      const clue = { title: m.name + " 路 纰庣墖绾跨储", type: m.tags[0] || "pop", tier: 1 };
+      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：中（Tier 2）" });
+    } else if (tier === "失败") {
+      macro.声望 = Math.max(0, macro.声望 - 2);
+      lines.push("失败：碎片线索。");
+      const clue = { title: m.name + " · 碎片线索", type: m.tags[0] || "pop", tier: 1, topicKey: newTopicKey() };
       state.clues.push(clue);
-      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "绾跨储鍝佽川锛氫綆锛圱ier 1锛? });
+      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：低（Tier 1）" });
     } else {
-      macro.瀹堝簭 = Math.max(0, macro.瀹堝簭 - 3);
-      macro.鐙傛€?= Math.min(100, macro.鐙傛€?+ 3);
-      lines.push("澶уけ璐ャ€?);
+      macro.守序 = Math.max(0, macro.守序 - 3);
+      macro.狂性 = Math.min(100, macro.狂性 + 3);
+      lines.push("大失败。");
     }
-    ["鍏俊", "璇″悕", "澹版湜", "瀹堝簭", "鐙傛€?].forEach((k) => {
+    ["公信", "诡名", "声望", "守序", "狂性"].forEach((k) => {
       macro[k] = Math.max(0, Math.min(100, macro[k]));
     });
-    log(`${m.name} 鈫?銆?{tier}銆峘);
+    log(`${m.name} → 「${tier}」`);
     const elRes = document.getElementById("view-result");
     const showDice = state.displayMode === "dice";
     const missionHead = missionHeaderHtml(m, state.selectedStaffIds);
     elRes.innerHTML = `
-      <h2>${m.missionType === "leadInvestigation" ? "绾跨储璋冩煡缁撶畻" : "鎺㈢储缁撶畻"}</h2>
+      <h2>${m.missionType === "leadInvestigation" ? "线索调查结算" : "探索结算"}</h2>
       ${missionHead}
-      <div class="result-banner" id="tierBanner">鍒ゅ畾涓?..</div>
-      ${showDice ? `<div id="diceAnim"><div class="dice-rolling-hint"><span class="dice-spinner"></span><span>鎽囬涓?..</span></div></div>`
-        : `<div class="prob-box" id="diceAnim">璁＄畻涓?..</div>`}
+      <div class="result-banner" id="tierBanner">判定中...</div>
+      ${showDice ? `<div id="diceAnim"><div class="dice-rolling-hint"><span class="dice-spinner"></span><span>摇骰中...</span></div></div>`
+        : `<div class="prob-box" id="diceAnim">计算中...</div>`}
       <p style="font-size:0.9rem;color:var(--muted);">${lines.map(escapeHtml).join("<br/>")}</p>
-      <p>鍓╀綑 <strong>${state.day}</strong> 鏃?/p>
-      <button type="button" class="primary" id="btnAfterResult" disabled>缁х画</button>`;
+      <p>剩余 <strong>${state.day}</strong> 日</p>
+      <button type="button" class="primary" id="btnAfterResult" disabled>继续</button>`;
     bindMissionStaffHover(elRes);
     setView("result");
     renderMacro();
@@ -3387,15 +3395,15 @@
     } else {
       await sleep(450);
       const h = document.getElementById("diceAnim");
-      if (h) h.innerHTML = `<div class="prob-box">璋冩煡 ${check.hitsA}/${check.nAe}锛堚墺${check.kA}锛壜?鐜板満 ${check.hitsB}/${check.nBe}锛堚墺${check.kB}锛?/div>`;
+      if (h) h.innerHTML = `<div class="prob-box">调查 ${check.hitsA}/${check.nAe}（≥${check.kA}）· 现场 ${check.hitsB}/${check.nBe}（≥${check.kB}）</div>`;
     }
     await showRewardsPopup(rewards);
     if (week1TutorialActive() && !state.tutorialSoftW1.w1_result) {
       await showWeek1SoftTutorialModal(
         "w1_result",
-        "绗竴鍛?路 鎺㈢储缁撶畻锛堣蒋寮曞锛?,
-        `<p style="margin:0 0 0.6rem;line-height:1.55;">涓婃柟涓?strong>split 妫€瀹?/strong>缁撴灉锛氳皟鏌ユ睜涓庣幇鍦烘睜鍚勮嚜杈炬爣鎯呭喌鍐冲畾澶ф垚鍔?/ 灏忔垚鍔?/ 澶辫触 / 澶уけ璐ャ€傚鍔卞脊绐楀彲閫愭潯娴忚銆?/p>
-         <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">鐐广€岀户缁€嶈繑鍥炲尯鍩熸垨杩涘叆鍚堟垚闃舵锛堣嫢鏈懆澶╂暟宸茬敤灏斤級銆傚叧闂湰鎻愮ず鍚庢湰鍛ㄥ唴涓嶅啀寮瑰嚭銆?/p>`,
+        "第一周 · 探索结算（软引导）",
+        `<p style="margin:0 0 0.6rem;line-height:1.55;">上方为<strong>split 检定</strong>结果：调查池与现场池各自达标情况决定大成功 / 小成功 / 失败 / 大失败。奖励弹窗可逐条浏览。</p>
+         <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">点「继续」返回区域或进入合成阶段（若本周天数已用尽）。关闭本提示后本周内不再弹出。</p>`,
       );
     }
     const tb = document.getElementById("tierBanner");
@@ -3426,7 +3434,7 @@
       if (state.day <= 0) {
         enterSynthesisPhase();
       } else {
-        // 姣忔棩鍒ゅ畾闃熷垪缁撴潫鍚庯紝缁熶竴鍥炲埌鍏ㄧ悆鍦板浘锛屾柟渚跨户缁淳閬?
+        // 每日判定队列结束后，统一回到全球地图，方便继续派遣
         renderGlobal();
         setView("global");
       }
@@ -3459,8 +3467,8 @@
     const runningCount = state.activeMissions.filter((x) => x.status === "running").length;
     if (runningCount <= 0) {
       const ok = await showConfirmPopup(
-        "鏈繘琛屾帰绱?,
-        "<p style=\"margin:0;\">鎮ㄦ湭杩涜浠讳綍鎺㈢储锛屾槸鍚﹁繘鍏ヤ笅涓€澶╋紵</p>",
+        "未进行探索",
+        "<p style=\"margin:0;\">您未进行任何探索，是否进入下一天？</p>",
         dayDateLabel()
       );
       if (!ok) return;
@@ -3473,14 +3481,14 @@
     const due = state.activeMissions.filter((x) => x.status === "running" && x.remainingDays <= 0);
     due.forEach((x) => { x.status = "due"; });
     state.todayResolutionQueue = due.slice();
-    log(`鎺ㄨ繘鑷充笅涓€澶╋細褰撳墠鍓╀綑 ${state.day} 鏃ャ€?{due.length ? `鍒版湡浠诲姟 ${due.length} 椤癸紝寮€濮嬪垽瀹氥€俙 : "鏆傛棤鍒版湡浠诲姟銆?}`);
+    log(`推进至下一天：当前剩余 ${state.day} 日。${due.length ? `到期任务 ${due.length} 项，开始判定。` : "暂无到期任务。"}`);
     tickHeader();
     updateNextDayButton();
     await showDayPopup();
     if (!due.length) {
       state.processingDayTick = false;
       updateNextDayButton();
-      // 褰撳ぉ娌℃湁鍒版湡鍒ゅ畾锛屼篃缁熶竴鍥炲埌鍏ㄧ悆鍦板浘
+      // 当天没有到期判定，也统一回到全球地图
       renderGlobal();
       setView("global");
       if (state.day <= 0) enterSynthesisPhase();
@@ -3495,19 +3503,19 @@
   }
 
   function dayDateLabel() {
-    return `绗?${state.week} 鍛?路 绗?${dayIndexInWeek()} 澶╋紙浣?${state.day} / 7 鏃ワ級`;
+    return `第 ${state.week} 周 · 第 ${dayIndexInWeek()} 天（余 ${state.day} / 7 日）`;
   }
 
   function randomDayFlavor() {
     const pool = [
-      ["鍜栧暋娓嶅湪鐗堥潰涓婃墿鏁ｃ€?, "浣犳妸鏉瓙鎸紑锛屽亣瑁呬粈涔堥兘娌″彂鐢熴€?],
-      ["娣卞鐢佃瘽鍝嶄簡涓夋鎵嶆帴閫氥€?, "瀵规柟鍙锛歕"鍒幓娓彛鍖恒€俓""],
-      ["鎵撳嵃鏈哄悙鍑轰竴寮犵┖鐧界焊銆?, "绾镐笂鍗存湁娣℃贰鐨勬寚绾癸紝鍍忓垰浠庨洦閲屾崬鍑烘潵銆?],
-      ["瀹炰範鐢熼€掓潵涓€琚嬬儹涔庣殑鐢滅敎鍦堛€?, "浣犵獊鐒惰寰椾粖澶╀篃璁镐笉浼氬お绯熴€?],
-      ["鐢靛彴鎾姤鐨勫０闊冲拷杩滃拷杩戙€?, "浣犲惉鍒板叾涓す鐫€涓€鍙ヤ笉灞炰簬浠讳綍璇█鐨勪綆璇€?],
-      ["缂栬緫閮ㄧ殑鐏棯浜嗕袱涓嬨€?, "姣忎釜浜洪兘涓嬫剰璇嗙湅鍚戝湴鍥俱€?],
-      ["閭瓛閲屽浜嗕竴灏佹病鏈夊瘎浠朵汉鐨勪俊銆?, "浣犳媶寮€锛岄噷闈㈠彧鏈変竴灏忕墖閲戝睘銆?],
-      ["琛楄鐨勭尗鐩潃浣犵湅銆?, "瀹冪湪浜嗙湪鐪硷紝鍍忔槸鍦ㄧ‘璁ゆ煇涓瓟妗堛€?],
+      ["咖啡渍在版面上扩散。", "你把杯子挪开，假装什么都没发生。"],
+      ["深夜电话响了三次才接通。", "对方只说：\"别去港口区。\""],
+      ["打印机吐出一张空白纸。", "纸上却有淡淡的指纹，像刚从雨里捞出来。"],
+      ["实习生递来一袋热乎的甜甜圈。", "你突然觉得今天也许不会太糟。"],
+      ["电台播报的声音忽远忽近。", "你听到其中夹着一句不属于任何语言的低语。"],
+      ["编辑部的灯闪了两下。", "每个人都下意识看向地图。"],
+      ["邮筒里多了一封没有寄件人的信。", "你拆开，里面只有一小片金属。"],
+      ["街角的猫盯着你看。", "它眨了眨眼，像是在确认某个答案。"],
     ];
     const pick = pool[Math.floor(Math.random() * pool.length)];
     return `<p style="margin:0 0 0.35rem;">${escapeHtml(pick[0])}</p><p style="margin:0;color:#94a3b8;">${escapeHtml(pick[1])}</p>`;
@@ -3545,7 +3553,7 @@
     const ok = document.getElementById("confirmPopupOk");
     const cancel = document.getElementById("confirmPopupCancel");
     if (!wrap || !body || !date || !ttl || !ok || !cancel) return Promise.resolve(false);
-    ttl.textContent = title || "鎻愮ず";
+    ttl.textContent = title || "提示";
     date.textContent = dateText || "";
     body.innerHTML = bodyHtml || "";
     wrap.classList.remove("hidden");
@@ -3567,14 +3575,14 @@
   }
 
   function rewardIconByType(type) {
-    if (type === "sci") return "馃敩";
-    if (type === "occult") return "鉁?;
-    if (type === "pop") return "馃棡";
-    return "馃巵";
+    if (type === "sci") return "🔬";
+    if (type === "occult") return "✦";
+    if (type === "pop") return "🗞";
+    return "🎁";
   }
 
   function showRewardsPopup(rewards) {
-    const list = rewards && rewards.length ? rewards : [{ icon: "鈥?, title: "鏈幏寰楅澶栧鍔?, desc: "鏈浠呭畬鎴愪换鍔″垽瀹氥€? }];
+    const list = rewards && rewards.length ? rewards : [{ icon: "…", title: "未获得额外奖励", desc: "本次仅完成任务判定。" }];
     const wrap = document.getElementById("rewardPopup");
     const body = document.getElementById("rewardPopupBody");
     const step = document.getElementById("rewardPopupStep");
@@ -3585,13 +3593,13 @@
       const r = list[idx] || list[0];
       step.textContent = `${idx + 1}/${list.length}`;
       body.innerHTML = `<div class="reward-box">
-        <div class="reward-icon">${escapeHtml(r.icon || "馃巵")}</div>
+        <div class="reward-icon">${escapeHtml(r.icon || "🎁")}</div>
         <div>
-          <div class="reward-title">${escapeHtml(r.title || "濂栧姳")}</div>
+          <div class="reward-title">${escapeHtml(r.title || "奖励")}</div>
           <div class="reward-desc">${escapeHtml(r.desc || "")}</div>
         </div>
       </div>`;
-      next.textContent = idx >= list.length - 1 ? "瀹屾垚" : "涓嬩竴椤?;
+      next.textContent = idx >= list.length - 1 ? "完成" : "下一项";
     };
     wrap.classList.remove("hidden");
     render();
@@ -3617,8 +3625,8 @@
     btns.forEach((btn) => {
       btn.disabled = disabled;
       const label = btn.querySelector("span:last-child");
-      if (label) label.textContent = state.processingDayTick ? "缁撶畻涓?.." : "涓嬩竴澶?;
-      else btn.textContent = state.processingDayTick ? "缁撶畻涓?.." : "涓嬩竴澶?;
+      if (label) label.textContent = state.processingDayTick ? "结算中..." : "下一天";
+      else btn.textContent = state.processingDayTick ? "结算中..." : "下一天";
     });
   }
 
@@ -3638,6 +3646,7 @@
     state.cognitionCards = [];
     state.toolCards = [];
     state.craftedReports = [];
+    state.topicSynthOrder = {};
     state.synthRecipe = "r1";
     initSynthSlotsForRecipe("r1");
     state.tipOffCards = [];
@@ -3645,30 +3654,34 @@
       state.tipOffCards.push({
         id: newCardId(),
         kind: "tipoff",
-        name: `鍖垮悕鐖嗘枡鎽樺綍锛?{rand(["绾夸汉瀵嗕欢", "鏃佸惉璁板綍", "鍔犲瘑閭欢娈嬫", "妗ｆ缂洪〉澶嶅嵃浠?])}锛塦,
+        name: `匿名爆料摘录（${rand(["线人密件", "旁听记录", "加密邮件残段", "档案缺页复印件"])}）`,
         tier: Math.max(1, Math.min(3, state.pendingClues.length)),
       });
     }
     state.synthTab = "phenomenon";
     state.synthPollution = 0;
     for (const clue of state.pendingClues) {
+      if (!clue.topicKey) clue.topicKey = newTopicKey();
+      const tk = clue.topicKey;
       state.phenomenonCards.push({
         id: newCardId(),
         kind: "phenomenon",
-        name: clue.title.replace("路", "鏍锋湰路"),
+        name: clue.title.replace("·", "样本·"),
         domain: clue.type,
         evidenceValue: 35 + clue.tier * 16,
         mysteryBias: clue.type === "occult" ? 70 : clue.type === "pop" ? 45 : 30,
         tier: clue.tier,
+        topicKey: tk,
       });
       state.intelCards.push({
         id: newCardId(),
         kind: "intel",
-        name: `${clue.title.split("路")[0]} 鐩稿叧鎯呮姤`,
+        name: `${clue.title.split("·")[0]} 相关情报`,
         sourceType: clue.type,
         evidenceValue: 25 + clue.tier * 10,
         rumorValue: clue.type === "pop" ? 32 : 18,
         tier: clue.tier,
+        topicKey: tk,
       });
       state.cognitionCards.push({
         id: newCardId(),
@@ -3678,6 +3691,7 @@
         sourceType: clue.type,
         credibilityBonus: clue.type === "sci" ? 16 : 8,
         mysteryBonus: clue.type === "occult" ? 18 : 9,
+        topicKey: tk,
       });
     }
     const toolN = Math.max(1, Math.min(3, Math.floor(state.pendingClues.length / 2)));
@@ -3712,38 +3726,38 @@
     return all.find((c) => c.id === id) || null;
   }
 
-  const SYNTH_KIND_ZH = { phenomenon: "鐜拌薄", intel: "鎯呮姤", cognition: "璁ょ煡", tool: "宸ュ叿", tipoff: "鐖嗘枡鍗? };
+  const SYNTH_KIND_ZH = { phenomenon: "现象", intel: "情报", cognition: "认知", tool: "工具", tipoff: "爆料卡" };
 
   function synthSlotLayout(recipe) {
-    const tool = { key: "tool", kind: "tool", required: false, label: "宸ュ叿锛堝彲閫夛級" };
+    const tool = { key: "tool", kind: "tool", required: false, label: "工具（可选）" };
     if (recipe === "internal") {
-      return [{ key: "phenomenon", kind: "phenomenon", required: true, label: "鐜拌薄锛堝唴瀹＄礌鏉愶級" }];
+      return [{ key: "phenomenon", kind: "phenomenon", required: true, label: "现象（内审素材）" }];
     }
     if (recipe === "r1") {
       return [
-        { key: "phenomenon", kind: "phenomenon", required: true, label: "鐜拌薄锛堝繀瑕侊級" },
-        { key: "intel", kind: "intel", required: true, label: "鎯呮姤锛堝繀瑕侊級" },
+        { key: "phenomenon", kind: "phenomenon", required: true, label: "现象（必要）" },
+        { key: "intel", kind: "intel", required: true, label: "情报（必要）" },
         tool,
       ];
     }
     if (recipe === "r2") {
       return [
-        { key: "phenomenon", kind: "phenomenon", required: true, label: "鐜拌薄锛堝繀瑕侊級" },
-        { key: "cognition", kind: "cognition", required: true, label: "璁ょ煡锛堝繀瑕侊級" },
+        { key: "phenomenon", kind: "phenomenon", required: true, label: "现象（必要）" },
+        { key: "cognition", kind: "cognition", required: true, label: "认知（必要）" },
         tool,
       ];
     }
     if (recipe === "r3") {
       return [
-        { key: "cognition1", kind: "cognition", required: true, label: "璁ょ煡 鈶狅紙蹇呰锛? },
-        { key: "cognition2", kind: "cognition", required: true, label: "璁ょ煡 鈶★紙蹇呰锛? },
+        { key: "cognition1", kind: "cognition", required: true, label: "认知 ①（必要）" },
+        { key: "cognition2", kind: "cognition", required: true, label: "认知 ②（必要）" },
         tool,
       ];
     }
     return [
-      { key: "phenomenon", kind: "phenomenon", required: true, label: "鐜拌薄锛堝繀瑕侊級" },
-      { key: "cognition", kind: "cognition", required: true, label: "璁ょ煡锛堝繀瑕侊級" },
-      { key: "tipoff", kind: "tipoff", required: true, label: "鐖嗘枡鍗★紙蹇呰锛? },
+      { key: "phenomenon", kind: "phenomenon", required: true, label: "现象（必要）" },
+      { key: "cognition", kind: "cognition", required: true, label: "认知（必要）" },
+      { key: "tipoff", kind: "tipoff", required: true, label: "爆料卡（必要）" },
       tool,
     ];
   }
@@ -3789,11 +3803,11 @@
   }
 
   function recipeLabel(recipe) {
-    if (recipe === "internal") return "缂栬緫閮ㄥ唴瀹″畾璋冿紙闈炲叕寮€ 路 鐜拌薄 鈫?璁ょ煡锛?;
-    if (recipe === "r1") return "鎶㈠厛蹇锛堢幇璞?鎯呮姤 + 鍙€夊伐鍏凤級";
-    if (recipe === "r2") return "娣卞害鎶ラ亾锛堢幇璞?璁ょ煡 + 鍙€夊伐鍏凤級";
-    if (recipe === "r3") return "涓汉涓撴爮锛堝弻璁ょ煡 + 鍙€夊伐鍏凤級";
-    return "鐖嗙偢鎬ф柊闂伙紙鐜拌薄+璁ょ煡+鐖嗘枡鍗?+ 鍙€夊伐鍏?路 楂樿祵娉級";
+    if (recipe === "internal") return "编辑部内审定调（非公开 · 现象 → 认知）";
+    if (recipe === "r1") return "抢先快讯（现象+情报 + 可选工具）";
+    if (recipe === "r2") return "深度报道（现象+认知 + 可选工具）";
+    if (recipe === "r3") return "个人专栏（双认知 + 可选工具）";
+    return "爆炸性新闻（现象+认知+爆料卡 + 可选工具 · 高赌注）";
   }
 
   function validateRecipe(recipe, cards) {
@@ -3819,17 +3833,28 @@
 
   function buildSynthPreview(recipe, cards) {
     if (recipe === "internal") {
-      if (!cards.length) return "鍐呭瀹氳皟锛氳灏?1 寮犵幇璞＄墝鎷栧叆鍙充晶钃濊壊鍗℃Ы锛屽啀鐐广€岀敓鎴愯鐭ャ€嶃€備骇鍑轰负璁ょ煡鐗岋紝涓嶈繘鍏ャ€屽凡鍚堟垚鎶ラ亾銆嶃€?;
+      if (!cards.length) return "内审定调：请将 1 张现象牌拖入右侧蓝色卡槽，再点「生成认知」。产出为认知牌，不进入「已合成报道」。";
       const names = cards.map((c) => c.name).join(" + ");
       const ok = validateRecipe(recipe, cards);
-      return `${recipeLabel(recipe)}\n妲藉唴锛?{names}\n${ok ? "鍙墽琛岋細娑堣€楃幇璞＄墝锛岀敓鎴?1 寮犺鐭ョ墝銆? : "闇€涓斾粎闇€ 1 寮犵幇璞＄墝銆?}`;
+      return `${recipeLabel(recipe)}\n槽内：${names}\n${ok ? "可执行：不消耗现象牌，生成 1 张认知牌（与现象同题材）。" : "需且仅需 1 张现象牌。"}`;
     }
-    if (!cards.length) return "灏氭湭鏀惧叆绱犳潗銆傝灏嗗乏渚у崱鐗屾嫋鍏ュ彸渚х孩鑹插繀瑕佹Ы锛涜櫄绾挎Ы涓哄彲閫夊伐鍏蜂綅銆傜垎鐐告€ф柊闂婚渶鍙︽嫋鍏ャ€岀垎鏂欏崱銆嶏紙浠呯壒娈婇€斿緞鑾峰緱锛屼笉鍙悎鎴愶級銆?;
+    if (!cards.length) return "尚未放入素材。请将左侧卡牌拖入右侧红色必要槽；虚线槽为可选工具位。爆炸性新闻需另拖入「爆料卡」（仅特殊途径获得，不可合成）。";
     const names = cards.map((c) => c.name).join(" + ");
     const valid = validateRecipe(recipe, cards);
     const toolBonus = cards.filter((c) => c.kind === "tool").reduce((a, b) => a + b.bonus, 0);
     const successRate = clamp(recipeBaseSuccess(recipe) + toolBonus / 100 - Math.max(0, cards.length - 3) * 0.05, 0.15, 0.95);
-    return `${recipeLabel(recipe)}\n绱犳潗锛?{names}\n棰勮鎴愬姛鐜囷細${(successRate * 100).toFixed(1)}%\n${valid ? "閰嶆柟鍚堟硶锛屽彲鎵ц鍚堟垚銆? : "閰嶆柟涓嶅悎娉曪紝璇疯皟鏁寸礌鏉愮粍鍚堛€?}\n褰撳墠澶卞疄椋庨櫓锛?{state.synthPollution}`;
+    const substanceForTopic = cards.filter((c) => c.kind !== "tipoff" && c.kind !== "tool");
+    const phenCard = substanceForTopic.find((c) => c.kind === "phenomenon");
+    const pk = phenCard?.topicKey || substanceForTopic.find((c) => c.topicKey)?.topicKey;
+    const prevN = pk ? state.topicSynthOrder[pk] || 0 : 0;
+    const nextOrd = prevN + 1;
+    let topicLine = "\n公开合成：现象、认知牌不消耗；情报为材料会消耗；爆料与工具按规则消耗。";
+    if (pk && prevN > 0) {
+      topicLine += `\n该题材本周已公开合成 ${prevN} 篇；若本次成功，本条为第 ${nextOrd} 篇，上版时报纸结算基础值将按同题疲劳折算（先发抢先再发深度总加成低于单发深度）`;
+    } else if (pk) {
+      topicLine += `\n该题材本周首次公开合成，上版按满额基础值计入（仍受版面其它乘数影响）。`;
+    }
+    return `${recipeLabel(recipe)}\n素材：${names}\n预计成功率：${(successRate * 100).toFixed(1)}%\n${valid ? "配方合法，可执行合成。" : "配方不合法，请调整素材组合。"}\n当前失实风险：${state.synthPollution}${topicLine}`;
   }
 
   function consumeCards(ids) {
@@ -3841,6 +3866,37 @@
       .map((t) => (remove.has(t.id) ? { ...t, durability: t.durability - 1 } : t))
       .filter((t) => t.durability > 0);
     state.tipOffCards = state.tipOffCards.filter((c) => !remove.has(c.id));
+  }
+
+  /** 公开报道合成：只消耗情报、爆料、工具；现象与认知保留 */
+  function consumePublicSynthMaterials(cards) {
+    const ids = [];
+    for (const c of cards) {
+      if (c.kind === "intel" || c.kind === "tipoff") ids.push(c.id);
+      if (c.kind === "tool") ids.push(c.id);
+    }
+    consumeCards(ids);
+  }
+
+  const TOPIC_REPEAT_BASE_MULT = 0.72;
+  const TOPIC_DEEP_NOT_FIRST_MULT = 0.9;
+
+  function shortTopicLabel(topicKey) {
+    if (!topicKey) return "";
+    return topicKey.startsWith("topic_") ? `#${topicKey.slice(6)}` : topicKey;
+  }
+
+  /** 报刊结算用：同题材第 2 篇起打折，深度/专栏/爆炸再叠乘 */
+  function effectiveStoryBase(story) {
+    if (!story) return 0;
+    const intrinsic = story.intrinsicBaseValue != null ? story.intrinsicBaseValue : story.baseValue;
+    if (!story.fromExplore || !story.primaryTopicKey) return intrinsic;
+    const order = story.synthTopicOrder || 0;
+    if (order <= 0) return intrinsic;
+    let m = 1;
+    if (order >= 2) m *= TOPIC_REPEAT_BASE_MULT;
+    if (order >= 2 && (story.recipeType === "r2" || story.recipeType === "r3" || story.recipeType === "r4")) m *= TOPIC_DEEP_NOT_FIRST_MULT;
+    return Math.max(1, Math.round(intrinsic * m));
   }
 
   function synthToStory(recipe, cards) {
@@ -3872,15 +3928,23 @@
     }
     if (credibility < 40 && Math.random() < 0.35) negatives.push("sloppy_writing");
     const titlePrefix =
-      recipe === "r2" ? "娣卞害鎶ラ亾" : recipe === "r3" ? "涓汉涓撴爮" : recipe === "r4" ? "鐖嗙偢鎬ф柊闂? : "鎶㈠厛蹇";
+      recipe === "r2" ? "深度报道" : recipe === "r3" ? "个人专栏" : recipe === "r4" ? "爆炸性新闻" : "抢先快讯";
     const titleSeed = substance[0] || cards[0];
-    const title = `${titlePrefix}锛?{titleSeed?.name?.replace("鏍锋湰", "").replace("鐩稿叧鎯呮姤", "") || buildNewsTitle(tags)}`;
+    const title = `${titlePrefix}：${titleSeed?.name?.replace("样本", "").replace("相关情报", "") || buildNewsTitle(tags)}`;
+    const substanceForTopic = cards.filter((c) => c.kind !== "tipoff" && c.kind !== "tool");
+    const topicKeys = [...new Set(substanceForTopic.map((c) => c.topicKey).filter(Boolean))];
+    const phenCard = substanceForTopic.find((c) => c.kind === "phenomenon");
+    const primaryTopicKey = phenCard?.topicKey || substanceForTopic.find((c) => c.topicKey)?.topicKey || null;
     return {
       id: state.nextStoryId++,
       title,
       tags,
       quality: q.key,
       baseValue: q.value,
+      intrinsicBaseValue: q.value,
+      primaryTopicKey,
+      topicKeys,
+      synthTopicOrder: null,
       negatives,
       fromExplore: true,
       attrs: { sensational, credibility, mystery: mysteryScore, gaze },
@@ -3897,24 +3961,28 @@
     const list = getInventoryByTab(state.synthTab);
     if (!el.synInventory) return;
     if (!list.length) {
-      el.synInventory.innerHTML = `<div class="syn-help">褰撳墠鍒嗙被鏆傛棤鍗＄墝銆?/div>`;
+      el.synInventory.innerHTML = `<div class="syn-help">当前分类暂无卡牌。</div>`;
       return;
     }
     el.synInventory.innerHTML = list
       .map((c) => {
         const placed = isCardPlacedInSynth(c.id);
+        const topicChip =
+          c.topicKey && (c.kind === "phenomenon" || c.kind === "intel" || c.kind === "cognition")
+            ? `<span class="syn-badge">题材${shortTopicLabel(c.topicKey)}</span>`
+            : "";
         const badge =
           c.kind === "tool"
-            ? `<span class="syn-badge">鑰愪箙 ${c.durability}</span><span class="syn-badge">鍔犳垚 +${c.bonus}%</span>`
+            ? `<span class="syn-badge">耐久 ${c.durability}</span><span class="syn-badge">加成 +${c.bonus}%</span>`
             : c.kind === "cognition"
-              ? `<span class="syn-badge">绛夌骇 ${c.level}</span>`
+              ? `<span class="syn-badge">等级 ${c.level}</span>`
               : c.kind === "tipoff"
-                ? `<span class="syn-badge">鐗规畩</span><span class="syn-badge">涓嶅彲鍚堟垚</span>`
-                : `<span class="syn-badge">璇佹嵁 ${c.evidenceValue || 0}</span>`;
-        return `<div class="syn-item syn-item-draggable${placed ? " syn-item-slotted" : ""}" draggable="true" data-card="${c.id}" data-kind="${c.kind}" title="鎷栧埌鍙充晶鍗℃Ы">
+                ? `<span class="syn-badge">特殊</span><span class="syn-badge">不可合成</span>`
+                : `<span class="syn-badge">证据 ${c.evidenceValue || 0}</span>`;
+        return `<div class="syn-item syn-item-draggable${placed ? " syn-item-slotted" : ""}" draggable="true" data-card="${c.id}" data-kind="${c.kind}" title="拖到右侧卡槽">
           <strong>${escapeHtml(c.name)}</strong>
-          <div class="syn-badges"><span class="syn-badge">${c.kind}</span>${badge}</div>
-          ${placed ? `<div class="syn-slotted-hint">宸插湪妲戒綅</div>` : ""}
+          <div class="syn-badges"><span class="syn-badge">${c.kind}</span>${topicChip}${badge}</div>
+          ${placed ? `<div class="syn-slotted-hint">已在槽位</div>` : ""}
         </div>`;
       })
       .join("");
@@ -3929,13 +3997,13 @@
 
   function synthSlotInnerHtml(slotKey, cardId, kind) {
     if (!cardId) {
-      return `<span class="syn-slot-placeholder">鎷栧叆${SYNTH_KIND_ZH[kind] || ""}</span>`;
+      return `<span class="syn-slot-placeholder">拖入${SYNTH_KIND_ZH[kind] || ""}</span>`;
     }
     const c = getCardById(cardId);
-    if (!c) return `<span class="syn-slot-placeholder">绌?/span>`;
+    if (!c) return `<span class="syn-slot-placeholder">空</span>`;
     return `<div class="syn-slot-filled">
       <span class="syn-slot-chip-title">${escapeHtml(c.name)}</span>
-      <button type="button" class="syn-slot-clear" data-clear-slot="${slotKey}" title="绉诲嚭鍗℃Ы">脳</button>
+      <button type="button" class="syn-slot-clear" data-clear-slot="${slotKey}" title="移出卡槽">×</button>
     </div>`;
   }
 
@@ -3954,7 +4022,7 @@
         const key = zone.getAttribute("data-slot-key");
         if (!key) return;
         if (assignCardToCraftSlot(key, id)) renderSynthesis();
-        else log(`绫诲瀷涓嶇锛氭妲介渶瑕併€?{SYNTH_KIND_ZH[zone.getAttribute("data-accept")] || ""}銆嶇墝銆俙);
+        else log(`类型不符：此槽需要「${SYNTH_KIND_ZH[zone.getAttribute("data-accept")] || ""}」牌。`);
       });
     });
     root.querySelectorAll("[data-clear-slot]").forEach((btn) => {
@@ -3994,22 +4062,36 @@
   function renderSynthReports() {
     if (!el.synReports) return;
     if (!state.craftedReports.length) {
-      el.synReports.innerHTML = `<div class="syn-help">灏氭湭鍚堟垚鎶ラ亾銆傝嚦灏戝埗浣?1 绡囧悗鍙繘鍏ョ粍鐗堛€?/div>`;
+      el.synReports.innerHTML = `<div class="syn-help">尚未合成报道。至少制作 1 篇后可进入组版。</div>`;
       return;
     }
     el.synReports.innerHTML = state.craftedReports
-      .map((r) => `<div class="syn-report">
+      .map((r) => {
+        const pk = r.primaryTopicKey;
+        const ord = r.synthTopicOrder;
+        const topicLine =
+          pk && ord
+            ? `<span class="syn-badge">题材${shortTopicLabel(pk)}</span><span class="syn-badge">本周公开第${ord}篇</span>`
+            : pk
+              ? `<span class="syn-badge">题材${shortTopicLabel(pk)}</span>`
+              : "";
+        const eff = effectiveStoryBase(r);
+        const intr = r.intrinsicBaseValue != null ? r.intrinsicBaseValue : r.baseValue;
+        const effLine = intr !== eff ? `<span class="syn-badge">上版有效基础 ${eff}</span>` : `<span class="syn-badge">基础 ${intr}</span>`;
+        return `<div class="syn-report">
         <strong>${escapeHtml(r.title)}</strong>
         <div class="syn-badges" style="margin-top:4px;">
-          <span class="syn-badge">绫诲瀷 ${r.recipeType}</span>
-          <span class="syn-badge">璐ㄩ噺 ${r.quality}</span>
-          <span class="syn-badge">鍩虹鍊?${r.baseValue}</span>
-          <span class="syn-badge">杞板姩 ${r.attrs.sensational}</span>
-          <span class="syn-badge">鍙俊 ${r.attrs.credibility}</span>
-          <span class="syn-badge">绁炵 ${r.attrs.mystery}</span>
-          <span class="syn-badge">璇¤ ${r.attrs.gaze}</span>
+          ${topicLine}
+          <span class="syn-badge">类型 ${r.recipeType}</span>
+          <span class="syn-badge">质量 ${r.quality}</span>
+          ${effLine}
+          <span class="syn-badge">轰动 ${r.attrs.sensational}</span>
+          <span class="syn-badge">可信 ${r.attrs.credibility}</span>
+          <span class="syn-badge">神秘 ${r.attrs.mystery}</span>
+          <span class="syn-badge">诡视 ${r.attrs.gaze}</span>
         </div>
-      </div>`)
+      </div>`;
+      })
       .join("");
   }
 
@@ -4021,15 +4103,15 @@
     if (el.synthesisHint) {
       if (state.synthRecipe === "internal") {
         el.synthesisHint.textContent =
-          "钃濊壊涓虹紪杈戦儴鍐呭锛堥潪鍏紑锛夛細瀹氳皟娑堣€楃幇璞＄墝锛岀敓鎴愯鐭ョ墝銆傜垎鏂欏崱浠呫€岀垎鐐告€ф柊闂汇€嶉渶瑕侊紝鎺㈢储缁撴潫杩涘叆鍚堟垚鍙版椂鍙兘鍙戞斁锛屼笉鍙敱鍚堟垚浜х敓銆?;
+          "蓝色为编辑部内审（非公开）：不消耗现象牌，生成与现象同题材的认知牌。爆料卡仅「爆炸性新闻」需要；公开报道侧情报为消耗性材料。";
       } else {
-        el.synthesisHint.textContent = `閰嶆柟璇存槑锛?{recipeLabel(state.synthRecipe)}銆傜孩鑹插繀瑕佹Ы銆侀噾鑹茶櫄绾垮伐鍏凤紙鍙€夛級锛涚垎鐐告€ф柊闂诲彟闇€绾㈣壊妲芥梺鐨勭垎鏂欏崱妲姐€傛湰鍛ㄧ嚎绱?${state.pendingClues.length} 鏉★紝宸插悎鎴愭姤閬?${state.craftedReports.length} 鏉°€俙;
+        el.synthesisHint.textContent = `配方说明：${recipeLabel(state.synthRecipe)}。现象与认知可反复用于公开报道；情报为材料每次合成会消耗。爆料与工具按原规则。同题材本周多篇公开稿上版时报纸结算基础值递减。`;
       }
     }
     const craftBtn = document.getElementById("craftBtn");
     if (craftBtn) {
       craftBtn.disabled = !validateRecipe(state.synthRecipe, cards);
-      craftBtn.textContent = state.synthRecipe === "internal" ? "鐢熸垚璁ょ煡" : "鎵ц鍚堟垚";
+      craftBtn.textContent = state.synthRecipe === "internal" ? "生成认知" : "执行合成";
     }
     ["recipe1", "recipe2", "recipe3", "recipe4"].forEach((bid, i) => {
       const b = document.getElementById(bid);
@@ -4049,10 +4131,10 @@
       sourceType: phen.domain,
       credibilityBonus: phen.evidenceValue > 60 ? 16 : 10,
       mysteryBonus: phen.mysteryBias > 55 ? 16 : 8,
+      topicKey: phen.topicKey || null,
     };
     state.cognitionCards.push(newCog);
-    state.phenomenonCards = state.phenomenonCards.filter((c) => c.id !== phen.id);
-    log(`鍐呭瀹氳皟瀹屾垚锛氳幏寰楄鐭ョ墝銆?{newCog.name}銆嶏紙Lv.${newCog.level}锛夈€俙);
+    log(`内审定调完成：获得认知牌「${newCog.name}」（Lv.${newCog.level}），现象牌仍保留。`);
   }
 
   function craftReport() {
@@ -4061,7 +4143,7 @@
     if (recipe === "internal") {
       const phen = cards.find((c) => c.kind === "phenomenon");
       if (!phen || !validateRecipe(recipe, cards)) {
-        log("鍐呭澶辫触锛氳灏?1 寮犵幇璞＄墝鎷栧叆钃濊壊鍗℃Ы銆?);
+        log("内审失败：请将 1 张现象牌拖入蓝色卡槽。");
         renderSynthesis();
         return;
       }
@@ -4071,29 +4153,33 @@
       return;
     }
     if (!validateRecipe(recipe, cards)) {
-      log("鍚堟垚澶辫触锛氱礌鏉愪笉婊¤冻褰撳墠閰嶆柟銆?);
+      log("合成失败：素材不满足当前配方。");
       renderSynthesis();
       return;
     }
     const toolBonus = cards.filter((c) => c.kind === "tool").reduce((a, b) => a + b.bonus, 0);
     const successRate = clamp(recipeBaseSuccess(recipe) + toolBonus / 100 - Math.max(0, cards.length - 3) * 0.05, 0.15, 0.95);
     if (Math.random() > successRate) {
-      const toConsume = cards.slice(1).map((c) => c.id);
-      consumeCards(toConsume);
+      consumePublicSynthMaterials(cards);
       initSynthSlotsForRecipe(recipe);
       state.synthPollution += recipe === "r4" ? 5 : recipe === "r3" ? 2 : 0;
-      log(`鍚堟垚澶辫触锛?{recipeLabel(recipe)}锛堟垚鍔熺巼 ${(successRate * 100).toFixed(1)}%锛夈€俙);
+      log(`合成失败：${recipeLabel(recipe)}（成功率 ${(successRate * 100).toFixed(1)}%）。`);
       renderSynthesis();
       return;
     }
     const story = synthToStory(recipe, cards);
+    if (story.primaryTopicKey) {
+      state.topicSynthOrder[story.primaryTopicKey] = (state.topicSynthOrder[story.primaryTopicKey] || 0) + 1;
+      story.synthTopicOrder = state.topicSynthOrder[story.primaryTopicKey];
+    } else {
+      story.synthTopicOrder = null;
+    }
     state.craftedReports.push(story);
-    const consumeIds = cards.map((c) => c.id);
-    consumeCards(consumeIds);
+    consumePublicSynthMaterials(cards);
     initSynthSlotsForRecipe(recipe);
     if (recipe === "r3") state.synthPollution += 4;
     if (recipe === "r4") state.synthPollution += 10;
-    log(`鍚堟垚鎴愬姛锛?{story.title}锛?{story.quality}锛夈€俙);
+    log(`合成成功：${story.title}（${story.quality}）。`);
     renderSynthesis();
   }
 
@@ -4106,14 +4192,14 @@
     document.getElementById("phase-synthesis").classList.remove("hidden");
     document.getElementById("phase-editorial").classList.add("hidden");
     document.getElementById("phase-summary").classList.add("hidden");
-    document.getElementById("synthesisSub").textContent = `绗?${state.week} 鍛?路 宸插甫鍏ユ帰绱㈢嚎绱?${state.pendingClues.length} 鏉°€傝灏嗙礌鏉愭嫋鍏ュ崱妲藉悎鎴愭姤閬擄紝鍐嶈繘鍏ョ粍鐗堛€俙;
+    document.getElementById("synthesisSub").textContent = `第 ${state.week} 周 · 已带入探索线索 ${state.pendingClues.length} 条。请将素材拖入卡槽合成报道，再进入组版。`;
     el.synInventory = document.getElementById("synInventory");
     el.synWorkbench = document.getElementById("synWorkbench");
     el.synSynthPreview = document.getElementById("synSynthPreview");
     el.synReports = document.getElementById("synReports");
     el.synthesisHint = document.getElementById("synthesisHint");
     renderSynthesis();
-    log("杩涘叆鏁呬簨鍚堟垚鍙帮細鐜拌薄/璁ょ煡/鎯呮姤鍙悎鎴愭姤閬撱€?);
+    log("进入故事合成台：现象/认知/情报可合成报道。");
     if (week1TutorialActive() && !state.tutorialSoftW1.w1_synthesis) {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
@@ -4124,7 +4210,7 @@
   }
 
   function toZhTag(tag) {
-    const map = { Politics: "鏃舵斂", Military: "鍐涗簨", Economy: "缁忔祹", Sport: "浣撹偛", Gossip: "鑺辫竟鏂伴椈", Pets: "鐚嫍", Humor: "骞介粯", Shopping: "璐墿" };
+    const map = { Politics: "时政", Military: "军事", Economy: "经济", Sport: "体育", Gossip: "花边新闻", Pets: "猫狗", Humor: "幽默", Shopping: "购物" };
     return map[tag] || tag;
   }
 
@@ -4133,9 +4219,9 @@
     const secondTag = tags[1];
     const location = rand(LOCATIONS);
     const org = rand(ORGS);
-    const subject = rand(SUBJECTS[mainTag] || ["鐒︾偣浜嬩欢"]);
+    const subject = rand(SUBJECTS[mainTag] || ["焦点事件"]);
     const action = rand(ACTIONS);
-    if (secondTag) return `${location}${org}灏?{subject}${action}锛?{toZhTag(secondTag)}绾跨储鍚屾娴幇`;
+    if (secondTag) return `${location}${org}就${subject}${action}，${toZhTag(secondTag)}线索同步浮现`;
     return `${location}${org}${subject}${action}`;
   }
 
@@ -4197,7 +4283,7 @@
     document.getElementById("phase-explore").classList.add("hidden");
     document.getElementById("phase-editorial").classList.remove("hidden");
     document.getElementById("phase-summary").classList.add("hidden");
-    document.getElementById("editorialSub").textContent = `绗?${state.week} 鍛?路 宸插鍏ュ悎鎴愭姤閬?${state.pendingReports.length || state.pendingClues.length} 鏉★紝璇风粍鐗堝悗缁撶畻銆俙;
+    document.getElementById("editorialSub").textContent = `第 ${state.week} 周 · 已导入合成报道 ${state.pendingReports.length || state.pendingClues.length} 条，请组版后结算。`;
     el.storyList = document.getElementById("storyList");
     el.slotList = document.getElementById("slotList");
     el.liveStats = document.getElementById("liveStats");
@@ -4207,8 +4293,8 @@
     renderSlots();
     updatePaperModeButton();
     renderLiveStats();
-    el.resultBox.innerHTML = `<div class="k">灏氭湭缁撶畻</div><div class="nm-tip">鎷栨嫿鎶ラ亾鍒扮増浣嶏紝鍐嶇偣銆岀粨绠楁湰鏈熴€嶃€?/div>`;
-    log("杩涘叆缂栬緫閮細鎷栨嫿缁勭増锛岀粨绠椾笌 docs/鎶ュ垔缁撶畻鍑虹増鐜╂硶璁捐鏂囨。.md 涓€鑷淬€?);
+    el.resultBox.innerHTML = `<div class="k">尚未结算</div><div class="nm-tip">拖拽报道到版位，再点「结算本期」。</div>`;
+    log("进入编辑部：拖拽组版，结算与 docs/报刊结算出版玩法设计文档.md 一致。");
     const btnDemo = document.getElementById("btnPaperDemoLab");
     if (btnDemo) {
       btnDemo.style.display = state.paperLabMode || state.week === 1 ? "inline-block" : "none";
@@ -4230,7 +4316,13 @@
   function calculate(isSettle) {
     const placed = getAllPlaced();
     const emptySlots = slots.length - placed.length;
-    const totalBaseValue = placed.reduce((acc, x) => acc + x.story.baseValue, 0);
+    let sumIntrinsicBase = 0;
+    const totalBaseValue = placed.reduce((acc, x) => {
+      const s = x.story;
+      sumIntrinsicBase += s.intrinsicBaseValue != null ? s.intrinsicBaseValue : s.baseValue;
+      return acc + effectiveStoryBase(s);
+    }, 0);
+    const topicFatigueLoss = Math.max(0, Math.round(sumIntrinsicBase - totalBaseValue));
     const allTags = placed.flatMap((x) => x.story.tags);
     const uniqueTags = new Set(allTags).size;
     const negPenaltyPoints = placed.reduce((acc, x) => acc + x.story.negatives.length, 0);
@@ -4293,6 +4385,8 @@
       placedCount: placed.length,
       emptySlots,
       totalBaseValue,
+      sumIntrinsicBase,
+      topicFatigueLoss,
       uniqueTags,
       comboRaw,
       publicRatio,
@@ -4342,9 +4436,9 @@
     const massRatio = massCount / total;
     const lightRatio = lightCount / total;
     const dominantRatio = Math.max(publicRatio, massRatio, lightRatio);
-    let dominantType = "杞诲唴瀹?;
-    if (dominantRatio === publicRatio) dominantType = "鍏叡浜嬪姟";
-    else if (dominantRatio === massRatio) dominantType = "澶т紬鍏虫敞";
+    let dominantType = "轻内容";
+    if (dominantRatio === publicRatio) dominantType = "公共事务";
+    else if (dominantRatio === massRatio) dominantType = "大众关注";
     return { linked, publicRatio, massRatio, lightRatio, dominantRatio, dominantType };
   }
 
@@ -4363,21 +4457,29 @@
       card.draggable = true;
       card.dataset.storyId = String(story.id);
       const negatives = story.negatives.length
-        ? `<span class="nm-chip" style="color:#fca5a5">璐熼潰:${story.negatives.join("/")}</span>`
-        : `<span class="nm-chip">璐熼潰:鏃?/span>`;
-      const ex = story.fromExplore ? `<span class="nm-chip ex">鎺㈢储绋?/span>` : "";
+        ? `<span class="nm-chip" style="color:#fca5a5">负面:${story.negatives.join("/")}</span>`
+        : `<span class="nm-chip">负面:无</span>`;
+      const ex = story.fromExplore ? `<span class="nm-chip ex">探索稿</span>` : "";
+      const effB = effectiveStoryBase(story);
+      const intrB = story.intrinsicBaseValue != null ? story.intrinsicBaseValue : story.baseValue;
+      const baseChip =
+        story.fromExplore && story.primaryTopicKey
+          ? `<span class="nm-chip">上版有效基础:${effB}${intrB !== effB ? `（稿内${intrB}）` : ""}</span><span class="nm-chip">题材${shortTopicLabel(story.primaryTopicKey)}</span>${
+              story.synthTopicOrder ? `<span class="nm-chip">本周稿序${story.synthTopicOrder}</span>` : ""
+            }`
+          : `<span class="nm-chip">基础值:${story.baseValue}</span>`;
       card.innerHTML = `
         <div class="nm-story-title">${escapeHtml(story.title)}</div>
         <div class="nm-chips">
           ${ex}
-          <span class="nm-chip">鏍囩:${story.tags.map(toZhTag).join(" / ")}</span>
-          <span class="nm-chip">璐ㄩ噺:${story.quality}</span>
-          <span class="nm-chip">鍩虹鍊?${story.baseValue}</span>
+          <span class="nm-chip">标签:${story.tags.map(toZhTag).join(" / ")}</span>
+          <span class="nm-chip">质量:${story.quality}</span>
+          ${baseChip}
           ${negatives}
         </div>`;
       const tip = document.createElement("div");
       tip.className = "nm-tip";
-      tip.textContent = "鎷栧埌涓棿鐗堜綅";
+      tip.textContent = "拖到中间版位";
       card.appendChild(tip);
       card.addEventListener("dragstart", (ev) => {
         state.draggingStoryId = story.id;
@@ -4398,7 +4500,7 @@
       node.classList.remove("drag-over", "good-preview", "bad-preview", "synergy");
     });
     el.slotList.querySelectorAll("[data-impact]").forEach((n) => {
-      n.textContent = "鎷栧叆鎶ラ亾鍙瑙堣鐗堜綅褰卞搷";
+      n.textContent = "拖入报道可预览该版位影响";
     });
   }
 
@@ -4414,25 +4516,25 @@
 
   function renderImpactRows(baseline, projected, extraText) {
     const core = [
-      { name: "棰勮鍒╂鼎", delta: Math.round(projected.profit - baseline.profit), suffix: "" },
-      { name: "棰勮閿€閲?, delta: projected.sold - baseline.sold, suffix: "浠? },
-      { name: "鍏抽敭鍘熷洜", delta: 0, text: extraText || "鏃犳槑鏄惧彉鍖? },
+      { name: "预计利润", delta: Math.round(projected.profit - baseline.profit), suffix: "" },
+      { name: "预计销量", delta: projected.sold - baseline.sold, suffix: "份" },
+      { name: "关键原因", delta: 0, text: extraText || "无明显变化" },
     ];
     const detail = [
-      { name: "杩炴惡棰樻潗鏁?, delta: projected.linkCount - baseline.linkCount, suffix: "" },
-      { name: "澶氭牱鎬т箻鏁?, delta: projected.multipliers.mDiversity - baseline.multipliers.mDiversity, suffix: "x", fixed: 2 },
-      { name: "鍋忕鎯╃綒涔樻暟", delta: projected.multipliers.mBias - baseline.multipliers.mBias, suffix: "x", fixed: 2 },
-      { name: "璐熼潰鎯╃綒鐐?, delta: projected.negPenaltyPoints - baseline.negPenaltyPoints, suffix: "" },
+      { name: "连携题材数", delta: projected.linkCount - baseline.linkCount, suffix: "" },
+      { name: "多样性乘数", delta: projected.multipliers.mDiversity - baseline.multipliers.mDiversity, suffix: "x", fixed: 2 },
+      { name: "偏科惩罚乘数", delta: projected.multipliers.mBias - baseline.multipliers.mBias, suffix: "x", fixed: 2 },
+      { name: "负面惩罚点", delta: projected.negPenaltyPoints - baseline.negPenaltyPoints, suffix: "" },
     ];
     const renderRow = (d) => {
       if (d.text) return `<div class="nm-impact-row neu"><span class="name">${d.name}</span><span class="delta">${d.text}</span></div>`;
       const cls = d.delta > 0 ? "pos" : d.delta < 0 ? "neg" : "neu";
       const abs = d.fixed != null ? Math.abs(d.delta).toFixed(d.fixed) : Math.abs(d.delta);
-      const prefix = d.delta > 0 ? "+" : d.delta < 0 ? "-" : "卤";
+      const prefix = d.delta > 0 ? "+" : d.delta < 0 ? "-" : "±";
       return `<div class="nm-impact-row ${cls}"><span class="name">${d.name}</span><span class="delta">${prefix}${abs}${d.suffix}</span></div>`;
     };
     return `<div class="nm-impact-list">${core.map(renderRow).join("")}</div>
-      <details style="margin-top:6px;"><summary style="cursor:pointer;color:#94a3b8;font-size:12px;">璇︽儏</summary>
+      <details style="margin-top:6px;"><summary style="cursor:pointer;color:#94a3b8;font-size:12px;">详情</summary>
       <div class="nm-impact-list" style="margin-top:6px;">${detail.map(renderRow).join("")}</div></details>`;
   }
 
@@ -4441,8 +4543,8 @@
       clearTimeout(state.undoTimer);
       state.undoTimer = null;
     }
-    el.toast.innerHTML = `<span>宸叉浛鎹細${escapeHtml(prevStory.title)} 鈫?${escapeHtml(newStory.title)}</span>
-      <button class="nm-sec" id="undoBtn">鎾ら攢</button>`;
+    el.toast.innerHTML = `<span>已替换：${escapeHtml(prevStory.title)} → ${escapeHtml(newStory.title)}</span>
+      <button class="nm-sec" id="undoBtn">撤销</button>`;
     el.toast.classList.add("show");
     document.getElementById("undoBtn").onclick = () => {
       if (!state.lastReplaceAction) return;
@@ -4463,19 +4565,19 @@
     const baseline = calculate(false);
 
     const layout = [
-      { page: 1, kind: "main", slotId: "front-main", label: "澶寸増" },
-      { page: 1, kind: "subL", slotId: "front-side", label: "瀛愮増 A" },
-      { page: 1, kind: "subR", slotId: "feature-1", label: "瀛愮増 B" },
-      { page: 2, kind: "main", slotId: "feature-2", label: "娆″ご鐗? },
-      { page: 2, kind: "subL", slotId: "inner-1", label: "瀛愮増 C" },
-      { page: 2, kind: "subR", slotId: "inner-2", label: "瀛愮増 D" },
+      { page: 1, kind: "main", slotId: "front-main", label: "头版" },
+      { page: 1, kind: "subL", slotId: "front-side", label: "子版 A" },
+      { page: 1, kind: "subR", slotId: "feature-1", label: "子版 B" },
+      { page: 2, kind: "main", slotId: "feature-2", label: "次头版" },
+      { page: 2, kind: "subL", slotId: "inner-1", label: "子版 C" },
+      { page: 2, kind: "subR", slotId: "inner-2", label: "子版 D" },
     ];
 
     const attrsDots = (story) => {
       const tags = (story && story.tags) || [];
       const dots = [];
       for (let i = 0; i < Math.min(4, tags.length); i++) dots.push(`<span class="paper-attr t${(i % 4) + 1}" title="${escapeHtml(toZhTag(tags[i]))}"></span>`);
-      if (story && story.negatives && story.negatives.length) dots.push(`<span class="paper-attr t1" title="璐熼潰璇嶆潯"></span>`);
+      if (story && story.negatives && story.negatives.length) dots.push(`<span class="paper-attr t1" title="负面词条"></span>`);
       return `<div class="paper-attrs">${dots.join("")}</div>`;
     };
 
@@ -4491,25 +4593,25 @@
       const mult = (1 + 2 * slot.weight).toFixed(1);
       if (!current) {
         const multHint = slot.id === "front-main"
-          ? `<div class="paper-multi empty">澶寸増濂栧姳绯绘暟 x${mult}</div>`
-          : `<div class="paper-multi">绯绘暟 x${mult}</div>`;
+          ? `<div class="paper-multi empty">头版奖励系数 x${mult}</div>`
+          : `<div class="paper-multi">系数 x${mult}</div>`;
         return `
           <div class="paper-slot-header"><span>${escapeHtml(labelText)}</span>${multHint}</div>
-          <div class="paper-empty">鎷栨嫿鎶ラ亾鍒版澶?/div>
+          <div class="paper-empty">拖拽报道到此处</div>
         `;
       }
       const titleCls = isMain ? "" : "small";
-      const removeBtn = `<button class="nm-sec" data-remove="${slot.id}" style="justify-self:end;">绉婚櫎</button>`;
+      const removeBtn = `<button class="nm-sec" data-remove="${slot.id}" style="justify-self:end;">移除</button>`;
       return `
         <div class="paper-slot-header">
           <span>${escapeHtml(labelText)}</span>
-          <span class="paper-multi">绯绘暟 x${mult}</span>
+          <span class="paper-multi">系数 x${mult}</span>
         </div>
         <div>
           <div class="paper-story-title ${titleCls}">${escapeHtml(current.title)}</div>
           ${attrsDots(current)}
         </div>
-        <div class="paper-img" aria-label="鎶ラ亾鍥剧墖鍗犱綅"></div>
+        <div class="paper-img" aria-label="报道图片占位"></div>
         ${bodyMask()}
         ${removeBtn}
       `;
@@ -4522,8 +4624,8 @@
       const subL = items.find((x) => x.kind === "subL");
       const subR = items.find((x) => x.kind === "subR");
       const header = num === 1
-        ? `<div class="paper-header"><div class="paper-name">DOG NEWS</div><div class="paper-meta"><span>1930骞?鏈?/span><span>绗?{state.week}鍛?/span><span>绗?{num}椤?/span></div></div>`
-        : `<div class="paper-header"><div class="paper-name" style="font-size:18px;letter-spacing:0.06em;">DOG NEWS</div><div class="paper-meta"><span>1930骞?鏈?/span><span>绗?{state.week}鍛?/span><span>绗?{num}椤?/span></div></div>`;
+        ? `<div class="paper-header"><div class="paper-name">DOG NEWS</div><div class="paper-meta"><span>1930年3月</span><span>第${state.week}周</span><span>第${num}页</span></div></div>`
+        : `<div class="paper-header"><div class="paper-name" style="font-size:18px;letter-spacing:0.06em;">DOG NEWS</div><div class="paper-meta"><span>1930年3月</span><span>第${state.week}周</span><span>第${num}页</span></div></div>`;
       return `<section class="paper-page">
         ${header}
         <div class="paper-grid">
@@ -4593,29 +4695,30 @@
     }
     btn.style.display = "";
     if (visualBtn) visualBtn.style.display = "";
-    btn.textContent = state.paperLayoutMode === "fixed" ? "鍒囨崲涓烘祦寮忕増闈? : "鍒囨崲涓哄畾楂樼増闈?;
+    btn.textContent = state.paperLayoutMode === "fixed" ? "切换为流式版面" : "切换为定高版面";
     btn.title = state.paperLayoutMode === "fixed"
-      ? "褰撳墠锛氬畾楂橈紙淇濇寔鎶ョ焊褰㈢姸锛?
-      : "褰撳墠锛氭祦寮忥紙闅忓唴瀹规媺浼革級";
+      ? "当前：定高（保持报纸形状）"
+      : "当前：流式（随内容拉伸）";
     if (visualBtn) {
-      visualBtn.textContent = state.paperVisualMode === "enhanced" ? "鎷熺墿澧炲己锛氬紑" : "鎷熺墿澧炲己锛氬叧";
-      visualBtn.title = state.paperVisualMode === "enhanced" ? "褰撳墠锛氭嫙鐗╁寮烘ā寮? : "褰撳墠锛氭甯告ā寮?;
+      visualBtn.textContent = state.paperVisualMode === "enhanced" ? "拟物增强：开" : "拟物增强：关";
+      visualBtn.title = state.paperVisualMode === "enhanced" ? "当前：拟物增强模式" : "当前：正常模式";
     }
   }
 
   function renderLiveStats() {
     const r = calculate(false);
     const effects = analyzeTagEffects(getAllPlaced().map((x) => x.story));
-    const profileLabel = state.editorialProfile <= -35 ? "淇℃伅鍨? : state.editorialProfile >= 35 ? "鐑害鍨? : "骞宠　鍨?;
+    const profileLabel = state.editorialProfile <= -35 ? "信息型" : state.editorialProfile >= 35 ? "热度型" : "平衡型";
     el.liveStats.innerHTML = `
-      <div class="k">宸插～鐗堜綅</div><div class="v">${r.placedCount}/${slots.length}</div>
-      <div class="k">缂栬緫瀹氫綅</div><div class="v">${profileLabel} (${Math.round(state.editorialProfile)})</div>
-      <div class="k">鐙壒鏍囩鏁?/div><div class="v">${r.uniqueTags}</div>
-      <div class="k">閲嶅鎴愮粍鍒?/div><div class="v">${r.comboRaw.toFixed(2)}</div>
-      <div class="k">杩炴惡棰樻潗</div><div class="v ${effects.linked.length ? "nm-ok" : "nm-warn"}">${effects.linked.length ? effects.linked.map(toZhTag).join("銆?) : "鏃?}</div>
-      <div class="k">涓夎酱 P/M/L</div><div class="v ${effects.dominantRatio > 0.7 ? "nm-bad" : "nm-ok"}">${Math.round(effects.publicRatio * 100)}/${Math.round(effects.massRatio * 100)}/${Math.round(effects.lightRatio * 100)}%</div>
-      <div class="k">棰勮闇€姹?/div><div class="v">${Math.round(r.demand).toLocaleString("zh-CN")}</div>
-      <div class="k">璁㈤槄鍩烘暟</div><div class="v">${state.subscribers.toLocaleString("zh-CN")}</div>`;
+      <div class="k">已填版位</div><div class="v">${r.placedCount}/${slots.length}</div>
+      <div class="k">编辑定位</div><div class="v">${profileLabel} (${Math.round(state.editorialProfile)})</div>
+      <div class="k">独特标签数</div><div class="v">${r.uniqueTags}</div>
+      <div class="k">重复成组分</div><div class="v">${r.comboRaw.toFixed(2)}</div>
+      <div class="k">连携题材</div><div class="v ${effects.linked.length ? "nm-ok" : "nm-warn"}">${effects.linked.length ? effects.linked.map(toZhTag).join("、") : "无"}</div>
+      <div class="k">三轴 P/M/L</div><div class="v ${effects.dominantRatio > 0.7 ? "nm-bad" : "nm-ok"}">${Math.round(effects.publicRatio * 100)}/${Math.round(effects.massRatio * 100)}/${Math.round(effects.lightRatio * 100)}%</div>
+      <div class="k">预计需求</div><div class="v">${Math.round(r.demand).toLocaleString("zh-CN")}</div>
+      <div class="k">订阅基数</div><div class="v">${state.subscribers.toLocaleString("zh-CN")}</div>
+      <div class="k">有效基础（版内）</div><div class="v">${r.totalBaseValue}${r.topicFatigueLoss > 0 ? ` <span style="color:#fca5a5">−${r.topicFatigueLoss}同题</span>` : ""}</div>`;
   }
 
   function settlePaper() {
@@ -4624,28 +4727,29 @@
     const axis = analyzeTagEffects(placed);
     const profileDelta = (axis.lightRatio - axis.publicRatio) * 24 - axis.massRatio * 4;
     state.editorialProfile = clamp(state.editorialProfile + profileDelta, -100, 100);
-    macro.澹版湜 = Math.min(100, macro.澹版湜 + Math.min(5, Math.floor(state.pendingClues.length / 2)));
+    macro.声望 = Math.min(100, macro.声望 + Math.min(5, Math.floor(state.pendingClues.length / 2)));
     const profitClass = r.profit >= 0 ? "nm-ok" : "nm-bad";
     el.resultBox.innerHTML = `
-      <div class="k">鏈湡鍑€鍒╂鼎</div>
+      <div class="k">本期净利润</div>
       <div class="nm-big ${profitClass}">${fmtMoney(r.profit)}</div>
       <div class="nm-sum-grid">
-        <div class="k">鍗栨姤</div><div class="v">${fmtMoney(r.circulationRevenue)}</div>
-        <div class="k">璁㈤槄</div><div class="v">${fmtMoney(r.subscriptionRevenue)}</div>
-        <div class="k">骞垮憡</div><div class="v">${fmtMoney(r.adsRevenue)}</div>
-        <div class="k">鎬绘垚鏈?/div><div class="v">${fmtMoney(-r.costs.totalCost)}</div>
-        <div class="k">瀹為檯閿€閲?/div><div class="v">${r.sold.toLocaleString("zh-CN")}</div>
-        <div class="k">璁㈤槄锛堜笅鏈燂級</div><div class="v">${r.nextSubs.toLocaleString("zh-CN")}</div>
+        <div class="k">卖报</div><div class="v">${fmtMoney(r.circulationRevenue)}</div>
+        <div class="k">订阅</div><div class="v">${fmtMoney(r.subscriptionRevenue)}</div>
+        <div class="k">广告</div><div class="v">${fmtMoney(r.adsRevenue)}</div>
+        <div class="k">总成本</div><div class="v">${fmtMoney(-r.costs.totalCost)}</div>
+        <div class="k">实际销量</div><div class="v">${r.sold.toLocaleString("zh-CN")}</div>
+        <div class="k">订阅（下期）</div><div class="v">${r.nextSubs.toLocaleString("zh-CN")}</div>
       </div>
-      <div class="nm-tip">涔樻暟锛氳川閲?${r.multipliers.mQuality.toFixed(2)} / 閲嶅 ${r.multipliers.mCombo.toFixed(2)} / 澶氭牱鎬?${r.multipliers.mDiversity.toFixed(2)} / 鐗堜綅 ${r.multipliers.mLayout.toFixed(2)} / 鍋忕 ${r.multipliers.mBias.toFixed(2)}</div>`;
+      <div class="nm-tip">乘数：质量 ${r.multipliers.mQuality.toFixed(2)} / 重复 ${r.multipliers.mCombo.toFixed(2)} / 多样性 ${r.multipliers.mDiversity.toFixed(2)} / 版位 ${r.multipliers.mLayout.toFixed(2)} / 偏科 ${r.multipliers.mBias.toFixed(2)}</div>
+      <div class="nm-tip" style="margin-top:6px;">同题报道：稿内基础合计 ${r.sumIntrinsicBase} → 上版有效合计 ${r.totalBaseValue}${r.topicFatigueLoss > 0 ? `（同题疲劳折损 ${r.topicFatigueLoss} 点基础值）` : "（无同题折损）"}</div>`;
     renderLiveStats();
     document.getElementById("summaryText").innerHTML = `
-      绗?<strong>${state.week}</strong> 鍛ㄦ姤鍒婂凡缁撶畻锛氬噣鍒╂鼎 <strong>${fmtMoney(r.profit)}</strong>锛?
-      涓嬫湡璁㈤槄 <strong>${r.nextSubs.toLocaleString("zh-CN")}</strong>銆?
-      鏈懆鍚堟垚绋夸欢 <strong>${(state.pendingReports && state.pendingReports.length) || state.pendingClues.length}</strong> 鏉★紙宸茶鍏ユ晠浜嬪簱锛夈€俙;
+      第 <strong>${state.week}</strong> 周报刊已结算：净利润 <strong>${fmtMoney(r.profit)}</strong>，
+      下期订阅 <strong>${r.nextSubs.toLocaleString("zh-CN")}</strong>。
+      本周合成稿件 <strong>${(state.pendingReports && state.pendingReports.length) || state.pendingClues.length}</strong> 条（已计入故事库）。`;
     document.getElementById("phase-editorial").classList.add("hidden");
     document.getElementById("phase-summary").classList.remove("hidden");
-    log(`鎶ュ垔缁撶畻瀹屾垚锛氬埄娑?${Math.round(r.profit)}`);
+    log(`报刊结算完成：利润 ${Math.round(r.profit)}`);
   }
 
   function nextWeek() {
@@ -4661,13 +4765,14 @@
     state.dayResolutionInfo = null;
     state.pendingClues = [];
     state.pendingReports = [];
+    state.topicSynthOrder = {};
     cleanupWeekScopedEffects();
     initRegionLeadEvents();
     state.phase = "explore";
     document.getElementById("phase-explore").classList.remove("hidden");
     document.getElementById("phase-synthesis").classList.add("hidden");
     document.getElementById("phase-summary").classList.add("hidden");
-    log("鈥斺€斺€斺€?鏂扮殑涓€鍛?鈥斺€斺€斺€?);
+    log("———— 新的一周 ————");
     renderMacro();
     renderWeekStart();
   }
@@ -4675,8 +4780,8 @@
   function tickHeader() {
     const wl = document.getElementById("weekLabel");
     const dl = document.getElementById("dayLabel");
-    if (wl) wl.textContent = `绗?${state.week} 鍛╜;
-    if (dl) dl.textContent = `鍓╀綑 ${state.day} / 7 鏃;
+    if (wl) wl.textContent = `第 ${state.week} 周`;
+    if (dl) dl.textContent = `剩余 ${state.day} / 7 日`;
     updateNextDayButton();
   }
 
@@ -4697,7 +4802,7 @@
       for (const s of slots) state.placed[s.id] = null;
       renderSlots();
       renderLiveStats();
-      el.resultBox.innerHTML = `<div class="k">灏氭湭缁撶畻</div><div class="nm-tip">鐗堥潰宸叉竻绌恒€?/div>`;
+      el.resultBox.innerHTML = `<div class="k">尚未结算</div><div class="nm-tip">版面已清空。</div>`;
     };
     const modeBtn = document.getElementById("paperModeToggle");
     if (modeBtn) {
@@ -4775,7 +4880,7 @@
     document.getElementById("toEditorialBtn").onclick = () => {
       state.pendingReports = state.craftedReports.slice();
       if (!state.pendingReports.length) {
-        log("鏈悎鎴愭姤閬擄紝绯荤粺灏嗕娇鐢ㄦ帰绱㈢嚎绱㈣嚜鍔ㄨ浆绋裤€?);
+        log("未合成报道，系统将使用探索线索自动转稿。");
       }
       enterEditorialPhase();
     };
@@ -4783,35 +4888,42 @@
 
   document.getElementById("btnEndWeek").onclick = () => {
     if (state.phase !== "explore") return;
-    log("缁撴潫鎺㈢储鍛紝杩涘叆鏁呬簨鍚堟垚鍙般€?);
+    log("结束探索周，进入故事合成台。");
     state.day = 0;
     enterSynthesisPhase();
   };
   document.getElementById("btnNextDay").onclick = () => advanceOneDay();
 
   function createPaperLabReports() {
-    const mk = (title, tags, quality, baseValue, negatives, attrs, recipeType) => ({
-      id: state.nextStoryId++,
-      title,
-      tags,
-      quality,
-      baseValue,
-      negatives,
-      fromExplore: true,
-      attrs,
-      recipeType,
-    });
+    const mk = (title, tags, quality, baseValue, negatives, attrs, recipeType, labTopicIdx) => {
+      const pk = `topic_paperlab_${labTopicIdx}`;
+      return {
+        id: state.nextStoryId++,
+        title,
+        tags,
+        quality,
+        baseValue,
+        intrinsicBaseValue: baseValue,
+        primaryTopicKey: pk,
+        topicKeys: [pk],
+        synthTopicOrder: 1,
+        negatives,
+        fromExplore: true,
+        attrs,
+        recipeType,
+      };
+    };
     return [
-      mk("濉斿か鑴辫緸鍘诲ぇ娉曞畼鑱屽姟锛氬巻鍙叉€ч瀵煎眰鏇磋凯", ["Politics", "Economy"], "Gold", 450, [], { sensational: 64, credibility: 88, mystery: 28, gaze: 18 }, "r2"),
-      mk("娓姟灞€澶滈棿灏侀攣锛氫笁鍙风爜澶村嚭鐜板紓甯稿洖娉?, ["Military", "Gossip"], "Silver", 300, ["thin_source"], { sensational: 72, credibility: 55, mystery: 52, gaze: 34 }, "r1"),
-      mk("涓滃尯鍓ч櫌澶辫釜妗ｆ閲嶇幇锛氱讲鍚嶆潵鑷湭鏉ユ棩鏈?, ["Gossip", "Humor"], "Silver", 300, [], { sensational: 76, credibility: 48, mystery: 67, gaze: 46 }, "r3"),
-      mk("甯傛斂棰勭畻鏆楃嚎鏇濆厜锛氶噰璐悕鍗曞嚭鐜伴噸澶嶈韩浠?, ["Politics", "Shopping"], "Gold", 450, ["bias_overreach"], { sensational: 68, credibility: 79, mystery: 35, gaze: 24 }, "r2"),
-      mk("澶嶆椿鑺傚矝鐑紓甯歌拷韪細鐭冲儚缇ゆ俯宸秴鍑哄巻鍙茶褰?, ["Economy", "Sport"], "Silver", 300, [], { sensational: 58, credibility: 74, mystery: 44, gaze: 23 }, "r1"),
-      mk("澶滅彮鐢靛彴璇挱绁炵棰戞锛氬惉浼楁姤鍛婂悓棰戣€抽福", ["Gossip", "Pets"], "Bronze", 150, ["sloppy_writing"], { sensational: 70, credibility: 38, mystery: 62, gaze: 41 }, "r3"),
-      mk("娉曞涵閫熻鍛樺尶鍚嶅彛渚涳細鍒よ瘝鍦ㄥ璇诲墠宸叉硠闇?, ["Politics", "Military"], "Gold", 450, [], { sensational: 66, credibility: 86, mystery: 31, gaze: 20 }, "r2"),
-      mk("闆ㄥ杞ㄩ亾灏藉ご鐨勭櫧鐏細宸℃鍛樺彛渚涗簰鐩哥煕鐩?, ["Sport", "Humor"], "Bronze", 150, ["fabrication"], { sensational: 81, credibility: 27, mystery: 71, gaze: 52 }, "r4"),
-      mk("鑱旈偊浠撳簱鐭椂鏂數锛氱洃鎺х敾闈㈠嚭鐜扮┖鐧藉抚", ["Economy", "Gossip"], "Silver", 300, [], { sensational: 63, credibility: 66, mystery: 49, gaze: 29 }, "r1"),
-      mk("鍗堝鏉ヤ俊闄勫甫閲戝睘纰庣墖锛氭潗璐ㄤ笌鍐涙爣涓嶅尮閰?, ["Military", "Shopping"], "Silver", 300, ["thin_source"], { sensational: 74, credibility: 52, mystery: 59, gaze: 37 }, "r3"),
+      mk("塔夫脱辞去大法官职务：历史性领导层更迭", ["Politics", "Economy"], "Gold", 450, [], { sensational: 64, credibility: 88, mystery: 28, gaze: 18 }, "r2", 0),
+      mk("港务局夜间封锁：三号码头出现异常回波", ["Military", "Gossip"], "Silver", 300, ["thin_source"], { sensational: 72, credibility: 55, mystery: 52, gaze: 34 }, "r1", 1),
+      mk("东区剧院失踪档案重现：署名来自未来日期", ["Gossip", "Humor"], "Silver", 300, [], { sensational: 76, credibility: 48, mystery: 67, gaze: 46 }, "r3", 2),
+      mk("市政预算暗线曝光：采购名单出现重复身份", ["Politics", "Shopping"], "Gold", 450, ["bias_overreach"], { sensational: 68, credibility: 79, mystery: 35, gaze: 24 }, "r2", 3),
+      mk("复活节岛热异常追踪：石像群温差超出历史记录", ["Economy", "Sport"], "Silver", 300, [], { sensational: 58, credibility: 74, mystery: 44, gaze: 23 }, "r1", 4),
+      mk("夜班电台误播神秘频段：听众报告同频耳鸣", ["Gossip", "Pets"], "Bronze", 150, ["sloppy_writing"], { sensational: 70, credibility: 38, mystery: 62, gaze: 41 }, "r3", 5),
+      mk("法庭速记员匿名口供：判词在宣读前已泄露", ["Politics", "Military"], "Gold", 450, [], { sensational: 66, credibility: 86, mystery: 31, gaze: 20 }, "r2", 6),
+      mk("雨夜轨道尽头的白灯：巡检员口供互相矛盾", ["Sport", "Humor"], "Bronze", 150, ["fabrication"], { sensational: 81, credibility: 27, mystery: 71, gaze: 52 }, "r4", 7),
+      mk("联邦仓库短时断电：监控画面出现空白帧", ["Economy", "Gossip"], "Silver", 300, [], { sensational: 63, credibility: 66, mystery: 49, gaze: 29 }, "r1", 8),
+      mk("午夜来信附带金属碎片：材质与军标不匹配", ["Military", "Shopping"], "Silver", 300, ["thin_source"], { sensational: 74, credibility: 52, mystery: 59, gaze: 37 }, "r3", 9),
     ];
   }
 
@@ -4826,7 +4938,7 @@
     state.pendingReports = createPaperLabReports();
     state.pendingClues = [];
     state.clues = [];
-    log("宸茶繘鍏ユ姤绾稿～鍏呭疄楠屾ā寮忥細鎷熺墿澧炲己鐗堥潰 + 鏂版墜寮曞涓庡～鍏ユ紨绀猴紙鏁堟灉 B锛夈€?);
+    log("已进入报纸填充实验模式：拟物增强版面 + 新手引导与填入演示（效果 B）。");
     enterEditorialPhase();
     requestAnimationFrame(() => runPaperLabOnboarding());
     return true;
@@ -4841,7 +4953,7 @@
     bindEditorialUi();
     bindPaperDemoLabUi();
     bindSynthDemoLabUi();
-    log("鍏ㄩ摼鏉″紑濮嬶細鎺㈢储 鈫?鏁呬簨鍚堟垚 鈫?缂栬緫閮ㄧ粍鐗?鈫?缁撶畻銆?);
+    log("全链条开始：探索 → 故事合成 → 编辑部组版 → 结算。");
     if (!maybeEnterPaperLabMode()) {
       renderWeekStart();
       updateNextDayButton();

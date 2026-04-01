@@ -48,6 +48,10 @@
     tipOffCards: [],
     craftedReports: [],
     nextCardId: 1,
+    /** 每条线索唯一题材键，自增 */
+    nextTopicSeq: 1,
+    /** 本周公开合成成功次数，按 primaryTopicKey 计数（合成阶段重置） */
+    topicSynthOrder: {},
     weekEventResolved: false,
     staffEffects: [],
     dynamicNodes: [],
@@ -70,7 +74,7 @@
   const LAB_FULL_GUIDE_HTML = `<p style="margin:0 0 0.55rem;line-height:1.55;">本页为<strong>报刊组版实验模式</strong>（已跳过探索与合成）。下列与正式全链条第 1 周软引导一致，便于你在此专注练手。</p>
 <ul style="margin:0 0 0.55rem;padding-left:1.15rem;line-height:1.55;color:var(--text);">
 <li><strong>探索（主入口）</strong>：回合简报 → 全球地图 → 区域；<strong>下一天</strong>在全球/区域/左下角悬浮均可推进，到期任务会依次判定。</li>
-<li><strong>故事合成台</strong>：四种类型的公开报道 + 蓝色<strong>内审定调</strong>（现象→认知）；爆炸性新闻需<strong>爆料卡</strong>。</li>
+<li><strong>故事合成台</strong>：四种类型的公开报道 + 蓝色<strong>内审定调</strong>（不消耗现象，生成同题材认知）；公开合成消耗<strong>情报</strong>作材料，现象与认知可复用；爆炸性新闻需<strong>爆料卡</strong>。</li>
        <li><strong>报刊组版</strong>：左侧<strong>故事库</strong>卡片拖到中间<strong>拟物报纸</strong>版位（头版系数最高），再点「结算本期」。</li>
 </ul>
 <p style="margin:0;line-height:1.55;color:var(--muted);font-size:0.88rem;">关闭本窗后将打开<strong>填入演示</strong>（与正式全链条第一周所用相同：拟物报纸 + 效果 B + 1 秒自动重播）。刷新页面前本引导只出现一次。</p>`;
@@ -113,6 +117,10 @@
   ];
 
   state.placed = Object.fromEntries(slots.map((s) => [s.id, null]));
+
+  function newTopicKey() {
+    return `topic_${state.nextTopicSeq++}`;
+  }
 
   const REGIONS = [
     {
@@ -884,7 +892,7 @@
         body: "匿名线人送来一份禁区坐标碎片，你的编辑部获得了额外线索。",
         condition: () => true,
         apply: () => {
-          state.clues.push({ title: "匿名坐标碎片 · 临时线索", type: "occult", tier: 1 });
+          state.clues.push({ title: "匿名坐标碎片 · 临时线索", type: "occult", tier: 1, topicKey: newTopicKey() });
           addMacro({ 诡名: 1 });
           log("随机事件：获得临时线索「匿名坐标碎片」。");
         },
@@ -974,7 +982,7 @@
             text: "只拿设备不公开站队",
             desc: "获得临时科技线索，诡名 +1",
             apply: () => {
-              state.clues.push({ title: "协作设备清单 · 临时线索", type: "sci", tier: 1 });
+              state.clues.push({ title: "协作设备清单 · 临时线索", type: "sci", tier: 1, topicKey: newTopicKey() });
               addMacro({ 诡名: 1 });
             },
           },
@@ -1013,7 +1021,7 @@
             desc: "公信 +1，诡名 +1，获得临时情报线索",
             apply: () => {
               addMacro({ 公信: 1, 诡名: 1 });
-              state.clues.push({ title: "读者投稿拼图 · 临时线索", type: "pop", tier: 1 });
+              state.clues.push({ title: "读者投稿拼图 · 临时线索", type: "pop", tier: 1, topicKey: newTopicKey() });
             },
           },
         ],
@@ -1915,20 +1923,20 @@
       macro.诡名 += m.tags.includes("occult") ? 5 : 2;
       if (m.kind === "hidden") macro.狂性 = Math.min(100, macro.狂性 + 4);
       lines.push("大成功：高质量线索。");
-      const clue = { title: m.name + " · 深度特稿素材", type: m.tags[0] || "pop", tier: 3 };
+      const clue = { title: m.name + " · 深度特稿素材", type: m.tags[0] || "pop", tier: 3, topicKey: newTopicKey() };
       state.clues.push(clue);
       rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：高（Tier 3）" });
     } else if (tier === "小成功") {
       macro.声望 = Math.min(100, macro.声望 + 4);
       macro.诡名 += 1;
       lines.push("小成功：常规稿件素材。");
-      const clue = { title: m.name + " · 常规稿件素材", type: m.tags[0] || "pop", tier: 2 };
+      const clue = { title: m.name + " · 常规稿件素材", type: m.tags[0] || "pop", tier: 2, topicKey: newTopicKey() };
       state.clues.push(clue);
       rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：中（Tier 2）" });
     } else if (tier === "失败") {
       macro.声望 = Math.max(0, macro.声望 - 2);
       lines.push("失败：碎片线索。");
-      const clue = { title: m.name + " · 碎片线索", type: m.tags[0] || "pop", tier: 1 };
+      const clue = { title: m.name + " · 碎片线索", type: m.tags[0] || "pop", tier: 1, topicKey: newTopicKey() };
       state.clues.push(clue);
       rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：低（Tier 1）" });
     } else {
@@ -2211,6 +2219,7 @@
     state.cognitionCards = [];
     state.toolCards = [];
     state.craftedReports = [];
+    state.topicSynthOrder = {};
     state.synthRecipe = "r1";
     initSynthSlotsForRecipe("r1");
     state.tipOffCards = [];
@@ -2225,6 +2234,8 @@
     state.synthTab = "phenomenon";
     state.synthPollution = 0;
     for (const clue of state.pendingClues) {
+      if (!clue.topicKey) clue.topicKey = newTopicKey();
+      const tk = clue.topicKey;
       state.phenomenonCards.push({
         id: newCardId(),
         kind: "phenomenon",
@@ -2233,6 +2244,7 @@
         evidenceValue: 35 + clue.tier * 16,
         mysteryBias: clue.type === "occult" ? 70 : clue.type === "pop" ? 45 : 30,
         tier: clue.tier,
+        topicKey: tk,
       });
       state.intelCards.push({
         id: newCardId(),
@@ -2242,6 +2254,7 @@
         evidenceValue: 25 + clue.tier * 10,
         rumorValue: clue.type === "pop" ? 32 : 18,
         tier: clue.tier,
+        topicKey: tk,
       });
       state.cognitionCards.push({
         id: newCardId(),
@@ -2251,6 +2264,7 @@
         sourceType: clue.type,
         credibilityBonus: clue.type === "sci" ? 16 : 8,
         mysteryBonus: clue.type === "occult" ? 18 : 9,
+        topicKey: tk,
       });
     }
     const toolN = Math.max(1, Math.min(3, Math.floor(state.pendingClues.length / 2)));
@@ -2395,14 +2409,25 @@
       if (!cards.length) return "内审定调：请将 1 张现象牌拖入右侧蓝色卡槽，再点「生成认知」。产出为认知牌，不进入「已合成报道」。";
       const names = cards.map((c) => c.name).join(" + ");
       const ok = validateRecipe(recipe, cards);
-      return `${recipeLabel(recipe)}\n槽内：${names}\n${ok ? "可执行：消耗现象牌，生成 1 张认知牌。" : "需且仅需 1 张现象牌。"}`;
+      return `${recipeLabel(recipe)}\n槽内：${names}\n${ok ? "可执行：不消耗现象牌，生成 1 张认知牌（与现象同题材）。" : "需且仅需 1 张现象牌。"}`;
     }
     if (!cards.length) return "尚未放入素材。请将左侧卡牌拖入右侧红色必要槽；虚线槽为可选工具位。爆炸性新闻需另拖入「爆料卡」（仅特殊途径获得，不可合成）。";
     const names = cards.map((c) => c.name).join(" + ");
     const valid = validateRecipe(recipe, cards);
     const toolBonus = cards.filter((c) => c.kind === "tool").reduce((a, b) => a + b.bonus, 0);
     const successRate = clamp(recipeBaseSuccess(recipe) + toolBonus / 100 - Math.max(0, cards.length - 3) * 0.05, 0.15, 0.95);
-    return `${recipeLabel(recipe)}\n素材：${names}\n预计成功率：${(successRate * 100).toFixed(1)}%\n${valid ? "配方合法，可执行合成。" : "配方不合法，请调整素材组合。"}\n当前失实风险：${state.synthPollution}`;
+    const substanceForTopic = cards.filter((c) => c.kind !== "tipoff" && c.kind !== "tool");
+    const phenCard = substanceForTopic.find((c) => c.kind === "phenomenon");
+    const pk = phenCard?.topicKey || substanceForTopic.find((c) => c.topicKey)?.topicKey;
+    const prevN = pk ? state.topicSynthOrder[pk] || 0 : 0;
+    const nextOrd = prevN + 1;
+    let topicLine = "\n公开合成：现象、认知牌不消耗；情报为材料会消耗；爆料与工具按规则消耗。";
+    if (pk && prevN > 0) {
+      topicLine += `\n该题材本周已公开合成 ${prevN} 篇；若本次成功，本条为第 ${nextOrd} 篇，上版时报纸结算基础值将按同题疲劳折算（先发抢先再发深度总加成低于单发深度）`;
+    } else if (pk) {
+      topicLine += `\n该题材本周首次公开合成，上版按满额基础值计入（仍受版面其它乘数影响）。`;
+    }
+    return `${recipeLabel(recipe)}\n素材：${names}\n预计成功率：${(successRate * 100).toFixed(1)}%\n${valid ? "配方合法，可执行合成。" : "配方不合法，请调整素材组合。"}\n当前失实风险：${state.synthPollution}${topicLine}`;
   }
 
   function consumeCards(ids) {
@@ -2414,6 +2439,37 @@
       .map((t) => (remove.has(t.id) ? { ...t, durability: t.durability - 1 } : t))
       .filter((t) => t.durability > 0);
     state.tipOffCards = state.tipOffCards.filter((c) => !remove.has(c.id));
+  }
+
+  /** 公开报道合成：只消耗情报、爆料、工具；现象与认知保留 */
+  function consumePublicSynthMaterials(cards) {
+    const ids = [];
+    for (const c of cards) {
+      if (c.kind === "intel" || c.kind === "tipoff") ids.push(c.id);
+      if (c.kind === "tool") ids.push(c.id);
+    }
+    consumeCards(ids);
+  }
+
+  const TOPIC_REPEAT_BASE_MULT = 0.72;
+  const TOPIC_DEEP_NOT_FIRST_MULT = 0.9;
+
+  function shortTopicLabel(topicKey) {
+    if (!topicKey) return "";
+    return topicKey.startsWith("topic_") ? `#${topicKey.slice(6)}` : topicKey;
+  }
+
+  /** 报刊结算用：同题材第 2 篇起打折，深度/专栏/爆炸再叠乘 */
+  function effectiveStoryBase(story) {
+    if (!story) return 0;
+    const intrinsic = story.intrinsicBaseValue != null ? story.intrinsicBaseValue : story.baseValue;
+    if (!story.fromExplore || !story.primaryTopicKey) return intrinsic;
+    const order = story.synthTopicOrder || 0;
+    if (order <= 0) return intrinsic;
+    let m = 1;
+    if (order >= 2) m *= TOPIC_REPEAT_BASE_MULT;
+    if (order >= 2 && (story.recipeType === "r2" || story.recipeType === "r3" || story.recipeType === "r4")) m *= TOPIC_DEEP_NOT_FIRST_MULT;
+    return Math.max(1, Math.round(intrinsic * m));
   }
 
   function synthToStory(recipe, cards) {
@@ -2448,12 +2504,20 @@
       recipe === "r2" ? "深度报道" : recipe === "r3" ? "个人专栏" : recipe === "r4" ? "爆炸性新闻" : "抢先快讯";
     const titleSeed = substance[0] || cards[0];
     const title = `${titlePrefix}：${titleSeed?.name?.replace("样本", "").replace("相关情报", "") || buildNewsTitle(tags)}`;
+    const substanceForTopic = cards.filter((c) => c.kind !== "tipoff" && c.kind !== "tool");
+    const topicKeys = [...new Set(substanceForTopic.map((c) => c.topicKey).filter(Boolean))];
+    const phenCard = substanceForTopic.find((c) => c.kind === "phenomenon");
+    const primaryTopicKey = phenCard?.topicKey || substanceForTopic.find((c) => c.topicKey)?.topicKey || null;
     return {
       id: state.nextStoryId++,
       title,
       tags,
       quality: q.key,
       baseValue: q.value,
+      intrinsicBaseValue: q.value,
+      primaryTopicKey,
+      topicKeys,
+      synthTopicOrder: null,
       negatives,
       fromExplore: true,
       attrs: { sensational, credibility, mystery: mysteryScore, gaze },
@@ -2476,6 +2540,10 @@
     el.synInventory.innerHTML = list
       .map((c) => {
         const placed = isCardPlacedInSynth(c.id);
+        const topicChip =
+          c.topicKey && (c.kind === "phenomenon" || c.kind === "intel" || c.kind === "cognition")
+            ? `<span class="syn-badge">题材${shortTopicLabel(c.topicKey)}</span>`
+            : "";
         const badge =
           c.kind === "tool"
             ? `<span class="syn-badge">耐久 ${c.durability}</span><span class="syn-badge">加成 +${c.bonus}%</span>`
@@ -2486,7 +2554,7 @@
                 : `<span class="syn-badge">证据 ${c.evidenceValue || 0}</span>`;
         return `<div class="syn-item syn-item-draggable${placed ? " syn-item-slotted" : ""}" draggable="true" data-card="${c.id}" data-kind="${c.kind}" title="拖到右侧卡槽">
           <strong>${escapeHtml(c.name)}</strong>
-          <div class="syn-badges"><span class="syn-badge">${c.kind}</span>${badge}</div>
+          <div class="syn-badges"><span class="syn-badge">${c.kind}</span>${topicChip}${badge}</div>
           ${placed ? `<div class="syn-slotted-hint">已在槽位</div>` : ""}
         </div>`;
       })
@@ -2571,18 +2639,32 @@
       return;
     }
     el.synReports.innerHTML = state.craftedReports
-      .map((r) => `<div class="syn-report">
+      .map((r) => {
+        const pk = r.primaryTopicKey;
+        const ord = r.synthTopicOrder;
+        const topicLine =
+          pk && ord
+            ? `<span class="syn-badge">题材${shortTopicLabel(pk)}</span><span class="syn-badge">本周公开第${ord}篇</span>`
+            : pk
+              ? `<span class="syn-badge">题材${shortTopicLabel(pk)}</span>`
+              : "";
+        const eff = effectiveStoryBase(r);
+        const intr = r.intrinsicBaseValue != null ? r.intrinsicBaseValue : r.baseValue;
+        const effLine = intr !== eff ? `<span class="syn-badge">上版有效基础 ${eff}</span>` : `<span class="syn-badge">基础 ${intr}</span>`;
+        return `<div class="syn-report">
         <strong>${escapeHtml(r.title)}</strong>
         <div class="syn-badges" style="margin-top:4px;">
+          ${topicLine}
           <span class="syn-badge">类型 ${r.recipeType}</span>
           <span class="syn-badge">质量 ${r.quality}</span>
-          <span class="syn-badge">基础值 ${r.baseValue}</span>
+          ${effLine}
           <span class="syn-badge">轰动 ${r.attrs.sensational}</span>
           <span class="syn-badge">可信 ${r.attrs.credibility}</span>
           <span class="syn-badge">神秘 ${r.attrs.mystery}</span>
           <span class="syn-badge">诡视 ${r.attrs.gaze}</span>
         </div>
-      </div>`)
+      </div>`;
+      })
       .join("");
   }
 
@@ -2594,9 +2676,9 @@
     if (el.synthesisHint) {
       if (state.synthRecipe === "internal") {
         el.synthesisHint.textContent =
-          "蓝色为编辑部内审（非公开）：定调消耗现象牌，生成认知牌。爆料卡仅「爆炸性新闻」需要，探索结束进入合成台时可能发放，不可由合成产生。";
+          "蓝色为编辑部内审（非公开）：不消耗现象牌，生成与现象同题材的认知牌。爆料卡仅「爆炸性新闻」需要；公开报道侧情报为消耗性材料。";
       } else {
-        el.synthesisHint.textContent = `配方说明：${recipeLabel(state.synthRecipe)}。红色必要槽、金色虚线工具（可选）；爆炸性新闻另需红色槽旁的爆料卡槽。本周线索 ${state.pendingClues.length} 条，已合成报道 ${state.craftedReports.length} 条。`;
+        el.synthesisHint.textContent = `配方说明：${recipeLabel(state.synthRecipe)}。现象与认知可反复用于公开报道；情报为材料每次合成会消耗。爆料与工具按原规则。同题材本周多篇公开稿上版时报纸结算基础值递减。`;
       }
     }
     const craftBtn = document.getElementById("craftBtn");
@@ -2622,10 +2704,10 @@
       sourceType: phen.domain,
       credibilityBonus: phen.evidenceValue > 60 ? 16 : 10,
       mysteryBonus: phen.mysteryBias > 55 ? 16 : 8,
+      topicKey: phen.topicKey || null,
     };
     state.cognitionCards.push(newCog);
-    state.phenomenonCards = state.phenomenonCards.filter((c) => c.id !== phen.id);
-    log(`内审定调完成：获得认知牌「${newCog.name}」（Lv.${newCog.level}）。`);
+    log(`内审定调完成：获得认知牌「${newCog.name}」（Lv.${newCog.level}），现象牌仍保留。`);
   }
 
   function craftReport() {
@@ -2651,8 +2733,7 @@
     const toolBonus = cards.filter((c) => c.kind === "tool").reduce((a, b) => a + b.bonus, 0);
     const successRate = clamp(recipeBaseSuccess(recipe) + toolBonus / 100 - Math.max(0, cards.length - 3) * 0.05, 0.15, 0.95);
     if (Math.random() > successRate) {
-      const toConsume = cards.slice(1).map((c) => c.id);
-      consumeCards(toConsume);
+      consumePublicSynthMaterials(cards);
       initSynthSlotsForRecipe(recipe);
       state.synthPollution += recipe === "r4" ? 5 : recipe === "r3" ? 2 : 0;
       log(`合成失败：${recipeLabel(recipe)}（成功率 ${(successRate * 100).toFixed(1)}%）。`);
@@ -2660,9 +2741,14 @@
       return;
     }
     const story = synthToStory(recipe, cards);
+    if (story.primaryTopicKey) {
+      state.topicSynthOrder[story.primaryTopicKey] = (state.topicSynthOrder[story.primaryTopicKey] || 0) + 1;
+      story.synthTopicOrder = state.topicSynthOrder[story.primaryTopicKey];
+    } else {
+      story.synthTopicOrder = null;
+    }
     state.craftedReports.push(story);
-    const consumeIds = cards.map((c) => c.id);
-    consumeCards(consumeIds);
+    consumePublicSynthMaterials(cards);
     initSynthSlotsForRecipe(recipe);
     if (recipe === "r3") state.synthPollution += 4;
     if (recipe === "r4") state.synthPollution += 10;
@@ -2803,7 +2889,13 @@
   function calculate(isSettle) {
     const placed = getAllPlaced();
     const emptySlots = slots.length - placed.length;
-    const totalBaseValue = placed.reduce((acc, x) => acc + x.story.baseValue, 0);
+    let sumIntrinsicBase = 0;
+    const totalBaseValue = placed.reduce((acc, x) => {
+      const s = x.story;
+      sumIntrinsicBase += s.intrinsicBaseValue != null ? s.intrinsicBaseValue : s.baseValue;
+      return acc + effectiveStoryBase(s);
+    }, 0);
+    const topicFatigueLoss = Math.max(0, Math.round(sumIntrinsicBase - totalBaseValue));
     const allTags = placed.flatMap((x) => x.story.tags);
     const uniqueTags = new Set(allTags).size;
     const negPenaltyPoints = placed.reduce((acc, x) => acc + x.story.negatives.length, 0);
@@ -2866,6 +2958,8 @@
       placedCount: placed.length,
       emptySlots,
       totalBaseValue,
+      sumIntrinsicBase,
+      topicFatigueLoss,
       uniqueTags,
       comboRaw,
       publicRatio,
@@ -2939,13 +3033,21 @@
         ? `<span class="nm-chip" style="color:#fca5a5">负面:${story.negatives.join("/")}</span>`
         : `<span class="nm-chip">负面:无</span>`;
       const ex = story.fromExplore ? `<span class="nm-chip ex">探索稿</span>` : "";
+      const effB = effectiveStoryBase(story);
+      const intrB = story.intrinsicBaseValue != null ? story.intrinsicBaseValue : story.baseValue;
+      const baseChip =
+        story.fromExplore && story.primaryTopicKey
+          ? `<span class="nm-chip">上版有效基础:${effB}${intrB !== effB ? `（稿内${intrB}）` : ""}</span><span class="nm-chip">题材${shortTopicLabel(story.primaryTopicKey)}</span>${
+              story.synthTopicOrder ? `<span class="nm-chip">本周稿序${story.synthTopicOrder}</span>` : ""
+            }`
+          : `<span class="nm-chip">基础值:${story.baseValue}</span>`;
       card.innerHTML = `
         <div class="nm-story-title">${escapeHtml(story.title)}</div>
         <div class="nm-chips">
           ${ex}
           <span class="nm-chip">标签:${story.tags.map(toZhTag).join(" / ")}</span>
           <span class="nm-chip">质量:${story.quality}</span>
-          <span class="nm-chip">基础值:${story.baseValue}</span>
+          ${baseChip}
           ${negatives}
         </div>`;
       const tip = document.createElement("div");
@@ -3188,7 +3290,8 @@
       <div class="k">连携题材</div><div class="v ${effects.linked.length ? "nm-ok" : "nm-warn"}">${effects.linked.length ? effects.linked.map(toZhTag).join("、") : "无"}</div>
       <div class="k">三轴 P/M/L</div><div class="v ${effects.dominantRatio > 0.7 ? "nm-bad" : "nm-ok"}">${Math.round(effects.publicRatio * 100)}/${Math.round(effects.massRatio * 100)}/${Math.round(effects.lightRatio * 100)}%</div>
       <div class="k">预计需求</div><div class="v">${Math.round(r.demand).toLocaleString("zh-CN")}</div>
-      <div class="k">订阅基数</div><div class="v">${state.subscribers.toLocaleString("zh-CN")}</div>`;
+      <div class="k">订阅基数</div><div class="v">${state.subscribers.toLocaleString("zh-CN")}</div>
+      <div class="k">有效基础（版内）</div><div class="v">${r.totalBaseValue}${r.topicFatigueLoss > 0 ? ` <span style="color:#fca5a5">−${r.topicFatigueLoss}同题</span>` : ""}</div>`;
   }
 
   function settlePaper() {
@@ -3210,7 +3313,8 @@
         <div class="k">实际销量</div><div class="v">${r.sold.toLocaleString("zh-CN")}</div>
         <div class="k">订阅（下期）</div><div class="v">${r.nextSubs.toLocaleString("zh-CN")}</div>
       </div>
-      <div class="nm-tip">乘数：质量 ${r.multipliers.mQuality.toFixed(2)} / 重复 ${r.multipliers.mCombo.toFixed(2)} / 多样性 ${r.multipliers.mDiversity.toFixed(2)} / 版位 ${r.multipliers.mLayout.toFixed(2)} / 偏科 ${r.multipliers.mBias.toFixed(2)}</div>`;
+      <div class="nm-tip">乘数：质量 ${r.multipliers.mQuality.toFixed(2)} / 重复 ${r.multipliers.mCombo.toFixed(2)} / 多样性 ${r.multipliers.mDiversity.toFixed(2)} / 版位 ${r.multipliers.mLayout.toFixed(2)} / 偏科 ${r.multipliers.mBias.toFixed(2)}</div>
+      <div class="nm-tip" style="margin-top:6px;">同题报道：稿内基础合计 ${r.sumIntrinsicBase} → 上版有效合计 ${r.totalBaseValue}${r.topicFatigueLoss > 0 ? `（同题疲劳折损 ${r.topicFatigueLoss} 点基础值）` : "（无同题折损）"}</div>`;
     renderLiveStats();
     document.getElementById("summaryText").innerHTML = `
       第 <strong>${state.week}</strong> 周报刊已结算：净利润 <strong>${fmtMoney(r.profit)}</strong>，
@@ -3234,6 +3338,7 @@
     state.dayResolutionInfo = null;
     state.pendingClues = [];
     state.pendingReports = [];
+    state.topicSynthOrder = {};
     cleanupWeekScopedEffects();
     initRegionLeadEvents();
     state.phase = "explore";
@@ -3363,28 +3468,35 @@
   document.getElementById("btnNextDay").onclick = () => advanceOneDay();
 
   function createPaperLabReports() {
-    const mk = (title, tags, quality, baseValue, negatives, attrs, recipeType) => ({
-      id: state.nextStoryId++,
-      title,
-      tags,
-      quality,
-      baseValue,
-      negatives,
-      fromExplore: true,
-      attrs,
-      recipeType,
-    });
+    const mk = (title, tags, quality, baseValue, negatives, attrs, recipeType, labTopicIdx) => {
+      const pk = `topic_paperlab_${labTopicIdx}`;
+      return {
+        id: state.nextStoryId++,
+        title,
+        tags,
+        quality,
+        baseValue,
+        intrinsicBaseValue: baseValue,
+        primaryTopicKey: pk,
+        topicKeys: [pk],
+        synthTopicOrder: 1,
+        negatives,
+        fromExplore: true,
+        attrs,
+        recipeType,
+      };
+    };
     return [
-      mk("塔夫脱辞去大法官职务：历史性领导层更迭", ["Politics", "Economy"], "Gold", 450, [], { sensational: 64, credibility: 88, mystery: 28, gaze: 18 }, "r2"),
-      mk("港务局夜间封锁：三号码头出现异常回波", ["Military", "Gossip"], "Silver", 300, ["thin_source"], { sensational: 72, credibility: 55, mystery: 52, gaze: 34 }, "r1"),
-      mk("东区剧院失踪档案重现：署名来自未来日期", ["Gossip", "Humor"], "Silver", 300, [], { sensational: 76, credibility: 48, mystery: 67, gaze: 46 }, "r3"),
-      mk("市政预算暗线曝光：采购名单出现重复身份", ["Politics", "Shopping"], "Gold", 450, ["bias_overreach"], { sensational: 68, credibility: 79, mystery: 35, gaze: 24 }, "r2"),
-      mk("复活节岛热异常追踪：石像群温差超出历史记录", ["Economy", "Sport"], "Silver", 300, [], { sensational: 58, credibility: 74, mystery: 44, gaze: 23 }, "r1"),
-      mk("夜班电台误播神秘频段：听众报告同频耳鸣", ["Gossip", "Pets"], "Bronze", 150, ["sloppy_writing"], { sensational: 70, credibility: 38, mystery: 62, gaze: 41 }, "r3"),
-      mk("法庭速记员匿名口供：判词在宣读前已泄露", ["Politics", "Military"], "Gold", 450, [], { sensational: 66, credibility: 86, mystery: 31, gaze: 20 }, "r2"),
-      mk("雨夜轨道尽头的白灯：巡检员口供互相矛盾", ["Sport", "Humor"], "Bronze", 150, ["fabrication"], { sensational: 81, credibility: 27, mystery: 71, gaze: 52 }, "r4"),
-      mk("联邦仓库短时断电：监控画面出现空白帧", ["Economy", "Gossip"], "Silver", 300, [], { sensational: 63, credibility: 66, mystery: 49, gaze: 29 }, "r1"),
-      mk("午夜来信附带金属碎片：材质与军标不匹配", ["Military", "Shopping"], "Silver", 300, ["thin_source"], { sensational: 74, credibility: 52, mystery: 59, gaze: 37 }, "r3"),
+      mk("塔夫脱辞去大法官职务：历史性领导层更迭", ["Politics", "Economy"], "Gold", 450, [], { sensational: 64, credibility: 88, mystery: 28, gaze: 18 }, "r2", 0),
+      mk("港务局夜间封锁：三号码头出现异常回波", ["Military", "Gossip"], "Silver", 300, ["thin_source"], { sensational: 72, credibility: 55, mystery: 52, gaze: 34 }, "r1", 1),
+      mk("东区剧院失踪档案重现：署名来自未来日期", ["Gossip", "Humor"], "Silver", 300, [], { sensational: 76, credibility: 48, mystery: 67, gaze: 46 }, "r3", 2),
+      mk("市政预算暗线曝光：采购名单出现重复身份", ["Politics", "Shopping"], "Gold", 450, ["bias_overreach"], { sensational: 68, credibility: 79, mystery: 35, gaze: 24 }, "r2", 3),
+      mk("复活节岛热异常追踪：石像群温差超出历史记录", ["Economy", "Sport"], "Silver", 300, [], { sensational: 58, credibility: 74, mystery: 44, gaze: 23 }, "r1", 4),
+      mk("夜班电台误播神秘频段：听众报告同频耳鸣", ["Gossip", "Pets"], "Bronze", 150, ["sloppy_writing"], { sensational: 70, credibility: 38, mystery: 62, gaze: 41 }, "r3", 5),
+      mk("法庭速记员匿名口供：判词在宣读前已泄露", ["Politics", "Military"], "Gold", 450, [], { sensational: 66, credibility: 86, mystery: 31, gaze: 20 }, "r2", 6),
+      mk("雨夜轨道尽头的白灯：巡检员口供互相矛盾", ["Sport", "Humor"], "Bronze", 150, ["fabrication"], { sensational: 81, credibility: 27, mystery: 71, gaze: 52 }, "r4", 7),
+      mk("联邦仓库短时断电：监控画面出现空白帧", ["Economy", "Gossip"], "Silver", 300, [], { sensational: 63, credibility: 66, mystery: 49, gaze: 29 }, "r1", 8),
+      mk("午夜来信附带金属碎片：材质与军标不匹配", ["Military", "Shopping"], "Silver", 300, ["thin_source"], { sensational: 74, credibility: 52, mystery: 59, gaze: 37 }, "r3", 9),
     ];
   }
 
