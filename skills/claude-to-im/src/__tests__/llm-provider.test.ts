@@ -194,12 +194,22 @@ describe('history + attachment prompt helpers', () => {
   });
 
   it('extracts readable text from stored JSON message blocks', () => {
-    const normalized = normalizeStoredMessageContent(JSON.stringify([
-      { type: 'text', text: 'First line' },
-      { type: 'tool_result', content: 'Tool output' },
-    ]));
+    const previous = process.env.CTI_FEISHU_HIDE_TOOL_METADATA;
+    process.env.CTI_FEISHU_HIDE_TOOL_METADATA = 'true';
+    try {
+      const normalized = normalizeStoredMessageContent(JSON.stringify([
+        { type: 'text', text: 'First line' },
+        { type: 'tool_result', content: 'Tool output' },
+      ]));
 
-    assert.equal(normalized, 'First line\n\nTool output');
+      assert.equal(normalized, 'First line');
+    } finally {
+      if (previous === undefined) {
+        delete process.env.CTI_FEISHU_HIDE_TOOL_METADATA;
+      } else {
+        process.env.CTI_FEISHU_HIDE_TOOL_METADATA = previous;
+      }
+    }
   });
 
   it('builds history prelude with normalized user and assistant messages', () => {

@@ -277,6 +277,8 @@ theme_override_constants/separation = 12
 [node name="LibraryPanel" type="PanelContainer" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.1
+custom_minimum_size = Vector2(300, 0)
 
 [node name="LibraryVBox" type="VBoxContainer" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns/LibraryPanel"]
 layout_mode = 2
@@ -293,14 +295,18 @@ text = "拖拽稿件到版位。探索稿会优先保留其出处与题材。"
 [node name="StoryScroll" type="ScrollContainer" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns/LibraryPanel/LibraryVBox"]
 layout_mode = 2
 size_flags_vertical = 3
+horizontal_scroll_mode = 0
 
 [node name="StoryList" type="VBoxContainer" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns/LibraryPanel/LibraryVBox/StoryScroll"]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 8
 
 [node name="LayoutPanel" type="PanelContainer" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.2
+custom_minimum_size = Vector2(360, 0)
 
 [node name="LayoutVBox" type="VBoxContainer" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns/LayoutPanel"]
 layout_mode = 2
@@ -330,7 +336,9 @@ text = "结算本期"
 
 [node name="StatsPanel" type="PanelContainer" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns"]
 layout_mode = 2
-size_flags_horizontal = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.9
+custom_minimum_size = Vector2(240, 0)
 
 [node name="StatsVBox" type="VBoxContainer" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns/StatsPanel"]
 layout_mode = 2

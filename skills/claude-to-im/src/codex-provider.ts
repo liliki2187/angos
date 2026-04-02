@@ -14,6 +14,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 
+import { getBridgeContext } from 'claude-to-im/src/lib/bridge/context.js';
 import type { FileAttachment, LLMProvider, StreamChatParams } from 'claude-to-im/src/lib/bridge/host.js';
 import type { PendingPermissions } from './permission-gateway.js';
 import { sseEvent } from './sse-utils.js';
@@ -40,6 +41,14 @@ function formatAttachmentSize(size: number): string {
 
 function isImageFile(file: FileAttachment): boolean {
   return file.type.startsWith('image/');
+}
+
+function shouldHideToolMetadata(): boolean {
+  try {
+    return getBridgeContext().store.getSetting('bridge_feishu_hide_tool_metadata') === 'true';
+  } catch {
+    return process.env.CTI_FEISHU_HIDE_TOOL_METADATA === 'true';
+  }
 }
 
 export function normalizeStoredMessageContent(content: string): string {
@@ -69,7 +78,7 @@ export function normalizeStoredMessageContent(content: string): string {
     const parsed = JSON.parse(text) as Array<{ type?: string; text?: string; content?: string }>;
     if (Array.isArray(parsed)) {
       const textBlocks = parsed
-        .filter((block) => block && (block.type === 'text' || block.type === 'tool_result'))
+        .filter((block) => block && (block.type === 'text' || (!shouldHideToolMetadata() && block.type === 'tool_result')))
         .map((block) => (block.type === 'text' ? block.text : block.content) || '')
         .filter(Boolean);
       if (textBlocks.length > 0) {

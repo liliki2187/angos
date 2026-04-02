@@ -16,7 +16,6 @@ import type { BaseChannelAdapter } from 'claude-to-im/src/lib/bridge/channel-ada
 import { registerAdapterFactory } from 'claude-to-im/src/lib/bridge/channel-adapter.js';
 import { FeishuAdapter as UpstreamFeishuAdapter } from 'claude-to-im/src/lib/bridge/adapters/feishu-adapter.js';
 import {
-  buildCardContent,
   buildPostContent,
   hasComplexMarkdown,
   htmlToFeishuMarkdown,
@@ -129,6 +128,86 @@ function formatAttachmentSize(size: number): string {
   if (size >= 1024 * 1024) return `${(size / (1024 * 1024)).toFixed(1)} MB`;
   if (size >= 1024) return `${(size / 1024).toFixed(1)} KB`;
   return `${size} B`;
+}
+
+function normalizeFeishuMarkdownLayout(text: string): string {
+  return text
+    .replace(/\r\n/g, '\n')
+    .replace(/[ \t]+\n/g, '\n')
+    .replace(/([^\n])(\n#{1,6}\s)/g, '$1\n$2')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+function splitFeishuCardSections(text: string): string[] {
+  const sections: string[] = [];
+  const lines = text.split('\n');
+  const buffer: string[] = [];
+  let inFence = false;
+
+  const flush = () => {
+    const section = buffer.join('\n').trim();
+    buffer.length = 0;
+    if (section) {
+      sections.push(section);
+    }
+  };
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith('```')) {
+      if (!inFence && buffer.length > 0) {
+        flush();
+      }
+      buffer.push(line);
+      inFence = !inFence;
+      if (!inFence) {
+        flush();
+      }
+      continue;
+    }
+
+    if (!inFence && /^#{1,6}\s/.test(trimmed) && buffer.length > 0) {
+      flush();
+    }
+
+    if (!inFence && trimmed === '') {
+      flush();
+      continue;
+    }
+
+    buffer.push(line);
+  }
+
+  flush();
+  return sections;
+}
+
+export function buildReadableFeishuCardContent(text: string): string {
+  const content = normalizeFeishuMarkdownLayout(text);
+  const sections = splitFeishuCardSections(content);
+  return JSON.stringify({
+    schema: '2.0',
+    config: {
+      wide_screen_mode: true,
+    },
+    body: {
+      elements: (sections.length > 0 ? sections : [content]).map((section) => ({
+        tag: 'markdown',
+        content: section,
+      })),
+    },
+  });
+}
+
+export function shouldPreferFeishuCard(text: string): boolean {
+  if (hasComplexMarkdown(text)) return true;
+  if (/^#{1,6}\s/m.test(text)) return true;
+  if (/^>\s/m.test(text)) return true;
+  if (/^[-*+]\s/m.test(text)) return true;
+  if (/^\d+\.\s/m.test(text)) return true;
+  if (/\n\s*\n/.test(text) && text.length > 120) return true;
+  return false;
 }
 
 function longestCommonPrefixLength(a: string, b: string): number {
@@ -257,6 +336,14 @@ export class FeishuAdapter extends BaseFeishuAdapter {
   private previewStates = new Map<string, FeishuPreviewState>();
   private taskStates = new Map<string, FeishuTaskState>();
   private recentSends = new Map<string, FeishuRecentSend>();
+
+  private forceCardReplies(): boolean {
+    try {
+      return getBridgeContext().store.getSetting('bridge_feishu_force_card') === 'true';
+    } catch {
+      return process.env.CTI_FEISHU_FORCE_CARD === 'true';
+    }
+  }
 
   async handleIncomingEvent(data: FeishuMessageEventData): Promise<void> {
     try {
@@ -465,6 +552,9 @@ export class FeishuAdapter extends BaseFeishuAdapter {
   }
 
   getPreviewCapabilities(_chatId: string): PreviewCapabilities | null {
+    if (this.forceCardReplies()) {
+      return null;
+    }
     return { supported: true, privateOnly: false };
   }
 
@@ -943,7 +1033,7 @@ export class FeishuAdapter extends BaseFeishuAdapter {
   }
 
   private async sendAsCard(chatId: string, text: string, replyToMessageId?: string): Promise<SendResult> {
-    const cardContent = buildCardContent(text);
+    const cardContent = buildReadableFeishuCardContent(text);
     const result = await this.sendPayload(chatId, 'interactive', cardContent, replyToMessageId);
     if (result.ok) {
       return result;
@@ -1037,6 +1127,10 @@ export class FeishuAdapter extends BaseFeishuAdapter {
       text = preprocessFeishuMarkdown(text);
     }
 
+    if (message.parseMode !== 'plain') {
+      text = normalizeFeishuMarkdownLayout(text);
+    }
+
     if (message.inlineButtons && message.inlineButtons.length > 0) {
       return this.sendPermissionCard(chatId, text, message.inlineButtons, message.replyToMessageId);
     }
@@ -1045,7 +1139,11 @@ export class FeishuAdapter extends BaseFeishuAdapter {
       return this.sendAsText(chatId, text, message.replyToMessageId);
     }
 
-    if (hasComplexMarkdown(text)) {
+    if (this.forceCardReplies()) {
+      return this.sendAsCard(chatId, text, message.replyToMessageId);
+    }
+
+    if (shouldPreferFeishuCard(text)) {
       return this.sendAsCard(chatId, text, message.replyToMessageId);
     }
 

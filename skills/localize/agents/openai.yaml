@@ -1,0 +1,4 @@
+interface:
+  display_name: "Localize"
+  short_description: "Run the localization workflow: extract strings, validate localization readiness, check for hardcoded text, and generate translation-ready string tables."
+  default_prompt: "Use $localize to run the Localize workflow in this Codex project."

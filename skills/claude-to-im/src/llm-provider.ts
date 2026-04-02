@@ -9,6 +9,7 @@ import fs from 'node:fs';
 import { execSync } from 'node:child_process';
 import { query } from '@anthropic-ai/claude-agent-sdk';
 import type { SDKMessage, PermissionResult } from '@anthropic-ai/claude-agent-sdk';
+import { getBridgeContext } from 'claude-to-im/src/lib/bridge/context.js';
 import type { LLMProvider, StreamChatParams, FileAttachment } from 'claude-to-im/src/lib/bridge/host.js';
 import type { PendingPermissions } from './permission-gateway.js';
 
@@ -87,6 +88,14 @@ const NON_CLAUDE_MODEL_RE = /^(gpt-|o[1-9][-_]|codex[-_]|davinci|text-|openai\/)
 /** Return true if a model name clearly belongs to a non-Claude provider. */
 export function isNonClaudeModel(model?: string): boolean {
   return !!model && NON_CLAUDE_MODEL_RE.test(model);
+}
+
+function shouldHideToolMetadata(): boolean {
+  try {
+    return getBridgeContext().store.getSetting('bridge_feishu_hide_tool_metadata') === 'true';
+  } catch {
+    return process.env.CTI_FEISHU_HIDE_TOOL_METADATA === 'true';
+  }
 }
 
 function shouldRetryFreshSession(message: string): boolean {
@@ -410,7 +419,7 @@ export function normalizeStoredMessageContent(content: string): string {
     const parsed = JSON.parse(text) as Array<{ type?: string; text?: string; content?: string }>;
     if (Array.isArray(parsed)) {
       const textBlocks = parsed
-        .filter((block) => block && (block.type === 'text' || block.type === 'tool_result'))
+        .filter((block) => block && (block.type === 'text' || (!shouldHideToolMetadata() && block.type === 'tool_result')))
         .map((block) => (block.type === 'text' ? block.text : block.content) || '')
         .filter(Boolean);
       if (textBlocks.length > 0) {

@@ -5,6 +5,7 @@ import { getBridgeContext } from 'claude-to-im/src/lib/bridge/context.js';
 import type { FileAttachment } from 'claude-to-im/src/lib/bridge/host.js';
 import type { ChannelBinding } from 'claude-to-im/src/lib/bridge/types.js';
 import { CTI_HOME } from './config.js';
+import { atomicWrite, ensureDir } from './file-utils.js';
 
 const CACHE_DIR = path.join(CTI_HOME, 'data', 'feishu-history-cache');
 const DEFAULT_LOOKBACK_HOURS = 48;
@@ -76,16 +77,6 @@ function getMaxMessages(): number {
 
 function getMaxImageBytes(): number {
   return parsePositiveInt(process.env.CTI_FEISHU_HISTORY_MAX_IMAGE_MB, DEFAULT_MAX_IMAGE_DOWNLOAD_MB) * 1024 * 1024;
-}
-
-function ensureDir(dir: string): void {
-  fs.mkdirSync(dir, { recursive: true });
-}
-
-function atomicWrite(filePath: string, data: string): void {
-  const tmp = `${filePath}.tmp`;
-  fs.writeFileSync(tmp, data, 'utf-8');
-  fs.renameSync(tmp, filePath);
 }
 
 function getCacheFile(sessionId: string): string {

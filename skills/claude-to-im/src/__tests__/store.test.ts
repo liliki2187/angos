@@ -317,6 +317,37 @@ describe('JsonFileStore', () => {
 
   // ── SDK Session ──
 
+  it('setChannelOffset falls back when rename is blocked', () => {
+    const store = new JsonFileStore(makeSettings());
+    const offsetsPath = path.join(DATA_DIR, 'offsets.json');
+    const originalRenameSync = fs.renameSync;
+
+    fs.renameSync = ((oldPath: fs.PathLike, newPath: fs.PathLike) => {
+      if (String(newPath) === offsetsPath) {
+        const error = new Error('rename blocked') as NodeJS.ErrnoException;
+        error.code = 'EPERM';
+        throw error;
+      }
+      return originalRenameSync(oldPath, newPath);
+    }) as typeof fs.renameSync;
+
+    try {
+      store.setChannelOffset('tg:offset', '12345');
+    } finally {
+      fs.renameSync = originalRenameSync;
+    }
+
+    assert.equal(store.getChannelOffset('tg:offset'), '12345');
+    assert.deepEqual(
+      JSON.parse(fs.readFileSync(offsetsPath, 'utf-8')) as Record<string, string>,
+      { 'tg:offset': '12345' },
+    );
+    assert.equal(
+      fs.readdirSync(DATA_DIR).some((entry) => /^offsets\.json\..+\.tmp$/.test(entry)),
+      false,
+    );
+  });
+
   it('updateSdkSessionId updates session and bindings', () => {
     const store = new JsonFileStore(makeSettings());
     const session = store.createSession('test', 'model', undefined, '/tmp');

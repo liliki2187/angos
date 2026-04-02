@@ -906,7 +906,8 @@ func _style_button(button: Button, emphasis: bool) -> void:
 
 func _clear_container(node: Node) -> void:
 	for child in node.get_children():
-		child.free()
+		node.remove_child(child)
+		child.queue_free()
 
 func _add_log(text: String) -> void:
 	log_entries.append(text)

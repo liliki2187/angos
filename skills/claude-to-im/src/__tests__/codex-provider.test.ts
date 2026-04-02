@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildPromptText, buildThreadOptions } from '../codex-provider.js';
+import { buildPromptText, buildThreadOptions, normalizeStoredMessageContent } from '../codex-provider.js';
 
 // ── SSE utils tests ─────────────────────────────────────────
 
@@ -244,6 +244,25 @@ describe('CodexProvider', () => {
     });
 
     assert.equal(chunks.length, 0);
+  });
+
+  it('drops tool_result blocks from stored assistant history normalization', () => {
+    const previous = process.env.CTI_FEISHU_HIDE_TOOL_METADATA;
+    process.env.CTI_FEISHU_HIDE_TOOL_METADATA = 'true';
+    try {
+      const normalized = normalizeStoredMessageContent(JSON.stringify([
+        { type: 'text', text: 'Final answer' },
+        { type: 'tool_result', content: 'Read src/main.ts' },
+      ]));
+
+      assert.equal(normalized, 'Final answer');
+    } finally {
+      if (previous === undefined) {
+        delete process.env.CTI_FEISHU_HIDE_TOOL_METADATA;
+      } else {
+        process.env.CTI_FEISHU_HIDE_TOOL_METADATA = previous;
+      }
+    }
   });
 
   it('does not pass model by default and skips stale Claude resume id', async () => {

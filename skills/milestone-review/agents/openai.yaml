@@ -1,0 +1,4 @@
+interface:
+  display_name: "Milestone Review"
+  short_description: "Generates a comprehensive milestone progress review including feature completeness, quality metrics, risk assessment, and go/no-go recommendation. Use at milestone checkpoints or when evaluating readiness for a milestone deadline."
+  default_prompt: "Use $milestone-review to run the Milestone Review workflow in this Codex project."

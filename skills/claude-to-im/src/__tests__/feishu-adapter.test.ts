@@ -9,6 +9,7 @@ import { initBridgeContext } from 'claude-to-im/src/lib/bridge/context.js';
 import { JsonFileStore } from '../store.js';
 import {
   FeishuAdapter,
+  buildReadableFeishuCardContent,
   buildBusyMentionPostContent,
   buildStoredInboundContent,
   computeBackfillWindow,
@@ -16,20 +17,22 @@ import {
   computeFeishuPreviewDelta,
   isFeishuClearCommandText,
   isFeishuStopCommandText,
+  shouldPreferFeishuCard,
 } from '../feishu-adapter.js';
 import { CTI_HOME } from '../config.js';
 
-function makeSettings(): Map<string, string> {
+function makeSettings(extra: Array<[string, string]> = []): Map<string, string> {
   return new Map([
     ['remote_bridge_enabled', 'true'],
     ['bridge_feishu_enabled', 'true'],
     ['bridge_feishu_group_policy', 'open'],
     ['bridge_feishu_require_mention', 'true'],
+    ...extra,
   ]);
 }
 
-function initTestContext(): JsonFileStore {
-  const store = new JsonFileStore(makeSettings());
+function initTestContext(extra: Array<[string, string]> = []): JsonFileStore {
+  const store = new JsonFileStore(makeSettings(extra));
   initBridgeContext({
     store,
     llm: { streamChat: () => new ReadableStream<string>() },
@@ -718,6 +721,51 @@ describe('FeishuAdapter stop suppression', () => {
     assert.deepEqual(htmlResult, { ok: true, messageId: 'stop-notice-1' });
     assert.deepEqual(markdownResult, { ok: true, messageId: 'stop-notice-1' });
     assert.equal(calls.length, 0);
+  });
+});
+
+describe('Feishu formatting helpers', () => {
+  it('prefers cards for structured markdown replies', () => {
+    assert.equal(
+      shouldPreferFeishuCard('# Title\n\n- one\n- two\n\nParagraph'),
+      true,
+    );
+  });
+
+  it('builds segmented card content for better spacing', () => {
+    const card = JSON.parse(buildReadableFeishuCardContent('# Title\n\nFirst paragraph\n\n## Next\n\nSecond paragraph')) as {
+      body?: { elements?: Array<{ tag?: string; content?: string }> };
+    };
+    const elements = card.body?.elements ?? [];
+    assert.equal(elements.length, 4);
+    assert.deepEqual(
+      elements.map((element) => element.content),
+      ['# Title', 'First paragraph', '## Next', 'Second paragraph'],
+    );
+  });
+
+  it('disables preview and forces cards when the setting is enabled', async () => {
+    initTestContext([
+      ['bridge_feishu_force_card', 'true'],
+    ]);
+    const adapter = new FeishuAdapter();
+    const { client, calls } = makeMockRestClient();
+
+    (adapter as any).restClient = client;
+
+    assert.equal(adapter.getPreviewCapabilities('chat-card'), null);
+
+    const result = await adapter.send({
+      address: { channelType: 'feishu', chatId: 'chat-card' },
+      text: 'Plain paragraph\n\nSecond paragraph',
+      parseMode: 'Markdown',
+      replyToMessageId: 'incoming-card',
+    });
+
+    assert.equal(result.ok, true);
+    assert.equal(calls.length, 1);
+    const payload = calls[0].payload.data as { msg_type?: string };
+    assert.equal(payload.msg_type, 'interactive');
   });
 });
 

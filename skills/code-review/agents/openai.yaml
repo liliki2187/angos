@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Review"
+  short_description: "Performs an architectural and quality code review on a specified file or set of files. Checks for coding standard compliance, architectural pattern adherence, SOLID principles, testability, and performance concerns."
+  default_prompt: "Use $code-review to run the Code Review workflow in this Codex project."

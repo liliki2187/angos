@@ -1,0 +1,4 @@
+interface:
+  display_name: "SVG to PNG"
+  short_description: "Render a local SVG into a PNG image on Windows."
+  default_prompt: "Use $svg-to-png to convert a local SVG file into a PNG in this workspace."

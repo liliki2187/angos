@@ -13,8 +13,33 @@ Desktop.ini
 *.tmp
 ~$*
 
+# Local env
+.env.local
+
+# Codex / bridge local state
+.codepilot-uploads/
+.codex_tmp/
+.local/
+skills/.claude-to-im/config.env
+skills/.claude-to-im/data/
+skills/.claude-to-im/logs/
+skills/.claude-to-im/runtime/
+
+# Godot local cache / exports
+.godot/
+build/
+
+# Rendered previews / export artifacts
+artifacts/activity-wheel-eggy/
+artifacts/egg-riches-wheel/
+artifacts/Build-Windows-*/
+artifacts/gui-resource-layout/
+artifacts/reply-image-resources/
+artifacts/wireframes/
+
 # Optional: if you add Node later
 node_modules/
+skills/claude-to-im/dist/
 
 # MCP local (if any)
 mcps/

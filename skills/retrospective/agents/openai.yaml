@@ -1,0 +1,4 @@
+interface:
+  display_name: "Retrospective"
+  short_description: "Generates a sprint or milestone retrospective by analyzing completed work, velocity, blockers, and patterns. Produces actionable insights for the next iteration."
+  default_prompt: "Use $retrospective to run the Retrospective workflow in this Codex project."

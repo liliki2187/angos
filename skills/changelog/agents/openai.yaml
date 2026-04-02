@@ -1,0 +1,4 @@
+interface:
+  display_name: "Changelog"
+  short_description: "Auto-generates a changelog from git commits, sprint data, and design documents. Produces both internal and player-facing versions."
+  default_prompt: "Use $changelog to run the Changelog workflow in this Codex project."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reverse Document"
+  short_description: "Generate design or architecture documents from existing implementation. Works backwards from code/prototypes to create missing planning docs."
+  default_prompt: "Use $reverse-document to run the Reverse Document workflow in this Codex project."

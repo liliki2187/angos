@@ -56,8 +56,8 @@ Do not use generic praise. Tie each reason to an Angus system, screen, or art ta
 
 When the user asks to send selected images to Feishu:
 
-1. Use `feishu-send/scripts/send-feishu-image-post.mjs`.
-2. Send each selected image as its own message.
+1. Use `claude-to-im/scripts/send-feishu-images-post.mjs`.
+2. Prefer `--separate` so each selected image is its own message.
 3. Use a short title, usually one line naming the motif.
 4. Put the relevance reason in the caption, not as a separate dump.
 5. If one image was previously sent with bad text, resend that image cleanly instead of referencing the broken message.

@@ -1,0 +1,13 @@
+{
+	"meta_type":"image",
+	"version":1,
+	"texture_options":{
+		"srgb_mode":1
+	},
+	"slice_offset":{
+		"left":35.0,
+		"top":25.0,
+		"right":35.0,
+		"bottom":45.0
+	}
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Patch Notes"
+  short_description: "Generate player-facing patch notes from git history, sprint data, and internal changelogs. Translates developer language into clear, engaging player communication."
+  default_prompt: "Use $patch-notes to run the Patch Notes workflow in this Codex project."
