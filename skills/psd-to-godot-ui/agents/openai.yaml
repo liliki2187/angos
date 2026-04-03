@@ -1,0 +1,4 @@
+interface:
+  display_name: "PSD to Godot UI"
+  short_description: "Turn a PSD into a reusable Godot UI scene."
+  default_prompt: "Use $psd-to-godot-ui to convert a PSD into a reusable Godot UI scene bundle and report the generated paths."

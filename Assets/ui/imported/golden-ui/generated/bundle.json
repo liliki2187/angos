@@ -1,0 +1,10 @@
+{
+  "mode": "reusable",
+  "slug": "golden-ui",
+  "source_psd": "D:/vibeprojects/angus/angus/Assets/ui/imported/golden-ui/source/golden_ui.psd",
+  "generated_dir": "D:/vibeprojects/angus/angus/Assets/ui/imported/golden-ui/generated",
+  "scene_path": "D:/vibeprojects/angus/angus/scenes/ui/imported/GoldenUiUi.tscn",
+  "root_name": "GoldenUiUi",
+  "preview_png": "D:/vibeprojects/angus/angus/Assets/ui/imported/golden-ui/generated/preview/golden_ui_flat.png",
+  "manifest_path": "D:/vibeprojects/angus/angus/Assets/ui/imported/golden-ui/generated/manifest.json"
+}

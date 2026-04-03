@@ -28,14 +28,11 @@ skills/.claude-to-im/runtime/
 # Godot local cache / exports
 .godot/
 build/
+*.import
 
 # Rendered previews / export artifacts
-artifacts/activity-wheel-eggy/
-artifacts/egg-riches-wheel/
-artifacts/Build-Windows-*/
-artifacts/gui-resource-layout/
-artifacts/reply-image-resources/
-artifacts/wireframes/
+artifacts/
+image_gen/
 
 # Optional: if you add Node later
 node_modules/

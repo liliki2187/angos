@@ -1,0 +1,838 @@
+[gd_scene load_steps=60 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/items_copia.png" id="1_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/livello_1.png" id="2_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/message_box/base.png" id="3_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/message_box/icons/info.png" id="4_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/message_box/icons/error.png" id="5_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/message_box/icons/warning.png" id="6_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/message_box/icons/message.png" id="7_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/frame/base_separators.png" id="8_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/buttons/small.png" id="9_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/buttons/mid.png" id="10_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/buttons/big.png" id="11_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/radio_button/base.png" id="12_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/radio_button/fill.png" id="13_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/inputbox/base.png" id="14_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/listbox/base.png" id="15_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/cursors/standard.png" id="16_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/slider/vertical/base.png" id="17_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/slider/vertical/slider.png" id="18_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/slider/horizontal/base.png" id="19_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/slider/horizontal/slider.png" id="20_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/scrollbar/horizontal/base.png" id="21_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/scrollbar/horizontal/cursor.png" id="22_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/scrollbar/vertical/base.png" id="23_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/scrollbar/vertical/cursor.png" id="24_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/fillbar/base.png" id="25_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/fillbar/fill_red.png" id="26_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/fillbar/fill_green.png" id="27_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/fillbar/fill_blue.png" id="28_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/multi_fillbar/base.png" id="29_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/multi_fillbar/fill_red.png" id="30_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/multi_fillbar/fill_green.png" id="31_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/common/multi_fillbar/fill_blue.png" id="32_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/hud/hitbars_minimap.png" id="33_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/hud/bars.png" id="34_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/hud/action_icons.png" id="35_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/inventory/frame/base.png" id="36_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/inventory/frame/selected.png" id="37_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/inventory/frame/items.png" id="38_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/inventory/frame/description.png" id="39_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/inventory/frame/buttons.png" id="40_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/inventory/tabs/inactives.png" id="41_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/inventory/tabs/active.png" id="42_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/inventory/tabs/icons.png" id="43_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/inventory/title/base.png" id="44_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/inventory/title/quit.png" id="45_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/inventory/title/text.png" id="46_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/player/frame/base.png" id="47_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/player/frame/text.png" id="48_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/player/title/base.png" id="49_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/player/title/quit.png" id="50_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/player/title/text.png" id="51_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/menu/background.png" id="52_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/menu/banner.png" id="53_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/menu/play/base.png" id="54_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/menu/play/text.png" id="55_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/menu/options/base.png" id="56_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/menu/options/text.png" id="57_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/menu/quit/base.png" id="58_layer"]
+[ext_resource type="Texture2D" path="res://Assets/ui/imported/golden-ui/generated/layers/ui/menu/quit/text.png" id="59_layer"]
+
+[node name="GoldenUiUi" type="Control"]
+layout_mode = 0
+offset_right = 606.0
+offset_bottom = 744.0
+mouse_filter = 2
+
+[node name="items_copia" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 343.0
+offset_right = 414.0
+offset_bottom = 738.0
+mouse_filter = 2
+texture = ExtResource("1_layer")
+
+[node name="livello_1" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 606.0
+offset_bottom = 332.0
+mouse_filter = 2
+texture = ExtResource("2_layer")
+
+[node name="ui" type="Control" parent="."]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 592.0
+offset_bottom = 322.0
+mouse_filter = 2
+
+[node name="common" type="Control" parent="ui"]
+layout_mode = 0
+offset_left = 276.0
+offset_top = 4.0
+offset_right = 580.0
+offset_bottom = 173.0
+mouse_filter = 2
+
+[node name="message_box" type="Control" parent="ui/common"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 244.0
+offset_bottom = 63.0
+mouse_filter = 2
+
+[node name="base" type="TextureRect" parent="ui/common/message_box"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 244.0
+offset_bottom = 63.0
+mouse_filter = 2
+texture = ExtResource("3_layer")
+
+[node name="icons" type="Control" parent="ui/common/message_box"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 202.0
+offset_bottom = 56.0
+mouse_filter = 2
+
+[node name="info" type="TextureRect" parent="ui/common/message_box/icons"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 50.0
+offset_bottom = 16.0
+mouse_filter = 2
+texture = ExtResource("4_layer")
+
+[node name="error" type="TextureRect" parent="ui/common/message_box/icons"]
+layout_mode = 0
+offset_left = 124.0
+offset_top = 0.0
+offset_right = 175.0
+offset_bottom = 16.0
+mouse_filter = 2
+texture = ExtResource("5_layer")
+
+[node name="warning" type="TextureRect" parent="ui/common/message_box/icons"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 32.0
+offset_right = 59.0
+offset_bottom = 48.0
+mouse_filter = 2
+texture = ExtResource("6_layer")
+
+[node name="message" type="TextureRect" parent="ui/common/message_box/icons"]
+layout_mode = 0
+offset_left = 124.0
+offset_top = 32.0
+offset_right = 194.0
+offset_bottom = 48.0
+mouse_filter = 2
+texture = ExtResource("7_layer")
+
+[node name="frame" type="Control" parent="ui/common"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 73.0
+offset_right = 304.0
+offset_bottom = 169.0
+mouse_filter = 2
+
+[node name="base_separators" type="TextureRect" parent="ui/common/frame"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 304.0
+offset_bottom = 96.0
+mouse_filter = 2
+texture = ExtResource("8_layer")
+
+[node name="buttons" type="Control" parent="ui/common"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 80.0
+offset_right = 97.0
+offset_bottom = 163.0
+mouse_filter = 2
+
+[node name="small" type="TextureRect" parent="ui/common/buttons"]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 0.0
+offset_right = 89.0
+offset_bottom = 32.0
+mouse_filter = 2
+texture = ExtResource("9_layer")
+
+[node name="mid" type="TextureRect" parent="ui/common/buttons"]
+layout_mode = 0
+offset_left = 57.0
+offset_top = 33.0
+offset_right = 89.0
+offset_bottom = 83.0
+mouse_filter = 2
+texture = ExtResource("10_layer")
+
+[node name="big" type="TextureRect" parent="ui/common/buttons"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 27.0
+offset_right = 55.0
+offset_bottom = 83.0
+mouse_filter = 2
+texture = ExtResource("11_layer")
+
+[node name="radio_button" type="Control" parent="ui/common"]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 88.0
+offset_right = 112.0
+offset_bottom = 114.0
+mouse_filter = 2
+
+[node name="base" type="TextureRect" parent="ui/common/radio_button"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 8.0
+offset_bottom = 26.0
+mouse_filter = 2
+texture = ExtResource("12_layer")
+
+[node name="fill" type="TextureRect" parent="ui/common/radio_button"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 11.0
+offset_right = 6.0
+offset_bottom = 15.0
+mouse_filter = 2
+texture = ExtResource("13_layer")
+
+[node name="inputbox" type="Control" parent="ui/common"]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 88.0
+offset_right = 192.0
+offset_bottom = 104.0
+mouse_filter = 2
+
+[node name="base" type="TextureRect" parent="ui/common/inputbox"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 72.0
+offset_bottom = 16.0
+mouse_filter = 2
+texture = ExtResource("14_layer")
+
+[node name="listbox" type="Control" parent="ui/common"]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 112.0
+offset_right = 192.0
+offset_bottom = 160.0
+mouse_filter = 2
+
+[node name="base" type="TextureRect" parent="ui/common/listbox"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 72.0
+offset_bottom = 48.0
+mouse_filter = 2
+texture = ExtResource("15_layer")
+
+[node name="cursors" type="Control" parent="ui/common"]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 120.0
+offset_right = 110.0
+offset_bottom = 128.0
+mouse_filter = 2
+
+[node name="standard" type="TextureRect" parent="ui/common/cursors"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 6.0
+offset_bottom = 8.0
+mouse_filter = 2
+texture = ExtResource("16_layer")
+
+[node name="slider" type="Control" parent="ui/common"]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 91.0
+offset_right = 236.0
+offset_bottom = 139.0
+mouse_filter = 2
+
+[node name="vertical" type="Control" parent="ui/common/slider"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 13.0
+offset_right = 10.0
+offset_bottom = 48.0
+mouse_filter = 2
+
+[node name="base" type="TextureRect" parent="ui/common/slider/vertical"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 0.0
+offset_right = 9.0
+offset_bottom = 35.0
+mouse_filter = 2
+texture = ExtResource("17_layer")
+
+[node name="slider" type="TextureRect" parent="ui/common/slider/vertical"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 7.0
+offset_right = 10.0
+offset_bottom = 12.0
+mouse_filter = 2
+texture = ExtResource("18_layer")
+
+[node name="horizontal" type="Control" parent="ui/common/slider"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 0.0
+offset_right = 36.0
+offset_bottom = 10.0
+mouse_filter = 2
+
+[node name="base" type="TextureRect" parent="ui/common/slider/horizontal"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 1.0
+offset_right = 35.0
+offset_bottom = 9.0
+mouse_filter = 2
+texture = ExtResource("19_layer")
+
+[node name="slider" type="TextureRect" parent="ui/common/slider/horizontal"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 0.0
+offset_right = 13.0
+offset_bottom = 10.0
+mouse_filter = 2
+texture = ExtResource("20_layer")
+
+[node name="scrollbar" type="Control" parent="ui/common"]
+layout_mode = 0
+offset_left = 216.0
+offset_top = 90.0
+offset_right = 288.0
+offset_bottom = 152.0
+mouse_filter = 2
+
+[node name="horizontal" type="Control" parent="ui/common/scrollbar"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 0.0
+offset_right = 72.0
+offset_bottom = 12.0
+mouse_filter = 2
+
+[node name="base" type="TextureRect" parent="ui/common/scrollbar/horizontal"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 48.0
+offset_bottom = 12.0
+mouse_filter = 2
+texture = ExtResource("21_layer")
+
+[node name="cursor" type="TextureRect" parent="ui/common/scrollbar/horizontal"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 1.0
+offset_right = 28.0
+offset_bottom = 11.0
+mouse_filter = 2
+texture = ExtResource("22_layer")
+
+[node name="vertical" type="Control" parent="ui/common/scrollbar"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 14.0
+offset_right = 12.0
+offset_bottom = 62.0
+mouse_filter = 2
+
+[node name="base" type="TextureRect" parent="ui/common/scrollbar/vertical"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 12.0
+offset_bottom = 48.0
+mouse_filter = 2
+texture = ExtResource("23_layer")
+
+[node name="cursor" type="TextureRect" parent="ui/common/scrollbar/vertical"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 16.0
+offset_right = 11.0
+offset_bottom = 28.0
+mouse_filter = 2
+texture = ExtResource("24_layer")
+
+[node name="fillbar" type="Control" parent="ui/common"]
+layout_mode = 0
+offset_left = 238.0
+offset_top = 105.0
+offset_right = 290.0
+offset_bottom = 119.0
+mouse_filter = 2
+
+[node name="base" type="TextureRect" parent="ui/common/fillbar"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 52.0
+offset_bottom = 14.0
+mouse_filter = 2
+texture = ExtResource("25_layer")
+
+[node name="fill_red" type="TextureRect" parent="ui/common/fillbar"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 3.0
+offset_right = 25.0
+offset_bottom = 11.0
+mouse_filter = 2
+texture = ExtResource("26_layer")
+
+[node name="fill_green" type="TextureRect" parent="ui/common/fillbar"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 3.0
+offset_right = 25.0
+offset_bottom = 11.0
+mouse_filter = 2
+texture = ExtResource("27_layer")
+
+[node name="fill_blue" type="TextureRect" parent="ui/common/fillbar"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 3.0
+offset_right = 25.0
+offset_bottom = 11.0
+mouse_filter = 2
+texture = ExtResource("28_layer")
+
+[node name="multi_fillbar" type="Control" parent="ui/common"]
+layout_mode = 0
+offset_left = 238.0
+offset_top = 122.0
+offset_right = 290.0
+offset_bottom = 158.0
+mouse_filter = 2
+
+[node name="base" type="TextureRect" parent="ui/common/multi_fillbar"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 52.0
+offset_bottom = 36.0
+mouse_filter = 2
+texture = ExtResource("29_layer")
+
+[node name="fill_red" type="TextureRect" parent="ui/common/multi_fillbar"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 3.0
+offset_right = 25.0
+offset_bottom = 11.0
+mouse_filter = 2
+texture = ExtResource("30_layer")
+
+[node name="fill_green" type="TextureRect" parent="ui/common/multi_fillbar"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 14.0
+offset_right = 32.0
+offset_bottom = 22.0
+mouse_filter = 2
+texture = ExtResource("31_layer")
+
+[node name="fill_blue" type="TextureRect" parent="ui/common/multi_fillbar"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 25.0
+offset_right = 22.0
+offset_bottom = 33.0
+mouse_filter = 2
+texture = ExtResource("32_layer")
+
+[node name="hud" type="Control" parent="ui"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 0.0
+offset_right = 104.0
+offset_bottom = 59.0
+mouse_filter = 2
+
+[node name="hitbars_minimap" type="TextureRect" parent="ui/hud"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 100.0
+offset_bottom = 32.0
+mouse_filter = 2
+texture = ExtResource("33_layer")
+
+[node name="bars" type="TextureRect" parent="ui/hud"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 4.0
+offset_right = 87.0
+offset_bottom = 28.0
+mouse_filter = 2
+texture = ExtResource("34_layer")
+
+[node name="action_icons" type="TextureRect" parent="ui/hud"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 35.0
+offset_right = 90.0
+offset_bottom = 59.0
+mouse_filter = 2
+texture = ExtResource("35_layer")
+
+[node name="inventory" type="Control" parent="ui"]
+layout_mode = 0
+offset_left = 135.0
+offset_top = 1.0
+offset_right = 255.0
+offset_bottom = 173.0
+mouse_filter = 2
+
+[node name="frame" type="Control" parent="ui/inventory"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 30.0
+offset_right = 102.0
+offset_bottom = 172.0
+mouse_filter = 2
+
+[node name="base" type="TextureRect" parent="ui/inventory/frame"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 102.0
+offset_bottom = 142.0
+mouse_filter = 2
+texture = ExtResource("36_layer")
+
+[node name="selected" type="TextureRect" parent="ui/inventory/frame"]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 13.0
+offset_right = 41.0
+offset_bottom = 27.0
+mouse_filter = 2
+texture = ExtResource("37_layer")
+
+[node name="items" type="TextureRect" parent="ui/inventory/frame"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 15.0
+offset_right = 56.0
+offset_bottom = 26.0
+mouse_filter = 2
+texture = ExtResource("38_layer")
+
+[node name="description" type="TextureRect" parent="ui/inventory/frame"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 74.0
+offset_right = 63.0
+offset_bottom = 79.0
+mouse_filter = 2
+texture = ExtResource("39_layer")
+
+[node name="buttons" type="TextureRect" parent="ui/inventory/frame"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 74.0
+offset_right = 93.0
+offset_bottom = 95.0
+mouse_filter = 2
+texture = ExtResource("40_layer")
+
+[node name="tabs" type="Control" parent="ui/inventory"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 38.0
+offset_right = 118.0
+offset_bottom = 111.0
+mouse_filter = 2
+
+[node name="inactives" type="TextureRect" parent="ui/inventory/tabs"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 0.0
+offset_right = 16.0
+offset_bottom = 73.0
+mouse_filter = 2
+texture = ExtResource("41_layer")
+
+[node name="active" type="TextureRect" parent="ui/inventory/tabs"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 36.0
+offset_right = 18.0
+offset_bottom = 55.0
+mouse_filter = 2
+texture = ExtResource("42_layer")
+
+[node name="icons" type="TextureRect" parent="ui/inventory/tabs"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 13.0
+offset_bottom = 69.0
+mouse_filter = 2
+texture = ExtResource("43_layer")
+
+[node name="title" type="Control" parent="ui/inventory"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 120.0
+offset_bottom = 132.0
+mouse_filter = 2
+
+[node name="base" type="TextureRect" parent="ui/inventory/title"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 1.0
+offset_right = 102.0
+offset_bottom = 31.0
+mouse_filter = 2
+texture = ExtResource("44_layer")
+
+[node name="quit" type="TextureRect" parent="ui/inventory/title"]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 0.0
+offset_right = 120.0
+offset_bottom = 132.0
+mouse_filter = 2
+texture = ExtResource("45_layer")
+
+[node name="text" type="TextureRect" parent="ui/inventory/title"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 11.0
+offset_right = 83.0
+offset_bottom = 22.0
+mouse_filter = 2
+texture = ExtResource("46_layer")
+
+[node name="player" type="Control" parent="ui"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 67.0
+offset_right = 123.0
+offset_bottom = 139.0
+mouse_filter = 2
+
+[node name="frame" type="Control" parent="ui/player"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 30.0
+offset_right = 102.0
+offset_bottom = 72.0
+mouse_filter = 2
+
+[node name="base" type="TextureRect" parent="ui/player/frame"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 102.0
+offset_bottom = 42.0
+mouse_filter = 2
+texture = ExtResource("47_layer")
+
+[node name="text" type="TextureRect" parent="ui/player/frame"]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 12.0
+offset_right = 95.0
+offset_bottom = 35.0
+mouse_filter = 2
+texture = ExtResource("48_layer")
+
+[node name="title" type="Control" parent="ui/player"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 120.0
+offset_bottom = 67.0
+mouse_filter = 2
+
+[node name="base" type="TextureRect" parent="ui/player/title"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 1.0
+offset_right = 102.0
+offset_bottom = 31.0
+mouse_filter = 2
+texture = ExtResource("49_layer")
+
+[node name="quit" type="TextureRect" parent="ui/player/title"]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 0.0
+offset_right = 120.0
+offset_bottom = 67.0
+mouse_filter = 2
+texture = ExtResource("50_layer")
+
+[node name="text" type="TextureRect" parent="ui/player/title"]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 11.0
+offset_right = 74.0
+offset_bottom = 22.0
+mouse_filter = 2
+texture = ExtResource("51_layer")
+
+[node name="menu" type="Control" parent="ui"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 182.0
+offset_right = 301.0
+offset_bottom = 310.0
+mouse_filter = 2
+
+[node name="background" type="TextureRect" parent="ui/menu"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 301.0
+offset_bottom = 128.0
+mouse_filter = 2
+texture = ExtResource("52_layer")
+
+[node name="banner" type="TextureRect" parent="ui/menu"]
+layout_mode = 0
+offset_left = 161.0
+offset_top = 36.0
+offset_right = 262.0
+offset_bottom = 102.0
+mouse_filter = 2
+texture = ExtResource("53_layer")
+
+[node name="play" type="Control" parent="ui/menu"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 27.0
+offset_right = 107.0
+offset_bottom = 59.0
+mouse_filter = 2
+
+[node name="base" type="TextureRect" parent="ui/menu/play"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 96.0
+offset_bottom = 32.0
+mouse_filter = 2
+texture = ExtResource("54_layer")
+
+[node name="text" type="TextureRect" parent="ui/menu/play"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 11.0
+offset_right = 74.0
+offset_bottom = 22.0
+mouse_filter = 2
+texture = ExtResource("55_layer")
+
+[node name="options" type="Control" parent="ui/menu"]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 56.0
+offset_right = 125.0
+offset_bottom = 88.0
+mouse_filter = 2
+
+[node name="base" type="TextureRect" parent="ui/menu/options"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 96.0
+offset_bottom = 32.0
+mouse_filter = 2
+texture = ExtResource("56_layer")
+
+[node name="text" type="TextureRect" parent="ui/menu/options"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 11.0
+offset_right = 84.0
+offset_bottom = 22.0
+mouse_filter = 2
+texture = ExtResource("57_layer")
+
+[node name="quit" type="Control" parent="ui/menu"]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 85.0
+offset_right = 143.0
+offset_bottom = 117.0
+mouse_filter = 2
+
+[node name="base" type="TextureRect" parent="ui/menu/quit"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 96.0
+offset_bottom = 32.0
+mouse_filter = 2
+texture = ExtResource("58_layer")
+
+[node name="text" type="TextureRect" parent="ui/menu/quit"]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 11.0
+offset_right = 73.0
+offset_bottom = 22.0
+mouse_filter = 2
+texture = ExtResource("59_layer")
