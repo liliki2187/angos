@@ -1,3 +1,9 @@
+# 将当前分支推送到两个远程，使 angos 与 angus 的 main 保持一致（项目正式约定）。
+# origin     -> https://github.com/liliki2187/angos.git
+# daydreamer -> https://github.com/daydreamerguan/angus.git
+# 用法：在仓库根目录 .\sync-both-remotes.ps1
+# 首次若缺 daydreamer：git remote add daydreamer https://github.com/daydreamerguan/angus.git
+
 param(
   [string]$Branch = "main",
   [switch]$DryRun,
