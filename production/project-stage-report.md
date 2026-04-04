@@ -1,14 +1,14 @@
 # Project Stage Analysis
 
-**Date**: 2026-03-31
+**Date**: 2026-04-04
 **Stage**: Production (early)
 
 ## Completeness Overview
 
-- **Design**: ~70% complete. There is strong system-level documentation in `design/systems/` and `docs/`, but canonical `design/gdd/` documents were missing before this pass.
+- **Design**: ~75% complete. Canonical `design/gdd/` documents now exist, though some older `docs/` design material still needs clearer legacy/reference labeling.
 - **Code**: ~55% complete for MVP. Godot has a playable weekly vertical prototype with menu flow, exploration, event checks, editorial layout, and settlement, but architecture is still monolithic.
-- **Architecture**: ~25% complete. Engine choice is effectively locked, but ADRs and explicit system boundaries were missing.
-- **Production**: ~35% complete. Plans and dev logs exist, but there was no `production/` directory, no sprint artifact, and no explicit stage tracking.
+- **Architecture**: ~35% complete. Engine choice is locked and ADR work has started, but runtime boundaries are not yet enforced in code.
+- **Production**: ~55% complete. A durable `production/` workspace now exists with stage, sprint, backlog, risk, handoff, and session-state artifacts, but it still needs regular operational use.
 - **Tests**: ~0-5% complete. No project-owned automated gameplay test structure was found.
 
 ## Scope Check: Godot MVP
@@ -74,7 +74,7 @@ Implemented or partially implemented in Godot:
 2. The project has a playable runtime but no formal architecture boundary between state, content, and UI.
 3. Content is still too hardcoded for rapid iteration.
 4. There is no owned test strategy for formulas or phase transitions.
-5. The repo had plans and logs, but not a durable production-state workspace.
+5. The repo now has a durable production-state workspace, but it still needs the first real spec-driven feature packet and consistent weekly upkeep.
 
 ## Recommended Next Steps
 
@@ -82,4 +82,4 @@ Implemented or partially implemented in Godot:
 2. Extract `Clue Inventory and Story Conversion` and `Macro Attributes and Unlock Pressure` into dedicated GDDs next.
 3. Follow the ADR to separate weekly state ownership from scene presentation.
 4. Build the content/config pipeline before broadening content volume.
-5. Start formal sprint planning only after the next two MVP GDDs are in place.
+5. Use the new `production/` workspace as the default execution layer and start the first real `specs/` packet on the next cross-functional feature.

@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Full Chain Demo 分发入口</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: rgba(14, 22, 42, 0.86);
+      --panel-strong: rgba(19, 30, 56, 0.95);
+      --line: rgba(167, 180, 210, 0.22);
+      --text: #edf2ff;
+      --muted: #aab7d6;
+      --accent: #f4c96c;
+      --accent-2: #84c8ff;
+      --good: #89d7a4;
+      --shadow: 0 26px 60px rgba(0, 0, 0, 0.34);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", "Microsoft YaHei UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(95, 138, 255, 0.18), transparent 34%),
+        radial-gradient(circle at 85% 20%, rgba(244, 201, 108, 0.12), transparent 22%),
+        linear-gradient(180deg, #0b1020 0%, #070b16 100%);
+    }
+
+    main {
+      width: min(1120px, calc(100% - 40px));
+      margin: 40px auto 56px;
+    }
+
+    .hero,
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero {
+      padding: 28px 30px;
+      background: linear-gradient(145deg, rgba(25, 38, 70, 0.94), rgba(10, 16, 31, 0.92));
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    h1 {
+      margin: 10px 0 12px;
+      font-size: clamp(28px, 4.8vw, 48px);
+      line-height: 1.05;
+    }
+
+    .hero p,
+    .panel p,
+    li {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 18px;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, var(--panel) 0%, rgba(11, 16, 32, 0.92) 100%);
+      padding: 22px;
+    }
+
+    .panel h2 {
+      margin: 0 0 8px;
+      font-size: 21px;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    a.link,
+    a.primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 14px 16px;
+      text-decoration: none;
+      border-radius: 14px;
+      transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+    }
+
+    a.link {
+      background: rgba(132, 200, 255, 0.08);
+      border: 1px solid rgba(132, 200, 255, 0.14);
+      color: var(--text);
+    }
+
+    a.primary {
+      background: linear-gradient(135deg, rgba(244, 201, 108, 0.18), rgba(132, 200, 255, 0.16));
+      border: 1px solid rgba(244, 201, 108, 0.24);
+      color: var(--text);
+      min-width: 260px;
+    }
+
+    a:hover {
+      transform: translateY(-1px);
+      border-color: rgba(244, 201, 108, 0.4);
+      background: rgba(244, 201, 108, 0.12);
+    }
+
+    .note {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(137, 215, 164, 0.2);
+      background: rgba(137, 215, 164, 0.08);
+      color: var(--good);
+    }
+
+    code {
+      font-family: "Cascadia Code", "Consolas", monospace;
+      font-size: 0.95em;
+      color: var(--accent-2);
+    }
+
+    ul {
+      margin: 12px 0 0;
+      padding-left: 18px;
+    }
+
+    @media (max-width: 720px) {
+      main { width: min(100% - 24px, 1120px); margin-top: 24px; }
+      .hero, .panel { padding: 18px; border-radius: 18px; }
+      .hero-actions { flex-direction: column; }
+      a.primary { min-width: 0; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">Prototype Package</div>
+      <h1>世界未解之谜周刊 · Full Chain Demo</h1>
+      <p>这个目录是给组员本机直接体验用的离线分发包。推荐入口是完整周循环原型，辅助页保留为单阶段验证与对照。</p>
+      <div class="hero-actions">
+        <a class="primary" href="web/world-mysteries-full-chain.html">
+          <span>打开完整周循环原型</span>
+          <span>推荐</span>
+        </a>
+        <a class="primary" href="docs/世界未解之谜周刊_全链条版设计文档汇总.md">
+          <span>打开全链条说明文档</span>
+          <span>文档</span>
+        </a>
+      </div>
+      <div class="note">可直接双击同目录下的 <code>Run FullChain Demo.exe</code> 打开本页，再进入具体原型。</div>
+    </section>
+
+    <section class="grid">
+      <article class="panel">
+        <h2>网页入口</h2>
+        <p>面向体验的离线入口，保留主流程与两个辅助实验页。</p>
+        <div class="links">
+          <a class="link" href="web/world-mysteries-full-chain.html">完整周循环原型</a>
+          <a class="link" href="web/world-mysteries-explore-dice.html">探索与检定原型</a>
+          <a class="link" href="web/newspaper-fill-lab.html">报刊填入实验页</a>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>源码快照</h2>
+        <p>保留当前版本的组合 HTML 与拆分源码，方便策划和程序对照。</p>
+        <div class="links">
+          <a class="link" href="web/world-mysteries-full-chain.html">组合版 HTML</a>
+          <a class="link" href="web/world-mysteries-full-chain-head.htm">Head 模板</a>
+          <a class="link" href="web/world-mysteries-full-chain.js">逻辑脚本</a>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>相关文档</h2>
+        <p>把 full-chain 原型依赖的核心策划文档一起收口，避免组员到仓库别处再找。</p>
+        <div class="links">
+          <a class="link" href="docs/世界未解之谜周刊_全链条版设计文档汇总.md">全链条版设计文档汇总</a>
+          <a class="link" href="docs/世界未解之谜周刊_探索部分设计文档.md">探索部分设计文档</a>
+          <a class="link" href="docs/故事合成与报道编写系统设计文档.md">故事合成与报道编写</a>
+          <a class="link" href="docs/报刊结算出版玩法设计文档.md">报刊结算出版玩法</a>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>包内容说明</h2>
+        <p>为了保证离线可打开，资源已经随包复制，包括教程示意图与角色头像资源。</p>
+        <ul>
+          <li><code>web/Assets/tutorial-map-guide.svg</code></li>
+          <li><code>web/Assets/avatars/*</code></li>
+          <li><code>docs/*.md</code> 核心设计文档</li>
+          <li><code>Run FullChain Demo.exe</code> 本地启动器</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

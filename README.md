@@ -1,28 +1,29 @@
-# angos / 世界未解之谜周刊 Demo
+# Angus / 世界未解之谜周刊
 
-单机网页 Demo（探索 → 骰子检定 → 报刊组版 → 结算），无后端依赖。
+This repository contains the Angus Godot MVP, historical HTML prototypes, design documentation, and project-local automation skills.
 
-## 快速体验
+## Canonical Locations
 
-- 用浏览器打开项目根目录下的 **`world-mysteries-full-chain.html`**（建议 Chrome / Edge）。
-- 设计文档见 **`docs/`**，总览见 **`docs/世界未解之谜周刊_全链条版设计文档汇总.md`**。
+- Runtime: `scenes/` and `Assets/`
+- Gameplay design: `design/gdd/`
+- Architecture decisions: `docs/architecture/`
+- Execution state: `production/`
+- Onboarding and collaboration rules: `docs/onboarding/`
+- Feature packets: `specs/`
 
-## 其它文件
+## Reference And Prototype Material
 
-- `world-mysteries-full-chain-head.htm` + `world-mysteries-full-chain.js`：合并生成完整 HTML 的源码片段（见 `docs/GIT上传与分享说明.md` 中的合并命令）。
-- `index.html`：报刊结算独立原型（与全链条不同入口）。
+- Root HTML files and `design/htmls/` are reference or prototype layers, not the canonical runtime.
+- `prototype/` is for distributable prototype packages. Generated package outputs are rebuildable and ignored by default.
 
-## Git：两个 GitHub 仓库要保持一致
+## First Reads
 
-本仓库约定 **`main` 同时推送到两个远程**，避免只更新一侧：
+- `docs/onboarding/repository-map.md`
+- `docs/onboarding/git-collaboration.md`
+- `docs/technical-preferences.md`
+- `production/session-state/active.md`
 
-| 远程 | 仓库 |
-|------|------|
-| `origin` | [liliki2187/angos](https://github.com/liliki2187/angos) |
-| `daydreamer` | [daydreamerguan/angus](https://github.com/daydreamerguan/angus) |
+## Notes
 
-推送示例：`git push origin main` 后执行 `git push daydreamer main`，或在根目录运行 **`sync-both-remotes.ps1`**。详情见 **`docs/Cursor对话交接指引_研发无缝衔接.md`** 第 2 节。
-
-## 编码说明
-
-合并 HTML 时请使用 **UTF-8**；Windows 下建议输出 **UTF-8 带 BOM** 的 `world-mysteries-full-chain.html`，避免中文乱码。
+- The current MVP runtime is Godot 4.3.
+- If you work on the HTML prototype sources, treat them as reference material unless a GDD or ADR explicitly promotes behavior into the game.

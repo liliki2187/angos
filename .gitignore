@@ -12,6 +12,9 @@ Desktop.ini
 *.log
 *.tmp
 ~$*
+__pycache__/
+*.pyc
+*.pyo
 
 # Local env
 .env.local
@@ -33,6 +36,8 @@ build/
 # Rendered previews / export artifacts
 artifacts/
 image_gen/
+prototype/fullchain_demo/
+prototype/*.zip
 
 # Optional: if you add Node later
 node_modules/

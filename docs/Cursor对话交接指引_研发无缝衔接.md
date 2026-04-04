@@ -1,131 +1,56 @@
 # Cursor 新对话 · 研发无缝衔接指引
 
-> 用途：在 Cursor 新开对话时，把本文整体粘贴给 AI，或让 AI 先读本文件再继续开发。  
-> 工作区路径（本机）：`d:\angos`  
-> 最后更新：以仓库 `git log -1` 为准。
+> 用途：在新对话里快速恢复正确上下文，而不是继续沿用旧假设。
+> 工作区路径（当前）：`E:\angus\angus`
+> 最后更新：2026-04-04
 
----
+## 先读顺序
 
-## 1. 项目是什么
+1. `docs/onboarding/repository-map.md`
+2. `docs/onboarding/git-collaboration.md`
+3. `docs/technical-preferences.md`
+4. `production/session-state/active.md`
 
-《世界未解之谜周刊》相关原型与文档：**网页全链条 Demo** + **Godot 4.3 原型** 已合并到同一仓库。
+## 当前项目判断
 
-- **可玩网页（全链条）**：根目录 `world-mysteries-full-chain.html`（由 `world-mysteries-full-chain-head.htm` + `world-mysteries-full-chain.js` 合并生成）。
-- **独立骰子动画实验页**：`dice-animation-lab.html`（调参验证用，与主干逻辑解耦）。
-- **报刊结算独立原型**：`index.html`。
-- **Godot**：`project.godot`、`scenes/`、`scripts/` 等（来自 `daydreamerguan/angus` 历史合并）。
+- 项目阶段：Early Production
+- 当前主线：Godot 4.3 周循环 MVP
+- 参考层仍保留：根目录 HTML 原型、`design/htmls/`、部分旧 `docs/*.md`
+- 当前重点：目录治理、配置管线、运行时边界拆分，而不是继续扩张原型分支
 
----
+## 权威来源
 
-## 2. Git：双远程必须一致（必读，避免误解）
+- Runtime: `scenes/` 和 `Assets/`
+- Gameplay design: `design/gdd/`
+- Architecture: `docs/architecture/`
+- Execution state: `production/`
+- Git collaboration rule: `docs/onboarding/git-collaboration.md`
 
-**协作约定（现行）**：`origin` 与 `daydreamer` 两个仓库的 **`main` 分支应始终保持同一提交**（内容一致且为最新）。推送时 **不要只推一边**。
+## 新对话常见误区
 
-| 远程名 | URL | 说明 |
-|--------|-----|------|
-| **`origin`** | `https://github.com/liliki2187/angos.git` | 主展示仓名 **angos** |
-| **`daydreamer`** | `https://github.com/daydreamerguan/angus.git` | 同名历史仓 **angus**，与上表 **同一套 `main` 历史** |
+- 不要把根目录 HTML 当成 Godot 运行时权威
+- 不要把旧 `docs/*.md` 默认当成当前设计主线
+- 不要复述旧的 Git 推送说法，先看 `git remote -v` 再看 Git 协作文档
+- 不要把生成包或缓存目录当源码
 
-**推荐操作**（在仓库根目录）：
+## 当前建议关注点
 
-1. 开发在 **`main`** 上；`commit` 后先 `git pull origin main`（或 `--rebase`，团队统一一种即可），解决冲突再推送。  
-2. **连续推两次**，或运行脚本一次搞定：  
-   - `git push origin main`  
-   - `git push daydreamer main`  
-   - 或：`.\sync-both-remotes.ps1`（默认推 `main` 到上述两个远程）
+1. `scenes/FullChainGame.gd` 的边界拆分
+2. 内容配置和数据入口
+3. 公式与阶段切换的最小自动化验证
+4. 继续清理 legacy/reference/generated 层的边界
 
-若本地缺少 `daydreamer`：`git remote add daydreamer https://github.com/daydreamerguan/angus.git`
-
-**给 AI / 新同事的一句话**：本仓库 **不是**「只维护 angos」；**任何合并进 `main` 的改动都应同步到 `origin` 与 `daydreamer`**，除非负责人明确说临时只推一侧（并记得补推）。
-
-**若 `git push origin` 被 GitHub 拒绝（Push Protection / Secret Scanning）**
-
-- 常见原因：历史提交里含疑似 **Personal Access Token**（例如曾出现在 `scripts/github_push.py` 等路径）。
-- 处理方向：从历史中剔除或替换密钥后重写可见历史，或按 GitHub 提示走一次性放行（不推荐长期依赖）。具体以报错与团队安全规范为准。
-
----
-
-## 3. 近期关键提交（理解进度用）
-
-| 提交 | 说明 |
-|------|------|
-| `600c04c` | 故事合成台、回合事件、地图 UI、骰子动画等与全链条相关的大量功能 |
-| `47d4925` | 交接文档文件名规范化 |
-| `094c125` | 与 `daydreamer/main` 合并（无共同历史，已 `--allow-unrelated-histories`） |
-| `4fab604` / `67bea62` | 与双远程相关的历史脚本提交 |
-| （最新） | 现行约定：**`main` 同时推 `origin` + `daydreamer`**，见本节上文 |
-
----
-
-## 4. 文档索引（新对话优先读这些）
-
-| 路径 | 内容 |
-|------|------|
-| `docs/AI说明_最新版.md` | 给 AI 的仓库级交接摘要 |
-| `docs/世界未解之谜周刊_全链条版设计文档汇总.md` | 全链条总览与索引 |
-| `docs/故事合成与报道编写系统设计文档.md` | 故事合成正式设计 |
-| `docs/报刊结算出版玩法设计文档.md` | 组版与结算公式（与 `index.html` / 全链条编辑部对齐） |
-| `docs/骰子判定玩法_最终版.md` | 二项 / split 检定数学 |
-| `docs/世界未解之谜周刊_探索部分设计文档.md` | 探索侧（注意与全链条 split 实现的差异说明在汇总里） |
-| `docs/GIT上传与分享说明.md` | 合并 HTML 的 PowerShell 命令 |
-
----
-
-## 5. 网页全链条：开发与合并命令
-
-修改逻辑时改 **`world-mysteries-full-chain-head.htm`** 与 **`world-mysteries-full-chain.js`**，再合并生成 **`world-mysteries-full-chain.html`**（UTF-8 带 BOM 为宜，见 `docs/GIT上传与分享说明.md`）。
-
----
-
-## 6. 当前玩法流程（主干网页）
-
-`world-mysteries-full-chain.html` 内大致顺序：
-
-1. 探索（地图点位、区域节点地图、split 检定）  
-2. **故事合成台**（现象/情报/认知/工具、四类配方）  
-3. 报刊组版与结算  
-4. 下一周  
-
-回合开始有 **条件随机事件**（无选项 / 多选项）；探索结算在 **骰子模式** 下会先切到结果页再播动画（六面轮播：`✓` 绿、`×` 红、`?` 蓝、三空白为真空白）。
-
----
-
-## 7. 本地未提交项（新对话注意）
-
-- `bootstrap-angus.ps1` 可能显示为已修改（多为行尾/未暂存），**提交前请 `git diff` 确认是否应纳入**。
-
----
-
-## 8. 给新对话 AI 的一键开场模板（复制即用）
+## 给新对话 AI 的模板
 
 ```text
-请接手《世界未解之谜周刊》/ Angus 合并仓库。
+请接手 Angus 仓库，工作区是 E:\angus\angus。
 
-工作区：d:\angos（或 clone 后打开同结构仓库）
+先读：
+1. docs/onboarding/repository-map.md
+2. docs/onboarding/git-collaboration.md
+3. docs/technical-preferences.md
+4. production/session-state/active.md
 
-请先读：
-1) docs/Cursor对话交接指引_研发无缝衔接.md
-2) docs/AI说明_最新版.md
-3) docs/世界未解之谜周刊_全链条版设计文档汇总.md
-
-Git：
-- 日常只推本人仓库：origin = https://github.com/liliki2187/angos.git
-- 不再要求双远程同步；若 push 被 Secret Scanning 拦截，需按报错处理历史密钥等问题
-
-主入口网页：world-mysteries-full-chain.html
-骰子实验页：dice-animation-lab.html
-
-当前 HEAD 以 git log -1 为准。请在我说明的具体任务上继续，不要擅自大范围重构。
+当前目标不是随意扩功能，而是沿着现有 GDD/ADR/production 状态继续推进。
+如果你准备修改的是 HTML 原型或旧 docs，请先说明它和 Godot 主线的关系。
 ```
-
----
-
-## 9. 建议的下一步（可选，按产品优先级）
-
-- 若 `origin` 推送仍受 Secret Scanning 影响：清理历史中的密钥或按规范处理，保证日常 `push` 顺畅。  
-- 将 `dice-animation-lab.html` 中的可调参数（面权重、间隔）以最小方式暴露到主干设置里。  
-- 故事合成与 Godot 全链条计划的文档对齐（见 `design/`、`docs/plans/`）。
-
----
-
-**全文完。**
