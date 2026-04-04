@@ -12,11 +12,13 @@
 
 - `index.html`：分发入口页
 - `web/`：原型网页与其依赖资源
-- `docs/`：与 full-chain 原型直接相关的策划文档
+- `docs/`：统一入口、工具文档与历史归档
+- `design/gdd/`：当前权威玩法设计文档
 - `Run FullChain Demo.exe`：本地启动器，打开入口页
 
 ## 说明
 
 - 这是一个自包含快照目录，便于分发和本地体验
 - 网页内依赖的教程示意图和头像资源已经随包复制
+- 原型相关旧设计稿仍保留在 `docs/archive/`，但当前规则以 `design/gdd/` 为准
 - 如果直接拷贝整个 `prototype/fullchain_demo` 目录给其他组员，他们可以在自己的机器上双击 EXE 体验

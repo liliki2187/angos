@@ -5,10 +5,11 @@
 
 ## 先读这些
 
-1. `docs/onboarding/repository-map.md`
-2. `docs/onboarding/git-collaboration.md`
-3. `docs/technical-preferences.md`
-4. `production/session-state/active.md`
+1. `docs/README.md`
+2. `docs/onboarding/repository-map.md`
+3. `docs/onboarding/git-collaboration.md`
+4. `docs/technical-preferences.md`
+5. `production/session-state/active.md`
 
 ## 当前权威层
 
@@ -21,7 +22,8 @@
 
 - 根目录 HTML 原型
 - `design/htmls/`
-- 历史设计文档与分析文档
+- `design/systems/`
+- `docs/archive/`
 
 这些内容仍然有价值，但默认不作为运行时权威。
 

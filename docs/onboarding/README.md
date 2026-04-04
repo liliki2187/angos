@@ -5,9 +5,10 @@ Start here when you need to understand how this repository is organized before c
 Read order:
 
 1. `repository-map.md`
-2. `git-collaboration.md`
-3. `../technical-preferences.md`
-4. `../../production/session-state/active.md`
+2. `../README.md`
+3. `git-collaboration.md`
+4. `../technical-preferences.md`
+5. `../../production/session-state/active.md`
 
 If you need deeper product context after that:
 

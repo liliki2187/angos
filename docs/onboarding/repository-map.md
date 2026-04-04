@@ -17,7 +17,7 @@ This document is the quickest way to identify what is canonical, what is referen
 - Root HTML prototype files such as `world-mysteries-full-chain.html`
 - `design/htmls/`: HTML prototypes and UI experiments
 - `design/systems/`: supporting system analysis and older design decomposition
-- Most root-level `docs/*.md`: legacy design docs and historical reference material
+- `docs/archive/`: legacy or deferred design material
 
 ## Generated Or Rebuildable Layers
 
@@ -30,3 +30,4 @@ This document is the quickest way to identify what is canonical, what is referen
 - Prototype HTML entry points live under `design/htmls/`; duplicate root-level `docs/` mirrors have been removed.
 - `design/generated-settlement-reference/` remains a reference asset area; some outputs are still consumed by the current Godot UI preview flow.
 - `design/original-art-reference/` remains the current art-reference archive because project skills already depend on that path.
+- Avatar-cropping rules now live at `docs/tools/avatar-cropping.md`.

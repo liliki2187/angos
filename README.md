@@ -18,6 +18,7 @@ This repository contains the Angus Godot MVP, historical HTML prototypes, design
 
 ## First Reads
 
+- `docs/README.md`
 - `docs/onboarding/repository-map.md`
 - `docs/onboarding/git-collaboration.md`
 - `docs/technical-preferences.md`

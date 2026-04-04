@@ -6,16 +6,17 @@
 
 ## 先读顺序
 
-1. `docs/onboarding/repository-map.md`
-2. `docs/onboarding/git-collaboration.md`
-3. `docs/technical-preferences.md`
-4. `production/session-state/active.md`
+1. `docs/README.md`
+2. `docs/onboarding/repository-map.md`
+3. `docs/onboarding/git-collaboration.md`
+4. `docs/technical-preferences.md`
+5. `production/session-state/active.md`
 
 ## 当前项目判断
 
 - 项目阶段：Early Production
 - 当前主线：Godot 4.3 周循环 MVP
-- 参考层仍保留：根目录 HTML 原型、`design/htmls/`、部分旧 `docs/*.md`
+- 参考层仍保留：根目录 HTML 原型、`design/htmls/`、`design/systems/`、`docs/archive/`
 - 当前重点：目录治理、配置管线、运行时边界拆分，而不是继续扩张原型分支
 
 ## 权威来源
@@ -46,10 +47,11 @@
 请接手 Angus 仓库，工作区是 E:\angus\angus。
 
 先读：
-1. docs/onboarding/repository-map.md
-2. docs/onboarding/git-collaboration.md
-3. docs/technical-preferences.md
-4. production/session-state/active.md
+1. docs/README.md
+2. docs/onboarding/repository-map.md
+3. docs/onboarding/git-collaboration.md
+4. docs/technical-preferences.md
+5. production/session-state/active.md
 
 当前目标不是随意扩功能，而是沿着现有 GDD/ADR/production 状态继续推进。
 如果你准备修改的是 HTML 原型或旧 docs，请先说明它和 Godot 主线的关系。

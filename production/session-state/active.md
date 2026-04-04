@@ -22,6 +22,9 @@
 - Removed tracked Python cache output from `scripts/__pycache__/`
 - Removed duplicate prototype HTML mirrors from the root `docs/` directory
 - Moved the generated demo packaging workflow under `scripts/release/`
+- Archived superseded root-level gameplay design docs under `docs/archive/`
+- Added unified documentation indexes in `docs/` and `design/gdd/`
+- Updated the documentation map so legacy and deferred docs no longer masquerade as current authority
 
 ## Current Source Of Truth
 

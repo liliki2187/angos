@@ -196,7 +196,7 @@
       <h1>《世界未解之谜周刊》· 探索 + 骰子判定</h1>
       <p class="sub">
         7 日一回合 · 全球/区域探索 · <strong>分别多属性检定（split）</strong>：调查池 + 现场池 · 对手抵消骰子 · 与
-        <code>docs/骰子判定玩法_最终版.md</code> 一致
+        <code>design/gdd/event-check-resolution.md</code> 一致
       </p>
     </header>
 
@@ -954,7 +954,7 @@
 
     el.innerHTML = `
       <h2>探索结算（骰子判定）</h2>
-      <p style="font-size:0.85rem;color:var(--muted);">单次检定 = 二项分布 · 对手抵消 = 随机作废 · 档位 = 双池是否分别达标（见 docs/骰子判定玩法_最终版.md §3.3）</p>
+      <p style="font-size:0.85rem;color:var(--muted);">单次检定 = 二项分布 · 对手抵消 = 随机作废 · 档位 = 双池是否分别达标（见 design/gdd/event-check-resolution.md）</p>
       <div class="result-banner">${escapeHtml(tier)}</div>
       ${diceBlock}
       <p style="font-size:0.9rem;color:var(--muted);">${lines.map(escapeHtml).join("<br/>")}</p>

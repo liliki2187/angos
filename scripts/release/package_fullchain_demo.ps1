@@ -10,6 +10,7 @@ $distRoot = Join-Path $RepoRoot "prototype\fullchain_demo"
 $webRoot = Join-Path $distRoot "web"
 $webAssetsRoot = Join-Path $webRoot "Assets"
 $docsRoot = Join-Path $distRoot "docs"
+$designRoot = Join-Path $distRoot "design"
 
 $webFiles = @(
     "world-mysteries-full-chain.html",
@@ -23,7 +24,7 @@ if (Test-Path $distRoot) {
     Remove-Item $distRoot -Recurse -Force
 }
 
-New-Item -ItemType Directory -Force $distRoot, $webRoot, $webAssetsRoot, $docsRoot | Out-Null
+New-Item -ItemType Directory -Force $distRoot, $webRoot, $webAssetsRoot, $docsRoot, $designRoot | Out-Null
 
 foreach ($file in $webFiles) {
     Copy-Item (Join-Path $RepoRoot $file) (Join-Path $webRoot $file) -Force
@@ -32,7 +33,9 @@ foreach ($file in $webFiles) {
 Copy-Item (Join-Path $RepoRoot "Assets\tutorial-map-guide.svg") (Join-Path $webAssetsRoot "tutorial-map-guide.svg") -Force
 Copy-Item (Join-Path $RepoRoot "Assets\avatars") (Join-Path $webAssetsRoot "avatars") -Recurse -Force
 
-Copy-Item (Join-Path $RepoRoot "docs\*.md") $docsRoot -Force
+Copy-Item (Join-Path $RepoRoot "docs\*") $docsRoot -Recurse -Force
+Copy-Item (Join-Path $RepoRoot "design\gdd") (Join-Path $designRoot "gdd") -Recurse -Force
+Copy-Item (Join-Path $RepoRoot "design\systems") (Join-Path $designRoot "systems") -Recurse -Force
 
 Copy-Item (Join-Path $templateRoot "index.template.html") (Join-Path $distRoot "index.html") -Force
 Copy-Item (Join-Path $templateRoot "README.template.md") (Join-Path $distRoot "README.md") -Force
