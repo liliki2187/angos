@@ -1034,8 +1034,38 @@
     }
 
     /* 第一周软引导 */
-    #tutorialSoftModal .modal-card { max-width: 420px; }
-    #tutorialSoftBody { font-size: 0.9rem; line-height: 1.5; color: var(--text); }
+    #tutorialSoftModal .modal-card { max-width: 440px; }
+    #tutorialSoftBody {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text);
+      max-height: min(52vh, 320px);
+      overflow-y: auto;
+    }
+    .tutorial-soft-first-row {
+      padding: 0 1rem 0.35rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .tutorial-soft-first-row label { cursor: pointer; display: flex; gap: 0.45rem; align-items: flex-start; }
+    .tutorial-soft-first-row input { margin-top: 0.2rem; flex-shrink: 0; }
+    .tutorial-soft-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    #tutorialSoftPageInd {
+      font-size: 0.78rem;
+      color: var(--muted);
+      flex: 1;
+      text-align: center;
+      min-width: 5rem;
+    }
+    #tutorialSoftPrev { flex-shrink: 0; }
+    #tutorialSoftNext { flex-shrink: 0; margin-left: auto; }
 
     /* 报纸填入演示实验：与正式组版一致的 nm-story + 拟物报纸（效果 B） */
     #paperDemoLabModal .modal-card { max-width: 720px; }
@@ -1207,8 +1237,16 @@
           <h3 id="tutorialSoftTitle">提示</h3>
         </div>
         <div class="modal-body" id="tutorialSoftBody"></div>
-        <div class="modal-actions">
-          <button type="button" class="primary" id="tutorialSoftOk">知道了</button>
+        <div id="tutorialSoftFirstRow" class="tutorial-soft-first-row hidden">
+          <label>
+            <input type="checkbox" id="tutorialSoftNever" />
+            <span>不再进行任何新手引导（本机记住；清除本站浏览器数据后可恢复）</span>
+          </label>
+        </div>
+        <div class="modal-actions tutorial-soft-actions">
+          <button type="button" id="tutorialSoftPrev">上一页</button>
+          <span id="tutorialSoftPageInd" class="hidden"></span>
+          <button type="button" class="primary" id="tutorialSoftNext">知道了</button>
         </div>
       </div>
     </div>
