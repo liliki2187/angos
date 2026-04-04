@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -28,6 +28,14 @@
     .stat b { display: block; color: var(--gold); font-size: 0.7rem; }
     .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.1rem; margin-bottom: 1rem; }
     .panel h2 { margin: 0 0 0.6rem; font-size: 1rem; color: var(--gold-dim); font-weight: 600; }
+    .view-title-row {
+      display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+      gap: 0.35rem 1rem; margin: 0 0 0.6rem;
+    }
+    .view-title-row h2 { margin: 0; flex: 1 1 auto; min-width: 0; }
+    .dispatch-count {
+      font-size: 0.95rem; font-weight: 600; color: var(--gold-dim); letter-spacing: 0.02em; white-space: nowrap;
+    }
     .row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
     button, .btn {
       font-family: inherit; cursor: pointer; border-radius: 6px; border: 1px solid var(--border);
@@ -542,13 +550,20 @@
     .badge.perm { color: var(--sci); border-color: rgba(88, 166, 255, 0.4); }
     .badge.temp { color: var(--danger); border-color: rgba(248, 81, 73, 0.4); }
     .badge.hid { color: var(--mystic); border-color: rgba(163, 113, 247, 0.45); }
-    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(136px, 1fr)); gap: 0.5rem; }
     .staff-card { border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem 0.55rem; font-size: 0.78rem; cursor: pointer; background: #0f1318; }
     .staff-card.selected { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(212, 168, 83, 0.35); }
     .staff-card .t { font-weight: 700; margin-bottom: 0.25rem; }
     .staff-card .portrait {
-      width: 100%; aspect-ratio: 4 / 3; border-radius: 8px; border: 1px solid #334155; margin-bottom: 0.35rem;
-      object-fit: cover; display: block; background: #0b1220;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      margin-bottom: 0.35rem;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      background: #f3f3f3;
     }
     .staff-card dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 0.1rem 0.35rem; font-size: 0.72rem; color: var(--muted); }
     .log { font-size: 0.8rem; color: var(--muted); max-height: 160px; overflow-y: auto; }
@@ -901,18 +916,251 @@
     .syn-card { background: #0f1318; border: 1px solid var(--border); border-radius: 10px; padding: 0.8rem; }
     .syn-card h3 { margin: 0 0 0.5rem; color: var(--gold); font-size: 0.95rem; }
     .syn-list { display: grid; gap: 0.4rem; max-height: 300px; overflow: auto; }
+    .syn-list-deck { grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); }
     .syn-item {
-      border: 1px solid #3b4756; border-radius: 8px; background: #0b1220; padding: 0.45rem 0.55rem; cursor: pointer;
-      display: grid; gap: 0.25rem; font-size: 0.82rem;
+      border: 1px solid #3b4756; border-radius: 8px; background: #0b1220; padding: 0.45rem 0.55rem; cursor: grab;
+      display: grid; gap: 0.25rem; font-size: 0.78rem;
     }
-    .syn-item.on { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(212, 168, 83, 0.35); }
+    .syn-item:active { cursor: grabbing; }
+    .syn-item-slotted { opacity: 0.55; border-style: dashed; }
+    .syn-slotted-hint { font-size: 10px; color: var(--gold-dim); }
     .syn-badges { display: flex; gap: 6px; flex-wrap: wrap; }
     .syn-badge { font-size: 11px; padding: 1px 6px; border-radius: 99px; border: 1px solid #4b5563; color: #cbd5e1; }
     .syn-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 0.6rem; }
-    .syn-slot { border: 1px dashed #5b6470; border-radius: 8px; padding: 0.45rem; min-height: 72px; font-size: 0.8rem; color: var(--muted); background: #0b1220; }
+    .syn-workbench-host { min-height: 120px; margin-bottom: 0.55rem; }
+    .syn-slots-arch {
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; justify-content: flex-start;
+    }
+    .syn-slot-cell {
+      flex: 1 1 140px; max-width: 200px; display: flex; flex-direction: column; gap: 4px;
+    }
+    .syn-slot-required .syn-drop-slot {
+      background: linear-gradient(180deg, rgba(127, 29, 29, 0.45), rgba(30, 20, 22, 0.92));
+      border: 1px solid rgba(248, 113, 113, 0.45);
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25);
+    }
+    .syn-slot-required .syn-slot-label { color: #fecaca; }
+    .syn-slot-internal .syn-drop-slot {
+      background: linear-gradient(180deg, rgba(30, 58, 138, 0.42), rgba(15, 23, 42, 0.92));
+      border: 1px solid rgba(96, 165, 250, 0.5);
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+    }
+    .syn-slot-internal .syn-slot-label { color: #bfdbfe; }
+    .syn-slots-internal-mode { padding: 4px 0; }
+    button.syn-recipe-internal {
+      border-color: rgba(59, 130, 246, 0.65);
+      color: #93c5fd;
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98));
+    }
+    button.syn-recipe-internal:hover { border-color: #60a5fa; color: #e0f2fe; }
+    button.syn-recipe-internal.primary {
+      border-color: #3b82f6;
+      color: #eff6ff;
+      box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.35);
+    }
+    .syn-slot-optional .syn-drop-slot {
+      border: 1px dashed rgba(212, 168, 83, 0.55);
+      background: rgba(15, 23, 42, 0.65);
+    }
+    .syn-slot-optional .syn-slot-label { color: var(--gold-dim); }
+    .syn-slot-label { font-size: 11px; font-weight: 600; letter-spacing: 0.02em; }
+    .syn-drop-slot {
+      border-radius: 10px; min-height: 76px; padding: 6px 8px; display: flex; align-items: center; justify-content: center;
+      text-align: center; transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .syn-drop-slot.syn-drop-has-card { align-items: stretch; justify-content: stretch; }
+    .syn-slot-placeholder { font-size: 11px; color: #9ca3af; line-height: 1.35; }
+    .syn-slot-filled {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; width: 100%;
+      font-size: 11px; color: var(--text); text-align: left;
+    }
+    .syn-slot-chip-title { line-height: 1.35; word-break: break-word; }
+    .syn-slot-clear {
+      flex-shrink: 0; width: 22px; height: 22px; padding: 0; line-height: 1; border-radius: 6px;
+      border: 1px solid var(--border); background: #1e293b; color: var(--muted); cursor: pointer; font-size: 14px;
+    }
+    .syn-slot-clear:hover { color: var(--gold); border-color: var(--gold-dim); }
+    .syn-slot-research {
+      min-height: 64px; margin-top: 6px; border: 1px dashed #64748b; border-radius: 10px; padding: 8px;
+      background: rgba(11, 18, 32, 0.85);
+    }
+    .syn-research-guide { margin-top: 0.5rem; margin-bottom: 0.35rem; }
+    .syn-preview-pre {
+      margin: 0; padding: 0.5rem 0.6rem; border-radius: 8px; border: 1px dashed #4b5563; background: #0b1220;
+      font-size: 0.75rem; color: var(--soft); line-height: 1.45; white-space: pre-wrap; font-family: inherit;
+    }
     .syn-reports { max-height: 260px; overflow: auto; display: grid; gap: 8px; }
     .syn-report { border: 1px solid #334155; border-radius: 8px; padding: 0.5rem; background: #0b1220; font-size: 0.8rem; }
     .syn-help { font-size: 0.8rem; color: var(--muted); line-height: 1.45; }
+
+    /* 合成台演示 Modal */
+    #synthDemoLabModal .modal-card { max-width: 640px; }
+    .synth-demo-stage {
+      position: relative; margin-top: 0.45rem; padding: 12px; background: linear-gradient(180deg, #111827, #0b1220);
+      border: 1px solid var(--line); border-radius: 12px; overflow: hidden; min-height: 200px;
+    }
+    .synth-demo-row { display: grid; grid-template-columns: 1fr 1.15fr; gap: 14px; align-items: start; }
+    @media (max-width: 560px) { .synth-demo-row { grid-template-columns: 1fr; } }
+    .synth-demo-label { font-size: 11px; font-weight: 700; color: var(--text); margin: 0 0 8px; }
+    .synth-demo-mini-card {
+      padding: 8px 10px; border-radius: 8px; border: 1px solid #475569; background: #0b1220; font-size: 11px; margin-bottom: 8px;
+      max-width: 160px;
+    }
+    .synth-demo-slots-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+    .syn-demo-cell { flex: 1 1 120px; max-width: 160px; }
+    .syn-demo-placeholder { font-size: 10px; color: #9ca3af; }
+    .syn-demo-chip { font-size: 11px; color: var(--text); text-align: left; width: 100%; }
+    .synth-demo-source-pulse {
+      animation: synthDemoSourcePulse 0.42s ease-in-out infinite alternate;
+    }
+    @keyframes synthDemoSourcePulse {
+      from { box-shadow: 0 0 0 0 rgba(212, 168, 83, 0); border-color: #334155; }
+      to { box-shadow: 0 0 0 2px rgba(212, 168, 83, 0.28); border-color: rgba(212, 168, 83, 0.75); }
+    }
+    .synth-demo-flyer {
+      position: absolute; left: 0; top: 0; pointer-events: none; z-index: 8;
+      max-width: 140px; padding: 6px 8px; background: #0b1220; border: 1px solid rgba(212, 168, 83, 0.55);
+      border-radius: 8px; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35); opacity: 0; visibility: hidden;
+      font-size: 11px; will-change: transform, opacity;
+    }
+    .synth-demo-flyer-visible { visibility: visible; }
+    .synth-demo-result {
+      margin-top: 10px; text-align: center; font-size: 12px; color: var(--gold); min-height: 1.2em;
+    }
+    .synth-demo-result-flash { animation: synthDemoResultFlash 0.75s ease-out 1; }
+    @keyframes synthDemoResultFlash {
+      0%, 100% { opacity: 1; filter: none; }
+      40% { opacity: 1; filter: brightness(1.25); text-shadow: 0 0 12px rgba(212, 168, 83, 0.45); }
+    }
+
+    /* 第一周软引导 */
+    #tutorialSoftModal .modal-card { max-width: 440px; }
+    #tutorialSoftBody {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text);
+      max-height: min(52vh, 320px);
+      overflow-y: auto;
+    }
+    .tutorial-soft-first-row {
+      padding: 0 1rem 0.35rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .tutorial-soft-first-row label { cursor: pointer; display: flex; gap: 0.45rem; align-items: flex-start; }
+    .tutorial-soft-first-row input { margin-top: 0.2rem; flex-shrink: 0; }
+    .tutorial-soft-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    #tutorialSoftPageInd {
+      font-size: 0.78rem;
+      color: var(--muted);
+      flex: 1;
+      text-align: center;
+      min-width: 5rem;
+    }
+    #tutorialSoftPrev { flex-shrink: 0; }
+    #tutorialSoftNext { flex-shrink: 0; margin-left: auto; }
+
+    /* 报纸填入演示实验：与正式组版一致的 nm-story + 拟物报纸（效果 B） */
+    #paperDemoLabModal .modal-card { max-width: 720px; }
+    .paper-demo-stage-real {
+      position: relative;
+      margin-top: 0.45rem;
+      padding: 12px;
+      background: linear-gradient(180deg, #111827, #0b1220);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .paper-demo-real-row {
+      display: grid;
+      grid-template-columns: minmax(200px, 0.95fr) minmax(260px, 1.1fr);
+      gap: 14px;
+      align-items: start;
+    }
+    @media (max-width: 640px) {
+      .paper-demo-real-row { grid-template-columns: 1fr; }
+    }
+    .paper-demo-section-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 8px;
+    }
+    .paper-demo-source-card.nm-story {
+      cursor: default;
+      max-width: 100%;
+    }
+    .paper-demo-source-pulse {
+      animation: paperDemoSourcePulse 0.42s ease-in-out infinite alternate;
+    }
+    @keyframes paperDemoSourcePulse {
+      from { box-shadow: 0 0 0 0 rgba(212, 168, 83, 0); border-color: #334155; }
+      to { box-shadow: 0 0 0 2px rgba(212, 168, 83, 0.28); border-color: rgba(212, 168, 83, 0.75); }
+    }
+    #paperDemoLabModal .paper-demo-spread-single {
+      display: block;
+      max-width: 100%;
+    }
+    #paperDemoLabModal .paper-demo-spread-single .paper-page {
+      min-height: 0;
+      min-width: 0;
+      max-width: 340px;
+    }
+    #paperDemoLabModal .paper-demo-spread-single .paper-name {
+      font-size: 22px;
+    }
+    #paperDemoLabModal .paper-demo-spread-single .paper-grid {
+      grid-template-rows: 1fr;
+      min-height: 160px;
+      padding: 8px 10px 12px;
+    }
+    #paperDemoLabModal .paper-demo-spread-single .paper-slot {
+      min-height: 140px;
+    }
+    #paperDemoLabModal .paper-demo-spread-single .paper-empty {
+      min-height: 72px;
+    }
+    .paper-demo-landed {
+      display: grid;
+      gap: 6px;
+    }
+    .paper-demo-landed .paper-story-title { margin: 0; }
+    .paper-demo-slot-flash.paper-slot {
+      animation: paperDemoPaperSlotFlash 0.6s ease-out 1;
+    }
+    @keyframes paperDemoPaperSlotFlash {
+      0%, 100% { box-shadow: inherit; }
+      40% {
+        box-shadow: 0 0 0 2px rgba(180, 120, 50, 0.55) inset, 0 0 12px rgba(212, 168, 83, 0.25);
+      }
+    }
+    .paper-demo-slot-filled.paper-slot .paper-slot-header { opacity: 1; }
+    .paper-demo-flyer {
+      position: absolute;
+      left: 0;
+      top: 0;
+      pointer-events: none;
+      z-index: 8;
+      width: max-content;
+      max-width: 200px;
+      padding: 8px 10px;
+      background: #0b1220;
+      border: 1px solid #475569;
+      border-radius: 10px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+      opacity: 0;
+      visibility: hidden;
+      will-change: transform, opacity;
+    }
+    .paper-demo-flyer-visible { visibility: visible; }
+    .paper-demo-flyer-b { transition: none; }
   </style>
 </head>
 <body>
@@ -983,33 +1231,172 @@
       </div>
     </div>
 
+    <div id="tutorialSoftModal" class="modal-mask hidden" role="dialog" aria-modal="true" aria-labelledby="tutorialSoftTitle">
+      <div class="modal-card">
+        <div class="modal-title">
+          <h3 id="tutorialSoftTitle">提示</h3>
+        </div>
+        <div class="modal-body" id="tutorialSoftBody"></div>
+        <div id="tutorialSoftFirstRow" class="tutorial-soft-first-row hidden">
+          <label>
+            <input type="checkbox" id="tutorialSoftNever" />
+            <span>不再进行任何新手引导（本机记住；清除本站浏览器数据后可恢复）</span>
+          </label>
+        </div>
+        <div class="modal-actions tutorial-soft-actions">
+          <button type="button" id="tutorialSoftPrev">上一页</button>
+          <span id="tutorialSoftPageInd" class="hidden"></span>
+          <button type="button" class="primary" id="tutorialSoftNext">知道了</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="paperDemoLabModal" class="modal-mask hidden" role="dialog" aria-modal="true" aria-labelledby="paperDemoLabTitle">
+      <div class="modal-card">
+        <div class="modal-title">
+          <h3 id="paperDemoLabTitle">报刊填入演示（实验）</h3>
+        </div>
+        <div class="modal-body">
+          <p style="margin:0 0 0.55rem;font-size:0.88rem;color:var(--muted);line-height:1.55;">
+            与正式全链条<strong>第一周组版</strong>所用演示相同：<strong>左侧故事库卡片</strong> + <strong>拟物增强报纸头版槽位</strong>；<strong>效果 B</strong>（来源高亮 + 插值飞入）；<strong>每次播完间隔 1 秒自动重播</strong>。也可点「重播」立即重来；正式流程中可在组版工具栏点「报刊填入演示」再次打开。
+          </p>
+          <div class="paper-demo-stage paper-demo-stage-real" id="paperDemoStage">
+            <div class="paper-demo-real-row">
+              <div class="paper-demo-lib-col">
+                <div class="paper-demo-section-label">1）本期故事库（与主界面相同控件样式）</div>
+                <div class="nm-story paper-demo-source-card" id="paperDemoSourceChip">
+                  <div class="nm-story-title">示例报道：港区异常回波</div>
+                  <div class="nm-chips">
+                    <span class="nm-chip ex">探索稿</span>
+                    <span class="nm-chip">标签:时政 / 经济</span>
+                    <span class="nm-chip">质量:Gold</span>
+                  </div>
+                  <div class="nm-tip" style="margin-top:6px;font-size:11px;padding:6px;">拖到中间头版版位</div>
+                </div>
+              </div>
+              <div class="paper-demo-paper-col">
+                <div class="paper-demo-section-label">2）拟物报纸 · 头版（与组版「当期版面」一致主题）</div>
+                <div class="paper-spread paper-mode-fixed paper-visual-enhanced paper-demo-spread-single">
+                  <section class="paper-page">
+                    <div class="paper-header">
+                      <div class="paper-name">DOG NEWS</div>
+                      <div class="paper-meta">
+                        <span>1930年3月</span><span>第1周</span><span>演示页</span>
+                      </div>
+                    </div>
+                    <div class="paper-grid">
+                      <div class="paper-slot" id="paperDemoTargetSlot">
+                        <div class="paper-slot-header">
+                          <span>头版</span>
+                          <div class="paper-multi empty">头版奖励系数 x3.0</div>
+                        </div>
+                        <div class="paper-empty" id="paperDemoEmptyHint">拖拽报道到此处</div>
+                        <div class="paper-demo-landed hidden" id="paperDemoLandedBlock">
+                          <div class="paper-story-title">示例报道：港区异常回波</div>
+                          <div class="paper-attrs">
+                            <span class="paper-attr t1" title="时政"></span>
+                            <span class="paper-attr t2" title="经济"></span>
+                          </div>
+                          <div class="paper-img" aria-hidden="true"></div>
+                          <div class="paper-body">
+                            <span>**** **** **** ****</span>
+                            <span>**** **** **** ****</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+            <div class="paper-demo-flyer" id="paperDemoFlyer" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="paperDemoReplay">重播</button>
+          <button type="button" class="primary" id="paperDemoClose">关闭</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="synthDemoLabModal" class="modal-mask hidden" role="dialog" aria-modal="true" aria-labelledby="synthDemoLabTitle">
+      <div class="modal-card">
+        <div class="modal-title">
+          <h3 id="synthDemoLabTitle">合成台拖拽演示</h3>
+        </div>
+        <div class="modal-body">
+          <p style="margin:0 0 0.55rem;font-size:0.88rem;color:var(--muted);line-height:1.55;">
+            与正式合成台一致：<strong>红色背板</strong>为必要槽，<strong>金色虚线</strong>为可选工具槽。示意顺序为现象 → 情报 → 合成示意；播完间隔约 2 秒自动重播，也可点「重播」。
+          </p>
+          <div class="synth-demo-stage" id="synthDemoStage">
+            <div class="synth-demo-row">
+              <div>
+                <div class="synth-demo-label">素材（示意）</div>
+                <div class="synth-demo-mini-card" id="synthDemoCardPhen">现象样本 · 演示</div>
+                <div class="synth-demo-mini-card" id="synthDemoCardIntel">情报摘要 · 演示</div>
+              </div>
+              <div>
+                <div class="synth-demo-label">卡槽（类型1 抢先报道）</div>
+                <div class="synth-demo-slots-wrap">
+                  <div class="syn-slot-cell syn-slot-required syn-demo-cell">
+                    <div class="syn-slot-label">现象（必要）</div>
+                    <div class="syn-drop-slot" id="synthDemoDropPhen"><span class="syn-demo-placeholder">拖入现象</span></div>
+                  </div>
+                  <div class="syn-slot-cell syn-slot-required syn-demo-cell">
+                    <div class="syn-slot-label">情报（必要）</div>
+                    <div class="syn-drop-slot" id="synthDemoDropIntel"><span class="syn-demo-placeholder">拖入情报</span></div>
+                  </div>
+                  <div class="syn-slot-cell syn-slot-optional syn-demo-cell">
+                    <div class="syn-slot-label">工具（可选）</div>
+                    <div class="syn-drop-slot" id="synthDemoDropTool"><span class="syn-demo-placeholder">可选</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="synth-demo-result" id="synthDemoResult" aria-live="polite"></div>
+            <div class="synth-demo-flyer" id="synthDemoFlyer" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="synthDemoReplay">重播</button>
+          <button type="button" class="primary" id="synthDemoClose">关闭</button>
+        </div>
+      </div>
+    </div>
+
     <div id="phase-synthesis" class="hidden">
       <h1>编辑部 · 故事合成台</h1>
-      <p class="sub" id="synthesisSub">将探索获得的素材与认知进行合成，产出可刊登报道。</p>
+      <div class="row" style="margin-bottom:0.65rem;flex-wrap:wrap;gap:10px;align-items:center;">
+        <p class="sub" id="synthesisSub" style="margin:0;flex:1;min-width:220px;">将探索获得的素材与认知进行合成，产出可刊登报道。</p>
+        <button type="button" class="nm-sec" id="btnSynthDemoLab">合成拖拽演示</button>
+      </div>
       <div class="syn-grid">
         <section class="syn-card">
           <h3>1) 素材仓</h3>
+          <p class="syn-help" style="margin:0 0 0.5rem;">拖拽卡牌到右侧卡槽。公开报道用<strong>红/金</strong>槽；<strong>爆料卡</strong>仅用于「爆炸性新闻」，不可合成获得。</p>
           <div class="row" style="margin-bottom:0.5rem;">
             <button type="button" id="tabPhenomenon">现象牌</button>
             <button type="button" id="tabIntel">情报牌</button>
             <button type="button" id="tabCognition">认知牌</button>
             <button type="button" id="tabTool">工具牌</button>
+            <button type="button" id="tabTipOff">爆料卡</button>
           </div>
-          <div id="synInventory" class="syn-list"></div>
+          <div id="synInventory" class="syn-list syn-list-deck"></div>
           <div class="syn-actions">
-            <button type="button" id="clearSelection">清空选择</button>
-            <button type="button" id="researchBtn">研究现象 -> 生成认知</button>
+            <button type="button" id="clearSelection">清空卡槽</button>
           </div>
         </section>
         <section class="syn-card">
-          <h3>2) 配方与结果</h3>
-          <div class="row" style="margin-bottom:0.5rem;">
-            <button type="button" class="primary" id="recipe1">类型1 抢先报道</button>
-            <button type="button" id="recipe2">类型2 纪实揭秘</button>
-            <button type="button" id="recipe3">类型3 猎奇假想</button>
-            <button type="button" id="recipe4">类型4 生硬编造</button>
+          <h3>2) 报道类型与卡槽</h3>
+          <div class="row" style="margin-bottom:0.5rem;align-items:stretch;">
+            <button type="button" class="primary" id="recipe1">抢先快讯</button>
+            <button type="button" id="recipe2">深度报道</button>
+            <button type="button" id="recipe3">个人专栏</button>
+            <button type="button" id="recipe4">爆炸性新闻</button>
+            <button type="button" class="syn-recipe-internal" id="recipeInternal">内审定调</button>
           </div>
-          <div class="syn-slot" id="synSlotPreview">尚未选择素材。请在左侧点击卡牌后执行合成。</div>
+          <div id="synWorkbench" class="syn-workbench-host" aria-live="polite"></div>
+          <pre class="syn-preview-pre" id="synSynthPreview"></pre>
           <div class="syn-actions">
             <button type="button" class="primary" id="craftBtn">执行合成</button>
             <button type="button" id="toEditorialBtn">进入组版</button>
@@ -1047,6 +1434,7 @@
           <div class="nm-slot-grid" id="slotList"></div>
           <div class="nm-divider"></div>
           <div class="row">
+            <button type="button" class="nm-sec" id="btnPaperDemoLab" style="display:none">报刊填入演示</button>
             <button type="button" class="nm-sec" id="clearBtn">清空版面</button>
             <button type="button" class="nm-sec" id="paperModeToggle">切换版面模式</button>
             <button type="button" class="nm-sec" id="paperVisualToggle">拟物增强：关</button>
@@ -1116,14 +1504,19 @@
     subUnitValue: 0.18,
     synthTab: "phenomenon",
     synthRecipe: "r1",
-    synthSelection: [],
+    synthCraftSlots: {},
     synthPollution: 0,
     phenomenonCards: [],
     intelCards: [],
     cognitionCards: [],
     toolCards: [],
+    tipOffCards: [],
     craftedReports: [],
     nextCardId: 1,
+    /** 每条线索唯一题材键，自增 */
+    nextTopicSeq: 1,
+    /** 本周公开合成成功次数，按 primaryTopicKey 计数（合成阶段重置） */
+    topicSynthOrder: {},
     weekEventResolved: false,
     staffEffects: [],
     dynamicNodes: [],
@@ -1139,7 +1532,58 @@
     paperLayoutMode: "fixed",
     paperLabMode: false,
     paperVisualMode: "normal",
+    /** 第 1 周软引导：已关闭过的 key，本局内不再弹出；新周目从第 1 周开始时随页面或 nextWeek 清空 */
+    tutorialSoftW1: {},
   };
+
+  /** localStorage：勾选「不再任何新手引导」后，本机不再弹出引导弹窗（清除站点数据可恢复） */
+  const TUTORIAL_LS_DISABLE_ALL = "wm_angos_no_tutorials_v1";
+  const TUTORIAL_LS_FIRST_PANEL_DONE = "wm_angos_tutorial_intro_offer_done_v1";
+
+  function tutorialsGloballyDisabled() {
+    try {
+      return localStorage.getItem(TUTORIAL_LS_DISABLE_ALL) === "1";
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function tutorialIntroOfferStillPending() {
+    try {
+      return localStorage.getItem(TUTORIAL_LS_FIRST_PANEL_DONE) !== "1";
+    } catch (_) {
+      return true;
+    }
+  }
+
+  function markTutorialIntroOfferFinished() {
+    try {
+      localStorage.setItem(TUTORIAL_LS_FIRST_PANEL_DONE, "1");
+    } catch (_) {}
+  }
+
+  function setTutorialsGloballyDisabled() {
+    try {
+      localStorage.setItem(TUTORIAL_LS_DISABLE_ALL, "1");
+    } catch (_) {}
+  }
+
+  /** 全球地图引导页：示意插图（Assets/tutorial-map-guide.svg） */
+  const TUTORIAL_MAP_GUIDE_FIGURE = `<div class="tutorial-soft-figure" style="margin:0 0 0.65rem;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#0b1220;">
+<img src="Assets/tutorial-map-guide.svg" alt="取材地图示意：左侧为可点区域，右侧为区域情报列表，二者可联动高亮" style="display:block;width:100%;max-height:min(30vh,220px);height:auto;object-fit:contain;" />
+<p style="margin:0;padding:8px 10px;font-size:0.72rem;color:var(--muted);line-height:1.45;border-top:1px solid var(--line);">上图为界面结构示意（非您本局实时画面）。左：点陆块上的区域；右：「区域情报」与地图点位对应，可联动高亮。</p>
+</div>`;
+
+  /** 报刊组版实验 · 多页（最多 5 页） */
+  const LAB_FULL_GUIDE_PAGES = [
+    `<p style="margin:0;line-height:1.6;">主编您好。这里是《世界未解之谜周刊》的<strong>组版练习场</strong>：我们暂时跳过出门采访和成稿台，让您先熟悉「报纸长什么样、稿子怎么上桌」。</p>`,
+    `<p style="margin:0;line-height:1.6;">在完整周刊里，流程是：<strong>回合札记 → 世界地图取材 → 合成台成稿 → 编辑部组版</strong>。本页只练最后一步，和正式第一周组版用的是同一套版心与操作习惯。</p>`,
+    `<p style="margin:0;line-height:1.6;">关窗后会自动播放一则<strong>填入动画示例</strong>（稿件飞入头版，可循环）。需要重温时，可在工具栏打开「报刊填入演示」。<span style="color:var(--muted);font-size:0.88rem;">本提示在刷新页面前只出现一次。</span></p>`,
+  ];
+
+  const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道：港区异常回波</div>
+<div class="nm-chips"><span class="nm-chip ex">探索稿</span><span class="nm-chip">标签:时政 / 经济</span><span class="nm-chip">质量:Gold</span></div>
+<div class="nm-tip" style="margin-top:6px;font-size:11px;padding:6px;">拖到中间头版版位</div>`;
 
   const TAGS = ["Politics", "Military", "Economy", "Sport", "Gossip", "Pets", "Humor", "Shopping"];
   const QUALITY = [
@@ -1175,6 +1619,10 @@
   ];
 
   state.placed = Object.fromEntries(slots.map((s) => [s.id, null]));
+
+  function newTopicKey() {
+    return `topic_${state.nextTopicSeq++}`;
+  }
 
   const REGIONS = [
     {
@@ -1243,14 +1691,14 @@
   }
 
   const STAFF = [
-    { id: "s1", name: "外勤·阿黎", avatar: makeAvatar("外勤·阿黎", "#1d4ed8", "#0ea5e9"), 探索: 3, 生存: 2, 洞察: 2, 诡思: 1, 理性: 2 },
-    { id: "s2", name: "调查·老魏", avatar: makeAvatar("调查·老魏", "#14532d", "#22c55e"), 探索: 2, 生存: 3, 洞察: 3, 诡思: 0, 理性: 3 },
-    { id: "s3", name: "神秘版·伊芙", avatar: makeAvatar("神秘版·伊芙", "#4c1d95", "#a855f7"), 探索: 1, 生存: 1, 洞察: 2, 诡思: 4, 理性: 1 },
-    { id: "s4", name: "实习生·小赵", avatar: makeAvatar("实习生·小赵", "#7c2d12", "#f97316"), 探索: 2, 生存: 1, 洞察: 1, 诡思: 1, 理性: 2 },
-    { id: "s5", name: "档案员·沈墨", avatar: makeAvatar("档案员·沈墨", "#0f766e", "#14b8a6"), 探索: 1, 生存: 1, 洞察: 4, 诡思: 1, 理性: 3 },
-    { id: "s6", name: "摄影师·鲁卡", avatar: makeAvatar("摄影师·鲁卡", "#4338ca", "#6366f1"), 探索: 3, 生存: 2, 洞察: 2, 诡思: 1, 理性: 2 },
-    { id: "s7", name: "联络员·宁言", avatar: makeAvatar("联络员·宁言", "#7f1d1d", "#ef4444"), 探索: 2, 生存: 2, 洞察: 3, 诡思: 0, 理性: 3 },
-    { id: "s8", name: "法医顾问·白鹿", avatar: makeAvatar("法医顾问·白鹿", "#374151", "#9ca3af"), 探索: 1, 生存: 2, 洞察: 3, 诡思: 2, 理性: 4 },
+    { id: "s1", name: "印第安纳穷死", avatar: "Assets/avatars/s1_indiana.png", 探索: 3, 生存: 2, 洞察: 2, 诡思: 1, 理性: 2 },
+    { id: "s2", name: "末日时钟", avatar: "Assets/avatars/s2_doomclock.png", 探索: 2, 生存: 3, 洞察: 3, 诡思: 0, 理性: 3 },
+    { id: "s3", name: "火鸡科学家", avatar: "Assets/avatars/s3_turkey_scientist.png", 探索: 1, 生存: 1, 洞察: 2, 诡思: 4, 理性: 1 },
+    { id: "s4", name: "薛定谔", avatar: "Assets/avatars/s4_schrodinger.png", 探索: 2, 生存: 1, 洞察: 1, 诡思: 1, 理性: 2 },
+    { id: "s5", name: "主角", avatar: "Assets/avatars/s5_protagonist.png", 探索: 1, 生存: 1, 洞察: 4, 诡思: 1, 理性: 3 },
+    { id: "s6", name: "伪人", avatar: "Assets/avatars/s6_impostor.png", 探索: 3, 生存: 2, 洞察: 2, 诡思: 1, 理性: 2 },
+    { id: "s7", name: "娜娜", avatar: "Assets/avatars/s7_nana.png", 探索: 2, 生存: 2, 洞察: 3, 诡思: 0, 理性: 3 },
+    { id: "s8", name: "艾灵", avatar: "Assets/avatars/s8_ailing.png", 探索: 1, 生存: 2, 洞察: 3, 诡思: 2, 理性: 4 },
   ];
 
   const TAG_LABEL = { sci: "科学纪实", occult: "神秘玄学", pop: "世俗流量" };
@@ -1261,7 +1709,8 @@
 
   const el = {
     synInventory: null,
-    synSlotPreview: null,
+    synWorkbench: null,
+    synSynthPreview: null,
     synReports: null,
     synthesisHint: null,
     storyList: null,
@@ -1422,6 +1871,454 @@
       .replace(/"/g, "&quot;");
   }
 
+  function week1TutorialActive() {
+    return state.week === 1 && !state.paperLabMode;
+  }
+
+  /** bodyHtmlOrPages：单页 HTML 字符串，或最多 5 页字符串数组 */
+  function showSoftTutorialModal(key, title, bodyHtmlOrPages, gateFn) {
+    return new Promise((resolve) => {
+      if (tutorialsGloballyDisabled()) {
+        state.tutorialSoftW1[key] = true;
+        resolve();
+        return;
+      }
+      if (!gateFn() || state.tutorialSoftW1[key]) {
+        resolve();
+        return;
+      }
+      const wrap = document.getElementById("tutorialSoftModal");
+      const ttl = document.getElementById("tutorialSoftTitle");
+      const body = document.getElementById("tutorialSoftBody");
+      const btnPrev = document.getElementById("tutorialSoftPrev");
+      const btnNext = document.getElementById("tutorialSoftNext");
+      const pageInd = document.getElementById("tutorialSoftPageInd");
+      const firstRow = document.getElementById("tutorialSoftFirstRow");
+      const neverCb = document.getElementById("tutorialSoftNever");
+      if (!wrap || !ttl || !body || !btnNext) {
+        resolve();
+        return;
+      }
+      let pages = Array.isArray(bodyHtmlOrPages)
+        ? bodyHtmlOrPages.slice(0, 5).filter((p) => p && String(p).trim())
+        : [bodyHtmlOrPages || ""].filter((p) => p && String(p).trim());
+      if (!pages.length) pages = ["<p style=\"margin:0;\">（暂无说明）</p>"];
+      let pageIndex = 0;
+
+      const showFirstTimeRow = tutorialIntroOfferStillPending();
+      if (firstRow) {
+        firstRow.classList.toggle("hidden", !showFirstTimeRow);
+        if (neverCb) neverCb.checked = false;
+      }
+
+      const detachAll = () => {
+        btnNext.removeEventListener("click", onNext);
+        if (btnPrev) btnPrev.removeEventListener("click", onPrev);
+        wrap.removeEventListener("click", onMask);
+      };
+
+      const finishIntroMeta = () => {
+        markTutorialIntroOfferFinished();
+        if (neverCb && neverCb.checked) setTutorialsGloballyDisabled();
+      };
+
+      const done = () => {
+        detachAll();
+        wrap.classList.add("hidden");
+        state.tutorialSoftW1[key] = true;
+        finishIntroMeta();
+        resolve();
+      };
+
+      const renderPage = () => {
+        ttl.textContent = title || "提示";
+        body.innerHTML = pages[pageIndex] || "";
+        const n = pages.length;
+        if (pageInd) {
+          pageInd.textContent = n > 1 ? `第 ${pageIndex + 1} / ${n} 页` : "";
+          pageInd.classList.toggle("hidden", n <= 1);
+        }
+        if (btnPrev) {
+          btnPrev.classList.toggle("hidden", n <= 1 || pageIndex <= 0);
+          btnPrev.disabled = pageIndex <= 0;
+        }
+        const last = pageIndex >= n - 1;
+        btnNext.textContent = last ? "知道了" : "下一页";
+      };
+
+      const onNext = () => {
+        if (pageIndex < pages.length - 1) {
+          pageIndex += 1;
+          renderPage();
+        } else {
+          done();
+        }
+      };
+
+      const onPrev = () => {
+        if (pageIndex > 0) {
+          pageIndex -= 1;
+          renderPage();
+        }
+      };
+
+      const onMask = (ev) => {
+        if (ev.target === wrap) done();
+      };
+
+      renderPage();
+      wrap.classList.remove("hidden");
+      btnNext.addEventListener("click", onNext);
+      if (btnPrev) btnPrev.addEventListener("click", onPrev);
+      wrap.addEventListener("click", onMask);
+    });
+  }
+
+  function showWeek1SoftTutorialModal(key, title, bodyHtmlOrPages) {
+    return showSoftTutorialModal(key, title, bodyHtmlOrPages, week1TutorialActive);
+  }
+
+  async function runPaperLabOnboarding() {
+    if (!state.paperLabMode) return;
+    if (tutorialsGloballyDisabled()) return;
+    await showSoftTutorialModal("lab_fullGuide", "新手引导 · 报刊组版实验", LAB_FULL_GUIDE_PAGES, () => state.paperLabMode);
+    openPaperDemoLab();
+  }
+
+  async function runWeek1EditorialOnboarding() {
+    if (!week1TutorialActive() || state.phase !== "editorial" || state.paperLabMode) return;
+    if (tutorialsGloballyDisabled()) return;
+    await showWeek1SoftTutorialModal(
+      "w1_editorial",
+      "第一周 · 编辑部组版",
+      [
+        `<p style="margin:0;line-height:1.6;">主编，成稿已经备好。请把左侧<strong>故事库</strong>里的卡片<strong>拖进</strong>中间报纸的版位——<strong>头版</strong>最吸睛，<strong>内页</strong>略逊一筹，都会算进本期曝光。</p>`,
+        `<p style="margin:0;line-height:1.6;">版式满意后点<strong>结算本期</strong>，看这一周的销量与利润。关窗后会播一段<strong>填入演示</strong>（可循环）；也可点「报刊填入演示」重温。<span style="color:var(--muted);font-size:0.88rem;">本周内本提示只出现一次。</span></p>`,
+      ],
+    );
+    if (!week1TutorialActive() || state.phase !== "editorial" || state.paperLabMode) return;
+    openPaperDemoLab();
+  }
+
+  async function runWeek1SynthesisOnboarding() {
+    if (!week1TutorialActive() || state.phase !== "synthesis" || state.paperLabMode) return;
+    if (tutorialsGloballyDisabled()) return;
+    await showWeek1SoftTutorialModal(
+      "w1_synthesis",
+      "第一周 · 故事合成台",
+      [
+        `<p style="margin:0;line-height:1.6;">主编，这里是<strong>故事合成台</strong>：左侧是您带回的现象、认知、情报和工具；右侧卡槽决定「这一版周刊要出哪一种公开报道」。</p>`,
+        `<p style="margin:0;line-height:1.6;"><strong>公开报道</strong>：按<strong>红色</strong>槽位提示放入必需素材；<strong>金色虚线</strong>槽可放工具，略抬成功率。<strong>内审定调</strong>（蓝色）：用现象定编辑部口径，生成同主题的「认知」供后续使用，<strong>不直接上版</strong>。</p>`,
+        `<p style="margin:0;line-height:1.6;"><strong>爆炸性新闻</strong>需要专用<strong>爆料卡</strong>（在左侧「爆料卡」分类；来自探索，无法靠合成「做出来」）。</p>`,
+        `<p style="margin:0;line-height:1.6;">关窗后会自动播<strong>拖拽示意</strong>；需要时也可点「合成拖拽演示」。<span style="color:var(--muted);font-size:0.88rem;">本周内本提示只出现一次。</span></p>`,
+      ],
+    );
+    if (!week1TutorialActive() || state.phase !== "synthesis" || state.paperLabMode) return;
+    openSynthDemoLab();
+  }
+
+  function scheduleWeek1SoftTutorial(key, title, bodyHtmlOrPages) {
+    if (tutorialsGloballyDisabled() || !week1TutorialActive() || state.tutorialSoftW1[key]) return;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (tutorialsGloballyDisabled() || !week1TutorialActive() || state.tutorialSoftW1[key]) return;
+        showWeek1SoftTutorialModal(key, title, bodyHtmlOrPages);
+      });
+    });
+  }
+
+  let paperDemoRaf = null;
+  let paperDemoGen = 0;
+  let paperDemoAutoTimer = null;
+  const PAPER_DEMO_AUTO_INTERVAL_MS = 1000;
+
+  function cancelPaperDemoAnim() {
+    if (paperDemoRaf != null) {
+      cancelAnimationFrame(paperDemoRaf);
+      paperDemoRaf = null;
+    }
+  }
+
+  function clearPaperDemoAutoTimer() {
+    if (paperDemoAutoTimer != null) {
+      clearTimeout(paperDemoAutoTimer);
+      paperDemoAutoTimer = null;
+    }
+  }
+
+  function schedulePaperDemoAutoReplay() {
+    clearPaperDemoAutoTimer();
+    const wrap = document.getElementById("paperDemoLabModal");
+    if (!wrap || wrap.classList.contains("hidden")) return;
+    paperDemoAutoTimer = window.setTimeout(() => {
+      paperDemoAutoTimer = null;
+      const w = document.getElementById("paperDemoLabModal");
+      if (!w || w.classList.contains("hidden")) return;
+      playPaperDemoLab();
+    }, PAPER_DEMO_AUTO_INTERVAL_MS);
+  }
+
+  function playPaperDemoLab() {
+    const stage = document.getElementById("paperDemoStage");
+    const flyer = document.getElementById("paperDemoFlyer");
+    const slot = document.getElementById("paperDemoTargetSlot");
+    const chip = document.getElementById("paperDemoSourceChip");
+    const emptyHint = document.getElementById("paperDemoEmptyHint");
+    const landed = document.getElementById("paperDemoLandedBlock");
+    if (!stage || !flyer || !slot || !chip) return;
+    clearPaperDemoAutoTimer();
+    chip.innerHTML = PAPER_DEMO_SOURCE_INNER_HTML;
+    if (emptyHint) emptyHint.classList.remove("hidden");
+    if (landed) landed.classList.add("hidden");
+    cancelPaperDemoAnim();
+    stage.classList.remove("paper-demo-fx-b", "paper-demo-running");
+    flyer.classList.remove("paper-demo-flyer-visible", "paper-demo-flyer-b");
+    slot.classList.remove("paper-demo-slot-flash", "paper-demo-slot-filled");
+    chip.classList.remove("paper-demo-source-pulse");
+    flyer.innerHTML = `<div class="nm-story-title" style="font-size:12px;line-height:1.3;">示例报道：港区异常回波</div>`;
+    flyer.style.transform = "";
+    flyer.style.opacity = "";
+    void stage.offsetWidth;
+
+    const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      slot.classList.add("paper-demo-slot-filled");
+      if (emptyHint) emptyHint.classList.add("hidden");
+      if (landed) landed.classList.remove("hidden");
+      schedulePaperDemoAutoReplay();
+      return;
+    }
+
+    const myGen = ++paperDemoGen;
+    stage.classList.add("paper-demo-fx-b");
+    const sr = stage.getBoundingClientRect();
+    const cr = chip.getBoundingClientRect();
+    const targetEl = emptyHint && emptyHint.isConnected ? emptyHint : slot;
+    const tr = targetEl.getBoundingClientRect();
+    const x0 = cr.left - sr.left + cr.width / 2;
+    const y0 = cr.top - sr.top + cr.height / 2;
+    const x1 = tr.left - sr.left + tr.width / 2;
+    const y1 = tr.top - sr.top + tr.height / 2;
+    flyer.classList.add("paper-demo-flyer-visible", "paper-demo-flyer-b");
+    chip.classList.add("paper-demo-source-pulse");
+    const t0 = performance.now();
+    const dur = 880;
+    const ease = (t) => 1 - Math.pow(1 - t, 3);
+
+    const finishLand = () => {
+      chip.classList.remove("paper-demo-source-pulse");
+      slot.classList.add("paper-demo-slot-flash", "paper-demo-slot-filled");
+      if (emptyHint) emptyHint.classList.add("hidden");
+      if (landed) landed.classList.remove("hidden");
+    };
+
+    const step = (now) => {
+      if (myGen !== paperDemoGen) return;
+      const t = Math.min(1, (now - t0) / dur);
+      const e = ease(t);
+      const x = x0 + (x1 - x0) * e;
+      const y = y0 + (y1 - y0) * e;
+      const sc = 1 - 0.14 * e;
+      flyer.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${sc})`;
+      flyer.style.opacity = String(0.38 + 0.62 * e);
+      if (t < 1) {
+        paperDemoRaf = requestAnimationFrame(step);
+      } else {
+        paperDemoRaf = null;
+        finishLand();
+        schedulePaperDemoAutoReplay();
+      }
+    };
+    flyer.style.transform = `translate(${x0}px, ${y0}px) translate(-50%, -50%) scale(1)`;
+    flyer.style.opacity = "1";
+    paperDemoRaf = requestAnimationFrame(step);
+  }
+
+  function openPaperDemoLab() {
+    const wrap = document.getElementById("paperDemoLabModal");
+    if (!wrap) return;
+    clearPaperDemoAutoTimer();
+    cancelPaperDemoAnim();
+    wrap.classList.remove("hidden");
+    requestAnimationFrame(() => playPaperDemoLab());
+  }
+
+  function closePaperDemoLab() {
+    const wrap = document.getElementById("paperDemoLabModal");
+    if (wrap) wrap.classList.add("hidden");
+    clearPaperDemoAutoTimer();
+    cancelPaperDemoAnim();
+    paperDemoGen += 1;
+  }
+
+  let paperDemoLabBound = false;
+  function bindPaperDemoLabUi() {
+    if (paperDemoLabBound) return;
+    const wrap = document.getElementById("paperDemoLabModal");
+    const replay = document.getElementById("paperDemoReplay");
+    const closeBtn = document.getElementById("paperDemoClose");
+    if (!wrap || !replay || !closeBtn) return;
+    paperDemoLabBound = true;
+    replay.onclick = () => playPaperDemoLab();
+    closeBtn.onclick = () => closePaperDemoLab();
+    wrap.addEventListener("click", (ev) => {
+      if (ev.target === wrap) closePaperDemoLab();
+    });
+  }
+
+  let synthDemoRaf = null;
+  let synthDemoGen = 0;
+  let synthDemoAutoTimer = null;
+  const SYNTH_DEMO_AUTO_INTERVAL_MS = 2200;
+
+  function cancelSynthDemoAnim() {
+    if (synthDemoRaf != null) {
+      cancelAnimationFrame(synthDemoRaf);
+      synthDemoRaf = null;
+    }
+  }
+
+  function clearSynthDemoAutoTimer() {
+    if (synthDemoAutoTimer != null) {
+      clearTimeout(synthDemoAutoTimer);
+      synthDemoAutoTimer = null;
+    }
+  }
+
+  function scheduleSynthDemoAutoReplay() {
+    clearSynthDemoAutoTimer();
+    const wrap = document.getElementById("synthDemoLabModal");
+    if (!wrap || wrap.classList.contains("hidden")) return;
+    synthDemoAutoTimer = window.setTimeout(() => {
+      synthDemoAutoTimer = null;
+      const w = document.getElementById("synthDemoLabModal");
+      if (!w || w.classList.contains("hidden")) return;
+      playSynthDemoLab();
+    }, SYNTH_DEMO_AUTO_INTERVAL_MS);
+  }
+
+  function playSynthDemoLab() {
+    const stage = document.getElementById("synthDemoStage");
+    const flyer = document.getElementById("synthDemoFlyer");
+    const phenCard = document.getElementById("synthDemoCardPhen");
+    const intelCard = document.getElementById("synthDemoCardIntel");
+    const slotPhen = document.getElementById("synthDemoDropPhen");
+    const slotIntel = document.getElementById("synthDemoDropIntel");
+    const slotTool = document.getElementById("synthDemoDropTool");
+    const resultEl = document.getElementById("synthDemoResult");
+    if (!stage || !flyer || !phenCard || !intelCard || !slotPhen || !slotIntel) return;
+    clearSynthDemoAutoTimer();
+    cancelSynthDemoAnim();
+    slotPhen.innerHTML = `<span class="syn-demo-placeholder">拖入现象</span>`;
+    slotIntel.innerHTML = `<span class="syn-demo-placeholder">拖入情报</span>`;
+    if (slotTool) slotTool.innerHTML = `<span class="syn-demo-placeholder">工具（可选）</span>`;
+    if (resultEl) {
+      resultEl.textContent = "";
+      resultEl.classList.remove("synth-demo-result-flash");
+    }
+    flyer.classList.remove("synth-demo-flyer-visible");
+    flyer.style.transform = "";
+    flyer.style.opacity = "";
+    phenCard.classList.remove("synth-demo-source-pulse");
+    intelCard.classList.remove("synth-demo-source-pulse");
+    stage.classList.remove("synth-demo-running");
+    void stage.offsetWidth;
+
+    const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      slotPhen.innerHTML = `<div class="syn-demo-chip">现象样本</div>`;
+      slotIntel.innerHTML = `<div class="syn-demo-chip">情报摘要</div>`;
+      if (resultEl) {
+        resultEl.textContent = "执行合成 · 示意（演示不消耗真实素材）";
+        resultEl.classList.add("synth-demo-result-flash");
+      }
+      scheduleSynthDemoAutoReplay();
+      return;
+    }
+
+    const myGen = ++synthDemoGen;
+    stage.classList.add("synth-demo-running");
+    const sr = stage.getBoundingClientRect();
+    const ease = (t) => 1 - Math.pow(1 - t, 3);
+    const dur = 700;
+
+    const runFly = (sourceEl, slotEl, chipHtml, onDone) => {
+      const cr = sourceEl.getBoundingClientRect();
+      const tr = slotEl.getBoundingClientRect();
+      const x0 = cr.left - sr.left + cr.width / 2;
+      const y0 = cr.top - sr.top + cr.height / 2;
+      const x1 = tr.left - sr.left + tr.width / 2;
+      const y1 = tr.top - sr.top + tr.height / 2;
+      flyer.innerHTML = chipHtml;
+      flyer.classList.add("synth-demo-flyer-visible");
+      sourceEl.classList.add("synth-demo-source-pulse");
+      const t0 = performance.now();
+      const step = (now) => {
+        if (myGen !== synthDemoGen) return;
+        const t = Math.min(1, (now - t0) / dur);
+        const e = ease(t);
+        const x = x0 + (x1 - x0) * e;
+        const y = y0 + (y1 - y0) * e;
+        const sc = 1 - 0.12 * e;
+        flyer.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${sc})`;
+        flyer.style.opacity = String(0.38 + 0.62 * e);
+        if (t < 1) synthDemoRaf = requestAnimationFrame(step);
+        else {
+          synthDemoRaf = null;
+          sourceEl.classList.remove("synth-demo-source-pulse");
+          flyer.classList.remove("synth-demo-flyer-visible");
+          slotEl.innerHTML = `<div class="syn-demo-chip">${chipHtml}</div>`;
+          onDone();
+        }
+      };
+      flyer.style.transform = `translate(${x0}px, ${y0}px) translate(-50%, -50%) scale(1)`;
+      flyer.style.opacity = "1";
+      synthDemoRaf = requestAnimationFrame(step);
+    };
+
+    runFly(phenCard, slotPhen, "现象样本", () => {
+      runFly(intelCard, slotIntel, "情报摘要", () => {
+        if (resultEl) {
+          resultEl.textContent = "执行合成 · 示意（演示不消耗素材）";
+          resultEl.classList.add("synth-demo-result-flash");
+        }
+        scheduleSynthDemoAutoReplay();
+      });
+    });
+  }
+
+  function openSynthDemoLab() {
+    const wrap = document.getElementById("synthDemoLabModal");
+    if (!wrap) return;
+    clearSynthDemoAutoTimer();
+    cancelSynthDemoAnim();
+    wrap.classList.remove("hidden");
+    requestAnimationFrame(() => playSynthDemoLab());
+  }
+
+  function closeSynthDemoLab() {
+    const wrap = document.getElementById("synthDemoLabModal");
+    if (wrap) wrap.classList.add("hidden");
+    clearSynthDemoAutoTimer();
+    cancelSynthDemoAnim();
+    synthDemoGen += 1;
+  }
+
+  let synthDemoLabBound = false;
+  function bindSynthDemoLabUi() {
+    if (synthDemoLabBound) return;
+    const wrap = document.getElementById("synthDemoLabModal");
+    const replay = document.getElementById("synthDemoReplay");
+    const closeBtn = document.getElementById("synthDemoClose");
+    if (!wrap || !replay || !closeBtn) return;
+    synthDemoLabBound = true;
+    replay.onclick = () => playSynthDemoLab();
+    closeBtn.onclick = () => closeSynthDemoLab();
+    wrap.addEventListener("click", (ev) => {
+      if (ev.target === wrap) closeSynthDemoLab();
+    });
+  }
+
   function renderMacro() {
     const elM = document.getElementById("macro");
     if (!elM) return;
@@ -1571,7 +2468,7 @@
         body: "匿名线人送来一份禁区坐标碎片，你的编辑部获得了额外线索。",
         condition: () => true,
         apply: () => {
-          state.clues.push({ title: "匿名坐标碎片 · 临时线索", type: "occult", tier: 1 });
+          state.clues.push({ title: "匿名坐标碎片 · 临时线索", type: "occult", tier: 1, topicKey: newTopicKey() });
           addMacro({ 诡名: 1 });
           log("随机事件：获得临时线索「匿名坐标碎片」。");
         },
@@ -1661,7 +2558,7 @@
             text: "只拿设备不公开站队",
             desc: "获得临时科技线索，诡名 +1",
             apply: () => {
-              state.clues.push({ title: "协作设备清单 · 临时线索", type: "sci", tier: 1 });
+              state.clues.push({ title: "协作设备清单 · 临时线索", type: "sci", tier: 1, topicKey: newTopicKey() });
               addMacro({ 诡名: 1 });
             },
           },
@@ -1700,7 +2597,7 @@
             desc: "公信 +1，诡名 +1，获得临时情报线索",
             apply: () => {
               addMacro({ 公信: 1, 诡名: 1 });
-              state.clues.push({ title: "读者投稿拼图 · 临时线索", type: "pop", tier: 1 });
+              state.clues.push({ title: "读者投稿拼图 · 临时线索", type: "pop", tier: 1, topicKey: newTopicKey() });
             },
           },
         ],
@@ -1821,6 +2718,14 @@
       renderGlobal();
     };
     setView("weekStart");
+    scheduleWeek1SoftTutorial(
+      "w1_weekStart",
+      "第一周 · 编辑部札记",
+      [
+        `<p style="margin:0;line-height:1.6;">主编，新一周从<strong>编辑部札记</strong>开始：这里会冒出本周的小插曲或突发消息。您读完标题与正文，按提示处理即可——有时只需确认，有时要在几个走向里选一条。<strong>您的选择可能会有不同的后果。</strong></p>`,
+        `<p style="margin:0;line-height:1.6;">处理完札记后，请点<strong>进入全球地图</strong>，编辑部要派您去各地「挖料」了。<span style="color:var(--muted);font-size:0.88rem;">点「知道了」或空白处可关窗；本周内同类提示不再弹出，新周目第一周会再出现。</span></p>`,
+      ],
+    );
   }
 
   function renderGlobal() {
@@ -1830,7 +2735,10 @@
       .map((k) => `<button type="button" class="tag ${state.filters[k] ? "on" : ""}" data-filter="${k}">${TAG_LABEL[k]}</button>`)
       .join(" ");
     elG.innerHTML = `
-      <h2>全球地图</h2>
+      <div class="view-title-row">
+        <h2>全球地图</h2>
+        ${dispatchCountSpanHtml()}
+      </div>
       <div class="tags" id="filterTags">${filterHtml}</div>
       <p style="margin:0.75rem 0 0.5rem;"><button type="button" id="btnRecycle">回收噪音线索</button>
       <span style="color:var(--muted);font-size:0.8rem;margin-left:0.5rem;">诡名 -2，声望 +1</span></p>
@@ -1854,7 +2762,7 @@
     const grid = document.getElementById("regionGrid");
     const regionData = REGIONS.map((r) => {
       const visibleNodes = getRegionNodes(r).filter(nodeVisible).filter(filterNodeTags);
-      const leads = (state.regionLeadEvents[r.id] || []).filter((lead) => !lead.investigated);
+      const leads = visibleRegionLeads(r.id);
       const eventCount = r.unlocked ? (visibleNodes.length + leads.length) : 0;
       const has = visibleNodes.length > 0;
       return { r, visibleNodes, leads, eventCount, has };
@@ -1895,6 +2803,15 @@
     const ndg = document.getElementById("btnNextDayGlobal");
     if (ndg) ndg.onclick = () => advanceOneDay();
     document.getElementById("backFromGlobal").onclick = () => renderWeekStart();
+    scheduleWeek1SoftTutorial(
+      "w1_global",
+      "第一周 · 世界取材地图",
+      [
+        `${TUTORIAL_MAP_GUIDE_FIGURE}<p style="margin:0;line-height:1.6;">这是您的<strong>取材地图</strong>，即您当前可以探索的地域：点陆块上的<strong>区域</strong>进入当地版面。右侧情报列表会与地图上的点位<strong>联动高亮</strong>，方便您对号入座。</p>`,
+        `<p style="margin:0;line-height:1.6;">顶部的 <strong>科学 / 秘闻 / 大众</strong> 标签用来筛一筛题材口味，减少无关目标干扰。</p>`,
+        `<p style="margin:0;line-height:1.6;"><strong>下一天</strong>可用本页右侧大按钮、区域内同款按钮，或屏幕<strong>左下角悬浮按钮</strong>；时间会推进，到期的外派会依次结算。<span style="color:var(--muted);font-size:0.88rem;">本周内本提示只出现一次。</span></p>`,
+      ],
+    );
   }
 
   function findActiveMission(predicate) {
@@ -2017,6 +2934,17 @@
     return false;
   }
 
+  function dispatchStaffCounts() {
+    const total = STAFF.length;
+    const assigned = assignedStaffSet().size;
+    return { available: total - assigned, total };
+  }
+
+  function dispatchCountSpanHtml() {
+    const { available, total } = dispatchStaffCounts();
+    return `<span class="dispatch-count" title="当前可派遣人数 / 队员总人数">（${available}/${total}）</span>`;
+  }
+
   function openQueuedMission(rec) {
     if (!rec || !rec.mission) return;
     state.mission = { ...rec.mission, missionQueueId: rec.id };
@@ -2038,12 +2966,16 @@
     setView("setup");
   }
 
+  function visibleRegionLeads(regionId) {
+    return (state.regionLeadEvents[regionId] || []).filter((lead) => !lead.investigated);
+  }
+
   function renderRegion() {
     const r = REGIONS.find((x) => x.id === state.regionId);
     const elR = document.getElementById("view-region");
     if (!r) return;
     const regionNodes = getRegionNodes(r);
-    const leads = state.regionLeadEvents[r.id] || [];
+    const leads = visibleRegionLeads(r.id);
     const nodePos = NODE_MAP_POS[r.id] || {};
     const pointHtmlNodes = regionNodes
       .filter(nodeVisible)
@@ -2119,7 +3051,10 @@
         </div>`;
       })
       .join("");
-    elR.innerHTML = `<h2>${escapeHtml(r.name)}</h2>
+    elR.innerHTML = `<div class="view-title-row">
+        <h2>${escapeHtml(r.name)}</h2>
+        ${dispatchCountSpanHtml()}
+      </div>
       <div class="region-map-wrap">
         <div class="region-map">${pointHtml}</div>
         <div class="region-node-side">
@@ -2176,6 +3111,15 @@
       renderGlobal();
       setView("global");
     };
+    scheduleWeek1SoftTutorial(
+      "w1_region",
+      "第一周 · 区域版面",
+      [
+        `<p style="margin:0;line-height:1.6;">进入区域后，图例上的 <strong>常 / 隐 / !</strong> 大致表示常驻点、隐藏点和临时热点；已经派人手的格子会标<strong>派</strong>字，避免重复踩坑。</p>`,
+        `<p style="margin:0;line-height:1.6;">点开一条线后，右侧可<strong>组小队</strong>。请看「调查」「现场」两侧的骰数门槛——凑够再派遣更稳妥；不够也能去，但成功率会吃亏。</p>`,
+        `<p style="margin:0;line-height:1.6;"><strong>线索</strong>类条目走调查流程，跑通有机会<strong>解锁新节点</strong>。<span style="color:var(--muted);font-size:0.88rem;">关窗后本周不再用弹窗打断您。</span></p>`,
+      ],
+    );
   }
 
   function syncRegionLinkedState(root, key) {
@@ -2316,6 +3260,14 @@
       renderRegion();
       setView("region");
     };
+    scheduleWeek1SoftTutorial(
+      "w1_setup",
+      "第一周 · 组队与出发",
+      [
+        `<p style="margin:0;line-height:1.6;">请点选队员卡片组成小队（最多 5 人）。上方概率是本次外拍的参考；可在<strong>骰子</strong>与<strong>纯数字</strong>两种展示间切换，看哪种更顺眼。</p>`,
+        `<p style="margin:0;line-height:1.6;">点<strong>派遣</strong>后，任务会占用本周若干天；到期的日子请用<strong>下一天</strong>推进，系统会依次播报结果。您按自己的节奏操作即可，不必为引导多点无关按钮。<span style="color:var(--muted);font-size:0.88rem;">本周内本提示只出现一次。</span></p>`,
+      ],
+    );
   }
 
   function renderDiceRow(rolls, voidSet, label) {
@@ -2555,20 +3507,20 @@
       macro.诡名 += m.tags.includes("occult") ? 5 : 2;
       if (m.kind === "hidden") macro.狂性 = Math.min(100, macro.狂性 + 4);
       lines.push("大成功：高质量线索。");
-      const clue = { title: m.name + " · 深度特稿素材", type: m.tags[0] || "pop", tier: 3 };
+      const clue = { title: m.name + " · 深度特稿素材", type: m.tags[0] || "pop", tier: 3, topicKey: newTopicKey() };
       state.clues.push(clue);
       rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：高（Tier 3）" });
     } else if (tier === "小成功") {
       macro.声望 = Math.min(100, macro.声望 + 4);
       macro.诡名 += 1;
       lines.push("小成功：常规稿件素材。");
-      const clue = { title: m.name + " · 常规稿件素材", type: m.tags[0] || "pop", tier: 2 };
+      const clue = { title: m.name + " · 常规稿件素材", type: m.tags[0] || "pop", tier: 2, topicKey: newTopicKey() };
       state.clues.push(clue);
       rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：中（Tier 2）" });
     } else if (tier === "失败") {
       macro.声望 = Math.max(0, macro.声望 - 2);
       lines.push("失败：碎片线索。");
-      const clue = { title: m.name + " · 碎片线索", type: m.tags[0] || "pop", tier: 1 };
+      const clue = { title: m.name + " · 碎片线索", type: m.tags[0] || "pop", tier: 1, topicKey: newTopicKey() };
       state.clues.push(clue);
       rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：低（Tier 1）" });
     } else {
@@ -2603,6 +3555,20 @@
       if (h) h.innerHTML = `<div class="prob-box">调查 ${check.hitsA}/${check.nAe}（≥${check.kA}）· 现场 ${check.hitsB}/${check.nBe}（≥${check.kB}）</div>`;
     }
     await showRewardsPopup(rewards);
+    if (week1TutorialActive() && !state.tutorialSoftW1.w1_result) {
+      if (tutorialsGloballyDisabled()) {
+        state.tutorialSoftW1.w1_result = true;
+      } else {
+        await showWeek1SoftTutorialModal(
+          "w1_result",
+          "第一周 · 外拍结算",
+          [
+            `<p style="margin:0;line-height:1.6;">主编，这是本次外拍的<strong>双线结果</strong>：「调查」与「现场」各自过线，合在一起决定是大获全胜、平稳交差、失手还是闹大。奖励弹窗可逐条翻看。</p>`,
+            `<p style="margin:0;line-height:1.6;">点<strong>继续</strong>：若本周还有天数，会回到区域；若本周时间用尽，编辑部会请您进<strong>合成台</strong>把料收成稿。<span style="color:var(--muted);font-size:0.88rem;">关窗后本周不再重复本提示。</span></p>`,
+          ],
+        );
+      }
+    }
     const tb = document.getElementById("tierBanner");
     if (tb) tb.textContent = tier;
     const goBtn = document.getElementById("btnAfterResult");
@@ -2843,11 +3809,23 @@
     state.cognitionCards = [];
     state.toolCards = [];
     state.craftedReports = [];
-    state.synthSelection = [];
+    state.topicSynthOrder = {};
     state.synthRecipe = "r1";
+    initSynthSlotsForRecipe("r1");
+    state.tipOffCards = [];
+    if (state.pendingClues.length) {
+      state.tipOffCards.push({
+        id: newCardId(),
+        kind: "tipoff",
+        name: `匿名爆料摘录（${rand(["线人密件", "旁听记录", "加密邮件残段", "档案缺页复印件"])}）`,
+        tier: Math.max(1, Math.min(3, state.pendingClues.length)),
+      });
+    }
     state.synthTab = "phenomenon";
     state.synthPollution = 0;
     for (const clue of state.pendingClues) {
+      if (!clue.topicKey) clue.topicKey = newTopicKey();
+      const tk = clue.topicKey;
       state.phenomenonCards.push({
         id: newCardId(),
         kind: "phenomenon",
@@ -2856,6 +3834,7 @@
         evidenceValue: 35 + clue.tier * 16,
         mysteryBias: clue.type === "occult" ? 70 : clue.type === "pop" ? 45 : 30,
         tier: clue.tier,
+        topicKey: tk,
       });
       state.intelCards.push({
         id: newCardId(),
@@ -2865,6 +3844,7 @@
         evidenceValue: 25 + clue.tier * 10,
         rumorValue: clue.type === "pop" ? 32 : 18,
         tier: clue.tier,
+        topicKey: tk,
       });
       state.cognitionCards.push({
         id: newCardId(),
@@ -2874,6 +3854,7 @@
         sourceType: clue.type,
         credibilityBonus: clue.type === "sci" ? 16 : 8,
         mysteryBonus: clue.type === "occult" ? 18 : 9,
+        topicKey: tk,
       });
     }
     const toolN = Math.max(1, Math.min(3, Math.floor(state.pendingClues.length / 2)));
@@ -2892,48 +3873,151 @@
     if (tab === "phenomenon") return state.phenomenonCards;
     if (tab === "intel") return state.intelCards;
     if (tab === "cognition") return state.cognitionCards;
+    if (tab === "tipoff") return state.tipOffCards;
     return state.toolCards;
   }
 
-  function selectedCards() {
-    const all = [...state.phenomenonCards, ...state.intelCards, ...state.cognitionCards, ...state.toolCards];
-    const set = new Set(state.synthSelection);
-    return all.filter((c) => set.has(c.id));
+  function getCardById(id) {
+    if (!id) return null;
+    const all = [
+      ...state.phenomenonCards,
+      ...state.intelCards,
+      ...state.cognitionCards,
+      ...state.toolCards,
+      ...state.tipOffCards,
+    ];
+    return all.find((c) => c.id === id) || null;
+  }
+
+  const SYNTH_KIND_ZH = { phenomenon: "现象", intel: "情报", cognition: "认知", tool: "工具", tipoff: "爆料卡" };
+
+  function synthSlotLayout(recipe) {
+    const tool = { key: "tool", kind: "tool", required: false, label: "工具（可选）" };
+    if (recipe === "internal") {
+      return [{ key: "phenomenon", kind: "phenomenon", required: true, label: "现象（内审素材）" }];
+    }
+    if (recipe === "r1") {
+      return [
+        { key: "phenomenon", kind: "phenomenon", required: true, label: "现象（必要）" },
+        { key: "intel", kind: "intel", required: true, label: "情报（必要）" },
+        tool,
+      ];
+    }
+    if (recipe === "r2") {
+      return [
+        { key: "phenomenon", kind: "phenomenon", required: true, label: "现象（必要）" },
+        { key: "cognition", kind: "cognition", required: true, label: "认知（必要）" },
+        tool,
+      ];
+    }
+    if (recipe === "r3") {
+      return [
+        { key: "cognition1", kind: "cognition", required: true, label: "认知 ①（必要）" },
+        { key: "cognition2", kind: "cognition", required: true, label: "认知 ②（必要）" },
+        tool,
+      ];
+    }
+    return [
+      { key: "phenomenon", kind: "phenomenon", required: true, label: "现象（必要）" },
+      { key: "cognition", kind: "cognition", required: true, label: "认知（必要）" },
+      { key: "tipoff", kind: "tipoff", required: true, label: "爆料卡（必要）" },
+      tool,
+    ];
+  }
+
+  function initSynthSlotsForRecipe(recipe) {
+    const layout = synthSlotLayout(recipe);
+    const o = {};
+    layout.forEach((s) => {
+      o[s.key] = null;
+    });
+    state.synthCraftSlots = o;
+  }
+
+  function clearCardFromAllCraftSlots(cardId) {
+    if (!cardId || !state.synthCraftSlots) return;
+    const slots = state.synthCraftSlots;
+    Object.keys(slots).forEach((k) => {
+      if (slots[k] === cardId) slots[k] = null;
+    });
+  }
+
+  function assignCardToCraftSlot(slotKey, cardId) {
+    const layout = synthSlotLayout(state.synthRecipe);
+    const def = layout.find((s) => s.key === slotKey);
+    if (!def) return false;
+    const card = getCardById(cardId);
+    if (!card || card.kind !== def.kind) return false;
+    clearCardFromAllCraftSlots(cardId);
+    state.synthCraftSlots[slotKey] = cardId;
+    return true;
+  }
+
+  function selectedSynthCards() {
+    const layout = synthSlotLayout(state.synthRecipe);
+    const out = [];
+    for (const s of layout) {
+      const id = state.synthCraftSlots[s.key];
+      if (!id) continue;
+      const c = getCardById(id);
+      if (c) out.push(c);
+    }
+    return out;
   }
 
   function recipeLabel(recipe) {
-    if (recipe === "r1") return "类型1 抢先报道（现象+情报）";
-    if (recipe === "r2") return "类型2 纪实揭秘（认知+现象，可带工具）";
-    if (recipe === "r3") return "类型3 猎奇假想（认知+认知）";
-    return "类型4 生硬编造（认知+现象）";
+    if (recipe === "internal") return "编辑部内审定调（非公开 · 现象 → 认知）";
+    if (recipe === "r1") return "抢先快讯（现象+情报 + 可选工具）";
+    if (recipe === "r2") return "深度报道（现象+认知 + 可选工具）";
+    if (recipe === "r3") return "个人专栏（双认知 + 可选工具）";
+    return "爆炸性新闻（现象+认知+爆料卡 + 可选工具 · 高赌注）";
   }
 
   function validateRecipe(recipe, cards) {
     const nPhen = cards.filter((c) => c.kind === "phenomenon").length;
     const nIntel = cards.filter((c) => c.kind === "intel").length;
     const nCog = cards.filter((c) => c.kind === "cognition").length;
-    const nTool = cards.filter((c) => c.kind === "tool").length;
+    const nTip = cards.filter((c) => c.kind === "tipoff").length;
+    if (recipe === "internal") return nPhen >= 1 && cards.length >= 1;
     if (recipe === "r1") return nPhen >= 1 && nIntel >= 1;
     if (recipe === "r2") return nPhen >= 1 && nCog >= 1;
     if (recipe === "r3") return nCog >= 2;
-    if (recipe === "r4") return nPhen >= 1 && nCog >= 1;
+    if (recipe === "r4") return nPhen >= 1 && nCog >= 1 && nTip >= 1;
     return false;
   }
 
   function recipeBaseSuccess(recipe) {
+    if (recipe === "internal") return 1;
     if (recipe === "r1") return 0.85;
     if (recipe === "r2") return 0.75;
     if (recipe === "r3") return 0.65;
-    return 0.55;
+    return 0.52;
   }
 
   function buildSynthPreview(recipe, cards) {
-    if (!cards.length) return "尚未选择素材。请在左侧点击卡牌后执行合成。";
+    if (recipe === "internal") {
+      if (!cards.length) return "内审定调：请将 1 张现象牌拖入右侧蓝色卡槽，再点「生成认知」。产出为认知牌，不进入「已合成报道」。";
+      const names = cards.map((c) => c.name).join(" + ");
+      const ok = validateRecipe(recipe, cards);
+      return `${recipeLabel(recipe)}\n槽内：${names}\n${ok ? "可执行：不消耗现象牌，生成 1 张认知牌（与现象同题材）。" : "需且仅需 1 张现象牌。"}`;
+    }
+    if (!cards.length) return "尚未放入素材。请将左侧卡牌拖入右侧红色必要槽；虚线槽为可选工具位。爆炸性新闻需另拖入「爆料卡」（仅特殊途径获得，不可合成）。";
     const names = cards.map((c) => c.name).join(" + ");
     const valid = validateRecipe(recipe, cards);
     const toolBonus = cards.filter((c) => c.kind === "tool").reduce((a, b) => a + b.bonus, 0);
     const successRate = clamp(recipeBaseSuccess(recipe) + toolBonus / 100 - Math.max(0, cards.length - 3) * 0.05, 0.15, 0.95);
-    return `${recipeLabel(recipe)}\n素材：${names}\n预计成功率：${(successRate * 100).toFixed(1)}%\n${valid ? "配方合法，可执行合成。" : "配方不合法，请调整素材组合。"}\n当前失实风险：${state.synthPollution}`;
+    const substanceForTopic = cards.filter((c) => c.kind !== "tipoff" && c.kind !== "tool");
+    const phenCard = substanceForTopic.find((c) => c.kind === "phenomenon");
+    const pk = phenCard?.topicKey || substanceForTopic.find((c) => c.topicKey)?.topicKey;
+    const prevN = pk ? state.topicSynthOrder[pk] || 0 : 0;
+    const nextOrd = prevN + 1;
+    let topicLine = "\n公开合成：现象、认知牌不消耗；情报为材料会消耗；爆料与工具按规则消耗。";
+    if (pk && prevN > 0) {
+      topicLine += `\n该题材本周已公开合成 ${prevN} 篇；若本次成功，本条为第 ${nextOrd} 篇，上版时报纸结算基础值将按同题疲劳折算（先发抢先再发深度总加成低于单发深度）`;
+    } else if (pk) {
+      topicLine += `\n该题材本周首次公开合成，上版按满额基础值计入（仍受版面其它乘数影响）。`;
+    }
+    return `${recipeLabel(recipe)}\n素材：${names}\n预计成功率：${(successRate * 100).toFixed(1)}%\n${valid ? "配方合法，可执行合成。" : "配方不合法，请调整素材组合。"}\n当前失实风险：${state.synthPollution}${topicLine}`;
   }
 
   function consumeCards(ids) {
@@ -2944,21 +4028,56 @@
     state.toolCards = state.toolCards
       .map((t) => (remove.has(t.id) ? { ...t, durability: t.durability - 1 } : t))
       .filter((t) => t.durability > 0);
+    state.tipOffCards = state.tipOffCards.filter((c) => !remove.has(c.id));
+  }
+
+  /** 公开报道合成：只消耗情报、爆料、工具；现象与认知保留 */
+  function consumePublicSynthMaterials(cards) {
+    const ids = [];
+    for (const c of cards) {
+      if (c.kind === "intel" || c.kind === "tipoff") ids.push(c.id);
+      if (c.kind === "tool") ids.push(c.id);
+    }
+    consumeCards(ids);
+  }
+
+  const TOPIC_REPEAT_BASE_MULT = 0.72;
+  const TOPIC_DEEP_NOT_FIRST_MULT = 0.9;
+
+  function shortTopicLabel(topicKey) {
+    if (!topicKey) return "";
+    return topicKey.startsWith("topic_") ? `#${topicKey.slice(6)}` : topicKey;
+  }
+
+  /** 报刊结算用：同题材第 2 篇起打折，深度/专栏/爆炸再叠乘 */
+  function effectiveStoryBase(story) {
+    if (!story) return 0;
+    const intrinsic = story.intrinsicBaseValue != null ? story.intrinsicBaseValue : story.baseValue;
+    if (!story.fromExplore || !story.primaryTopicKey) return intrinsic;
+    const order = story.synthTopicOrder || 0;
+    if (order <= 0) return intrinsic;
+    let m = 1;
+    if (order >= 2) m *= TOPIC_REPEAT_BASE_MULT;
+    if (order >= 2 && (story.recipeType === "r2" || story.recipeType === "r3" || story.recipeType === "r4")) m *= TOPIC_DEEP_NOT_FIRST_MULT;
+    return Math.max(1, Math.round(intrinsic * m));
   }
 
   function synthToStory(recipe, cards) {
-    const hasSci = cards.some((c) => c.sourceType === "sci" || c.domain === "sci");
-    const hasOccult = cards.some((c) => c.sourceType === "occult" || c.domain === "occult");
-    const hasPop = cards.some((c) => c.sourceType === "pop" || c.domain === "pop");
+    const substance = cards.filter((c) => c.kind !== "tipoff");
+    const hasTipoff = cards.some((c) => c.kind === "tipoff");
+    const hasSci = substance.some((c) => c.sourceType === "sci" || c.domain === "sci");
+    const hasOccult = substance.some((c) => c.sourceType === "occult" || c.domain === "occult");
+    const hasPop = substance.some((c) => c.sourceType === "pop" || c.domain === "pop");
     const tags = [];
     if (hasSci) tags.push("Politics");
     if (hasOccult) tags.push("Gossip");
     if (hasPop || !tags.length) tags.push("Shopping");
     if (tags.length === 1 && Math.random() < 0.5) tags.push(rand(TAGS.filter((t) => t !== tags[0])));
-    const evidence = cards.reduce((a, c) => a + (c.evidenceValue || 0), 0);
-    const mystery = cards.reduce((a, c) => a + (c.mysteryBias || c.mysteryBonus || 0), 0);
-    const cognitionLv = cards.reduce((a, c) => a + (c.level || 0), 0);
-    const sensational = recipe === "r3" ? 78 : recipe === "r4" ? 86 : recipe === "r1" ? 64 : 56;
+    const evidence = substance.reduce((a, c) => a + (c.evidenceValue || 0), 0);
+    const mystery = substance.reduce((a, c) => a + (c.mysteryBias || c.mysteryBonus || 0), 0);
+    const cognitionLv = substance.reduce((a, c) => a + (c.level || 0), 0);
+    let sensational = recipe === "r3" ? 72 : recipe === "r4" ? 88 : recipe === "r1" ? 64 : 58;
+    if (hasTipoff) sensational += 14;
     const credibility = clamp(evidence * 0.65 + cognitionLv * 4 - (recipe === "r4" ? 45 : recipe === "r3" ? 22 : 0), 8, 95);
     const mysteryScore = clamp(mystery * 0.7 + (recipe === "r3" ? 20 : 0), 10, 95);
     const gaze = clamp((recipe === "r4" ? 26 : 12) + Math.round(mysteryScore * 0.25) + Math.round(cognitionLv * 0.8), 6, 90);
@@ -2971,19 +4090,34 @@
       if (Math.random() < 0.4) negatives.push("bias_overreach");
     }
     if (credibility < 40 && Math.random() < 0.35) negatives.push("sloppy_writing");
-    const titlePrefix = recipe === "r2" ? "纪实揭秘" : recipe === "r3" ? "猎奇假想" : recipe === "r4" ? "争议爆料" : "抢先快讯";
-    const title = `${titlePrefix}：${cards[0]?.name?.replace("样本", "").replace("相关情报", "") || buildNewsTitle(tags)}`;
+    const titlePrefix =
+      recipe === "r2" ? "深度报道" : recipe === "r3" ? "个人专栏" : recipe === "r4" ? "爆炸性新闻" : "抢先快讯";
+    const titleSeed = substance[0] || cards[0];
+    const title = `${titlePrefix}：${titleSeed?.name?.replace("样本", "").replace("相关情报", "") || buildNewsTitle(tags)}`;
+    const substanceForTopic = cards.filter((c) => c.kind !== "tipoff" && c.kind !== "tool");
+    const topicKeys = [...new Set(substanceForTopic.map((c) => c.topicKey).filter(Boolean))];
+    const phenCard = substanceForTopic.find((c) => c.kind === "phenomenon");
+    const primaryTopicKey = phenCard?.topicKey || substanceForTopic.find((c) => c.topicKey)?.topicKey || null;
     return {
       id: state.nextStoryId++,
       title,
       tags,
       quality: q.key,
       baseValue: q.value,
+      intrinsicBaseValue: q.value,
+      primaryTopicKey,
+      topicKeys,
+      synthTopicOrder: null,
       negatives,
       fromExplore: true,
       attrs: { sensational, credibility, mystery: mysteryScore, gaze },
       recipeType: recipe,
     };
+  }
+
+  function isCardPlacedInSynth(id) {
+    if (!id) return false;
+    return Object.values(state.synthCraftSlots || {}).some((v) => v === id);
   }
 
   function renderSynthInventory() {
@@ -2995,30 +4129,97 @@
     }
     el.synInventory.innerHTML = list
       .map((c) => {
-        const on = state.synthSelection.includes(c.id) ? "on" : "";
-        const badge = c.kind === "tool"
-          ? `<span class="syn-badge">耐久 ${c.durability}</span><span class="syn-badge">加成 +${c.bonus}%</span>`
-          : c.kind === "cognition"
-            ? `<span class="syn-badge">等级 ${c.level}</span>`
-            : `<span class="syn-badge">证据 ${c.evidenceValue || 0}</span>`;
-        return `<div class="syn-item ${on}" data-card="${c.id}">
+        const placed = isCardPlacedInSynth(c.id);
+        const topicChip =
+          c.topicKey && (c.kind === "phenomenon" || c.kind === "intel" || c.kind === "cognition")
+            ? `<span class="syn-badge">题材${shortTopicLabel(c.topicKey)}</span>`
+            : "";
+        const badge =
+          c.kind === "tool"
+            ? `<span class="syn-badge">耐久 ${c.durability}</span><span class="syn-badge">加成 +${c.bonus}%</span>`
+            : c.kind === "cognition"
+              ? `<span class="syn-badge">等级 ${c.level}</span>`
+              : c.kind === "tipoff"
+                ? `<span class="syn-badge">特殊</span><span class="syn-badge">不可合成</span>`
+                : `<span class="syn-badge">证据 ${c.evidenceValue || 0}</span>`;
+        return `<div class="syn-item syn-item-draggable${placed ? " syn-item-slotted" : ""}" draggable="true" data-card="${c.id}" data-kind="${c.kind}" title="拖到右侧卡槽">
           <strong>${escapeHtml(c.name)}</strong>
-          <div class="syn-badges"><span class="syn-badge">${c.kind}</span>${badge}</div>
+          <div class="syn-badges"><span class="syn-badge">${c.kind}</span>${topicChip}${badge}</div>
+          ${placed ? `<div class="syn-slotted-hint">已在槽位</div>` : ""}
         </div>`;
       })
       .join("");
-    el.synInventory.querySelectorAll("[data-card]").forEach((node) => {
-      node.onclick = () => {
+    el.synInventory.querySelectorAll(".syn-item-draggable").forEach((node) => {
+      node.addEventListener("dragstart", (ev) => {
         const id = node.getAttribute("data-card");
-        const idx = state.synthSelection.indexOf(id);
-        if (idx >= 0) state.synthSelection.splice(idx, 1);
-        else {
-          if (state.synthSelection.length >= 4) state.synthSelection.shift();
-          state.synthSelection.push(id);
-        }
-        renderSynthesis();
-      };
+        ev.dataTransfer.setData("text/plain", id);
+        ev.dataTransfer.effectAllowed = "move";
+      });
     });
+  }
+
+  function synthSlotInnerHtml(slotKey, cardId, kind) {
+    if (!cardId) {
+      return `<span class="syn-slot-placeholder">拖入${SYNTH_KIND_ZH[kind] || ""}</span>`;
+    }
+    const c = getCardById(cardId);
+    if (!c) return `<span class="syn-slot-placeholder">空</span>`;
+    return `<div class="syn-slot-filled">
+      <span class="syn-slot-chip-title">${escapeHtml(c.name)}</span>
+      <button type="button" class="syn-slot-clear" data-clear-slot="${slotKey}" title="移出卡槽">×</button>
+    </div>`;
+  }
+
+  function bindSynthWorkbenchDrag() {
+    const root = el.synWorkbench;
+    if (!root) return;
+    root.querySelectorAll(".syn-drop-slot").forEach((zone) => {
+      zone.addEventListener("dragover", (ev) => {
+        ev.preventDefault();
+        ev.dataTransfer.dropEffect = "move";
+      });
+      zone.addEventListener("drop", (ev) => {
+        ev.preventDefault();
+        const id = ev.dataTransfer.getData("text/plain");
+        if (!id) return;
+        const key = zone.getAttribute("data-slot-key");
+        if (!key) return;
+        if (assignCardToCraftSlot(key, id)) renderSynthesis();
+        else log(`类型不符：此槽需要「${SYNTH_KIND_ZH[zone.getAttribute("data-accept")] || ""}」牌。`);
+      });
+    });
+    root.querySelectorAll("[data-clear-slot]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const key = btn.getAttribute("data-clear-slot");
+        if (key && state.synthCraftSlots) state.synthCraftSlots[key] = null;
+        renderSynthesis();
+      });
+    });
+  }
+
+  function renderSynthWorkbench() {
+    if (!el.synWorkbench) return;
+    const layout = synthSlotLayout(state.synthRecipe);
+    const archCls = state.synthRecipe === "internal" ? "syn-slots-arch syn-slots-internal-mode" : "syn-slots-arch";
+    const cells = layout
+      .map((s) => {
+        const id = state.synthCraftSlots[s.key];
+        const cls =
+          state.synthRecipe === "internal"
+            ? "syn-slot-cell syn-slot-internal"
+            : s.required
+              ? "syn-slot-cell syn-slot-required"
+              : "syn-slot-cell syn-slot-optional";
+        const inner = synthSlotInnerHtml(s.key, id, s.kind);
+        return `<div class="${cls}">
+          <div class="syn-slot-label">${escapeHtml(s.label)}</div>
+          <div class="syn-drop-slot${id ? " syn-drop-has-card" : ""}" data-slot-key="${s.key}" data-accept="${s.kind}">${inner}</div>
+        </div>`;
+      })
+      .join("");
+    el.synWorkbench.innerHTML = `<div class="${archCls}">${cells}</div>`;
+    bindSynthWorkbenchDrag();
   }
 
   function renderSynthReports() {
@@ -3028,68 +4229,63 @@
       return;
     }
     el.synReports.innerHTML = state.craftedReports
-      .map((r) => `<div class="syn-report">
+      .map((r) => {
+        const pk = r.primaryTopicKey;
+        const ord = r.synthTopicOrder;
+        const topicLine =
+          pk && ord
+            ? `<span class="syn-badge">题材${shortTopicLabel(pk)}</span><span class="syn-badge">本周公开第${ord}篇</span>`
+            : pk
+              ? `<span class="syn-badge">题材${shortTopicLabel(pk)}</span>`
+              : "";
+        const eff = effectiveStoryBase(r);
+        const intr = r.intrinsicBaseValue != null ? r.intrinsicBaseValue : r.baseValue;
+        const effLine = intr !== eff ? `<span class="syn-badge">上版有效基础 ${eff}</span>` : `<span class="syn-badge">基础 ${intr}</span>`;
+        return `<div class="syn-report">
         <strong>${escapeHtml(r.title)}</strong>
         <div class="syn-badges" style="margin-top:4px;">
+          ${topicLine}
           <span class="syn-badge">类型 ${r.recipeType}</span>
           <span class="syn-badge">质量 ${r.quality}</span>
-          <span class="syn-badge">基础值 ${r.baseValue}</span>
+          ${effLine}
           <span class="syn-badge">轰动 ${r.attrs.sensational}</span>
           <span class="syn-badge">可信 ${r.attrs.credibility}</span>
           <span class="syn-badge">神秘 ${r.attrs.mystery}</span>
           <span class="syn-badge">诡视 ${r.attrs.gaze}</span>
         </div>
-      </div>`)
+      </div>`;
+      })
       .join("");
   }
 
   function renderSynthesis() {
     renderSynthInventory();
-    const cards = selectedCards();
-    if (el.synSlotPreview) el.synSlotPreview.textContent = buildSynthPreview(state.synthRecipe, cards);
+    renderSynthWorkbench();
+    const cards = selectedSynthCards();
+    if (el.synSynthPreview) el.synSynthPreview.textContent = buildSynthPreview(state.synthRecipe, cards);
     if (el.synthesisHint) {
-      el.synthesisHint.textContent = `配方说明：${recipeLabel(state.synthRecipe)}。本周探索线索 ${state.pendingClues.length} 条，已合成报道 ${state.craftedReports.length} 条。`;
+      if (state.synthRecipe === "internal") {
+        el.synthesisHint.textContent =
+          "蓝色为编辑部内审（非公开）：不消耗现象牌，生成与现象同题材的认知牌。爆料卡仅「爆炸性新闻」需要；公开报道侧情报为消耗性材料。";
+      } else {
+        el.synthesisHint.textContent = `配方说明：${recipeLabel(state.synthRecipe)}。现象与认知可反复用于公开报道；情报为材料每次合成会消耗。爆料与工具按原规则。同题材本周多篇公开稿上版时报纸结算基础值递减。`;
+      }
     }
+    const craftBtn = document.getElementById("craftBtn");
+    if (craftBtn) {
+      craftBtn.disabled = !validateRecipe(state.synthRecipe, cards);
+      craftBtn.textContent = state.synthRecipe === "internal" ? "生成认知" : "执行合成";
+    }
+    ["recipe1", "recipe2", "recipe3", "recipe4"].forEach((bid, i) => {
+      const b = document.getElementById(bid);
+      if (b) b.classList.toggle("primary", state.synthRecipe === ["r1", "r2", "r3", "r4"][i]);
+    });
+    const ri = document.getElementById("recipeInternal");
+    if (ri) ri.classList.toggle("primary", state.synthRecipe === "internal");
     renderSynthReports();
   }
 
-  function craftReport() {
-    const cards = selectedCards();
-    const recipe = state.synthRecipe;
-    if (!validateRecipe(recipe, cards)) {
-      log("合成失败：素材不满足当前配方。");
-      renderSynthesis();
-      return;
-    }
-    const toolBonus = cards.filter((c) => c.kind === "tool").reduce((a, b) => a + b.bonus, 0);
-    const successRate = clamp(recipeBaseSuccess(recipe) + toolBonus / 100 - Math.max(0, cards.length - 3) * 0.05, 0.15, 0.95);
-    if (Math.random() > successRate) {
-      const toConsume = cards.slice(1).map((c) => c.id);
-      consumeCards(toConsume);
-      state.synthSelection = [];
-      state.synthPollution += recipe === "r4" ? 5 : recipe === "r3" ? 2 : 0;
-      log(`合成失败：${recipeLabel(recipe)}（成功率 ${(successRate * 100).toFixed(1)}%）。`);
-      renderSynthesis();
-      return;
-    }
-    const story = synthToStory(recipe, cards);
-    state.craftedReports.push(story);
-    const consumeIds = cards.map((c) => c.id);
-    consumeCards(consumeIds);
-    state.synthSelection = [];
-    if (recipe === "r3") state.synthPollution += 4;
-    if (recipe === "r4") state.synthPollution += 10;
-    log(`合成成功：${story.title}（${story.quality}）。`);
-    renderSynthesis();
-  }
-
-  function researchPhenomenon() {
-    const selected = selectedCards();
-    const phen = selected.find((c) => c.kind === "phenomenon");
-    if (!phen) {
-      log("研究失败：请先选择 1 张现象牌。");
-      return;
-    }
+  function runInternalReview(phen) {
     const newCog = {
       id: newCardId(),
       kind: "cognition",
@@ -3098,11 +4294,55 @@
       sourceType: phen.domain,
       credibilityBonus: phen.evidenceValue > 60 ? 16 : 10,
       mysteryBonus: phen.mysteryBias > 55 ? 16 : 8,
+      topicKey: phen.topicKey || null,
     };
     state.cognitionCards.push(newCog);
-    state.phenomenonCards = state.phenomenonCards.filter((c) => c.id !== phen.id);
-    state.synthSelection = [];
-    log(`研究完成：获得认知牌「${newCog.name}」（Lv.${newCog.level}）。`);
+    log(`内审定调完成：获得认知牌「${newCog.name}」（Lv.${newCog.level}），现象牌仍保留。`);
+  }
+
+  function craftReport() {
+    const cards = selectedSynthCards();
+    const recipe = state.synthRecipe;
+    if (recipe === "internal") {
+      const phen = cards.find((c) => c.kind === "phenomenon");
+      if (!phen || !validateRecipe(recipe, cards)) {
+        log("内审失败：请将 1 张现象牌拖入蓝色卡槽。");
+        renderSynthesis();
+        return;
+      }
+      runInternalReview(phen);
+      initSynthSlotsForRecipe("internal");
+      renderSynthesis();
+      return;
+    }
+    if (!validateRecipe(recipe, cards)) {
+      log("合成失败：素材不满足当前配方。");
+      renderSynthesis();
+      return;
+    }
+    const toolBonus = cards.filter((c) => c.kind === "tool").reduce((a, b) => a + b.bonus, 0);
+    const successRate = clamp(recipeBaseSuccess(recipe) + toolBonus / 100 - Math.max(0, cards.length - 3) * 0.05, 0.15, 0.95);
+    if (Math.random() > successRate) {
+      consumePublicSynthMaterials(cards);
+      initSynthSlotsForRecipe(recipe);
+      state.synthPollution += recipe === "r4" ? 5 : recipe === "r3" ? 2 : 0;
+      log(`合成失败：${recipeLabel(recipe)}（成功率 ${(successRate * 100).toFixed(1)}%）。`);
+      renderSynthesis();
+      return;
+    }
+    const story = synthToStory(recipe, cards);
+    if (story.primaryTopicKey) {
+      state.topicSynthOrder[story.primaryTopicKey] = (state.topicSynthOrder[story.primaryTopicKey] || 0) + 1;
+      story.synthTopicOrder = state.topicSynthOrder[story.primaryTopicKey];
+    } else {
+      story.synthTopicOrder = null;
+    }
+    state.craftedReports.push(story);
+    consumePublicSynthMaterials(cards);
+    initSynthSlotsForRecipe(recipe);
+    if (recipe === "r3") state.synthPollution += 4;
+    if (recipe === "r4") state.synthPollution += 10;
+    log(`合成成功：${story.title}（${story.quality}）。`);
     renderSynthesis();
   }
 
@@ -3115,13 +4355,21 @@
     document.getElementById("phase-synthesis").classList.remove("hidden");
     document.getElementById("phase-editorial").classList.add("hidden");
     document.getElementById("phase-summary").classList.add("hidden");
-    document.getElementById("synthesisSub").textContent = `第 ${state.week} 周 · 已带入探索线索 ${state.pendingClues.length} 条。请先合成报道，再进入组版。`;
+    document.getElementById("synthesisSub").textContent = `第 ${state.week} 周 · 已带入探索线索 ${state.pendingClues.length} 条。请将素材拖入卡槽合成报道，再进入组版。`;
     el.synInventory = document.getElementById("synInventory");
-    el.synSlotPreview = document.getElementById("synSlotPreview");
+    el.synWorkbench = document.getElementById("synWorkbench");
+    el.synSynthPreview = document.getElementById("synSynthPreview");
     el.synReports = document.getElementById("synReports");
     el.synthesisHint = document.getElementById("synthesisHint");
     renderSynthesis();
     log("进入故事合成台：现象/认知/情报可合成报道。");
+    if (week1TutorialActive() && !state.tutorialSoftW1.w1_synthesis) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          void runWeek1SynthesisOnboarding();
+        });
+      });
+    }
   }
 
   function toZhTag(tag) {
@@ -3210,6 +4458,18 @@
     renderLiveStats();
     el.resultBox.innerHTML = `<div class="k">尚未结算</div><div class="nm-tip">拖拽报道到版位，再点「结算本期」。</div>`;
     log("进入编辑部：拖拽组版，结算与 docs/报刊结算出版玩法设计文档.md 一致。");
+    const btnDemo = document.getElementById("btnPaperDemoLab");
+    if (btnDemo) {
+      btnDemo.style.display = state.paperLabMode || state.week === 1 ? "inline-block" : "none";
+      btnDemo.onclick = () => openPaperDemoLab();
+    }
+    if (week1TutorialActive() && !state.paperLabMode) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          void runWeek1EditorialOnboarding();
+        });
+      });
+    }
   }
 
   function getAllPlaced() {
@@ -3219,7 +4479,13 @@
   function calculate(isSettle) {
     const placed = getAllPlaced();
     const emptySlots = slots.length - placed.length;
-    const totalBaseValue = placed.reduce((acc, x) => acc + x.story.baseValue, 0);
+    let sumIntrinsicBase = 0;
+    const totalBaseValue = placed.reduce((acc, x) => {
+      const s = x.story;
+      sumIntrinsicBase += s.intrinsicBaseValue != null ? s.intrinsicBaseValue : s.baseValue;
+      return acc + effectiveStoryBase(s);
+    }, 0);
+    const topicFatigueLoss = Math.max(0, Math.round(sumIntrinsicBase - totalBaseValue));
     const allTags = placed.flatMap((x) => x.story.tags);
     const uniqueTags = new Set(allTags).size;
     const negPenaltyPoints = placed.reduce((acc, x) => acc + x.story.negatives.length, 0);
@@ -3282,6 +4548,8 @@
       placedCount: placed.length,
       emptySlots,
       totalBaseValue,
+      sumIntrinsicBase,
+      topicFatigueLoss,
       uniqueTags,
       comboRaw,
       publicRatio,
@@ -3355,13 +4623,21 @@
         ? `<span class="nm-chip" style="color:#fca5a5">负面:${story.negatives.join("/")}</span>`
         : `<span class="nm-chip">负面:无</span>`;
       const ex = story.fromExplore ? `<span class="nm-chip ex">探索稿</span>` : "";
+      const effB = effectiveStoryBase(story);
+      const intrB = story.intrinsicBaseValue != null ? story.intrinsicBaseValue : story.baseValue;
+      const baseChip =
+        story.fromExplore && story.primaryTopicKey
+          ? `<span class="nm-chip">上版有效基础:${effB}${intrB !== effB ? `（稿内${intrB}）` : ""}</span><span class="nm-chip">题材${shortTopicLabel(story.primaryTopicKey)}</span>${
+              story.synthTopicOrder ? `<span class="nm-chip">本周稿序${story.synthTopicOrder}</span>` : ""
+            }`
+          : `<span class="nm-chip">基础值:${story.baseValue}</span>`;
       card.innerHTML = `
         <div class="nm-story-title">${escapeHtml(story.title)}</div>
         <div class="nm-chips">
           ${ex}
           <span class="nm-chip">标签:${story.tags.map(toZhTag).join(" / ")}</span>
           <span class="nm-chip">质量:${story.quality}</span>
-          <span class="nm-chip">基础值:${story.baseValue}</span>
+          ${baseChip}
           ${negatives}
         </div>`;
       const tip = document.createElement("div");
@@ -3604,7 +4880,8 @@
       <div class="k">连携题材</div><div class="v ${effects.linked.length ? "nm-ok" : "nm-warn"}">${effects.linked.length ? effects.linked.map(toZhTag).join("、") : "无"}</div>
       <div class="k">三轴 P/M/L</div><div class="v ${effects.dominantRatio > 0.7 ? "nm-bad" : "nm-ok"}">${Math.round(effects.publicRatio * 100)}/${Math.round(effects.massRatio * 100)}/${Math.round(effects.lightRatio * 100)}%</div>
       <div class="k">预计需求</div><div class="v">${Math.round(r.demand).toLocaleString("zh-CN")}</div>
-      <div class="k">订阅基数</div><div class="v">${state.subscribers.toLocaleString("zh-CN")}</div>`;
+      <div class="k">订阅基数</div><div class="v">${state.subscribers.toLocaleString("zh-CN")}</div>
+      <div class="k">有效基础（版内）</div><div class="v">${r.totalBaseValue}${r.topicFatigueLoss > 0 ? ` <span style="color:#fca5a5">−${r.topicFatigueLoss}同题</span>` : ""}</div>`;
   }
 
   function settlePaper() {
@@ -3626,7 +4903,8 @@
         <div class="k">实际销量</div><div class="v">${r.sold.toLocaleString("zh-CN")}</div>
         <div class="k">订阅（下期）</div><div class="v">${r.nextSubs.toLocaleString("zh-CN")}</div>
       </div>
-      <div class="nm-tip">乘数：质量 ${r.multipliers.mQuality.toFixed(2)} / 重复 ${r.multipliers.mCombo.toFixed(2)} / 多样性 ${r.multipliers.mDiversity.toFixed(2)} / 版位 ${r.multipliers.mLayout.toFixed(2)} / 偏科 ${r.multipliers.mBias.toFixed(2)}</div>`;
+      <div class="nm-tip">乘数：质量 ${r.multipliers.mQuality.toFixed(2)} / 重复 ${r.multipliers.mCombo.toFixed(2)} / 多样性 ${r.multipliers.mDiversity.toFixed(2)} / 版位 ${r.multipliers.mLayout.toFixed(2)} / 偏科 ${r.multipliers.mBias.toFixed(2)}</div>
+      <div class="nm-tip" style="margin-top:6px;">同题报道：稿内基础合计 ${r.sumIntrinsicBase} → 上版有效合计 ${r.totalBaseValue}${r.topicFatigueLoss > 0 ? `（同题疲劳折损 ${r.topicFatigueLoss} 点基础值）` : "（无同题折损）"}</div>`;
     renderLiveStats();
     document.getElementById("summaryText").innerHTML = `
       第 <strong>${state.week}</strong> 周报刊已结算：净利润 <strong>${fmtMoney(r.profit)}</strong>，
@@ -3638,6 +4916,7 @@
   }
 
   function nextWeek() {
+    state.tutorialSoftW1 = {};
     state.week += 1;
     state.day = 7;
     state.weekEvent = null;
@@ -3649,6 +4928,7 @@
     state.dayResolutionInfo = null;
     state.pendingClues = [];
     state.pendingReports = [];
+    state.topicSynthOrder = {};
     cleanupWeekScopedEffects();
     initRegionLeadEvents();
     state.phase = "explore";
@@ -3726,26 +5006,40 @@
     };
     document.getElementById("recipe1").onclick = () => {
       state.synthRecipe = "r1";
+      initSynthSlotsForRecipe("r1");
       renderSynthesis();
     };
     document.getElementById("recipe2").onclick = () => {
       state.synthRecipe = "r2";
+      initSynthSlotsForRecipe("r2");
       renderSynthesis();
     };
     document.getElementById("recipe3").onclick = () => {
       state.synthRecipe = "r3";
+      initSynthSlotsForRecipe("r3");
       renderSynthesis();
     };
     document.getElementById("recipe4").onclick = () => {
       state.synthRecipe = "r4";
+      initSynthSlotsForRecipe("r4");
       renderSynthesis();
     };
     document.getElementById("clearSelection").onclick = () => {
-      state.synthSelection = [];
+      initSynthSlotsForRecipe(state.synthRecipe);
       renderSynthesis();
     };
-    document.getElementById("researchBtn").onclick = researchPhenomenon;
     document.getElementById("craftBtn").onclick = craftReport;
+    document.getElementById("tabTipOff").onclick = () => {
+      state.synthTab = "tipoff";
+      renderSynthesis();
+    };
+    document.getElementById("recipeInternal").onclick = () => {
+      state.synthRecipe = "internal";
+      initSynthSlotsForRecipe("internal");
+      renderSynthesis();
+    };
+    const btnSynthDemo = document.getElementById("btnSynthDemoLab");
+    if (btnSynthDemo) btnSynthDemo.onclick = () => openSynthDemoLab();
     document.getElementById("toEditorialBtn").onclick = () => {
       state.pendingReports = state.craftedReports.slice();
       if (!state.pendingReports.length) {
@@ -3764,28 +5058,35 @@
   document.getElementById("btnNextDay").onclick = () => advanceOneDay();
 
   function createPaperLabReports() {
-    const mk = (title, tags, quality, baseValue, negatives, attrs, recipeType) => ({
-      id: state.nextStoryId++,
-      title,
-      tags,
-      quality,
-      baseValue,
-      negatives,
-      fromExplore: true,
-      attrs,
-      recipeType,
-    });
+    const mk = (title, tags, quality, baseValue, negatives, attrs, recipeType, labTopicIdx) => {
+      const pk = `topic_paperlab_${labTopicIdx}`;
+      return {
+        id: state.nextStoryId++,
+        title,
+        tags,
+        quality,
+        baseValue,
+        intrinsicBaseValue: baseValue,
+        primaryTopicKey: pk,
+        topicKeys: [pk],
+        synthTopicOrder: 1,
+        negatives,
+        fromExplore: true,
+        attrs,
+        recipeType,
+      };
+    };
     return [
-      mk("塔夫脱辞去大法官职务：历史性领导层更迭", ["Politics", "Economy"], "Gold", 450, [], { sensational: 64, credibility: 88, mystery: 28, gaze: 18 }, "r2"),
-      mk("港务局夜间封锁：三号码头出现异常回波", ["Military", "Gossip"], "Silver", 300, ["thin_source"], { sensational: 72, credibility: 55, mystery: 52, gaze: 34 }, "r1"),
-      mk("东区剧院失踪档案重现：署名来自未来日期", ["Gossip", "Humor"], "Silver", 300, [], { sensational: 76, credibility: 48, mystery: 67, gaze: 46 }, "r3"),
-      mk("市政预算暗线曝光：采购名单出现重复身份", ["Politics", "Shopping"], "Gold", 450, ["bias_overreach"], { sensational: 68, credibility: 79, mystery: 35, gaze: 24 }, "r2"),
-      mk("复活节岛热异常追踪：石像群温差超出历史记录", ["Economy", "Sport"], "Silver", 300, [], { sensational: 58, credibility: 74, mystery: 44, gaze: 23 }, "r1"),
-      mk("夜班电台误播神秘频段：听众报告同频耳鸣", ["Gossip", "Pets"], "Bronze", 150, ["sloppy_writing"], { sensational: 70, credibility: 38, mystery: 62, gaze: 41 }, "r3"),
-      mk("法庭速记员匿名口供：判词在宣读前已泄露", ["Politics", "Military"], "Gold", 450, [], { sensational: 66, credibility: 86, mystery: 31, gaze: 20 }, "r2"),
-      mk("雨夜轨道尽头的白灯：巡检员口供互相矛盾", ["Sport", "Humor"], "Bronze", 150, ["fabrication"], { sensational: 81, credibility: 27, mystery: 71, gaze: 52 }, "r4"),
-      mk("联邦仓库短时断电：监控画面出现空白帧", ["Economy", "Gossip"], "Silver", 300, [], { sensational: 63, credibility: 66, mystery: 49, gaze: 29 }, "r1"),
-      mk("午夜来信附带金属碎片：材质与军标不匹配", ["Military", "Shopping"], "Silver", 300, ["thin_source"], { sensational: 74, credibility: 52, mystery: 59, gaze: 37 }, "r3"),
+      mk("塔夫脱辞去大法官职务：历史性领导层更迭", ["Politics", "Economy"], "Gold", 450, [], { sensational: 64, credibility: 88, mystery: 28, gaze: 18 }, "r2", 0),
+      mk("港务局夜间封锁：三号码头出现异常回波", ["Military", "Gossip"], "Silver", 300, ["thin_source"], { sensational: 72, credibility: 55, mystery: 52, gaze: 34 }, "r1", 1),
+      mk("东区剧院失踪档案重现：署名来自未来日期", ["Gossip", "Humor"], "Silver", 300, [], { sensational: 76, credibility: 48, mystery: 67, gaze: 46 }, "r3", 2),
+      mk("市政预算暗线曝光：采购名单出现重复身份", ["Politics", "Shopping"], "Gold", 450, ["bias_overreach"], { sensational: 68, credibility: 79, mystery: 35, gaze: 24 }, "r2", 3),
+      mk("复活节岛热异常追踪：石像群温差超出历史记录", ["Economy", "Sport"], "Silver", 300, [], { sensational: 58, credibility: 74, mystery: 44, gaze: 23 }, "r1", 4),
+      mk("夜班电台误播神秘频段：听众报告同频耳鸣", ["Gossip", "Pets"], "Bronze", 150, ["sloppy_writing"], { sensational: 70, credibility: 38, mystery: 62, gaze: 41 }, "r3", 5),
+      mk("法庭速记员匿名口供：判词在宣读前已泄露", ["Politics", "Military"], "Gold", 450, [], { sensational: 66, credibility: 86, mystery: 31, gaze: 20 }, "r2", 6),
+      mk("雨夜轨道尽头的白灯：巡检员口供互相矛盾", ["Sport", "Humor"], "Bronze", 150, ["fabrication"], { sensational: 81, credibility: 27, mystery: 71, gaze: 52 }, "r4", 7),
+      mk("联邦仓库短时断电：监控画面出现空白帧", ["Economy", "Gossip"], "Silver", 300, [], { sensational: 63, credibility: 66, mystery: 49, gaze: 29 }, "r1", 8),
+      mk("午夜来信附带金属碎片：材质与军标不匹配", ["Military", "Shopping"], "Silver", 300, ["thin_source"], { sensational: 74, credibility: 52, mystery: 59, gaze: 37 }, "r3", 9),
     ];
   }
 
@@ -3795,13 +5096,14 @@
     if (!enabled) return false;
     state.paperLabMode = true;
     state.paperLayoutMode = "fixed";
-    state.paperVisualMode = "normal";
+    state.paperVisualMode = "enhanced";
     state.phase = "editorial";
     state.pendingReports = createPaperLabReports();
     state.pendingClues = [];
     state.clues = [];
-    log("已进入报纸填充实验模式：跳过全流程，直接体验两页六版位组版。");
+    log("已进入报纸填充实验模式：拟物增强版面 + 新手引导与填入演示（效果 B）。");
     enterEditorialPhase();
+    requestAnimationFrame(() => runPaperLabOnboarding());
     return true;
   }
 
@@ -3812,6 +5114,8 @@
     initRegionLeadEvents();
     bindSynthesisUi();
     bindEditorialUi();
+    bindPaperDemoLabUi();
+    bindSynthDemoLabUi();
     log("全链条开始：探索 → 故事合成 → 编辑部组版 → 结算。");
     if (!maybeEnterPaperLabMode()) {
       renderWeekStart();
@@ -3822,6 +5126,6 @@
   init();
 })();
 
-</script>
+  </script>
 </body>
 </html>

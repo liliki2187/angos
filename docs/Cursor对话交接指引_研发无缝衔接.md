@@ -17,17 +17,26 @@
 
 ---
 
-## 2. Git：日常只需本人仓库（必读）
+## 2. Git：双远程必须一致（必读，避免误解）
 
-**协作约定（现行）**：每日研发成果 **只提交并推送到本人主仓** 即可，**不再做双远程双同步**。
+**协作约定（现行）**：`origin` 与 `daydreamer` 两个仓库的 **`main` 分支应始终保持同一提交**（内容一致且为最新）。推送时 **不要只推一边**。
 
-| 项目 | 说明 |
-|------|------|
-| **规范远程** | `origin` → `https://github.com/liliki2187/angos.git`（本人 angos 仓库） |
-| **日常操作** | 本地 `commit` 后 `git push origin <分支>`（一般为 `main`） |
-| **克隆/拉取** | 以 `origin` 对应 URL 为准即可 |
+| 远程名 | URL | 说明 |
+|--------|-----|------|
+| **`origin`** | `https://github.com/liliki2187/angos.git` | 主展示仓名 **angos** |
+| **`daydreamer`** | `https://github.com/daydreamerguan/angus.git` | 同名历史仓 **angus**，与上表 **同一套 `main` 历史** |
 
-**历史说明**：仓库曾合并 `daydreamerguan/angus` 历史，本地 `git remote` 里可能仍留有 `daydreamer` 等名称；**日常开发不必再向这些远程推送**。根目录下的 `sync-both-remotes.ps1` 为历史脚本，**非当前工作流必需**，需要时自行判断是否删除或仅作存档。
+**推荐操作**（在仓库根目录）：
+
+1. 开发在 **`main`** 上；`commit` 后先 `git pull origin main`（或 `--rebase`，团队统一一种即可），解决冲突再推送。  
+2. **连续推两次**，或运行脚本一次搞定：  
+   - `git push origin main`  
+   - `git push daydreamer main`  
+   - 或：`.\sync-both-remotes.ps1`（默认推 `main` 到上述两个远程）
+
+若本地缺少 `daydreamer`：`git remote add daydreamer https://github.com/daydreamerguan/angus.git`
+
+**给 AI / 新同事的一句话**：本仓库 **不是**「只维护 angos」；**任何合并进 `main` 的改动都应同步到 `origin` 与 `daydreamer`**，除非负责人明确说临时只推一侧（并记得补推）。
 
 **若 `git push origin` 被 GitHub 拒绝（Push Protection / Secret Scanning）**
 
@@ -43,7 +52,8 @@
 | `600c04c` | 故事合成台、回合事件、地图 UI、骰子动画等与全链条相关的大量功能 |
 | `47d4925` | 交接文档文件名规范化 |
 | `094c125` | 与 `daydreamer/main` 合并（无共同历史，已 `--allow-unrelated-histories`） |
-| `4fab604` / `67bea62` | 曾用于双远程推送的脚本（**现行流程已不再要求双推**） |
+| `4fab604` / `67bea62` | 与双远程相关的历史脚本提交 |
+| （最新） | 现行约定：**`main` 同时推 `origin` + `daydreamer`**，见本节上文 |
 
 ---
 

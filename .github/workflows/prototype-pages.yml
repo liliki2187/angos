@@ -1,13 +1,8 @@
 name: Prototype Pages
 
+# 仅手动运行：与 pages.yml（全链条 index）分开，避免同一次 push 两次 deploy-pages 抢锁失败。
+# 需要发布「原型导航站 + design/htmls」时在 Actions 里选本 workflow → Run workflow。
 on:
-  push:
-    branches: [main]
-    paths:
-      - "index.html"
-      - "design/htmls/**"
-      - "design/generated-settlement-reference/2026-03-18/**"
-      - ".github/workflows/prototype-pages.yml"
   workflow_dispatch:
 
 permissions:
@@ -15,8 +10,9 @@ permissions:
   pages: write
   id-token: write
 
+# 与 pages.yml 共用同一组，避免并发部署 GitHub Pages 失败
 concurrency:
-  group: prototype-pages
+  group: "github-pages-${{ github.ref }}"
   cancel-in-progress: true
 
 jobs:
@@ -40,13 +36,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          shopt -s nullglob
           mkdir -p site/design/htmls
           mkdir -p site/design/generated-settlement-reference/2026-03-18
           cp index.html site/index.html
-          cp design/htmls/*.html site/design/htmls/
-          cp design/generated-settlement-reference/2026-03-18/*.html site/design/generated-settlement-reference/2026-03-18/
-          cp design/generated-settlement-reference/2026-03-18/*.css site/design/generated-settlement-reference/2026-03-18/
-          cp design/generated-settlement-reference/2026-03-18/*.js site/design/generated-settlement-reference/2026-03-18/
+          for f in design/htmls/*.html; do cp "$f" site/design/htmls/; done
+          for f in design/generated-settlement-reference/2026-03-18/*.html; do cp "$f" site/design/generated-settlement-reference/2026-03-18/; done
+          for f in design/generated-settlement-reference/2026-03-18/*.css; do cp "$f" site/design/generated-settlement-reference/2026-03-18/; done
+          for f in design/generated-settlement-reference/2026-03-18/*.js; do cp "$f" site/design/generated-settlement-reference/2026-03-18/; done
           touch site/.nojekyll
 
       - name: Upload Pages artifact

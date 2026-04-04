@@ -9,6 +9,7 @@
 
 - 可玩网页（GitHub Pages）：`https://liliki2187.github.io/angos/`
 - 代码仓库（GitHub）：`https://github.com/liliki2187/angos`
+- **同步仓（须与上者 `main` 一致）**：`https://github.com/daydreamerguan/angus` — 远程名一般为 `daydreamer`；推送时请 **`git push origin main` 与 `git push daydreamer main` 都做**，或运行根目录 `sync-both-remotes.ps1`。详见 `docs/Cursor对话交接指引_研发无缝衔接.md` 第 2 节。
 
 ---
 
