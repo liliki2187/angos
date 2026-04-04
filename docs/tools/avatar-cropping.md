@@ -23,7 +23,7 @@
 
 - 格式：`PNG`
 - 尺寸：`384 x 512`（固定 3:4）
-- 路径：`Assets/avatars/`
+- 路径：`design/prototypes/html/full-chain-demo/Assets/avatars/`
 - 命名：`s{序号}_{英文或拼音标识}.png`
 
 ### 2.2 前端显示（头像卡）
@@ -66,9 +66,9 @@
 
 ## 4. 执行流程（每次替换头像都走）
 
-1. 在 `Assets/pic/` 收集源图。  
+1. 在 `design/prototypes/html/full-chain-demo/source/avatars/` 收集源图。  
 2. 先确定每张图的“脸部中心”和“头顶留白”。  
-3. 按 3:4 裁切框导出到 `Assets/avatars/`（384x512 PNG）。  
+3. 按 3:4 裁切框导出到 `design/prototypes/html/full-chain-demo/Assets/avatars/`（384x512 PNG）。  
 4. 在游戏内目标界面实机查看（不是只看导出图）。  
 5. 按验收清单逐条打勾。  
 6. 通过后再提交。  
@@ -136,7 +136,7 @@
 
 ## 8. 变更约束建议
 
-- 若只换头像素材：优先只改 `Assets/avatars/*`，避免误改玩法逻辑。  
+- 若只换头像素材：优先只改 `design/prototypes/html/full-chain-demo/Assets/avatars/*`，避免把网页原型资源继续混进运行时 `Assets/`。  
 - 若调整显示样式：必须同步回归已有头像，确保不会引入“二次裁切”问题。  
 - 大批量替换后，建议至少在以下界面回归一次：  
   - 配队卡列表  

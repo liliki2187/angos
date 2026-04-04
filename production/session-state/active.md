@@ -25,6 +25,12 @@
 - Archived superseded root-level gameplay design docs under `docs/archive/`
 - Added unified documentation indexes in `docs/` and `design/gdd/`
 - Updated the documentation map so legacy and deferred docs no longer masquerade as current authority
+- Consolidated all HTML prototype sources under `design/prototypes/html/`
+- Moved prototype-only web assets out of `Assets/` into `design/prototypes/html/full-chain-demo/Assets/`
+- Split scripts into `git/`, `import/`, `prototypes/`, `release/`, `render/`, `setup/`, and `share/`
+- Split runtime scenes into `autoload/`, `gameplay/`, and `ui/`
+- Removed obsolete Unity-era leftovers from `Assets/Editor/` and `Packages/`
+- Cleared generated prototype outputs from `prototype/`
 
 ## Current Source Of Truth
 
@@ -37,11 +43,11 @@
 ## Immediate Next Work
 
 1. Continue low-risk cleanup of legacy and duplicated reference entry points
-2. Normalize the remaining script and prototype taxonomy without breaking skills
+2. Start the next runtime-boundary extraction pass from `FullChainGame.gd`
 3. Start the first real `specs/` packet when the next feature is selected
 
 ## Notes
 
 - `prototype/fullchain_demo/` is treated as a generated distribution package, not source of truth.
-- Root HTML files remain useful reference/demo artifacts, but not the canonical runtime.
+- HTML reference sources now live under `design/prototypes/html/`, not the repo root.
 - The next high-value technical move remains config-pipeline work plus runtime boundary extraction.

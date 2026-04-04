@@ -19,9 +19,9 @@ Sources:
 ## What was added
 
 - `addons/nklbdev.importality`
-- `scripts/psd_to_png.py`
-- `scripts/psd_to_godot_ui.py`
-- `scripts/configure_importality_psd.py`
+- `scripts/import/psd_to_png.py`
+- `scripts/import/psd_to_godot_ui.py`
+- `scripts/import/configure_importality_psd.py`
 - `Assets/ui/psd_samples/golden_ui/source/golden_ui.psd`
 - `Assets/ui/psd_samples/golden_ui/generated/...`
 - `scenes/dev/GoldenUiImportedPreview.tscn`
@@ -31,7 +31,7 @@ Sources:
 Use the high-level wrapper when the goal is "take this PSD and make a reusable Godot UI bundle":
 
 ```powershell
-python scripts/build_psd_ui_bundle.py path\\to\\mockup.psd
+python scripts/import/build_psd_ui_bundle.py path\\to\\mockup.psd
 ```
 
 By default this creates:
@@ -44,7 +44,7 @@ By default this creates:
 For validation-only output:
 
 ```powershell
-python scripts/build_psd_ui_bundle.py path\\to\\mockup.psd --mode preview
+python scripts/import/build_psd_ui_bundle.py path\\to\\mockup.psd --mode preview
 ```
 
 This writes to `Assets/ui/psd_samples/<slug>/...` and `scenes/dev/<Slug>ImportedPreview.tscn`.
@@ -56,7 +56,7 @@ The add-on uses Godot Editor Settings, not project settings, for external conver
 Run:
 
 ```powershell
-python scripts/configure_importality_psd.py
+python scripts/import/configure_importality_psd.py
 ```
 
 This updates `editor_settings-4.3.tres` with:
@@ -67,13 +67,13 @@ This updates `editor_settings-4.3.tres` with:
 The PSD rule points to:
 
 ```text
-python scripts/psd_to_png.py {in_path} {out_path}
+python scripts/import/psd_to_png.py {in_path} {out_path}
 ```
 
 ## Rebuild a PSD UI scene
 
 ```powershell
-python scripts/psd_to_godot_ui.py `
+python scripts/import/psd_to_godot_ui.py `
   Assets/ui/psd_samples/golden_ui/source/golden_ui.psd `
   --output-dir Assets/ui/psd_samples/golden_ui/generated `
   --scene scenes/dev/GoldenUiImportedPreview.tscn `

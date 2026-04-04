@@ -20,8 +20,7 @@
 
 ## 参考层
 
-- 根目录 HTML 原型
-- `design/htmls/`
+- `design/prototypes/html/`
 - `design/systems/`
 - `docs/archive/`
 

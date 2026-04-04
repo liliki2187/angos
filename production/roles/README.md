@@ -6,7 +6,7 @@ This is the practical ownership map for day-to-day work.
 - Runtime programming: `scenes/`, `scripts/`, `docs/architecture/`, `docs/technical/`
 - UI and import pipeline: `design/ui/` when it exists, `Assets/ui/`, `scenes/ui/`, `docs/tools/`
 - Production coordination: `production/`
-- Reference-only prototypes: root HTML experiments, `design/htmls/`, `prototype/`
+- Reference-only prototypes: `design/prototypes/html/`, `prototype/`
 
 Rules:
 

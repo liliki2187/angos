@@ -55,8 +55,8 @@ godot --headless --export-release "HTML5" build/web/index.html
 或使用脚本：
 
 ```bash
-chmod +x scripts/export.sh
-./scripts/export.sh "Windows Desktop" build/Angus.exe
+chmod +x scripts/release/export.sh
+./scripts/release/export.sh "Windows Desktop" build/Angus.exe
 ```
 
 ## 自定义配置

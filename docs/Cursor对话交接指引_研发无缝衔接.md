@@ -16,7 +16,7 @@
 
 - 项目阶段：Early Production
 - 当前主线：Godot 4.3 周循环 MVP
-- 参考层仍保留：根目录 HTML 原型、`design/htmls/`、`design/systems/`、`docs/archive/`
+- 参考层仍保留：`design/prototypes/html/`、`design/systems/`、`docs/archive/`
 - 当前重点：目录治理、配置管线、运行时边界拆分，而不是继续扩张原型分支
 
 ## 权威来源
@@ -36,7 +36,7 @@
 
 ## 当前建议关注点
 
-1. `scenes/FullChainGame.gd` 的边界拆分
+1. `scenes/gameplay/full_chain/FullChainGame.gd` 的边界拆分
 2. 内容配置和数据入口
 3. 公式与阶段切换的最小自动化验证
 4. 继续清理 legacy/reference/generated 层的边界

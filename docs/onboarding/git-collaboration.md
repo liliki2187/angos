@@ -29,7 +29,7 @@ If that layout is missing, fix it deliberately as a Git task, not as incidental 
 
 ## Helper Script
 
-`sync-both-remotes.ps1` is intended for the normalized dual-remote setup.
+`scripts/git/sync-both-remotes.ps1` is intended for the normalized dual-remote setup.
 
 Only use it after `git remote -v` confirms that the current clone matches the expected mirror configuration.
 

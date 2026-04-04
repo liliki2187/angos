@@ -26,7 +26,7 @@ Use the generated scene as a reviewable layout/art baseline that can later be in
 
 ## Default workflow
 
-1. Use `python scripts/build_psd_ui_bundle.py <psd_path>` as the default entry point.
+1. Use `python scripts/import/build_psd_ui_bundle.py <psd_path>` as the default entry point.
 2. Use `reusable` mode unless the user clearly asks for a throwaway validation build.
 3. Let the wrapper:
    - copy the PSD into the repo
@@ -57,20 +57,20 @@ Use `reusable` mode for assets the team may later wire into the game.
 Preferred high-level command:
 
 ```powershell
-python scripts/build_psd_ui_bundle.py "<absolute-or-relative-psd-path>"
+python scripts/import/build_psd_ui_bundle.py "<absolute-or-relative-psd-path>"
 ```
 
 Validation-only build:
 
 ```powershell
-python scripts/build_psd_ui_bundle.py "<absolute-or-relative-psd-path>" --mode preview
+python scripts/import/build_psd_ui_bundle.py "<absolute-or-relative-psd-path>" --mode preview
 ```
 
 Lower-level commands only when debugging or changing the pipeline:
 
 ```powershell
-python scripts/configure_importality_psd.py
-python scripts/psd_to_godot_ui.py "<input.psd>" --output-dir "<generated-dir>" --scene "<scene.tscn>" --root-name "<SceneRootName>"
+python scripts/import/configure_importality_psd.py
+python scripts/import/psd_to_godot_ui.py "<input.psd>" --output-dir "<generated-dir>" --scene "<scene.tscn>" --root-name "<SceneRootName>"
 ```
 
 ## Integration boundary

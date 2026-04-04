@@ -29,6 +29,7 @@
 - **Runtime assets**: `Assets/`
 - **Editor plugins / addons**: `addons/`
 - **Automation / import / packaging scripts**: `scripts/`
+- **HTML prototypes and reference labs**: `design/prototypes/html/`
 - **Canonical gameplay design docs**: `design/gdd/`
 - **System analysis and supporting design notes**: `design/systems/`
 - **Architecture decisions**: `docs/architecture/`
@@ -39,7 +40,7 @@
 
 - **Godot is the only canonical runtime** for the current MVP and weekly loop.
 - **`design/gdd/` is the canonical design layer** for current gameplay behavior.
-- **HTML prototypes are reference artifacts only**. If a rule from HTML is promoted into the game, it must be reflected in `design/gdd/` before being treated as canonical.
+- **HTML prototypes are reference artifacts only**. If a rule from `design/prototypes/html/` is promoted into the game, it must be reflected in `design/gdd/` before being treated as canonical.
 - **`Globals` must stay lightweight** and limited to bootstrapping, scene paths, debug logging, and small shared helpers. It must not become the permanent home of gameplay state.
 
 ## Architecture Preferences

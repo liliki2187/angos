@@ -6,9 +6,9 @@ $ErrorActionPreference = "Stop"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
 $templateRoot = Join-Path $PSScriptRoot "fullchain_demo"
+$prototypeSourceRoot = Join-Path $RepoRoot "design\prototypes\html\full-chain-demo"
 $distRoot = Join-Path $RepoRoot "prototype\fullchain_demo"
 $webRoot = Join-Path $distRoot "web"
-$webAssetsRoot = Join-Path $webRoot "Assets"
 $docsRoot = Join-Path $distRoot "docs"
 $designRoot = Join-Path $distRoot "design"
 
@@ -24,14 +24,13 @@ if (Test-Path $distRoot) {
     Remove-Item $distRoot -Recurse -Force
 }
 
-New-Item -ItemType Directory -Force $distRoot, $webRoot, $webAssetsRoot, $docsRoot, $designRoot | Out-Null
+New-Item -ItemType Directory -Force $distRoot, $webRoot, $docsRoot, $designRoot | Out-Null
 
 foreach ($file in $webFiles) {
-    Copy-Item (Join-Path $RepoRoot $file) (Join-Path $webRoot $file) -Force
+    Copy-Item (Join-Path $prototypeSourceRoot $file) (Join-Path $webRoot $file) -Force
 }
 
-Copy-Item (Join-Path $RepoRoot "Assets\tutorial-map-guide.svg") (Join-Path $webAssetsRoot "tutorial-map-guide.svg") -Force
-Copy-Item (Join-Path $RepoRoot "Assets\avatars") (Join-Path $webAssetsRoot "avatars") -Recurse -Force
+Copy-Item (Join-Path $prototypeSourceRoot "Assets") $webRoot -Recurse -Force
 
 Copy-Item (Join-Path $RepoRoot "docs\*") $docsRoot -Recurse -Force
 Copy-Item (Join-Path $RepoRoot "design\gdd") (Join-Path $designRoot "gdd") -Recurse -Force

@@ -1,7 +1,7 @@
 name: Prototype Pages
 
 # 仅手动运行：与 pages.yml（全链条 index）分开，避免同一次 push 两次 deploy-pages 抢锁失败。
-# 需要发布「原型导航站 + design/htmls」时在 Actions 里选本 workflow → Run workflow。
+# 需要发布「原型导航站 + design/prototypes/html」时在 Actions 里选本 workflow → Run workflow。
 on:
   workflow_dispatch:
 
@@ -36,14 +36,23 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          shopt -s nullglob
-          mkdir -p site/design/htmls
+          mkdir -p site/design/prototypes
           mkdir -p site/design/generated-settlement-reference/2026-03-18
-          cp index.html site/index.html
-          for f in design/htmls/*.html; do cp "$f" site/design/htmls/; done
-          for f in design/generated-settlement-reference/2026-03-18/*.html; do cp "$f" site/design/generated-settlement-reference/2026-03-18/; done
-          for f in design/generated-settlement-reference/2026-03-18/*.css; do cp "$f" site/design/generated-settlement-reference/2026-03-18/; done
-          for f in design/generated-settlement-reference/2026-03-18/*.js; do cp "$f" site/design/generated-settlement-reference/2026-03-18/; done
+          cp -R design/prototypes/html site/design/prototypes/
+          rm -rf site/design/prototypes/html/full-chain-demo/source
+          cp -R design/generated-settlement-reference/2026-03-18/. site/design/generated-settlement-reference/2026-03-18/
+          printf '%s\n' \
+            '<!DOCTYPE html>' \
+            '<html lang="zh-CN">' \
+            '<head>' \
+            '  <meta charset="UTF-8" />' \
+            '  <meta http-equiv="refresh" content="0; url=design/prototypes/html/prototype-hub.html" />' \
+            '  <title>ANGUS Prototype Hub Redirect</title>' \
+            '</head>' \
+            '<body>' \
+            '  <p><a href="design/prototypes/html/prototype-hub.html">跳转到原型导航页</a></p>' \
+            '</body>' \
+            '</html>' > site/index.html
           touch site/.nojekyll
 
       - name: Upload Pages artifact

@@ -14,8 +14,7 @@ This document is the quickest way to identify what is canonical, what is referen
 
 ## Reference-Only Layers
 
-- Root HTML prototype files such as `world-mysteries-full-chain.html`
-- `design/htmls/`: HTML prototypes and UI experiments
+- `design/prototypes/html/`: HTML prototypes, labs, and legacy web demos
 - `design/systems/`: supporting system analysis and older design decomposition
 - `docs/archive/`: legacy or deferred design material
 
@@ -27,7 +26,8 @@ This document is the quickest way to identify what is canonical, what is referen
 
 ## Notes On Legacy Material
 
-- Prototype HTML entry points live under `design/htmls/`; duplicate root-level `docs/` mirrors have been removed.
+- Prototype HTML entry points now live under `design/prototypes/html/`; root-level HTML experiments have been removed from the repo root.
+- The self-contained full-chain web demo source now lives under `design/prototypes/html/full-chain-demo/`.
 - `design/generated-settlement-reference/` remains a reference asset area; some outputs are still consumed by the current Godot UI preview flow.
 - `design/original-art-reference/` remains the current art-reference archive because project skills already depend on that path.
 - Avatar-cropping rules now live at `docs/tools/avatar-cropping.md`.

@@ -11,12 +11,12 @@ config_version=5
 [application]
 
 config/name="Angus"
-run/main_scene="res://scenes/MainMenu.tscn"
+run/main_scene="res://scenes/ui/main_menu/MainMenu.tscn"
 config/features=PackedStringArray("4.3")
 
 [autoload]
 
-Globals="*res://scenes/globals.gd"
+Globals="*res://scenes/autoload/Globals.gd"
 
 [display]
 

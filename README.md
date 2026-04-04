@@ -13,7 +13,7 @@ This repository contains the Angus Godot MVP, historical HTML prototypes, design
 
 ## Reference And Prototype Material
 
-- Root HTML files and `design/htmls/` are reference or prototype layers, not the canonical runtime.
+- `design/prototypes/html/` is the reference / prototype layer for HTML experiments and legacy playable web demos.
 - `prototype/` is for distributable prototype packages. Generated package outputs are rebuildable and ignored by default.
 
 ## First Reads

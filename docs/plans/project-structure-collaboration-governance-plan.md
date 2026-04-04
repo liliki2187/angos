@@ -14,8 +14,8 @@
    - `Assets/`
    - `addons/`
 2. **HTML 历史参考与网页原型**
-   - 根目录 `world-mysteries-full-chain*.{html,htm,js}`
-   - `design/htmls/`
+   - `design/prototypes/html/full-chain-demo/`
+   - `design/prototypes/html/`
 3. **设计文档体系**
    - `design/gdd/`
    - `design/systems/`
@@ -28,7 +28,7 @@
    - `prototype/`
    - `design/generated-*`
    - `artifacts/`
-   - `image_gen/`
+   - `design/generated-concept-visual/`
 
 这说明仓库已经进入“**可玩原型存在，但治理边界还不稳**”的阶段。优势是素材和知识已经不少，风险是继续推进后会越来越难判断什么才是主线。
 
@@ -37,7 +37,7 @@
 ### 2.1 权威来源不够单一
 
 - Godot 已经被 ADR 明确为当前 MVP 的唯一运行时主线。
-- 但仓库里仍同时存在根目录 HTML、`design/htmls/`、旧 `docs/` 设计文档、Godot 场景实现。
+- 但仓库里仍同时存在 `design/prototypes/html/`、旧 `docs/` 设计文档、Godot 场景实现。
 - 新同学和 AI 很容易误判“应该改哪里”。
 
 ### 2.2 生产协作层过薄
@@ -58,7 +58,7 @@
 
 ### 2.4 运行时代码边界还偏原型化
 
-- [`scenes/FullChainGame.gd`](E:\angus\angus\scenes\FullChainGame.gd) 同时承载了：
+- [`scenes/gameplay/full_chain/FullChainGame.gd`](E:\angus\angus\scenes\gameplay\full_chain\FullChainGame.gd) 同时承载了：
   - 内容定义
   - 周循环状态
   - 结算公式
@@ -201,11 +201,11 @@ specs/
 
 | 领域 | 当前权威位置 | 非权威但可参考 |
 |------|--------------|----------------|
-| Godot 运行时行为 | `scenes/` | 根目录 HTML、`design/htmls/` |
+| Godot 运行时行为 | `scenes/` | `design/prototypes/html/` |
 | 核心玩法设计 | `design/gdd/` | `design/systems/`、`docs/*.md` |
 | 技术架构决策 | `docs/architecture/` | 聊天记录、dev log |
 | 团队执行状态 | `production/` | `docs/plans/` |
-| UI 运行时资源 | `Assets/ui/` + `scenes/ui/` | `design/generated-*`、`design/htmls/` |
+| UI 运行时资源 | `Assets/ui/` + `scenes/ui/` | `design/generated-*`、`design/prototypes/html/` |
 | 美术参考 | `design/` | 飞书聊天记录、外部临时图片 |
 | 分发体验包 | `prototype/` 或未来 release 目录 | 根目录源码 |
 
@@ -328,10 +328,10 @@ specs/
 
 本阶段建议动作：
 
-1. 把 `design/htmls/`、`design/generated-*`、`design/original-art-reference/` 收敛到更明确的子分类
+1. 把 `design/prototypes/html/`、`design/generated-*`、`design/original-art-reference/` 收敛到更明确的子分类
 2. 给 `Assets/` 区分 `ui`、`characters`、`environment`、`runtime-imports`
 3. 给 `scenes/` 区分 `meta`、`gameplay`、`ui`、`dev`
-4. 给 `scripts/` 区分 `build`、`import`、`release`
+4. 给 `scripts/` 区分 `git`、`import`、`prototypes`、`release`、`render`、`share`、`setup`
 
 完成标准：
 
@@ -343,7 +343,7 @@ specs/
 
 本阶段建议动作：
 
-1. 从 [`scenes/FullChainGame.gd`](E:\angus\angus\scenes\FullChainGame.gd) 抽离：
+1. 从 [`scenes/gameplay/full_chain/FullChainGame.gd`](E:\angus\angus\scenes\gameplay\full_chain\FullChainGame.gd) 抽离：
    - 周状态
    - 内容定义
    - 结算公式

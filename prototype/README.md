@@ -15,3 +15,7 @@ Current generated package path:
 Current packaging script:
 
 - `scripts/release/package_fullchain_demo.ps1`
+
+Current package source:
+
+- `design/prototypes/html/full-chain-demo/`

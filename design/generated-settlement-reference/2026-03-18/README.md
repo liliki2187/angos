@@ -8,7 +8,7 @@
 - `design/systems/editing.md`
 - `design/systems/attributes.md`
 - `design/systems/factions.md`
-- `design/htmls/ui-prototype.html`
+- `design/prototypes/html/ui-prototype.html`
 
 ## 5 个方向
 
@@ -27,11 +27,11 @@
 
 - `magazine-settlement-reference.html`
   - 单文件模板，通过 `?variant=` 切换方案。
-- `scripts/render-magazine-settlement-references.mjs`
+- `scripts/render/magazine-settlement-references.mjs`
   - 使用 Playwright 批量导出 PNG。
 
 ## 导出命令
 
 ```powershell
-node scripts/render-magazine-settlement-references.mjs
+node scripts/render/magazine-settlement-references.mjs
 ```
