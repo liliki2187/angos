@@ -8,8 +8,9 @@ from pathlib import Path
 from typing import Iterable
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-LOCAL_PYTHON_DIR = PROJECT_ROOT / ".local" / "python"
+REPO_ROOT = Path(__file__).resolve().parents[2]
+PROJECT_ROOT = REPO_ROOT / "gd_project"
+LOCAL_PYTHON_DIR = REPO_ROOT / ".local" / "python"
 if LOCAL_PYTHON_DIR.exists():
     sys.path.insert(0, str(LOCAL_PYTHON_DIR))
 
@@ -78,6 +79,15 @@ def slugify(value: str, fallback: str) -> str:
 
 def forward_slash(path: Path | str) -> str:
     return str(path).replace("\\", "/")
+
+
+def repo_relative(path: Path) -> str:
+    resolved = path.resolve()
+    try:
+        rel_path = resolved.relative_to(REPO_ROOT)
+    except ValueError:
+        return forward_slash(resolved)
+    return forward_slash(rel_path)
 
 
 def quote_tres_string(value: str) -> str:
@@ -203,7 +213,7 @@ def write_manifest(
     manifest_path: Path,
 ) -> None:
     payload = {
-        "source_psd": forward_slash(psd_path),
+        "source_psd": repo_relative(psd_path),
         "size": list(psd_size),
         "layers": [node.to_manifest_dict() for node in nodes],
     }

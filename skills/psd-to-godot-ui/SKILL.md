@@ -41,13 +41,13 @@ Use the generated scene as a reviewable layout/art baseline that can later be in
 Use these defaults unless the user asks for a different layout:
 
 - `reusable` mode:
-  - `Assets/ui/imported/<slug>/source/<file>.psd`
-  - `Assets/ui/imported/<slug>/generated/...`
-  - `scenes/ui/imported/<Slug>Ui.tscn`
+  - `gd_project/Assets/ui/imported/<slug>/source/<file>.psd`
+  - `gd_project/Assets/ui/imported/<slug>/generated/...`
+  - `gd_project/scenes/ui/imported/<Slug>Ui.tscn`
 - `preview` mode:
-  - `Assets/ui/psd_samples/<slug>/source/<file>.psd`
-  - `Assets/ui/psd_samples/<slug>/generated/...`
-  - `scenes/dev/<Slug>ImportedPreview.tscn`
+  - `gd_project/Assets/ui/psd_samples/<slug>/source/<file>.psd`
+  - `gd_project/Assets/ui/psd_samples/<slug>/generated/...`
+  - `gd_project/scenes/dev/<Slug>ImportedPreview.tscn`
 
 Use `preview` mode for proving the pipeline works.
 Use `reusable` mode for assets the team may later wire into the game.

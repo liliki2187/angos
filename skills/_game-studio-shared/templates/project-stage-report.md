@@ -30,11 +30,11 @@
 
 ### Source Code
 - **Status**: [X%] complete
-- **Files Found**: [N] source files in `src/`
+- **Files Found**: [N] runtime source files in `gd_project/`
 - **Major Systems Identified**:
-  - ✅ [System 1] (`src/path/`) -- [brief status]
-  - ✅ [System 2] (`src/path/`) -- [brief status]
-  - ⚠️  [System 3] (`src/path/`) -- [issue or incomplete]
+  - ✅ [System 1] (`gd_project/path/`) -- [brief status]
+  - ✅ [System 2] (`gd_project/path/`) -- [brief status]
+  - ⚠️  [System 3] (`gd_project/path/`) -- [issue or incomplete]
 - **Key Gaps**:
   - [ ] [Missing system 1 + impact]
   - [ ] [Missing system 2 + impact]
@@ -69,7 +69,7 @@
   - [ ] [Missing test area + risk]
 
 ### Prototypes
-- **Active Prototypes**: [N] in `prototypes/`
+- **Active Prototypes**: [N] in `design/prototypes/html/` or `prototype/`
   - ✅ [Prototype 1] -- documented with README
   - ⚠️  [Prototype 2] -- no README, unclear status
 - **Archived**: [N] (experiments completed)
@@ -174,12 +174,10 @@ design/
   narrative/     [N] files
   levels/        [N] files
 
-src/
-  core/          [N] files
-  gameplay/      [N] files
-  ai/            [N] files
-  networking/    [N] files
-  ui/            [N] files
+gd_project/
+  scenes/        [N] files
+  Assets/        [N] tracked assets
+  addons/        [N] files
 
 docs/
   architecture/  [N] ADRs
@@ -189,7 +187,7 @@ production/
   milestones/    [N] definitions
 
 tests/           [N] test files
-prototypes/      [N] directories
+prototype/       [N] directories
 ```
 
 ---

@@ -18,13 +18,13 @@ Sources:
 
 ## What was added
 
-- `addons/nklbdev.importality`
+- `gd_project/addons/nklbdev.importality`
 - `scripts/import/psd_to_png.py`
 - `scripts/import/psd_to_godot_ui.py`
 - `scripts/import/configure_importality_psd.py`
-- `Assets/ui/psd_samples/golden_ui/source/golden_ui.psd`
-- `Assets/ui/psd_samples/golden_ui/generated/...`
-- `scenes/dev/GoldenUiImportedPreview.tscn`
+- `gd_project/Assets/ui/psd_samples/golden_ui/source/golden_ui.psd`
+- `gd_project/Assets/ui/psd_samples/golden_ui/generated/...`
+- `gd_project/scenes/dev/GoldenUiImportedPreview.tscn`
 
 ## Preferred entry point
 
@@ -36,9 +36,9 @@ python scripts/import/build_psd_ui_bundle.py path\\to\\mockup.psd
 
 By default this creates:
 
-- `Assets/ui/imported/<slug>/source/<file>.psd`
-- `Assets/ui/imported/<slug>/generated/...`
-- `scenes/ui/imported/<Slug>Ui.tscn`
+- `gd_project/Assets/ui/imported/<slug>/source/<file>.psd`
+- `gd_project/Assets/ui/imported/<slug>/generated/...`
+- `gd_project/scenes/ui/imported/<Slug>Ui.tscn`
 - `generated/bundle.json`
 
 For validation-only output:
@@ -47,7 +47,7 @@ For validation-only output:
 python scripts/import/build_psd_ui_bundle.py path\\to\\mockup.psd --mode preview
 ```
 
-This writes to `Assets/ui/psd_samples/<slug>/...` and `scenes/dev/<Slug>ImportedPreview.tscn`.
+This writes to `gd_project/Assets/ui/psd_samples/<slug>/...` and `gd_project/scenes/dev/<Slug>ImportedPreview.tscn`.
 
 ## Configure Godot editor settings
 
@@ -74,9 +74,9 @@ python scripts/import/psd_to_png.py {in_path} {out_path}
 
 ```powershell
 python scripts/import/psd_to_godot_ui.py `
-  Assets/ui/psd_samples/golden_ui/source/golden_ui.psd `
-  --output-dir Assets/ui/psd_samples/golden_ui/generated `
-  --scene scenes/dev/GoldenUiImportedPreview.tscn `
+  gd_project/Assets/ui/psd_samples/golden_ui/source/golden_ui.psd `
+  --output-dir gd_project/Assets/ui/psd_samples/golden_ui/generated `
+  --scene gd_project/scenes/dev/GoldenUiImportedPreview.tscn `
   --root-name GoldenUiImportedPreview
 ```
 

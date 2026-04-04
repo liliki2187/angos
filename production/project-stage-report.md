@@ -29,7 +29,7 @@ Source of truth: `docs/plans/godot-full-chain-implementation-plan.md`
 Implemented or partially implemented in Godot:
 
 1. Main menu entry into the current full-chain prototype
-2. Unified weekly prototype in `scenes/gameplay/full_chain/FullChainGame.gd`
+2. Unified weekly prototype in `gd_project/scenes/gameplay/full_chain/FullChainGame.gd`
 3. Region and node selection with unlock rules
 4. Staff dispatch and split event checks
 5. Weekly clue generation

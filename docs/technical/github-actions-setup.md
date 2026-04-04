@@ -10,6 +10,12 @@
 .github/workflows/godot-build.yml
 ```
 
+Godot 项目根目录：
+
+```
+gd_project/project.godot
+```
+
 ### 触发条件
 
 - 推送到 `main` 分支（自动）
@@ -40,16 +46,16 @@
 
 ```bash
 # Linux
-godot --headless --export-release "Linux/X11" build/Angus.x86_64
+godot --headless --path gd_project --export-release "Linux/X11" build/Angus.x86_64
 
 # Windows
-godot --headless --export-release "Windows Desktop" build/Angus.exe
+godot --headless --path gd_project --export-release "Windows Desktop" build/Angus.exe
 
 # macOS
-godot --headless --export-release "macOS" build/Angus.zip
+godot --headless --path gd_project --export-release "macOS" build/Angus.zip
 
 # HTML5
-godot --headless --export-release "HTML5" build/web/index.html
+godot --headless --path gd_project --export-release "HTML5" build/web/index.html
 ```
 
 或使用脚本：
@@ -69,11 +75,11 @@ chmod +x scripts/release/export.sh
 
 ### 添加新场景
 
-编辑 `project.godot` 中的 `run/main_scene`，或使用 Godot Editor 设置。
+编辑 `gd_project/project.godot` 中的 `run/main_scene`，或使用 Godot Editor 设置。
 
 ### 修改窗口分辨率
 
-编辑 `project.godot` 中的 `[display]` 部分。
+编辑 `gd_project/project.godot` 中的 `[display]` 部分。
 
 ## 常见问题
 
@@ -84,7 +90,7 @@ A: 检查 CI 中 export templates 下载链接是否正确
 A: Godot Editor → Editor → Manage Export Templates → Download
 
 ### Q: 如何添加新导出平台
-A: 编辑 `export_presets.cfg` 添加新 preset，同步更新 workflow
+A: 编辑 `gd_project/export_presets.cfg` 添加新 preset，同步更新 workflow
 
 ## 参考资源
 

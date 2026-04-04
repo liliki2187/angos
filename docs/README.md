@@ -7,7 +7,7 @@ This is the unified entry point for repository documentation.
 - Gameplay design: `../design/gdd/`
 - Supporting analysis: `../design/systems/`
 - Architecture decisions: `architecture/`
-- Technical defaults: `technical-preferences.md`
+- Technical defaults: `../docs/technical-preferences.md`
 - Onboarding and collaboration rules: `onboarding/`
 - Production execution state: `../production/`
 
@@ -18,7 +18,7 @@ This is the unified entry point for repository documentation.
 | Runtime gameplay rules | `../design/gdd/` | Canonical |
 | System analysis and deeper breakdowns | `../design/systems/` | Reference, still useful |
 | Git / repo onboarding | `onboarding/` | Canonical |
-| Technical workflow and tooling | `technical/`, `tools/`, `technical-preferences.md` | Canonical |
+| Technical workflow and tooling | `../docs/`, `../scripts/` | Canonical |
 | Active execution plans | `plans/` + `../production/` | Canonical if still active |
 | Historical design docs from pre-GDD phase | `archive/legacy-design/` | Archived |
 | Deferred systems outside current MVP | `archive/deferred-design/` | Archived reference |
@@ -38,6 +38,6 @@ The repository now uses this split:
 ## Recommended Read Order
 
 1. `onboarding/repository-map.md`
-2. `technical-preferences.md`
+2. `../docs/technical-preferences.md`
 3. `../design/gdd/README.md`
 4. `../production/session-state/active.md`

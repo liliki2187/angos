@@ -4,20 +4,12 @@ on:
   push:
     branches: [main]
     paths:
-      - "**.gd"
-      - "project.godot"
-      - "export_presets.cfg"
-      - "scenes/**"
-      - "Assets/**"
+      - "gd_project/**"
       - ".github/workflows/godot-build.yml"
   pull_request:
     branches: [main]
     paths:
-      - "**.gd"
-      - "project.godot"
-      - "export_presets.cfg"
-      - "scenes/**"
-      - "Assets/**"
+      - "gd_project/**"
       - ".github/workflows/godot-build.yml"
   workflow_dispatch:
 
@@ -42,6 +34,7 @@ jobs:
 
       - name: Make Windows preset CI-safe
         run: |
+          cd gd_project
           if [ ! -f export_presets.cfg ]; then
             echo "::error::export_presets.cfg not found"
             exit 1
@@ -58,9 +51,10 @@ jobs:
 
       - name: Build Windows (release + debug)
         run: |
+          cd gd_project
           mkdir -p build/release build/debug
-          godot --headless --export-release "Windows Desktop" build/release/Angus.exe
-          godot --headless --export-debug "Windows Desktop" build/debug/Angus.exe
+          godot --headless --path . --export-release "Windows Desktop" build/release/Angus.exe
+          godot --headless --path . --export-debug "Windows Desktop" build/debug/Angus.exe
           echo "=== build/debug files ==="
           ls -la build/debug
           if ! ls build/debug/*console*.exe >/dev/null 2>&1; then
@@ -71,5 +65,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Build-Windows
-          path: build/
+          path: gd_project/build/
           retention-days: 14

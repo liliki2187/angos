@@ -2,7 +2,7 @@
 
 ## R1. Monolithic Runtime Script
 
-- **Risk**: `scenes/gameplay/full_chain/FullChainGame.gd` still owns too much state, content, and presentation logic.
+- **Risk**: `gd_project/scenes/gameplay/full_chain/FullChainGame.gd` still owns too much state, content, and presentation logic.
 - **Impact**: High
 - **Mitigation**: Keep new work tied to ADR boundaries and plan extraction slices before adding more mechanics.
 

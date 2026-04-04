@@ -37,10 +37,10 @@ Analyze project structure and content:
 - Count narrative docs in `design/narrative/`
 - Count level designs in `design/levels/`
 
-**Source Code** (`src/`):
+**Source Code** (`gd_project/`):
 - Count source files (language-agnostic)
 - Identify major systems (directories with 5+ files)
-- Check for core/, gameplay/, ai/, networking/, ui/ directories
+- Check for runtime areas like `gd_project/scenes/gameplay/`, `gd_project/scenes/ui/`, `gd_project/Assets/`, and `gd_project/addons/`
 - Estimate lines of code (rough scale)
 
 **Production Artifacts** (`production/`):
@@ -48,8 +48,8 @@ Analyze project structure and content:
 - Look for milestone definitions
 - Find roadmap documents
 
-**Prototypes** (`prototypes/`):
-- Count prototype directories
+**Prototypes** (`design/prototypes/html/` and `prototype/`):
+- Count prototype directories or packaged outputs
 - Check for READMEs (documented vs undocumented)
 - Assess if prototypes are archived or active
 
@@ -72,8 +72,8 @@ auto-detect using these heuristics (check from most-advanced backward):
 | **Concept** | No game concept doc, brainstorming phase |
 | **Systems Design** | Game concept exists, systems index missing or incomplete |
 | **Technical Setup** | Systems index exists, engine not configured |
-| **Pre-Production** | Engine configured, `src/` has <10 source files |
-| **Production** | `src/` has 10+ source files, active development |
+| **Pre-Production** | Engine configured, `gd_project/` has <10 runtime source files |
+| **Production** | `gd_project/` has 10+ runtime source files, active development |
 | **Polish** | Explicit only (set by `$gate-check` Production -> Polish gate) |
 | **Release** | Explicit only (set by `$gate-check` Polish -> Release gate) |
 
@@ -81,7 +81,7 @@ auto-detect using these heuristics (check from most-advanced backward):
 
 **DO NOT** just list missing files. Instead, **ask clarifying questions**:
 
-- "I see combat code (`src/gameplay/combat/`) but no `design/gdd/combat-system.md`. Was this prototyped first, or should we reverse-document?"
+- "I see runtime code under `gd_project/scenes/gameplay/` but no matching GDD. Was this prototyped first, or should we reverse-document?"
 - "You have 15 ADRs but no architecture overview. Should I create one to help new contributors?"
 - "No sprint plans in `production/`. Are you tracking work elsewhere (Jira, Trello, etc.)?"
 - "I found a game concept but no systems index. Have you decomposed the concept into individual systems yet, or should we run `$map-systems`?"
@@ -177,9 +177,9 @@ $project-stage-detect designer
 After generating the report, suggest relevant next steps:
 
 - **Concept exists but no systems index?** -> `$map-systems` to decompose into systems
-- **Missing design docs?** -> `$reverse-document design src/[system]`
+- **Missing design docs?** -> `$reverse-document design gd_project/scenes/[system]`
 - **Missing architecture docs?** -> `$architecture-decision` or `$reverse-document architecture`
-- **Prototypes need documentation?** -> `$reverse-document concept prototypes/[name]`
+- **Prototypes need documentation?** -> `$reverse-document concept design/prototypes/html/[name]`
 - **No sprint plan?** -> `$sprint-plan`
 - **Approaching milestone?** -> `$milestone-review`
 

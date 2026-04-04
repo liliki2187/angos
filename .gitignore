@@ -29,8 +29,8 @@ skills/.claude-to-im/logs/
 skills/.claude-to-im/runtime/
 
 # Godot local cache / exports
-.godot/
-build/
+gd_project/.godot/
+gd_project/build/
 *.import
 
 # Rendered previews / export artifacts

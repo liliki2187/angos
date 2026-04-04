@@ -6,7 +6,7 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 
-from psd_support import PROJECT_ROOT, forward_slash, quote_tres_string
+from psd_support import PROJECT_ROOT, REPO_ROOT, forward_slash, quote_tres_string
 
 
 TEMP_DIR_KEY = "importality/temporary_files_directory_path"
@@ -66,7 +66,7 @@ def main() -> int:
     temp_dir.mkdir(parents=True, exist_ok=True)
 
     python_path = forward_slash(Path(__import__("sys").executable).resolve())
-    converter_path = forward_slash((PROJECT_ROOT / "scripts" / "import" / "psd_to_png.py").resolve())
+    converter_path = forward_slash((REPO_ROOT / "scripts" / "import" / "psd_to_png.py").resolve())
     psd_rule = f"psd: {python_path} {converter_path} {{in_path}} {{out_path}}"
 
     original_text = settings_path.read_text(encoding="utf-8")

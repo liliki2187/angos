@@ -90,7 +90,7 @@ The project progresses through these stages:
 ### Gate: Pre-Production -> Production
 
 **Required Artifacts:**
-- [ ] At least 1 prototype in `prototypes/` with a README
+- [ ] At least 1 prototype in `design/prototypes/html/` or `prototype/` with a README or clear usage note
 - [ ] First sprint plan exists in `production/sprints/`
 - [ ] All MVP-tier GDDs from systems index are complete
 
@@ -104,8 +104,8 @@ The project progresses through these stages:
 ### Gate: Production -> Polish
 
 **Required Artifacts:**
-- [ ] `src/` has active code organized into subsystems
-- [ ] All core mechanics from GDD are implemented (cross-reference `design/gdd/` with `src/`)
+- [ ] `gd_project/` has active runtime code organized into subsystems
+- [ ] All core mechanics from GDD are implemented (cross-reference `design/gdd/` with `gd_project/`)
 - [ ] Main gameplay path is playable end-to-end
 - [ ] Test files exist in `tests/`
 - [ ] At least 1 playtest report (or `$playtest-report` has been run)
@@ -123,7 +123,7 @@ The project progresses through these stages:
 **Required Artifacts:**
 - [ ] All features from milestone plan are implemented
 - [ ] Content is complete (all levels, assets, dialogue referenced in design docs exist)
-- [ ] Localization strings are externalized (no hardcoded player-facing text in `src/`)
+- [ ] Localization strings are externalized (no hardcoded player-facing text in `gd_project/`)
 - [ ] QA test plan exists
 - [ ] Balance data has been reviewed (`$balance-check` run)
 - [ ] Release checklist completed (`$release-checklist` or `$launch-checklist` run)
@@ -156,10 +156,10 @@ For each item in the target gate:
 - For design review checks: `Read` the GDD and check for the 8 required sections
 - For performance checks: `Read` technical-preferences.md and compare against any
   profiling data in `tests/performance/` or recent `$perf-profile` output
-- For localization checks: `Grep` for hardcoded strings in `src/`
+- For localization checks: `Grep` for hardcoded strings in `gd_project/`
 
 ### Cross-Reference Checks
-- Compare `design/gdd/` documents against `src/` implementations
+- Compare `design/gdd/` documents against `gd_project/` implementations
 - Check that every system referenced in architecture docs has corresponding code
 - Verify sprint plans reference real work items
 

@@ -21,7 +21,7 @@ When this skill is invoked:
    - `status` -- Report overall localization status
 
 2. **For `scan`**:
-   - Search `src/` for hardcoded user-facing strings:
+   - Search `gd_project/` for hardcoded user-facing strings:
      - String literals in UI code that are not wrapped in a localization function
      - Concatenated strings that should be parameterized
      - Strings with positional placeholders (`%s`, `%d`) instead of named ones (`{playerName}`)
@@ -34,7 +34,7 @@ When this skill is invoked:
 
 3. **For `extract`**:
    - Scan all source files for localized string references
-   - Compare against the existing string table (if any) in `assets/data/`
+   - Compare against the existing string table (if any) in `gd_project/Assets/data/`
    - Generate new entries for strings that don't have keys yet
    - Suggest key names following the convention: `[category].[subcategory].[description]`
    - Output a diff of new strings to add to the string table

@@ -1,18 +1,20 @@
 # Angus 项目结构与协作治理方案
 
-**日期**: 2026-04-04
+**日期**: 2026-04-05
 **适用阶段**: Early Production / Godot MVP 持续迭代期
 **目标**: 在不打断当前开发的前提下，建立清晰的目录归属、文档权威层级、角色协作方式和反混乱机制，方便后续使用 OpenSpec 风格流程与仓库内 game-production skills。
+
+> 2026-04-05 更新：Godot 运行时已正式收敛到 `gd_project/`，相关技术文档与导入导出工具继续保留在 `docs/` 与 `scripts/`。本方案中凡是旧的根目录运行时写法，都应按这套新结构理解。
 
 ## 1. 项目现状判断
 
 当前仓库不是单一形态项目，而是 5 类内容叠加在一起：
 
 1. **Godot 主工程**
-   - `project.godot`
-   - `scenes/`
-   - `Assets/`
-   - `addons/`
+   - `gd_project/project.godot`
+   - `gd_project/scenes/`
+   - `gd_project/Assets/`
+   - `gd_project/addons/`
 2. **HTML 历史参考与网页原型**
    - `design/prototypes/html/full-chain-demo/`
    - `design/prototypes/html/`
@@ -58,7 +60,7 @@
 
 ### 2.4 运行时代码边界还偏原型化
 
-- [`scenes/gameplay/full_chain/FullChainGame.gd`](E:\angus\angus\scenes\gameplay\full_chain\FullChainGame.gd) 同时承载了：
+- [`gd_project/scenes/gameplay/full_chain/FullChainGame.gd`](E:\angus\angus\gd_project\scenes\gameplay\full_chain\FullChainGame.gd) 同时承载了：
   - 内容定义
   - 周循环状态
   - 结算公式
@@ -70,7 +72,7 @@
 
 - `prototype/fullchain_demo/` 是脚本生成的分发包，但当前不在忽略范围内，容易污染工作区。
 - `scripts/__pycache__/` 这类派生产物也不应继续作为正式仓库内容扩散。
-- `design/generated-*` 与 `Assets/ui/imported/` 已经出现“参考产物”和“运行时产物”同时存在的趋势，需要规则化。
+- `design/generated-*` 与 `gd_project/Assets/ui/imported/` 已经出现“参考产物”和“运行时产物”同时存在的趋势，需要规则化。
 
 ## 3. 治理总原则
 
@@ -84,12 +86,12 @@
    - 玩法规则：`design/gdd/`
    - 技术决策：`docs/architecture/`
    - 团队执行状态：`production/`
-   - 运行时资源：`Assets/`
-   - 运行时场景/脚本：`scenes/`
+   - 运行时资源：`gd_project/Assets/`
+   - 运行时场景/脚本：`gd_project/scenes/`
 
 3. **`design/` 不直接承担运行时主资源职责**
    - `design/` 用于设计、参考、视觉探索、HTML 原型和分析材料。
-   - 真正进入游戏的资产必须进入 `Assets/` 或明确的导入链。
+   - 真正进入游戏的资产必须进入 `gd_project/Assets/` 或明确的导入链。
 
 4. **所有生成物必须能追溯回源文件或脚本**
    - 任何导出包、预览图、打包目录都必须有来源说明。
@@ -105,22 +107,23 @@
 
 ## 4. 建议的目标目录职责
 
-以下不是要求立刻大迁移，而是未来 2 到 4 周内逐步收敛到的目标。
+Godot 目录拆分已经落地，下面记录的是当前应长期维持的目录职责。
 
 ### 4.1 运行时主线
 
 ```text
-project.godot
-addons/
-scenes/
-Assets/
-scripts/
+gd_project/
+  project.godot
+  addons/
+  scenes/
+  Assets/
 ```
 
-- `scenes/`: Godot 场景与直接挂接的 GDScript
-- `Assets/`: 会被游戏加载或经过导入链进入游戏的资源
-- `scripts/`: 构建、打包、导入、自动化脚本
-- `addons/`: 引擎插件
+- `gd_project/scenes/`: Godot 场景与直接挂接的 GDScript
+- `gd_project/Assets/`: 会被游戏加载或经过导入链进入游戏的资源
+- `gd_project/addons/`: 运行时所需引擎插件
+- `scripts/`: Godot 导入、导出、CI 支撑脚本
+- `docs/`: 引擎约束、CI、导入流程和技术说明
 
 ### 4.2 设计与跨职能设计资产
 
@@ -149,17 +152,15 @@ design/
 ```text
 docs/
   architecture/
-  technical/
   onboarding/
   dev-logs/
-  tools/
 ```
 
 - `docs/architecture/`: ADR、架构边界、模块图
-- `docs/technical/`: 工具链、CI、导入流程、工程说明
 - `docs/onboarding/`: 新同学、新 AI 的上手文档
 - `docs/dev-logs/`: 日期型开发日志
-- `docs/tools/`: 特定工具使用说明
+- `docs/`: 工具链、CI、导入流程、工程说明
+- `scripts/`: 引擎相关辅助脚本
 
 ### 4.4 生产协作层
 
@@ -197,15 +198,15 @@ specs/
 
 ## 5. 当前仓库的“来源权威”划分
 
-在大迁移前，先按下面的认知执行，能马上降低混乱。
+按下面的认知执行，可以持续降低混乱。
 
 | 领域 | 当前权威位置 | 非权威但可参考 |
 |------|--------------|----------------|
-| Godot 运行时行为 | `scenes/` | `design/prototypes/html/` |
+| Godot 运行时行为 | `gd_project/scenes/` | `design/prototypes/html/` |
 | 核心玩法设计 | `design/gdd/` | `design/systems/`、`docs/*.md` |
 | 技术架构决策 | `docs/architecture/` | 聊天记录、dev log |
 | 团队执行状态 | `production/` | `docs/plans/` |
-| UI 运行时资源 | `Assets/ui/` + `scenes/ui/` | `design/generated-*`、`design/prototypes/html/` |
+| UI 运行时资源 | `gd_project/Assets/ui/` + `gd_project/scenes/ui/` | `design/generated-*`、`design/prototypes/html/` |
 | 美术参考 | `design/` | 飞书聊天记录、外部临时图片 |
 | 分发体验包 | `prototype/` 或未来 release 目录 | 根目录源码 |
 
@@ -231,10 +232,10 @@ specs/
 
 主责任目录：
 
-- `scenes/`
+- `gd_project/`
 - `scripts/`
 - `docs/architecture/`
-- `docs/technical/`
+- `docs/`
 - `.github/`
 
 规则：
@@ -249,9 +250,9 @@ specs/
 
 - `design/references/`
 - `design/art-direction/`
-- `Assets/art-source/` 或未来明确的 source 目录
-- `Assets/characters/`
-- `Assets/environments/`
+- `gd_project/Assets/art-source/` 或未来明确的 source 目录
+- `gd_project/Assets/characters/`
+- `gd_project/Assets/environments/`
 
 规则：
 
@@ -264,16 +265,16 @@ specs/
 主责任目录：
 
 - `design/ui/`
-- `Assets/ui/`
-- `scenes/ui/`
+- `gd_project/Assets/ui/`
+- `gd_project/scenes/ui/`
 - `docs/tools/psd-ui-import.md`
 
 规则：
 
 - 高保真稿、源 PSD、导出 PNG、Godot 场景要形成链路
 - `design/ui/` 放规范与方案
-- `Assets/ui/` 放导入源和运行时资源
-- `scenes/ui/` 放实际游戏中的 UI 场景
+- `gd_project/Assets/ui/` 放导入源和运行时资源
+- `gd_project/scenes/ui/` 放实际游戏中的 UI 场景
 
 ## 7. 推荐的协作工作流
 
@@ -306,9 +307,9 @@ specs/
 
 ## 8. 分阶段实施计划
 
-## Phase 0：先立规矩，不先大迁移
+## Phase 0：已完成的结构定锚
 
-目标：让团队从今天开始按统一规则协作。
+目标：让团队从今天开始按统一规则协作，并完成 `gd_project/` 这一运行时主目录的顶层定锚。
 
 本阶段应完成：
 
@@ -322,16 +323,16 @@ specs/
 
 - 新同学能在 10 分钟内知道“应该看哪里、改哪里、不要碰哪里”
 
-## Phase 1：让目录开始表达边界
+## Phase 1：让目录继续表达边界
 
 目标：不重写项目，但让目录本身开始说人话。
 
 本阶段建议动作：
 
 1. 把 `design/prototypes/html/`、`design/generated-*`、`design/original-art-reference/` 收敛到更明确的子分类
-2. 给 `Assets/` 区分 `ui`、`characters`、`environment`、`runtime-imports`
-3. 给 `scenes/` 区分 `meta`、`gameplay`、`ui`、`dev`
-4. 给 `scripts/` 区分 `git`、`import`、`prototypes`、`release`、`render`、`share`、`setup`
+2. 给 `gd_project/Assets/` 区分 `ui`、`characters`、`environment`、`runtime-imports`
+3. 给 `gd_project/scenes/` 区分 `autoload`、`gameplay`、`ui`、`dev`
+4. 让 `scripts/` 与仓库根 `scripts/` 长期保持职责分离
 
 完成标准：
 
@@ -343,7 +344,7 @@ specs/
 
 本阶段建议动作：
 
-1. 从 [`scenes/gameplay/full_chain/FullChainGame.gd`](E:\angus\angus\scenes\gameplay\full_chain\FullChainGame.gd) 抽离：
+1. 从 [`gd_project/scenes/gameplay/full_chain/FullChainGame.gd`](E:\angus\angus\gd_project\scenes\gameplay\full_chain\FullChainGame.gd) 抽离：
    - 周状态
    - 内容定义
    - 结算公式

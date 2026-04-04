@@ -4,8 +4,11 @@ This document is the quickest way to identify what is canonical, what is referen
 
 ## Canonical Layers
 
-- `scenes/`: Godot runtime scenes and scene-owned scripts
-- `Assets/`: runtime assets and import inputs that belong to the game
+- `gd_project/`: Godot runtime project root
+- `gd_project/scenes/`: Godot runtime scenes and scene-owned scripts
+- `gd_project/Assets/`: runtime assets and import inputs that belong to the game
+- `gd_project/addons/`: project-local Godot addons required by the runtime
+- `docs/`: project documentation, technical guidance, onboarding, and logs
 - `design/gdd/`: canonical gameplay design
 - `docs/architecture/`: architecture decisions and technical boundaries
 - `production/`: execution state, sprint context, and handoff

@@ -22,7 +22,7 @@ Directory guide:
 
 Authority rules:
 
-- Runtime truth lives in `scenes/` and related Godot assets.
+- Runtime truth lives in `gd_project/scenes/` and related `gd_project/Assets/`.
 - Design truth lives in `design/gdd/`.
 - Architecture truth lives in `docs/architecture/`.
 - This directory tracks execution state, not deep design prose.

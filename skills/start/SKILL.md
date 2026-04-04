@@ -32,9 +32,8 @@ Check:
 - **Engine configured?** Read `docs/technical-preferences.md`. If the
   Engine field contains `[TO BE CONFIGURED]`, the engine is not set.
 - **Game concept exists?** Check for `design/gdd/game-concept.md`.
-- **Source code exists?** Glob for source files in `src/` (`*.gd`, `*.cs`,
-  `*.cpp`, `*.h`, `*.rs`, `*.py`, `*.js`, `*.ts`).
-- **Prototypes exist?** Check for subdirectories in `prototypes/`.
+- **Source code exists?** Glob for runtime files in `gd_project/` (`*.gd`, `*.tscn`, `*.gdshader`, `*.tres`, `*.cs`, `*.cpp`, `*.h`).
+- **Prototypes exist?** Check `design/prototypes/html/` and packaged outputs in `prototype/`.
 - **Design docs exist?** Count markdown files in `design/gdd/`.
 - **Production artifacts?** Check for files in `production/sprints/` or
   `production/milestones/`.
@@ -164,7 +163,7 @@ once the user has a clear next action.
   project is a fresh template with no artifacts yet. Would Path A or B be a
   better fit?"
 - **User picks A but project has code**: Mention what you found -- "I noticed
-  there's already code in `src/`. Did you mean to pick D (existing work)? Or
+  there's already runtime code in `gd_project/`. Did you mean to pick D (existing work)? Or
   would you like to start fresh with a new concept?"
 - **User is returning (engine configured, concept exists)**: Skip onboarding
   entirely -- "It looks like you're already set up! Your engine is [X] and you

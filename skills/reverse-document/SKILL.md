@@ -35,15 +35,15 @@ appropriate design or architecture documentation. Use this when:
 - `concept` -> Generate a concept document from prototype
 
 **Path**: Directory or file to analyze
-- `src/gameplay/combat/` -> All combat-related code
-- `src/core/event-system.cpp` -> Specific file
-- `prototypes/stealth-mech/` -> Prototype directory
+- `gd_project/scenes/gameplay/` -> Gameplay scene and script area
+- `gd_project/scenes/ui/` -> UI implementation area
+- `design/prototypes/html/full-chain-demo/` -> Prototype directory
 
 **Examples**:
 ```bash
-$reverse-document design src/gameplay/magic-system
-$reverse-document architecture src/core/entity-component
-$reverse-document concept prototypes/vehicle-combat
+$reverse-document design gd_project/scenes/gameplay/full_chain
+$reverse-document architecture gd_project/scenes/autoload/Globals.gd
+$reverse-document concept design/prototypes/html/full-chain-demo
 ```
 
 ### 2. Analyze Implementation
@@ -99,7 +99,7 @@ $reverse-document concept prototypes/vehicle-combat
 Before drafting, show what you discovered:
 
 ```
-I've analyzed src/gameplay/combat/. Here's what I found:
+I've analyzed gd_project/scenes/gameplay/full_chain/. Here's what I found:
 
 MECHANICS IMPLEMENTED:
 - 3-hit combo system with timing windows
@@ -130,7 +130,7 @@ Based on type, use appropriate template:
 |------|----------|-------------|
 | `design` | `templates/design-doc-from-implementation.md` | `design/gdd/[system-name].md` |
 | `architecture` | `templates/architecture-doc-from-code.md` | `docs/architecture/[decision-name].md` |
-| `concept` | `templates/concept-doc-from-prototype.md` | `prototypes/[name]/CONCEPT.md` or `design/concepts/[name].md` |
+| `concept` | `templates/concept-doc-from-prototype.md` | `prototype/[name]/CONCEPT.md` or `design/concepts/[name].md` |
 
 **Draft structure**:
 - Capture **what exists** (mechanics, patterns, implementation)
@@ -167,7 +167,7 @@ When approved, write the file with special markers:
 ```markdown
 ---
 status: reverse-documented
-source: src/gameplay/combat/
+source: gd_project/scenes/gameplay/full_chain/
 date: 2026-02-13
 verified-by: [User name]
 ---
@@ -205,23 +205,22 @@ Would you like me to tackle any of these now?
 
 | If analyzing... | Use template... | Because... |
 |----------------|-----------------|------------|
-| `src/gameplay/*` | design-doc-from-implementation.md | Gameplay mechanics -> GDD |
-| `src/core/*`, `src/ai/*` | architecture-doc-from-code.md | Core systems -> ADR |
-| `prototypes/*` | concept-doc-from-prototype.md | Experiments -> concept doc |
-| `src/networking/*` | architecture-doc-from-code.md | Technical systems -> ADR |
-| `src/ui/*` | design-doc-from-implementation.md | UI/UX -> design spec |
+| `gd_project/scenes/gameplay/*` | design-doc-from-implementation.md | Gameplay mechanics -> GDD |
+| `gd_project/scenes/autoload/*`, `gd_project/addons/*` | architecture-doc-from-code.md | Core systems -> ADR |
+| `design/prototypes/html/*` | concept-doc-from-prototype.md | Experiments -> concept doc |
+| `gd_project/scenes/ui/*` | design-doc-from-implementation.md | UI/UX -> design spec |
 
 ---
 
 ## Example Session: Reverse-Document Combat Code
 
 ```
-User: $reverse-document design src/gameplay/combat
+User: $reverse-document design gd_project/scenes/gameplay/full_chain
 
 Agent: I'll analyze your combat implementation to create a design doc.
        [Reads code, discovers mechanics, formulas]
 
-Agent: I've analyzed src/gameplay/combat/. Here's what I found:
+Agent: I've analyzed gd_project/scenes/gameplay/full_chain/. Here's what I found:
        [Shows mechanics, formulas, unclear areas]
 
        Before drafting, could you clarify:

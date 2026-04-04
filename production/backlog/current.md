@@ -2,7 +2,7 @@
 
 ## P0
 
-- Split monolithic logic out of `scenes/gameplay/full_chain/FullChainGame.gd` behind documented runtime boundaries
+- Split monolithic logic out of `gd_project/scenes/gameplay/full_chain/FullChainGame.gd` behind documented runtime boundaries
 - Start the content/config pipeline so gameplay iteration is not trapped in code constants
 - Add minimal automated coverage for weekly phase transitions and settlement formulas
 

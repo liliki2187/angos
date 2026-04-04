@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 
 from psd_support import PROJECT_ROOT, forward_slash
+from psd_support import repo_relative
 
 SCRIPT_ROOT = Path(__file__).resolve().parent
 
@@ -116,12 +117,12 @@ def main() -> int:
     summary = {
         "mode": args.mode,
         "slug": slug,
-        "source_psd": forward_slash(source_path),
-        "generated_dir": forward_slash(generated_dir),
-        "scene_path": forward_slash(scene_path),
+        "source_psd": repo_relative(source_path),
+        "generated_dir": repo_relative(generated_dir),
+        "scene_path": repo_relative(scene_path),
         "root_name": root_name,
-        "preview_png": forward_slash(generated_dir / "preview" / f"{source_path.stem}_flat.png"),
-        "manifest_path": forward_slash(generated_dir / "manifest.json"),
+        "preview_png": repo_relative(generated_dir / "preview" / f"{source_path.stem}_flat.png"),
+        "manifest_path": repo_relative(generated_dir / "manifest.json"),
     }
     generated_dir.mkdir(parents=True, exist_ok=True)
     summary_path = generated_dir / "bundle.json"

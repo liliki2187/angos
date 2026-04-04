@@ -20,7 +20,7 @@ When this skill is invoked:
    role is specified.
 
 3. **Scan the codebase** for the relevant area:
-   - For programmers: scan `src/` for architecture, patterns, key files
+   - For programmers: scan `gd_project/` for runtime architecture, patterns, and key files
    - For designers: scan `design/` for existing design documents
    - For narrative: scan `design/narrative/` for world-building and story docs
    - For QA: scan `tests/` for existing test coverage

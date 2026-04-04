@@ -25,10 +25,12 @@
 
 ## Directory Conventions
 
-- **Runtime scenes**: `scenes/`
-- **Runtime assets**: `Assets/`
-- **Editor plugins / addons**: `addons/`
-- **Automation / import / packaging scripts**: `scripts/`
+- **Formal Godot project root**: `gd_project/`
+- **Runtime scenes**: `gd_project/scenes/`
+- **Runtime assets**: `gd_project/Assets/`
+- **Editor plugins / addons**: `gd_project/addons/`
+- **Engine-facing tooling**: `scripts/`
+- **Non-engine automation / packaging scripts**: `scripts/`
 - **HTML prototypes and reference labs**: `design/prototypes/html/`
 - **Canonical gameplay design docs**: `design/gdd/`
 - **System analysis and supporting design notes**: `design/systems/`
@@ -39,6 +41,7 @@
 ## Source Of Truth Rules
 
 - **Godot is the only canonical runtime** for the current MVP and weekly loop.
+- **`gd_project/` is the only canonical runtime project root** for day-to-day game development.
 - **`design/gdd/` is the canonical design layer** for current gameplay behavior.
 - **HTML prototypes are reference artifacts only**. If a rule from `design/prototypes/html/` is promoted into the game, it must be reflected in `design/gdd/` before being treated as canonical.
 - **`Globals` must stay lightweight** and limited to bootstrapping, scene paths, debug logging, and small shared helpers. It must not become the permanent home of gameplay state.
@@ -77,17 +80,19 @@
 - Do not mix content data, state ownership, formulas, and UI refresh into new monolithic scripts without a clear reason.
 - Do not hardcode new core gameplay rules without updating the relevant GDD or ADR.
 - Do not introduce new root-level entry files for experiments when they belong under `design/`, `prototype/`, or `scripts/`.
+- Do not add new Godot runtime content outside `gd_project/`.
+- Do not put engine-support scripts back into the runtime tree when they belong under `scripts/`.
 
 ## Allowed Libraries / Addons
 
 - `nklbdev.importality` for PSD and import workflow
-- Project-local scripts under `scripts/`
+- Project-local engine scripts under `scripts/`
 - GitHub Actions workflows under `.github/workflows/`
 - Additional third-party addons only after they are explicitly accepted and documented
 
 ## Build / Export Defaults
 
-- Keep Godot export presets in `export_presets.cfg`
+- Keep Godot export presets in `gd_project/export_presets.cfg`
 - Treat CI builds and export automation as repository-owned tooling
 - Prefer reproducible packaging scripts over manual copy-paste release steps
 
