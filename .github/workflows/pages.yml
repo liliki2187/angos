@@ -10,8 +10,9 @@ permissions:
   pages: write
   id-token: write
 
+# 与 prototype-pages.yml 共用同一组，避免两次同时 deploy-pages 导致失败
 concurrency:
-  group: "pages"
+  group: "github-pages-${{ github.ref }}"
   cancel-in-progress: true
 
 jobs:

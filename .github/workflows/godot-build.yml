@@ -3,8 +3,22 @@ name: Godot Build
 on:
   push:
     branches: [main]
+    paths:
+      - "**.gd"
+      - "project.godot"
+      - "export_presets.cfg"
+      - "scenes/**"
+      - "Assets/**"
+      - ".github/workflows/godot-build.yml"
   pull_request:
     branches: [main]
+    paths:
+      - "**.gd"
+      - "project.godot"
+      - "export_presets.cfg"
+      - "scenes/**"
+      - "Assets/**"
+      - ".github/workflows/godot-build.yml"
   workflow_dispatch:
 
 jobs:
