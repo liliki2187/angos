@@ -1,50 +1,50 @@
-# Game Pillars
+# 设计支柱
 
-> **Project**: Angus / 《世界未解之谜周刊》
-> **Created**: 2026-03-31
-> **Status**: Draft
-> **Scope**: Godot single-player weekly loop
+> **项目**：Angus / 《世界未解之谜周刊》
+> **创建时间**：2026-03-31
+> **状态**：草案
+> **适用范围**：Godot 单人周循环
 
-## Pillar 1: Investigation Must Feed Publication
+## 支柱 1：调查必须导向出版
 
-The game's front half and back half are one system. Exploration exists to create, distort, or deny editorial material; publication exists to cash out the consequences of exploration.
+游戏前半段与后半段是一套系统。探索的存在意义，是创造、扭曲或剥夺可供编辑部使用的素材；出版阶段的意义，是兑现探索带来的后果。
 
-**Design test**: If a feature does not materially change clue quality, issue composition, or next-week state, it should not delay MVP.
+**设计判断题**：如果一个功能不能实质改变线索质量、版面构成或下一周状态，它就不该拖慢 MVP。
 
-## Pillar 2: Truth and Sensation Must Stay in Tension
+## 支柱 2：真实与猎奇必须保持张力
 
-The player should never be able to maximize credibility, weirdness, and profit with the same obvious move. Good decisions come from visible compromise.
+玩家不应通过同一个显而易见的操作，同时把公信力、怪异度和利润全部拉满。好的决策来自可见的妥协。
 
-**Design test**: If a mechanic makes "best story" always equal to "most profitable story," rework it.
+**设计判断题**：如果一个机制让“最好的故事”永远等于“最赚钱的故事”，那它就需要重做。
 
-## Pillar 3: One Week Must Read as One Arc
+## 支柱 3：一周必须读成一个完整段落
 
-Every week should open with context, present limited choices, end with a publishable issue, and produce a meaningful carryover into the next week.
+每一周都应以背景开场，给出有限选择，以一期可出版的周刊收束，并把有意义的结果带入下一周。
 
-**Design test**: If a system cannot produce value or consequence inside a single week, move it out of MVP unless it is a foundation dependency.
+**设计判断题**：如果一个系统不能在单周内产生价值或后果，除非它是基础依赖，否则应移出 MVP。
 
-## Pillar 4: Occult Pressure Is Both Reward and Threat
+## 支柱 4：神秘学压力既是奖励也是威胁
 
-Strange knowledge should unlock opportunities, not just flavor. But it must also destabilize long-term control through macro-attribute pressure, hidden content risk, or editorial drift.
+诡异知识应当带来机会，而不只是氛围文本；但它也必须通过宏观属性压力、隐藏内容风险或编辑倾向漂移来破坏长期稳定。
 
-**Design test**: If occult-facing choices only add content without adding instability, the pillar is not being served.
+**设计判断题**：如果面向神秘的选择只增加内容、不增加失控风险，那它就没有服务这一支柱。
 
-## Pillar 5: Readability Beats Feature Count
+## 支柱 5：可读性优先于功能数量
 
-The project should prefer a small number of legible interconnected rules over parallel prototype branches or overloaded content layers.
+项目应优先选择少量但彼此联动、易于理解的规则，而不是并行原型分支或过载的内容层。
 
-**Design test**: If a new system makes the loop harder to read before it makes it deeper, defer it.
+**设计判断题**：如果一个新系统在加深玩法之前先让循环更难读懂，就先延期。
 
-## Anti-Pillars
+## 反支柱
 
-- **We will NOT build parallel canonical rulesets** because HTML reference prototypes and Godot runtime logic drifting apart will stall production.
-- **We will NOT treat the editorial phase as cosmetic presentation only** because that would break the core identity of the project.
-- **We will NOT chase broad faction, story synthesis, or content scale before the week loop is stable** because it would compromise readability and implementation speed.
-- **We will NOT solve prototype weakness with UI polish first** because unclear rules hidden behind pretty surfaces are still unclear.
+- **我们不会构建并行的正式规则集**，因为 HTML 参考原型与 Godot 运行时逻辑继续分叉只会拖慢生产。
+- **我们不会把编辑阶段当作纯装饰展示**，因为那会直接破坏项目的核心身份。
+- **在周循环稳定之前，我们不会追逐大规模势力分支、故事合成或内容膨胀**，因为这会牺牲可读性和实现速度。
+- **我们不会先用 UI 抛光去掩盖原型弱点**，因为规则不清晰，加再漂亮的外壳也还是不清晰。
 
-## Current MVP Implications
+## 对当前 MVP 的直接含义
 
-- Keep Godot as the single implementation source of truth.
-- Keep the week loop narrow and replayable.
-- Keep story synthesis outside current MVP, but preserve its future interface through clue and story data contracts.
-- Prefer documentation and architecture cleanup over adding more isolated prototype screens.
+- 把 Godot 保持为唯一实现真源。
+- 让周循环保持收束且可重复游玩。
+- 让故事合成暂时停留在 MVP 外，但通过线索和故事数据契约保留未来接口。
+- 相比继续堆新的孤立原型页面，优先补文档和清理架构。

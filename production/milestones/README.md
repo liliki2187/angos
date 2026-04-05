@@ -1,15 +1,15 @@
-# Milestones
+# 里程碑说明
 
-Store one document per active or historical milestone.
+每个活跃或历史里程碑都应在这里单独保存一份文档。
 
-Each milestone doc should define:
+## 每份里程碑文档应包含
 
-- goal
-- scope included
-- scope explicitly excluded
-- exit criteria
-- current status
+- 目标
+- 纳入范围
+- 明确排除的范围
+- 退出标准
+- 当前状态
 
-Current active milestone:
+## 当前活跃里程碑
 
 - `godot-mvp-foundation.md`

@@ -1,48 +1,48 @@
-# Technical Preferences
+# 技术偏好
 
-<!-- Populated by /setup-engine. Updated as the user makes decisions throughout development. -->
-<!-- All agents reference this file for project-specific standards and conventions. -->
+<!-- 由 /setup-engine 填充。随着用户在开发过程中的决策持续更新。 -->
+<!-- 所有代理都应引用本文件，以获取项目特有的技术标准与约定。 -->
 
-## Engine & Language
+## 引擎与语言
 
-- **Engine**: [TO BE CONFIGURED -- run /setup-engine]
-- **Language**: [TO BE CONFIGURED]
-- **Rendering**: [TO BE CONFIGURED]
-- **Physics**: [TO BE CONFIGURED]
+- **引擎**：[待配置，运行 `/setup-engine`]
+- **语言**：[待配置]
+- **渲染**：[待配置]
+- **物理**：[待配置]
 
-## Naming Conventions
+## 命名规范
 
-- **Classes**: [TO BE CONFIGURED]
-- **Variables**: [TO BE CONFIGURED]
-- **Signals/Events**: [TO BE CONFIGURED]
-- **Files**: [TO BE CONFIGURED]
-- **Scenes/Prefabs**: [TO BE CONFIGURED]
-- **Constants**: [TO BE CONFIGURED]
+- **类**：[待配置]
+- **变量**：[待配置]
+- **信号 / 事件**：[待配置]
+- **文件**：[待配置]
+- **场景 / Prefab**：[待配置]
+- **常量**：[待配置]
 
-## Performance Budgets
+## 性能预算
 
-- **Target Framerate**: [TO BE CONFIGURED]
-- **Frame Budget**: [TO BE CONFIGURED]
-- **Draw Calls**: [TO BE CONFIGURED]
-- **Memory Ceiling**: [TO BE CONFIGURED]
+- **目标帧率**：[待配置]
+- **单帧预算**：[待配置]
+- **Draw Calls**：[待配置]
+- **内存上限**：[待配置]
 
-## Testing
+## 测试
 
-- **Framework**: [TO BE CONFIGURED]
-- **Minimum Coverage**: [TO BE CONFIGURED]
-- **Required Tests**: Balance formulas, gameplay systems, networking (if applicable)
+- **框架**：[待配置]
+- **最低覆盖**：[待配置]
+- **必须覆盖**：平衡公式、玩法系统、联网逻辑（如适用）
 
-## Forbidden Patterns
+## 禁止模式
 
-<!-- Add patterns that should never appear in this project's codebase -->
-- [None configured yet -- add as architectural decisions are made]
+<!-- 在这里补充本项目代码库中绝不应出现的模式 -->
+- [尚未配置，待架构决策落定后补充]
 
-## Allowed Libraries / Addons
+## 允许的库 / Addon
 
-<!-- Add approved third-party dependencies here -->
-- [None configured yet -- add as dependencies are approved]
+<!-- 在这里登记获批的第三方依赖 -->
+- [尚未配置，待依赖获批后补充]
 
-## Architecture Decisions Log
+## 架构决策日志
 
-<!-- Quick reference linking to full ADRs in docs/architecture/ -->
-- [No ADRs yet -- use /architecture-decision to create one]
+<!-- 快速索引，指向 docs/architecture/ 中的完整 ADR -->
+- [尚无 ADR，可用 `/architecture-decision` 创建]

@@ -1,26 +1,26 @@
 # Angus / 世界未解之谜周刊
 
-This repository contains the Angus Godot MVP, historical HTML prototypes, design documentation, and project-local automation skills.
-The active Godot runtime now lives under `gd_project/`, while supporting docs and tooling remain under `docs/` and `scripts/`.
+本仓库包含 Angus 的 Godot MVP、历史 HTML 原型、设计文档，以及项目本地自动化技能。
+当前生效的 Godot 运行时位于 `gd_project/`，配套文档与工具位于 `docs/` 和 `scripts/`。
 
-## Canonical Locations
+## 规范位置
 
-- Runtime project root: `gd_project/`
-- Gameplay runtime: `gd_project/scenes/` and `gd_project/Assets/`
-- Runtime support docs and tools: `docs/` and `scripts/`
-- Gameplay design: `design/gdd/`
-- Architecture decisions: `docs/architecture/`
-- Execution state: `production/`
-- Onboarding and collaboration rules: `docs/onboarding/`
-- Feature packets: `specs/`
+- 运行时项目根目录：`gd_project/`
+- 游戏运行时内容：`gd_project/scenes/` 与 `gd_project/Assets/`
+- 运行时配套文档与工具：`docs/` 与 `scripts/`
+- 游戏设计：`design/gdd/`
+- 架构决策：`docs/architecture/`
+- 执行状态：`production/`
+- 入门与协作规则：`docs/onboarding/`
+- 功能规格包：`specs/`
 
-## Reference And Prototype Material
+## 参考与原型材料
 
-- `design/prototypes/html/` is the reference / prototype layer for HTML experiments and legacy playable web demos.
-- `prototype/` is for distributable prototype packages. Generated package outputs are rebuildable and ignored by default.
-- `_obsolete/` is the graveyard for expired material. Treat it as ignore-by-default unless you are explicitly doing history lookup or recovery.
+- `design/prototypes/html/` 是 HTML 实验和旧网页可玩 Demo 的参考层。
+- `prototype/` 用于可分发的原型打包产物。可重建的包默认应忽略，不直接追踪。
+- `_obsolete/` 是失效材料的归档区。除非明确在做历史查询或恢复，否则默认忽略。
 
-## First Reads
+## 建议先读
 
 - `docs/README.md`
 - `docs/onboarding/repository-map.md`
@@ -29,8 +29,8 @@ The active Godot runtime now lives under `gd_project/`, while supporting docs an
 - `gd_project/README.md`
 - `production/session-state/active.md`
 
-## Notes
+## 备注
 
-- Open `gd_project/project.godot` in Godot 4.3.
-- Treat `gd_project/` as the formal game-development directory for runtime work.
-- If you work on the HTML prototype sources, treat them as reference material unless a GDD or ADR explicitly promotes behavior into the game.
+- 请使用 Godot 4.3 打开 `gd_project/project.godot`。
+- 运行时开发工作应把 `gd_project/` 视为正式游戏目录。
+- 如果你在处理 HTML 原型源码，默认把它当作参考材料，除非某份 GDD 或 ADR 明确将对应行为提升为正式游戏规则。

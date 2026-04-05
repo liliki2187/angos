@@ -1,8 +1,8 @@
-# Release Scripts
+# 发布脚本
 
-Scripts in this directory create distributable or shareable outputs.
+本目录中的脚本用于生成可分发或可共享的产物。
 
-Current entries:
+## 当前内容
 
-- `package_fullchain_demo.ps1`: builds the local `prototype/fullchain_demo/` package from `design/prototypes/html/full-chain-demo/`
-- `fullchain_demo/`: launcher and README/index templates used by the packaging script
+- `package_fullchain_demo.ps1`：从 `design/prototypes/html/full-chain-demo/` 构建本地 `prototype/fullchain_demo/` 包
+- `fullchain_demo/`：打包脚本使用的启动器和 README / index 模板

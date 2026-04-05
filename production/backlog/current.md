@@ -1,20 +1,20 @@
-# Current Backlog
+# 当前待办
 
 ## P0
 
-- Split monolithic logic out of `gd_project/scenes/gameplay/full_chain/FullChainGame.gd` behind documented runtime boundaries
-- Start the content/config pipeline so gameplay iteration is not trapped in code constants
-- Add minimal automated coverage for weekly phase transitions and settlement formulas
+- 按已文档化的运行时边界，把 `gd_project/scenes/gameplay/full_chain/FullChainGame.gd` 中的单体逻辑继续拆开
+- 启动内容 / 配置管线，避免玩法迭代被代码常量卡死
+- 为周阶段切换与结算公式补上最小自动化覆盖
 
 ## P1
 
-- Finish the next pass of reference-layer cleanup for stale docs, labs, and generated artifacts
-- Define `specs/` usage on the first real feature packet
-- Normalize remaining scene/module ownership after the directory split
-- Add a concise onboarding page for GUI and art contributors
+- 完成下一轮参考层清理，处理陈旧文档、实验页和生成产物
+- 为第一份真实功能包明确 `specs/` 的使用方式
+- 在目录拆分后继续规范剩余场景 / 模块所有权
+- 为 GUI 和美术贡献者补一页精简入门说明
 
 ## P2
 
-- Audit which prototype pages still deserve publishing support after the directory split
-- Add milestone-specific acceptance checklists
-- Decide which reference prototypes deserve permanent publishing support
+- 复盘哪些原型页面在目录拆分后仍值得保留发布支持
+- 为各里程碑补充验收检查清单
+- 决定哪些参考原型值得长期保留发布支持

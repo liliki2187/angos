@@ -1,160 +1,160 @@
-# Systems Index: Angus / 《世界未解之谜周刊》
+# 系统索引：Angus / 《世界未解之谜周刊》
 
-> **Status**: Draft
-> **Created**: 2026-03-31
-> **Last Updated**: 2026-03-31
-> **Source Concept**: design/gdd/game-concept.md
-
----
-
-## Overview
-
-Angus is a weekly management loop built around a narrow but tightly connected chain: maintain a persistent newspaper state, dispatch staff into mystery nodes, resolve expeditions through split event checks, convert results into publishable stories, assemble a six-slot issue, and settle the consequences into next week's conditions. The highest-value systems are the ones that keep this chain readable and maintainable in Godot. Anything that sits outside that loop is secondary until the MVP is stable.
+> **状态**：草案
+> **创建时间**：2026-03-31
+> **最后更新**：2026-03-31
+> **来源概念**：`design/gdd/game-concept.md`
 
 ---
 
-## Systems Enumeration
+## 概览
 
-| # | System Name | Category | Priority | Status | Design Doc | Depends On |
-|---|-------------|----------|----------|--------|------------|------------|
-| 1 | Weekly Run Loop and State | Core | MVP | Drafted | design/gdd/weekly-run-loop.md | -- |
-| 2 | Region and Node Availability | Gameplay | MVP | Drafted | design/gdd/exploration-and-node-dispatch.md | Weekly Run Loop and State |
-| 3 | Staff Dispatch and Attribute Aggregation | Gameplay | MVP | Drafted | design/gdd/exploration-and-node-dispatch.md | Weekly Run Loop and State |
-| 4 | Event Check Resolution | Gameplay | MVP | Drafted | design/gdd/event-check-resolution.md | Staff Dispatch and Attribute Aggregation |
-| 5 | Clue Inventory and Story Conversion (inferred) | Gameplay | MVP | Not Started | -- | Event Check Resolution, Weekly Run Loop and State |
-| 6 | Editorial Layout and Slot Assignment | Gameplay | MVP | Drafted | design/gdd/editorial-layout-and-settlement.md | Clue Inventory and Story Conversion |
-| 7 | Issue Settlement and Subscription Economy | Economy | MVP | Drafted | design/gdd/editorial-layout-and-settlement.md | Editorial Layout and Slot Assignment, Weekly Run Loop and State |
-| 8 | Macro Attributes and Unlock Pressure (inferred) | Progression | MVP | Not Started | -- | Weekly Run Loop and State, Issue Settlement and Subscription Economy |
-| 9 | Menus and Scene Navigation | UI | Vertical Slice | Implemented | -- | Weekly Run Loop and State |
-| 10 | Feedback, Logging, and Forecast UI (inferred) | UI | Vertical Slice | Not Started | -- | Event Check Resolution, Editorial Layout and Slot Assignment |
-| 11 | Content Data and Config Pipeline | Core | Vertical Slice | Not Started | -- | Weekly Run Loop and State |
-| 12 | Narrative/Faction Event Layer | Narrative | Alpha | Not Started | -- | Macro Attributes and Unlock Pressure, Content Data and Config Pipeline |
-| 13 | Save/Load and Profile Persistence | Persistence | Alpha | Not Started | -- | Weekly Run Loop and State |
-| 14 | Onboarding and Tutorialization | Meta | Vertical Slice | Not Started | -- | Menus and Scene Navigation, Feedback, Logging, and Forecast UI |
-| 15 | Story Synthesis Workbench | Gameplay | Full Vision | Deferred | -- | Clue Inventory and Story Conversion, Macro Attributes and Unlock Pressure |
-| 16 | Accessibility and Presentation Polish | Meta | Full Vision | Not Started | -- | Feedback, Logging, and Forecast UI |
+Angus 是一条收束但紧密联动的周循环经营链路：维持持续存在的报纸状态，把员工派往异闻节点，经由拆分事件检定结算远征结果，把结果转成可出版故事，组出一份六栏周刊，再把后果结算到下一周条件中。最有价值的系统，是那些能让这条链在 Godot 中保持可读、可维护的部分。凡是游离在这条链之外的内容，在 MVP 稳定之前都属于次要项。
 
 ---
 
-## Categories
+## 系统枚举
 
-| Category | Description | Typical Systems |
-|----------|-------------|-----------------|
-| **Core** | Foundation systems everything depends on | State loop, config pipeline |
-| **Gameplay** | The systems that make the weekly loop interactive | Dispatch, checks, clue conversion, layout |
-| **Progression** | How the paper changes over time | Macro attributes, unlock pressure, long-term drift |
-| **Economy** | Resource creation and consumption | Settlement, subscriptions, profit |
-| **Persistence** | Save state and continuity | Save/load, profile continuity |
-| **UI** | Player-facing information displays | Menus, forecasts, result panels |
-| **Narrative** | Story and event delivery | Factions, event chains, unlock text |
-| **Meta** | Systems outside the core loop | Onboarding, accessibility, polish |
-
----
-
-## Priority Tiers
-
-| Tier | Definition | Target Milestone | Design Urgency |
-|------|------------|------------------|----------------|
-| **MVP** | Required for the core loop to function | First stable Godot week loop | Design first |
-| **Vertical Slice** | Required for a clearer, pitchable, more maintainable demo | Internal vertical slice | Design second |
-| **Alpha** | Expands long-term structure and content breadth | Alpha | Design third |
-| **Full Vision** | High-scope additions and polish | Beta / Release | Design as needed |
+| # | 系统名 | 类别 | 优先级 | 状态 | 设计文档 | 依赖 |
+|---|--------|------|--------|------|----------|------|
+| 1 | 周循环与状态 | 核心 | MVP | 已起草 | `design/gdd/weekly-run-loop.md` | -- |
+| 2 | 区域与节点可用性 | 玩法 | MVP | 已起草 | `design/gdd/exploration-and-node-dispatch.md` | 周循环与状态 |
+| 3 | 员工派遣与属性聚合 | 玩法 | MVP | 已起草 | `design/gdd/exploration-and-node-dispatch.md` | 周循环与状态 |
+| 4 | 事件检定结算 | 玩法 | MVP | 已起草 | `design/gdd/event-check-resolution.md` | 员工派遣与属性聚合 |
+| 5 | 线索库存与故事转化（推导项） | 玩法 | MVP | 未开始 | -- | 事件检定结算、周循环与状态 |
+| 6 | 编辑排版与版位分配 | 玩法 | MVP | 已起草 | `design/gdd/editorial-layout-and-settlement.md` | 线索库存与故事转化 |
+| 7 | 周刊结算与订阅经济 | 经济 | MVP | 已起草 | `design/gdd/editorial-layout-and-settlement.md` | 编辑排版与版位分配、周循环与状态 |
+| 8 | 宏观属性与解锁压力（推导项） | 成长 | MVP | 未开始 | -- | 周循环与状态、周刊结算与订阅经济 |
+| 9 | 菜单与场景导航 | UI | 垂直切片 | 已实现 | -- | 周循环与状态 |
+| 10 | 反馈、日志与预测 UI（推导项） | UI | 垂直切片 | 未开始 | -- | 事件检定结算、编辑排版与版位分配 |
+| 11 | 内容数据与配置管线 | 核心 | 垂直切片 | 未开始 | -- | 周循环与状态 |
+| 12 | 叙事 / 势力事件层 | 叙事 | Alpha | 未开始 | -- | 宏观属性与解锁压力、内容数据与配置管线 |
+| 13 | 存档 / 读档与档案持久化 | 持久化 | Alpha | 未开始 | -- | 周循环与状态 |
+| 14 | 新手引导与教程化 | 元系统 | 垂直切片 | 未开始 | -- | 菜单与场景导航、反馈/日志/预测 UI |
+| 15 | 故事合成工作台 | 玩法 | 完整愿景 | 已延期 | -- | 线索库存与故事转化、宏观属性与解锁压力 |
+| 16 | 无障碍与表现抛光 | 元系统 | 完整愿景 | 未开始 | -- | 反馈/日志/预测 UI |
 
 ---
 
-## Dependency Map
+## 类别说明
 
-### Foundation Layer (no dependencies)
-
-1. **Weekly Run Loop and State** -- owns week boundaries, shared variables, phase transitions, and cross-week persistence rules.
-
-### Core Layer (depends on foundation)
-
-1. **Region and Node Availability** -- depends on: Weekly Run Loop and State
-2. **Staff Dispatch and Attribute Aggregation** -- depends on: Weekly Run Loop and State
-3. **Content Data and Config Pipeline** -- depends on: Weekly Run Loop and State
-4. **Menus and Scene Navigation** -- depends on: Weekly Run Loop and State
-5. **Macro Attributes and Unlock Pressure** -- depends on: Weekly Run Loop and State, Issue Settlement and Subscription Economy
-
-### Feature Layer (depends on core)
-
-1. **Event Check Resolution** -- depends on: Staff Dispatch and Attribute Aggregation
-2. **Clue Inventory and Story Conversion** -- depends on: Event Check Resolution, Weekly Run Loop and State
-3. **Editorial Layout and Slot Assignment** -- depends on: Clue Inventory and Story Conversion
-4. **Issue Settlement and Subscription Economy** -- depends on: Editorial Layout and Slot Assignment, Weekly Run Loop and State
-5. **Narrative/Faction Event Layer** -- depends on: Macro Attributes and Unlock Pressure, Content Data and Config Pipeline
-
-### Presentation Layer (depends on features)
-
-1. **Feedback, Logging, and Forecast UI** -- depends on: Event Check Resolution, Editorial Layout and Slot Assignment
-2. **Onboarding and Tutorialization** -- depends on: Menus and Scene Navigation, Feedback, Logging, and Forecast UI
-
-### Polish Layer (depends on everything)
-
-1. **Save/Load and Profile Persistence** -- depends on: Weekly Run Loop and State, Content Data and Config Pipeline
-2. **Story Synthesis Workbench** -- depends on: Clue Inventory and Story Conversion, Macro Attributes and Unlock Pressure
-3. **Accessibility and Presentation Polish** -- depends on: Feedback, Logging, and Forecast UI
+| 类别 | 定义 | 典型系统 |
+|------|------|----------|
+| **核心** | 所有其他系统依赖的基础层 | 状态循环、配置管线 |
+| **玩法** | 让周循环可交互的系统 | 派遣、检定、线索转化、排版 |
+| **成长** | 报纸如何随时间变化 | 宏观属性、解锁压力、长期漂移 |
+| **经济** | 资源的产生与消耗 | 结算、订阅、利润 |
+| **持久化** | 存档状态与连续性 | 存档/读档、档案延续 |
+| **UI** | 玩家可见的信息展示 | 菜单、预测、结果面板 |
+| **叙事** | 故事与事件传达 | 势力、事件链、解锁文本 |
+| **元系统** | 核心循环之外的外围系统 | 引导、无障碍、抛光 |
 
 ---
 
-## Recommended Design Order
+## 优先级层级
 
-| Order | System | Priority | Layer | Agent(s) | Est. Effort |
-|-------|--------|----------|-------|----------|-------------|
-| 1 | Weekly Run Loop and State | MVP | Foundation | game-designer + gameplay-programmer | M |
-| 2 | Region and Node Availability | MVP | Core | game-designer | M |
-| 3 | Staff Dispatch and Attribute Aggregation | MVP | Core | game-designer | S |
-| 4 | Event Check Resolution | MVP | Feature | game-designer + systems-designer | M |
-| 5 | Clue Inventory and Story Conversion | MVP | Feature | game-designer | M |
-| 6 | Editorial Layout and Slot Assignment | MVP | Feature | game-designer + ux-designer | M |
-| 7 | Issue Settlement and Subscription Economy | MVP | Feature | economy-designer + systems-designer | L |
-| 8 | Macro Attributes and Unlock Pressure | MVP | Core | game-designer | M |
-| 9 | Content Data and Config Pipeline | Vertical Slice | Core | gameplay-programmer | L |
-| 10 | Feedback, Logging, and Forecast UI | Vertical Slice | Presentation | ux-designer + ui-programmer | M |
-| 11 | Menus and Scene Navigation | Vertical Slice | Core | ui-programmer | S |
-| 12 | Onboarding and Tutorialization | Vertical Slice | Presentation | game-designer | S |
-| 13 | Save/Load and Profile Persistence | Alpha | Polish | gameplay-programmer | M |
-| 14 | Narrative/Faction Event Layer | Alpha | Feature | narrative-director + game-designer | L |
-| 15 | Story Synthesis Workbench | Full Vision | Polish | game-designer | L |
-| 16 | Accessibility and Presentation Polish | Full Vision | Polish | ux-designer | M |
+| 层级 | 定义 | 目标里程碑 | 设计紧迫度 |
+|------|------|------------|------------|
+| **MVP** | 核心循环运转所必需 | 第一版稳定 Godot 周循环 | 优先设计 |
+| **垂直切片** | 为了更清晰、更可演示、更可维护的 Demo 所必需 | 内部垂直切片 | 第二优先 |
+| **Alpha** | 扩展长期结构与内容广度 | Alpha | 第三优先 |
+| **完整愿景** | 高范围增量与抛光 | Beta / Release | 需要时设计 |
 
 ---
 
-## Circular Dependencies
+## 依赖图
 
-- **Potential cycle: Macro Attributes and Unlock Pressure <-> Narrative/Faction Event Layer**. Resolve by making macro attributes the source state and letting the narrative layer only read and emit scripted mutations through explicit events.
-- **Potential cycle: Content Data and Config Pipeline <-> Narrative/Faction Event Layer**. Resolve by defining the data schema first and keeping narrative content as consumers of the schema.
+### 基础层（无依赖）
+
+1. **周循环与状态**：负责周边界、共享变量、阶段切换和跨周持久化规则。
+
+### 核心层（依赖基础层）
+
+1. **区域与节点可用性**：依赖周循环与状态
+2. **员工派遣与属性聚合**：依赖周循环与状态
+3. **内容数据与配置管线**：依赖周循环与状态
+4. **菜单与场景导航**：依赖周循环与状态
+5. **宏观属性与解锁压力**：依赖周循环与状态、周刊结算与订阅经济
+
+### 功能层（依赖核心层）
+
+1. **事件检定结算**：依赖员工派遣与属性聚合
+2. **线索库存与故事转化**：依赖事件检定结算、周循环与状态
+3. **编辑排版与版位分配**：依赖线索库存与故事转化
+4. **周刊结算与订阅经济**：依赖编辑排版与版位分配、周循环与状态
+5. **叙事 / 势力事件层**：依赖宏观属性与解锁压力、内容数据与配置管线
+
+### 表现层（依赖功能层）
+
+1. **反馈、日志与预测 UI**：依赖事件检定结算、编辑排版与版位分配
+2. **新手引导与教程化**：依赖菜单与场景导航、反馈/日志/预测 UI
+
+### 抛光层（依赖全部）
+
+1. **存档 / 读档与档案持久化**：依赖周循环与状态、内容数据与配置管线
+2. **故事合成工作台**：依赖线索库存与故事转化、宏观属性与解锁压力
+3. **无障碍与表现抛光**：依赖反馈/日志/预测 UI
 
 ---
 
-## High-Risk Systems
+## 建议设计顺序
 
-| System | Risk Type | Risk Description | Mitigation |
-|--------|-----------|-----------------|------------|
-| Weekly Run Loop and State | Technical | Current behavior is concentrated in a monolithic scene script | Extract state ownership and document interfaces before adding content |
-| Issue Settlement and Subscription Economy | Design | Multipliers may produce opaque or dominant strategies | Prototype balance changes and document tuning ranges |
-| Content Data and Config Pipeline | Scope | Hardcoded content will slow every future iteration | Move nodes, regions, and story templates toward data assets early |
-| Story Synthesis Workbench | Scope | Design exists in docs but not in Godot MVP; easy to reintroduce too early | Keep deferred until the core loop is stable and documented |
+| 顺序 | 系统 | 优先级 | 层级 | 负责角色 | 预估工作量 |
+|------|------|--------|------|----------|------------|
+| 1 | 周循环与状态 | MVP | 基础层 | game-designer + gameplay-programmer | M |
+| 2 | 区域与节点可用性 | MVP | 核心层 | game-designer | M |
+| 3 | 员工派遣与属性聚合 | MVP | 核心层 | game-designer | S |
+| 4 | 事件检定结算 | MVP | 功能层 | game-designer + systems-designer | M |
+| 5 | 线索库存与故事转化 | MVP | 功能层 | game-designer | M |
+| 6 | 编辑排版与版位分配 | MVP | 功能层 | game-designer + ux-designer | M |
+| 7 | 周刊结算与订阅经济 | MVP | 功能层 | economy-designer + systems-designer | L |
+| 8 | 宏观属性与解锁压力 | MVP | 核心层 | game-designer | M |
+| 9 | 内容数据与配置管线 | 垂直切片 | 核心层 | gameplay-programmer | L |
+| 10 | 反馈、日志与预测 UI | 垂直切片 | 表现层 | ux-designer + ui-programmer | M |
+| 11 | 菜单与场景导航 | 垂直切片 | 核心层 | ui-programmer | S |
+| 12 | 新手引导与教程化 | 垂直切片 | 表现层 | game-designer | S |
+| 13 | 存档 / 读档与档案持久化 | Alpha | 抛光层 | gameplay-programmer | M |
+| 14 | 叙事 / 势力事件层 | Alpha | 功能层 | narrative-director + game-designer | L |
+| 15 | 故事合成工作台 | 完整愿景 | 抛光层 | game-designer | L |
+| 16 | 无障碍与表现抛光 | 完整愿景 | 抛光层 | ux-designer | M |
 
 ---
 
-## Progress Tracker
+## 循环依赖风险
 
-| Metric | Count |
-|--------|-------|
-| Total systems identified | 16 |
-| Design docs started | 4 |
-| Design docs reviewed | 0 |
-| Design docs approved | 0 |
-| MVP systems designed | 4/8 |
-| Vertical Slice systems designed | 0/4 |
+- **潜在循环：宏观属性与解锁压力 <-> 叙事 / 势力事件层**。解决方式：让宏观属性成为源状态，叙事层只读取，并通过显式事件输出受控修改。
+- **潜在循环：内容数据与配置管线 <-> 叙事 / 势力事件层**。解决方式：先定义数据结构，让叙事内容只作为该结构的消费者。
 
 ---
 
-## Next Steps
+## 高风险系统
 
-- [ ] Review and approve this systems enumeration
-- [ ] Draft or refine `Clue Inventory and Story Conversion`
-- [ ] Draft `Macro Attributes and Unlock Pressure`
-- [ ] Create the config-pipeline ADR-backed implementation plan
-- [ ] Run focused design review on the drafted MVP GDDs
+| 系统 | 风险类型 | 风险描述 | 缓解方式 |
+|------|----------|----------|----------|
+| 周循环与状态 | 技术 | 当前行为集中在一个单体场景脚本中 | 扩内容前先抽离状态所有权并文档化接口 |
+| 周刊结算与订阅经济 | 设计 | 各种乘区可能导致策略不透明或出现支配性解法 | 先原型化平衡调整，再文档化调参区间 |
+| 内容数据与配置管线 | 范围 | 硬编码内容会拖慢未来所有迭代 | 尽早把节点、区域和故事模板迁向数据资产 |
+| 故事合成工作台 | 范围 | 文档里已有设计，但不在 Godot MVP 中，容易过早回流 | 仅在核心循环稳定且文档完备后再启用 |
+
+---
+
+## 进度追踪
+
+| 指标 | 数值 |
+|------|------|
+| 已识别系统总数 | 16 |
+| 已开始设计文档 | 4 |
+| 已评审设计文档 | 0 |
+| 已批准设计文档 | 0 |
+| 已设计 MVP 系统 | 4/8 |
+| 已设计垂直切片系统 | 0/4 |
+
+---
+
+## 下一步
+
+- [ ] 评审并批准这份系统枚举
+- [ ] 起草或修订“线索库存与故事转化”
+- [ ] 起草“宏观属性与解锁压力”
+- [ ] 制定由 ADR 支撑的配置管线实施计划
+- [ ] 对已起草的 MVP GDD 做一次聚焦设计评审

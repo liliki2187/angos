@@ -1,85 +1,85 @@
-# Project Stage Analysis
+# 项目阶段分析
 
-**Date**: 2026-04-04
-**Stage**: Production (early)
+**日期**：2026-04-04  
+**阶段**：制作期（早期）
 
-## Completeness Overview
+## 完整度概览
 
-- **Design**: ~75% complete. Canonical `design/gdd/` documents now exist, though some older `docs/` design material still needs clearer legacy/reference labeling.
-- **Code**: ~55% complete for MVP. Godot has a playable weekly vertical prototype with menu flow, exploration, event checks, editorial layout, and settlement, but architecture is still monolithic.
-- **Architecture**: ~35% complete. Engine choice is locked and ADR work has started, but runtime boundaries are not yet enforced in code.
-- **Production**: ~55% complete. A durable `production/` workspace now exists with stage, sprint, backlog, risk, handoff, and session-state artifacts, but it still needs regular operational use.
-- **Tests**: ~0-5% complete. No project-owned automated gameplay test structure was found.
+- **设计**：约 75% 完成。规范性的 `design/gdd/` 文档已经建立，但部分旧 `docs/` 设计材料仍需要更清晰的历史 / 参考标记。
+- **代码**：MVP 约 55% 完成。Godot 已有可玩的周循环垂直原型，包含菜单流转、探索、事件检定、编辑排版与结算，但架构仍偏单体。
+- **架构**：约 35% 完成。引擎选择已锁定，ADR 工作已开始，但运行时边界尚未在代码中真正落实。
+- **生产**：约 55% 完成。`production/` 工作区已具备阶段、冲刺、待办、风险、交接与会话状态等稳定结构，但还需要形成持续运转。
+- **测试**：约 0-5% 完成。尚未发现项目自有的自动化玩法测试结构。
 
-## Scope Check: Godot MVP
+## 范围检查：Godot MVP
 
-### Original Scope
+### 原始范围
 
-Source of truth: `docs/plans/godot-full-chain-implementation-plan.md`
+真实来源：`docs/plans/godot-full-chain-implementation-plan.md`
 
-1. Global week state and loop skeleton
-2. Exploration map and node execution
-3. Event check integration into exploration
-4. Clue-to-story conversion and editorial scene
-5. Economic settlement and cross-week persistence
-6. Content configuration pipeline
+1. 全局周状态与循环骨架
+2. 探索地图与节点执行
+3. 把事件检定整合进探索
+4. 线索转故事与编辑场景
+5. 经济结算与跨周持续状态
+6. 内容配置管线
 
-### Current Scope
+### 当前范围
 
-Implemented or partially implemented in Godot:
+已在 Godot 中实现或部分实现：
 
-1. Main menu entry into the current full-chain prototype
-2. Unified weekly prototype in `gd_project/scenes/gameplay/full_chain/FullChainGame.gd`
-3. Region and node selection with unlock rules
-4. Staff dispatch and split event checks
-5. Weekly clue generation
-6. Automatic story generation and filler padding
-7. Six-slot editorial layout
-8. Settlement with subscriptions, profile drift, and macro-stat updates
-9. Next-week transition
+1. 从主菜单进入当前全链条原型
+2. 位于 `gd_project/scenes/gameplay/full_chain/FullChainGame.gd` 的统一周循环原型
+3. 带解锁规则的区域与节点选择
+4. 员工派遣与拆分事件检定
+5. 每周线索生成
+6. 自动故事生成与填充稿补足
+7. 六栏编辑排版
+8. 含订阅、画像漂移和宏观属性更新的结算
+9. 下一周过渡
 
-### Scope Additions (not in original plan as core deliverables)
+### 范围新增项（不在原计划核心交付内）
 
-| Addition | Justified? | Effort |
-|----------|------------|--------|
-| Responsive layout and presentation polish inside the Godot prototype | Yes | S |
-| Main menu settlement preview and extra showcase entry points | Yes, but secondary | S |
-| Continued HTML reference branch with story synthesis docs | Yes as reference, not as MVP runtime | M |
+| 新增项 | 是否合理 | 工作量 |
+|--------|----------|--------|
+| Godot 原型内部的响应式布局与表现抛光 | 是 | S |
+| 主菜单结算预览与额外展示入口 | 是，但属于次级项 | S |
+| 持续保留 HTML 参考分支与故事合成文档 | 作为参考是合理的，但不属于 MVP 运行时 | M |
 
-### Scope Removals / Not Yet Landed
+### 范围移除 / 尚未落地项
 
-| Removed or Missing Item | Reason | Impact |
-|-------------------------|--------|--------|
-| Config-driven content pipeline | Not implemented yet | Slows future iteration and content scaling |
-| Formal save/load | Deferred | Acceptable for MVP, risky for longer sessions |
-| Story synthesis as a separate Godot phase | Intentionally deferred | Keeps MVP narrow, but leaves one future design branch unresolved |
+| 缺失项 | 原因 | 影响 |
+|--------|------|------|
+| 配置驱动内容管线 | 尚未实现 | 拖慢未来迭代和内容扩展 |
+| 正式存档 / 读档 | 已延期 | 对 MVP 可接受，但长会话存在风险 |
+| 独立的 Godot 故事合成阶段 | 有意延期 | 保持 MVP 收束，但留下一个未来设计分支未决 |
 
-### Bloat Score
+### 膨胀评分
 
-- Original items: 6
-- Current implemented core items: 9
-- Items added beyond original plan: 3 (+50% at repo level, but only +2 meaningful runtime additions)
-- Items removed or deferred: 3
-- **Verdict**: Minor creep at repository level, but the Godot MVP itself remains on track because most additions are presentation or reference-layer work rather than new mandatory gameplay branches.
+- 原始条目数：6
+- 当前已实现核心条目数：9
+- 超出原计划的新增项：3（仓库层面 +50%，但真正有意义的运行时新增只有 +2）
+- 已移除或延期项：3
+- **结论**：仓库层面存在轻微蔓延，但 Godot MVP 本身仍在正轨上，因为大多数新增项属于表现层或参考层，而不是新的强制玩法分支。
 
-### Risk Assessment
+### 风险评估
 
-- **Schedule Risk**: Medium. The project already has a playable loop, but config work and architecture cleanup still need attention.
-- **Quality Risk**: High. Core behavior is concentrated in a large scene script, which makes balancing and iteration fragile.
-- **Integration Risk**: Medium. HTML reference logic and Godot runtime are close enough to cross-pollinate, but still need clearer source-of-truth rules.
+- **进度风险**：中。项目已经有可玩的闭环，但配置工作和架构清理仍需投入。
+- **质量风险**：高。核心行为集中在一个大型场景脚本中，使平衡与迭代都较脆弱。
+- **集成风险**：中。HTML 参考逻辑与 Godot 运行时仍然足够接近，容易相互污染，因此需要更明确的真实来源规则。
 
-## Gaps Identified
+## 已识别缺口
 
-1. There was no canonical game-concept, pillars, or systems index. This is now being corrected, but those documents must become the default planning layer.
-2. The project has a playable runtime but no formal architecture boundary between state, content, and UI.
-3. Content is still too hardcoded for rapid iteration.
-4. There is no owned test strategy for formulas or phase transitions.
-5. The repo now has a durable production-state workspace, but it still needs the first real spec-driven feature packet and consistent weekly upkeep.
+1. 过去缺少正式的游戏概念、设计支柱和系统索引。现在正在补齐，但这些文档必须成为默认规划层。
+2. 项目已有可玩运行时，但状态、内容和 UI 之间仍缺少正式架构边界。
+3. 内容仍然过于硬编码，不利于快速迭代。
+4. 公式和阶段切换还没有归属明确的测试策略。
+5. 仓库已经有稳定的生产状态工作区，但还缺第一份真正的 spec 驱动功能包，以及持续性的周维护。
 
-## Recommended Next Steps
+## 建议的下一步
 
-1. Use the new `design/gdd/` documents as the canonical design layer.
-2. Extract `Clue Inventory and Story Conversion` and `Macro Attributes and Unlock Pressure` into dedicated GDDs next.
-3. Follow the ADR to separate weekly state ownership from scene presentation.
-4. Build the content/config pipeline before broadening content volume.
-5. Use the new `production/` workspace as the default execution layer and start the first real `specs/` packet on the next cross-functional feature.
+1. 把新的 `design/gdd/` 文档作为正式设计层。
+2. 下一步优先抽出 `线索库存与故事转化` 和 `宏观属性与解锁压力` 两份独立 GDD。
+3. 按 ADR 将周状态所有权与场景表现拆开。
+4. 在扩大内容体量前，先建立内容 / 配置管线。
+5. 把新的 `production/` 工作区作为默认执行层，并在下一个跨职能功能上启动第一份真正的 `specs/` 包。

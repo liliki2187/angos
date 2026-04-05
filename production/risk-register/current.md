@@ -1,25 +1,25 @@
-# Active Risk Register
+# 当前风险登记
 
-## R1. Monolithic Runtime Script
+## R1. 运行时脚本仍然单体化
 
-- **Risk**: `gd_project/scenes/gameplay/full_chain/FullChainGame.gd` still owns too much state, content, and presentation logic.
-- **Impact**: High
-- **Mitigation**: Keep new work tied to ADR boundaries and plan extraction slices before adding more mechanics.
+- **风险**：`gd_project/scenes/gameplay/full_chain/FullChainGame.gd` 仍同时拥有过多状态、内容和表现逻辑。
+- **影响**：高
+- **缓解**：新增工作继续绑定 ADR 边界，并在加入更多机制前先规划抽离切片。
 
-## R2. Source-Of-Truth Drift
+## R2. 真实来源漂移
 
-- **Risk**: HTML prototypes, legacy docs, and Godot runtime can still diverge.
-- **Impact**: High
-- **Mitigation**: Treat `design/gdd/` plus Godot runtime as canonical and mark prototypes as reference-only.
+- **风险**：HTML 原型、旧文档和 Godot 运行时仍可能继续分叉。
+- **影响**：高
+- **缓解**：把 `design/gdd/` 和 Godot 运行时视为规范层，并把原型显式标记为仅参考。
 
-## R3. Generated Output Noise
+## R3. 生成产物噪音
 
-- **Risk**: Demo packaging and local cache outputs make the worktree noisy and harder to review.
-- **Impact**: Medium
-- **Mitigation**: Ignore generated package paths and keep rebuildable outputs script-owned.
+- **风险**：Demo 打包和本地缓存输出会让工作区变脏，评审成本上升。
+- **影响**：中
+- **缓解**：忽略生成包路径，并确保可重建产物由脚本统一管理。
 
-## R4. Git Workflow Ambiguity
+## R4. Git 工作流歧义
 
-- **Risk**: Different docs previously gave incompatible push instructions.
-- **Impact**: Medium
-- **Mitigation**: Route all Git collaboration guidance through `docs/onboarding/git-collaboration.md`.
+- **风险**：不同文档过去给出过互相冲突的推送说明。
+- **影响**：中
+- **缓解**：所有 Git 协作说明统一收口到 `docs/onboarding/git-collaboration.md`。

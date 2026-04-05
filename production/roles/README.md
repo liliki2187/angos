@@ -1,16 +1,16 @@
-# Directory Ownership
+# 目录归属
 
-This is the practical ownership map for day-to-day work.
+这是日常工作使用的实际归属地图。
 
-- Design: `design/gdd/`, `design/systems/`, `specs/`
-- Runtime programming: `gd_project/scenes/`, `gd_project/Assets/`, `docs/architecture/`, `docs/`
-- Engine tooling: `scripts/`, `.github/workflows/`
-- UI and import pipeline: `design/ui/` when it exists, `gd_project/Assets/ui/`, `gd_project/scenes/ui/`, `docs/tools/psd-ui-import.md`
-- Production coordination: `production/`
-- Reference-only prototypes: `design/prototypes/html/`, `prototype/`
+- 设计：`design/gdd/`、`design/systems/`、`specs/`
+- 运行时开发：`gd_project/scenes/`、`gd_project/Assets/`、`docs/architecture/`、`docs/`
+- 引擎工具链：`scripts/`、`.github/workflows/`
+- UI 与导入管线：`design/ui/`（如存在）、`gd_project/Assets/ui/`、`gd_project/scenes/ui/`、`docs/tools/psd-ui-import.md`
+- 生产协同：`production/`
+- 仅参考原型：`design/prototypes/html/`、`prototype/`
 
-Rules:
+## 规则
 
-- Do not treat reference prototypes as runtime authority.
-- Do not add new long-lived source files to the repo root unless they are true root-level project files.
-- New implementation work should point back to a GDD, spec, or ADR.
+- 不要把参考原型视为运行时权威来源。
+- 不要在仓库根目录增加新的长期源码文件，除非它们确实是根层项目文件。
+- 新的实现工作应回链到相应 GDD、spec 或 ADR。

@@ -1,38 +1,38 @@
-# Git Collaboration
+# Git 协作规范
 
-This is the authority document for day-to-day Git collaboration guidance in this repository.
+这是本仓库日常 Git 协作的权威文档。
 
-## First Rule
+## 第一条规则
 
-Do not assume remote names or URLs from memory. Always inspect the current clone first:
+不要凭记忆假设远端名称或 URL。先检查当前 clone：
 
 ```powershell
 git remote -v
 ```
 
-Different local clones may not yet be normalized the same way.
+不同本地副本的远端配置可能还没有完全统一。
 
-## Team Policy
+## 团队策略
 
-- Keep the actively used hosted repositories in sync when that mirror setup is configured for the clone.
-- Do not push based on outdated instructions copied from older docs.
-- If the clone has only one configured remote, do not silently invent or rename remotes during unrelated work.
+- 当当前 clone 已配置双远端镜像工作流时，保持正在使用的托管仓库同步。
+- 不要根据旧文档里复制下来的过期说明直接推送。
+- 如果当前 clone 只配置了一个远端，不要在无关任务里擅自发明或重命名远端。
 
-## Preferred Normalized Layout
+## 推荐的标准命名
 
-When the clone is configured for the dual-remote mirror workflow, the preferred naming is:
+当 clone 使用双远端镜像工作流时，推荐命名为：
 
-- `origin`: primary presentation repo
-- `daydreamer`: mirrored historical repo
+- `origin`：主展示仓库
+- `daydreamer`：镜像历史仓库
 
-If that layout is missing, fix it deliberately as a Git task, not as incidental cleanup during feature work.
+如果当前 clone 不符合该布局，应把修正视为一个明确的 Git 任务，而不是顺手清理。
 
-## Helper Script
+## 辅助脚本
 
-`scripts/git/sync-both-remotes.ps1` is intended for the normalized dual-remote setup.
+`scripts/git/sync-both-remotes.ps1` 面向上述标准双远端布局。
 
-Only use it after `git remote -v` confirms that the current clone matches the expected mirror configuration.
+只有在 `git remote -v` 确认当前 clone 与预期镜像配置一致后，才使用该脚本。
 
-## Documentation Rule
+## 文档规则
 
-Other docs should link here instead of restating Git push policy in slightly different words.
+其他文档应链接到这里，而不是各自重复一套略有差异的 Git 推送策略。

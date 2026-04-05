@@ -1,151 +1,151 @@
-# ADR-0001: Godot Week Loop State and Data Boundaries
+# ADR-0001：Godot 周循环状态与数据边界
 
-## Status
-Accepted
+## 状态
+已接受
 
-## Date
+## 日期
 2026-03-31
 
-## Context
+## 背景
 
-### Problem Statement
+### 问题陈述
 
-Angus already has a playable Godot weekly prototype, but core behavior currently lives in a large scene script that owns content definitions, phase transitions, formulas, and UI refresh logic together. At the same time, HTML prototypes and legacy docs still exist as reference sources. Without a clear boundary, every new feature risks deepening prototype debt and reintroducing rule drift.
+Angus 已经有一个可玩的 Godot 周循环原型，但核心行为目前集中在一个大型场景脚本中，同时掌管内容定义、阶段切换、公式和 UI 刷新逻辑。与此同时，HTML 原型和旧文档仍作为参考来源存在。如果没有清晰边界，每个新功能都会继续加深原型债务，并重新引入规则漂移。
 
-### Constraints
+### 约束
 
-- The current live prototype is in Godot 4.3.
-- The team needs to preserve momentum and avoid restarting the runtime.
-- HTML reference assets still contain useful design information, but should not remain an equal implementation source.
-- Team bandwidth favors incremental extraction over large rewrites.
+- 当前在线原型基于 Godot 4.3。
+- 团队需要保留开发动能，不能重启运行时实现。
+- HTML 参考资产仍然包含有价值的设计信息，但不应继续作为同等实现来源。
+- 团队带宽更适合渐进式抽离，而不是大规模重写。
 
-### Requirements
+### 要求
 
-- Must keep Godot as the only canonical runtime for the current MVP.
-- Must separate weekly state ownership from scene presentation logic.
-- Must support future migration of content definitions out of hardcoded arrays and dictionaries.
-- Must preserve the existing playable loop while enabling safer iteration.
+- 当前 MVP 必须把 Godot 保持为唯一规范运行时。
+- 必须将周状态所有权与场景表现逻辑分离。
+- 必须支持未来把内容定义从硬编码数组和字典迁移出去。
+- 必须在保留当前可玩循环的同时，提高后续迭代安全性。
 
-## Decision
+## 决策
 
-Angus will treat the Godot weekly loop as the only implementation source of truth for the MVP. Weekly runtime state, content data, and scene presentation will be treated as separate concerns.
+Angus 将把 Godot 周循环视为 MVP 的唯一实现真源。周运行时状态、内容数据和场景表现将被视为三个独立关注点。
 
-### Architecture Diagram
+### 架构示意
 
 ```text
-Content Data (regions, nodes, staff, story templates)
+内容数据（区域、节点、员工、故事模板）
         |
         v
-Weekly State / Rules Layer
-  - week/day
-  - macro stats
-  - subscribers
-  - editorial profile
-  - weekly clues
-  - current phase
+周状态 / 规则层
+  - 周数/天数
+  - 宏观属性
+  - 订阅数
+  - 编辑部画像
+  - 本周线索
+  - 当前阶段
         |
         v
-Scene/UI Layer
-  - menu
-  - exploration panels
-  - editorial layout
-  - summary presentation
+场景 / UI 层
+  - 菜单
+  - 探索面板
+  - 组版界面
+  - 结算总结展示
 ```
 
-### Key Interfaces
+### 关键接口
 
-- **Content Data -> Weekly State**
-  - Region definitions
-  - Node definitions
-  - Staff definitions
-  - Story filler templates
-- **Weekly State -> Scene/UI**
-  - Current phase
-  - Available regions/nodes
-  - Probability previews
-  - Story pool
-  - Settlement summary
-- **Scene/UI -> Weekly State**
-  - Selected region/node
-  - Selected staff
-  - Slot assignment
-  - Phase transition actions
+- **内容数据 -> 周状态**
+  - 区域定义
+  - 节点定义
+  - 员工定义
+  - 填充故事模板
+- **周状态 -> 场景/UI**
+  - 当前阶段
+  - 可用区域/节点
+  - 概率预览
+  - 故事池
+  - 结算摘要
+- **场景/UI -> 周状态**
+  - 选中的区域/节点
+  - 选中的员工
+  - 版位分配
+  - 阶段切换动作
 
-### Additional Rules
+### 额外规则
 
-- `Globals` should remain limited to bootstrapping, scene paths, theme helpers, and debug logging. It should not become the permanent home of gameplay state.
-- HTML prototypes remain reference artifacts only. Any rule promoted from HTML must be re-documented in `design/gdd/` before being treated as canonical.
-- Story synthesis is explicitly outside current MVP runtime scope.
+- `Globals` 只应保留启动逻辑、场景路径、主题辅助和调试日志，不应成为玩法状态的长期归宿。
+- HTML 原型仅保留为参考资产。任何从 HTML 提升为正式规则的内容，都必须先在 `design/gdd/` 重新文档化，才能视为规范。
+- 故事合成明确不在当前 MVP 运行时范围内。
 
-## Alternatives Considered
+## 备选方案
 
-### Alternative 1: Keep expanding the monolithic `FullChainGame.gd`
+### 方案 1：继续扩张单体 `FullChainGame.gd`
 
-- **Description**: Continue building directly inside the existing scene script.
-- **Pros**: Fastest short-term implementation speed.
-- **Cons**: Harder to test, harder to document, harder to move to config-driven content, and more likely to create rule drift.
-- **Rejection Reason**: Acceptable for proving the loop, not acceptable for sustained development.
+- **描述**：继续直接在现有场景脚本里堆叠功能。
+- **优点**：短期实现速度最快。
+- **缺点**：更难测试、更难文档化、更难迁移到配置驱动内容，也更容易造成规则漂移。
+- **否决原因**：适合验证循环，不适合持续开发。
 
-### Alternative 2: Keep HTML and Godot as parallel canonical runtimes
+### 方案 2：让 HTML 与 Godot 继续并行充当规范运行时
 
-- **Description**: Continue treating both the HTML full-chain reference and Godot prototype as equal sources of truth.
-- **Pros**: Easier to compare old and new mechanics.
-- **Cons**: Doubles documentation burden, invites divergence, and slows engineering focus.
-- **Rejection Reason**: The project already suffers from parallel-branch ambiguity; this would worsen it.
+- **描述**：继续把 HTML 全链条参考实现与 Godot 原型视为同等真实来源。
+- **优点**：更容易比较新旧机制。
+- **缺点**：文档负担翻倍，容易分叉，也会拖慢工程聚焦。
+- **否决原因**：项目已经受到并行分支歧义困扰，这会进一步恶化。
 
-### Alternative 3: Rebuild from scratch around a new architecture before documenting
+### 方案 3：在文档补完前，先围绕新架构彻底重写
 
-- **Description**: Pause feature work and rewrite the runtime into a clean modular structure immediately.
-- **Pros**: Best long-term purity.
-- **Cons**: High interruption cost, risky loss of current behavior, and poor fit for team momentum.
-- **Rejection Reason**: Too expensive relative to the value of incremental extraction.
+- **描述**：暂停功能开发，立即把运行时全部重写成干净模块化结构。
+- **优点**：长期纯度最佳。
+- **缺点**：中断成本高，容易丢失当前行为，也不符合团队当前节奏。
+- **否决原因**：相对增量抽离而言，成本过高。
 
-## Consequences
+## 影响
 
-### Positive
+### 正面
 
-- One canonical runtime direction
-- Cleaner separation between rules, content, and presentation
-- Better support for upcoming config-pipeline work
-- Documentation can now map to concrete system boundaries
+- 明确唯一运行时方向
+- 更清晰地区分规则、内容和表现
+- 更利于后续配置管线工作
+- 文档能够映射到具体系统边界
 
-### Negative
+### 负面
 
-- Some existing code will need staged extraction and renaming.
-- Team members must stop treating HTML prototypes as equal implementation targets.
+- 现有代码需要分阶段抽离和改名。
+- 团队成员必须停止把 HTML 原型视作同等实现目标。
 
-### Risks
+### 风险
 
-- **Risk**: Extraction work slows visible feature progress.
-  - **Mitigation**: Tie refactors to specific GDD and ADR outputs, not open-ended cleanup.
-- **Risk**: Documentation and runtime still diverge during transition.
-  - **Mitigation**: Treat `design/gdd/` as the canonical design source for all new changes.
-- **Risk**: Content remains hardcoded longer than planned.
-  - **Mitigation**: Prioritize the content/config pipeline after the remaining MVP GDDs.
+- **风险**：抽离工作会拖慢可见功能推进。
+  - **缓解**：把重构绑定到明确的 GDD 和 ADR 产出，而不是无边界清理。
+- **风险**：迁移期间文档与运行时仍可能出现偏差。
+  - **缓解**：所有新改动都以 `design/gdd/` 作为规范设计来源。
+- **风险**：内容继续硬编码的时间可能比计划更长。
+  - **缓解**：在剩余 MVP GDD 完成后，优先推进内容/配置管线。
 
-## Performance Implications
+## 性能影响
 
-- **CPU**: Neutral to positive if update logic becomes more targeted.
-- **Memory**: Neutral; structured state may add light overhead but reduce duplication.
-- **Load Time**: Neutral for MVP, potentially better once content data is externalized.
-- **Network**: None.
+- **CPU**：中性到正向；如果更新逻辑更聚焦，会更有利。
+- **内存**：中性；结构化状态会带来少量开销，但可减少重复。
+- **加载时间**：对 MVP 基本中性，内容外置后可能更好。
+- **网络**：无。
 
-## Migration Plan
+## 迁移计划
 
-1. Keep the current playable scene operational.
-2. Finish canonical MVP documentation in `design/gdd/`.
-3. Identify state fields that belong to a weekly state layer versus presentation helpers.
-4. Move region/node/staff/story definitions toward external content data or typed resources.
-5. Refactor scene code in slices rather than rewriting all at once.
+1. 保持当前可玩场景持续可运行。
+2. 完成 `design/gdd/` 中规范 MVP 文档。
+3. 识别哪些状态字段属于周状态层，哪些只是表现层辅助。
+4. 逐步把区域/节点/员工/故事定义迁移为外部内容数据或类型化资源。
+5. 按切片重构场景代码，不做一次性全量重写。
 
-## Validation Criteria
+## 验证标准
 
-- New gameplay changes can name which GDD and ADR they implement.
-- Weekly state and content definitions are no longer mixed arbitrarily with UI refresh code.
-- HTML reference features are only promoted after documentation updates.
-- The team can add new nodes or story content without editing unrelated UI logic.
+- 新玩法改动能够明确指出其对应实现的 GDD 与 ADR。
+- 周状态和内容定义不再与 UI 刷新代码任意混杂。
+- HTML 参考特性只能在文档更新后才允许提升。
+- 团队可以在不改动无关 UI 逻辑的前提下添加新节点或新故事内容。
 
-## Related Decisions
+## 相关决策
 
 - `design/gdd/game-concept.md`
 - `design/gdd/game-pillars.md`

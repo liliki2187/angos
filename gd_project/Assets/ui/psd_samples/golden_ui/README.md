@@ -1,21 +1,21 @@
-# Golden UI PSD sample
+# Golden UI PSD 示例
 
-This sample is used to verify the PSD-to-Godot UI pipeline.
+这个示例用于验证 PSD 到 Godot UI 的导入链路。
 
-Source:
+## 来源
 
 - https://lpc.opengameart.org/content/golden-ui
 
-License:
+## 许可证
 
 - CC0
 
-Files:
+## 文件说明
 
-- `source/golden_ui.psd`: original PSD from OpenGameArt
-- `generated/`: exported layer PNGs, preview PNG, and manifest
+- `source/golden_ui.psd`：来自 OpenGameArt 的原始 PSD
+- `generated/`：导出的图层 PNG、预览 PNG 和 manifest
 
-Notes from the source page:
+## 来源页备注
 
-- The PSD file is included in the download.
-- The preview fonts are not included as reusable font assets.
+- 下载包内包含 PSD 文件。
+- 预览图使用的字体并未作为可复用字体资源一并提供。

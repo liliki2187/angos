@@ -1,27 +1,27 @@
-# Godot MVP Foundation
+# Godot MVP 基础
 
-**Status**: Active
-**Stage**: Early Production
-**Primary Goal**: Stabilize the Godot weekly-loop MVP as the canonical runtime while reducing repository confusion.
+**状态**：进行中  
+**阶段**：早期制作  
+**主要目标**：在降低仓库混乱度的同时，把 Godot 周循环 MVP 稳定为唯一规范运行时。
 
-## In Scope
+## 范围内
 
-- Keep Godot as the only canonical runtime target
-- Preserve HTML and visual prototypes as reference material
-- Strengthen directory ownership and onboarding clarity
-- Reduce repository noise from generated packages and local outputs
-- Prepare for config-pipeline and runtime modularization work
+- 保持 Godot 为唯一规范运行时目标
+- 保留 HTML 与视觉原型作为参考材料
+- 强化目录归属与入门清晰度
+- 降低生成包和本地输出带来的仓库噪音
+- 为配置管线和运行时模块化工作做准备
 
-## Explicitly Out Of Scope
+## 明确不在范围内
 
-- Large gameplay redesigns
-- Broad scene refactors without spec or ADR backing
-- New major prototype branches
-- Polishing release packaging as if it were a shipping build pipeline
+- 大规模玩法重设计
+- 没有 spec 或 ADR 支撑的广泛场景重构
+- 新的大型原型分支
+- 把发布打包抛光到像正式出货流水线那样完整
 
-## Exit Criteria
+## 退出标准
 
-- A new contributor can identify the canonical runtime, design, architecture, and production layers in under 10 minutes
-- Production workspace contains stage, sprint, backlog, risks, and handoff structure
-- Generated package outputs no longer pollute normal `git status`
-- Git collaboration guidance is no longer contradictory across docs
+- 新贡献者能在 10 分钟内识别运行时、设计、架构与生产层的规范位置
+- `production/` 工作区具备阶段、冲刺、待办、风险和交接结构
+- 生成的打包产物不再污染正常 `git status`
+- 不同文档之间的 Git 协作说明不再互相冲突

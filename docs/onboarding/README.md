@@ -1,8 +1,8 @@
-# Onboarding
+# 入门指引
 
-Start here when you need to understand how this repository is organized before changing anything.
+当你需要在动手修改前先理解仓库结构时，从这里开始。
 
-Read order:
+建议阅读顺序：
 
 1. `repository-map.md`
 2. `../README.md`
@@ -10,8 +10,8 @@ Read order:
 4. `../technical-preferences.md`
 5. `../../production/session-state/active.md`
 
-If you need deeper product context after that:
+如果之后还需要更深入的产品上下文：
 
-- gameplay and scope: `../../design/gdd/`
-- architecture decisions: `../architecture/`
-- historical logs: `../dev-logs/`
+- 玩法与范围：`../../design/gdd/`
+- 架构决策：`../architecture/`
+- 历史日志：`../dev-logs/`

@@ -1,8 +1,8 @@
-# Specs
+# 规格包说明
 
-Use this directory for feature-scoped work packets.
+本目录用于保存按功能范围划分的工作规格包。
 
-Recommended structure:
+## 推荐结构
 
 ```text
 specs/
@@ -12,8 +12,8 @@ specs/
     handoff.md
 ```
 
-Rules:
+## 规则
 
-- Create a spec when a feature crosses design, code, UI, or production boundaries
-- Link the spec back to relevant `design/gdd/` or `docs/architecture/` material
-- Use `handoff.md` to capture what actually landed and what remains
+- 当一个功能跨越设计、代码、UI 或生产协作边界时，就应该建立 spec
+- spec 应回链到相关的 `design/gdd/` 或 `docs/architecture/` 文档
+- 使用 `handoff.md` 记录本次实际落地了什么，以及还剩下什么

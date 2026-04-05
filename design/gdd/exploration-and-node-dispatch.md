@@ -1,62 +1,62 @@
-# Exploration and Node Dispatch
+# 探索与节点派遣
 
-> **Status**: Draft
-> **Author**: Codex + repository synthesis
-> **Last Updated**: 2026-03-31
-> **Implements Pillar**: Investigation Must Feed Publication
+> **状态**：草案
+> **作者**：Codex + 仓库综合整理
+> **最后更新**：2026-03-31
+> **对应支柱**：调查必须导向出版
 
-## Overview
+## 概览
 
-This system covers the exploration half of the weekly loop: region availability, node selection, staff assignment, dispatch validation, and clue output preparation. Its job is to turn limited time and staff capability into publishable material.
+这个系统覆盖周循环前半段的探索部分：区域可用性、节点选择、员工分配、派遣校验，以及线索输出准备。它的任务，是把有限时间和员工能力转化为可出版素材。
 
-## Player Fantasy
+## 玩家幻想
 
-The player should feel like they are directing a fragile but capable investigative team into uncertain opportunities, reading risk, scarcity, and potential reward before committing the paper's limited week.
+玩家应感受到自己正在指挥一支脆弱但有能力的调查团队，在投入报社本周有限资源之前，先阅读风险、稀缺性和潜在收益。
 
-## Detailed Design
+## 详细设计
 
-### Core Rules
+### 核心规则
 
-1. The world is organized into regions, each containing permanent, temporary, or hidden nodes.
-2. Regions unlock through explicit rules tied to macro attributes, flags, or prior evidence.
-3. Each dispatch selects 1-3 staff members whose attributes are aggregated against node requirements.
-4. A node is valid only if the player has enough remaining days and satisfies required attribute thresholds.
-5. Successful or partial outcomes generate clues; failed outcomes may generate weak clues or pressure effects.
-6. Exploration ends when the player chooses to stop or the week budget can no longer support useful action.
+1. 世界按区域组织，每个区域包含常驻、临时或隐藏节点。
+2. 区域通过与宏观属性、标记或既有证据相关的显式规则解锁。
+3. 每次派遣可选择 1-3 名员工，其属性会聚合后与节点需求比较。
+4. 只有当玩家剩余天数足够，并满足节点要求的属性阈值时，该节点才有效。
+5. 成功或部分成功会生成线索；失败可能只产生弱线索或压力效果。
+6. 当玩家主动停止，或本周预算已不足以支持有效行动时，探索结束。
 
-### States and Transitions
+### 状态与切换
 
-| State | Entry Condition | Exit Condition | Behavior |
-|-------|----------------|----------------|----------|
-| `region_browse` | Enter exploration phase | Region selected | Browse region list and unlock hints |
-| `node_select` | Region selected | Staff and node prepared | Inspect nodes, filters, and availability |
-| `dispatch_ready` | Valid node and staff combination exists | Execute pressed | Show probabilities and mission summary |
-| `dispatch_resolved` | Event check returns a result | Player selects next action | Apply clue and state changes |
+| 状态 | 进入条件 | 退出条件 | 行为 |
+|------|---------|---------|------|
+| `region_browse` | 进入探索阶段 | 选中区域 | 浏览区域列表与解锁提示 |
+| `node_select` | 已选中区域 | 员工与节点准备完毕 | 检查节点、过滤项与可用性 |
+| `dispatch_ready` | 存在合法的节点与员工组合 | 按下执行 | 展示概率与任务摘要 |
+| `dispatch_resolved` | 事件检定返回结果 | 玩家选择下一步 | 应用线索与状态变化 |
 
-### Interactions with Other Systems
+### 与其他系统的交互
 
-- **Weekly Run Loop and State** supplies remaining days, current week, flags, and macro attributes.
-- **Event Check Resolution** consumes aggregated staff values, node difficulty, and opponent values, then returns a result tier.
-- **Macro Attributes and Unlock Pressure** affects hidden nodes and region unlock rules.
-- **Clue Inventory and Story Conversion** consumes the resulting clue objects.
+- **周循环与状态** 提供剩余天数、当前周、标记和宏观属性。
+- **事件检定结算** 消耗聚合后的员工值、节点难度与对手值，再返回结果层级。
+- **宏观属性与解锁压力** 会影响隐藏节点和区域解锁规则。
+- **线索库存与故事转化** 会消费本系统产出的线索对象。
 
-## Formulas
+## 公式
 
-### Staff Attribute Aggregation
+### 员工属性聚合
 
 ```
 team_total[attr] = sum(staff_i[attr] for each selected staff member)
 ```
 
-| Variable | Type | Range | Source | Description |
-|----------|------|-------|--------|-------------|
-| `staff_i[attr]` | int | 0-10+ | staff data | Attribute value for one staff member |
-| `team_total[attr]` | int | 0-30+ | calculated | Aggregated team value for a requirement |
+| 变量 | 类型 | 范围 | 来源 | 说明 |
+|------|------|------|------|------|
+| `staff_i[attr]` | int | 0-10+ | 员工数据 | 单个员工在某属性上的值 |
+| `team_total[attr]` | int | 0-30+ | 计算值 | 面向某需求的团队聚合值 |
 
-**Expected output range**: 0 to 30+
-**Edge case**: Empty staff selection is invalid for dispatch.
+**预期输出范围**：0 到 30+  
+**边界情况**：未选择任何员工时，派遣无效。
 
-### Node Availability Gate
+### 节点可用性判定
 
 ```
 dispatch_enabled =
@@ -66,68 +66,68 @@ dispatch_enabled =
   and node_visibility == true
 ```
 
-| Variable | Type | Range | Source | Description |
-|----------|------|-------|--------|-------------|
-| `remaining_days` | int | 0-7 | week state | Available time budget |
-| `staff_count` | int | 0-3 | selection state | Number of assigned staff |
-| `node.need[attr]` | int | 0-10+ | node data | Requirement per attribute |
-| `node_visibility` | bool | true/false | unlock logic | Whether player can see the node |
+| 变量 | 类型 | 范围 | 来源 | 说明 |
+|------|------|------|------|------|
+| `remaining_days` | int | 0-7 | 周状态 | 可用时间预算 |
+| `staff_count` | int | 0-3 | 选择状态 | 已分配员工数 |
+| `node.need[attr]` | int | 0-10+ | 节点数据 | 每项属性需求 |
+| `node_visibility` | bool | true/false | 解锁逻辑 | 玩家是否能看到该节点 |
 
-## Edge Cases
+## 边界情况
 
-| Scenario | Expected Behavior | Rationale |
-|----------|------------------|-----------|
-| No staff selected | Node cannot execute | Prevent invalid dispatch state |
-| Temporary node already resolved | Disable it for the current week | Preserve temporal pressure |
-| Hidden node unlock condition met mid-run | Reveal it without rebuilding the loop | Makes macro pressure feel alive |
-| Requirements missed by one point | Node stays unavailable, but UI explains why | Preserves legibility |
+| 场景 | 预期行为 | 理由 |
+|------|----------|------|
+| 未选择员工 | 节点不可执行 | 防止非法派遣状态 |
+| 临时节点已被处理 | 本周内禁用该节点 | 保留时间压力 |
+| 运行中途满足隐藏节点解锁条件 | 立即揭示，而不重建整个循环 | 让宏观压力显得是活的 |
+| 需求只差一点 | 节点仍不可用，但 UI 必须解释原因 | 保持可读性 |
 
-## Dependencies
+## 依赖
 
-| System | Direction | Nature of Dependency |
-|--------|-----------|---------------------|
-| Weekly Run Loop and State | This system depends on it | Reads phase, days, flags, and week state |
-| Event Check Resolution | This system depends on it | Uses it to resolve dispatch outcome |
-| Clue Inventory and Story Conversion | It depends on this system | Consumes clue output |
-| Macro Attributes and Unlock Pressure | Bidirectional | Unlocks regions/nodes and may be mutated by results |
+| 系统 | 方向 | 依赖性质 |
+|------|------|----------|
+| 周循环与状态 | 本系统依赖它 | 读取阶段、天数、标记与周状态 |
+| 事件检定结算 | 本系统依赖它 | 使用它结算派遣结果 |
+| 线索库存与故事转化 | 它依赖本系统 | 消费线索输出 |
+| 宏观属性与解锁压力 | 双向依赖 | 决定区域/节点解锁，也可能被结果修改 |
 
-## Tuning Knobs
+## 调参旋钮
 
-| Parameter | Current Value | Safe Range | Effect of Increase | Effect of Decrease |
-|-----------|--------------|------------|-------------------|-------------------|
-| Region count in MVP | 2 | 2-4 | More variety, more content load | Tighter onboarding |
-| Staff cap per dispatch | 3 | 2-4 | More combinatorial depth | Harder requirement satisfaction |
-| Node day cost | 1-3 | 1-4 | More week pressure | More dispatch volume per week |
-| Node requirement thresholds | per node | low-mid | Requires stronger staff composition | Easier access, less tension |
+| 参数 | 当前值 | 安全范围 | 提高后的效果 | 降低后的效果 |
+|------|--------|----------|--------------|--------------|
+| MVP 区域数 | 2 | 2-4 | 内容更多样，但制作压力更大 | 引导更紧凑 |
+| 单次派遣员工上限 | 3 | 2-4 | 组合深度更高 | 更难满足需求 |
+| 节点天数消耗 | 1-3 | 1-4 | 周压力更高 | 单周可派遣次数更多 |
+| 节点需求阈值 | 按节点配置 | 低到中 | 需要更强配队 | 更容易进入，张力下降 |
 
-## Visual/Audio Requirements
+## 视觉 / 音频需求
 
-| Event | Visual Feedback | Audio Feedback | Priority |
-|-------|----------------|---------------|----------|
-| Region selection | Distinct selected state and hint panel update | Light UI confirm | Medium |
-| Node availability change | Clear disabled reason text | None required | High |
-| Dispatch execution | Mission panel emphasis and result reveal | Strong confirm and resolve cues | High |
+| 事件 | 视觉反馈 | 音频反馈 | 优先级 |
+|------|----------|----------|--------|
+| 区域选择 | 明显的选中状态与提示面板刷新 | 轻量 UI 确认音 | 中 |
+| 节点可用性变化 | 清晰的禁用原因文本 | 可无 | 高 |
+| 执行派遣 | 任务面板强调与结果揭示 | 强确认与结算提示音 | 高 |
 
-## UI Requirements
+## UI 需求
 
-| Information | Display Location | Update Frequency | Condition |
-|-------------|-----------------|-----------------|-----------|
-| Region hint and unlock status | Region panel | On selection or state change | During exploration |
-| Node cost, risk, and reason text | Node list | On refresh | During exploration |
-| Selected staff summary | Staff panel | On every selection change | During exploration |
-| Probability preview | Mission panel | On staff or node change | When dispatch can be evaluated |
+| 信息 | 显示位置 | 更新频率 | 条件 |
+|------|----------|----------|------|
+| 区域提示与解锁状态 | 区域面板 | 选择或状态变化时 | 探索阶段 |
+| 节点消耗、风险与原因文本 | 节点列表 | 刷新时 | 探索阶段 |
+| 已选员工摘要 | 员工面板 | 每次选择变化 | 探索阶段 |
+| 概率预览 | 任务面板 | 员工或节点变化时 | 派遣可评估时 |
 
-## Acceptance Criteria
+## 验收标准
 
-- [ ] The player can complete a valid dispatch using 1-3 staff.
-- [ ] Disabled nodes always explain why they are unavailable.
-- [ ] Exploration outputs clue data that downstream systems can consume.
-- [ ] Region unlock rules and hidden-node visibility respond to macro-state changes.
-- [ ] A weak week with few clues remains valid and publishable.
+- [ ] 玩家能使用 1-3 名员工完成一次合法派遣。
+- [ ] 所有不可用节点都必须明确说明原因。
+- [ ] 探索阶段产出的线索数据可被下游系统消费。
+- [ ] 区域解锁规则与隐藏节点可见性会响应宏观状态变化。
+- [ ] 线索很少的一周依然合法、依然可出版。
 
-## Open Questions
+## 开放问题
 
-| Question | Owner | Deadline | Resolution |
-|----------|-------|----------|-----------|
-| Should node filters affect only UI highlighting or also spawn weight later? | Design | Vertical Slice | Open |
-| How many node archetypes are enough before config extraction becomes mandatory? | Design/Tech | Vertical Slice | Open |
+| 问题 | 负责人 | 截止时间 | 结论 |
+|------|--------|----------|------|
+| 节点过滤器未来只影响 UI 高亮，还是也影响生成权重？ | 设计 | 垂直切片阶段 | 待定 |
+| 在配置抽离变成刚需前，节点原型最少需要多少 archetype？ | 设计 / 技术 | 垂直切片阶段 | 待定 |

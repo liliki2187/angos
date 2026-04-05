@@ -1,53 +1,53 @@
-# Event Check Resolution
+# 事件检定结算
 
-> **Status**: Draft
-> **Author**: Codex + repository synthesis
-> **Last Updated**: 2026-03-31
-> **Implements Pillar**: Truth and Sensation Must Stay in Tension
+> **状态**：草案
+> **作者**：Codex + 仓库综合整理
+> **最后更新**：2026-03-31
+> **对应支柱**：真实与猎奇必须保持张力
 
-## Overview
+## 概览
 
-This system resolves dispatch risk. It converts staff attributes, node difficulty, and opponent pressure into result tiers through a split binomial check model. In Angus, it is the bridge between planning and consequence.
+这个系统负责把派遣风险结算出来。它将员工属性、节点难度和对手压力转换为结果层级，底层模型是拆分二项式检定。在 Angus 中，它是“规划”和“后果”之间的桥。
 
-## Player Fantasy
+## 玩家幻想
 
-The player should feel that preparation matters, risk is legible, and dangerous opportunities remain tempting because the system exposes odds without making outcomes trivial.
+玩家应感觉到准备工作是有价值的，风险是可读的，而危险机会依然诱人，因为系统会展示胜率，却不会让结果失去悬念。
 
-## Detailed Design
+## 详细设计
 
-### Core Rules
+### 核心规则
 
-1. Event checks use binomial success rolls rather than deterministic threshold comparison.
-2. Difficulty maps to a base single-die success probability.
-3. Split checks separate the expedition into two pools:
-   - Investigation pool: exploration + insight + occult
-   - Field pool: survival + reason
-4. Opponent value reduces effective dice through random negation that preserves the underlying probability model.
-5. Result tiers are:
-   - major success: both pools clear their thresholds
-   - minor success: exactly one pool clears its threshold
-   - fail: neither pool clears
-6. Result tier maps into clue quality and side effects rather than ending the game.
+1. 事件检定使用二项式成功投掷，而不是简单阈值判定。
+2. 难度映射为单骰基础成功率。
+3. 检定被拆成两个池：
+   - 调查池：探索 + 洞察 + 神秘
+   - 行动池：生存 + 理性
+4. 对手值通过随机抵消有效骰子数来施压，同时保持底层概率模型一致。
+5. 结果层级分为：
+   - 大成功：两个池都达到阈值
+   - 小成功：只有一个池达到阈值
+   - 失败：两个池都未达到阈值
+6. 结果层级会映射到线索质量和副作用，而不是直接终止游戏。
 
-### States and Transitions
+### 状态与切换
 
-| State | Entry Condition | Exit Condition | Behavior |
-|-------|----------------|----------------|----------|
-| `preview` | Valid node and staff selection | Execute pressed | Show theoretical success distribution |
-| `roll_generation` | Execute pressed | Dice and negation generated | Produce roll arrays and negated indices |
-| `resolution` | Rolls generated | Result applied | Count surviving hits and assign tier |
-| `post_result` | Result applied | Player returns to exploration | Emit clue and state changes |
+| 状态 | 进入条件 | 退出条件 | 行为 |
+|------|---------|---------|------|
+| `preview` | 已选好合法节点与员工 | 按下执行 | 展示理论成功分布 |
+| `roll_generation` | 按下执行 | 骰子与抵消生成完毕 | 生成投掷数组与被抵消索引 |
+| `resolution` | 投掷已生成 | 结果已应用 | 统计有效命中并给出层级 |
+| `post_result` | 结果已应用 | 玩家返回探索 | 输出线索与状态变化 |
 
-### Interactions with Other Systems
+### 与其他系统的交互
 
-- **Exploration and Node Dispatch** supplies staff totals, node difficulty, thresholds, and opponent value.
-- **Clue Inventory and Story Conversion** consumes the result tier and clue metadata.
-- **Feedback UI** reads roll arrays, negated indices, and probability summaries for presentation.
-- **Macro Attributes and Unlock Pressure** may receive downstream deltas from failure or occult-heavy success.
+- **探索与节点派遣** 提供员工总值、节点难度、阈值和对手值。
+- **线索库存与故事转化** 消费结果层级和线索元数据。
+- **反馈 UI** 会读取投掷数组、被抵消索引和概率摘要用于表现。
+- **宏观属性与解锁压力** 可能接收来自失败或高神秘成功的后续变化。
 
-## Formulas
+## 公式
 
-### Difficulty to Single-Die Probability
+### 难度到单骰成功率
 
 ```
 p =
@@ -56,12 +56,12 @@ p =
   0.3333333333 if difficulty == "hard"
 ```
 
-| Variable | Type | Range | Source | Description |
-|----------|------|-------|--------|-------------|
-| `difficulty` | enum | easy/normal/hard | node data | Difficulty label |
-| `p` | float | 0.0-1.0 | lookup | Single-die success chance |
+| 变量 | 类型 | 范围 | 来源 | 说明 |
+|------|------|------|------|------|
+| `difficulty` | enum | easy/normal/hard | 节点数据 | 难度标签 |
+| `p` | float | 0.0-1.0 | 查表 | 单骰成功率 |
 
-### Opponent Split Allocation
+### 对手分配与抵消
 
 ```
 enemy_a = floor(enemy_attr * attr_a / max(1, attr_a + attr_b))
@@ -70,14 +70,14 @@ n_a_eff = max(0, attr_a - enemy_a)
 n_b_eff = max(0, attr_b - enemy_b)
 ```
 
-| Variable | Type | Range | Source | Description |
-|----------|------|-------|--------|-------------|
-| `enemy_attr` | int | 0+ | node data | Opponent pressure |
-| `attr_a` | int | 0+ | aggregated staff | Investigation pool size |
-| `attr_b` | int | 0+ | aggregated staff | Field pool size |
-| `n_a_eff`, `n_b_eff` | int | 0+ | calculated | Effective dice after negation |
+| 变量 | 类型 | 范围 | 来源 | 说明 |
+|------|------|------|------|------|
+| `enemy_attr` | int | 0+ | 节点数据 | 对手压力 |
+| `attr_a` | int | 0+ | 员工聚合值 | 调查池大小 |
+| `attr_b` | int | 0+ | 员工聚合值 | 行动池大小 |
+| `n_a_eff`、`n_b_eff` | int | 0+ | 计算值 | 抵消后的有效骰子数 |
 
-### Split Outcome Distribution
+### 拆分结果分布
 
 ```
 P_A = P(X_A >= k_A), where X_A ~ Binomial(n_a_eff, p)
@@ -87,69 +87,69 @@ P_minor = P_A * (1 - P_B) + (1 - P_A) * P_B
 P_fail = (1 - P_A) * (1 - P_B)
 ```
 
-| Variable | Type | Range | Source | Description |
-|----------|------|-------|--------|-------------|
-| `k_A`, `k_B` | int | 0+ | node data | Thresholds for each pool |
-| `P_major` | float | 0.0-1.0 | calculated | Probability of major success |
-| `P_minor` | float | 0.0-1.0 | calculated | Probability of minor success |
-| `P_fail` | float | 0.0-1.0 | calculated | Probability of failure |
+| 变量 | 类型 | 范围 | 来源 | 说明 |
+|------|------|------|------|------|
+| `k_A`、`k_B` | int | 0+ | 节点数据 | 两个池各自的阈值 |
+| `P_major` | float | 0.0-1.0 | 计算值 | 大成功概率 |
+| `P_minor` | float | 0.0-1.0 | 计算值 | 小成功概率 |
+| `P_fail` | float | 0.0-1.0 | 计算值 | 失败概率 |
 
-## Edge Cases
+## 边界情况
 
-| Scenario | Expected Behavior | Rationale |
-|----------|------------------|-----------|
-| Effective dice count becomes 0 while threshold is above 0 | That pool fails automatically | Maintains probability integrity |
-| Threshold is 0 | That pool succeeds automatically | Keeps formulas well-defined |
-| Opponent pressure exceeds one pool heavily | Split allocation still conserves total negation | Preserves model consistency |
-| UI uses numeric mode instead of dice mode | Same underlying random logic, different presentation only | Prevents desync between modes |
+| 场景 | 预期行为 | 理由 |
+|------|----------|------|
+| 有效骰子变成 0，且阈值大于 0 | 该池自动失败 | 维持概率模型完整性 |
+| 阈值为 0 | 该池自动成功 | 保持公式定义完备 |
+| 对手压力严重偏向单池 | 总抵消量仍然守恒 | 维持模型一致性 |
+| UI 选择数字模式而非骰子模式 | 底层随机逻辑一致，只是表现不同 | 防止两种模式数值不同步 |
 
-## Dependencies
+## 依赖
 
-| System | Direction | Nature of Dependency |
-|--------|-----------|---------------------|
-| Exploration and Node Dispatch | This system depends on it | Consumes input data for checks |
-| Clue Inventory and Story Conversion | It depends on this system | Uses result tier to set clue quality |
-| Feedback, Logging, and Forecast UI | It depends on this system | Displays probability and roll outcomes |
-| Macro Attributes and Unlock Pressure | Soft dependency | Some results may mutate long-term state |
+| 系统 | 方向 | 依赖性质 |
+|------|------|----------|
+| 探索与节点派遣 | 本系统依赖它 | 消费检定输入数据 |
+| 线索库存与故事转化 | 它依赖本系统 | 根据结果层级确定线索质量 |
+| 反馈、日志与预测 UI | 它依赖本系统 | 展示概率与投掷结果 |
+| 宏观属性与解锁压力 | 软依赖 | 某些结果可能修改长期状态 |
 
-## Tuning Knobs
+## 调参旋钮
 
-| Parameter | Current Value | Safe Range | Effect of Increase | Effect of Decrease |
-|-----------|--------------|------------|-------------------|-------------------|
-| `p_easy` | 0.60 | 0.55-0.70 | Easier expedition success | Less reliability |
-| `p_normal` | 0.50 | 0.45-0.55 | More consistent mid-tier play | Sharper uncertainty |
-| `p_hard` | 0.3333 | 0.25-0.40 | Hard nodes become less punishing | More punishing risk gating |
-| Node thresholds `k_A`, `k_B` | per node | low-mid | Raises failure rate | Softens dispatch planning |
-| Opponent value `enemy_attr` | per node | 0-5+ | More negation pressure | Cleaner success curve |
+| 参数 | 当前值 | 安全范围 | 提高后的效果 | 降低后的效果 |
+|------|--------|----------|--------------|--------------|
+| `p_easy` | 0.60 | 0.55-0.70 | 远征更容易成功 | 成功稳定性下降 |
+| `p_normal` | 0.50 | 0.45-0.55 | 中档玩法更稳定 | 不确定性更尖锐 |
+| `p_hard` | 0.3333 | 0.25-0.40 | 高难节点没那么惩罚 | 风险门槛更严 |
+| 节点阈值 `k_A`、`k_B` | 按节点配置 | 低到中 | 失败率上升 | 派遣规划压力减轻 |
+| 对手值 `enemy_attr` | 按节点配置 | 0-5+ | 抵消压力更强 | 成功曲线更平滑 |
 
-## Visual/Audio Requirements
+## 视觉 / 音频需求
 
-| Event | Visual Feedback | Audio Feedback | Priority |
-|-------|----------------|---------------|----------|
-| Probability preview | Clear major/minor/fail percentages | None required | High |
-| Dice resolution | Distinct roll reveal and negation pass | Dice or resolve cues | Medium |
-| Result tier reveal | Large readable tier and consequence text | Strong confirm / fail cue | High |
+| 事件 | 视觉反馈 | 音频反馈 | 优先级 |
+|------|----------|----------|--------|
+| 概率预览 | 清晰展示大成功 / 小成功 / 失败百分比 | 可无 | 高 |
+| 骰子结算 | 明显的投掷揭示与抵消过程 | 骰子或结算提示音 | 中 |
+| 结果揭示 | 大而清晰的结果层级与后果文本 | 鲜明的成功 / 失败提示音 | 高 |
 
-## UI Requirements
+## UI 需求
 
-| Information | Display Location | Update Frequency | Condition |
-|-------------|-----------------|-----------------|-----------|
-| Pool requirements | Mission panel | On node change | During dispatch planning |
-| Team totals | Mission panel | On staff change | During dispatch planning |
-| Major/minor/fail distribution | Mission panel | On every valid preview | Before execution |
-| Roll detail and negation | Result area / log | On execution | Dice mode only |
+| 信息 | 显示位置 | 更新频率 | 条件 |
+|------|----------|----------|------|
+| 池需求 | 任务面板 | 节点变化时 | 派遣规划阶段 |
+| 队伍总值 | 任务面板 | 员工变化时 | 派遣规划阶段 |
+| 大成功 / 小成功 / 失败分布 | 任务面板 | 每次合法预览 | 执行前 |
+| 投掷细节与抵消 | 结果区 / 日志 | 执行时 | 仅骰子模式 |
 
-## Acceptance Criteria
+## 验收标准
 
-- [ ] Difficulty mapping remains identical between numeric preview and resolved check.
-- [ ] Opponent negation preserves total-dice semantics instead of selectively deleting successes.
-- [ ] Split major/minor/fail tiers match documented thresholds.
-- [ ] Result output includes enough data for UI replay or logging.
-- [ ] Clue quality mapping can be driven from result tier without extra hidden rules.
+- [ ] 数字预览与真实结算使用完全相同的难度映射。
+- [ ] 对手抵消保留“总骰子量”语义，而不是只删掉已成功的点数。
+- [ ] 大成功 / 小成功 / 失败层级与文档阈值一致。
+- [ ] 结果输出包含足够数据，供 UI 回放或日志记录。
+- [ ] 线索质量可直接由结果层级驱动，无需额外隐藏规则。
 
-## Open Questions
+## 开放问题
 
-| Question | Owner | Deadline | Resolution |
-|----------|-------|----------|-----------|
-| Should delta-p modifiers stay global or become per-node data only? | Design | Vertical Slice | Open |
-| When should large-failure outcomes become a distinct tier in the Godot runtime? | Design | Later | Open |
+| 问题 | 负责人 | 截止时间 | 结论 |
+|------|--------|----------|------|
+| `delta-p` 修正应保持全局规则，还是改为仅由节点数据控制？ | 设计 | 垂直切片阶段 | 待定 |
+| Godot 运行时是否需要把“大失败”独立成单独结果层级？ | 设计 | 后续 | 待定 |

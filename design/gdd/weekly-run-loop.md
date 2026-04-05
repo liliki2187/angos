@@ -1,63 +1,63 @@
-# Weekly Run Loop and State
+# 周循环与状态
 
-> **Status**: Draft
-> **Author**: Codex + repository synthesis
-> **Last Updated**: 2026-03-31
-> **Implements Pillar**: One Week Must Read as One Arc
+> **状态**：草案
+> **作者**：Codex + 仓库综合整理
+> **最后更新**：2026-03-31
+> **对应支柱**：一周必须读成一个完整段落
 
-## Overview
+## 概览
 
-This system owns the weekly structure of Angus. It defines what state persists across weeks, what resets inside a week, how the player moves from briefing to exploration to publication, and how settlement feeds the next week. Without it, the project collapses back into disconnected prototypes.
+这个系统负责 Angus 的每周结构。它定义哪些状态会跨周保留，哪些状态会在周内重置，玩家如何从简报进入探索再进入出版，以及结算如何把结果反馈到下一周。如果没有它，项目就会重新塌回一堆互不连通的原型。
 
-## Player Fantasy
+## 玩家幻想
 
-The player should feel like an editor managing a living publication over time, not a user hopping between unrelated screens. Every week should feel like one complete editorial cycle with continuity.
+玩家应感受到自己是在持续经营一份活着的刊物，而不是在几块互不相干的界面间跳来跳去。每一周都应该像一个完整且连续的编辑周期。
 
-## Detailed Design
+## 详细设计
 
-### Core Rules
+### 核心规则
 
-1. Each week begins with a briefing, current macro state, and a refreshed set of available content opportunities.
-2. The player starts each week with a fixed day budget of 7.
-3. Exploration actions consume days and produce either usable clues, partial outcomes, or negative pressure.
-4. The player transitions from exploration to editorial either by choice or because the week can no longer support useful dispatch.
-5. Editorial settlement writes back to long-term state before the next week begins.
-6. Week-local containers are cleared at the start of a new week; long-term state remains.
+1. 每一周以简报、当前宏观状态和一组刷新后的内容机会开始。
+2. 玩家每周固定拥有 7 天行动预算。
+3. 探索行动会消耗天数，并产出可用线索、部分结果或负面压力。
+4. 玩家可以主动结束探索，也可能因为本周已无有效派遣空间而被迫进入编辑阶段。
+5. 编辑结算会在下一周开始前把结果写回长期状态。
+6. 周内容器会在新一周开始时清空；长期状态则继续保留。
 
-### States and Transitions
+### 状态与切换
 
-| State | Entry Condition | Exit Condition | Behavior |
-|-------|----------------|----------------|----------|
-| `briefing` | New run or post-settlement transition | Player enters exploration | Refresh week-facing text and available pressure |
-| `explore` | Week begins | Player ends week or day budget exhausted | Node selection, staff assignment, expedition resolution |
-| `editorial` | Exploration ends | Player settles the issue | Story pool generation, layout interaction, forecast updates |
-| `summary` | Settlement completes | Player advances week | Present outcome summary and long-term deltas |
+| 状态 | 进入条件 | 退出条件 | 行为 |
+|-------|---------|---------|------|
+| `briefing` | 新开局或结算后的过渡 | 玩家进入探索 | 刷新本周文案与可见压力 |
+| `explore` | 一周开始 | 玩家结束本周或天数耗尽 | 节点选择、员工分配、远征结算 |
+| `editorial` | 探索结束 | 玩家完成结算 | 生成故事池、进行排版交互、更新预测 |
+| `summary` | 结算完成 | 玩家推进到下一周 | 展示结果摘要与长期变量变化 |
 
-### Interactions with Other Systems
+### 与其他系统的交互
 
-- **Exploration and Node Dispatch** reads week state, day budget, unlock flags, and writes clue results.
-- **Editorial Layout and Settlement** reads weekly clues, story pool, subscriptions, and editorial profile, then writes profit and next-week values.
-- **Macro Attributes and Unlock Pressure** reads and mutates long-term variables such as credibility, weirdness, reputation, order, and mania.
-- **Menus and Scene Navigation** can create a new run or return to menu, but should not own weekly gameplay state.
+- **探索与节点派遣** 会读取周状态、天数预算和解锁标记，并写入线索结果。
+- **编辑排版与结算** 会读取周线索、故事池、订阅数和编辑画像，再写回利润与下一周数值。
+- **宏观属性与解锁压力** 会读取并修改公信力、怪异度、名望、秩序、狂性等长期变量。
+- **菜单与场景导航** 可以创建新开局或返回菜单，但不应拥有周玩法状态本身。
 
-## Formulas
+## 公式
 
-### Week Day Budget
+### 周天数预算
 
 ```
 remaining_days_next = remaining_days_current - node_days_cost
 ```
 
-| Variable | Type | Range | Source | Description |
-|----------|------|-------|--------|-------------|
-| `remaining_days_current` | int | 0-7 | runtime state | Days left before dispatch |
-| `node_days_cost` | int | 1-3+ | node data | Time consumed by an expedition |
-| `remaining_days_next` | int | 0-7 | calculated | Days left after dispatch |
+| 变量 | 类型 | 范围 | 来源 | 说明 |
+|------|------|------|------|------|
+| `remaining_days_current` | int | 0-7 | 运行时状态 | 派遣前剩余天数 |
+| `node_days_cost` | int | 1-3+ | 节点数据 | 一次远征消耗的时间 |
+| `remaining_days_next` | int | 0-7 | 计算值 | 派遣后剩余天数 |
 
-**Expected output range**: 0 to 7
-**Edge case**: If `node_days_cost > remaining_days_current`, dispatch is invalid.
+**预期输出范围**：0 到 7  
+**边界情况**：如果 `node_days_cost > remaining_days_current`，则该次派遣无效。
 
-### Weekly Reset Contract
+### 每周重置契约
 
 ```
 new_week.week = old_week.week + 1
@@ -69,62 +69,62 @@ new_week.last_roll = {}
 new_week.current_phase = "explore"
 ```
 
-This is a rule contract rather than a balance formula. It exists to keep long-term and short-term state separate.
+这是一条规则契约，而不是平衡公式。它的作用是把长期状态与周内状态明确分离。
 
-## Edge Cases
+## 边界情况
 
-| Scenario | Expected Behavior | Rationale |
-|----------|------------------|-----------|
-| Day budget reaches 0 after expedition | Force transition to editorial | Prevent dead-end weekly state |
-| Player ends exploration early | Allow transition with fewer clues | A weak week should still be publishable |
-| Settlement occurs with underfilled issue | Allowed, but economically punished | Preserves readability and teaches consequences |
-| New week starts after a losing issue | Continue play with updated long-term values | Supports recovery-oriented loop |
+| 场景 | 预期行为 | 理由 |
+|------|----------|------|
+| 远征后天数归零 | 强制切入编辑阶段 | 防止出现死局周状态 |
+| 玩家提前结束探索 | 允许带着较少线索进入编辑 | 弱势的一周也应可出版 |
+| 版面未填满时结算 | 允许，但给予经济惩罚 | 保持可读性并让后果可学习 |
+| 亏损的一周后进入新周 | 继续游戏，只是长期值已被更新 | 支持带恢复空间的循环 |
 
-## Dependencies
+## 依赖
 
-| System | Direction | Nature of Dependency |
-|--------|-----------|---------------------|
-| Exploration and Node Dispatch | This system supports it | Supplies day budget, unlock state, and week-local containers |
-| Editorial Layout and Settlement | This system supports it | Supplies weekly input and receives next-week outputs |
-| Macro Attributes and Unlock Pressure | Bidirectional | Shared long-term state and unlock logic |
-| Menus and Scene Navigation | Navigation depends on this | Creates or resumes the runtime path |
+| 系统 | 方向 | 依赖性质 |
+|------|------|----------|
+| 探索与节点派遣 | 本系统支撑它 | 提供天数预算、解锁状态和周内容器 |
+| 编辑排版与结算 | 本系统支撑它 | 提供本周输入并接收下一周输出 |
+| 宏观属性与解锁压力 | 双向依赖 | 共享长期状态与解锁逻辑 |
+| 菜单与场景导航 | 导航依赖本系统 | 创建或恢复运行时路径 |
 
-## Tuning Knobs
+## 调参旋钮
 
-| Parameter | Current Value | Safe Range | Effect of Increase | Effect of Decrease |
-|-----------|--------------|------------|-------------------|-------------------|
-| `week_days` | 7 | 5-9 | More dispatch freedom, less pressure | Tighter weeks, harder tradeoffs |
-| `starting_subscribers` | 1200 | 600-2000 | Smoother early economy | More punishing early game |
-| `starting_macro_stats` | per prototype values | 30-55 | Easier early unlock pressure control | Harsher starting conditions |
+| 参数 | 当前值 | 安全范围 | 提高后的效果 | 降低后的效果 |
+|------|--------|----------|--------------|--------------|
+| `week_days` | 7 | 5-9 | 派遣更自由、压力更小 | 周节奏更紧、取舍更难 |
+| `starting_subscribers` | 1200 | 600-2000 | 前期经济更平滑 | 开局更惩罚 |
+| `starting_macro_stats` | 按原型默认值 | 30-55 | 更容易控制前期解锁压力 | 起始条件更严苛 |
 
-## Visual/Audio Requirements
+## 视觉 / 音频需求
 
-| Event | Visual Feedback | Audio Feedback | Priority |
-|-------|----------------|---------------|----------|
-| Week start | Clear briefing panel and week label refresh | Light transition cue | Medium |
-| Phase transition | Screen state swap and summary emphasis | Distinct transition sting | High |
-| Next week advance | Reset labels and refreshed opportunity list | Resolve-and-return cue | Medium |
+| 事件 | 视觉反馈 | 音频反馈 | 优先级 |
+|------|----------|----------|--------|
+| 周开始 | 清晰的简报面板与周标签刷新 | 轻量过渡提示 | 中 |
+| 阶段切换 | 明确的界面状态切换与摘要强调 | 鲜明的切换提示音 | 高 |
+| 推进下一周 | 标签重置与机会列表刷新 | 结算后回归提示音 | 中 |
 
-## UI Requirements
+## UI 需求
 
-| Information | Display Location | Update Frequency | Condition |
-|-------------|-----------------|-----------------|-----------|
-| Current week | Header / week bar | On phase refresh | Always |
-| Remaining days | Header / week bar | After every expedition | During exploration |
-| Subscribers and editorial profile | Header / week bar | On refresh and settlement | Always |
-| Current phase context | Main content panel | On transition | Always |
+| 信息 | 显示位置 | 更新频率 | 条件 |
+|------|----------|----------|------|
+| 当前周次 | 顶部 / 周状态栏 | 阶段刷新时 | 始终 |
+| 剩余天数 | 顶部 / 周状态栏 | 每次远征后 | 探索阶段 |
+| 订阅数与编辑画像 | 顶部 / 周状态栏 | 刷新和结算时 | 始终 |
+| 当前阶段语境 | 主内容面板 | 状态切换时 | 始终 |
 
-## Acceptance Criteria
+## 验收标准
 
-- [ ] A full week can be played from briefing to next-week transition without leaving the Godot loop.
-- [ ] Week-local state clears correctly while long-term state persists.
-- [ ] Exploration cannot consume invalid days.
-- [ ] Settlement always produces a next-week state.
-- [ ] Phase transitions are explicit and readable.
+- [ ] 可以在 Godot 循环中完整游玩从简报到下一周过渡的一周内容。
+- [ ] 周内状态会正确清空，而长期状态会保留。
+- [ ] 探索阶段不能消耗非法天数。
+- [ ] 结算总能生成下一周状态。
+- [ ] 阶段切换明确且可读。
 
-## Open Questions
+## 开放问题
 
-| Question | Owner | Deadline | Resolution |
-|----------|-------|----------|-----------|
-| Should future weeks support interrupts between briefing and exploration? | Design | Later | Open |
-| When should save/load hook into the weekly state machine? | Tech | Vertical Slice | Open |
+| 问题 | 负责人 | 截止时间 | 结论 |
+|------|--------|----------|------|
+| 未来是否支持在简报与探索之间插入中断事件？ | 设计 | 后续 | 待定 |
+| 存档 / 读档应在周状态机的哪个节点接入？ | 技术 | 垂直切片阶段 | 待定 |

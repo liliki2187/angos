@@ -1,59 +1,59 @@
-# Editorial Layout and Settlement
+# 编辑排版与结算
 
-> **Status**: Draft
-> **Author**: Codex + repository synthesis
-> **Last Updated**: 2026-03-31
-> **Implements Pillar**: Editorial Tradeoffs Must Stay Visible
+> **状态**：草案
+> **作者**：Codex + 仓库综合整理
+> **最后更新**：2026-03-31
+> **对应支柱**：编辑取舍必须可见
 
-## Overview
+## 概览
 
-This system turns a week's investigatory output into a playable publication step. It generates a story pool, lets the player place stories into six issue slots, previews the consequences of composition choices, and settles the issue into profit, subscriptions, editorial profile, and macro-state change.
+这个系统把一周调查产出转化为可玩的出版步骤。它会生成故事池，让玩家把故事放进六个版位，实时预览排版选择的后果，并将整期周刊结算成利润、订阅、编辑画像与宏观状态变化。
 
-## Player Fantasy
+## 玩家幻想
 
-The player should feel like an editor making a real front-page call: choosing what leads, what supports, what gets cut, and what kind of paper they are becoming.
+玩家应感受到自己在做真正的头版决策：什么做头条，什么做陪衬，什么被砍掉，以及这家报纸正变成什么样子。
 
-## Detailed Design
+## 详细设计
 
-### Core Rules
+### 核心规则
 
-1. Weekly clues are converted into stories before the editorial phase begins.
-2. The story pool is padded with filler stories so the player can always complete a valid issue.
-3. The issue contains exactly six slots in the MVP, each with a different exposure weight.
-4. Each slot can contain at most one story; placing a story in a new slot removes it from any previous slot.
-5. Real-time stats update as the issue changes, exposing value, diversity, combo, penalty, balance, and bias signals.
-6. Settlement transforms the current issue into demand, sales, revenue, cost, profit, next-week subscribers, editorial profile drift, and macro-stat deltas.
+1. 每周线索会在编辑阶段开始前转化为故事。
+2. 系统会用填充故事补足故事池，确保玩家始终能完成一份合法周刊。
+3. MVP 中周刊固定有六个版位，每个版位拥有不同曝光权重。
+4. 每个版位最多容纳一篇故事；把一篇故事拖进新位置时，它会自动从旧位置移除。
+5. 随着版面变化，系统会实时更新数值，向玩家暴露价值、多样性、连携、惩罚、平衡与偏置等信号。
+6. 结算会把当前周刊转化为需求、销量、收入、成本、利润、下周订阅、编辑画像漂移与宏观属性变化。
 
-### States and Transitions
+### 状态与切换
 
-| State | Entry Condition | Exit Condition | Behavior |
-|-------|----------------|----------------|----------|
-| `story_pool_ready` | Editorial phase begins | Story selected | Weekly clues converted and filler generated |
-| `layout_edit` | Story pool available | Settlement triggered | Player assigns stories to slots and sees live stats |
-| `settled` | Settle action confirmed | Next week begins | Final stats applied and summary presented |
+| 状态 | 进入条件 | 退出条件 | 行为 |
+|------|---------|---------|------|
+| `story_pool_ready` | 进入编辑阶段 | 玩家选中故事 | 线索转故事并生成填充稿件 |
+| `layout_edit` | 故事池可用 | 触发结算 | 玩家分配版位并观察实时统计 |
+| `settled` | 结算动作确认 | 下一周开始 | 应用最终数值并展示总结 |
 
-### Interactions with Other Systems
+### 与其他系统的交互
 
-- **Clue Inventory and Story Conversion** supplies the initial exploration stories and their metadata.
-- **Weekly Run Loop and State** supplies subscribers, editorial profile, and receives next-week values.
-- **Macro Attributes and Unlock Pressure** reads the settled issue and mutates long-term paper identity.
-- **Feedback and Forecast UI** reads live calculations before the player commits settlement.
+- **线索库存与故事转化** 提供初始故事及其元数据。
+- **周循环与状态** 提供订阅数和编辑画像，并接收下一周数值。
+- **宏观属性与解锁压力** 会读取结算结果并修改长期报纸身份。
+- **反馈与预测 UI** 会在玩家确认结算前读取实时计算结果。
 
-## Formulas
+## 公式
 
-### Weighted Story Value
+### 加权故事价值
 
 ```
 total_base_value = sum(story.base_value * slot.weight for each filled slot)
 ```
 
-| Variable | Type | Range | Source | Description |
-|----------|------|-------|--------|-------------|
-| `story.base_value` | int | 100-500+ | story data | Baseline story worth |
-| `slot.weight` | float | 0.2-1.0 | slot data | Exposure multiplier per slot |
-| `total_base_value` | float | 0+ | calculated | Weighted issue value |
+| 变量 | 类型 | 范围 | 来源 | 说明 |
+|------|------|------|------|------|
+| `story.base_value` | int | 100-500+ | 故事数据 | 故事基础价值 |
+| `slot.weight` | float | 0.2-1.0 | 版位数据 | 每个版位的曝光乘区 |
+| `total_base_value` | float | 0+ | 计算值 | 加权后的整期价值 |
 
-### Demand and Sales
+### 需求与销量
 
 ```
 demand =
@@ -65,14 +65,14 @@ demand =
 sold = clamp(demand, 0, print_capacity)
 ```
 
-| Variable | Type | Range | Source | Description |
-|----------|------|-------|--------|-------------|
-| `subscribers` | int | 0+ | long-term state | Existing subscriber base |
-| `m_*` | float | ~0.35-1.55 | calculated | Composition multipliers |
-| `print_capacity` | int | 1000+ | config/runtime | Hard cap on sales |
-| `sold` | int | 0-print_capacity | calculated | Actual copies sold |
+| 变量 | 类型 | 范围 | 来源 | 说明 |
+|------|------|------|------|------|
+| `subscribers` | int | 0+ | 长期状态 | 现有订阅基数 |
+| `m_*` | float | ~0.35-1.55 | 计算值 | 版面构成乘区 |
+| `print_capacity` | int | 1000+ | 配置 / 运行时 | 销量硬上限 |
+| `sold` | int | 0-print_capacity | 计算值 | 实际售出份数 |
 
-### Next-Week Subscribers
+### 下一周订阅数
 
 ```
 next_subscribers =
@@ -85,69 +85,69 @@ next_subscribers =
       - empty_slots * 45))
 ```
 
-| Variable | Type | Range | Source | Description |
-|----------|------|-------|--------|-------------|
-| `profit` | float | negative to positive | settlement result | Net issue profit |
-| `m_balance`, `m_quality` | float | near 1.0 | calculated | Composition quality signals |
-| `empty_slots` | int | 0-6 | layout state | Number of blank slots |
+| 变量 | 类型 | 范围 | 来源 | 说明 |
+|------|------|------|------|------|
+| `profit` | float | 负到正 | 结算结果 | 本期净利润 |
+| `m_balance`、`m_quality` | float | 接近 1.0 | 计算值 | 版面质量相关信号 |
+| `empty_slots` | int | 0-6 | 排版状态 | 空白版位数 |
 
-## Edge Cases
+## 边界情况
 
-| Scenario | Expected Behavior | Rationale |
-|----------|------------------|-----------|
-| Player settles with empty slots | Allowed, with clear multiplier penalties | Preserve readable consequences |
-| Story pool contains too few exploration stories | Filler stories pad the pool | Keep the weekly loop playable |
-| Player reassigns a story to a new slot | Old slot is cleared automatically | Avoid duplicate placement |
-| Highly imbalanced tag mix | Bias and balance multipliers can reward or punish, but must stay legible | Keeps editorial identity meaningful |
+| 场景 | 预期行为 | 理由 |
+|------|----------|------|
+| 玩家带着空版位结算 | 允许，但要有明确乘区惩罚 | 保留可读后果 |
+| 探索故事太少 | 用填充故事补足池子 | 保持周循环可玩 |
+| 玩家把故事移到新版位 | 旧版位自动清空 | 避免重复放置 |
+| 标签组合极度失衡 | 偏置与平衡乘区可以奖惩，但必须保持可读 | 让编辑身份有意义 |
 
-## Dependencies
+## 依赖
 
-| System | Direction | Nature of Dependency |
-|--------|-----------|---------------------|
-| Clue Inventory and Story Conversion | This system depends on it | Needs weekly stories to operate |
-| Weekly Run Loop and State | Bidirectional | Reads long-term state and writes next-week state |
-| Macro Attributes and Unlock Pressure | Soft dependency | Settlement can mutate macro stats and unlock direction |
-| Feedback, Logging, and Forecast UI | It depends on this system | Presents live calculation feedback |
+| 系统 | 方向 | 依赖性质 |
+|------|------|----------|
+| 线索库存与故事转化 | 本系统依赖它 | 需要每周故事输入 |
+| 周循环与状态 | 双向依赖 | 读取长期状态并写回下一周状态 |
+| 宏观属性与解锁压力 | 软依赖 | 结算会修改宏观属性与解锁方向 |
+| 反馈、日志与预测 UI | 它依赖本系统 | 呈现实时计算反馈 |
 
-## Tuning Knobs
+## 调参旋钮
 
-| Parameter | Current Value | Safe Range | Effect of Increase | Effect of Decrease |
-|-----------|--------------|------------|-------------------|-------------------|
-| Slot weights | 0.2-1.0 | per slot | Makes slot hierarchy sharper | Flattens layout choices |
-| `m_combo` growth | +0.04 per combo | 0.02-0.06 | Stronger repeat-tag reward | Weaker synergy reward |
-| `m_diversity` growth | +0.035 per unique tag | 0.02-0.05 | Stronger variety reward | Less incentive to diversify |
-| Empty slot penalty | -0.12 each | 0.08-0.15 | Harsher underfilled issues | Softer punishment |
-| Subscriber floor | 600 | 300-800 | More forgiving collapse state | More punishing downturn |
+| 参数 | 当前值 | 安全范围 | 提高后的效果 | 降低后的效果 |
+|------|--------|----------|--------------|--------------|
+| 版位权重 | 0.2-1.0 | 按版位 | 版位层级更明显 | 版位差异变平 |
+| `m_combo` 增长 | 每次连携 +0.04 | 0.02-0.06 | 同标签奖励更强 | 协同奖励更弱 |
+| `m_diversity` 增长 | 每个唯一标签 +0.035 | 0.02-0.05 | 多样化奖励更强 | 分散激励更弱 |
+| 空版位惩罚 | 每个 -0.12 | 0.08-0.15 | 不完整周刊更伤 | 惩罚更轻 |
+| 订阅下限 | 600 | 300-800 | 崩盘后更容易恢复 | 下行更残酷 |
 
-## Visual/Audio Requirements
+## 视觉 / 音频需求
 
-| Event | Visual Feedback | Audio Feedback | Priority |
-|-------|----------------|---------------|----------|
-| Story selection | Clear selected state and disabled placed stories | Light UI confirm | Medium |
-| Slot placement | Readable slot occupancy update | Placement cue | High |
-| Live-stat change | Immediate stat refresh and emphasis on major swings | Soft tick or hover cue | High |
-| Settlement | Summary panel, profit/sales highlight, next-week transition | Strong issue-published cue | High |
+| 事件 | 视觉反馈 | 音频反馈 | 优先级 |
+|------|----------|----------|--------|
+| 故事选择 | 清晰的选中状态与已放置故事禁用态 | 轻量 UI 确认音 | 中 |
+| 放入版位 | 易读的版位占用更新 | 放置提示音 | 高 |
+| 实时统计变化 | 立即刷新统计，并强调大幅波动 | 轻量 tick 或 hover 音 | 高 |
+| 结算 | 总结面板、利润/销量高亮、下一周过渡 | 强烈的成刊提示音 | 高 |
 
-## UI Requirements
+## UI 需求
 
-| Information | Display Location | Update Frequency | Condition |
-|-------------|-----------------|-----------------|-----------|
-| Story tags, quality, base value | Story list | Always | Editorial phase |
-| Slot exposure and occupancy | Slot list | On every placement | Editorial phase |
-| Live multipliers and forecast | Stats panel | On every placement or clear | Editorial phase |
-| Summary outcome | Summary panel | On settlement | Post-settlement |
+| 信息 | 显示位置 | 更新频率 | 条件 |
+|------|----------|----------|------|
+| 故事标签、质量、基础价值 | 故事列表 | 始终 | 编辑阶段 |
+| 版位曝光与占用情况 | 版位列表 | 每次放置时 | 编辑阶段 |
+| 实时乘区与预测 | 统计面板 | 每次放置或清空时 | 编辑阶段 |
+| 总结结果 | 总结面板 | 结算时 | 结算后 |
 
-## Acceptance Criteria
+## 验收标准
 
-- [ ] Weekly clues convert into stories without manual authoring work.
-- [ ] The player can fill, replace, and clear all six slots.
-- [ ] Live forecast updates correctly as layout changes.
-- [ ] Settlement returns profit, demand, and next-subscriber values in one pass.
-- [ ] Next-week state reflects settlement results immediately.
+- [ ] 周线索能在不依赖人工手写的情况下转成故事。
+- [ ] 玩家可填充、替换和清空全部六个版位。
+- [ ] 版面变化时，实时预测会正确更新。
+- [ ] 结算能一次性返回利润、需求和下一周订阅数。
+- [ ] 下一周状态会立即反映结算结果。
 
-## Open Questions
+## 开放问题
 
-| Question | Owner | Deadline | Resolution |
-|----------|-------|----------|-----------|
-| Should filler stories stay purely functional, or eventually inherit week mood and macro-state? | Design | Vertical Slice | Open |
-| At what point should editorial profile influence unlock content, not just multipliers? | Design | Alpha | Open |
+| 问题 | 负责人 | 截止时间 | 结论 |
+|------|--------|----------|------|
+| 填充故事是否应长期保持纯功能稿，还是未来继承周氛围与宏观状态？ | 设计 | 垂直切片阶段 | 待定 |
+| 编辑画像应从哪个阶段开始影响内容解锁，而不只是影响乘区？ | 设计 | Alpha 阶段 | 待定 |

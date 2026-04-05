@@ -1,28 +1,28 @@
-# Plans Index
+# 计划索引
 
-This directory contains planning documents with mixed authority levels.
+本目录存放规划文档，但它们的权威级别并不完全一致。
 
-## Active Planning References
+## 当前活跃的规划参考
 
 - `project-structure-collaboration-governance-plan.md`
-  - Current repository-governance and collaboration cleanup plan
+  - 当前的仓库治理与协作清理计划
 - `godot-full-chain-implementation-plan.md`
-  - Historical implementation baseline for the Godot MVP
+  - Godot MVP 的历史实现基线
 
-## Reference Plans
+## 参考计划
 
 - `ui-design-plan.md`
-  - Role-specific UI direction and earlier delivery sequencing
+  - 面向角色分工的 UI 方向与更早期的交付顺序
 - `art-development-plan.md`
-  - Role-specific art planning and reference direction
+  - 面向角色分工的美术规划与参考方向
 
-## Retired Material
+## 已退役内容
 
-Low-authority plan drafts have been moved to `../../_obsolete/docs/plans/` and should be ignored during normal work.
+低权威计划草稿已移至 `../../_obsolete/docs/plans/`，正常工作时应忽略。
 
-## Working Rule
+## 工作规则
 
-If a plan affects current execution, it should either:
+如果某份计划仍影响当前执行，它应满足以下两者之一：
 
-1. stay aligned with `production/`, or
-2. be replaced by a spec packet under `../specs/`
+1. 与 `production/` 保持一致；或
+2. 被替换为 `../specs/` 下的规格包

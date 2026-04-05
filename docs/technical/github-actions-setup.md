@@ -1,39 +1,39 @@
-# GitHub Actions Godot 构建配置指南
+# GitHub Actions 与 Godot 构建配置指南
 
 ## 概述
 
-已配置 GitHub Actions 自动构建 Godot 项目，每次推送到 main 分支会自动触发构建。支持 Linux / Windows / macOS / HTML5 导出。
+仓库已配置 GitHub Actions 自动构建 Godot 项目。每次推送到 `main` 分支时会自动触发构建，支持 Linux / Windows / macOS / HTML5 导出。
 
 ## CI 工作流
 
-```
+```text
 .github/workflows/godot-build.yml
 ```
 
 Godot 项目根目录：
 
-```
+```text
 gd_project/project.godot
 ```
 
 ### 触发条件
 
 - 推送到 `main` 分支（自动）
-- 创建 Pull Request 到 `main`（自动）
-- 手动触发（Actions 页面 → Run workflow）
+- 向 `main` 发起 Pull Request（自动）
+- 手动触发（Actions 页面 -> `Run workflow`）
 
 ### 构建平台
 
 | 选项 | 输出 |
 |------|------|
-| linux | Angus.x86_64 |
-| windows | Angus.exe |
-| mac | Angus.zip |
-| web | build/web/ |
+| `linux` | `Angus.x86_64` |
+| `windows` | `Angus.exe` |
+| `mac` | `Angus.zip` |
+| `web` | `build/web/` |
 
 ### 容器镜像
 
-使用 `barichello/godot-ci:4.3`（Godot 4.3 + 导出模板预装）。
+使用 `barichello/godot-ci:4.3`，其中已预装 Godot 4.3 与导出模板。
 
 ## 本地构建
 
@@ -58,7 +58,7 @@ godot --headless --path gd_project --export-release "macOS" build/Angus.zip
 godot --headless --path gd_project --export-release "HTML5" build/web/index.html
 ```
 
-或使用脚本：
+也可以使用脚本：
 
 ```bash
 chmod +x scripts/release/export.sh
@@ -69,13 +69,14 @@ chmod +x scripts/release/export.sh
 
 ### 修改 Godot 版本
 
-编辑 `.github/workflows/godot-build.yml` 中的：
+编辑 `.github/workflows/godot-build.yml` 中的以下字段：
+
 - `image: barichello/godot-ci:4.3`（CI 容器）
 - `Godot_v4.3-stable_export_templates.tpz`（导出模板下载链接）
 
 ### 添加新场景
 
-编辑 `gd_project/project.godot` 中的 `run/main_scene`，或使用 Godot Editor 设置。
+编辑 `gd_project/project.godot` 中的 `run/main_scene`，或直接通过 Godot 编辑器设置。
 
 ### 修改窗口分辨率
 
@@ -83,14 +84,17 @@ chmod +x scripts/release/export.sh
 
 ## 常见问题
 
-### Q: 构建失败 "Export template not found"
-A: 检查 CI 中 export templates 下载链接是否正确
+### Q：构建失败，提示 `Export template not found`
 
-### Q: 本地导出缺少模板
-A: Godot Editor → Editor → Manage Export Templates → Download
+A：检查 CI 中的导出模板下载链接是否正确。
 
-### Q: 如何添加新导出平台
-A: 编辑 `gd_project/export_presets.cfg` 添加新 preset，同步更新 workflow
+### Q：本地导出提示缺少模板
+
+A：打开 Godot Editor -> Editor -> Manage Export Templates -> Download。
+
+### Q：如何添加新的导出平台？
+
+A：编辑 `gd_project/export_presets.cfg`，添加新的 preset，并同步更新 workflow。
 
 ## 参考资源
 

@@ -1,13 +1,13 @@
-# Archive
+# 归档说明
 
-This directory stores documentation that is still worth keeping in repository history but should not be treated as the current source of truth.
+本目录保存仍值得留在仓库历史中的文档，但它们不应被视为当前真实来源。
 
-## Folders
+## 子目录
 
-- `legacy-design/`: older root-level gameplay design docs that were superseded by `design/gdd/` and `design/systems/`
-- `deferred-design/`: design work that may return later but is outside the current Godot MVP scope
+- `legacy-design/`：被 `design/gdd/` 和 `design/systems/` 取代的旧版根层玩法设计文档
+- `deferred-design/`：未来可能回归，但当前 Godot MVP 范围之外的设计工作
 
-## Rules
+## 使用规则
 
-- Do not implement new gameplay directly from archived docs without first promoting the rules back into the canonical design layer.
-- Archived docs may still contain useful rationale, examples, or historical wording, but they are reference-only.
+- 不要直接根据归档文档实现新玩法，除非你先把规则提升回正式设计层。
+- 归档文档仍可能保留有价值的设计理由、示例或历史表述，但只能作为参考。

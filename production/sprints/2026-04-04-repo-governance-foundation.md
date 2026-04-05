@@ -1,26 +1,26 @@
-# Sprint: Repository Governance Foundation
+# Sprint：仓库治理基础
 
-**Window**: 2026-04-04 to 2026-04-11
-**Status**: Active
-**Source Plan**: `docs/plans/project-structure-collaboration-governance-plan.md`
+**周期**：2026-04-04 至 2026-04-11  
+**状态**：进行中  
+**来源计划**：`docs/plans/project-structure-collaboration-governance-plan.md`
 
-## Sprint Goals
+## Sprint 目标
 
-1. Land the minimum production workspace needed for ongoing collaboration
-2. Establish a single Git-collaboration authority entry point
-3. Clarify which directories are canonical, reference-only, or generated
-4. Reduce workspace noise from generated demo packages and caches
+1. 落地持续协作所需的最小生产工作区
+2. 建立唯一的 Git 协作权威入口
+3. 明确哪些目录是规范层、仅参考层或生成层
+4. 降低生成 Demo 包与缓存带来的工作区噪音
 
-## Planned Deliverables
+## 计划交付物
 
 - `production/stage.txt`
-- production skeleton with backlog, sprint, milestone, risk, and handoff docs
-- onboarding docs for repository map and Git collaboration
-- updated root README and AI handoff docs
-- ignore rules for generated demo packages and Python cache output
+- 包含 backlog、sprint、milestone、risk 与 handoff 文档的生产骨架
+- 仓库地图与 Git 协作入门文档
+- 更新后的根 README 与 AI 交接文档
+- 针对生成 Demo 包和 Python 缓存的忽略规则
 
-## Done Definition
+## 完成定义
 
-- Core governance docs exist and reference each other coherently
-- `git status` is not polluted by `prototype/fullchain_demo` or `scripts/__pycache__`
-- Onboarding materials point to canonical directories instead of scattered assumptions
+- 核心治理文档已经存在，并且互相引用一致
+- `git status` 不再被 `prototype/fullchain_demo` 或 `scripts/__pycache__` 污染
+- 入门材料指向明确的规范目录，而不是零散假设

@@ -1,259 +1,259 @@
-# Game Concept: Angus / 《世界未解之谜周刊》
+# 游戏概念：Angus / 《世界未解之谜周刊》
 
-*Created: 2026-03-31*
-*Status: Draft*
-
----
-
-## Elevator Pitch
-
-> It's a single-player weekly management strategy game where you run an occult newspaper, dispatch reporters into dangerous mystery sites, turn clues into publishable stories, lay out a six-slot issue, and steer the paper's credibility, reputation, and obsession with the unknown from week to week.
+*创建时间：2026-03-31*  
+*状态：草案*
 
 ---
 
-## Core Identity
+## 电梯陈述
 
-| Aspect | Detail |
+> 这是一款单人周循环经营策略游戏。你将运营一家神秘学报社，派遣记者深入危险的异闻现场，把线索转化为可出版报道，排出一份六栏周刊，并在一周又一周之间操控报纸的公信力、名望，以及对未知的沉迷程度。
+
+---
+
+## 核心身份
+
+| 维度 | 说明 |
 | ---- | ---- |
-| **Genre** | Single-player management strategy + narrative investigation + newspaper simulation |
-| **Platform** | PC first in Godot 4.3; HTML prototypes are reference-only |
-| **Target Audience** | Mid-core players who enjoy occult themes, system-driven strategy, and readable session arcs |
-| **Player Count** | Single-player |
-| **Session Length** | 30-60 minutes for 1-3 in-game weeks |
-| **Monetization** | None yet; internal prototype |
-| **Estimated Scope** | Medium for MVP-to-vertical-slice, large for full vision |
-| **Comparable Titles** | News Tower, Cultist Simulator, The Sultan's Game |
+| **类型** | 单人经营策略 + 叙事调查 + 报刊模拟 |
+| **平台** | PC 优先，使用 Godot 4.3；HTML 原型仅作参考 |
+| **目标玩家** | 喜欢神秘题材、系统驱动策略与清晰回合结构的中核玩家 |
+| **玩家人数** | 单人 |
+| **单次时长** | 30-60 分钟，可覆盖 1-3 个游戏内周次 |
+| **商业化** | 暂无；当前为内部原型 |
+| **预估范围** | 从 MVP 到垂直切片为中等规模，完整愿景为大规模 |
+| **可参考作品** | News Tower、Cultist Simulator、The Sultan's Game |
 
 ---
 
-## Core Fantasy
+## 核心幻想
 
-You are not a field investigator or a heroic adventurer. You are the editor responsible for deciding which mysteries deserve resources, which truths should be amplified, and how much corruption, spectacle, or credibility the paper is willing to absorb in exchange for growth.
+你不是深入一线的调查员，也不是英勇冒险者。你是报社的主编，负责决定哪些谜团值得投入资源，哪些真相需要被放大，以及为了增长，这家报纸愿意吞下多少腐化、噱头或信誉代价。
 
-The fantasy is to feel like the mind behind a dangerous publication: making risky editorial bets, sensing that every expedition can reshape the paper's public identity, and watching one issue's choices ripple into the next week's opportunities and dangers.
-
----
-
-## Unique Hook
-
-This is a newspaper management game where the content pipeline starts with occult field dispatch, resolves through split binomial event checks, and only becomes publishable after surviving editorial tradeoffs. It is not just "run a newspaper" and not just "investigate mysteries"; the distinctive hook is that investigation quality and editorial positioning are part of the same weekly risk loop.
+玩家要体验的是：作为一份危险刊物背后的大脑，做出高风险选题决策，感受到每一次远征都可能改写报纸的公共形象，并看见本周报纸的选择如何影响下一周的机会与危险。
 
 ---
 
-## Player Experience Analysis (MDA Framework)
+## 独特钩子
 
-### Target Aesthetics (What the player FEELS)
+这是一款报社经营游戏，但它的内容流水线从神秘现场派遣开始，经由拆分二项式事件检定得出结果，最后还要穿过编辑部取舍才能真正成为可出版内容。它既不只是“办报纸”，也不只是“查谜案”；真正独特之处在于，调查质量与编辑立场同属于一条每周风险循环。
 
-| Aesthetic | Priority | How We Deliver It |
+---
+
+## 玩家体验分析（MDA 框架）
+
+### 目标审美体验（玩家“感受到什么”）
+
+| 审美 | 优先级 | 实现方式 |
 | ---- | ---- | ---- |
-| **Sensation** (sensory pleasure) | 6 | Moody UI, occult newspaper presentation, dice and result feedback |
-| **Fantasy** (make-believe, role-playing) | 2 | Acting as editor-in-chief of a paranormal weekly |
-| **Narrative** (drama, story arc) | 4 | Every week becomes a self-contained editorial story with consequences |
-| **Challenge** (obstacle course, mastery) | 3 | Limited days, team composition, risk management, slot optimization |
-| **Fellowship** (social connection) | N/A | Single-player prototype |
-| **Discovery** (exploration, secrets) | 1 | Region unlocks, hidden nodes, occult pressure, clue quality variance |
-| **Expression** (self-expression, creativity) | 5 | Editorial profile, issue composition, topic bias |
-| **Submission** (relaxation, comfort zone) | 7 | Readable weekly loop and strong structure, but not a cozy game |
+| **感官**（Sensation） | 6 | 阴郁 UI、神秘周刊视觉、骰子与结果反馈 |
+| **幻想**（Fantasy） | 2 | 扮演超自然周刊总编 |
+| **叙事**（Narrative） | 4 | 每一周都是自成一体且有后果的编辑故事 |
+| **挑战**（Challenge） | 3 | 有限天数、队伍搭配、风险管理、版位优化 |
+| **社交**（Fellowship） | N/A | 当前为单人原型 |
+| **探索**（Discovery） | 1 | 区域解锁、隐藏节点、神秘压力、线索质量波动 |
+| **表达**（Expression） | 5 | 编辑倾向、报纸构成、选题偏置 |
+| **沉浸重复**（Submission） | 7 | 清晰可读的周循环和强结构，但不是温馨休闲游戏 |
 
-### Key Dynamics (Emergent player behaviors)
+### 关键动态（玩家自然产生的行为）
 
-- Players compare short-term odds against long-term identity growth, choosing whether to chase safer credible stories or stranger high-risk ones.
-- Players naturally optimize expedition staff compositions and region choices as they learn how clue quality converts into issue value.
-- Players form an editorial style over time because layout, balance, and thematic bias all feed back into subscriptions and macro attributes.
+- 玩家会在短期成功率与长期身份成长之间做比较，决定是追求更安全、更可信的故事，还是去搏更怪异、更高风险的题材。
+- 随着理解线索质量如何转化为版面价值，玩家会自然优化远征配队和区域选择。
+- 由于版面、平衡与题材偏向都会反馈到订阅和宏观属性上，玩家会逐渐形成稳定的编辑风格。
 
-### Core Mechanics (Systems we build)
+### 核心机制（需要建设的系统）
 
-1. Weekly state loop with cross-week persistence.
-2. Region/node dispatch with staff selection and day consumption.
-3. Split binomial event checks with opponent negation.
-4. Clue-to-story conversion and six-slot editorial layout.
-5. Economic settlement that updates subscriptions, editorial profile, and macro attributes.
+1. 可跨周持久化的周状态循环。
+2. 带员工选择和天数消耗的区域/节点派遣。
+3. 带对手抵消的拆分二项式事件检定。
+4. 线索转故事与六栏编辑排版。
+5. 会更新订阅、编辑画像和宏观属性的经济结算。
 
 ---
 
-## Player Motivation Profile
+## 玩家动机画像
 
-### Primary Psychological Needs Served
+### 主要满足的心理需求
 
-| Need | How This Game Satisfies It | Strength |
+| 需求 | 本游戏如何满足 | 强度 |
 | ---- | ---- | ---- |
-| **Autonomy** (freedom, meaningful choice) | Choose regions, staff, risk appetite, story mix, and issue bias every week | Core |
-| **Competence** (mastery, skill growth) | Learn probabilities, optimize dispatch composition, and shape profitable balanced issues | Core |
-| **Relatedness** (connection, belonging) | Build attachment to the paper, its staff roles, and the world reacting to editorial direction | Supporting |
+| **自主性**（Autonomy） | 每周自行选择区域、员工、风险偏好、故事组合和版面偏置 | 核心 |
+| **胜任感**（Competence） | 学会概率、优化派遣组合、构建盈利且平衡的报纸 | 核心 |
+| **联结感**（Relatedness） | 对报社、员工岗位以及会回应编辑方向的世界产生依附 | 支撑 |
 
-### Player Type Appeal (Bartle Taxonomy)
+### 玩家类型吸引力（Bartle）
 
-- [x] **Achievers** (goal completion, collection, progression) -- How: unlock regions, improve subscriptions, stabilize profitable weekly issues
-- [x] **Explorers** (discovery, understanding systems, finding secrets) -- How: hidden nodes, macro-attribute thresholds, occult progression
-- [ ] **Socializers** (relationships, cooperation, community) -- How: not a current focus in the single-player MVP
-- [ ] **Killers/Competitors** (domination, PvP, leaderboards) -- How: not a current focus
+- [x] **成就型**：解锁区域、提升订阅、维持稳定盈利的周刊
+- [x] **探索型**：隐藏节点、宏观属性阈值、神秘推进
+- [ ] **社交型**：当前单人 MVP 不聚焦此项
+- [ ] **竞争型**：当前不聚焦 PvP 或排行榜
 
-### Flow State Design
+### 心流设计
 
-- **Onboarding curve**: Start with a small staff pool, one open region, and a fixed week loop that teaches dispatch, check, layout, and settlement in order.
-- **Difficulty scaling**: Expand through harder nodes, stricter resource tradeoffs, stronger risk flags, and more punishing editorial imbalance.
-- **Feedback clarity**: Show probabilities before dispatch, clue quality after checks, and real-time settlement forecasts during layout.
-- **Recovery from failure**: A failed week should still produce readable output and allow fast transition into the next week rather than hard fail states.
-
----
-
-## Core Loop
-
-### Moment-to-Moment (30 seconds)
-
-The player reads node requirements, picks staff, inspects success odds, commits a dispatch, then evaluates the resulting clue or failure outcome. In the editorial half, the player picks a story and places it into a slot while watching the issue forecast update.
-
-### Short-Term (5-15 minutes)
-
-The player spends a week budget by chaining 2-4 expeditions, converts clues into a usable story pool, fills six issue slots, and settles one complete paper. This is the "one more week" loop.
-
-### Session-Level (30-120 minutes)
-
-A session consists of several consecutive weekly issues. Each week creates a new editorial bet, new unlock pressure, and new macro-state consequences, giving the player natural stop points after settlement and natural return hooks at the next briefing.
-
-### Long-Term Progression
-
-Long-term growth comes from subscriptions, editorial profile drift, macro-attribute changes, unlocked regions/nodes, and future faction or occult event chains. The intended longer arc is to evolve the paper from a fringe publication into a powerful but unstable force.
-
-### Retention Hooks
-
-- **Curiosity**: Hidden nodes, unlock conditions, and unresolved world mysteries
-- **Investment**: Cross-week subscriptions, macro attributes, and editorial identity
-- **Social**: Not part of current MVP
-- **Mastery**: Better staff assignment, cleaner layout composition, and more deliberate long-term profile shaping
+- **上手曲线**：从少量员工、一个开启区域和固定周流程开始，按顺序教授派遣、检定、排版和结算。
+- **难度增长**：通过更难节点、更紧张的资源权衡、更强的风险标记，以及更严厉的编辑失衡惩罚来扩张。
+- **反馈清晰度**：派遣前展示概率，检定后展示线索质量，排版期间实时展示结算预测。
+- **失败恢复**：糟糕的一周也应产出可读结果，并允许快速进入下一周，而不是直接判死。
 
 ---
 
-## Game Pillars
+## 核心循环
 
-### Pillar 1: Investigation Must Feed Publication
+### 即时循环（30 秒）
 
-Every field action must either create publishable material, deny it, or distort it in a way the paper feels next.
+玩家阅读节点需求、选择员工、查看成功率、确认派遣，然后评估生成的线索或失败结果。在编辑阶段，玩家选择一篇报道并放入一个版位，同时观察周刊预测值变化。
 
-*Design test*: If a feature is fun in isolation but does not affect the week's issue, it should not block MVP.
+### 短期循环（5-15 分钟）
 
-### Pillar 2: Editorial Tradeoffs Must Stay Visible
+玩家消耗一周预算，串联 2-4 次远征，把线索转成可用故事池，填满六个版位，并完成一期完整周刊。这就是“再来一周”的循环。
 
-The player should always feel the tension between credibility, weirdness, profit, and long-term identity.
+### 会话级循环（30-120 分钟）
 
-*Design test*: If a rule removes the need to choose between safer and stranger outcomes, it weakens the game.
+一次会话由连续数期周刊组成。每一周都会形成新的编辑下注、新的解锁压力和新的宏观后果，使玩家在结算后拥有自然停点，也在下一次简报时拥有自然回归理由。
 
-### Pillar 3: One Week Should Form One Readable Arc
+### 长期成长
 
-Each week must be understandable as a complete cycle: briefing, dispatch, issue assembly, settlement, next week.
+长期成长来自订阅数、编辑画像漂移、宏观属性变化、区域/节点解锁，以及未来可能加入的势力或神秘事件链。长期目标是让报纸从边缘刊物成长为强大但不稳定的力量。
 
-*Design test*: If a system cannot express value within a week or feed into the next week, defer it.
+### 留存钩子
 
-### Anti-Pillars (What This Game Is NOT)
-
-- **NOT an open-world adventure game**: Direct field movement and exploration scenes would dilute the editor fantasy and blow scope.
-- **NOT a pure deckbuilder or card battler**: Cards can exist as content containers, but the core loop is editorial management, not combat or deck optimization.
-- **NOT a content-bloat narrative sandbox for MVP**: Faction branches, broad story synthesis trees, and deep progression should not delay the weekly Godot loop.
+- **好奇心**：隐藏节点、解锁条件、未解世界谜团
+- **投入感**：跨周订阅、宏观属性、编辑身份
+- **社交**：不属于当前 MVP
+- **精通**：更好的配队、更清晰的排版构成、更有意识的长期画像塑造
 
 ---
 
-## Inspiration and References
+## 游戏支柱
 
-| Reference | What We Take From It | What We Do Differently | Why It Matters |
+### 支柱 1：调查必须导向出版
+
+每一次野外行动都必须创造、扭曲或剥夺一份本周报纸能感受到的素材。
+
+*设计判断题*：如果某个功能单独拿出来很好玩，但不会影响本周成刊，它就不该阻塞 MVP。
+
+### 支柱 2：编辑取舍必须可见
+
+玩家应始终感受到公信力、猎奇性、利润和长期身份之间的拉扯。
+
+*设计判断题*：如果一条规则消除了在“更安全”和“更诡异”结果之间做选择的必要，它就削弱了游戏。
+
+### 支柱 3：一周应当形成一个完整可读弧线
+
+每周都必须可以被理解为一整个闭环：简报、派遣、组刊、结算、进入下一周。
+
+*设计判断题*：如果一个系统不能在一周内表达价值，或不能把结果传入下一周，就应延期。
+
+### 反支柱（本游戏不是什么）
+
+- **不是开放世界冒险游戏**：直接控制角色在场景中移动会稀释“主编幻想”，也会把范围炸穿。
+- **不是纯卡组构筑或卡牌对战游戏**：卡片可以是内容容器，但核心循环是编辑经营，而不是战斗或牌组优化。
+- **不是给 MVP 准备的大体量叙事沙盒**：势力分支、复杂故事合成树和深进度层不应拖慢 Godot 周循环落地。
+
+---
+
+## 灵感与参考
+
+| 参考 | 我们借鉴什么 | 我们做得不同的地方 | 重要性 |
 | ---- | ---- | ---- | ---- |
-| **News Tower** | Newspaper production fantasy and publication framing | We attach issue quality to mystery investigation, not newsroom throughput alone | Validates the editorial-management appeal |
-| **Cultist Simulator** | Occult pressure, dangerous knowledge, escalating instability | We structure it into readable weekly runs and explicit issue settlement | Validates the occult-management mood |
-| **The Sultan's Game** | Binomial-style resolution feel and visible risk math | We use it as expedition resolution inside a broader newspaper loop | Validates the check model and tension |
+| **News Tower** | 报业生产幻想与出版 framing | 我们把周刊质量绑定到神秘调查，而非单纯新闻生产效率 | 证明编辑经营题材有吸引力 |
+| **Cultist Simulator** | 神秘压力、危险知识、逐步失稳 | 我们把它收束进清晰的周循环与显式结算中 | 证明神秘经营氛围成立 |
+| **The Sultan's Game** | 二项式风格的结果体验与可见风险数学 | 我们将其作为更大报社循环中的远征结算 | 证明检定模型和张力可行 |
 
-**Non-game inspirations**: Paranormal tabloids, conspiracy newspapers, occult pulp magazines, Cold War mystery fiction, UFO folklore, and periodical front-page design.
+**非游戏参考**：超自然小报、阴谋论报纸、神秘学 pulp 杂志、冷战时期异闻小说，以及报刊头版设计。
 
 ---
 
-## Target Player Profile
+## 目标玩家画像
 
-| Attribute | Detail |
+| 属性 | 说明 |
 | ---- | ---- |
-| **Age range** | 18-40 |
-| **Gaming experience** | Mid-core to hardcore systems players |
-| **Time availability** | 30-60 minute focused sessions on weekdays; longer experimentation on weekends |
-| **Platform preference** | PC |
-| **Current games they play** | News Tower, Cultist Simulator, deckbuilders or management sims with strong thematic identity |
-| **What they're looking for** | A compact strategic loop with strong theme, readable consequences, and meaningful medium-term planning |
-| **What would turn them away** | Excessive randomness without agency, weak payoff from investigation, or a purely cosmetic newspaper phase |
+| **年龄段** | 18-40 |
+| **游戏经验** | 中核到硬核的系统型玩家 |
+| **时间条件** | 工作日可投入 30-60 分钟集中会话；周末可做更长时间实验 |
+| **平台偏好** | PC |
+| **当前会玩的游戏** | News Tower、Cultist Simulator，以及具有鲜明主题的卡牌或经营游戏 |
+| **他们在寻找什么** | 紧凑的策略循环、强主题包装、清晰后果和中期规划空间 |
+| **会劝退他们的点** | 没有决策空间的随机性、调查回报太弱，或编辑阶段仅剩视觉包装 |
 
 ---
 
-## Technical Considerations
+## 技术考虑
 
-| Consideration | Assessment |
+| 考量 | 评估 |
 | ---- | ---- |
-| **Recommended Engine** | Godot 4.3, because the team already has a live prototype and the project is UI-heavy rather than engine-technology heavy |
-| **Key Technical Challenges** | Extracting monolithic weekly logic into maintainable systems, converging HTML reference rules into Godot, and building a content/config pipeline |
-| **Art Style** | 2D stylized UI-forward prototype with occult newspaper presentation |
-| **Art Pipeline Complexity** | Medium; interface-heavy with bespoke print presentation and reference-driven atmosphere |
-| **Audio Needs** | Moderate; mood, feedback, and result emphasis matter more than reactive score complexity |
-| **Networking** | None |
-| **Content Volume** | MVP: 2 regions, a small node set, 1 full weekly loop; vertical slice: broader region variety, unlock chains, richer story pool |
-| **Procedural Systems** | Light procedural or semi-random briefing, filler story generation, and weekly node refresh |
+| **推荐引擎** | Godot 4.3。团队已有可运行原型，且项目的重心是 UI 而不是引擎技术奇观 |
+| **关键技术挑战** | 把单体周循环逻辑拆成可维护系统、将 HTML 参考规则收束进 Godot，以及建立内容/配置管线 |
+| **美术风格** | 2D、风格化、以 UI 为中心的原型，主打神秘周刊气质 |
+| **美术管线复杂度** | 中等；界面比重大，且需要定制化印刷呈现与参考驱动氛围 |
+| **音频需求** | 中等；氛围、反馈与结果强调比复杂动态配乐更重要 |
+| **联网** | 无 |
+| **内容体量** | MVP：2 个区域、少量节点、1 个完整周循环；垂直切片：更多区域变化、解锁链、更丰富故事池 |
+| **程序化系统** | 轻量程序化或半随机的简报、填充故事生成与每周节点刷新 |
 
 ---
 
-## Risks and Open Questions
+## 风险与开放问题
 
-### Design Risks
+### 设计风险
 
-- The loop may feel too abstract if dispatch and issue outcomes do not create strong emotional contrast.
-- The editorial phase may become a solved optimization puzzle if diversity and bias multipliers dominate too heavily.
+- 如果派遣与成刊结果之间缺少强烈情绪反差，循环可能显得过于抽象。
+- 如果多样性和偏置乘区过强，编辑阶段可能退化为已解出的最优题。
 
-### Technical Risks
+### 技术风险
 
-- Current weekly logic is concentrated in a single Godot scene script, which will make iteration brittle.
-- Data definitions for regions, nodes, and story generation remain embedded in code rather than stable content assets.
+- 当前周循环逻辑集中在单个 Godot 场景脚本中，会让迭代变脆。
+- 区域、节点和故事生成定义仍嵌在代码里，而不是稳定内容资产。
 
-### Market Risks
+### 市场风险
 
-- The concept is niche and relies heavily on strong thematic execution.
-- Players may understand the newspaper fantasy faster than they understand why the occult layer matters unless onboarding is sharp.
+- 概念本身偏小众，高度依赖主题执行质量。
+- 如果新手引导不够利落，玩家可能先懂报纸经营，却不理解神秘层为何重要。
 
-### Scope Risks
+### 范围风险
 
-- Reintroducing story synthesis, faction branches, or large content sets too early will split the prototype again.
-- UI polish can absorb time before the content and state architecture are stable.
+- 过早把故事合成、势力分支或大体量内容重新拉回，会再次拆散原型。
+- 在内容和状态架构稳定前，UI 抛光很容易吞噬时间。
 
-### Open Questions
+### 开放问题
 
-- Does the current clue-to-story conversion have enough expressive depth, or will a later synthesis layer be required for retention?
-- How aggressively should macro attributes unlock or distort weekly content before the game stops feeling readable?
+- 当前“线索转故事”是否已有足够表达深度，还是后续仍需要合成层来支撑留存？
+- 宏观属性应在多大程度上解锁或扭曲每周内容，才不会让游戏失去可读性？
 
 ---
 
-## MVP Definition
+## MVP 定义
 
-**Core hypothesis**: Players will enjoy a weekly loop where risky occult investigation choices directly create editorial tradeoffs that affect profit, subscriptions, and long-term paper identity.
+**核心假设**：玩家会喜欢这样一个周循环：高风险的神秘调查决策，直接制造会影响利润、订阅和长期报纸身份的编辑取舍。
 
-**Required for MVP**:
-1. A playable Godot week loop with state persistence across weeks.
-2. Region/node dispatch with 1-3 staff selection and split event checks.
-3. Clue generation, automatic story conversion, six-slot layout, and settlement.
-4. Cross-week updates to subscriptions, editorial profile, and macro attributes.
+**MVP 必要内容**：
+1. 一个可玩的 Godot 周循环，并支持跨周状态持续。
+2. 区域/节点派遣，支持 1-3 名员工选择与拆分事件检定。
+3. 线索生成、自动故事转化、六栏排版与结算。
+4. 订阅数、编辑画像和宏观属性的跨周更新。
 
-**Explicitly NOT in MVP** (defer to later):
-- Story synthesis workbench as a separate Godot phase
-- Deep faction mission chains
-- Large-scale save/load or release-grade meta systems
-- High-cost art polish or multiple alternate rule branches
+**明确不属于 MVP 的内容**（延期）：
+- 独立成相位的故事合成工作台
+- 深度势力任务链
+- 大体量存档系统或发行级元系统
+- 高成本美术抛光或多套平行规则分支
 
-### Scope Tiers (if budget/time shrinks)
+### 范围分层（如果预算 / 时间缩水）
 
-| Tier | Content | Features | Timeline |
+| 层级 | 内容 | 功能 | 时间预估 |
 | ---- | ---- | ---- | ---- |
-| **MVP** | 2 regions, limited node pool, 1 stable weekly loop | Dispatch, checks, clue conversion, six-slot settlement | 3-6 weeks of focused prototype cleanup and documentation-driven implementation |
-| **Vertical Slice** | More region/node variety, clearer unlocks, improved UI feedback | Better onboarding, stronger progression, config-driven content | 6-10 additional weeks |
-| **Alpha** | Most intended systems present in rough form | Factions, persistence, event layering, broader content | Dependent on team bandwidth |
-| **Full Vision** | Content-complete and polished | Story synthesis, long-term growth layers, polish, balancing | Post-Alpha |
+| **MVP** | 2 个区域、有限节点池、1 条稳定周循环 | 派遣、检定、线索转化、六栏结算 | 3-6 周聚焦于原型清理与文档驱动实现 |
+| **垂直切片** | 更多区域/节点变化、更清晰解锁、更好 UI 反馈 | 更好的新手引导、更强成长、更配置化内容 | 额外 6-10 周 |
+| **Alpha** | 大多数目标系统以粗糙形式出现 | 势力、持久化、事件分层、更广内容 | 取决于团队带宽 |
+| **完整愿景** | 内容完整并经过抛光 | 故事合成、长期成长层、抛光、平衡 | Alpha 之后 |
 
 ---
 
-## Next Steps
+## 下一步
 
-- [ ] Approve this concept as the canonical Godot direction
-- [ ] Use `design/gdd/game-pillars.md` as the decision filter for future scope calls
-- [ ] Maintain `design/gdd/systems-index.md` as the source of truth for what gets designed next
-- [ ] Design or revise the MVP system GDDs in dependency order
-- [ ] Execute ADR-driven refactors before content expansion
-- [ ] Prototype only the highest-risk unresolved system, not broad new branches
+- [ ] 批准这个概念，作为正式 Godot 方向
+- [ ] 将 `design/gdd/game-pillars.md` 用作后续范围判断过滤器
+- [ ] 持续维护 `design/gdd/systems-index.md`，把它作为“下一步该设计什么”的真源
+- [ ] 按依赖顺序设计或修订 MVP 系统 GDD
+- [ ] 在扩内容前，先执行 ADR 驱动的结构抽离
+- [ ] 只原型化风险最高、尚未解决的系统，不扩散到大范围新分支

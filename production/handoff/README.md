@@ -1,13 +1,13 @@
-# Handoff Notes
+# 交接说明
 
-Use this directory for milestone or session handoff packets when a plain chat summary is not enough.
+当简单的聊天摘要已经不够用时，请在本目录存放里程碑或会话交接包。
 
-Preferred contents:
+## 建议内容
 
-- current goal
-- work completed
-- unresolved blockers
-- files changed
-- recommended next step
+- 当前目标
+- 已完成工作
+- 未解决阻塞
+- 变更文件
+- 建议下一步
 
-For short live-state handoff, update `production/session-state/active.md` first.
+如果只是做简短的实时状态交接，先更新 `production/session-state/active.md`。
