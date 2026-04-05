@@ -49,7 +49,10 @@
     .syn-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 0.6rem; }
     .syn-workbench-host { min-height: 120px; margin-bottom: 0.55rem; }
     .syn-slots-arch { display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; justify-content: flex-start; }
-    .syn-slot-cell { flex: 1 1 140px; max-width: 200px; display: flex; flex-direction: column; gap: 4px; }
+    .syn-slot-cell {
+      flex: 1 1 140px; max-width: 200px; display: flex; flex-direction: column; gap: 4px;
+      cursor: pointer;
+    }
     .syn-slot-required .syn-drop-slot {
       background: linear-gradient(180deg, rgba(127, 29, 29, 0.45), rgba(30, 20, 22, 0.92));
       border: 1px solid rgba(248, 113, 113, 0.45);
@@ -81,6 +84,7 @@
     .syn-slot-optional .syn-slot-label { color: var(--gold-dim); }
     .syn-slot-label { font-size: 11px; font-weight: 600; letter-spacing: 0.02em; }
     .syn-drop-slot {
+      position: relative;
       border-radius: 10px; min-height: 76px; padding: 6px 8px; display: flex; align-items: center; justify-content: center;
       text-align: center; transition: border-color 0.15s, box-shadow 0.15s;
     }
@@ -103,23 +107,76 @@
     .syn-reports { max-height: 220px; overflow: auto; display: grid; gap: 8px; }
     .syn-report { border: 1px solid #334155; border-radius: 8px; padding: 0.5rem; background: #0b1220; font-size: 0.8rem; }
     .syn-help { font-size: 0.8rem; color: var(--muted); line-height: 1.45; }
+    .syn-item-eligible {
+      border-color: rgba(34, 197, 94, 0.55);
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.25);
+    }
+    .syn-item-dimmed { opacity: 0.42; }
+    .syn-slot-cell.syn-slot-focused .syn-drop-slot {
+      box-shadow: 0 0 0 2px rgba(212, 168, 83, 0.55), inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+    }
+    .syn-drop-slot.syn-slot-drag-target {
+      box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.7), inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+      animation: synDragTargetPulse 0.9s ease-in-out infinite;
+    }
+    @keyframes synDragTargetPulse {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.12); }
+    }
+    .syn-drop-slot.syn-drop-reject {
+      animation: synRejectBorder 0.45s ease-in-out 2;
+    }
+    @keyframes synRejectBorder {
+      0%, 100% { box-shadow: inset 0 0 0 0 rgba(239, 68, 68, 0); border-color: inherit; }
+      50% { box-shadow: inset 0 0 0 2px rgba(239, 68, 68, 0.85); border-color: #ef4444; }
+    }
+    .syn-reject-x-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 3;
+    }
+    .syn-reject-x-overlay::before,
+    .syn-reject-x-overlay::after {
+      content: "";
+      position: absolute;
+      width: min(72%, 120px);
+      height: 5px;
+      background: linear-gradient(90deg, transparent, #ef4444, transparent);
+      border-radius: 2px;
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.65);
+    }
+    .syn-reject-x-overlay::before { transform: rotate(45deg); }
+    .syn-reject-x-overlay::after { transform: rotate(-45deg); }
     .log-panel { margin-top: 1rem; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem; }
     .log-panel h2 { margin: 0 0 0.5rem; font-size: 0.9rem; color: var(--gold-dim); }
     .log { font-size: 0.78rem; color: var(--soft); max-height: 140px; overflow: auto; }
     .log div { margin-bottom: 0.25rem; border-bottom: 1px solid #1f2937; padding-bottom: 0.25rem; }
+    .syn-resolved-panel {
+      min-height: 2.6rem; margin-bottom: 0.55rem; padding: 0.45rem 0.6rem; border-radius: 8px;
+      border: 1px solid rgba(212, 168, 83, 0.28); background: rgba(15, 23, 42, 0.65);
+      font-size: 0.82rem; line-height: 1.45;
+    }
+    .syn-resolved-name { color: var(--gold); font-weight: 600; }
+    .syn-resolved-placeholder { color: var(--muted); }
+    .syn-resolved-internal { color: #93c5fd; font-weight: 600; }
   </style>
 </head>
 <body>
   <div id="app">
     <h1>故事合成台 · 独立实验</h1>
     <div class="lab-banner">
-      本页与正式合成台对齐：<strong>抢先快讯 / 深度报道 / 个人专栏 / 爆炸性新闻（需爆料卡）/ 内审定调（蓝色）</strong>。公开合成<strong>不消耗现象与认知</strong>，<strong>情报为材料会消耗</strong>；同题材本周多篇上版时报纸结算基础值递减。假素材可「重新载入」。
+      <strong>实验区：</strong>公开合成使用<strong>统一卡槽</strong>，<strong>放入素材后才自动识别</strong>抢先快讯/深度/专栏/爆炸性新闻；顶部不再手选报道类型。点击某卡槽时左侧素材 Tab 会<strong>自动跳到该槽对应分类</strong>（即使该页暂无牌）。内审定调仍为单独模式。拖拽高亮、错放红叉、槽位选中前置排序等交互保留。
+      规则摘要：公开合成<strong>不消耗现象与认知</strong>，<strong>情报为材料会消耗</strong>；同题材多篇上版基础值递减。假素材可「重新载入」。
       完整流程请打开仓库根目录 <code>world-mysteries-full-chain.html</code>。
     </div>
     <div class="syn-grid">
       <section class="syn-card">
         <h3>1) 素材仓</h3>
-        <p class="syn-help" style="margin:0 0 0.5rem;">拖到右侧卡槽。公开报道用红/金槽；<strong>爆料卡</strong>仅「爆炸性新闻」需要（本页假数据里自带，不可合成）。</p>
+        <p class="syn-help" style="margin:0 0 0.5rem;">拖到右侧卡槽，或先<strong>点击卡槽</strong>（会自动切换本区 Tab）。公开侧为统一槽位，凑齐配方后才会显示报道类型。</p>
         <div class="row" style="margin-bottom:0.5rem;">
           <button type="button" id="tabPhenomenon">现象牌</button>
           <button type="button" id="tabIntel">情报牌</button>
@@ -134,14 +191,12 @@
         </div>
       </section>
       <section class="syn-card">
-        <h3>2) 报道类型与卡槽</h3>
+        <h3>2) 合成模式与卡槽</h3>
         <div class="row" style="margin-bottom:0.5rem;">
-          <button type="button" class="primary" id="recipe1">抢先快讯</button>
-          <button type="button" id="recipe2">深度报道</button>
-          <button type="button" id="recipe3">个人专栏</button>
-          <button type="button" id="recipe4">爆炸性新闻</button>
-          <button type="button" class="syn-recipe-internal" id="recipeInternal">内审定调</button>
+          <button type="button" class="primary" id="modePublic">公开合成</button>
+          <button type="button" class="syn-recipe-internal" id="modeInternal">内审定调</button>
         </div>
+        <div id="synResolvedType" class="syn-resolved-panel" aria-live="polite"></div>
         <div id="synWorkbench" class="syn-workbench-host" aria-live="polite"></div>
         <pre class="syn-preview-pre" id="synSynthPreview"></pre>
         <div class="syn-actions">
@@ -202,14 +257,20 @@
     tipOffCards: [],
     craftedReports: [],
     synthTab: "phenomenon",
-    synthRecipe: "r1",
+    /** public：统一槽位 + 自动识别 r1–r4；internal：蓝色单槽 */
+    synthMode: "public",
     synthCraftSlots: {},
     synthPollution: 0,
     nextCardId: 1,
     nextStoryId: 1,
     nextTopicSeq: 1,
     topicSynthOrder: {},
+    /** 实验：点击卡槽选中；切换 Tab 清空 */
+    focusedSlotKey: null,
   };
+
+  /** 拖拽中的卡牌 kind，用于高亮可放入槽位 */
+  let dragKindActive = null;
 
   const el = {
     synInventory: null,
@@ -275,9 +336,10 @@
     state.craftedReports = [];
     state.topicSynthOrder = {};
     state.synthPollution = 0;
-    state.synthRecipe = "r1";
-    initSynthSlotsForRecipe("r1");
+    state.synthMode = "public";
+    initSynthCraftSlots();
     state.synthTab = "phenomenon";
+    state.focusedSlotKey = null;
     log("已载入假数据。");
   }
 
@@ -303,45 +365,66 @@
 
   const SYNTH_KIND_ZH = { phenomenon: "现象", intel: "情报", cognition: "认知", tool: "工具", tipoff: "爆料卡" };
 
-  function synthSlotLayout(recipe) {
+  function synthSlotLayout() {
     const tool = { key: "tool", kind: "tool", required: false, label: "工具（可选）" };
-    if (recipe === "internal") {
+    if (state.synthMode === "internal") {
       return [{ key: "phenomenon", kind: "phenomenon", required: true, label: "现象（内审素材）" }];
     }
-    if (recipe === "r1") {
-      return [
-        { key: "phenomenon", kind: "phenomenon", required: true, label: "现象（必要）" },
-        { key: "intel", kind: "intel", required: true, label: "情报（必要）" },
-        tool,
-      ];
-    }
-    if (recipe === "r2") {
-      return [
-        { key: "phenomenon", kind: "phenomenon", required: true, label: "现象（必要）" },
-        { key: "cognition", kind: "cognition", required: true, label: "认知（必要）" },
-        tool,
-      ];
-    }
-    if (recipe === "r3") {
-      return [
-        { key: "cognition1", kind: "cognition", required: true, label: "认知 ①（必要）" },
-        { key: "cognition2", kind: "cognition", required: true, label: "认知 ②（必要）" },
-        tool,
-      ];
-    }
     return [
-      { key: "phenomenon", kind: "phenomenon", required: true, label: "现象（必要）" },
-      { key: "cognition", kind: "cognition", required: true, label: "认知（必要）" },
-      { key: "tipoff", kind: "tipoff", required: true, label: "爆料卡（必要）" },
+      { key: "phenomenon", kind: "phenomenon", required: true, label: "现象槽" },
+      { key: "intel", kind: "intel", required: true, label: "情报槽" },
+      { key: "cognition1", kind: "cognition", required: true, label: "认知 ①" },
+      { key: "cognition2", kind: "cognition", required: true, label: "认知 ②" },
+      { key: "tipoff", kind: "tipoff", required: true, label: "爆料槽" },
       tool,
     ];
   }
 
-  function initSynthSlotsForRecipe(recipe) {
-    const layout = synthSlotLayout(recipe);
+  function initSynthCraftSlots() {
+    const layout = synthSlotLayout();
     const o = {};
     layout.forEach((s) => { o[s.key] = null; });
     state.synthCraftSlots = o;
+  }
+
+  /** 不含工具牌，用于判定公开报道类型 */
+  function substanceCardsForResolve(cards) {
+    return cards.filter((c) => c.kind !== "tool");
+  }
+
+  /**
+   * 从槽内素材解析公开配方（严格互斥，避免多解）。
+   * r4：爆料 + 现象 + ≥1 认知，且无情报。
+   * r1：情报 + 现象，且无认知、无爆料。
+   * r3：≥2 认知，且无现象、无情报、无爆料。
+   * r2：现象 + 恰好 1 认知，且无情报、无爆料。
+   */
+  function resolvePublicRecipe(cards) {
+    const sub = substanceCardsForResolve(cards);
+    const hasPhen = sub.some((c) => c.kind === "phenomenon");
+    const hasIntel = sub.some((c) => c.kind === "intel");
+    const nCog = sub.filter((c) => c.kind === "cognition").length;
+    const hasTip = sub.some((c) => c.kind === "tipoff");
+    if (hasTip) {
+      if (hasPhen && nCog >= 1 && !hasIntel) return "r4";
+      return null;
+    }
+    if (hasIntel) {
+      if (hasPhen && nCog === 0) return "r1";
+      return null;
+    }
+    if (nCog >= 2 && !hasPhen) return "r3";
+    if (hasPhen && nCog === 1) return "r2";
+    return null;
+  }
+
+  function slotKindToInventoryTab(kind) {
+    if (kind === "phenomenon") return "phenomenon";
+    if (kind === "intel") return "intel";
+    if (kind === "cognition") return "cognition";
+    if (kind === "tool") return "tool";
+    if (kind === "tipoff") return "tipoff";
+    return state.synthTab;
   }
 
   function clearCardFromAllCraftSlots(cardId) {
@@ -352,7 +435,7 @@
   }
 
   function assignCardToCraftSlot(slotKey, cardId) {
-    const layout = synthSlotLayout(state.synthRecipe);
+    const layout = synthSlotLayout();
     const def = layout.find((s) => s.key === slotKey);
     if (!def) return false;
     const card = getCardById(cardId);
@@ -363,7 +446,7 @@
   }
 
   function selectedSynthCards() {
-    const layout = synthSlotLayout(state.synthRecipe);
+    const layout = synthSlotLayout();
     const out = [];
     for (const s of layout) {
       const id = state.synthCraftSlots[s.key];
@@ -403,20 +486,25 @@
     return 0.52;
   }
 
-  function buildSynthPreview(recipe, cards) {
-    if (recipe === "internal") {
+  function buildSynthPreview(cards) {
+    if (state.synthMode === "internal") {
+      const recipe = "internal";
       if (!cards.length) return "内审定调：将 1 张现象牌拖入蓝色卡槽，再点「生成认知」。不上版、不进下方报道列表。";
       const names = cards.map((c) => c.name).join(" + ");
       const ok = validateRecipe(recipe, cards);
       return `${recipeLabel(recipe)}\n槽内：${names}\n${ok ? "可执行：不消耗现象牌，生成 1 张同题材认知牌。" : "需且仅需 1 张现象牌。"}`;
     }
     if (!cards.length) {
-      return "尚未放入素材。红色必要槽、金色虚线工具（可选）。爆炸性新闻需「爆料卡」分类中的特殊牌。";
+      return "公开合成：请向统一卡槽放入素材。凑齐一种完整配方后，上方会显示报道类型，合成键可点。\n提示：快讯=现象+情报；深度=现象+1认知；专栏=双认知（无现象）；爆炸=现象+认知+爆料（槽内勿放情报）。";
     }
+    const resolved = resolvePublicRecipe(cards);
     const names = cards.map((c) => c.name).join(" + ");
-    const valid = validateRecipe(recipe, cards);
+    if (!resolved) {
+      return `已放入：${names}\n当前组合尚不构成任何一种完整公开配方。请对照提示增删卡槽（例如：做「深度」时不要同时放情报；做「专栏」不要放现象）。\n当前失实风险：${state.synthPollution}`;
+    }
+    const valid = validateRecipe(resolved, cards);
     const toolBonus = cards.filter((c) => c.kind === "tool").reduce((a, b) => a + b.bonus, 0);
-    const successRate = clamp(recipeBaseSuccess(recipe) + toolBonus / 100 - Math.max(0, cards.length - 3) * 0.05, 0.15, 0.95);
+    const successRate = clamp(recipeBaseSuccess(resolved) + toolBonus / 100 - Math.max(0, cards.length - 3) * 0.05, 0.15, 0.95);
     const substanceForTopic = cards.filter((c) => c.kind !== "tipoff" && c.kind !== "tool");
     const phenCard = substanceForTopic.find((c) => c.kind === "phenomenon");
     const pk = phenCard?.topicKey || substanceForTopic.find((c) => c.topicKey)?.topicKey;
@@ -426,7 +514,7 @@
     if (pk && prevN > 0) {
       topicLine += `\n该题材本周已合成 ${prevN} 篇公开稿；若本次成功，本条为第 ${nextOrd} 篇（上版结算基础值将打折）。`;
     }
-    return `${recipeLabel(recipe)}\n素材：${names}\n预计成功率：${(successRate * 100).toFixed(1)}%\n${valid ? "配方合法，可执行合成。" : "配方不合法，请调整素材组合。"}\n当前失实风险：${state.synthPollution}${topicLine}`;
+    return `${recipeLabel(resolved)}\n素材：${names}\n预计成功率：${(successRate * 100).toFixed(1)}%\n${valid ? "配方合法，可执行合成。" : "配方不合法，请调整素材组合。"}\n当前失实风险：${state.synthPollution}${topicLine}`;
   }
 
   function consumeCards(ids) {
@@ -527,16 +615,105 @@
     return Object.values(state.synthCraftSlots || {}).some((v) => v === id);
   }
 
+  function getFocusedSlotAcceptKind() {
+    if (!state.focusedSlotKey) return null;
+    const layout = synthSlotLayout();
+    const def = layout.find((s) => s.key === state.focusedSlotKey);
+    return def ? def.kind : null;
+  }
+
+  function renderResolvedTypePanel() {
+    const box = document.getElementById("synResolvedType");
+    if (!box) return;
+    const cards = selectedSynthCards();
+    if (state.synthMode === "internal") {
+      box.innerHTML =
+        cards.length && validateRecipe("internal", cards)
+          ? `<span class="syn-resolved-internal">${escapeHtml(recipeLabel("internal"))}</span>`
+          : '<span class="syn-resolved-placeholder">内审定调 · 放入 1 张现象牌后可生成认知（非公开报道）</span>';
+      return;
+    }
+    const resolved = resolvePublicRecipe(cards);
+    const canCraft = resolved && validateRecipe(resolved, cards);
+    if (canCraft) {
+      box.innerHTML = `<span class="syn-resolved-name">当前报道类型：${escapeHtml(recipeLabel(resolved))}</span>`;
+    } else {
+      box.innerHTML = '<span class="syn-resolved-placeholder">放入素材后将自动识别报道类型</span>';
+    }
+  }
+
+  function syncModeButtons() {
+    const pub = document.getElementById("modePublic");
+    const int = document.getElementById("modeInternal");
+    if (pub) pub.classList.toggle("primary", state.synthMode === "public");
+    if (int) int.classList.toggle("primary", state.synthMode === "internal");
+  }
+
+  function syncInventoryTabButtons() {
+    const pairs = [
+      ["tabPhenomenon", "phenomenon"],
+      ["tabIntel", "intel"],
+      ["tabCognition", "cognition"],
+      ["tabTool", "tool"],
+      ["tabTipOff", "tipoff"],
+    ];
+    pairs.forEach(([id, tab]) => {
+      const b = document.getElementById(id);
+      if (b) b.classList.toggle("primary", state.synthTab === tab);
+    });
+  }
+
+  /** 选中槽位时：可放入的牌排在当前 Tab 列表前部 */
+  function orderedInventoryForDisplay(baseList) {
+    const accept = getFocusedSlotAcceptKind();
+    if (!accept) return baseList.slice();
+    const eligible = baseList.filter((c) => c.kind === accept);
+    const rest = baseList.filter((c) => c.kind !== accept);
+    return eligible.concat(rest);
+  }
+
+  function clearDragSlotHighlights() {
+    if (!el.synWorkbench) return;
+    el.synWorkbench.querySelectorAll(".syn-slot-drag-target").forEach((z) => z.classList.remove("syn-slot-drag-target"));
+    dragKindActive = null;
+  }
+
+  function applyDragSlotHighlights(kind) {
+    clearDragSlotHighlights();
+    if (!kind || !el.synWorkbench) return;
+    dragKindActive = kind;
+    el.synWorkbench.querySelectorAll(".syn-drop-slot").forEach((zone) => {
+      if (zone.getAttribute("data-accept") === kind) zone.classList.add("syn-slot-drag-target");
+    });
+  }
+
+  function flashSlotReject(zone) {
+    if (!zone) return;
+    zone.classList.add("syn-drop-reject");
+    const overlay = document.createElement("div");
+    overlay.className = "syn-reject-x-overlay";
+    overlay.setAttribute("aria-hidden", "true");
+    zone.appendChild(overlay);
+    window.setTimeout(() => {
+      zone.classList.remove("syn-drop-reject");
+      if (overlay.parentNode === zone) overlay.remove();
+    }, 900);
+  }
+
   function renderSynthInventory() {
-    const list = getInventoryByTab(state.synthTab);
+    const baseList = getInventoryByTab(state.synthTab);
+    const list = orderedInventoryForDisplay(baseList);
     if (!el.synInventory) return;
     if (!list.length) {
       el.synInventory.innerHTML = `<div class="syn-help">当前分类暂无卡牌。可点「重新载入假数据」。</div>`;
       return;
     }
+    const accept = getFocusedSlotAcceptKind();
     el.synInventory.innerHTML = list
       .map((c) => {
         const placed = isCardPlacedInSynth(c.id);
+        const eligibleCls = accept && c.kind === accept ? " syn-item-eligible" : "";
+        const dimCls = accept && c.kind !== accept ? " syn-item-dimmed" : "";
         const topicChip =
           c.topicKey && (c.kind === "phenomenon" || c.kind === "intel" || c.kind === "cognition")
             ? `<span class="syn-badge">题材${shortTopicLabel(c.topicKey)}</span>`
@@ -549,7 +726,7 @@
               : c.kind === "tipoff"
                 ? `<span class="syn-badge">特殊</span><span class="syn-badge">不可合成</span>`
                 : `<span class="syn-badge">证据 ${c.evidenceValue || 0}</span>`;
-        return `<div class="syn-item syn-item-draggable${placed ? " syn-item-slotted" : ""}" draggable="true" data-card="${c.id}" data-kind="${c.kind}" title="拖到右侧卡槽">
+        return `<div class="syn-item syn-item-draggable${placed ? " syn-item-slotted" : ""}${eligibleCls}${dimCls}" draggable="true" data-card="${c.id}" data-kind="${c.kind}" title="拖到右侧卡槽">
           <strong>${escapeHtml(c.name)}</strong>
           <div class="syn-badges"><span class="syn-badge">${c.kind}</span>${topicChip}${badge}</div>
           ${placed ? `<div class="syn-slotted-hint">已在槽位</div>` : ""}
@@ -558,8 +735,14 @@
       .join("");
     el.synInventory.querySelectorAll(".syn-item-draggable").forEach((node) => {
       node.addEventListener("dragstart", (ev) => {
-        ev.dataTransfer.setData("text/plain", node.getAttribute("data-card"));
+        const id = node.getAttribute("data-card");
+        ev.dataTransfer.setData("text/plain", id);
         ev.dataTransfer.effectAllowed = "move";
+        const card = getCardById(id);
+        applyDragSlotHighlights(card ? card.kind : null);
+      });
+      node.addEventListener("dragend", () => {
+        clearDragSlotHighlights();
       });
     });
   }
@@ -587,8 +770,12 @@
         if (!id) return;
         const key = zone.getAttribute("data-slot-key");
         if (!key) return;
-        if (assignCardToCraftSlot(key, id)) renderSynthesis();
-        else log(`类型不符：此槽需要「${SYNTH_KIND_ZH[zone.getAttribute("data-accept")] || ""}」牌。`);
+        if (assignCardToCraftSlot(key, id)) {
+          renderSynthesis();
+        } else {
+          flashSlotReject(zone);
+          log(`类型不符：此槽需要「${SYNTH_KIND_ZH[zone.getAttribute("data-accept")] || ""}」牌。`);
+        }
       });
     });
     el.synWorkbench.querySelectorAll("[data-clear-slot]").forEach((btn) => {
@@ -599,23 +786,42 @@
         renderSynthesis();
       });
     });
+    const layout = synthSlotLayout();
+    el.synWorkbench.querySelectorAll(".syn-slot-cell").forEach((cell) => {
+      cell.addEventListener("click", (ev) => {
+        if (ev.target.closest("[data-clear-slot]")) return;
+        const slot = cell.querySelector(".syn-drop-slot");
+        if (!slot) return;
+        const key = slot.getAttribute("data-slot-key");
+        if (!key) return;
+        if (state.focusedSlotKey === key) {
+          state.focusedSlotKey = null;
+        } else {
+          state.focusedSlotKey = key;
+          const def = layout.find((s) => s.key === key);
+          if (def) state.synthTab = slotKindToInventoryTab(def.kind);
+        }
+        renderSynthesis();
+      });
+    });
   }
 
   function renderSynthWorkbench() {
     if (!el.synWorkbench) return;
-    const layout = synthSlotLayout(state.synthRecipe);
-    const archCls = state.synthRecipe === "internal" ? "syn-slots-arch syn-slots-internal-mode" : "syn-slots-arch";
+    const layout = synthSlotLayout();
+    const archCls = state.synthMode === "internal" ? "syn-slots-arch syn-slots-internal-mode" : "syn-slots-arch";
     const cells = layout
       .map((s) => {
         const id = state.synthCraftSlots[s.key];
         const cls =
-          state.synthRecipe === "internal"
+          state.synthMode === "internal"
             ? "syn-slot-cell syn-slot-internal"
             : s.required
               ? "syn-slot-cell syn-slot-required"
               : "syn-slot-cell syn-slot-optional";
         const inner = synthSlotInnerHtml(s.key, id, s.kind);
-        return `<div class="${cls}">
+        const focused = state.focusedSlotKey === s.key ? " syn-slot-focused" : "";
+        return `<div class="${cls}${focused}">
           <div class="syn-slot-label">${escapeHtml(s.label)}</div>
           <div class="syn-drop-slot${id ? " syn-drop-has-card" : ""}" data-slot-key="${s.key}" data-accept="${s.kind}">${inner}</div>
         </div>`;
@@ -623,6 +829,7 @@
       .join("");
     el.synWorkbench.innerHTML = `<div class="${archCls}">${cells}</div>`;
     bindSynthWorkbenchDrag();
+    if (dragKindActive) applyDragSlotHighlights(dragKindActive);
   }
 
   function renderSynthReports() {
@@ -661,26 +868,29 @@
     renderSynthInventory();
     renderSynthWorkbench();
     const cards = selectedSynthCards();
-    if (el.synSynthPreview) el.synSynthPreview.textContent = buildSynthPreview(state.synthRecipe, cards);
+    renderResolvedTypePanel();
+    if (el.synSynthPreview) el.synSynthPreview.textContent = buildSynthPreview(cards);
     if (el.synthesisHint) {
-      if (state.synthRecipe === "internal") {
+      if (state.synthMode === "internal") {
         el.synthesisHint.textContent =
-          "蓝色为内审定调（非公开）：不消耗现象，生成同题材认知。公开侧情报为消耗材料；爆炸性新闻需爆料卡。";
+          "蓝色为内审定调（非公开）：不消耗现象，生成同题材认知。公开侧为统一卡槽，放入后自动识别报道类型。";
       } else {
-        el.synthesisHint.textContent = `配方：${recipeLabel(state.synthRecipe)}。现象与认知可反复使用；情报每次合成消耗；同题材多篇上版时基础值递减。`;
+        el.synthesisHint.textContent =
+          "公开合成：现象与认知可反复使用；情报每次合成消耗；爆炸性新闻需爆料卡且槽内不要放情报。同题材多篇上版时基础值递减。";
       }
     }
     const craftBtn = document.getElementById("craftBtn");
     if (craftBtn) {
-      craftBtn.disabled = !validateRecipe(state.synthRecipe, cards);
-      craftBtn.textContent = state.synthRecipe === "internal" ? "生成认知" : "执行合成";
+      if (state.synthMode === "internal") {
+        craftBtn.disabled = !validateRecipe("internal", cards);
+      } else {
+        const r = resolvePublicRecipe(cards);
+        craftBtn.disabled = !(r && validateRecipe(r, cards));
+      }
+      craftBtn.textContent = state.synthMode === "internal" ? "生成认知" : "执行合成";
     }
-    ["recipe1", "recipe2", "recipe3", "recipe4"].forEach((bid, i) => {
-      const b = document.getElementById(bid);
-      if (b) b.classList.toggle("primary", state.synthRecipe === ["r1", "r2", "r3", "r4"][i]);
-    });
-    const ri = document.getElementById("recipeInternal");
-    if (ri) ri.classList.toggle("primary", state.synthRecipe === "internal");
+    syncModeButtons();
+    syncInventoryTabButtons();
     renderSynthReports();
   }
 
@@ -701,21 +911,21 @@
 
   function craftReport() {
     const cards = selectedSynthCards();
-    const recipe = state.synthRecipe;
-    if (recipe === "internal") {
+    if (state.synthMode === "internal") {
       const phen = cards.find((c) => c.kind === "phenomenon");
-      if (!phen || !validateRecipe(recipe, cards)) {
+      if (!phen || !validateRecipe("internal", cards)) {
         log("内审失败：请将 1 张现象牌拖入蓝色卡槽。");
         renderSynthesis();
         return;
       }
       runInternalReview(phen);
-      initSynthSlotsForRecipe("internal");
+      initSynthCraftSlots();
       renderSynthesis();
       return;
     }
-    if (!validateRecipe(recipe, cards)) {
-      log("合成失败：素材不满足当前配方。");
+    const recipe = resolvePublicRecipe(cards);
+    if (!recipe || !validateRecipe(recipe, cards)) {
+      log("合成失败：当前素材未构成可执行的公开配方。");
       renderSynthesis();
       return;
     }
@@ -723,7 +933,7 @@
     const successRate = clamp(recipeBaseSuccess(recipe) + toolBonus / 100 - Math.max(0, cards.length - 3) * 0.05, 0.15, 0.95);
     if (Math.random() > successRate) {
       consumePublicSynthMaterials(cards);
-      initSynthSlotsForRecipe(recipe);
+      initSynthCraftSlots();
       state.synthPollution += recipe === "r4" ? 5 : recipe === "r3" ? 2 : 0;
       log(`合成失败（概率）：${recipeLabel(recipe)} · 成功率约 ${(successRate * 100).toFixed(1)}%`);
       renderSynthesis();
@@ -738,7 +948,7 @@
     }
     state.craftedReports.push(story);
     consumePublicSynthMaterials(cards);
-    initSynthSlotsForRecipe(recipe);
+    initSynthCraftSlots();
     if (recipe === "r3") state.synthPollution += 4;
     if (recipe === "r4") state.synthPollution += 10;
     log(`合成成功：${story.title}（${story.quality}）`);
@@ -746,22 +956,31 @@
   }
 
   function bindUi() {
-    document.getElementById("tabPhenomenon").onclick = () => { state.synthTab = "phenomenon"; renderSynthesis(); };
-    document.getElementById("tabIntel").onclick = () => { state.synthTab = "intel"; renderSynthesis(); };
-    document.getElementById("tabCognition").onclick = () => { state.synthTab = "cognition"; renderSynthesis(); };
-    document.getElementById("tabTool").onclick = () => { state.synthTab = "tool"; renderSynthesis(); };
-    document.getElementById("tabTipOff").onclick = () => { state.synthTab = "tipoff"; renderSynthesis(); };
-    document.getElementById("recipe1").onclick = () => { state.synthRecipe = "r1"; initSynthSlotsForRecipe("r1"); renderSynthesis(); };
-    document.getElementById("recipe2").onclick = () => { state.synthRecipe = "r2"; initSynthSlotsForRecipe("r2"); renderSynthesis(); };
-    document.getElementById("recipe3").onclick = () => { state.synthRecipe = "r3"; initSynthSlotsForRecipe("r3"); renderSynthesis(); };
-    document.getElementById("recipe4").onclick = () => { state.synthRecipe = "r4"; initSynthSlotsForRecipe("r4"); renderSynthesis(); };
-    document.getElementById("recipeInternal").onclick = () => {
-      state.synthRecipe = "internal";
-      initSynthSlotsForRecipe("internal");
+    const onTab = (tab) => {
+      state.focusedSlotKey = null;
+      state.synthTab = tab;
+      renderSynthesis();
+    };
+    document.getElementById("tabPhenomenon").onclick = () => onTab("phenomenon");
+    document.getElementById("tabIntel").onclick = () => onTab("intel");
+    document.getElementById("tabCognition").onclick = () => onTab("cognition");
+    document.getElementById("tabTool").onclick = () => onTab("tool");
+    document.getElementById("tabTipOff").onclick = () => onTab("tipoff");
+    document.getElementById("modePublic").onclick = () => {
+      state.focusedSlotKey = null;
+      state.synthMode = "public";
+      initSynthCraftSlots();
+      renderSynthesis();
+    };
+    document.getElementById("modeInternal").onclick = () => {
+      state.focusedSlotKey = null;
+      state.synthMode = "internal";
+      initSynthCraftSlots();
       renderSynthesis();
     };
     document.getElementById("clearSelection").onclick = () => {
-      initSynthSlotsForRecipe(state.synthRecipe);
+      state.focusedSlotKey = null;
+      initSynthCraftSlots();
       renderSynthesis();
     };
     document.getElementById("craftBtn").onclick = craftReport;
@@ -778,7 +997,7 @@
     bindUi();
     seedMock();
     renderSynthesis();
-    log("实验页就绪：与正式 Demo 一致——四种公开报道 + 蓝色内审定调 + 爆炸性新闻需爆料卡。");
+    log("实验页就绪：公开统一槽位自动识别报道类型；点槽自动切素材 Tab；内审单独模式。");
   }
 
   init();

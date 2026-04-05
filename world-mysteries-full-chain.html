@@ -1033,8 +1033,7 @@
       40% { opacity: 1; filter: brightness(1.25); text-shadow: 0 0 12px rgba(212, 168, 83, 0.45); }
     }
 
-    /* 第一周软引导 */
-    #tutorialSoftModal .modal-card { max-width: 440px; }
+    /* 第一周软引导 *    #tutorialSoftModal .modal-card { max-width: 440px; }
     #tutorialSoftBody {
       font-size: 0.9rem;
       line-height: 1.5;
@@ -1066,6 +1065,33 @@
     }
     #tutorialSoftPrev { flex-shrink: 0; }
     #tutorialSoftNext { flex-shrink: 0; margin-left: auto; }
+    #tutorialSoftBody .tutorial-soft-sheet { margin: 0; }
+    #tutorialSoftBody .tutorial-soft-sheet + .tutorial-soft-sheet { margin-top: 0.65rem; }
+    #tutorialSoftBody .tutorial-soft-h4 {
+      margin: 0 0 0.4rem;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+    #tutorialSoftBody .tutorial-soft-lead { margin: 0 0 0.45rem; line-height: 1.55; }
+    #tutorialSoftBody .tutorial-soft-ul {
+      margin: 0;
+      padding-left: 1.15rem;
+      line-height: 1.5;
+    }
+    #tutorialSoftBody .tutorial-soft-ul li { margin: 0.28rem 0; }
+    #tutorialSoftBody .tutorial-soft-note {
+      margin: 0.5rem 0 0;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    #tutorialSoftBody .tutorial-soft-section {
+      margin-top: 0.55rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--line);
+    }
 
     /* 报纸填入演示实验：与正式组版一致的 nm-story + 拟物报纸（效果 B） */
     #paperDemoLabModal .modal-card { max-width: 720px; }
@@ -1568,17 +1594,43 @@
     } catch (_) {}
   }
 
-  /** 全球地图引导页：示意插图（Assets/tutorial-map-guide.svg） */
-  const TUTORIAL_MAP_GUIDE_FIGURE = `<div class="tutorial-soft-figure" style="margin:0 0 0.65rem;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#0b1220;">
-<img src="Assets/tutorial-map-guide.svg" alt="取材地图示意：左侧为可点区域，右侧为区域情报列表，二者可联动高亮" style="display:block;width:100%;max-height:min(30vh,220px);height:auto;object-fit:contain;" />
-<p style="margin:0;padding:8px 10px;font-size:0.72rem;color:var(--muted);line-height:1.45;border-top:1px solid var(--line);">上图为界面结构示意（非您本局实时画面）。左：点陆块上的区域；右：「区域情报」与地图点位对应，可联动高亮。</p>
-</div>`;
+  /** 引导内嵌示意图：与 Assets/tutorial-*-guide.svg 线框风格一致 */
+  function tutorialSoftFigure(src, altAttr, captionHtml) {
+    const a = String(altAttr).replace(/"/g, "&quot;");
+    return `<div class="tutorial-soft-figure" style="margin:0 0 0.65rem;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#0b1220;"><img src="${src}" alt="${a}" style="display:block;width:100%;max-height:min(30vh,220px);height:auto;object-fit:contain;" /><p style="margin:0;padding:8px 10px;font-size:0.72rem;color:var(--muted);line-height:1.45;border-top:1px solid var(--line);">${captionHtml}</p></div>`;
+  }
 
-  /** 报刊组版实验 · 多页（最多 5 页） */
+  /** 报刊组版实验 · 多页（中等密度：小标题 + 列表） */
   const LAB_FULL_GUIDE_PAGES = [
-    `<p style="margin:0;line-height:1.6;">主编您好。这里是《世界未解之谜周刊》的<strong>组版练习场</strong>：我们暂时跳过出门采访和成稿台，让您先熟悉「报纸长什么样、稿子怎么上桌」。</p>`,
-    `<p style="margin:0;line-height:1.6;">在完整周刊里，流程是：<strong>回合札记 → 世界地图取材 → 合成台成稿 → 编辑部组版</strong>。本页只练最后一步，和正式第一周组版用的是同一套版心与操作习惯。</p>`,
-    `<p style="margin:0;line-height:1.6;">关窗后会自动播放一则<strong>填入动画示例</strong>（稿件飞入头版，可循环）。需要重温时，可在工具栏打开「报刊填入演示」。<span style="color:var(--muted);font-size:0.88rem;">本提示在刷新页面前只出现一次。</span></p>`,
+    `${tutorialSoftFigure(
+      "Assets/tutorial-editorial-guide.svg",
+      "组版示意：故事库拖入报纸版位",
+      "与正式组版同一套版心习惯；本实验跳过取材与合成。",
+    )}<div class="tutorial-soft-sheet">
+      <h4 class="tutorial-soft-h4">组版练习场是做什么的？</h4>
+      <p class="tutorial-soft-lead">主编您好。这里是《世界未解之谜周刊》的<strong>组版练习场</strong>：暂时跳过出门采访和成稿台，先熟悉报纸版心与「稿子怎么上桌」。</p>
+      <ul class="tutorial-soft-ul">
+        <li>完整流程里，组版排在<strong>取材 → 合成</strong>之后。</li>
+        <li>本页只练<strong>最后一步</strong>，和正式第一周用的是同一套版式习惯。</li>
+      </ul>
+    </div>`,
+    `<div class="tutorial-soft-sheet">
+      <h4 class="tutorial-soft-h4">和正式周刊的关系</h4>
+      <ul class="tutorial-soft-ul">
+        <li><strong>回合札记</strong>：每周开场事件。</li>
+        <li><strong>世界地图</strong>：选区域、跑探索。</li>
+        <li><strong>合成台</strong>：把线索收成报道。</li>
+        <li><strong>编辑部组版</strong>：把报道摆进版面（您现在练的就是这步）。</li>
+      </ul>
+    </div>`,
+    `<div class="tutorial-soft-sheet">
+      <h4 class="tutorial-soft-h4">关窗后会发生什么？</h4>
+      <ul class="tutorial-soft-ul">
+        <li>会自动播放一则<strong>填入动画示例</strong>（稿件飞入头版，可循环）。</li>
+        <li>需要重温时，在工具栏打开「<strong>报刊填入演示</strong>」。</li>
+      </ul>
+      <p class="tutorial-soft-note">本提示在刷新页面前只出现一次。</p>
+    </div>`,
   ];
 
   const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道：港区异常回波</div>
@@ -1992,8 +2044,25 @@
       "w1_editorial",
       "第一周 · 编辑部组版",
       [
-        `<p style="margin:0;line-height:1.6;">主编，成稿已经备好。请把左侧<strong>故事库</strong>里的卡片<strong>拖进</strong>中间报纸的版位——<strong>头版</strong>最吸睛，<strong>内页</strong>略逊一筹，都会算进本期曝光。</p>`,
-        `<p style="margin:0;line-height:1.6;">版式满意后点<strong>结算本期</strong>，看这一周的销量与利润。关窗后会播一段<strong>填入演示</strong>（可循环）；也可点「报刊填入演示」重温。<span style="color:var(--muted);font-size:0.88rem;">本周内本提示只出现一次。</span></p>`,
+        `${tutorialSoftFigure(
+          "Assets/tutorial-editorial-guide.svg",
+          "组版示意：故事库拖入报纸版位",
+          "示意：左为故事库；中为报纸版位（头版 / 内页等）。",
+        )}<div class="tutorial-soft-sheet">
+          <h4 class="tutorial-soft-h4">怎么摆版？</h4>
+          <p class="tutorial-soft-lead">成稿已备好：把左侧<strong>故事库</strong>里的卡片<strong>拖进</strong>中间报纸版位。</p>
+          <ul class="tutorial-soft-ul">
+            <li><strong>头版</strong>最吸睛；<strong>内页</strong>略逊，但都算进本期曝光。</li>
+          </ul>
+        </div>`,
+        `<div class="tutorial-soft-sheet">
+          <h4 class="tutorial-soft-h4">收尾</h4>
+          <ul class="tutorial-soft-ul">
+            <li>版式满意后点<strong>结算本期</strong>，查看销量与利润。</li>
+            <li>关窗后会播<strong>填入演示</strong>（可循环）；也可点「报刊填入演示」重温。</li>
+          </ul>
+          <p class="tutorial-soft-note">本周内本提示只出现一次。</p>
+        </div>`,
       ],
     );
     if (!week1TutorialActive() || state.phase !== "editorial" || state.paperLabMode) return;
@@ -2007,10 +2076,30 @@
       "w1_synthesis",
       "第一周 · 故事合成台",
       [
-        `<p style="margin:0;line-height:1.6;">主编，这里是<strong>故事合成台</strong>：左侧是您带回的现象、认知、情报和工具；右侧卡槽决定「这一版周刊要出哪一种公开报道」。</p>`,
-        `<p style="margin:0;line-height:1.6;"><strong>公开报道</strong>：按<strong>红色</strong>槽位提示放入必需素材；<strong>金色虚线</strong>槽可放工具，略抬成功率。<strong>内审定调</strong>（蓝色）：用现象定编辑部口径，生成同主题的「认知」供后续使用，<strong>不直接上版</strong>。</p>`,
-        `<p style="margin:0;line-height:1.6;"><strong>爆炸性新闻</strong>需要专用<strong>爆料卡</strong>（在左侧「爆料卡」分类；来自探索，无法靠合成「做出来」）。</p>`,
-        `<p style="margin:0;line-height:1.6;">关窗后会自动播<strong>拖拽示意</strong>；需要时也可点「合成拖拽演示」。<span style="color:var(--muted);font-size:0.88rem;">本周内本提示只出现一次。</span></p>`,
+        `${tutorialSoftFigure(
+          "Assets/tutorial-synth-guide.svg",
+          "合成台示意：左侧素材拖入右侧红金蓝槽位",
+          "示意：左为素材区；右为公开报道（红/金）与内审定调（蓝）槽位。",
+        )}<div class="tutorial-soft-sheet">
+          <h4 class="tutorial-soft-h4">合成台在做什么？</h4>
+          <p class="tutorial-soft-lead">左侧是您带回的<strong>现象、认知、情报、工具</strong>；右侧卡槽决定本周要出哪类稿件。</p>
+        </div>`,
+        `<div class="tutorial-soft-sheet">
+          <h4 class="tutorial-soft-h4">槽位颜色</h4>
+          <ul class="tutorial-soft-ul">
+            <li><strong>公开报道</strong>：按<strong>红色</strong>槽放入必需素材；<strong>金色虚线</strong>槽可放工具，略抬成功率。</li>
+            <li><strong>内审定调</strong>（蓝色）：用现象定编辑部口径，生成同主题「认知」供后续用，<strong>不直接上版</strong>。</li>
+          </ul>
+        </div>`,
+        `<div class="tutorial-soft-sheet">
+          <h4 class="tutorial-soft-h4">爆炸性新闻</h4>
+          <p class="tutorial-soft-lead">需要专用<strong>爆料卡</strong>（左侧「爆料卡」分类；来自探索，无法靠合成「做出来」）。</p>
+        </div>`,
+        `<div class="tutorial-soft-sheet">
+          <h4 class="tutorial-soft-h4">演示</h4>
+          <p class="tutorial-soft-lead">关窗后会自动播<strong>拖拽示意</strong>；需要时点「合成拖拽演示」。</p>
+          <p class="tutorial-soft-note">本周内本提示只出现一次。</p>
+        </div>`,
       ],
     );
     if (!week1TutorialActive() || state.phase !== "synthesis" || state.paperLabMode) return;
@@ -2722,8 +2811,21 @@
       "w1_weekStart",
       "第一周 · 编辑部札记",
       [
-        `<p style="margin:0;line-height:1.6;">主编，新一周从<strong>编辑部札记</strong>开始：这里会冒出本周的小插曲或突发消息。您读完标题与正文，按提示处理即可——有时只需确认，有时要在几个走向里选一条。<strong>您的选择可能会有不同的后果。</strong></p>`,
-        `<p style="margin:0;line-height:1.6;">处理完札记后，请点<strong>进入全球地图</strong>，编辑部要派您去各地「挖料」了。<span style="color:var(--muted);font-size:0.88rem;">点「知道了」或空白处可关窗；本周内同类提示不再弹出，新周目第一周会再出现。</span></p>`,
+        `<div class="tutorial-soft-sheet">
+          <h4 class="tutorial-soft-h4">本周从哪开始？</h4>
+          <p class="tutorial-soft-lead">新一周从<strong>编辑部札记</strong>开场：这里会出现本周小插曲或突发消息。</p>
+          <ul class="tutorial-soft-ul">
+            <li>读完标题与正文，按界面提示处理即可。</li>
+            <li>有时只需确认；有时要在几个走向里<strong>选一条</strong>——<strong>选择可能带来不同后果</strong>。</li>
+          </ul>
+        </div>`,
+        `<div class="tutorial-soft-sheet">
+          <h4 class="tutorial-soft-h4">接下来去哪？</h4>
+          <ul class="tutorial-soft-ul">
+            <li>处理完札记后，点<strong>进入全球地图</strong>，去各地取材。</li>
+          </ul>
+          <p class="tutorial-soft-note">点「知道了」或空白处可关窗；本周内同类提示不再弹出，新周目第一周会再出现。</p>
+        </div>`,
       ],
     );
   }
@@ -2807,9 +2909,38 @@
       "w1_global",
       "第一周 · 世界取材地图",
       [
-        `${TUTORIAL_MAP_GUIDE_FIGURE}<p style="margin:0;line-height:1.6;">这是您的<strong>取材地图</strong>，即您当前可以探索的地域：点陆块上的<strong>区域</strong>进入当地版面。右侧情报列表会与地图上的点位<strong>联动高亮</strong>，方便您对号入座。</p>`,
-        `<p style="margin:0;line-height:1.6;">顶部的 <strong>科学 / 秘闻 / 大众</strong> 标签用来筛一筛题材口味，减少无关目标干扰。</p>`,
-        `<p style="margin:0;line-height:1.6;"><strong>下一天</strong>可用本页右侧大按钮、区域内同款按钮，或屏幕<strong>左下角悬浮按钮</strong>；时间会推进，到期的外派会依次结算。<span style="color:var(--muted);font-size:0.88rem;">本周内本提示只出现一次。</span></p>`,
+        `${tutorialSoftFigure(
+          "Assets/tutorial-map-guide.svg",
+          "取材地图示意：左侧可点区域，右侧区域情报列表与地图联动高亮",
+          "上图为界面结构示意（非本局实时画面）。左：点陆块上的区域；右：「区域情报」与地图对应，可联动高亮。",
+        )}<div class="tutorial-soft-sheet">
+          <h4 class="tutorial-soft-h4">这张地图做什么用？</h4>
+          <p class="tutorial-soft-lead">这是您的<strong>取材地图</strong>：当前可探索的地域一览。</p>
+          <ul class="tutorial-soft-ul">
+            <li>点陆块上的<strong>区域</strong>，进入当地版面。</li>
+            <li>右侧情报与地图点位<strong>联动高亮</strong>，方便对号入座。</li>
+          </ul>
+        </div>`,
+        `${tutorialSoftFigure(
+          "Assets/tutorial-global-tags-guide.svg",
+          "全球地图顶部题材筛选标签示意：科学、秘闻、大众",
+          "与地图页顶栏一致：点标签可开关对应题材，地图点与右侧列表会随之隐藏或显示。",
+        )}<div class="tutorial-soft-sheet">
+          <h4 class="tutorial-soft-h4">筛选标签</h4>
+          <p class="tutorial-soft-lead">顶部 <strong>科学 / 秘闻 / 大众</strong> 用来按题材口味筛目标，减少无关干扰。</p>
+          <ul class="tutorial-soft-ul">
+            <li>可<strong>多选</strong>：关掉的题材不会在地图与列表里碍眼。</li>
+            <li>与正式全球地图页<strong>同一排按钮</strong>，进区域后仍可按需回想。</li>
+          </ul>
+        </div>`,
+        `<div class="tutorial-soft-sheet">
+          <h4 class="tutorial-soft-h4">推进时间</h4>
+          <ul class="tutorial-soft-ul">
+            <li><strong>下一天</strong>：本页右侧大按钮、区域内同款，或屏幕<strong>左下角悬浮按钮</strong>。</li>
+            <li>时间推进后，到期的外派会<strong>依次结算</strong>。</li>
+          </ul>
+          <p class="tutorial-soft-note">本周内本提示只出现一次。</p>
+        </div>`,
       ],
     );
   }
@@ -3115,9 +3246,32 @@
       "w1_region",
       "第一周 · 区域版面",
       [
-        `<p style="margin:0;line-height:1.6;">进入区域后，图例上的 <strong>常 / 隐 / !</strong> 大致表示常驻点、隐藏点和临时热点；已经派人手的格子会标<strong>派</strong>字，避免重复踩坑。</p>`,
-        `<p style="margin:0;line-height:1.6;">点开一条线后，右侧可<strong>组小队</strong>。请看「调查」「现场」两侧的骰数门槛——凑够再派遣更稳妥；不够也能去，但成功率会吃亏。</p>`,
-        `<p style="margin:0;line-height:1.6;"><strong>线索</strong>类条目走调查流程，跑通有机会<strong>解锁新节点</strong>。<span style="color:var(--muted);font-size:0.88rem;">关窗后本周不再用弹窗打断您。</span></p>`,
+        `${tutorialSoftFigure(
+          "Assets/tutorial-region-guide.svg",
+          "区域版面示意：常隐感叹号派字、列表联动与三种点说明",
+          "上图下方三条为图例摘要；左为地图点位，右为可与地图联动高亮的列表。",
+        )}<div class="tutorial-soft-sheet">
+          <h4 class="tutorial-soft-h4">图例在说什么？</h4>
+          <ul class="tutorial-soft-ul">
+            <li><strong>常</strong>：常驻探索点，一般始终在图上可见。</li>
+            <li><strong>隐</strong>：隐藏点，需满足条件（如线索、进度）后才出现。</li>
+            <li><strong>!</strong>：临时热点，常带截止天数，过期可能消失。</li>
+            <li>已派人手的格子会标<strong>派</strong>，避免重复踩坑。</li>
+          </ul>
+        </div>`,
+        `<div class="tutorial-soft-sheet">
+          <h4 class="tutorial-soft-h4">怎么出发？</h4>
+          <p class="tutorial-soft-lead">点开一条线后，右侧可<strong>组小队</strong>。</p>
+          <ul class="tutorial-soft-ul">
+            <li>注意「调查」「现场」两侧的骰数门槛：凑够再派遣更稳妥。</li>
+            <li>不够也能去，但成功率会吃亏。</li>
+          </ul>
+        </div>`,
+        `<div class="tutorial-soft-sheet">
+          <h4 class="tutorial-soft-h4">线索类条目</h4>
+          <p class="tutorial-soft-lead"><strong>线索</strong>走调查流程，跑通有机会<strong>解锁新节点</strong>。</p>
+          <p class="tutorial-soft-note">关窗后本周不再用弹窗打断您。</p>
+        </div>`,
       ],
     );
   }
@@ -3264,8 +3418,26 @@
       "w1_setup",
       "第一周 · 组队与出发",
       [
-        `<p style="margin:0;line-height:1.6;">请点选队员卡片组成小队（最多 5 人）。上方概率是本次外拍的参考；可在<strong>骰子</strong>与<strong>纯数字</strong>两种展示间切换，看哪种更顺眼。</p>`,
-        `<p style="margin:0;line-height:1.6;">点<strong>派遣</strong>后，任务会占用本周若干天；到期的日子请用<strong>下一天</strong>推进，系统会依次播报结果。您按自己的节奏操作即可，不必为引导多点无关按钮。<span style="color:var(--muted);font-size:0.88rem;">本周内本提示只出现一次。</span></p>`,
+        `${tutorialSoftFigure(
+          "Assets/tutorial-setup-guide.svg",
+          "组队界面示意：概率区、队员选择与派遣",
+          "示意：上方为成功率参考；中间选队员；底部确认派遣。",
+        )}<div class="tutorial-soft-sheet">
+          <h4 class="tutorial-soft-h4">组小队</h4>
+          <ul class="tutorial-soft-ul">
+            <li>点选队员卡片，最多 <strong>5</strong> 人。</li>
+            <li>上方概率是本次外拍的参考。</li>
+            <li>可在<strong>骰子</strong>与<strong>纯数字</strong>两种展示间切换。</li>
+          </ul>
+        </div>`,
+        `<div class="tutorial-soft-sheet">
+          <h4 class="tutorial-soft-h4">派遣之后</h4>
+          <ul class="tutorial-soft-ul">
+            <li>点<strong>派遣</strong>后，任务占用本周若干天。</li>
+            <li>到点用<strong>下一天</strong>推进，系统会依次播报结果。</li>
+          </ul>
+          <p class="tutorial-soft-note">按自己的节奏即可，不必为引导多点无关按钮。本周内本提示只出现一次。</p>
+        </div>`,
       ],
     );
   }
@@ -3563,8 +3735,25 @@
           "w1_result",
           "第一周 · 外拍结算",
           [
-            `<p style="margin:0;line-height:1.6;">主编，这是本次外拍的<strong>双线结果</strong>：「调查」与「现场」各自过线，合在一起决定是大获全胜、平稳交差、失手还是闹大。奖励弹窗可逐条翻看。</p>`,
-            `<p style="margin:0;line-height:1.6;">点<strong>继续</strong>：若本周还有天数，会回到区域；若本周时间用尽，编辑部会请您进<strong>合成台</strong>把料收成稿。<span style="color:var(--muted);font-size:0.88rem;">关窗后本周不再重复本提示。</span></p>`,
+            `${tutorialSoftFigure(
+              "Assets/tutorial-result-guide.svg",
+              "结算示意：调查与现场双线判定",
+              "示意：调查池与现场池各自过线，合起来决定本次档位。",
+            )}<div class="tutorial-soft-sheet">
+              <h4 class="tutorial-soft-h4">双线结果</h4>
+              <p class="tutorial-soft-lead">「调查」与「现场」<strong>各自过线</strong>，合在一起决定大获全胜、平稳交差、失手或闹大。</p>
+              <ul class="tutorial-soft-ul">
+                <li>奖励弹窗可逐条翻看。</li>
+              </ul>
+            </div>`,
+            `<div class="tutorial-soft-sheet">
+              <h4 class="tutorial-soft-h4">点「继续」之后</h4>
+              <ul class="tutorial-soft-ul">
+                <li>若本周还有天数：回到<strong>区域</strong>继续安排。</li>
+                <li>若本周时间用尽：编辑部会请您进<strong>合成台</strong>把料收成稿。</li>
+              </ul>
+              <p class="tutorial-soft-note">关窗后本周不再重复本提示。</p>
+            </div>`,
           ],
         );
       }
