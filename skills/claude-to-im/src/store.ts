@@ -21,6 +21,7 @@ import type {
 import type { ChannelBinding, ChannelType } from 'claude-to-im/src/lib/bridge/types.js';
 import { CTI_HOME } from './config.js';
 import { atomicWrite, ensureDir } from './file-utils.js';
+import { resolveBridgeSystemPrompt } from './session-prompt.js';
 
 const DATA_DIR = path.join(CTI_HOME, 'data');
 const MESSAGES_DIR = path.join(DATA_DIR, 'messages');
@@ -98,8 +99,19 @@ export class JsonFileStore implements BridgeStore {
       path.join(DATA_DIR, 'sessions.json'),
       {},
     );
+    let sessionsChanged = false;
     for (const [id, s] of Object.entries(sessions)) {
-      this.sessions.set(id, s);
+      const normalizedSystemPrompt = resolveBridgeSystemPrompt(s.system_prompt);
+      if (normalizedSystemPrompt !== s.system_prompt) {
+        sessionsChanged = true;
+      }
+      this.sessions.set(id, {
+        ...s,
+        ...(normalizedSystemPrompt ? { system_prompt: normalizedSystemPrompt } : {}),
+      });
+    }
+    if (sessionsChanged) {
+      this.persistSessions();
     }
 
     // Bindings
@@ -276,7 +288,7 @@ export class JsonFileStore implements BridgeStore {
       id: uuid(),
       working_directory: cwd || this.settings.get('bridge_default_work_dir') || process.cwd(),
       model,
-      system_prompt: systemPrompt,
+      system_prompt: resolveBridgeSystemPrompt(systemPrompt),
     };
     this.sessions.set(session.id, session);
     this.persistSessions();

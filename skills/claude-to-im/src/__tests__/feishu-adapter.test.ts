@@ -767,6 +767,20 @@ describe('Feishu formatting helpers', () => {
     const payload = calls[0].payload.data as { msg_type?: string };
     assert.equal(payload.msg_type, 'interactive');
   });
+
+  it('disables preview in clean Feishu mode when tool metadata is hidden', async () => {
+    initTestContext([
+      ['bridge_feishu_hide_tool_metadata', 'true'],
+    ]);
+    const adapter = new FeishuAdapter();
+    const { client, calls } = makeMockRestClient();
+
+    (adapter as any).restClient = client;
+
+    assert.equal(adapter.getPreviewCapabilities('chat-clean'), null);
+    assert.equal(await adapter.sendPreview('chat-clean', 'partial reply', 303), 'skip');
+    assert.equal(calls.length, 0);
+  });
 });
 
 describe('FeishuAdapter clear command', () => {

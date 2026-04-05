@@ -28,6 +28,18 @@ const RUNTIME_DIR = path.join(CTI_HOME, 'runtime');
 const STATUS_FILE = path.join(RUNTIME_DIR, 'status.json');
 const PID_FILE = path.join(RUNTIME_DIR, 'bridge.pid');
 
+function applyRuntimeEnvFromConfig(config: Config): void {
+  if (config.codexSandboxMode) {
+    process.env.CTI_CODEX_SANDBOX_MODE = config.codexSandboxMode;
+  }
+  if (config.codexNetworkAccess !== undefined) {
+    process.env.CTI_CODEX_NETWORK_ACCESS = String(config.codexNetworkAccess);
+  }
+  if (config.codexWindowsShell) {
+    process.env.CTI_CODEX_WINDOWS_SHELL = config.codexWindowsShell;
+  }
+}
+
 /**
  * Resolve the LLM provider based on the runtime setting.
  * - 'claude' (default): uses Claude Code SDK via SDKLLMProvider
@@ -222,6 +234,7 @@ async function sendFeishuStartupNotice(config: Config, store: JsonFileStore, _ru
 
 async function main(): Promise<void> {
   const config = loadConfig();
+  applyRuntimeEnvFromConfig(config);
   setupLogger();
   clearSandboxProxyEnv();
 

@@ -345,6 +345,18 @@ export class FeishuAdapter extends BaseFeishuAdapter {
     }
   }
 
+  private hideToolMetadata(): boolean {
+    try {
+      return getBridgeContext().store.getSetting('bridge_feishu_hide_tool_metadata') === 'true';
+    } catch {
+      return process.env.CTI_FEISHU_HIDE_TOOL_METADATA === 'true';
+    }
+  }
+
+  private streamingPreviewEnabled(): boolean {
+    return !this.forceCardReplies() && !this.hideToolMetadata();
+  }
+
   async handleIncomingEvent(data: FeishuMessageEventData): Promise<void> {
     try {
       if (await this.handleClearCommandIfNeeded(data)) {
@@ -552,7 +564,7 @@ export class FeishuAdapter extends BaseFeishuAdapter {
   }
 
   getPreviewCapabilities(_chatId: string): PreviewCapabilities | null {
-    if (this.forceCardReplies()) {
+    if (!this.streamingPreviewEnabled()) {
       return null;
     }
     return { supported: true, privateOnly: false };
@@ -563,6 +575,11 @@ export class FeishuAdapter extends BaseFeishuAdapter {
     text: string,
     draftId: number,
   ): Promise<'sent' | 'skip' | 'degrade'> {
+    if (!this.streamingPreviewEnabled()) {
+      this.previewStates.delete(chatId);
+      return 'skip';
+    }
+
     const replyToMessageId = (this as any).lastIncomingMessageId?.get(chatId) as string | undefined;
     const current = this.previewStates.get(chatId);
     const state = current && current.draftId === draftId

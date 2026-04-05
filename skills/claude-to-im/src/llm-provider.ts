@@ -18,6 +18,7 @@ import {
   ensureFeishuHistoryBackfill,
   markFeishuHistoryBackfillApplied,
 } from './feishu-history.js';
+import { prependSystemPrompt } from './session-prompt.js';
 
 // ── Environment isolation ──
 
@@ -458,6 +459,7 @@ export function buildPrompt(
   text: string,
   files?: FileAttachment[],
   history?: Array<{ role: 'user' | 'assistant'; content: string }>,
+  systemPrompt?: string,
 ): string | AsyncIterable<{ type: 'user'; message: { role: 'user'; content: unknown[] }; parent_tool_use_id: null; session_id: string }> {
   const historyPrelude = buildHistoryPrelude(history);
   const imageFiles = files?.filter(isImageFile) ?? [];
@@ -475,7 +477,10 @@ export function buildPrompt(
       .filter(Boolean)
       .join('\n');
   }
-  effectiveText = [historyPrelude, effectiveText].filter(Boolean).join('\n\n');
+  effectiveText = prependSystemPrompt(
+    [historyPrelude, effectiveText].filter(Boolean).join('\n\n'),
+    systemPrompt,
+  );
 
   if (imageFiles.length === 0) return effectiveText;
 
@@ -643,6 +648,7 @@ export class SDKLLMProvider implements LLMProvider {
                 params.prompt,
                 params.files,
                 resumeSessionId ? undefined : mergedHistory,
+                params.systemPrompt,
               );
               const q = query({
                 prompt: prompt as Parameters<typeof query>[0]["prompt"],

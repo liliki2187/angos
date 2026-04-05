@@ -22,6 +22,8 @@ import {
   ensureFeishuHistoryBackfill,
   markFeishuHistoryBackfillApplied,
 } from './feishu-history.js';
+import { prependSystemPrompt } from './session-prompt.js';
+import { prependPathEntry, resolvePreferredWindowsShellPath } from './windows-shell.js';
 
 /** MIME → file extension for temp image files. */
 const MIME_EXT: Record<string, string> = {
@@ -112,6 +114,7 @@ export function buildPromptText(
   text: string,
   files?: StreamChatParams['files'],
   history?: Array<{ role: 'user' | 'assistant'; content: string }>,
+  systemPrompt?: string,
 ): string {
   const historyPrelude = buildHistoryPrelude(history);
   const attachmentSummary = (files ?? [])
@@ -132,7 +135,10 @@ export function buildPromptText(
       .join('\n');
   }
 
-  return [historyPrelude, effectiveText].filter(Boolean).join('\n\n');
+  return prependSystemPrompt(
+    [historyPrelude, effectiveText].filter(Boolean).join('\n\n'),
+    systemPrompt,
+  );
 }
 
 // All SDK types kept as `any` because @openai/codex-sdk is optional.
@@ -161,6 +167,30 @@ function toApprovalPolicy(permissionMode?: string): string {
 /** Whether to forward bridge model to Codex CLI. Default: false (use Codex current/default model). */
 function shouldPassModelToCodex(): boolean {
   return process.env.CTI_CODEX_PASS_MODEL === 'true';
+}
+
+export function buildCodexCliEnv(
+  baseEnv: NodeJS.ProcessEnv = process.env,
+): Record<string, string> {
+  const env: Record<string, string> = {};
+  for (const [key, value] of Object.entries(baseEnv)) {
+    if (typeof value === 'string') {
+      env[key] = value;
+    }
+  }
+
+  const shellPath = resolvePreferredWindowsShellPath(baseEnv);
+  if (process.platform === 'win32' && shellPath) {
+    const shellDir = path.dirname(shellPath);
+    const nextPath = prependPathEntry(env.Path || env.PATH, shellDir);
+    env.Path = nextPath;
+    env.PATH = nextPath;
+    env.ComSpec = shellPath;
+    env.COMSPEC = shellPath;
+    env.SHELL = shellPath;
+  }
+
+  return env;
 }
 
 type CodexSandboxMode = 'read-only' | 'workspace-write' | 'danger-full-access';
@@ -252,6 +282,7 @@ export class CodexProvider implements LLMProvider {
     this.codex = new CodexClass({
       ...(apiKey ? { apiKey } : {}),
       ...(baseUrl ? { baseUrl } : {}),
+      env: buildCodexCliEnv(),
     });
 
     return { sdk: this.sdk, codex: this.codex };
@@ -311,6 +342,7 @@ export class CodexProvider implements LLMProvider {
                 params.prompt,
                 params.files,
                 useStoredHistory ? mergedHistory : undefined,
+                params.systemPrompt,
               );
 
               // Build input: Codex SDK UserInput supports { type: "text" } and

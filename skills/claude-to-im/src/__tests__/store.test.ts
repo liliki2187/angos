@@ -36,10 +36,35 @@ describe('JsonFileStore', () => {
     assert.ok(session.id);
     assert.equal(session.model, 'model-1');
     assert.equal(session.working_directory, '/tmp');
-    assert.equal(session.system_prompt, 'system prompt');
+    assert.ok(session.system_prompt?.includes('system prompt'));
+    if (process.platform === 'win32') {
+      assert.ok(session.system_prompt?.includes('PowerShell as the execution shell'));
+    }
 
     const fetched = store.getSession(session.id);
     assert.deepEqual(fetched, session);
+  });
+
+  it('normalizes loaded Windows sessions with the bridge PowerShell prompt', () => {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+    fs.writeFileSync(
+      path.join(DATA_DIR, 'sessions.json'),
+      JSON.stringify({
+        legacy: {
+          id: 'legacy',
+          working_directory: '/tmp/legacy',
+          model: 'model-legacy',
+        },
+      }, null, 2),
+    );
+
+    const store = new JsonFileStore(makeSettings());
+    const session = store.getSession('legacy');
+
+    assert.ok(session);
+    if (process.platform === 'win32') {
+      assert.ok(session?.system_prompt?.includes('PowerShell as the execution shell'));
+    }
   });
 
   it('getSession returns null for unknown id', () => {
