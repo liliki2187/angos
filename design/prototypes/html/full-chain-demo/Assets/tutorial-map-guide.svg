@@ -1,43 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 168" width="400" height="168" role="img" aria-labelledby="tutorialMapTitle">
-  <title id="tutorialMapTitle">÷P0˛Lb:</title>
+  <title id="tutorialMapTitle">&#x53d6;&#x6750;&#x5730;&#x56fe;&#x793a;&#x610f;</title>
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="tmap_bg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#1e293b"/>
       <stop offset="100%" stop-color="#0f172a"/>
     </linearGradient>
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="1.2" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
   </defs>
-  <rect width="400" height="168" fill="url(#bg)" rx="8"/>
-  <!-- Êß0˛: -->
+  <rect width="400" height="168" fill="url(#tmap_bg)" rx="8"/>
   <rect x="10" y="10" width="218" height="148" fill="#0b1220" stroke="#334155" stroke-width="1.5" rx="6"/>
-  <text x="119" y="26" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="system-ui,sans-serif">L0˛ ∑ π:ﬂ€e</text>
-  <!-- ÄÑFW -->
+  <text x="119" y="26" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x4e16;&#x754c;&#x5730;&#x56fe; &#xb7; &#x70b9;&#x533a;&#x57df;&#x8fdb;&#x5165;</text>
   <ellipse cx="72" cy="78" rx="38" ry="28" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1" opacity="0.9"/>
   <ellipse cx="130" cy="62" rx="32" ry="36" fill="#312e81" stroke="#a78bfa" stroke-width="1" opacity="0.85"/>
   <ellipse cx="168" cy="102" rx="28" ry="22" fill="#134e4a" stroke="#2dd4bf" stroke-width="1" opacity="0.8"/>
-  <!-- :ﬂ	Æ: -->
   <rect x="48" y="64" width="52" height="22" rx="4" fill="#1d4ed8" stroke="#60a5fa" stroke-width="0.8"/>
-  <text x="74" y="79" text-anchor="middle" fill="#e2e8f0" font-size="8" font-family="system-ui,sans-serif">éÅ:&</text>
+  <text x="74" y="79" text-anchor="middle" fill="#e2e8f0" font-size="8" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x533a;&#x57df; A</text>
   <rect x="108" y="48" width="52" height="22" rx="4" fill="#3730a3" stroke="#a5b4fc" stroke-width="0.8" opacity="0.95"/>
-  <text x="134" y="63" text-anchor="middle" fill="#e2e8f0" font-size="8" font-family="system-ui,sans-serif">ö^ÿ</text>
+  <text x="134" y="63" text-anchor="middle" fill="#e2e8f0" font-size="8" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x533a;&#x57df; B</text>
   <rect x="138" y="92" width="52" height="20" rx="4" fill="#0f766e" stroke="#5eead4" stroke-width="0.8" opacity="0.85"/>
-  <text x="164" y="105" text-anchor="middle" fill="#e2e8f0" font-size="7.5" font-family="system-ui,sans-serif">*s§õ</text>
-  <!-- Ûß≈•h -->
+  <text x="164" y="105" text-anchor="middle" fill="#e2e8f0" font-size="7.5" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x533a;&#x57df; C</text>
   <rect x="236" y="10" width="154" height="148" fill="#0b1220" stroke="#334155" stroke-width="1.5" rx="6"/>
-  <text x="313" y="28" text-anchor="middle" fill="#d4a853" font-size="11" font-weight="600" font-family="system-ui,sans-serif">:ﬂ≈•</text>
+  <text x="313" y="28" text-anchor="middle" fill="#d4a853" font-size="11" font-weight="600" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x533a;&#x57df;&#x60c5;&#x62a5;</text>
   <line x1="246" y1="36" x2="380" y2="36" stroke="#334155" stroke-width="1"/>
-  <text x="250" y="52" fill="#cbd5e1" font-size="9" font-family="system-ui,sans-serif">éÅ:& ∑ Ô€e</text>
-  <text x="250" y="66" fill="#64748b" font-size="8" font-family="system-ui,sans-serif">Ô¡Ó& ãˆ &</text>
-  <text x="250" y="88" fill="#94a3b8" font-size="9" font-family="system-ui,sans-serif">ö^ÿ0&*„	</text>
-  <text x="250" y="112" fill="#64748b" font-size="8" font-family="system-ui,sans-serif">Êß0˛πMT®ÿÆ</text>
-  <!-- T®≠4 -->
+  <text x="250" y="52" fill="#cbd5e1" font-size="9" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x5317;&#x7f8e;&#x7981;&#x533a;&#x5e26; &#xb7; &#x53ef;&#x89c1;&#x76ee;&#x6807; 3</text>
+  <text x="250" y="66" fill="#64748b" font-size="8" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x90fd;&#x5e02;&#x4f20;&#x8bf4;&#x4e0e;&#x7981;&#x533a;&#x5e76;&#x5b58;</text>
+  <text x="250" y="88" fill="#94a3b8" font-size="9" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x5176;&#x4ed6;&#x533a;&#x57df;&#x6761;&#x76ee;&#x2026;</text>
+  <text x="250" y="112" fill="#64748b" font-size="8" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x4e0e;&#x5de6;&#x4fa7;&#x5730;&#x56fe;&#x8054;&#x52a8;&#x9ad8;&#x4eae;</text>
   <path d="M 118 78 L 228 78" stroke="#d4a853" stroke-width="1.2" stroke-dasharray="4 3" fill="none" opacity="0.85"/>
   <polygon points="232,78 226,75 226,81" fill="#d4a853" opacity="0.85"/>
-  <text x="168" y="74" text-anchor="middle" fill="#d4a853" font-size="7.5" font-family="system-ui,sans-serif">T®</text>
-  <!-- ïË–:a -->
-  <rect x="10" y="148" width="380" height="12" fill="transparent"/>
-  <text x="200" y="161" text-anchor="middle" fill="#64748b" font-size="8" font-family="system-ui,sans-serif">:^ûˆLbÂ®SM0˛:∆</text>
+  <text x="168" y="74" text-anchor="middle" fill="#d4a853" font-size="7.5" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x8054;&#x52a8;</text>
+  <text x="200" y="161" text-anchor="middle" fill="#64748b" font-size="8" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x793a;&#x610f; &#xb7; &#x975e;&#x5b9e;&#x65f6;&#x753b;&#x9762;</text>
 </svg>
