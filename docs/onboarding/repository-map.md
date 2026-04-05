@@ -21,6 +21,10 @@ This document is the quickest way to identify what is canonical, what is referen
 - `design/systems/`: supporting system analysis and older design decomposition
 - `docs/archive/`: legacy or deferred design material
 
+## Ignore-By-Default Layers
+
+- `_obsolete/`: expired, superseded, or audit-only material kept only for history or recovery; do not use as source of truth
+
 ## Generated Or Rebuildable Layers
 
 - `prototype/fullchain_demo/`: generated distribution package output
@@ -34,3 +38,4 @@ This document is the quickest way to identify what is canonical, what is referen
 - `design/generated-settlement-reference/` remains a reference asset area; some outputs are still consumed by the current Godot UI preview flow.
 - `design/original-art-reference/` remains the current art-reference archive because project skills already depend on that path.
 - Avatar-cropping rules now live at `docs/tools/avatar-cropping.md`.
+- `_obsolete/` is reserved for material that should be kept but ignored by default during normal work.

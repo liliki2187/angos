@@ -18,6 +18,7 @@ The active Godot runtime now lives under `gd_project/`, while supporting docs an
 
 - `design/prototypes/html/` is the reference / prototype layer for HTML experiments and legacy playable web demos.
 - `prototype/` is for distributable prototype packages. Generated package outputs are rebuildable and ignored by default.
+- `_obsolete/` is the graveyard for expired material. Treat it as ignore-by-default unless you are explicitly doing history lookup or recovery.
 
 ## First Reads
 

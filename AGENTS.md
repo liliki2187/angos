@@ -25,3 +25,15 @@ Prefer these workspace copies over duplicated installs under `$CODEX_HOME/skills
 - Resolve relative paths from the skill directory first.
 - Imported game-studio skills use shared templates under `./skills/_game-studio-shared/templates`.
 - Shared bridge config, logs, and state for this workspace live in `./skills/.claude-to-im` unless `CTI_HOME` overrides it.
+
+## Obsolete Content
+
+`./_obsolete/` is the repository graveyard for expired, superseded, or audit-only material.
+
+Rules for all AI agents:
+
+- Skip `./_obsolete/` by default when exploring the repo.
+- Do not use `./_obsolete/` as source of truth for code, design, assets, requirements, or process.
+- Do not cite, summarize, migrate, or update files under `./_obsolete/` unless the user explicitly asks for historical lookup, recovery, or comparison.
+- If content under `./_obsolete/` conflicts with active docs or code, always ignore the `_obsolete/` version.
+- When archiving something new, add a short README in that archived subdirectory so later sessions know why it was retired.

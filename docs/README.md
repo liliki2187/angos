@@ -23,6 +23,7 @@ This is the unified entry point for repository documentation.
 | Historical design docs from pre-GDD phase | `archive/legacy-design/` | Archived |
 | Deferred systems outside current MVP | `archive/deferred-design/` | Archived reference |
 | Development chronology | `dev-logs/` | Historical record |
+| Expired cross-cutting material | `../_obsolete/` | Ignore by default |
 
 ## What Changed
 
@@ -34,6 +35,7 @@ The repository now uses this split:
 1. `design/gdd/` for current gameplay rules
 2. `design/systems/` for supporting analysis, templates, and deeper breakdowns
 3. `docs/archive/` for legacy or deferred design material
+4. `_obsolete/` for kept-but-expired material that should be ignored unless history is explicitly requested
 
 ## Recommended Read Order
 
