@@ -38,7 +38,6 @@ jobs:
           cp "design/prototypes/html/full-chain-demo/world-mysteries-full-chain.js" dist/world-mysteries-full-chain.js
           cp "design/prototypes/html/full-chain-demo/world-mysteries-full-chain-head.htm" dist/world-mysteries-full-chain-head.htm
           cp "design/prototypes/html/full-chain-demo/world-mysteries-explore-dice.html" dist/world-mysteries-explore-dice.html
-          cp "design/prototypes/html/full-chain-demo/newspaper-fill-lab.html" dist/newspaper-fill-lab.html
           cp -R "design/prototypes/html/full-chain-demo/Assets" dist/Assets
           cp "README.md" dist/README.md
           touch dist/.nojekyll

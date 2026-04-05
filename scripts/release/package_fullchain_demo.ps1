@@ -16,8 +16,7 @@ $webFiles = @(
     "world-mysteries-full-chain.html",
     "world-mysteries-full-chain.js",
     "world-mysteries-full-chain-head.htm",
-    "world-mysteries-explore-dice.html",
-    "newspaper-fill-lab.html"
+    "world-mysteries-explore-dice.html"
 )
 
 if (Test-Path $distRoot) {
