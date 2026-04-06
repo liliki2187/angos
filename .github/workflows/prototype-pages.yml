@@ -38,9 +38,11 @@ jobs:
           set -euo pipefail
           shopt -s nullglob
           mkdir -p site/design/htmls
+          mkdir -p site/labs
           mkdir -p site/design/generated-settlement-reference/2026-03-18
           cp index.html site/index.html
           for f in design/htmls/*.html; do cp "$f" site/design/htmls/; done
+          for f in labs/*.html; do cp "$f" site/labs/; done
           for f in design/generated-settlement-reference/2026-03-18/*.html; do cp "$f" site/design/generated-settlement-reference/2026-03-18/; done
           for f in design/generated-settlement-reference/2026-03-18/*.css; do cp "$f" site/design/generated-settlement-reference/2026-03-18/; done
           for f in design/generated-settlement-reference/2026-03-18/*.js; do cp "$f" site/design/generated-settlement-reference/2026-03-18/; done

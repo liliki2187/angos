@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>功能实验页 · 索引</title>
+  <style>
+    :root {
+      --bg: #0b1118;
+      --panel: rgba(16, 24, 35, 0.96);
+      --line: #2b3a4b;
+      --text: #e2e7ee;
+      --dim: #90a0b5;
+      --gold: #d49a57;
+      --gold-dim: #8f6638;
+      --accent: #2a8a8f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", "PingFang SC", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(42, 138, 143, 0.12), transparent 30%),
+        radial-gradient(circle at top right, rgba(212, 154, 87, 0.1), transparent 26%),
+        linear-gradient(180deg, #091019 0%, #0e1822 100%);
+    }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 36px 20px 48px; }
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(26px, 4vw, 34px);
+      letter-spacing: 0.04em;
+      color: var(--gold);
+    }
+    .lead {
+      margin: 0 0 28px;
+      color: var(--dim);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+    .list { display: grid; gap: 14px; }
+    a.card {
+      display: block;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--panel);
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    a.card:hover {
+      border-color: var(--gold-dim);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    }
+    a.card h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      color: var(--text);
+    }
+    a.card p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--dim);
+    }
+    .path {
+      margin-top: 10px;
+      font-size: 12px;
+      font-family: ui-monospace, Consolas, monospace;
+      color: var(--accent);
+    }
+    .back {
+      margin-top: 32px;
+      font-size: 13px;
+    }
+    .back a { color: var(--gold); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>功能实验页</h1>
+    <p class="lead">
+      与正式全链条页面解耦的调参、演示与独立交互页，统一放在本目录，避免在 <code>design/htmls/</code> 里翻找。
+    </p>
+    <div class="list">
+      <a class="card" href="./synth-workbench-lab.html">
+        <h2>故事合成台 · 拖拽实验</h2>
+        <p>独立合成台交互（公开统一槽位自动识别 r1–r4），与主干合成规则对齐；用于验证槽位、配方与拖拽逻辑。</p>
+        <div class="path">labs/synth-workbench-lab.html</div>
+      </a>
+      <a class="card" href="./dice-animation-lab.html">
+        <h2>骰子动画实验场</h2>
+        <p>面权重、间隔等动画参数调参，与主干判定逻辑分离。</p>
+        <div class="path">labs/dice-animation-lab.html</div>
+      </a>
+      <a class="card" href="./newspaper-fill-lab.html">
+        <h2>报刊组版演示入口</h2>
+        <p>跳转到全链条页的报刊实验模式（<code>?paperlab=1</code>），跳过前置流程直达组版相关演示。</p>
+        <div class="path">labs/newspaper-fill-lab.html</div>
+      </a>
+      <a class="card" href="../world-mysteries-explore-dice.html">
+        <h2>探索骰子界面（独立页）</h2>
+        <p>仅探索阶段的骰子相关网页原型，仍放在仓库根目录，由此链入。</p>
+        <div class="path">world-mysteries-explore-dice.html</div>
+      </a>
+    </div>
+    <p class="back">更多静态 UI 原型见 <a href="../design/htmls/prototype-hub.html">design/htmls/prototype-hub.html</a></p>
+  </div>
+</body>
+</html>
