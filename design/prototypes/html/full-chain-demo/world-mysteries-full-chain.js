@@ -3155,7 +3155,7 @@
     updatePaperModeButton();
     renderLiveStats();
     el.resultBox.innerHTML = `<div class="k">尚未结算</div><div class="nm-tip">拖拽报道到版位，再点「结算本期」。</div>`;
-    log("进入编辑部：拖拽组版，结算与 design/gdd/editorial-layout-and-settlement.md 对齐。");
+    log("进入编辑部：拖拽组版，与 design/gdd/editorial-layout-and-publishing-strategy.md 和 design/gdd/issue-settlement-and-audience-feedback.md 对齐。");
     const btnDemo = document.getElementById("btnPaperDemoLab");
     if (btnDemo) {
       btnDemo.style.display = state.paperLabMode || state.week === 1 ? "inline-block" : "none";

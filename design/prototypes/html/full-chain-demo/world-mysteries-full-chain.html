@@ -633,7 +633,7 @@
     }
     footer { margin-top: 1rem; font-size: 0.72rem; color: var(--muted); text-align: center; }
 
-    /* 报刊组版（与 design/gdd/editorial-layout-and-settlement.md / index.html 对齐） */
+    /* 报刊组版（与 design/gdd/editorial-layout-and-publishing-strategy.md / design/gdd/issue-settlement-and-audience-feedback.md / index.html 对齐） */
     .nm-wrap { font-family: "Segoe UI", system-ui, sans-serif; }
     .nm-grid { display: grid; grid-template-columns: 0.9fr 1.55fr 0.85fr; gap: 14px; }
     @media (max-width: 1100px) { .nm-grid { grid-template-columns: 1fr; } }
@@ -1196,7 +1196,7 @@
         <h1>《世界未解之谜周刊》· 全链条 Demo</h1>
         <p class="sub">
           <strong>探索</strong>（地图/骰子）→ <strong>线索成稿</strong> → <strong>拖拽组版</strong> → <strong>结算本期</strong>（与
-          <code>design/gdd/editorial-layout-and-settlement.md</code> 规则对齐）
+          <code>design/gdd/editorial-layout-and-publishing-strategy.md</code> / <code>design/gdd/issue-settlement-and-audience-feedback.md</code> 规则对齐）
         </p>
       </header>
       <div class="bar-row" id="macro"></div>
@@ -4646,7 +4646,7 @@
     updatePaperModeButton();
     renderLiveStats();
     el.resultBox.innerHTML = `<div class="k">尚未结算</div><div class="nm-tip">拖拽报道到版位，再点「结算本期」。</div>`;
-    log("进入编辑部：拖拽组版，结算与 design/gdd/editorial-layout-and-settlement.md 对齐。");
+    log("进入编辑部：拖拽组版，与 design/gdd/editorial-layout-and-publishing-strategy.md 和 design/gdd/issue-settlement-and-audience-feedback.md 对齐。");
     const btnDemo = document.getElementById("btnPaperDemoLab");
     if (btnDemo) {
       btnDemo.style.display = state.paperLabMode || state.week === 1 ? "inline-block" : "none";
