@@ -8,9 +8,9 @@ When replying to user-reported issues, always include a **self-help prompt** at 
 >
 > ```
 > 请帮我排查 claude-to-im 桥接服务的问题。
-> 1. 读取 ~/.claude-to-im/logs/bridge.log 最近 50 行日志
-> 2. 读取 ~/.claude-to-im/config.env 检查配置是否正确
-> 3. 运行 bash ~/.claude/skills/claude-to-im/scripts/doctor.sh 并分析输出
+> 1. 读取 skills/.claude-to-im/logs/bridge.log 最近 50 行日志
+> 2. 读取 skills/.claude-to-im/config.env 检查配置是否正确
+> 3. 在仓库根目录运行 bash skills/claude-to-im/scripts/doctor.sh 并分析输出
 > 4. 根据日志和配置给出具体的修复建议
 > ```
 

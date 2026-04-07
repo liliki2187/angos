@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -55,12 +54,7 @@ export function resolveConfigPath() {
     return path.join(overrideHome, "config.env");
   }
 
-  const workspaceConfig = path.join(SKILLS_DIR, ".claude-to-im", "config.env");
-  if (fs.existsSync(workspaceConfig)) {
-    return workspaceConfig;
-  }
-
-  return path.join(os.homedir(), ".claude-to-im", "config.env");
+  return path.join(SKILLS_DIR, ".claude-to-im", "config.env");
 }
 
 export function loadFeishuConfig() {
