@@ -15,7 +15,8 @@ Desktop.ini
 __pycache__/
 *.pyc
 *.pyo
-tmp/
+tmp/*
+!tmp/handsoff.md
 
 # Local env
 .env.local
