@@ -23,12 +23,12 @@ var psd_ui_preview: Control
 func _ready():
 	Globals.log("MainMenu", "_ready() called")
 
-	btn_new.pressed.connect(_on_goto_full_chain)
+	btn_new.pressed.connect(_on_goto_weekly_run)
 	btn_continue.pressed.connect(_on_button_pressed.bind("Continue"))
 	btn_cards.pressed.connect(_on_goto_cards)
 	btn_settings.pressed.connect(_on_button_pressed.bind("Settings"))
 	btn_check.pressed.connect(_on_goto_check)
-	btn_full_chain.pressed.connect(_on_goto_full_chain)
+	btn_full_chain.pressed.connect(_on_goto_weekly_run)
 	btn_settlement_preview.pressed.connect(_on_open_settlement_preview)
 	btn_psd_ui_toggle.pressed.connect(_on_toggle_psd_ui_preview)
 	psd_preview_viewport.resized.connect(_layout_psd_ui_preview)
@@ -55,9 +55,9 @@ func _on_goto_check():
 	if err != OK:
 		Globals.log_error("MainMenu", "change_scene failed: %d" % err)
 
-func _on_goto_full_chain():
-	var path := str(Globals.scene_paths.get("full_chain", "res://scenes/gameplay/full_chain/FullChainGame.tscn"))
-	Globals.log("MainMenu", "_on_goto_full_chain() -> %s" % path)
+func _on_goto_weekly_run():
+	var path := str(Globals.scene_paths.get("weekly_run", Globals.scene_paths.get("full_chain", "res://scenes/gameplay/weekly_run/WeeklyRunGame.tscn")))
+	Globals.log("MainMenu", "_on_goto_weekly_run() -> %s" % path)
 	var err = get_tree().change_scene_to_file(path)
 	if err != OK:
 		Globals.log_error("MainMenu", "change_scene failed: %d" % err)

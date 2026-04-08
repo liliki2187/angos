@@ -5,9 +5,10 @@
 
 ## 引擎与语言
 
-- **引擎**：Godot 4.3
+- **引擎**：Godot 4.6.2 stable
 - **主要运行时语言**：GDScript
 - **辅助工具语言**：PowerShell、Python，以及少量仅用于工具链的 C# 或 Node.js
+- **本地锁定引擎目录**：`tools/godot/4.6.2-stable/`
 - **渲染**：以 2D / UI 为主的 Godot 项目，使用项目设置中的 `mobile` 渲染方式
 - **物理**：极少使用。本项目主要由 UI、状态切换和公式驱动，而不是物理模拟。
 
@@ -82,6 +83,7 @@
 ## 测试
 
 - **推荐框架**：GdUnit4 或 GUT
+- **本地 smoke test 入口**：`scripts/run_weekly_run_smoke_tests.ps1`，默认优先使用 `tools/godot/` 下的仓库内引擎
 - **最低覆盖策略**：在追求广覆盖前，优先覆盖关键公式与阶段 / 状态切换
 - **必须关注的回归覆盖区域**：
   - 事件检定概率与结果层级
@@ -95,6 +97,7 @@
 - 不要把 HTML 原型视作与运行时同级的实现目标。
 - 不要把新的长期玩法状态塞进 `Globals`。
 - 不要在没有明确理由的情况下，把内容数据、状态所有权、公式和 UI 刷新重新混进新的单体脚本。
+- 不要在 GDScript 中继续写 `Array[Array[T]]`、`Array[Dictionary[String, T]]` 这类嵌套 typed collections；稳定版文档仍不支持，改用 `Array[Array]`、typed dictionaries、显式校验函数或独立状态类。
 - 不要在正式 UI 中继续使用 `Button.new()`、`Label.new()`、`HBoxContainer.new()` 之类的方式拼装固定布局。
 - 不要把“允许实例化预制组件场景”误用成“允许继续现场手搓原始控件树”。
 - 不要在未更新相关 GDD 或 ADR 的前提下硬编码新的核心玩法规则。
@@ -120,3 +123,4 @@
 
 - `ADR-0001`：Godot 周循环状态与数据边界
 - `ADR-0002`：Godot UI 场景优先与绑定式脚本规范
+- `ADR-0003`：Demo 周状态字段向正式 Weekly Schema 的迁移边界
