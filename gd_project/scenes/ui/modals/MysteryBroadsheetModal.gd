@@ -1,6 +1,6 @@
 extends Control
 
-const PAGE_TEXTURE := preload("res://design/generated-settlement-reference/2026-03-18/output/06-mystery-broadsheet-reference.png")
+const PAGE_TEXTURE := preload("res://design/references/settlement-reference/2026-03-18/output/06-mystery-broadsheet-reference.png")
 const WARNING_SHADER := preload("res://scenes/ui/mystery_broadsheet/WarningPulse.gdshader")
 const VIDEO_SHADER := preload("res://scenes/ui/mystery_broadsheet/VideoGlitch.gdshader")
 const EXPLOSION_OVERLAY_SCRIPT := preload("res://scenes/ui/mystery_broadsheet/MysteryExplosionOverlay.gd")

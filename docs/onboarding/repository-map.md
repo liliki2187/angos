@@ -35,7 +35,7 @@
 
 - 原型 HTML 入口现在位于 `design/prototypes/html/`；仓库根目录已移除旧入口。
 - 自包含的全链条网页 Demo 源码现在位于 `design/prototypes/html/full-chain-demo/`。
-- `design/generated-settlement-reference/` 仍是参考资产区域；其中部分结果仍服务于当前 Godot UI 预览流程。
-- `design/original-art-reference/` 仍保留为当前原画参考归档路径，因为项目技能已依赖该位置。
+- `design/references/settlement-reference/` 仍是参考资产区域；其中部分结果仍服务于当前 Godot UI 预览流程。
+- `design/references/original-art/` 仍保留为当前原画参考归档路径，项目技能已改为依赖该位置。
 - 头像裁图规则现在位于 `docs/tools/avatar-cropping.md`。
 - `_obsolete/` 专门用于保存“需要保留但默认应忽略”的材料。

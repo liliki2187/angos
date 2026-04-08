@@ -28,9 +28,9 @@
    - `.github/workflows/`
 5. **分发与参考产物**
    - `prototype/`
-   - `design/generated-*`
+   - `design/references/`
    - `artifacts/`
-   - `design/generated-concept-visual/`
+   - `design/references/concept-visual/`
 
 这说明仓库已经进入“**可玩原型存在，但治理边界还不稳**”的阶段。优势是素材和知识已经不少，风险是继续推进后会越来越难判断什么才是主线。
 
@@ -72,7 +72,7 @@
 
 - `prototype/fullchain_demo/` 是脚本生成的分发包，但当前不在忽略范围内，容易污染工作区。
 - `scripts/__pycache__/` 这类派生产物也不应继续作为正式仓库内容扩散。
-- `design/generated-*` 与 `gd_project/Assets/ui/imported/` 已经出现“参考产物”和“运行时产物”同时存在的趋势，需要规则化。
+- `design/references/` 与 `gd_project/Assets/ui/imported/` 已经出现“参考产物”和“运行时产物”同时存在的趋势，需要规则化。
 
 ## 3. 治理总原则
 
@@ -206,7 +206,7 @@ specs/
 | 核心玩法设计 | `design/gdd/` | `design/systems/`、`docs/*.md` |
 | 技术架构决策 | `docs/architecture/` | 聊天记录、dev log |
 | 团队执行状态 | `production/` | `docs/plans/` |
-| UI 运行时资源 | `gd_project/Assets/ui/` + `gd_project/scenes/ui/` | `design/generated-*`、`design/prototypes/html/` |
+| UI 运行时资源 | `gd_project/Assets/ui/` + `gd_project/scenes/ui/` | `design/references/settlement-reference/`、`design/prototypes/html/` |
 | 美术参考 | `design/` | 飞书聊天记录、外部临时图片 |
 | 分发体验包 | `prototype/` 或未来 release 目录 | 根目录源码 |
 
@@ -329,7 +329,7 @@ specs/
 
 本阶段建议动作：
 
-1. 把 `design/prototypes/html/`、`design/generated-*`、`design/original-art-reference/` 收敛到更明确的子分类
+1. 把 `design/prototypes/html/` 与 `design/references/` 下的参考资产继续收敛到更明确的子分类
 2. 给 `gd_project/Assets/` 区分 `ui`、`characters`、`environment`、`runtime-imports`
 3. 给 `gd_project/scenes/` 区分 `autoload`、`gameplay`、`ui`、`dev`
 4. 让 `scripts/` 与仓库根 `scripts/` 长期保持职责分离

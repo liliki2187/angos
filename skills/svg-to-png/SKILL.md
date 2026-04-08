@@ -25,8 +25,8 @@ E:\angus\angus\skills\svg-to-png\scripts\export-svg-to-png.cmd "<input.svg>" ["<
 Examples:
 
 ```cmd
-E:\angus\angus\skills\svg-to-png\scripts\export-svg-to-png.cmd "E:\angus\angus\design\diagrams\game-overall-flow.svg"
-E:\angus\angus\skills\svg-to-png\scripts\export-svg-to-png.cmd "E:\angus\angus\design\diagrams\game-overall-flow.svg" "E:\angus\angus\design\diagrams\game-overall-flow@2x.png" 2600 1750
+E:\angus\angus\skills\svg-to-png\scripts\export-svg-to-png.cmd "E:\angus\angus\design\references\diagrams\game-overall-flow.svg"
+E:\angus\angus\skills\svg-to-png\scripts\export-svg-to-png.cmd "E:\angus\angus\design\references\diagrams\game-overall-flow.svg" "E:\angus\angus\design\references\diagrams\game-overall-flow@2x.png" 2600 1750
 ```
 
 ## Behavior
