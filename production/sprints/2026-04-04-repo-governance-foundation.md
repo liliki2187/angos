@@ -1,4 +1,4 @@
-# Sprint：仓库治理基础
+﻿# Sprint：仓库治理基础
 
 **周期**：2026-04-04 至 2026-04-11  
 **状态**：进行中  
@@ -22,5 +22,6 @@
 ## 完成定义
 
 - 核心治理文档已经存在，并且互相引用一致
-- `git status` 不再被 `prototype/fullchain_demo` 或 `scripts/__pycache__` 污染
+- `git status` 不再被 历史分发包目录或 `scripts/__pycache__` 污染
 - 入门材料指向明确的规范目录，而不是零散假设
+

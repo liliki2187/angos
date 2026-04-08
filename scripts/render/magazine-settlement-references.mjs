@@ -7,7 +7,8 @@ const repoRoot = process.cwd();
 const referenceDir = path.join(
   repoRoot,
   "design",
-  "generated-settlement-reference",
+  "references",
+  "settlement-reference",
   "2026-03-18"
 );
 const sourceFile = path.join(referenceDir, "magazine-settlement-reference.html");

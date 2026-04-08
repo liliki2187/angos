@@ -1,4 +1,4 @@
-# Angus 项目结构与协作治理方案
+﻿# Angus 项目结构与协作治理方案
 
 **日期**: 2026-04-05
 **适用阶段**: Early Production / Godot MVP 持续迭代期
@@ -27,10 +27,10 @@
    - `scripts/`
    - `.github/workflows/`
 5. **分发与参考产物**
-   - `prototype/`
-   - `design/generated-*`
+   - `_obsolete/`
+   - `design/references/`
    - `artifacts/`
-   - `design/generated-concept-visual/`
+   - `design/references/concept-visual/`
 
 这说明仓库已经进入“**可玩原型存在，但治理边界还不稳**”的阶段。优势是素材和知识已经不少，风险是继续推进后会越来越难判断什么才是主线。
 
@@ -70,9 +70,9 @@
 
 ### 2.5 生成物和源文件边界不够清楚
 
-- `prototype/fullchain_demo/` 是脚本生成的分发包，但当前不在忽略范围内，容易污染工作区。
+- 原 `prototype/fullchain_demo/` 分发包链路已下线并归档到 `_obsolete/scripts/release/`，不再作为主仓库输出目录。
 - `scripts/__pycache__/` 这类派生产物也不应继续作为正式仓库内容扩散。
-- `design/generated-*` 与 `gd_project/Assets/ui/imported/` 已经出现“参考产物”和“运行时产物”同时存在的趋势，需要规则化。
+- `design/references/` 与 `gd_project/Assets/ui/imported/` 已经出现“参考产物”和“运行时产物”同时存在的趋势，需要规则化。
 
 ## 3. 治理总原则
 
@@ -206,9 +206,9 @@ specs/
 | 核心玩法设计 | `design/gdd/` | `design/systems/`、`docs/*.md` |
 | 技术架构决策 | `docs/architecture/` | 聊天记录、dev log |
 | 团队执行状态 | `production/` | `docs/plans/` |
-| UI 运行时资源 | `gd_project/Assets/ui/` + `gd_project/scenes/ui/` | `design/generated-*`、`design/prototypes/html/` |
+| UI 运行时资源 | `gd_project/Assets/ui/` + `gd_project/scenes/ui/` | `design/references/settlement-reference/`、`design/prototypes/html/` |
 | 美术参考 | `design/` | 飞书聊天记录、外部临时图片 |
-| 分发体验包 | `prototype/` 或未来 release 目录 | 根目录源码 |
+| 分发体验包（历史） | `_obsolete/scripts/release/`（仅供审计） | 根目录源码 |
 
 ## 6. 四类同学的目录边界
 
@@ -286,7 +286,7 @@ specs/
 4. GUI / 美术分别补 `design/ui/` 与 `design/references/`
 5. 程序在 Godot 主线实现
 6. 验收后把执行结果写回 `specs/<feature>/handoff.md`
-7. 必要时再生成 `prototype/` 或 release 体验包
+7. 如需分发体验包，改为在独立发布流程中生成，不再写入主仓库目录
 
 ### 7.2 每周固定同步
 
@@ -317,7 +317,7 @@ specs/
 2. 补齐 `docs/technical-preferences.md`
 3. 补齐 `production/` 基本骨架
 4. 统一 Git 协作规则，只保留一份权威说法
-5. 明确 `prototype/` 是生成分发包还是正式版本目录
+5. 维持 `prototype/` 已移除状态，历史分发流程仅保留在 `_obsolete/` 供审计
 
 完成标准：
 
@@ -329,7 +329,7 @@ specs/
 
 本阶段建议动作：
 
-1. 把 `design/prototypes/html/`、`design/generated-*`、`design/original-art-reference/` 收敛到更明确的子分类
+1. 把 `design/prototypes/html/` 与 `design/references/` 下的参考资产继续收敛到更明确的子分类
 2. 给 `gd_project/Assets/` 区分 `ui`、`characters`、`environment`、`runtime-imports`
 3. 给 `gd_project/scenes/` 区分 `autoload`、`gameplay`、`ui`、`dev`
 4. 让 `scripts/` 与仓库根 `scripts/` 长期保持职责分离
@@ -402,3 +402,4 @@ specs/
 - 如果现在不先立边界，后面每多一个人、每多一个系统，混乱会成倍增长
 
 因此，**最合适的不是马上大重构目录，而是先建立目录职责、权威层级、spec 流程和 production 工作台，再做分阶段收敛**。
+

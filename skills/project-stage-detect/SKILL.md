@@ -1,4 +1,4 @@
----
+﻿---
 name: project-stage-detect
 description: "Automatically analyze project state, detect stage, identify gaps, and recommend next steps based on existing artifacts."
 ---
@@ -48,7 +48,7 @@ Analyze project structure and content:
 - Look for milestone definitions
 - Find roadmap documents
 
-**Prototypes** (`design/prototypes/html/` and `prototype/`):
+**Prototypes** (`design/prototypes/html/` and `design/prototypes/labs/`):
 - Count prototype directories or packaged outputs
 - Check for READMEs (documented vs undocumented)
 - Assess if prototypes are archived or active
@@ -196,3 +196,4 @@ This skill follows the collaborative design principle:
 5. **Get Approval**: "May I write to production/project-stage-report.md?"
 
 **Never** silently write files. **Always** show findings and ask before creating artifacts.
+

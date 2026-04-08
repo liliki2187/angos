@@ -1,4 +1,4 @@
----
+﻿---
 name: prototype
 description: "Rapid prototyping workflow. Skips normal standards to quickly validate a game concept or mechanic. Produces throwaway code and a structured prototype report."
 ---
@@ -26,7 +26,7 @@ When this skill is invoked:
    viable prototype looks like. What is the core question? What is the absolute
    minimum code needed to answer it? What can be skipped?
 
-4. **Create the prototype directory**: `prototype/[concept-name]/` where
+4. **Create the prototype directory**: `design/prototypes/labs/[concept-name]/` where
    `[concept-name]` is a short, kebab-case identifier derived from the concept.
 
 5. **Implement the prototype** in the isolated directory. Every file must begin
@@ -47,7 +47,7 @@ When this skill is invoked:
    measurable data (frame times, interaction counts, feel assessments).
 
 7. **Generate the Prototype Report** and save it to
-   `prototype/[concept-name]/REPORT.md`:
+   `design/prototypes/labs/[concept-name]/REPORT.md`:
 
 ```markdown
 ## Prototype Report: [Concept Name]
@@ -92,7 +92,7 @@ When this skill is invoked:
 
 8. **Output a summary** to the user with: the core question, the result, and
    the recommendation. Link to the full report at
-   `prototype/[concept-name]/REPORT.md`.
+   `design/prototypes/labs/[concept-name]/REPORT.md`.
 
 ### Important Constraints
 
@@ -103,3 +103,4 @@ When this skill is invoked:
 - Total prototype effort should be timeboxed to 1-3 days equivalent of work
 - If the prototype scope starts growing, stop and reassess whether the
   question can be simplified
+

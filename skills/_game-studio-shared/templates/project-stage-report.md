@@ -1,4 +1,4 @@
-# 项目阶段分析报告
+﻿# 项目阶段分析报告
 
 **生成时间**：[日期]  
 **阶段**：[概念期 | 系统设计期 | 技术搭建期 | 前期制作 | 制作期 | 抛光期 | 发布期]  
@@ -69,7 +69,7 @@
   - [ ] [缺失的测试区域，以及风险]
 
 ### 原型
-- **活跃原型**：`design/prototypes/html/` 或 `prototype/` 下共 [N] 个
+- **活跃原型**：`design/prototypes/html/` 或 `design/prototypes/labs/` 下共 [N] 个
   - ✅ [原型 1] -- 有 README，状态清晰
   - ⚠️ [原型 2] -- 无 README，状态不清晰
 - **已归档**：[N] 个（实验已结束）
@@ -187,7 +187,7 @@ production/
   milestones/    [N] definitions
 
 tests/           [N] test files
-prototype/       [N] directories
+design/prototypes/ [N] directories
 ```
 
 ---
@@ -195,3 +195,4 @@ prototype/       [N] directories
 **报告结束**
 
 *由 `/project-stage-detect` 技能生成*
+

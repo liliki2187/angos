@@ -37,10 +37,10 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p site/design/prototypes
-          mkdir -p site/design/generated-settlement-reference/2026-03-18
+          mkdir -p site/design/references/settlement-reference/2026-03-18
           cp -R design/prototypes/html site/design/prototypes/
           rm -rf site/design/prototypes/html/full-chain-demo/source
-          cp -R design/generated-settlement-reference/2026-03-18/. site/design/generated-settlement-reference/2026-03-18/
+          cp -R design/references/settlement-reference/2026-03-18/. site/design/references/settlement-reference/2026-03-18/
           printf '%s\n' \
             '<!DOCTYPE html>' \
             '<html lang="zh-CN">' \
