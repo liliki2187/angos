@@ -1,4 +1,4 @@
----
+﻿---
 name: gate-check
 description: "Validate readiness to advance between development phases. Produces a PASS/CONCERNS/FAIL verdict with specific blockers and required artifacts."
 ---
@@ -90,7 +90,7 @@ The project progresses through these stages:
 ### Gate: Pre-Production -> Production
 
 **Required Artifacts:**
-- [ ] At least 1 prototype in `design/prototypes/html/` or `prototype/` with a README or clear usage note
+- [ ] At least 1 prototype in `design/prototypes/html/` with a README or clear usage note
 - [ ] First sprint plan exists in `production/sprints/`
 - [ ] All MVP-tier GDDs from systems index are complete
 
@@ -256,3 +256,4 @@ This skill follows the collaborative design principle:
 
 **Never** block a user from advancing -- the verdict is advisory. Document the risks
 and let the user decide whether to proceed despite concerns.
+

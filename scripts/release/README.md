@@ -1,8 +1,14 @@
-# 发布脚本
+﻿# 发布脚本
 
-本目录中的脚本用于生成可分发或可共享的产物。
+本目录保留当前仍在使用的发布/导出脚本。
 
 ## 当前内容
 
-- `package_fullchain_demo.ps1`：从 `design/prototypes/html/full-chain-demo/` 构建本地 `prototype/fullchain_demo/` 包
-- `fullchain_demo/`：打包脚本使用的启动器和 README / index 模板
+- `export.sh`：Godot 4 headless 导出脚本（CI/本地通用）。
+
+## 已归档内容
+
+以下原型分发打包链路已停用并归档到 `_obsolete/scripts/release/`：
+
+- `package_fullchain_demo.ps1`
+- `fullchain_demo/` 模板目录

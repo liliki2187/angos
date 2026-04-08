@@ -1,4 +1,4 @@
-# 会话状态
+﻿# 会话状态
 
 **日期**：2026-04-05  
 **任务**：拆分 Godot 代码库，使 `gd_project/` 成为正式运行时项目根目录  
@@ -31,6 +31,7 @@
 
 ## 备注
 
-- `prototype/fullchain_demo/` 视为生成的分发包，而不是源码真源。
+- 历史分发包链路已归档到 `_obsolete/scripts/release/`，不再作为活跃目录。
 - HTML 参考源码保留在 `design/prototypes/html/`。
 - 新的 Godot 运行时工作应落在 `gd_project/` 下；配套脚本继续放在 `scripts/`。
+

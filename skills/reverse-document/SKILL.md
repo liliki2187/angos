@@ -1,4 +1,4 @@
----
+﻿---
 name: reverse-document
 description: "Generate design or architecture documents from existing implementation. Works backwards from code/prototypes to create missing planning docs."
 ---
@@ -130,7 +130,7 @@ Based on type, use appropriate template:
 |------|----------|-------------|
 | `design` | `templates/design-doc-from-implementation.md` | `design/gdd/[system-name].md` |
 | `architecture` | `templates/architecture-doc-from-code.md` | `docs/architecture/[decision-name].md` |
-| `concept` | `templates/concept-doc-from-prototype.md` | `prototype/[name]/CONCEPT.md` or `design/concepts/[name].md` |
+| `concept` | `templates/concept-doc-from-prototype.md` | `design/prototypes/labs/[name]/CONCEPT.md` or `design/concepts/[name].md` |
 
 **Draft structure**:
 - Capture **what exists** (mechanics, patterns, implementation)
@@ -265,3 +265,4 @@ This skill follows the collaborative design principle:
 8. **Flag Follow-Up**: Suggest related work, don't auto-execute
 
 **Never assume intent. Always ask before documenting "why".**
+

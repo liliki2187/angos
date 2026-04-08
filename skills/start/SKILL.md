@@ -1,4 +1,4 @@
----
+﻿---
 name: start
 description: "First-time onboarding -- asks where you are, then guides you to the right workflow. No assumptions."
 ---
@@ -33,7 +33,7 @@ Check:
   Engine field contains `[TO BE CONFIGURED]`, the engine is not set.
 - **Game concept exists?** Check for `design/gdd/game-concept.md`.
 - **Source code exists?** Glob for runtime files in `gd_project/` (`*.gd`, `*.tscn`, `*.gdshader`, `*.tres`, `*.cs`, `*.cpp`, `*.h`).
-- **Prototypes exist?** Check `design/prototypes/html/` and packaged outputs in `prototype/`.
+- **Prototypes exist?** Check `design/prototypes/html/` and any entries under `design/prototypes/labs/`.
 - **Design docs exist?** Count markdown files in `design/gdd/`.
 - **Production artifacts?** Check for files in `production/sprints/` or
   `production/milestones/`.
@@ -183,3 +183,4 @@ This skill follows the collaborative design principle:
 3. **User decides** -- they pick the direction
 4. **No auto-execution** -- recommend the next skill, don't run it without asking
 5. **Adapt** -- if the user's situation doesn't fit a template, listen and adjust
+

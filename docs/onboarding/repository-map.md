@@ -1,4 +1,4 @@
-# 仓库地图
+﻿# 仓库地图
 
 这份文档用于最快识别哪些内容是规范来源、哪些只是参考、哪些是可重建产物。
 
@@ -27,8 +27,8 @@
 
 ## 生成或可重建层
 
-- `prototype/fullchain_demo/`：生成的分发包目录
-- `prototype/*.zip`：生成的打包导出物
+- `_obsolete/scripts/release/`：已归档的历史原型打包脚本与模板
+- `_obsolete/.github/workflows/`：已归档的历史原型 Pages 工作流
 - `scripts/__pycache__/`：Python 字节码缓存
 
 ## 关于历史材料的说明
@@ -39,3 +39,4 @@
 - `design/references/original-art/` 仍保留为当前原画参考归档路径，项目技能已改为依赖该位置。
 - 头像裁图规则现在位于 `docs/tools/avatar-cropping.md`。
 - `_obsolete/` 专门用于保存“需要保留但默认应忽略”的材料。
+

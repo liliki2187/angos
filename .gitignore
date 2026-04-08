@@ -1,4 +1,4 @@
-# OS
+﻿# OS
 Thumbs.db
 Desktop.ini
 
@@ -36,8 +36,6 @@ gd_project/build/
 # Rendered previews / export artifacts
 artifacts/
 image_gen/
-prototype/fullchain_demo/
-prototype/*.zip
 
 # Optional: if you add Node later
 node_modules/
@@ -45,3 +43,4 @@ skills/claude-to-im/dist/
 
 # MCP local (if any)
 mcps/
+
