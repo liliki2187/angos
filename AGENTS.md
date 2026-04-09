@@ -1,8 +1,8 @@
-## 设计文档（系统总集）
+## 设计文档（正式真源）
 
-- **母文档**：[`设计文档/系统功能设计总集.md`](./设计文档/系统功能设计总集.md) — 系统功能全貌、分册索引、全链原型落地对照。
-- **同步**：已确定并落地的玩法/规则/常量变更，应同步更新该总集对应章节与 §13、§14。
-- **出入提醒**：若代码/配置与总集描述不一致，助手在改完或评审时应**明确提醒**用户：择一修正文档或实现。
+- **顶层真源**：[`design/gdd/game-concept.md`](./design/gdd/game-concept.md)、[`design/gdd/game-pillars.md`](./design/gdd/game-pillars.md)、[`design/gdd/systems-index.md`](./design/gdd/systems-index.md)。
+- **同步**：已确定并落地的玩法/规则/常量变更，应先同步对应 `design/gdd/` 文档；若影响产品定位、支柱或系统边界，再同步顶层三份文档。
+- **归档提醒**：旧的“系统功能设计总集”已归档到 [`docs/archive/legacy-design/系统功能设计总集.md`](./docs/archive/legacy-design/系统功能设计总集.md)，仅供历史对照，不再作为当前真实来源。
 
 ## Skills
 

@@ -1,7 +1,7 @@
 # Sprint：周循环正式 Schema 迁移（切片 1）
 
 - **周期**：2026-04-09 至 2026-04-16
-- **状态**：进行中
+- **状态**：已收尾（2026-04-10，遗留项转下一轮）
 - **里程碑**：`production/milestones/godot-mvp-foundation.md`
 - **约束来源**：`design/gdd/weekly-run-loop.md`、`docs/architecture/adr-0001-godot-week-loop-state-and-data-boundaries.md`、`docs/architecture/adr-0003-demo-weekly-schema-migration-boundary.md`
 
@@ -77,3 +77,16 @@
 - [ ] demo 主链不再以 `weekly_clues -> story_pool -> settlement` 作为外显正式描述
 - [ ] 周阶段切换与结算公式至少有最小自动化覆盖
 - [ ] 若实现偏离 GDD，相关文档已同步更新
+
+## 收尾说明
+
+- 本轮 retrospective 已写入：
+  - `production/sprints/2026-04-09-weekly-schema-migration-slice-1-retrospective.md`
+- 当前可视为完成的目标：
+  - 正式运行时骨架已收口到 `weekly_run`
+  - 四阶段链路已成立
+  - 最小 smoke test 已到位
+- 转入下一轮的重点：
+  - `ExplorePhase` 局部刷新
+  - `cognition` / 结算模块下一轮拆分接口
+  - 正式 GDD 同步 2026-04-09 原型规则

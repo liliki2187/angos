@@ -2,7 +2,7 @@
 
 > **状态**：草案
 > **作者**：Codex + 仓库综合整理
-> **最后更新**：2026-04-08
+> **最后更新**：2026-04-10
 > **对应支柱**：调查必须导向发刊；发刊必须是一种立场选择；四大势力必须改变你的发刊决定
 
 ## 概览
@@ -21,10 +21,11 @@
 2. 新开局与每个新周都必须先进入 `briefing`。`briefing` 负责生成周起始事件、本周任务和本周内容机会；玩家确认后才能进入 `explore`。
 3. `explore` 只处理时间预算与行动推进。合法探索会消耗 `remaining_days`，并把结果写入素材库存真源；周循环最多记录“本周新增素材引用”，不重复持有素材本体。
 4. `editorial` 是内容生产与排版的父阶段。认知构建、稿件生成、版位选择和发刊前校验都在这里完成。
-5. `summary` 是发刊结算与世界反馈的父阶段。它冻结本期周刊，计算经济、势力与宏观后果，并写出 `next_week_hooks` 供下周 `briefing` 消费。
+5. `summary` 是发刊结算与世界反馈的父阶段。它冻结本期周刊，计算经济、势力与主要宏观后果，并写出 `next_week_hooks` 供下周 `briefing` 消费。
 6. 周循环负责阶段切换和周内容器清空，不直接拥有长期系统真源。订阅、势力关系、宏观属性、素材库存和区域解锁仍分别由对应系统维护。
-7. 当玩家主动结束探索、`remaining_days == 0`，或当前所有可见节点都不存在合法派遣组合时，周循环强制从 `explore` 进入 `editorial`。
-8. 新周初始化只重置周内字段；所有长期字段继续保留，并在 `briefing` 阶段参与本周生成。
+7. `editorial` 允许写入少量即时长期后果，但只限于内容生产阶段本身就会发生的结果，例如异常题材内审成功带来的 `狂性` 增量；绝大多数世界层结算仍由 `summary` 统一处理。
+8. 当玩家主动结束探索、`remaining_days == 0`，或当前所有可见节点都不存在合法派遣组合时，周循环强制从 `explore` 进入 `editorial`。
+9. 新周初始化只重置周内字段；所有长期字段继续保留，并在 `briefing` 阶段参与本周生成。
 
 ### 顶层阶段与切换
 
@@ -32,7 +33,7 @@
 |----------|----------|----------|------------|----------------|
 | `briefing` | 新开局或上一周 `summary` 确认后 | 玩家确认进入探索 | 回合起始事件、周期任务、势力压力快照 | `briefing_event_id`、`active_tasks`、`opportunity_ids` |
 | `explore` | `briefing` 确认完成 | 玩家主动结束探索，或 `remaining_days == 0`，或 `legal_dispatch_count == 0` | 区域浏览、节点派遣、事件检定、素材入库 | `remaining_days`、`new_material_ids`、周内临时节点状态 |
-| `editorial` | 探索结束 | 玩家确认发刊 | 内容生产、认知构建、稿件生成、排版与发刊前校验 | `article_candidates`、`slot_assignment`、`published_issue`、`settlement_preview` |
+| `editorial` | 探索结束 | 玩家确认发刊 | 内容生产、认知构建、稿件生成、排版与发刊前校验 | `article_candidates`、`slot_assignment`、`published_issue`、`settlement_preview`，以及少量即时长期后果 |
 | `summary` | 发刊确认 | 玩家确认进入下一周 | 发刊结算、受众反馈、现实偏移展示 | `settlement_result`、`next_week_hooks` |
 
 ### 周状态真源
@@ -56,9 +57,10 @@
 ### 长期状态边界
 
 - `material_inventory` 的真源属于 **线索与内容素材库存**；周循环只读写本周新增引用。
-- `macro_stats` 的真源属于 **宏观属性与现实偏移**；周循环只在 `briefing`、`explore` 和 `summary` 阶段读取或展示。
+- `macro_stats` 的真源属于 **宏观属性与现实偏移**；周循环可以在 `briefing`、`explore`、`editorial` 和 `summary` 阶段读取或展示，但不持有第二份副本。
 - `faction_reputation` 与任务模板真源属于 **四大势力任务、干预与声望**。
 - `subscribers`、资源与运营基线属于长期运行状态，并由 **发刊结算与受众反馈** 在 `summary` 后更新。
+- `topic_stance_history`（同题公开取向历史）属于长期运行状态，并由 **发刊结算与受众反馈** 在每次发刊结算后更新；排版阶段只读它做预览，不再维护第二份副本。
 - 区域解锁、永久标记与世界门槛属于区域系统和宏观系统，不在周循环里重复持有第二份真源。
 
 ### 与其他系统的交互
@@ -66,9 +68,9 @@
 - **回合起始事件与周期任务** 只在 `briefing` 内运行，负责生成 `briefing_event_id`、`active_tasks` 和 `opportunity_ids`。
 - **探索与节点派遣** 只在 `explore` 内运行，消费 `remaining_days`、任务约束和机会池；其结果先写入素材库存，再回写 `new_material_ids` 作为本周展示引用。
 - **线索与内容素材库存** 保存素材正文与跨周保留规则，并向 `editorial` 提供当前可消费的库存。
-- **内容生产链与稿件生成** 与 **编辑排版与发行策略** 只在 `editorial` 内运行，分别写入 `article_candidates`、`slot_assignment`、`published_issue` 与 `settlement_preview`。
+- **内容生产链与稿件生成** 与 **编辑排版与发行策略** 只在 `editorial` 内运行，分别写入 `article_candidates`、`slot_assignment`、`published_issue` 与 `settlement_preview`；其中异常题材内审成功可直接推动 `macro_stats.mania` 这类即时长期后果。
 - **发刊结算与受众反馈** 只在 `summary` 内运行，读取 `published_issue` 与长期状态，写回 `settlement_result` 与 `next_week_hooks`。
-- **宏观属性与现实偏移** 提供 `briefing` / `explore` 的门槛输入，并在 `summary` 后接收结算增量。
+- **宏观属性与现实偏移** 提供 `briefing` / `explore` / `editorial` 的门槛输入，并在 `editorial` 接收即时内容生产后果、在 `summary` 接收统一结算增量。
 - **菜单与场景导航** 可以创建新开局、返回菜单或恢复存档，但不拥有周玩法状态本身。
 
 ## 公式

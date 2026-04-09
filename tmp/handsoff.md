@@ -1,110 +1,158 @@
 # 当前交接状态
 
-更新时间：2026-04-09
+更新时间：2026-04-10
 
-## 本轮已完成
+## 当前主线判断
 
-- 周循环正式运行时继续收口到 `gd_project/scenes/gameplay/weekly_run/`，并保留 `briefing -> explore -> editorial -> summary` 四阶段正式链路。
-- `material_inventory` 已从 `WeeklyRunState` 中抽出，独立为：
-  - `gd_project/scenes/gameplay/weekly_run/materials/WeeklyMaterialInventory.gd`
-- 旧 `full_chain/` 已收成显式兼容 shim：
-  - `gd_project/scenes/gameplay/full_chain/FullChainGame.gd`
-  - 旧路径仍可打开，但正式逻辑只继续落在 `weekly_run/`
-- `weekly_run` 的 UI 已从 demo 式混合大页面重构为“固定壳层 + 阶段场景 + 复用组件”：
-  - 壳层：
-    - `gd_project/scenes/gameplay/weekly_run/WeeklyRunGame.tscn`
-    - `gd_project/scenes/gameplay/weekly_run/WeeklyRunGame.gd`
-  - 阶段场景：
-    - `phases/WeeklyRunBriefingPhase.tscn`
-    - `phases/WeeklyRunExplorePhase.tscn`
-    - `phases/WeeklyRunEditorialPhase.tscn`
-    - `phases/WeeklyRunSummaryPhase.tscn`
-  - 复用组件：
-    - `components/WeeklyRunActionItem.tscn`
-    - `components/WeeklyRunInfoCard.tscn`
-    - `components/WeeklyRunMetricCard.tscn`
-    - `components/WeeklyRunScrollableText.tscn`
-- 项目 UI 设计基线已切到 `1920x1080`，并把“非浮动模态优先相对布局”的规则写入：
-  - `gd_project/project.godot`
-  - `docs/technical-preferences.md`
-- 修掉了新 `weekly_run` 界面被上下顶开的结构性问题：
-  - 不再让 `briefing` 借住 `explore` 页面
-  - 新周进入 `briefing` 时不会再因为上周日志 / 文本撑高整页
-- 修掉了 `本周简报 / 派遣简报 / 结算预估` 内容挤到左边窄列的问题：
-  - 统一改成 `WeeklyRunScrollableText`
-  - 内容宽度跟随滚动区同步，不再退化成 `1px`
-- 为排查“外采后切换探索节点卡顿”补了结构化日志与耗时：
-  - `WeeklyRunGame.gd`
-  - `phases/WeeklyRunExplorePhase.gd`
-  - `phases/WeeklyRunEditorialPhase.gd`
+- 项目当前仍在 **周循环正式 schema 迁移 / `weekly_run` 收口** 这条线上。
+- 直接依据：
+  - 阶段标记：`production/stage.txt` 当前为 `early-production`
+  - 阶段报告：`production/project-stage-report.md` 当前写的是“早期制作”
+  - 活跃会话：`production/session-state/active.md`
+  - 当前 sprint：`production/sprints/2026-04-09-weekly-schema-migration-slice-1.md`
+- 结论：
+  - 这不是“已经离开周循环主线，开始做别的里程碑”的状态。
+  - 当前更像是：`weekly_run` 运行时已经能玩，但性能、正式字段收口和设计文档同步还没彻底闭环。
 
-## 当前真实来源
+## 现在真正需要记住的状态
 
-- 正式周循环运行时：
+- 正式运行时真源：
   - `gd_project/scenes/gameplay/weekly_run/`
-- 周状态真源：
+- 周循环顶层阶段真源：
   - `design/gdd/weekly-run-loop.md`
-- 迁移边界与 UI 约束：
-  - `docs/architecture/adr-0002-godot-ui-scene-first-and-binding-driven.md`
-  - `docs/architecture/adr-0003-demo-weekly-schema-migration-boundary.md`
-- 本地工具链工作流：
-  - `docs/tools/godot-local-engine-workflow.md`
+- 当前正式阶段链路：
+  - `briefing -> explore -> editorial -> summary`
+- 旧 `full_chain/`：
+  - 仅保留兼容入口，不再是正式实现真源
+
+## 本轮新增结论
+
+### 1. 目录标准已补正
+
+以下内容原本落在不合适的位置，现已按当前仓库标准重新归位：
+
+- 旧母文档：
+  - `设计文档/系统功能设计总集.md`
+  - 已移到：`docs/archive/legacy-design/系统功能设计总集.md`
+- 待拍板头脑风暴：
+  - `design/gdd/brainstorm-synthesis-cognition-2026-04-06.md`
+  - 已移到：`docs/archive/deferred-design/brainstorm-synthesis-cognition-2026-04-06.md`
+- HTML 实验页：
+  - `design/htmls/synth-workbench-lab.html`
+  - 已移到：`design/prototypes/html/labs/synth-workbench-lab.html`
+
+并补了归档说明：
+
+- `docs/archive/deferred-design/README.md`
+- `docs/archive/legacy-design/README.md`
+- `design/prototypes/html/labs/README.md`
+
+### 2. 顶层设计文档冲突已拍板并完成同步
+
+当前已按用户确认，以 **2026-04-09 全链原型** 作为这一组规则的正式来源，完成并回：
+
+- `design/gdd/game-concept.md`
+- `design/gdd/game-pillars.md`
+- `design/gdd/systems-index.md`
+- `design/gdd/content-production-and-article-generation.md`
+- `design/gdd/editorial-layout-and-publishing-strategy.md`
+- `design/gdd/issue-settlement-and-audience-feedback.md`
+- `design/gdd/macro-attributes-and-reality-shift.md`
+
+已正式写入的规则包括：
+
+- 认知主要由 **内审定调** 生成
+- **抢先快讯** 可以不经过认知直接发
+- 正式稿件命名切到：
+  - `抢先快讯 / 深度报道 / 个人专栏 / 爆炸性新闻`
+- 引入 **主笔 / SAN / 心理干预 / 内审疲劳**
+- 引入 **公开取向**
+- 引入 **同题疲劳**
+- 引入 **取向冲突惩罚**
+- 异常内审成功会直接推动 **宏观狂性** 上升
+
+### 3. 设计复核已继续完成，并补齐契约层缺口
+
+在继续做 `design-review` 后，已把原本还不够落地的部分补进正式 GDD：
+
+- `design/gdd/weekly-run-loop.md`
+  - 已明确：异常题材内审成功带来的 `狂性` 增量可以在 `editorial` 直接入账
+  - 已明确：`topic_stance_history` 属于长期状态，由结算系统更新
+- `design/gdd/clue-and-content-inventory.md`
+  - 已补素材字段契约：
+    - `kind / domain / tier / topic_key / mystery_bias / evidence_value / consumable`
+  - 已补公开合成时的默认消耗规则
+- `design/gdd/content-production-and-article-generation.md`
+  - 已补 `SAN` 风险区间
+  - 已补 `心理干预包` 的默认供给规则
+  - 已补 `article_candidates` 的字段契约
+- `design/gdd/editorial-layout-and-publishing-strategy.md`
+  - 已补 `published_issue / placed_articles` 的字段契约
+  - 已补同题疲劳的当前原型常量基线
+- `design/gdd/issue-settlement-and-audience-feedback.md`
+  - 已补结算输入契约，明确结算读取哪些冻结字段
+
+当前文档层面的结论：
+
+- 这组规则现在已经不再是“仅原型成立、正式文档还没落稳”的状态
+- 当前更适合把后续工作转回运行时实现与参数打磨，而不是继续大范围重写设计文档
 
 ## 已验证
 
-- smoke test 已通过：
-  - `tests/godot/weekly_run/test_phase_flow.gd`
-  - `tests/godot/weekly_run/test_settlement_result.gd`
-  - `tests/godot/weekly_run/test_weekly_run_layout.gd`
-- 验证命令：
-
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts/run_weekly_run_smoke_tests.ps1
-```
-
-- `full_chain` 兼容 shim 已做过 headless 加载检查，能正确挂到新的 `weekly_run`
-- repo-local Godot 4.6.2 与 export templates 已就位：
-  - `tools/godot/4.6.2-stable/`
-- 已重新导出可测包：
+- 本地 Windows 包已重新导出：
   - `gd_project/build/debug/Angus.exe`
   - `gd_project/build/debug/Angus.console.exe`
   - `gd_project/build/release/Angus.exe`
+- 这次导出后 `git status` 仍可控，没有新的意外脏改动
+- 退出时仍有旧告警：
+  - `ObjectDB instances leaked at exit`
+  - `resources still in use at exit`
 
-## 关键技术结论
+## 当前还没闭环的点
 
-- 当前“外采后切换探索节点会卡一下”已经定位到主因，不是公式，不是合法派遣枚举：
-  - `_refresh_all()` 平均约 `60ms`
-  - `_on_node_pressed()` 触发后平均约 `62ms`
-  - `ExplorePhase.render()` 本身约 `62ms`
-- 目前最重的是 `ExplorePhase` 的整块重建：
-  - `StaffGrid` 重建约 `29ms`
-  - `NodeList` 重建约 `17ms`
-  - `RegionList` 重建约 `8ms`
-- `build_explore_payload()` 本身很轻，问题不在 payload 计算，而在“切节点时整页删节点再实例化”
-
-## 目前还没闭环的点
-
-1. 探索页切换节点仍是“整页 refresh -> 整页 render -> 列表重建”。
+1. 探索页切换节点仍是整页刷新
 原因：
-当前 `WeeklyRunGame._on_node_pressed()` 仍直接调 `_refresh_all()`，还没改成局部刷新。
+`WeeklyRunGame._on_node_pressed()` 现在仍直接走 `_refresh_all()`，还没做局部刷新。
 
-2. `gd_project/project.godot` 里的 `config/features` 仍显示 `4.3`。
+2. `gd_project/project.godot` 里的 `config/features` 仍显示 `4.3`
 原因：
-还没有做一次正式的编辑器保存迁移。
+还没做一次正式编辑器保存迁移。
 
-3. Windows 导出虽然成功，但 Godot 退出时仍有：
-   - `ObjectDB instances leaked at exit`
-   - `resources still in use at exit`
-这不是当前阻塞，但后续值得排查。
+3. Godot 退出泄漏告警仍在
+原因：
+当前没有继续追这条线，只确认了它不阻塞本地导出。
 
-## 下个会话建议起点
+4. 内容生产链规则虽然已完成正式文档同步，但运行时还没有完整落到这套新契约
+原因：
+当前 `weekly_run` 运行时代码还没有完整对齐 `public_stance`、同题历史、成刊快照字段等新设计契约。
 
-1. 把 `ExplorePhase` 改成“局部刷新”，至少做到切换节点时不再重建区域 / 节点 / 职员 / 素材 / 日志整页
-2. 如果继续收口正式切片，再把 `briefing/explore/editorial/summary` 中仍用代码实例化的列表项继续替换成更稳定的 item scene 池或复用更新策略
-3. 视情况用 4.6.2 编辑器正式打开并保存 `gd_project/project.godot`，把版本戳迁掉
-4. 后续再看 `ObjectDB` / `resources still in use at exit` 的退出警告
+## 如果现在要 close 当前工作，用什么技能
 
-## 备注
+最合适的是：
 
-- 仓库根的 `.godot/` 是本轮探针和导出产生的缓存，已补进 `.gitignore`
-- `tools/godot/4.6.2-stable/` 下实际二进制仍按仓库规则不纳入 Git
+- `retrospective`
+
+原因：
+
+- 当前更像是“要给这条正在做的 sprint / 切片收尾、记录完成项与 carryover”，不是要切阶段。
+- `project-stage-detect` 适合回答“项目现在在哪个阶段”
+- `gate-check` 适合回答“是否可以进入下一开发阶段”
+- `milestone-review` 适合做整个 milestone 的阶段性评估，范围更大，也更重
+
+所以如果只是想：
+
+- 关掉当前这轮 weekly schema 迁移切片
+- 记录哪些完成了、哪些 carry over
+- 再切到设计修改
+
+优先用 `retrospective`，不要先用 `gate-check`。
+
+## 下个会话最合理的顺序
+
+1. 先用 `retrospective` 给当前这轮 weekly schema / weekly_run 切片做收尾
+2. 回到运行时，开始把 `weekly_run` 对齐到新的内容生产链契约
+3. 继续处理：
+   - ExplorePhase 局部刷新
+   - `project.godot` 版本戳迁移
+   - 退出泄漏告警
+4. 如果继续做设计侧工作，优先是参数与验收细化，而不是重新开一轮大规则改写

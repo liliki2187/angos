@@ -1,7 +1,8 @@
 # 头脑风暴存档：线索 · 认知 · 报道合成（2026-04-06）
 
-> 用途：在另一台设备/新对话打开本文件，可接续讨论，不必翻聊天记录。  
-> 关联原型：`world-mysteries-full-chain.html`、合成台、`labs/synth-workbench-lab.html`。
+> **状态**：归档备忘。保留 2026-04-06 讨论时的待拍板思路，不属于当前正式 GDD。  
+> **当前正式真源**：`design/gdd/systems-index.md` 及对应系统 GDD。  
+> **关联原型**：`design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html`、合成台、`design/prototypes/html/labs/synth-workbench-lab.html`。
 
 ---
 
@@ -10,7 +11,7 @@
 - **移除「草拟报道」类型**：不再有单独 `draft` 配方与按钮；默认回到 **抢先快讯（r1）** 等四种定型。
 - **情报领域显性化**：情报牌在素材仓展示 **科学侧 / 秘闻 / 流行**（与探索 `sourceType` 一致）；文案说明不同领域情报影响成稿标签与数值走向（`synthToStory` 仍按素材 `sourceType`/`domain` 聚合）。
 - **合成槽位提示**：空槽可完成性高亮、拖拽/点击预览时错型槽位 ×（此前已实现）。
-- **实验页与交接指引**：`labs/synth-workbench-lab.html` 与主干对齐（仅公开统一槽位）；`docs/Cursor对话交接指引_研发无缝衔接.md` 增加实验页同步规则与「重大规则先征得同意再写入指引」的约定。
+- **实验页与交接流程**：实验页改为放在 `design/prototypes/html/labs/synth-workbench-lab.html` 并与主干对齐（仅公开统一槽位）；当时提到的旧交接指引现已被 `production/handoff/` 与 `production/session-state/active.md` 取代。
 - **Git 约定（对话中）**：对 `daydreamer` 远程可不推 `main`，用**单独分支**推送（与交接文档里历史「双 main 对齐」表述并存时以负责人最新说法为准）。
 
 ---
@@ -65,7 +66,7 @@
 ## 六、续聊时可用的开场（粘贴给 AI）
 
 ```text
-请先读 design/gdd/brainstorm-synthesis-cognition-2026-04-06.md 与 design/gdd/systems-index.md。
+请先读 docs/archive/deferred-design/brainstorm-synthesis-cognition-2026-04-06.md 与 design/gdd/systems-index.md。
 我们在继续讨论：线索→认知→报道的顺序、认知牌上限与取向互斥、是否要恢复轻量「草拟」。
 我今天的选择是：（在此补充你对第三节三个问题的答案或倾向）
 ```

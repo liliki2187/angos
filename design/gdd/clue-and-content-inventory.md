@@ -2,7 +2,7 @@
 
 > **状态**：草案
 > **作者**：Codex + 策划稿整理
-> **最后更新**：2026-04-06
+> **最后更新**：2026-04-10
 > **对应支柱**：调查必须导向发刊
 
 ## 概览
@@ -25,6 +25,42 @@
 6. 本系统只管理“你拥有什么”，不直接决定“你怎样解释它”。
 7. 周循环最多记录本周新增素材的引用或摘要，不应再保存一份 `weekly_clues` 式的素材副本。
 
+### 素材条目契约
+
+所有可进入内容生产链的库存条目，至少应满足以下公共字段：
+
+| 字段 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| `id` | string | 是 | 唯一标识 |
+| `kind` | enum | 是 | `phenomenon / intel / material / tool / tipoff` |
+| `title` | string | 是 | 玩家可读名称 |
+| `domain` | enum | 是 | `sci / occult / pop`，决定题材与公开取向基础 |
+| `tier` | int | 是 | 1-3，用于认知等级和稿件质量基础 |
+| `topic_key` | string | 否 | 同题追踪用的题材标识 |
+| `source_region` | string | 否 | 来源地区 |
+| `source_node` | string | 否 | 来源节点 |
+| `risk_flags` | array[string] | 否 | 残缺、污染等负面标签 |
+| `consumable` | bool | 是 | 是否会在内容生产中被消耗 |
+
+### 按类型字段
+
+| `kind` | 额外字段 | 用途 |
+|--------|----------|------|
+| `phenomenon` | `mystery_bias`、`evidence_value` | 供内审判定、异常题材判定和认知品质使用 |
+| `intel` | `evidence_value` | 作为 `抢先快讯` 的主要消耗材料 |
+| `material` | `evidence_value`、`sample_tags` | 保留给后续更复杂生产链 |
+| `tool` | `bonus`、`durability` | 提供公开合成成功率修正 |
+| `tipoff` | `payload` | 作为 `爆炸性新闻` 的必要输入 |
+
+### 当前原型 / 运行时映射
+
+- 2026-04-09 全链原型侧的 `phenomenon.domain`、`phenomenon.tier`、`phenomenon.mysteryBias`、`phenomenon.evidenceValue`，正式上提后分别映射为：
+  - `domain`
+  - `tier`
+  - `mystery_bias`
+  - `evidence_value`
+- 当前 `weekly_run` 运行时若仍使用 `type` 作为领域字段，应视为临时实现映射，正式文档一律以 `domain` 为准。
+
 ### 状态与切换
 
 | 状态 | 进入条件 | 退出条件 | 行为 |
@@ -36,7 +72,7 @@
 ### 与其他系统的交互
 
 - **事件检定结算** 输出结果层级与掉落元数据，供本系统创建素材条目。
-- **内容生产链与稿件生成** 消费本系统中的素材，并写回生成结果。
+- **内容生产链与稿件生成** 消费本系统中的素材，并按 `kind / domain / topic_key / mystery_bias / evidence_value / consumable` 契约写回生成结果。
 - **周循环与状态** 只管理阶段切换与本周新增素材引用；素材正文与跨周保留规则仍由本系统持有。
 - **全球地图、区域与节点可用性** 可能读取关键素材来解锁新节点或区域。
 
@@ -66,6 +102,16 @@ retained = not consumable and not expired
 | `consumable` | bool | true/false | 素材配置 | 是否在生产时被消耗 |
 | `expired` | bool | true/false | 周状态 | 是否因时效失去有效性 |
 | `retained` | bool | true/false | 计算值 | 能否带到下一周 |
+
+### 当前合成消耗规则
+
+| 类型 | 默认规则 |
+|------|----------|
+| `phenomenon` | 在公开报道中默认保留，不因发稿被消耗 |
+| `intel` | 每次参与公开稿件时消耗 |
+| `tool` | 每次参与公开稿件时消耗 1 点 `durability` |
+| `tipoff` | 每次参与 `爆炸性新闻` 时消耗 |
+| `cognition` | 不是库存条目真源，但在公开报道中默认保留，不因发稿被消耗 |
 
 ## 边界情况
 
