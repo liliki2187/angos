@@ -1380,6 +1380,8 @@
             <button type="button" id="tabCognition">认知牌</button>
             <button type="button" id="tabTool">工具牌</button>
             <button type="button" id="tabTipOff">爆料卡</button>
+            <button type="button" id="tabStaff">主笔</button>
+            <button type="button" id="tabTherapy">干预</button>
           </div>
           <div id="synInventory" class="syn-list syn-list-deck"></div>
           <div class="syn-actions">
@@ -1517,6 +1519,15 @@
     nextTopicSeq: 1,
     /** 本周公开合成成功次数，按 primaryTopicKey 计数（合成阶段重置） */
     topicSynthOrder: {},
+    /** 每次进入合成阶段自增，用于主笔内审疲劳（失败锁定至下一合成阶段） */
+    synthSessionId: 0,
+    /** 各主笔：内审相关状态（SAN、下次可内审的 session） */
+    staffInternal: {},
+    /** 合成台用人物卡（引用 STAFF，不消耗） */
+    synthStaffCards: [],
+    therapyCards: [],
+    /** 题材 → 上次公开深度/专栏/爆料取向（sci/occult/pop）；快讯不计入 */
+    lastPublicStanceByTopic: {},
     weekEventResolved: false,
     staffEffects: [],
     dynamicNodes: [],
@@ -2008,7 +2019,7 @@
       "第一周 · 故事合成台",
       [
         `<p style="margin:0;line-height:1.6;">主编，这里是<strong>故事合成台</strong>：左侧是您带回的现象、认知、情报和工具；右侧卡槽决定「这一版周刊要出哪一种公开报道」。</p>`,
-        `<p style="margin:0;line-height:1.6;"><strong>公开报道</strong>：按<strong>红色</strong>槽位提示放入必需素材；<strong>金色虚线</strong>槽可放工具，略抬成功率。<strong>内审定调</strong>（蓝色）：用现象定编辑部口径，生成同主题的「认知」供后续使用，<strong>不直接上版</strong>。</p>`,
+        `<p style="margin:0;line-height:1.6;"><strong>公开报道</strong>：按<strong>红色</strong>槽位放入必需素材；<strong>金色虚线</strong>可放工具。<strong>内审定调</strong>（蓝色）：现象→认知，可选<strong>主笔人物</strong>提高高等级认知概率（承担 SAN）；认知需先内审再用于深度/专栏等。<strong>抢先快讯</strong>不需认知。</p>`,
         `<p style="margin:0;line-height:1.6;"><strong>爆炸性新闻</strong>需要专用<strong>爆料卡</strong>（在左侧「爆料卡」分类；来自探索，无法靠合成「做出来」）。</p>`,
         `<p style="margin:0;line-height:1.6;">关窗后会自动播<strong>拖拽示意</strong>；需要时也可点「合成拖拽演示」。<span style="color:var(--muted);font-size:0.88rem;">本周内本提示只出现一次。</span></p>`,
       ],
@@ -3813,6 +3824,14 @@
     state.synthRecipe = "r1";
     initSynthSlotsForRecipe("r1");
     state.tipOffCards = [];
+    ensureStaffInternalDefaults();
+    state.synthStaffCards = STAFF.map((s) => ({
+      id: `sc_${s.id}`,
+      kind: "staff",
+      staffId: s.id,
+      name: `${s.name}（主笔）`,
+    }));
+    state.therapyCards = [{ id: "th_pack_1", kind: "therapy", name: "心理干预包", uses: 1 }];
     if (state.pendingClues.length) {
       state.tipOffCards.push({
         id: newCardId(),
@@ -3846,16 +3865,6 @@
         tier: clue.tier,
         topicKey: tk,
       });
-      state.cognitionCards.push({
-        id: newCardId(),
-        kind: "cognition",
-        name: rand(COGNITION_NAME_POOL),
-        level: Math.max(1, clue.tier),
-        sourceType: clue.type,
-        credibilityBonus: clue.type === "sci" ? 16 : 8,
-        mysteryBonus: clue.type === "occult" ? 18 : 9,
-        topicKey: tk,
-      });
     }
     const toolN = Math.max(1, Math.min(3, Math.floor(state.pendingClues.length / 2)));
     for (let i = 0; i < toolN; i++) {
@@ -3874,6 +3883,8 @@
     if (tab === "intel") return state.intelCards;
     if (tab === "cognition") return state.cognitionCards;
     if (tab === "tipoff") return state.tipOffCards;
+    if (tab === "staff") return state.synthStaffCards || [];
+    if (tab === "therapy") return state.therapyCards || [];
     return state.toolCards;
   }
 
@@ -3885,16 +3896,105 @@
       ...state.cognitionCards,
       ...state.toolCards,
       ...state.tipOffCards,
+      ...(state.synthStaffCards || []),
+      ...(state.therapyCards || []),
     ];
     return all.find((c) => c.id === id) || null;
   }
 
-  const SYNTH_KIND_ZH = { phenomenon: "现象", intel: "情报", cognition: "认知", tool: "工具", tipoff: "爆料卡" };
+  const SYNTH_KIND_ZH = {
+    phenomenon: "现象",
+    intel: "情报",
+    cognition: "认知",
+    tool: "工具",
+    tipoff: "爆料卡",
+    staff: "人物",
+    therapy: "干预",
+  };
+
+  function ensureStaffInternalDefaults() {
+    for (const s of STAFF) {
+      if (!state.staffInternal[s.id]) {
+        state.staffInternal[s.id] = { san: 100, nextInternalOkSession: 0 };
+      }
+    }
+  }
+
+  /** 恐怖/违反常理：玄学域或现象神秘偏高 */
+  function phenomenonIsDisturbing(phen) {
+    if (!phen) return false;
+    if (phen.domain === "occult") return true;
+    return (phen.mysteryBias || 0) >= 52;
+  }
+
+  function staffInternalMeta(staffId) {
+    ensureStaffInternalDefaults();
+    return state.staffInternal[staffId];
+  }
+
+  function canStaffInternalThisSession(staffId) {
+    const m = staffInternalMeta(staffId);
+    return state.synthSessionId >= (m.nextInternalOkSession || 0);
+  }
+
+  /** 公开报道取向：仅 r2/r3/r4 用认知主导；r1 无 */
+  function derivePublicStance(recipe, cards) {
+    if (recipe === "r1") return null;
+    const cogs = cards.filter((c) => c.kind === "cognition");
+    if (!cogs.length) return null;
+    const score = { sci: 0, occult: 0, pop: 0 };
+    for (const c of cogs) {
+      const k = c.sourceType === "occult" ? "occult" : c.sourceType === "pop" ? "pop" : "sci";
+      score[k] += (c.level || 1) * 2 + 1;
+    }
+    if (score.sci >= score.occult && score.sci >= score.pop) return "sci";
+    if (score.occult >= score.pop) return "occult";
+    return "pop";
+  }
+
+  /** 结算时：公开取向矛盾惩罚（仅深度/专栏/爆料稿带 publicStance；快讯不计） */
+  function stanceClashMultiplierForPlaced(placedPairs) {
+    const lastForTopic = {};
+    for (const { story } of placedPairs) {
+      if (!story.fromExplore || !story.primaryTopicKey || !story.publicStance) continue;
+      lastForTopic[story.primaryTopicKey] = story.publicStance;
+    }
+    let clashes = 0;
+    for (const pk of Object.keys(lastForTopic)) {
+      const next = lastForTopic[pk];
+      const prev = state.lastPublicStanceByTopic[pk];
+      if (prev && prev !== next) clashes += 1;
+      state.lastPublicStanceByTopic[pk] = next;
+    }
+    if (!clashes) return 1;
+    return Math.max(0.72, 1 - 0.09 * clashes);
+  }
+
+  /** 不写入状态，供组版预览 */
+  function peekStanceClashDemandMult(placedPairs) {
+    const lastForTopic = {};
+    for (const { story } of placedPairs) {
+      if (!story.fromExplore || !story.primaryTopicKey || !story.publicStance) continue;
+      lastForTopic[story.primaryTopicKey] = story.publicStance;
+    }
+    let clashes = 0;
+    for (const pk of Object.keys(lastForTopic)) {
+      const next = lastForTopic[pk];
+      const prev = state.lastPublicStanceByTopic[pk];
+      if (prev && prev !== next) clashes += 1;
+    }
+    if (!clashes) return 1;
+    return Math.max(0.72, 1 - 0.09 * clashes);
+  }
 
   function synthSlotLayout(recipe) {
     const tool = { key: "tool", kind: "tool", required: false, label: "工具（可选）" };
     if (recipe === "internal") {
-      return [{ key: "phenomenon", kind: "phenomenon", required: true, label: "现象（内审素材）" }];
+      return [
+        { key: "phenomenon", kind: "phenomenon", required: true, label: "现象（内审素材）" },
+        { key: "staff", kind: "staff", required: false, label: "主笔人物（可选·提高高等级认知）" },
+        { key: "therapy", kind: "therapy", required: false, label: "心理干预（可选·解除主笔疲劳）" },
+      ];
     }
     if (recipe === "r1") {
       return [
@@ -3978,7 +4078,7 @@
     const nIntel = cards.filter((c) => c.kind === "intel").length;
     const nCog = cards.filter((c) => c.kind === "cognition").length;
     const nTip = cards.filter((c) => c.kind === "tipoff").length;
-    if (recipe === "internal") return nPhen >= 1 && cards.length >= 1;
+    if (recipe === "internal") return nPhen >= 1;
     if (recipe === "r1") return nPhen >= 1 && nIntel >= 1;
     if (recipe === "r2") return nPhen >= 1 && nCog >= 1;
     if (recipe === "r3") return nCog >= 2;
@@ -3996,10 +4096,22 @@
 
   function buildSynthPreview(recipe, cards) {
     if (recipe === "internal") {
-      if (!cards.length) return "内审定调：请将 1 张现象牌拖入右侧蓝色卡槽，再点「生成认知」。产出为认知牌，不进入「已合成报道」。";
+      if (!cards.length) return "内审定调：请将 1 张现象牌拖入蓝色槽；可选拖入主笔人物、心理干预包。认知仅由内审生成，不直接上版。";
       const names = cards.map((c) => c.name).join(" + ");
       const ok = validateRecipe(recipe, cards);
-      return `${recipeLabel(recipe)}\n槽内：${names}\n${ok ? "可执行：不消耗现象牌，生成 1 张认知牌（与现象同题材）。" : "需且仅需 1 张现象牌。"}`;
+      const phen = cards.find((c) => c.kind === "phenomenon");
+      const st = cards.find((c) => c.kind === "staff");
+      const disturbing = phenomenonIsDisturbing(phen);
+      const staffLine = st
+        ? canStaffInternalThisSession(st.staffId)
+          ? `主笔 ${st.name}：SAN ${staffInternalMeta(st.staffId).san}，可执行内审。`
+          : `主笔 ${st.name}：本阶段尚在休整，需下一合成阶段或心理干预后再试。`
+        : "无主笔：低等级认知概率高，高等级概率很低；异常题材尝试仍可能波动编辑部狂性。";
+      const odds = st
+        ? "（有主笔）失败约 12%；成功时 Lv.4+ 约 12%。"
+        : "（无主笔）失败约 8%；成功时多为 Lv.1–2，Lv.3+ 很低。";
+      const occ = disturbing ? "\n本现象偏异常：每次尝试可能伤主笔 SAN；成功则宏观「狂性」上升。" : "";
+      return `${recipeLabel(recipe)}\n槽内：${names}\n${ok ? `可执行内审判定。${odds}\n${staffLine}${occ}` : "至少需要 1 张现象牌。"}`;
     }
     if (!cards.length) return "尚未放入素材。请将左侧卡牌拖入右侧红色必要槽；虚线槽为可选工具位。爆炸性新闻需另拖入「爆料卡」（仅特殊途径获得，不可合成）。";
     const names = cards.map((c) => c.name).join(" + ");
@@ -4098,6 +4210,7 @@
     const topicKeys = [...new Set(substanceForTopic.map((c) => c.topicKey).filter(Boolean))];
     const phenCard = substanceForTopic.find((c) => c.kind === "phenomenon");
     const primaryTopicKey = phenCard?.topicKey || substanceForTopic.find((c) => c.topicKey)?.topicKey || null;
+    const publicStance = derivePublicStance(recipe, cards);
     return {
       id: state.nextStoryId++,
       title,
@@ -4112,6 +4225,7 @@
       fromExplore: true,
       attrs: { sensational, credibility, mystery: mysteryScore, gaze },
       recipeType: recipe,
+      publicStance,
     };
   }
 
@@ -4141,7 +4255,15 @@
               ? `<span class="syn-badge">等级 ${c.level}</span>`
               : c.kind === "tipoff"
                 ? `<span class="syn-badge">特殊</span><span class="syn-badge">不可合成</span>`
-                : `<span class="syn-badge">证据 ${c.evidenceValue || 0}</span>`;
+                : c.kind === "staff"
+                  ? `<span class="syn-badge">SAN ${staffInternalMeta(c.staffId).san}</span>${
+                      canStaffInternalThisSession(c.staffId)
+                        ? `<span class="syn-badge">可内审</span>`
+                        : `<span class="syn-badge" style="border-color:#f87171;color:#fecaca">休整中</span>`
+                    }`
+                  : c.kind === "therapy"
+                    ? `<span class="syn-badge">解除疲劳</span>`
+                    : `<span class="syn-badge">证据 ${c.evidenceValue || 0}</span>`;
         return `<div class="syn-item syn-item-draggable${placed ? " syn-item-slotted" : ""}" draggable="true" data-card="${c.id}" data-kind="${c.kind}" title="拖到右侧卡槽">
           <strong>${escapeHtml(c.name)}</strong>
           <div class="syn-badges"><span class="syn-badge">${c.kind}</span>${topicChip}${badge}</div>
@@ -4207,7 +4329,9 @@
         const id = state.synthCraftSlots[s.key];
         const cls =
           state.synthRecipe === "internal"
-            ? "syn-slot-cell syn-slot-internal"
+            ? s.required
+              ? "syn-slot-cell syn-slot-internal"
+              : "syn-slot-cell syn-slot-internal syn-slot-optional"
             : s.required
               ? "syn-slot-cell syn-slot-required"
               : "syn-slot-cell syn-slot-optional";
@@ -4266,7 +4390,7 @@
     if (el.synthesisHint) {
       if (state.synthRecipe === "internal") {
         el.synthesisHint.textContent =
-          "蓝色为编辑部内审（非公开）：不消耗现象牌，生成与现象同题材的认知牌。爆料卡仅「爆炸性新闻」需要；公开报道侧情报为消耗性材料。";
+          "内审独立于报道合成：现象→认知；可选主笔（提高高等级概率、承担 SAN）。心理干预可解除主笔本阶段疲劳。异常题材成功会增加宏观「狂性」。抢先快讯不计公开取向，深度/专栏/爆料若与既往同题取向矛盾，上版时需求受罚。";
       } else {
         el.synthesisHint.textContent = `配方说明：${recipeLabel(state.synthRecipe)}。现象与认知可反复用于公开报道；情报为材料每次合成会消耗。爆料与工具按原规则。同题材本周多篇公开稿上版时报纸结算基础值递减。`;
       }
@@ -4285,33 +4409,85 @@
     renderSynthReports();
   }
 
-  function runInternalReview(phen) {
-    const newCog = {
-      id: newCardId(),
-      kind: "cognition",
-      name: rand(COGNITION_NAME_POOL),
-      level: clamp((phen.tier || 1) + randomInt(0, 2), 1, 10),
-      sourceType: phen.domain,
-      credibilityBonus: phen.evidenceValue > 60 ? 16 : 10,
-      mysteryBonus: phen.mysteryBias > 55 ? 16 : 8,
-      topicKey: phen.topicKey || null,
-    };
-    state.cognitionCards.push(newCog);
-    log(`内审定调完成：获得认知牌「${newCog.name}」（Lv.${newCog.level}），现象牌仍保留。`);
-  }
-
   function craftReport() {
     const cards = selectedSynthCards();
     const recipe = state.synthRecipe;
     if (recipe === "internal") {
       const phen = cards.find((c) => c.kind === "phenomenon");
+      const staffCard = cards.find((c) => c.kind === "staff");
+      const therapyCard = cards.find((c) => c.kind === "therapy");
       if (!phen || !validateRecipe(recipe, cards)) {
         log("内审失败：请将 1 张现象牌拖入蓝色卡槽。");
         renderSynthesis();
         return;
       }
-      runInternalReview(phen);
+      if (therapyCard) {
+        if (staffCard) {
+          staffInternalMeta(staffCard.staffId).nextInternalOkSession = 0;
+        } else {
+          for (const s of STAFF) staffInternalMeta(s.id).nextInternalOkSession = 0;
+        }
+        state.therapyCards = (state.therapyCards || []).filter((c) => c.id !== therapyCard.id);
+        if (state.synthCraftSlots) state.synthCraftSlots.therapy = null;
+        log("心理干预已使用：解除主笔内审疲劳（本合成阶段可再试）。");
+      }
+      if (staffCard && !canStaffInternalThisSession(staffCard.staffId)) {
+        log("该主笔尚在休整，本阶段无法再次内审（请用心理干预或待下一周合成阶段）。");
+        renderSynthesis();
+        return;
+      }
+      const disturbing = phenomenonIsDisturbing(phen);
+      if (staffCard && disturbing && Math.random() < 0.3) {
+        const m = staffInternalMeta(staffCard.staffId);
+        m.san = clamp(m.san - randomInt(2, 6), 0, 100);
+        log(`接触异常题材尝试：${staffCard.name.replace("（主笔）", "")} SAN 波动（剩余 ${m.san}）。`);
+      }
+      const hasStaff = !!staffCard;
+      const failP = hasStaff ? 0.12 : 0.08;
+      if (Math.random() < failP) {
+        if (staffCard) {
+          const m = staffInternalMeta(staffCard.staffId);
+          m.nextInternalOkSession = state.synthSessionId + 1;
+          if (disturbing && Math.random() < 0.42) m.san = clamp(m.san - randomInt(3, 9), 0, 100);
+          else if (Math.random() < 0.28) m.san = clamp(m.san - randomInt(1, 5), 0, 100);
+        }
+        log(`内审判定失败（成功率 ${((1 - failP) * 100).toFixed(0)}%）。${hasStaff ? "主笔需休整至下一合成阶段方可再内审。" : ""}`);
+        renderMacro();
+        renderSynthesis();
+        return;
+      }
+      let level = 1;
+      if (hasStaff) {
+        const t = Math.random();
+        if (t < 0.22) level = 2;
+        else if (t < 0.58) level = 3;
+        else if (t < 0.88) level = 4;
+        else level = 5;
+      } else {
+        const t = Math.random();
+        if (t < 0.7) level = 1;
+        else if (t < 0.95) level = 2;
+        else level = 3;
+      }
+      level = clamp(level + Math.floor((phen.tier || 1) / 3), 1, 8);
+      if (disturbing) {
+        macro.狂性 = Math.min(100, macro.狂性 + randomInt(1, 4));
+        log("异常题材认知成立：编辑部宏观「狂性」上升。");
+      }
+      const newCog = {
+        id: newCardId(),
+        kind: "cognition",
+        name: rand(COGNITION_NAME_POOL),
+        level,
+        sourceType: phen.domain || "sci",
+        credibilityBonus: phen.evidenceValue > 60 ? 16 : 10,
+        mysteryBonus: phen.mysteryBias > 55 ? 16 : 8,
+        topicKey: phen.topicKey || null,
+      };
+      state.cognitionCards.push(newCog);
+      log(`内审定调完成：获得认知牌「${newCog.name}」（Lv.${newCog.level}），现象牌仍保留。`);
       initSynthSlotsForRecipe("internal");
+      renderMacro();
       renderSynthesis();
       return;
     }
@@ -4351,6 +4527,7 @@
     state.pendingClues = state.clues.slice();
     state.clues = [];
     initSynthesisFromClues();
+    state.synthSessionId = (state.synthSessionId || 0) + 1;
     document.getElementById("phase-explore").classList.add("hidden");
     document.getElementById("phase-synthesis").classList.remove("hidden");
     document.getElementById("phase-editorial").classList.add("hidden");
@@ -4523,7 +4700,9 @@
       mBias = Math.max(0.75, 1 - 0.25 * overflow);
     }
     const mBalance = publicRatio >= 0.25 && publicRatio <= 0.55 && lightRatio >= 0.2 && lightRatio <= 0.5 ? 1.06 : 1;
-    const demand = state.baseDemand * mQuality * mCombo * mDiversity * mLayout * mEmpty * mPenalty * mLink * mBalance * mBias;
+    const mStanceClash = isSettle ? stanceClashMultiplierForPlaced(placed) : 1;
+    const demand =
+      state.baseDemand * mQuality * mCombo * mDiversity * mLayout * mEmpty * mPenalty * mLink * mBalance * mBias * mStanceClash;
     const sold = Math.min(Math.round(demand), state.printCapacity);
     const stockoutRate = demand <= 0 ? 0 : Math.max(0, (demand - sold) / demand);
     const circulationRevenue = sold * state.coverPrice;
@@ -4559,7 +4738,22 @@
       linkedTags,
       linkCount,
       negPenaltyPoints,
-      multipliers: { mQuality, comboBase, comboProfileBoost, mCombo, mDiversityBase, diversityStyleBoost, mDiversity, mLayout, mEmpty, mPenalty, mLink, mBalance, mBias },
+      multipliers: {
+        mQuality,
+        comboBase,
+        comboProfileBoost,
+        mCombo,
+        mDiversityBase,
+        diversityStyleBoost,
+        mDiversity,
+        mLayout,
+        mEmpty,
+        mPenalty,
+        mLink,
+        mBalance,
+        mBias,
+        mStanceClash,
+      },
       demand,
       sold,
       stockoutRate,
@@ -4625,11 +4819,15 @@
       const ex = story.fromExplore ? `<span class="nm-chip ex">探索稿</span>` : "";
       const effB = effectiveStoryBase(story);
       const intrB = story.intrinsicBaseValue != null ? story.intrinsicBaseValue : story.baseValue;
+      const stanceChip =
+        story.publicStance && story.fromExplore
+          ? `<span class="nm-chip">公开取向:${story.publicStance === "sci" ? "科学纪实" : story.publicStance === "occult" ? "神秘玄学" : "世俗流量"}</span>`
+          : "";
       const baseChip =
         story.fromExplore && story.primaryTopicKey
           ? `<span class="nm-chip">上版有效基础:${effB}${intrB !== effB ? `（稿内${intrB}）` : ""}</span><span class="nm-chip">题材${shortTopicLabel(story.primaryTopicKey)}</span>${
               story.synthTopicOrder ? `<span class="nm-chip">本周稿序${story.synthTopicOrder}</span>` : ""
-            }`
+            }${stanceChip}`
           : `<span class="nm-chip">基础值:${story.baseValue}</span>`;
       card.innerHTML = `
         <div class="nm-story-title">${escapeHtml(story.title)}</div>
@@ -4870,7 +5068,9 @@
 
   function renderLiveStats() {
     const r = calculate(false);
-    const effects = analyzeTagEffects(getAllPlaced().map((x) => x.story));
+    const placed = getAllPlaced();
+    const peekMult = peekStanceClashDemandMult(placed);
+    const effects = analyzeTagEffects(placed.map((x) => x.story));
     const profileLabel = state.editorialProfile <= -35 ? "信息型" : state.editorialProfile >= 35 ? "热度型" : "平衡型";
     el.liveStats.innerHTML = `
       <div class="k">已填版位</div><div class="v">${r.placedCount}/${slots.length}</div>
@@ -4879,9 +5079,10 @@
       <div class="k">重复成组分</div><div class="v">${r.comboRaw.toFixed(2)}</div>
       <div class="k">连携题材</div><div class="v ${effects.linked.length ? "nm-ok" : "nm-warn"}">${effects.linked.length ? effects.linked.map(toZhTag).join("、") : "无"}</div>
       <div class="k">三轴 P/M/L</div><div class="v ${effects.dominantRatio > 0.7 ? "nm-bad" : "nm-ok"}">${Math.round(effects.publicRatio * 100)}/${Math.round(effects.massRatio * 100)}/${Math.round(effects.lightRatio * 100)}%</div>
-      <div class="k">预计需求</div><div class="v">${Math.round(r.demand).toLocaleString("zh-CN")}</div>
+      <div class="k">预计需求</div><div class="v">${Math.round(r.demand * peekMult).toLocaleString("zh-CN")}${peekMult < 1 ? "（已乘取向预览）" : ""}</div>
       <div class="k">订阅基数</div><div class="v">${state.subscribers.toLocaleString("zh-CN")}</div>
-      <div class="k">有效基础（版内）</div><div class="v">${r.totalBaseValue}${r.topicFatigueLoss > 0 ? ` <span style="color:#fca5a5">−${r.topicFatigueLoss}同题</span>` : ""}</div>`;
+      <div class="k">有效基础（版内）</div><div class="v">${r.totalBaseValue}${r.topicFatigueLoss > 0 ? ` <span style="color:#fca5a5">−${r.topicFatigueLoss}同题</span>` : ""}</div>
+      <div class="k">公开取向（预览）</div><div class="v ${peekMult < 1 ? "nm-warn" : "nm-ok"}">${peekMult >= 1 ? "与既往刊登无冲突" : `若本期结算，需求约×${peekMult.toFixed(2)}（深度/专栏取向与既往同题不一致）`}</div>`;
   }
 
   function settlePaper() {
@@ -4904,7 +5105,12 @@
         <div class="k">订阅（下期）</div><div class="v">${r.nextSubs.toLocaleString("zh-CN")}</div>
       </div>
       <div class="nm-tip">乘数：质量 ${r.multipliers.mQuality.toFixed(2)} / 重复 ${r.multipliers.mCombo.toFixed(2)} / 多样性 ${r.multipliers.mDiversity.toFixed(2)} / 版位 ${r.multipliers.mLayout.toFixed(2)} / 偏科 ${r.multipliers.mBias.toFixed(2)}</div>
-      <div class="nm-tip" style="margin-top:6px;">同题报道：稿内基础合计 ${r.sumIntrinsicBase} → 上版有效合计 ${r.totalBaseValue}${r.topicFatigueLoss > 0 ? `（同题疲劳折损 ${r.topicFatigueLoss} 点基础值）` : "（无同题折损）"}</div>`;
+      <div class="nm-tip" style="margin-top:6px;">同题报道：稿内基础合计 ${r.sumIntrinsicBase} → 上版有效合计 ${r.totalBaseValue}${r.topicFatigueLoss > 0 ? `（同题疲劳折损 ${r.topicFatigueLoss} 点基础值）` : "（无同题折损）"}</div>
+      ${
+        r.multipliers.mStanceClash < 1
+          ? `<div class="nm-tip" style="margin-top:6px;color:#fca5a5;">本期存在<strong>同题公开取向</strong>与既往深度/专栏/爆料不一致，需求已按 ×${r.multipliers.mStanceClash.toFixed(2)} 折算（抢先快讯不计取向）。</div>`
+          : ""
+      }`;
     renderLiveStats();
     document.getElementById("summaryText").innerHTML = `
       第 <strong>${state.week}</strong> 周报刊已结算：净利润 <strong>${fmtMoney(r.profit)}</strong>，
@@ -5033,6 +5239,20 @@
       state.synthTab = "tipoff";
       renderSynthesis();
     };
+    const tabStaff = document.getElementById("tabStaff");
+    if (tabStaff) {
+      tabStaff.onclick = () => {
+        state.synthTab = "staff";
+        renderSynthesis();
+      };
+    }
+    const tabTherapy = document.getElementById("tabTherapy");
+    if (tabTherapy) {
+      tabTherapy.onclick = () => {
+        state.synthTab = "therapy";
+        renderSynthesis();
+      };
+    }
     document.getElementById("recipeInternal").onclick = () => {
       state.synthRecipe = "internal";
       initSynthSlotsForRecipe("internal");
@@ -5060,6 +5280,8 @@
   function createPaperLabReports() {
     const mk = (title, tags, quality, baseValue, negatives, attrs, recipeType, labTopicIdx) => {
       const pk = `topic_paperlab_${labTopicIdx}`;
+      const publicStance =
+        recipeType === "r1" ? null : recipeType === "r3" || recipeType === "r4" ? "occult" : "sci";
       return {
         id: state.nextStoryId++,
         title,
@@ -5074,6 +5296,7 @@
         fromExplore: true,
         attrs,
         recipeType,
+        publicStance,
       };
     };
     return [

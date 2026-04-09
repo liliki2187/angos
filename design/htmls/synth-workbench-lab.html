@@ -113,8 +113,9 @@
   <div id="app">
     <h1>故事合成台 · 独立实验</h1>
     <div class="lab-banner">
-      本页与正式合成台对齐：<strong>抢先快讯 / 深度报道 / 个人专栏 / 爆炸性新闻（需爆料卡）/ 内审定调（蓝色）</strong>。公开合成<strong>不消耗现象与认知</strong>，<strong>情报为材料会消耗</strong>；同题材本周多篇上版时报纸结算基础值递减。假素材可「重新载入」。
-      完整流程请打开仓库根目录 <code>world-mysteries-full-chain.html</code>。
+      本页与正式合成台对齐：<strong>抢先快讯 / 深度 / 专栏 / 爆炸性新闻 / 内审定调（蓝色）</strong>。认知<strong>仅由内审</strong>生成；内审可选<strong>主笔</strong>（SAN、高等级概率）与<strong>心理干预</strong>；异常题材成功增加宏观<strong>狂性</strong>（本页右上角显示）。
+      公开合成不消耗现象与认知，情报消耗。假素材可「重新载入」。全链请打开 <code>world-mysteries-full-chain.html</code>。
+      <span id="labMacroLine" style="display:block;margin-top:6px;color:var(--gold-dim);">编辑部狂性（宏观）：<strong id="labMadnessVal">22</strong></span>
     </div>
     <div class="syn-grid">
       <section class="syn-card">
@@ -126,6 +127,8 @@
           <button type="button" id="tabCognition">认知牌</button>
           <button type="button" id="tabTool">工具牌</button>
           <button type="button" id="tabTipOff">爆料卡</button>
+          <button type="button" id="tabStaff">主笔</button>
+          <button type="button" id="tabTherapy">干预</button>
         </div>
         <div id="synInventory" class="syn-list syn-list-deck"></div>
         <div class="syn-actions">
@@ -194,6 +197,13 @@
     return `港区${rand(pool)}异常`;
   }
 
+  const labMacro = { 狂性: 22 };
+  const LAB_STAFF = [
+    { id: "ls1", name: "方楷" },
+    { id: "ls2", name: "林夜" },
+    { id: "ls3", name: "艾澄" },
+  ];
+
   const state = {
     phenomenonCards: [],
     intelCards: [],
@@ -209,6 +219,10 @@
     nextStoryId: 1,
     nextTopicSeq: 1,
     topicSynthOrder: {},
+    synthSessionId: 0,
+    staffInternal: {},
+    synthStaffCards: [],
+    therapyCards: [],
   };
 
   const el = {
@@ -235,6 +249,49 @@
     return `topic_${state.nextTopicSeq++}`;
   }
 
+  function ensureStaffInternalDefaults() {
+    for (const s of LAB_STAFF) {
+      if (!state.staffInternal[s.id]) {
+        state.staffInternal[s.id] = { san: 100, nextInternalOkSession: 0 };
+      }
+    }
+  }
+
+  function phenomenonIsDisturbing(phen) {
+    if (!phen) return false;
+    if (phen.domain === "occult") return true;
+    return (phen.mysteryBias || 0) >= 52;
+  }
+
+  function staffInternalMeta(staffId) {
+    ensureStaffInternalDefaults();
+    return state.staffInternal[staffId];
+  }
+
+  function canStaffInternalThisSession(staffId) {
+    const m = staffInternalMeta(staffId);
+    return state.synthSessionId >= (m.nextInternalOkSession || 0);
+  }
+
+  function derivePublicStance(recipe, cards) {
+    if (recipe === "r1") return null;
+    const cogs = cards.filter((c) => c.kind === "cognition");
+    if (!cogs.length) return null;
+    const score = { sci: 0, occult: 0, pop: 0 };
+    for (const c of cogs) {
+      const k = c.sourceType === "occult" ? "occult" : c.sourceType === "pop" ? "pop" : "sci";
+      score[k] += (c.level || 1) * 2 + 1;
+    }
+    if (score.sci >= score.occult && score.sci >= score.pop) return "sci";
+    if (score.occult >= score.pop) return "occult";
+    return "pop";
+  }
+
+  function updateLabMadnessDisplay() {
+    const n = document.getElementById("labMadnessVal");
+    if (n) n.textContent = String(labMacro.狂性);
+  }
+
   function qualityFromScore(score) {
     if (score >= 220) return QUALITY[2];
     if (score >= 140) return QUALITY[1];
@@ -255,11 +312,7 @@
       { id: newCardId(), kind: "intel", name: "罗斯威尔 相关情报", sourceType: "sci", evidenceValue: 52, rumorValue: 18, tier: 3, topicKey: tRos },
       { id: newCardId(), kind: "intel", name: "港区 相关情报", sourceType: "pop", evidenceValue: 40, rumorValue: 30, tier: 2, topicKey: tPort },
     ];
-    state.cognitionCards = [
-      { id: newCardId(), kind: "cognition", name: rand(COGNITION_NAME_POOL), level: 3, sourceType: "sci", credibilityBonus: 14, mysteryBonus: 8, topicKey: tRos },
-      { id: newCardId(), kind: "cognition", name: rand(COGNITION_NAME_POOL), level: 2, sourceType: "occult", credibilityBonus: 8, mysteryBonus: 16, topicKey: tTun },
-      { id: newCardId(), kind: "cognition", name: rand(COGNITION_NAME_POOL), level: 4, sourceType: "pop", credibilityBonus: 10, mysteryBonus: 10, topicKey: tPort },
-    ];
+    state.cognitionCards = [];
     state.toolCards = [
       { id: newCardId(), kind: "tool", name: rand(TOOL_NAME_POOL), durability: 2, bonus: 10 },
       { id: newCardId(), kind: "tool", name: rand(TOOL_NAME_POOL), durability: 2, bonus: 12 },
@@ -278,7 +331,17 @@
     state.synthRecipe = "r1";
     initSynthSlotsForRecipe("r1");
     state.synthTab = "phenomenon";
-    log("已载入假数据。");
+    ensureStaffInternalDefaults();
+    state.synthSessionId = (state.synthSessionId || 0) + 1;
+    state.synthStaffCards = LAB_STAFF.map((s) => ({
+      id: `sc_${s.id}`,
+      kind: "staff",
+      staffId: s.id,
+      name: `${s.name}（主笔）`,
+    }));
+    state.therapyCards = [{ id: "th_pack_1", kind: "therapy", name: "心理干预包", uses: 1 }];
+    updateLabMadnessDisplay();
+    log("已载入假数据（认知需内审生成）。");
   }
 
   function getInventoryByTab(tab) {
@@ -286,6 +349,8 @@
     if (tab === "intel") return state.intelCards;
     if (tab === "cognition") return state.cognitionCards;
     if (tab === "tipoff") return state.tipOffCards;
+    if (tab === "staff") return state.synthStaffCards || [];
+    if (tab === "therapy") return state.therapyCards || [];
     return state.toolCards;
   }
 
@@ -297,16 +362,30 @@
       ...state.cognitionCards,
       ...state.toolCards,
       ...state.tipOffCards,
+      ...(state.synthStaffCards || []),
+      ...(state.therapyCards || []),
     ];
     return all.find((c) => c.id === id) || null;
   }
 
-  const SYNTH_KIND_ZH = { phenomenon: "现象", intel: "情报", cognition: "认知", tool: "工具", tipoff: "爆料卡" };
+  const SYNTH_KIND_ZH = {
+    phenomenon: "现象",
+    intel: "情报",
+    cognition: "认知",
+    tool: "工具",
+    tipoff: "爆料卡",
+    staff: "人物",
+    therapy: "干预",
+  };
 
   function synthSlotLayout(recipe) {
     const tool = { key: "tool", kind: "tool", required: false, label: "工具（可选）" };
     if (recipe === "internal") {
-      return [{ key: "phenomenon", kind: "phenomenon", required: true, label: "现象（内审素材）" }];
+      return [
+        { key: "phenomenon", kind: "phenomenon", required: true, label: "现象（内审素材）" },
+        { key: "staff", kind: "staff", required: false, label: "主笔人物（可选）" },
+        { key: "therapy", kind: "therapy", required: false, label: "心理干预（可选）" },
+      ];
     }
     if (recipe === "r1") {
       return [
@@ -387,7 +466,7 @@
     const nIntel = cards.filter((c) => c.kind === "intel").length;
     const nCog = cards.filter((c) => c.kind === "cognition").length;
     const nTip = cards.filter((c) => c.kind === "tipoff").length;
-    if (recipe === "internal") return nPhen >= 1 && cards.length >= 1;
+    if (recipe === "internal") return nPhen >= 1;
     if (recipe === "r1") return nPhen >= 1 && nIntel >= 1;
     if (recipe === "r2") return nPhen >= 1 && nCog >= 1;
     if (recipe === "r3") return nCog >= 2;
@@ -405,10 +484,19 @@
 
   function buildSynthPreview(recipe, cards) {
     if (recipe === "internal") {
-      if (!cards.length) return "内审定调：将 1 张现象牌拖入蓝色卡槽，再点「生成认知」。不上版、不进下方报道列表。";
+      if (!cards.length) return "内审：现象 + 可选主笔 + 可选心理干预。认知仅由此生成。";
       const names = cards.map((c) => c.name).join(" + ");
       const ok = validateRecipe(recipe, cards);
-      return `${recipeLabel(recipe)}\n槽内：${names}\n${ok ? "可执行：不消耗现象牌，生成 1 张同题材认知牌。" : "需且仅需 1 张现象牌。"}`;
+      const phen = cards.find((c) => c.kind === "phenomenon");
+      const st = cards.find((c) => c.kind === "staff");
+      const disturbing = phenomenonIsDisturbing(phen);
+      const staffLine = st
+        ? canStaffInternalThisSession(st.staffId)
+          ? `主笔 SAN ${staffInternalMeta(st.staffId).san}`
+          : "主笔本阶段休整中"
+        : "无主笔：高等级认知概率很低";
+      const occ = disturbing ? "；异常题材：尝试可能扣 SAN，成功则狂性↑" : "";
+      return `${recipeLabel(recipe)}\n${names}\n${ok ? `可执行。${staffLine}${occ}` : "需至少 1 张现象"}`;
     }
     if (!cards.length) {
       return "尚未放入素材。红色必要槽、金色虚线工具（可选）。爆炸性新闻需「爆料卡」分类中的特殊牌。";
@@ -505,6 +593,7 @@
     const topicKeys = [...new Set(substanceForTopic.map((c) => c.topicKey).filter(Boolean))];
     const phenCard = substanceForTopic.find((c) => c.kind === "phenomenon");
     const primaryTopicKey = phenCard?.topicKey || substanceForTopic.find((c) => c.topicKey)?.topicKey || null;
+    const publicStance = derivePublicStance(recipe, cards);
     return {
       id: state.nextStoryId++,
       title,
@@ -519,6 +608,7 @@
       fromExplore: true,
       attrs: { sensational, credibility, mystery: mysteryScore, gaze },
       recipeType: recipe,
+      publicStance,
     };
   }
 
@@ -548,7 +638,15 @@
               ? `<span class="syn-badge">等级 ${c.level}</span>`
               : c.kind === "tipoff"
                 ? `<span class="syn-badge">特殊</span><span class="syn-badge">不可合成</span>`
-                : `<span class="syn-badge">证据 ${c.evidenceValue || 0}</span>`;
+                : c.kind === "staff"
+                  ? `<span class="syn-badge">SAN ${staffInternalMeta(c.staffId).san}</span>${
+                      canStaffInternalThisSession(c.staffId)
+                        ? `<span class="syn-badge">可内审</span>`
+                        : `<span class="syn-badge" style="border-color:#f87171;color:#fecaca">休整</span>`
+                    }`
+                  : c.kind === "therapy"
+                    ? `<span class="syn-badge">解疲劳</span>`
+                    : `<span class="syn-badge">证据 ${c.evidenceValue || 0}</span>`;
         return `<div class="syn-item syn-item-draggable${placed ? " syn-item-slotted" : ""}" draggable="true" data-card="${c.id}" data-kind="${c.kind}" title="拖到右侧卡槽">
           <strong>${escapeHtml(c.name)}</strong>
           <div class="syn-badges"><span class="syn-badge">${c.kind}</span>${topicChip}${badge}</div>
@@ -610,7 +708,9 @@
         const id = state.synthCraftSlots[s.key];
         const cls =
           state.synthRecipe === "internal"
-            ? "syn-slot-cell syn-slot-internal"
+            ? s.required
+              ? "syn-slot-cell syn-slot-internal"
+              : "syn-slot-cell syn-slot-internal syn-slot-optional"
             : s.required
               ? "syn-slot-cell syn-slot-required"
               : "syn-slot-cell syn-slot-optional";
@@ -665,7 +765,7 @@
     if (el.synthesisHint) {
       if (state.synthRecipe === "internal") {
         el.synthesisHint.textContent =
-          "蓝色为内审定调（非公开）：不消耗现象，生成同题材认知。公开侧情报为消耗材料；爆炸性新闻需爆料卡。";
+          "内审：现象→认知，可选主笔与心理干预。异常题材成功增加编辑部狂性（横幅显示）。深度/专栏需先内审出认知。";
       } else {
         el.synthesisHint.textContent = `配方：${recipeLabel(state.synthRecipe)}。现象与认知可反复使用；情报每次合成消耗；同题材多篇上版时基础值递减。`;
       }
@@ -682,21 +782,7 @@
     const ri = document.getElementById("recipeInternal");
     if (ri) ri.classList.toggle("primary", state.synthRecipe === "internal");
     renderSynthReports();
-  }
-
-  function runInternalReview(phen) {
-    const newCog = {
-      id: newCardId(),
-      kind: "cognition",
-      name: rand(COGNITION_NAME_POOL),
-      level: clamp((phen.tier || 1) + randomInt(0, 2), 1, 10),
-      sourceType: phen.domain,
-      credibilityBonus: phen.evidenceValue > 60 ? 16 : 10,
-      mysteryBonus: phen.mysteryBias > 55 ? 16 : 8,
-      topicKey: phen.topicKey || null,
-    };
-    state.cognitionCards.push(newCog);
-    log(`内审定调完成：认知牌「${newCog.name}」Lv.${newCog.level}，现象牌仍保留`);
+    updateLabMadnessDisplay();
   }
 
   function craftReport() {
@@ -704,13 +790,77 @@
     const recipe = state.synthRecipe;
     if (recipe === "internal") {
       const phen = cards.find((c) => c.kind === "phenomenon");
+      const staffCard = cards.find((c) => c.kind === "staff");
+      const therapyCard = cards.find((c) => c.kind === "therapy");
       if (!phen || !validateRecipe(recipe, cards)) {
         log("内审失败：请将 1 张现象牌拖入蓝色卡槽。");
         renderSynthesis();
         return;
       }
-      runInternalReview(phen);
+      if (therapyCard) {
+        if (staffCard) staffInternalMeta(staffCard.staffId).nextInternalOkSession = 0;
+        else LAB_STAFF.forEach((s) => { staffInternalMeta(s.id).nextInternalOkSession = 0; });
+        state.therapyCards = (state.therapyCards || []).filter((c) => c.id !== therapyCard.id);
+        if (state.synthCraftSlots) state.synthCraftSlots.therapy = null;
+        log("心理干预：已解除主笔内审疲劳。");
+      }
+      if (staffCard && !canStaffInternalThisSession(staffCard.staffId)) {
+        log("该主笔尚在休整，本阶段无法内审。");
+        renderSynthesis();
+        return;
+      }
+      const disturbing = phenomenonIsDisturbing(phen);
+      if (staffCard && disturbing && Math.random() < 0.3) {
+        const m = staffInternalMeta(staffCard.staffId);
+        m.san = clamp(m.san - randomInt(2, 6), 0, 100);
+        log(`异常题材尝试：主笔 SAN→${m.san}`);
+      }
+      const hasStaff = !!staffCard;
+      const failP = hasStaff ? 0.12 : 0.08;
+      if (Math.random() < failP) {
+        if (staffCard) {
+          const m = staffInternalMeta(staffCard.staffId);
+          m.nextInternalOkSession = state.synthSessionId + 1;
+          if (disturbing && Math.random() < 0.42) m.san = clamp(m.san - randomInt(3, 9), 0, 100);
+          else if (Math.random() < 0.28) m.san = clamp(m.san - randomInt(1, 5), 0, 100);
+        }
+        log(`内审判定失败。${hasStaff ? "主笔需待下一载入阶段再试。" : ""}`);
+        updateLabMadnessDisplay();
+        renderSynthesis();
+        return;
+      }
+      let level = 1;
+      if (hasStaff) {
+        const t = Math.random();
+        if (t < 0.22) level = 2;
+        else if (t < 0.58) level = 3;
+        else if (t < 0.88) level = 4;
+        else level = 5;
+      } else {
+        const t = Math.random();
+        if (t < 0.7) level = 1;
+        else if (t < 0.95) level = 2;
+        else level = 3;
+      }
+      level = clamp(level + Math.floor((phen.tier || 1) / 3), 1, 8);
+      if (disturbing) {
+        labMacro.狂性 = Math.min(100, labMacro.狂性 + randomInt(1, 4));
+        log("异常题材认知成立：编辑部狂性上升。");
+      }
+      const newCog = {
+        id: newCardId(),
+        kind: "cognition",
+        name: rand(COGNITION_NAME_POOL),
+        level,
+        sourceType: phen.domain || "sci",
+        credibilityBonus: phen.evidenceValue > 60 ? 16 : 10,
+        mysteryBonus: phen.mysteryBias > 55 ? 16 : 8,
+        topicKey: phen.topicKey || null,
+      };
+      state.cognitionCards.push(newCog);
+      log(`内审完成：「${newCog.name}」Lv.${newCog.level}`);
       initSynthSlotsForRecipe("internal");
+      updateLabMadnessDisplay();
       renderSynthesis();
       return;
     }
@@ -751,6 +901,8 @@
     document.getElementById("tabCognition").onclick = () => { state.synthTab = "cognition"; renderSynthesis(); };
     document.getElementById("tabTool").onclick = () => { state.synthTab = "tool"; renderSynthesis(); };
     document.getElementById("tabTipOff").onclick = () => { state.synthTab = "tipoff"; renderSynthesis(); };
+    document.getElementById("tabStaff").onclick = () => { state.synthTab = "staff"; renderSynthesis(); };
+    document.getElementById("tabTherapy").onclick = () => { state.synthTab = "therapy"; renderSynthesis(); };
     document.getElementById("recipe1").onclick = () => { state.synthRecipe = "r1"; initSynthSlotsForRecipe("r1"); renderSynthesis(); };
     document.getElementById("recipe2").onclick = () => { state.synthRecipe = "r2"; initSynthSlotsForRecipe("r2"); renderSynthesis(); };
     document.getElementById("recipe3").onclick = () => { state.synthRecipe = "r3"; initSynthSlotsForRecipe("r3"); renderSynthesis(); };
@@ -778,7 +930,7 @@
     bindUi();
     seedMock();
     renderSynthesis();
-    log("实验页就绪：与正式 Demo 一致——四种公开报道 + 蓝色内审定调 + 爆炸性新闻需爆料卡。");
+    log("实验页就绪：内审+主笔+狂性规则已与全链 Demo 对齐；认知请先用内审生成。");
   }
 
   init();
