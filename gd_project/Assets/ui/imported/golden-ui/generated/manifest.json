@@ -1,0 +1,1285 @@
+{
+  "source_psd": "gd_project/Assets/ui/imported/golden-ui/source/golden_ui.psd",
+  "size": [
+    606,
+    744
+  ],
+  "layers": [
+    {
+      "original_name": "Items copia",
+      "node_name": "items_copia",
+      "bbox": [
+        5,
+        343,
+        414,
+        738
+      ],
+      "is_group": false,
+      "visible": true,
+      "image_rel_path": "layers/items_copia.png",
+      "children": []
+    },
+    {
+      "original_name": "Livello 1",
+      "node_name": "livello_1",
+      "bbox": [
+        0,
+        0,
+        606,
+        332
+      ],
+      "is_group": false,
+      "visible": true,
+      "image_rel_path": "layers/livello_1.png",
+      "children": []
+    },
+    {
+      "original_name": "UI",
+      "node_name": "ui",
+      "bbox": [
+        12,
+        12,
+        592,
+        322
+      ],
+      "is_group": true,
+      "visible": true,
+      "image_rel_path": null,
+      "children": [
+        {
+          "original_name": "Common",
+          "node_name": "common",
+          "bbox": [
+            288,
+            16,
+            592,
+            185
+          ],
+          "is_group": true,
+          "visible": true,
+          "image_rel_path": null,
+          "children": [
+            {
+              "original_name": "Message box",
+              "node_name": "message_box",
+              "bbox": [
+                288,
+                16,
+                532,
+                79
+              ],
+              "is_group": true,
+              "visible": true,
+              "image_rel_path": null,
+              "children": [
+                {
+                  "original_name": "Base",
+                  "node_name": "base",
+                  "bbox": [
+                    288,
+                    16,
+                    532,
+                    79
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/common/message_box/base.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Icons",
+                  "node_name": "icons",
+                  "bbox": [
+                    296,
+                    24,
+                    490,
+                    72
+                  ],
+                  "is_group": true,
+                  "visible": true,
+                  "image_rel_path": null,
+                  "children": [
+                    {
+                      "original_name": "Info",
+                      "node_name": "info",
+                      "bbox": [
+                        296,
+                        24,
+                        346,
+                        40
+                      ],
+                      "is_group": false,
+                      "visible": true,
+                      "image_rel_path": "layers/ui/common/message_box/icons/info.png",
+                      "children": []
+                    },
+                    {
+                      "original_name": "Error",
+                      "node_name": "error",
+                      "bbox": [
+                        420,
+                        24,
+                        471,
+                        40
+                      ],
+                      "is_group": false,
+                      "visible": true,
+                      "image_rel_path": "layers/ui/common/message_box/icons/error.png",
+                      "children": []
+                    },
+                    {
+                      "original_name": "Warning",
+                      "node_name": "warning",
+                      "bbox": [
+                        296,
+                        56,
+                        355,
+                        72
+                      ],
+                      "is_group": false,
+                      "visible": true,
+                      "image_rel_path": "layers/ui/common/message_box/icons/warning.png",
+                      "children": []
+                    },
+                    {
+                      "original_name": "Message",
+                      "node_name": "message",
+                      "bbox": [
+                        420,
+                        56,
+                        490,
+                        72
+                      ],
+                      "is_group": false,
+                      "visible": true,
+                      "image_rel_path": "layers/ui/common/message_box/icons/message.png",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "original_name": "Frame",
+              "node_name": "frame",
+              "bbox": [
+                288,
+                89,
+                592,
+                185
+              ],
+              "is_group": true,
+              "visible": true,
+              "image_rel_path": null,
+              "children": [
+                {
+                  "original_name": "Base + separators",
+                  "node_name": "base_separators",
+                  "bbox": [
+                    288,
+                    89,
+                    592,
+                    185
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/common/frame/base_separators.png",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "original_name": "Buttons",
+              "node_name": "buttons",
+              "bbox": [
+                296,
+                96,
+                385,
+                179
+              ],
+              "is_group": true,
+              "visible": true,
+              "image_rel_path": null,
+              "children": [
+                {
+                  "original_name": "Small",
+                  "node_name": "small",
+                  "bbox": [
+                    364,
+                    96,
+                    385,
+                    128
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/common/buttons/small.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Mid",
+                  "node_name": "mid",
+                  "bbox": [
+                    353,
+                    129,
+                    385,
+                    179
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/common/buttons/mid.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Big",
+                  "node_name": "big",
+                  "bbox": [
+                    296,
+                    123,
+                    351,
+                    179
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/common/buttons/big.png",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "original_name": "Radio button",
+              "node_name": "radio_button",
+              "bbox": [
+                392,
+                104,
+                400,
+                130
+              ],
+              "is_group": true,
+              "visible": true,
+              "image_rel_path": null,
+              "children": [
+                {
+                  "original_name": "Base",
+                  "node_name": "base",
+                  "bbox": [
+                    392,
+                    104,
+                    400,
+                    130
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/common/radio_button/base.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Fill",
+                  "node_name": "fill",
+                  "bbox": [
+                    394,
+                    115,
+                    398,
+                    119
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/common/radio_button/fill.png",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "original_name": "Inputbox",
+              "node_name": "inputbox",
+              "bbox": [
+                408,
+                104,
+                480,
+                120
+              ],
+              "is_group": true,
+              "visible": true,
+              "image_rel_path": null,
+              "children": [
+                {
+                  "original_name": "Base",
+                  "node_name": "base",
+                  "bbox": [
+                    408,
+                    104,
+                    480,
+                    120
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/common/inputbox/base.png",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "original_name": "Listbox",
+              "node_name": "listbox",
+              "bbox": [
+                408,
+                128,
+                480,
+                176
+              ],
+              "is_group": true,
+              "visible": true,
+              "image_rel_path": null,
+              "children": [
+                {
+                  "original_name": "Base",
+                  "node_name": "base",
+                  "bbox": [
+                    408,
+                    128,
+                    480,
+                    176
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/common/listbox/base.png",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "original_name": "Cursors",
+              "node_name": "cursors",
+              "bbox": [
+                392,
+                136,
+                398,
+                144
+              ],
+              "is_group": true,
+              "visible": true,
+              "image_rel_path": null,
+              "children": [
+                {
+                  "original_name": "Standard",
+                  "node_name": "standard",
+                  "bbox": [
+                    392,
+                    136,
+                    398,
+                    144
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/common/cursors/standard.png",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "original_name": "Slider",
+              "node_name": "slider",
+              "bbox": [
+                488,
+                107,
+                524,
+                155
+              ],
+              "is_group": true,
+              "visible": true,
+              "image_rel_path": null,
+              "children": [
+                {
+                  "original_name": "Vertical",
+                  "node_name": "vertical",
+                  "bbox": [
+                    488,
+                    120,
+                    498,
+                    155
+                  ],
+                  "is_group": true,
+                  "visible": true,
+                  "image_rel_path": null,
+                  "children": [
+                    {
+                      "original_name": "Base",
+                      "node_name": "base",
+                      "bbox": [
+                        489,
+                        120,
+                        497,
+                        155
+                      ],
+                      "is_group": false,
+                      "visible": true,
+                      "image_rel_path": "layers/ui/common/slider/vertical/base.png",
+                      "children": []
+                    },
+                    {
+                      "original_name": "Slider",
+                      "node_name": "slider",
+                      "bbox": [
+                        488,
+                        127,
+                        498,
+                        132
+                      ],
+                      "is_group": false,
+                      "visible": true,
+                      "image_rel_path": "layers/ui/common/slider/vertical/slider.png",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "original_name": "Horizontal",
+                  "node_name": "horizontal",
+                  "bbox": [
+                    489,
+                    107,
+                    524,
+                    117
+                  ],
+                  "is_group": true,
+                  "visible": true,
+                  "image_rel_path": null,
+                  "children": [
+                    {
+                      "original_name": "Base",
+                      "node_name": "base",
+                      "bbox": [
+                        489,
+                        108,
+                        524,
+                        116
+                      ],
+                      "is_group": false,
+                      "visible": true,
+                      "image_rel_path": "layers/ui/common/slider/horizontal/base.png",
+                      "children": []
+                    },
+                    {
+                      "original_name": "Slider",
+                      "node_name": "slider",
+                      "bbox": [
+                        497,
+                        107,
+                        502,
+                        117
+                      ],
+                      "is_group": false,
+                      "visible": true,
+                      "image_rel_path": "layers/ui/common/slider/horizontal/slider.png",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "original_name": "Scrollbar",
+              "node_name": "scrollbar",
+              "bbox": [
+                504,
+                106,
+                576,
+                168
+              ],
+              "is_group": true,
+              "visible": true,
+              "image_rel_path": null,
+              "children": [
+                {
+                  "original_name": "Horizontal",
+                  "node_name": "horizontal",
+                  "bbox": [
+                    528,
+                    106,
+                    576,
+                    118
+                  ],
+                  "is_group": true,
+                  "visible": true,
+                  "image_rel_path": null,
+                  "children": [
+                    {
+                      "original_name": "Base",
+                      "node_name": "base",
+                      "bbox": [
+                        528,
+                        106,
+                        576,
+                        118
+                      ],
+                      "is_group": false,
+                      "visible": true,
+                      "image_rel_path": "layers/ui/common/scrollbar/horizontal/base.png",
+                      "children": []
+                    },
+                    {
+                      "original_name": "Cursor",
+                      "node_name": "cursor",
+                      "bbox": [
+                        544,
+                        107,
+                        556,
+                        117
+                      ],
+                      "is_group": false,
+                      "visible": true,
+                      "image_rel_path": "layers/ui/common/scrollbar/horizontal/cursor.png",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "original_name": "Vertical",
+                  "node_name": "vertical",
+                  "bbox": [
+                    504,
+                    120,
+                    516,
+                    168
+                  ],
+                  "is_group": true,
+                  "visible": true,
+                  "image_rel_path": null,
+                  "children": [
+                    {
+                      "original_name": "Base",
+                      "node_name": "base",
+                      "bbox": [
+                        504,
+                        120,
+                        516,
+                        168
+                      ],
+                      "is_group": false,
+                      "visible": true,
+                      "image_rel_path": "layers/ui/common/scrollbar/vertical/base.png",
+                      "children": []
+                    },
+                    {
+                      "original_name": "Cursor",
+                      "node_name": "cursor",
+                      "bbox": [
+                        505,
+                        136,
+                        515,
+                        148
+                      ],
+                      "is_group": false,
+                      "visible": true,
+                      "image_rel_path": "layers/ui/common/scrollbar/vertical/cursor.png",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "original_name": "Fillbar",
+              "node_name": "fillbar",
+              "bbox": [
+                526,
+                121,
+                578,
+                135
+              ],
+              "is_group": true,
+              "visible": true,
+              "image_rel_path": null,
+              "children": [
+                {
+                  "original_name": "Base",
+                  "node_name": "base",
+                  "bbox": [
+                    526,
+                    121,
+                    578,
+                    135
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/common/fillbar/base.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Fill - red",
+                  "node_name": "fill_red",
+                  "bbox": [
+                    536,
+                    124,
+                    551,
+                    132
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/common/fillbar/fill_red.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Fill - green",
+                  "node_name": "fill_green",
+                  "bbox": [
+                    536,
+                    124,
+                    551,
+                    132
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/common/fillbar/fill_green.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Fill - blue",
+                  "node_name": "fill_blue",
+                  "bbox": [
+                    536,
+                    124,
+                    551,
+                    132
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/common/fillbar/fill_blue.png",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "original_name": "Multi-fillbar",
+              "node_name": "multi_fillbar",
+              "bbox": [
+                526,
+                138,
+                578,
+                174
+              ],
+              "is_group": true,
+              "visible": true,
+              "image_rel_path": null,
+              "children": [
+                {
+                  "original_name": "Base",
+                  "node_name": "base",
+                  "bbox": [
+                    526,
+                    138,
+                    578,
+                    174
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/common/multi_fillbar/base.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Fill - red",
+                  "node_name": "fill_red",
+                  "bbox": [
+                    536,
+                    141,
+                    551,
+                    149
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/common/multi_fillbar/fill_red.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Fill - green",
+                  "node_name": "fill_green",
+                  "bbox": [
+                    536,
+                    152,
+                    558,
+                    160
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/common/multi_fillbar/fill_green.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Fill - blue",
+                  "node_name": "fill_blue",
+                  "bbox": [
+                    536,
+                    163,
+                    548,
+                    171
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/common/multi_fillbar/fill_blue.png",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "original_name": "Hud",
+          "node_name": "hud",
+          "bbox": [
+            16,
+            12,
+            116,
+            71
+          ],
+          "is_group": true,
+          "visible": true,
+          "image_rel_path": null,
+          "children": [
+            {
+              "original_name": "Hitbars + minimap",
+              "node_name": "hitbars_minimap",
+              "bbox": [
+                16,
+                12,
+                116,
+                44
+              ],
+              "is_group": false,
+              "visible": true,
+              "image_rel_path": "layers/ui/hud/hitbars_minimap.png",
+              "children": []
+            },
+            {
+              "original_name": "Bars",
+              "node_name": "bars",
+              "bbox": [
+                52,
+                16,
+                103,
+                40
+              ],
+              "is_group": false,
+              "visible": true,
+              "image_rel_path": "layers/ui/hud/bars.png",
+              "children": []
+            },
+            {
+              "original_name": "Action icons",
+              "node_name": "action_icons",
+              "bbox": [
+                16,
+                47,
+                106,
+                71
+              ],
+              "is_group": false,
+              "visible": true,
+              "image_rel_path": "layers/ui/hud/action_icons.png",
+              "children": []
+            }
+          ]
+        },
+        {
+          "original_name": "Inventory",
+          "node_name": "inventory",
+          "bbox": [
+            147,
+            13,
+            267,
+            185
+          ],
+          "is_group": true,
+          "visible": true,
+          "image_rel_path": null,
+          "children": [
+            {
+              "original_name": "Frame",
+              "node_name": "frame",
+              "bbox": [
+                147,
+                43,
+                249,
+                185
+              ],
+              "is_group": true,
+              "visible": true,
+              "image_rel_path": null,
+              "children": [
+                {
+                  "original_name": "Base",
+                  "node_name": "base",
+                  "bbox": [
+                    147,
+                    43,
+                    249,
+                    185
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/inventory/frame/base.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Selected",
+                  "node_name": "selected",
+                  "bbox": [
+                    174,
+                    56,
+                    188,
+                    70
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/inventory/frame/selected.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Items",
+                  "node_name": "items",
+                  "bbox": [
+                    159,
+                    58,
+                    203,
+                    69
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/inventory/frame/items.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Description",
+                  "node_name": "description",
+                  "bbox": [
+                    159,
+                    117,
+                    210,
+                    122
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/inventory/frame/description.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Buttons",
+                  "node_name": "buttons",
+                  "bbox": [
+                    219,
+                    117,
+                    240,
+                    138
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/inventory/frame/buttons.png",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "original_name": "Tabs",
+              "node_name": "tabs",
+              "bbox": [
+                247,
+                51,
+                265,
+                124
+              ],
+              "is_group": true,
+              "visible": true,
+              "image_rel_path": null,
+              "children": [
+                {
+                  "original_name": "Inactives",
+                  "node_name": "inactives",
+                  "bbox": [
+                    249,
+                    51,
+                    263,
+                    124
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/inventory/tabs/inactives.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Active",
+                  "node_name": "active",
+                  "bbox": [
+                    247,
+                    87,
+                    265,
+                    106
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/inventory/tabs/active.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Icons",
+                  "node_name": "icons",
+                  "bbox": [
+                    251,
+                    55,
+                    260,
+                    120
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/inventory/tabs/icons.png",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "original_name": "Title",
+              "node_name": "title",
+              "bbox": [
+                147,
+                13,
+                267,
+                145
+              ],
+              "is_group": true,
+              "visible": true,
+              "image_rel_path": null,
+              "children": [
+                {
+                  "original_name": "Base",
+                  "node_name": "base",
+                  "bbox": [
+                    147,
+                    14,
+                    249,
+                    44
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/inventory/title/base.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Quit",
+                  "node_name": "quit",
+                  "bbox": [
+                    237,
+                    13,
+                    267,
+                    145
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/inventory/title/quit.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Text",
+                  "node_name": "text",
+                  "bbox": [
+                    166,
+                    24,
+                    230,
+                    35
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/inventory/title/text.png",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "original_name": "Player",
+          "node_name": "player",
+          "bbox": [
+            15,
+            79,
+            135,
+            151
+          ],
+          "is_group": true,
+          "visible": true,
+          "image_rel_path": null,
+          "children": [
+            {
+              "original_name": "Frame",
+              "node_name": "frame",
+              "bbox": [
+                15,
+                109,
+                117,
+                151
+              ],
+              "is_group": true,
+              "visible": true,
+              "image_rel_path": null,
+              "children": [
+                {
+                  "original_name": "Base",
+                  "node_name": "base",
+                  "bbox": [
+                    15,
+                    109,
+                    117,
+                    151
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/player/frame/base.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Text",
+                  "node_name": "text",
+                  "bbox": [
+                    48,
+                    121,
+                    110,
+                    144
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/player/frame/text.png",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "original_name": "Title",
+              "node_name": "title",
+              "bbox": [
+                15,
+                79,
+                135,
+                146
+              ],
+              "is_group": true,
+              "visible": true,
+              "image_rel_path": null,
+              "children": [
+                {
+                  "original_name": "Base",
+                  "node_name": "base",
+                  "bbox": [
+                    15,
+                    80,
+                    117,
+                    110
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/player/title/base.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Quit",
+                  "node_name": "quit",
+                  "bbox": [
+                    105,
+                    79,
+                    135,
+                    146
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/player/title/quit.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Text",
+                  "node_name": "text",
+                  "bbox": [
+                    44,
+                    90,
+                    89,
+                    101
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/player/title/text.png",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "original_name": "Menu",
+          "node_name": "menu",
+          "bbox": [
+            12,
+            194,
+            313,
+            322
+          ],
+          "is_group": true,
+          "visible": true,
+          "image_rel_path": null,
+          "children": [
+            {
+              "original_name": "Background",
+              "node_name": "background",
+              "bbox": [
+                12,
+                194,
+                313,
+                322
+              ],
+              "is_group": false,
+              "visible": true,
+              "image_rel_path": "layers/ui/menu/background.png",
+              "children": []
+            },
+            {
+              "original_name": "Banner",
+              "node_name": "banner",
+              "bbox": [
+                173,
+                230,
+                274,
+                296
+              ],
+              "is_group": false,
+              "visible": true,
+              "image_rel_path": "layers/ui/menu/banner.png",
+              "children": []
+            },
+            {
+              "original_name": "Play",
+              "node_name": "play",
+              "bbox": [
+                23,
+                221,
+                119,
+                253
+              ],
+              "is_group": true,
+              "visible": true,
+              "image_rel_path": null,
+              "children": [
+                {
+                  "original_name": "Base",
+                  "node_name": "base",
+                  "bbox": [
+                    23,
+                    221,
+                    119,
+                    253
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/menu/play/base.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Text",
+                  "node_name": "text",
+                  "bbox": [
+                    68,
+                    232,
+                    97,
+                    243
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/menu/play/text.png",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "original_name": "Options",
+              "node_name": "options",
+              "bbox": [
+                41,
+                250,
+                137,
+                282
+              ],
+              "is_group": true,
+              "visible": true,
+              "image_rel_path": null,
+              "children": [
+                {
+                  "original_name": "Base",
+                  "node_name": "base",
+                  "bbox": [
+                    41,
+                    250,
+                    137,
+                    282
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/menu/options/base.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Text",
+                  "node_name": "text",
+                  "bbox": [
+                    75,
+                    261,
+                    125,
+                    272
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/menu/options/text.png",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "original_name": "Quit",
+              "node_name": "quit",
+              "bbox": [
+                59,
+                279,
+                155,
+                311
+              ],
+              "is_group": true,
+              "visible": true,
+              "image_rel_path": null,
+              "children": [
+                {
+                  "original_name": "Base",
+                  "node_name": "base",
+                  "bbox": [
+                    59,
+                    279,
+                    155,
+                    311
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/menu/quit/base.png",
+                  "children": []
+                },
+                {
+                  "original_name": "Text",
+                  "node_name": "text",
+                  "bbox": [
+                    106,
+                    290,
+                    132,
+                    301
+                  ],
+                  "is_group": false,
+                  "visible": true,
+                  "image_rel_path": "layers/ui/menu/quit/text.png",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

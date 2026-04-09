@@ -18,6 +18,7 @@ import './feishu-adapter.js';
 import type { LLMProvider } from 'claude-to-im/src/lib/bridge/host.js';
 import { loadConfig, configToSettings, CTI_HOME } from './config.js';
 import type { Config } from './config.js';
+import { atomicWrite } from './file-utils.js';
 import { JsonFileStore } from './store.js';
 import { SDKLLMProvider, resolveClaudeCliPath, preflightCheck } from './llm-provider.js';
 import { PendingPermissions } from './permission-gateway.js';
@@ -26,6 +27,18 @@ import { setupLogger } from './logger.js';
 const RUNTIME_DIR = path.join(CTI_HOME, 'runtime');
 const STATUS_FILE = path.join(RUNTIME_DIR, 'status.json');
 const PID_FILE = path.join(RUNTIME_DIR, 'bridge.pid');
+
+function applyRuntimeEnvFromConfig(config: Config): void {
+  if (config.codexSandboxMode) {
+    process.env.CTI_CODEX_SANDBOX_MODE = config.codexSandboxMode;
+  }
+  if (config.codexNetworkAccess !== undefined) {
+    process.env.CTI_CODEX_NETWORK_ACCESS = String(config.codexNetworkAccess);
+  }
+  if (config.codexWindowsShell) {
+    process.env.CTI_CODEX_WINDOWS_SHELL = config.codexWindowsShell;
+  }
+}
 
 /**
  * Resolve the LLM provider based on the runtime setting.
@@ -105,26 +118,51 @@ interface StatusInfo {
   lastExitReason?: string;
 }
 
+const PROXY_ENV_KEYS = [
+  'HTTP_PROXY',
+  'HTTPS_PROXY',
+  'ALL_PROXY',
+  'http_proxy',
+  'https_proxy',
+  'all_proxy',
+  'npm_config_proxy',
+  'npm_config_http_proxy',
+  'npm_config_https_proxy',
+] as const;
+
+function shouldClearProxyEnv(value: string | undefined): boolean {
+  if (!value) return false;
+  return /^(https?:\/\/)?(127\.0\.0\.1|localhost|\[::1\])(?::9)(?:\/)?$/i.test(value.trim());
+}
+
+function clearSandboxProxyEnv(): void {
+  const cleared: string[] = [];
+  for (const key of PROXY_ENV_KEYS) {
+    if (!shouldClearProxyEnv(process.env[key])) {
+      continue;
+    }
+    delete process.env[key];
+    cleared.push(key);
+  }
+
+  if (cleared.length > 0) {
+    console.warn(
+      `[claude-to-im] Cleared sandbox proxy env for bridge networking: ${cleared.join(', ')}`,
+    );
+  }
+}
+
 function writeStatus(info: StatusInfo): void {
   fs.mkdirSync(RUNTIME_DIR, { recursive: true });
   // Merge with existing status to preserve fields like lastExitReason
   let existing: Record<string, unknown> = {};
   try { existing = JSON.parse(fs.readFileSync(STATUS_FILE, 'utf-8')); } catch { /* first write */ }
-  const merged = { ...existing, ...info };
-  const tmp = STATUS_FILE + '.tmp';
-  const payload = JSON.stringify(merged, null, 2);
-  fs.writeFileSync(tmp, payload, 'utf-8');
-  try {
-    fs.renameSync(tmp, STATUS_FILE);
-  } catch (error) {
-    const renameError = error as NodeJS.ErrnoException;
-    if (renameError.code !== 'EPERM' && renameError.code !== 'EBUSY') {
-      throw error;
-    }
-    // Windows can transiently block rename-on-replace; fall back to direct write.
-    fs.writeFileSync(STATUS_FILE, payload, 'utf-8');
-    fs.rmSync(tmp, { force: true });
+  const merged: Record<string, unknown> = { ...existing, ...info };
+  if (info.running) {
+    delete merged.lastExitReason;
   }
+  const payload = JSON.stringify(merged, null, 2);
+  atomicWrite(STATUS_FILE, payload);
 }
 
 function formatStartupTimestamp(date: Date): string {
@@ -196,7 +234,9 @@ async function sendFeishuStartupNotice(config: Config, store: JsonFileStore, _ru
 
 async function main(): Promise<void> {
   const config = loadConfig();
+  applyRuntimeEnvFromConfig(config);
   setupLogger();
+  clearSandboxProxyEnv();
 
   const runId = crypto.randomUUID();
   console.log(`[claude-to-im] Starting bridge (run_id: ${runId})`);

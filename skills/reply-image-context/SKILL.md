@@ -23,4 +23,4 @@ Use the replied-message image files already attached to the current task. In the
 
 4. Continue with the requested task.
 - Once the local image is available, perform the real work directly: analysis, redraw, wireframe extraction, annotation, forwarding, or other requested image handling.
-- When the user wants the result sent to Feishu, use `feishu-send`.
+- When the user wants the result sent to Feishu, use `claude-to-im`'s Feishu send scripts.

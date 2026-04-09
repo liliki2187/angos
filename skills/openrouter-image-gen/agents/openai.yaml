@@ -1,0 +1,4 @@
+interface:
+  display_name: "OpenRouter Image Gen"
+  short_description: "Generate validated game-ready images through OpenRouter."
+  default_prompt: "Use $openrouter-image-gen to validate model constraints and generate game-ready images through OpenRouter."

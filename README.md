@@ -1,28 +1,37 @@
-# angos / 世界未解之谜周刊 Demo
+﻿# Angus / 世界未解之谜周刊
 
-单机网页 Demo（探索 → 骰子检定 → 报刊组版 → 结算），无后端依赖。
+本仓库包含 Angus 的 Godot MVP、历史 HTML 原型、设计文档，以及项目本地自动化技能。
+当前生效的 Godot 运行时位于 `gd_project/`，配套文档与工具位于 `docs/` 和 `scripts/`。
 
-## 快速体验
+## 规范位置
 
-- 用浏览器打开项目根目录下的 **`world-mysteries-full-chain.html`**（建议 Chrome / Edge）。
-- 设计文档见 **`docs/`**，总览见 **`docs/世界未解之谜周刊_全链条版设计文档汇总.md`**。
+- 运行时项目根目录：`gd_project/`
+- 游戏运行时内容：`gd_project/scenes/` 与 `gd_project/Assets/`
+- 运行时配套文档与工具：`docs/` 与 `scripts/`
+- 游戏设计：`design/gdd/`
+- 架构决策：`docs/architecture/`
+- 执行状态：`production/`
+- 入门与协作规则：`docs/onboarding/`
+- 功能规格包：`specs/`
 
-## 其它文件
+## 参考与原型材料
 
-- `world-mysteries-full-chain-head.htm` + `world-mysteries-full-chain.js`：合并生成完整 HTML 的源码片段（见 `docs/GIT上传与分享说明.md` 中的合并命令）。
-- `index.html`：报刊结算独立原型（与全链条不同入口）。
+- `design/prototypes/html/` 是 HTML 实验和旧网页可玩 Demo 的参考层。
+- `prototype/` 已移除；历史分发产物与打包流程归档在 `_obsolete/scripts/release/`。
+- `_obsolete/` 是失效材料的归档区。除非明确在做历史查询或恢复，否则默认忽略。
 
-## Git：两个 GitHub 仓库要保持一致
+## 建议先读
 
-本仓库约定 **`main` 同时推送到两个远程**，避免只更新一侧：
+- `docs/README.md`
+- `docs/onboarding/repository-map.md`
+- `docs/onboarding/git-collaboration.md`
+- `docs/technical-preferences.md`
+- `gd_project/README.md`
+- `production/session-state/active.md`
 
-| 远程 | 仓库 |
-|------|------|
-| `origin` | [liliki2187/angos](https://github.com/liliki2187/angos) |
-| `daydreamer` | [daydreamerguan/angus](https://github.com/daydreamerguan/angus) |
+## 备注
 
-推送示例：`git push origin main` 后执行 `git push daydreamer main`，或在根目录运行 **`sync-both-remotes.ps1`**。详情见 **`docs/Cursor对话交接指引_研发无缝衔接.md`** 第 2 节。
+- 请使用 Godot 4.3 打开 `gd_project/project.godot`。
+- 运行时开发工作应把 `gd_project/` 视为正式游戏目录。
+- 如果你在处理 HTML 原型源码，默认把它当作参考材料，除非某份 GDD 或 ADR 明确将对应行为提升为正式游戏规则。
 
-## 编码说明
-
-合并 HTML 时请使用 **UTF-8**；Windows 下建议输出 **UTF-8 带 BOM** 的 `world-mysteries-full-chain.html`，避免中文乱码。

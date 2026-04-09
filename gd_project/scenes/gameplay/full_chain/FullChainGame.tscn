@@ -1,0 +1,379 @@
+[gd_scene load_steps=2 format=3 uid="uid://full-chain-game"]
+
+[ext_resource type="Script" path="res://scenes/gameplay/full_chain/FullChainGame.gd" id="1_full_chain"]
+
+[node name="FullChainGame" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_full_chain")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.05, 0.07, 0.1, 1)
+
+[node name="RootMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 16.0
+offset_right = -18.0
+offset_bottom = -16.0
+
+[node name="RootVBox" type="VBoxContainer" parent="RootMargin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="HeaderPanel" type="PanelContainer" parent="RootMargin/RootVBox"]
+layout_mode = 2
+
+[node name="HeaderHBox" type="HBoxContainer" parent="RootMargin/RootVBox/HeaderPanel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleBox" type="VBoxContainer" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox/TitleBox"]
+layout_mode = 2
+text = "《世界未解之谜周刊》· 完整周循环原型"
+
+[node name="Subtitle" type="Label" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox/TitleBox"]
+layout_mode = 2
+text = "探索、事件检定、线索转稿、组版与结算全部接入 Godot"
+
+[node name="BackBtn" type="Button" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 42)
+text = "返回主菜单"
+
+[node name="MacroBar" type="HBoxContainer" parent="RootMargin/RootVBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="WeekBar" type="HBoxContainer" parent="RootMargin/RootVBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="WeekInfo" type="VBoxContainer" parent="RootMargin/RootVBox/WeekBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="WeekLabel" type="Label" parent="RootMargin/RootVBox/WeekBar/WeekInfo"]
+layout_mode = 2
+text = "第 1 周"
+
+[node name="DayLabel" type="Label" parent="RootMargin/RootVBox/WeekBar/WeekInfo"]
+layout_mode = 2
+text = "剩余 7 天"
+
+[node name="EndWeekBtn" type="Button" parent="RootMargin/RootVBox/WeekBar"]
+layout_mode = 2
+custom_minimum_size = Vector2(180, 40)
+text = "结束探索 · 进入编辑部"
+
+[node name="ExplorePhase" type="VBoxContainer" parent="RootMargin/RootVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="WeekStartPanel" type="PanelContainer" parent="RootMargin/RootVBox/ExplorePhase"]
+layout_mode = 2
+
+[node name="WeekStartText" type="RichTextLabel" parent="RootMargin/RootVBox/ExplorePhase/WeekStartPanel"]
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="ExploreSplit" type="HSplitContainer" parent="RootMargin/RootVBox/ExplorePhase"]
+layout_mode = 2
+size_flags_vertical = 3
+split_offset = 450
+
+[node name="ExploreLeft" type="VBoxContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="RegionPanel" type="PanelContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreLeft"]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="RegionVBox" type="VBoxContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreLeft/RegionPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="RegionTitle" type="Label" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreLeft/RegionPanel/RegionVBox"]
+layout_mode = 2
+text = "全球区域"
+
+[node name="FilterRow" type="HBoxContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreLeft/RegionPanel/RegionVBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="RegionList" type="VBoxContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreLeft/RegionPanel/RegionVBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="StaffPanel" type="PanelContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreLeft"]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="StaffVBox" type="VBoxContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreLeft/StaffPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="StaffTitle" type="Label" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreLeft/StaffPanel/StaffVBox"]
+layout_mode = 2
+text = "派遣职员"
+
+[node name="SelectedStaffLabel" type="Label" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreLeft/StaffPanel/StaffVBox"]
+layout_mode = 2
+text = "已选择：0 / 3"
+
+[node name="StaffGrid" type="GridContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreLeft/StaffPanel/StaffVBox"]
+layout_mode = 2
+columns = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+
+[node name="CluePanel" type="PanelContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreLeft"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ClueVBox" type="VBoxContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreLeft/CluePanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ClueTitle" type="Label" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreLeft/CluePanel/ClueVBox"]
+layout_mode = 2
+text = "本周线索池"
+
+[node name="ClueList" type="VBoxContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreLeft/CluePanel/ClueVBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ExploreRight" type="VBoxContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="NodePanel" type="PanelContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreRight"]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="NodeVBox" type="VBoxContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreRight/NodePanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NodeTitle" type="Label" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreRight/NodePanel/NodeVBox"]
+layout_mode = 2
+text = "探索节点"
+
+[node name="RegionHintLabel" type="Label" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreRight/NodePanel/NodeVBox"]
+layout_mode = 2
+text = "请选择区域"
+
+[node name="NodeList" type="VBoxContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreRight/NodePanel/NodeVBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="MissionPanel" type="PanelContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreRight"]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="MissionVBox" type="VBoxContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreRight/MissionPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MissionTitle" type="Label" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreRight/MissionPanel/MissionVBox"]
+layout_mode = 2
+text = "任务简报"
+
+[node name="MissionSummary" type="RichTextLabel" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreRight/MissionPanel/MissionVBox"]
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="ProbabilityLabel" type="Label" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreRight/MissionPanel/MissionVBox"]
+layout_mode = 2
+text = "理论结果："
+
+[node name="DiceWrap" type="VBoxContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreRight/MissionPanel/MissionVBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="DiceTitle" type="Label" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreRight/MissionPanel/MissionVBox/DiceWrap"]
+layout_mode = 2
+text = "现场检定"
+
+[node name="DiceRows" type="VBoxContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreRight/MissionPanel/MissionVBox/DiceWrap"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ResultLabel" type="Label" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreRight/MissionPanel/MissionVBox"]
+layout_mode = 2
+text = "等待执行"
+
+[node name="ExecuteBtn" type="Button" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreRight/MissionPanel/MissionVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 42)
+text = "执行外采"
+
+[node name="LogPanel" type="PanelContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreRight"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LogVBox" type="VBoxContainer" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreRight/LogPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LogTitle" type="Label" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreRight/LogPanel/LogVBox"]
+layout_mode = 2
+text = "行动日志"
+
+[node name="LogText" type="RichTextLabel" parent="RootMargin/RootVBox/ExplorePhase/ExploreSplit/ExploreRight/LogPanel/LogVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+scroll_active = true
+fit_content = true
+
+[node name="EditorialPhase" type="VBoxContainer" parent="RootMargin/RootVBox"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="EditorialHeader" type="PanelContainer" parent="RootMargin/RootVBox/EditorialPhase"]
+layout_mode = 2
+
+[node name="EditorialHeaderVBox" type="VBoxContainer" parent="RootMargin/RootVBox/EditorialPhase/EditorialHeader"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="EditorialTitle" type="Label" parent="RootMargin/RootVBox/EditorialPhase/EditorialHeader/EditorialHeaderVBox"]
+layout_mode = 2
+text = "编辑部 · 报刊组版"
+
+[node name="EditorialSubtitle" type="Label" parent="RootMargin/RootVBox/EditorialPhase/EditorialHeader/EditorialHeaderVBox"]
+layout_mode = 2
+text = "把本周线索稿与补充稿拖入 6 个版位，然后结算本期。"
+
+[node name="EditorialColumns" type="HBoxContainer" parent="RootMargin/RootVBox/EditorialPhase"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="LibraryPanel" type="PanelContainer" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.1
+custom_minimum_size = Vector2(300, 0)
+
+[node name="LibraryVBox" type="VBoxContainer" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns/LibraryPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LibraryTitle" type="Label" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns/LibraryPanel/LibraryVBox"]
+layout_mode = 2
+text = "故事库"
+
+[node name="LibraryHint" type="Label" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns/LibraryPanel/LibraryVBox"]
+layout_mode = 2
+text = "拖拽稿件到版位。探索稿会优先保留其出处与题材。"
+
+[node name="StoryScroll" type="ScrollContainer" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns/LibraryPanel/LibraryVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="StoryList" type="VBoxContainer" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns/LibraryPanel/LibraryVBox/StoryScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="LayoutPanel" type="PanelContainer" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.2
+custom_minimum_size = Vector2(360, 0)
+
+[node name="LayoutVBox" type="VBoxContainer" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns/LayoutPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LayoutTitle" type="Label" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns/LayoutPanel/LayoutVBox"]
+layout_mode = 2
+text = "当期版面"
+
+[node name="SlotList" type="VBoxContainer" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns/LayoutPanel/LayoutVBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LayoutActions" type="HBoxContainer" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns/LayoutPanel/LayoutVBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ClearLayoutBtn" type="Button" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns/LayoutPanel/LayoutVBox/LayoutActions"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 40)
+text = "清空版面"
+
+[node name="SettleBtn" type="Button" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns/LayoutPanel/LayoutVBox/LayoutActions"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 40)
+text = "结算本期"
+
+[node name="StatsPanel" type="PanelContainer" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.9
+custom_minimum_size = Vector2(240, 0)
+
+[node name="StatsVBox" type="VBoxContainer" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns/StatsPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="StatsTitle" type="Label" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns/StatsPanel/StatsVBox"]
+layout_mode = 2
+text = "结算面板"
+
+[node name="LiveStats" type="RichTextLabel" parent="RootMargin/RootVBox/EditorialPhase/EditorialColumns/StatsPanel/StatsVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = true
+scroll_active = true
+
+[node name="SummaryPhase" type="PanelContainer" parent="RootMargin/RootVBox"]
+visible = false
+layout_mode = 2
+
+[node name="SummaryVBox" type="VBoxContainer" parent="RootMargin/RootVBox/SummaryPhase"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SummaryTitle" type="Label" parent="RootMargin/RootVBox/SummaryPhase/SummaryVBox"]
+layout_mode = 2
+text = "本周结算完成"
+
+[node name="SummaryText" type="RichTextLabel" parent="RootMargin/RootVBox/SummaryPhase/SummaryVBox"]
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="NextWeekBtn" type="Button" parent="RootMargin/RootVBox/SummaryPhase/SummaryVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(220, 44)
+text = "进入下一周"

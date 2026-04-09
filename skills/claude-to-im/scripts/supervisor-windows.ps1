@@ -37,7 +37,6 @@ $RuntimeDir = Join-Path $CtiHome 'runtime'
 $PidFile    = Join-Path $RuntimeDir 'bridge.pid'
 $StatusFile = Join-Path $RuntimeDir 'status.json'
 $LogFile    = Join-Path (Join-Path $CtiHome 'logs') 'bridge.log'
-$ErrLogFile = Join-Path (Join-Path $CtiHome 'logs') 'bridge.err.log'
 $DaemonMjs  = Join-Path (Join-Path $SkillDir 'dist') 'daemon.mjs'
 
 $ServiceName = 'ClaudeToIMBridge'
@@ -86,6 +85,42 @@ function Test-StatusRunning {
     if (-not (Test-Path $StatusFile)) { return $false }
     $json = Get-Content $StatusFile -Raw | ConvertFrom-Json
     return $json.running -eq $true
+}
+
+function Get-StatusSnapshot {
+    if (-not (Test-Path $StatusFile)) {
+        return $null
+    }
+
+    try {
+        return Get-Content $StatusFile -Raw | ConvertFrom-Json
+    } catch {
+        return $null
+    }
+}
+
+function Wait-ForBridgeStart {
+    param(
+        [int]$TimeoutSeconds = 20
+    )
+
+    $deadline = (Get-Date).AddSeconds($TimeoutSeconds)
+    do {
+        $bridgePid = Read-Pid
+        $status = Get-StatusSnapshot
+        if (
+            $bridgePid -and
+            (Test-PidAlive $bridgePid) -and
+            $status -and
+            $status.running -eq $true -and
+            [string]$status.pid -eq [string]$bridgePid
+        ) {
+            return $bridgePid
+        }
+        Start-Sleep -Milliseconds 500
+    } while ((Get-Date) -lt $deadline)
+
+    return $null
 }
 
 function Show-LastExitReason {
@@ -235,8 +270,6 @@ function Start-Fallback {
             -ArgumentList $DaemonMjs `
             -WorkingDirectory $SkillDir `
             -WindowStyle Hidden `
-            -RedirectStandardOutput $LogFile `
-            -RedirectStandardError $ErrLogFile `
             -PassThru
 
         # Write initial PID (main.ts will overwrite with real PID)
@@ -249,6 +282,20 @@ function Start-Fallback {
         if ($hadDuplicatePath) {
             [System.Environment]::SetEnvironmentVariable('PATH', $originalUpperPath, 'Process')
         }
+    }
+}
+
+function Remove-FileIfPresent {
+    param([string]$Path)
+
+    if (-not (Test-Path $Path)) {
+        return
+    }
+
+    try {
+        Remove-Item $Path -Force -ErrorAction Stop
+    } catch {
+        Write-Warning "Could not remove '$Path': $($_.Exception.Message)"
     }
 }
 
@@ -271,9 +318,8 @@ switch ($Command) {
         if ($svc) {
             Write-Host "Starting bridge via Windows Service..."
             Start-Service -Name $ServiceName
-            Start-Sleep -Seconds 3
 
-            $newPid = Read-Pid
+            $newPid = Wait-ForBridgeStart
             if ($newPid -and (Test-PidAlive $newPid) -and (Test-StatusRunning)) {
                 Write-Host "Bridge started (PID: $newPid, managed by Windows Service)"
                 if (Test-Path $StatusFile) { Get-Content $StatusFile -Raw }
@@ -286,9 +332,8 @@ switch ($Command) {
         } else {
             Write-Host "Starting bridge (background process)..."
             $bridgePid = Start-Fallback
-            Start-Sleep -Seconds 3
 
-            $newPid = Read-Pid
+            $newPid = Wait-ForBridgeStart
             if ($newPid -and (Test-PidAlive $newPid) -and (Test-StatusRunning)) {
                 Write-Host "Bridge started (PID: $newPid)"
                 if (Test-Path $StatusFile) { Get-Content $StatusFile -Raw }
@@ -320,7 +365,7 @@ switch ($Command) {
             } else {
                 Write-Host "Bridge was not running (stale PID file)"
             }
-            if (Test-Path $PidFile) { Remove-Item $PidFile -Force }
+            Remove-FileIfPresent $PidFile
         }
     }
 
@@ -343,7 +388,7 @@ switch ($Command) {
             if (Test-Path $StatusFile) { Get-Content $StatusFile -Raw }
         } else {
             Write-Host "Bridge is not running"
-            if (Test-Path $PidFile) { Remove-Item $PidFile -Force }
+            Remove-FileIfPresent $PidFile
             Show-LastExitReason
         }
     }
@@ -375,9 +420,7 @@ switch ($Command) {
             $null = Start-Fallback
         }
 
-        Start-Sleep -Seconds 3
-
-        $newPid = Read-Pid
+        $newPid = Wait-ForBridgeStart
         if ($newPid -and (Test-PidAlive $newPid) -and (Test-StatusRunning)) {
             Write-Host "Bridge restarted (PID: $newPid)"
             if (Test-Path $StatusFile) { Get-Content $StatusFile -Raw }

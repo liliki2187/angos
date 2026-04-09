@@ -1,4 +1,4 @@
-# OS
+﻿# OS
 Thumbs.db
 Desktop.ini
 
@@ -12,9 +12,40 @@ Desktop.ini
 *.log
 *.tmp
 ~$*
+__pycache__/
+*.pyc
+*.pyo
+tmp/*
+!tmp/handsoff.md
+
+# Local env
+.env.local
+
+# Codex / bridge local state
+.codepilot-uploads/
+.codex_tmp/
+.local/
+skills/.claude-to-im/config.env
+skills/.claude-to-im/data/
+skills/.claude-to-im/logs/
+skills/.claude-to-im/runtime/
+
+# Godot local cache / exports
+gd_project/.godot/
+gd_project/build/
+*.import
+*.uid
+tools/godot/*
+!tools/godot/README.md
+
+# Rendered previews / export artifacts
+artifacts/
+image_gen/
 
 # Optional: if you add Node later
 node_modules/
+skills/claude-to-im/dist/
 
 # MCP local (if any)
 mcps/
+

@@ -36,10 +36,35 @@ describe('JsonFileStore', () => {
     assert.ok(session.id);
     assert.equal(session.model, 'model-1');
     assert.equal(session.working_directory, '/tmp');
-    assert.equal(session.system_prompt, 'system prompt');
+    assert.ok(session.system_prompt?.includes('system prompt'));
+    if (process.platform === 'win32') {
+      assert.ok(session.system_prompt?.includes('PowerShell as the execution shell'));
+    }
 
     const fetched = store.getSession(session.id);
     assert.deepEqual(fetched, session);
+  });
+
+  it('normalizes loaded Windows sessions with the bridge PowerShell prompt', () => {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+    fs.writeFileSync(
+      path.join(DATA_DIR, 'sessions.json'),
+      JSON.stringify({
+        legacy: {
+          id: 'legacy',
+          working_directory: '/tmp/legacy',
+          model: 'model-legacy',
+        },
+      }, null, 2),
+    );
+
+    const store = new JsonFileStore(makeSettings());
+    const session = store.getSession('legacy');
+
+    assert.ok(session);
+    if (process.platform === 'win32') {
+      assert.ok(session?.system_prompt?.includes('PowerShell as the execution shell'));
+    }
   });
 
   it('getSession returns null for unknown id', () => {
@@ -316,6 +341,37 @@ describe('JsonFileStore', () => {
   });
 
   // ── SDK Session ──
+
+  it('setChannelOffset falls back when rename is blocked', () => {
+    const store = new JsonFileStore(makeSettings());
+    const offsetsPath = path.join(DATA_DIR, 'offsets.json');
+    const originalRenameSync = fs.renameSync;
+
+    fs.renameSync = ((oldPath: fs.PathLike, newPath: fs.PathLike) => {
+      if (String(newPath) === offsetsPath) {
+        const error = new Error('rename blocked') as NodeJS.ErrnoException;
+        error.code = 'EPERM';
+        throw error;
+      }
+      return originalRenameSync(oldPath, newPath);
+    }) as typeof fs.renameSync;
+
+    try {
+      store.setChannelOffset('tg:offset', '12345');
+    } finally {
+      fs.renameSync = originalRenameSync;
+    }
+
+    assert.equal(store.getChannelOffset('tg:offset'), '12345');
+    assert.deepEqual(
+      JSON.parse(fs.readFileSync(offsetsPath, 'utf-8')) as Record<string, string>,
+      { 'tg:offset': '12345' },
+    );
+    assert.equal(
+      fs.readdirSync(DATA_DIR).some((entry) => /^offsets\.json\..+\.tmp$/.test(entry)),
+      false,
+    );
+  });
 
   it('updateSdkSessionId updates session and bindings', () => {
     const store = new JsonFileStore(makeSettings());

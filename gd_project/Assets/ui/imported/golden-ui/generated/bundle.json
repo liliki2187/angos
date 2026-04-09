@@ -1,0 +1,10 @@
+{
+  "mode": "reusable",
+  "slug": "golden-ui",
+  "source_psd": "gd_project/Assets/ui/imported/golden-ui/source/golden_ui.psd",
+  "generated_dir": "gd_project/Assets/ui/imported/golden-ui/generated",
+  "scene_path": "gd_project/scenes/ui/imported/GoldenUiUi.tscn",
+  "root_name": "GoldenUiUi",
+  "preview_png": "gd_project/Assets/ui/imported/golden-ui/generated/preview/golden_ui_flat.png",
+  "manifest_path": "gd_project/Assets/ui/imported/golden-ui/generated/manifest.json"
+}

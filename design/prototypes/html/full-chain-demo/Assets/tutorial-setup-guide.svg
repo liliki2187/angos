@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 178" width="400" height="178" role="img" aria-labelledby="tsetTitle">
+  <title id="tsetTitle">&#x7ec4;&#x961f;&#x6d3e;&#x9063;&#x754c;&#x9762;&#x793a;&#x610f;</title>
+  <defs>
+    <linearGradient id="tset_bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="178" fill="url(#tset_bg)" rx="8"/>
+  <text x="200" y="22" text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x914d;&#x7f6e; &#xb7; &#x6982;&#x7387;&#x4e0e;&#x961f;&#x5458;</text>
+  <rect x="20" y="34" width="360" height="52" rx="6" fill="#0b1220" stroke="#334155" stroke-width="1.2"/>
+  <text x="200" y="52" text-anchor="middle" fill="#cbd5e1" font-size="9" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x8c03;&#x67e5;&#x6c60; P(A) &#xb7; &#x73b0;&#x573a;&#x6c60; P(B) &#xb7; &#x5927;&#x6210;&#x529f; / &#x53cc;&#x8d25;</text>
+  <text x="200" y="70" text-anchor="middle" fill="#64748b" font-size="8" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x672a;&#x8fbe;&#x5c5e;&#x6027;&#x95e8;&#x69db;&#x65f6;&#x6210;&#x529f;&#x7387;&#x4f1a;&#x88ab;&#x4fee;&#x6b63;</text>
+  <rect x="20" y="94" width="360" height="54" rx="6" fill="#0b1220" stroke="#334155" stroke-width="1.2"/>
+  <text x="200" y="112" text-anchor="middle" fill="#d4a853" font-size="9" font-weight="600" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x70b9;&#x9009;&#x961f;&#x5458;&#xff08;&#x6700;&#x591a; 5 &#x4eba;&#xff09;</text>
+  <rect x="48" y="120" width="56" height="22" rx="4" fill="#1e293b" stroke="#475569"/>
+  <rect x="112" y="120" width="56" height="22" rx="4" fill="#1e293b" stroke="#475569"/>
+  <rect x="176" y="120" width="56" height="22" rx="4" fill="#1d4ed8" stroke="#60a5fa"/>
+  <rect x="240" y="120" width="56" height="22" rx="4" fill="#1e293b" stroke="#475569"/>
+  <rect x="304" y="120" width="56" height="22" rx="4" fill="#1e293b" stroke="#475569"/>
+  <rect x="120" y="156" width="160" height="18" rx="4" fill="#422006" stroke="#d4a853"/>
+  <text x="200" y="168" text-anchor="middle" fill="#fcd34d" font-size="9" font-weight="600" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x6d3e;&#x9063;&#xff08;&#x5360;&#x7528;&#x5929;&#x6570;&#xb7;&#x4e0b;&#x4e00;&#x5929;&#x7ed3;&#x7b97;&#xff09;</text>
+</svg>

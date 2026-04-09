@@ -95,4 +95,44 @@ describe('disableFeishuHistoryBackfill', () => {
     assert.equal(parsed.appliedToFreshSession, true);
     assert.deepEqual(parsed.messages, []);
   });
+
+  it('falls back when rename is blocked', () => {
+    const cacheDir = path.join(CTI_HOME, 'data', 'feishu-history-cache');
+    const cachePath = path.join(cacheDir, 'sess-fallback.json');
+    const originalRenameSync = fs.renameSync;
+
+    fs.renameSync = ((oldPath: fs.PathLike, newPath: fs.PathLike) => {
+      if (String(newPath) === cachePath) {
+        const error = new Error('rename blocked') as NodeJS.ErrnoException;
+        error.code = 'EPERM';
+        throw error;
+      }
+      return originalRenameSync(oldPath, newPath);
+    }) as typeof fs.renameSync;
+
+    try {
+      disableFeishuHistoryBackfill('sess-fallback', {
+        chatId: 'chat-fallback',
+        createdAt: '2026-03-23T00:00:00.000Z',
+      });
+    } finally {
+      fs.renameSync = originalRenameSync;
+    }
+
+    const parsed = JSON.parse(fs.readFileSync(cachePath, 'utf-8')) as {
+      chatId: string;
+      bindingCreatedAt: string;
+      appliedToFreshSession: boolean;
+      messages: unknown[];
+    };
+
+    assert.equal(parsed.chatId, 'chat-fallback');
+    assert.equal(parsed.bindingCreatedAt, '2026-03-23T00:00:00.000Z');
+    assert.equal(parsed.appliedToFreshSession, true);
+    assert.deepEqual(parsed.messages, []);
+    assert.equal(
+      fs.readdirSync(cacheDir).some((entry) => /^sess-fallback\.json\..+\.tmp$/.test(entry)),
+      false,
+    );
+  });
 });

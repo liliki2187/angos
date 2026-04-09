@@ -7,7 +7,6 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import crypto from 'node:crypto';
 import type {
   BridgeStore,
   BridgeSession,
@@ -21,43 +20,13 @@ import type {
 } from 'claude-to-im/src/lib/bridge/host.js';
 import type { ChannelBinding, ChannelType } from 'claude-to-im/src/lib/bridge/types.js';
 import { CTI_HOME } from './config.js';
+import { atomicWrite, ensureDir } from './file-utils.js';
+import { resolveBridgeSystemPrompt } from './session-prompt.js';
 
 const DATA_DIR = path.join(CTI_HOME, 'data');
 const MESSAGES_DIR = path.join(DATA_DIR, 'messages');
 
 // ── Helpers ──
-
-function ensureDir(dir: string): void {
-  fs.mkdirSync(dir, { recursive: true });
-}
-
-function atomicWrite(filePath: string, data: string): void {
-  const dir = path.dirname(filePath);
-  const writeOnce = (): void => {
-    ensureDir(dir);
-    const tmp = `${filePath}.${process.pid}.${crypto.randomUUID()}.tmp`;
-    try {
-      fs.writeFileSync(tmp, data, 'utf-8');
-      fs.renameSync(tmp, filePath);
-    } catch (err) {
-      try {
-        fs.rmSync(tmp, { force: true });
-      } catch {
-        // Best effort cleanup.
-      }
-      throw err;
-    }
-  };
-
-  try {
-    writeOnce();
-  } catch (err) {
-    if ((err as NodeJS.ErrnoException)?.code !== 'ENOENT') {
-      throw err;
-    }
-    writeOnce();
-  }
-}
 
 function readJson<T>(filePath: string, fallback: T): T {
   try {
@@ -130,8 +99,19 @@ export class JsonFileStore implements BridgeStore {
       path.join(DATA_DIR, 'sessions.json'),
       {},
     );
+    let sessionsChanged = false;
     for (const [id, s] of Object.entries(sessions)) {
-      this.sessions.set(id, s);
+      const normalizedSystemPrompt = resolveBridgeSystemPrompt(s.system_prompt);
+      if (normalizedSystemPrompt !== s.system_prompt) {
+        sessionsChanged = true;
+      }
+      this.sessions.set(id, {
+        ...s,
+        ...(normalizedSystemPrompt ? { system_prompt: normalizedSystemPrompt } : {}),
+      });
+    }
+    if (sessionsChanged) {
+      this.persistSessions();
     }
 
     // Bindings
@@ -308,7 +288,7 @@ export class JsonFileStore implements BridgeStore {
       id: uuid(),
       working_directory: cwd || this.settings.get('bridge_default_work_dir') || process.cwd(),
       model,
-      system_prompt: systemPrompt,
+      system_prompt: resolveBridgeSystemPrompt(systemPrompt),
     };
     this.sessions.set(session.id, session);
     this.persistSessions();

@@ -6,6 +6,16 @@
 
 ---
 
+## 2026-04-09 版本锁定更新
+
+- 2026-03-16 的原始选型结论保持不变：**继续使用 Godot**。
+- 当前项目的**执行锁定版本**已从历史上的 `Godot 4.3` 更新为 `Godot 4.6.2 stable`，以官方稳定版为准。
+- 当前项目的**仓库内标准工具链目录**为 `tools/godot/4.6.2-stable/`，不再以外部全局目录作为默认真源。
+- 官方稳定版文档仍明确写明：`Array[Array[float]]` 这类 **nested typed collections are not supported yet**。因此升级到 4.6.2 也**不能**把 `Array[Array[String]]` 当作合法长期方案。
+- 具体下载地址、目录约定与升级风险说明见：
+  - `docs/tools/godot-local-engine-workflow.md`
+  - `docs/engine-reference/godot/VERSION.md`
+
 ## 一、项目需求分析
 
 ### 1.1 游戏类型特征

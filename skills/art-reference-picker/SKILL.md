@@ -10,7 +10,7 @@ Read only the project docs and image files needed for the current request. Prefe
 - `README.md`
 - `docs/plans/art-development-plan.md`
 - `docs/plans/ui-design-plan.md`
-- the relevant files under `design/original-art-reference/`
+- the relevant files under `design/references/original-art/`
 
 Use `view_image` for any candidate image you are going to judge. Do not guess from filenames alone.
 
@@ -56,8 +56,8 @@ Do not use generic praise. Tie each reason to an Angus system, screen, or art ta
 
 When the user asks to send selected images to Feishu:
 
-1. Use `feishu-send/scripts/send-feishu-image-post.mjs`.
-2. Send each selected image as its own message.
+1. Use `claude-to-im/scripts/send-feishu-images-post.mjs`.
+2. Prefer `--separate` so each selected image is its own message.
 3. Use a short title, usually one line naming the motif.
 4. Put the relevance reason in the caption, not as a separate dump.
 5. If one image was previously sent with bad text, resend that image cleanly instead of referencing the broken message.
@@ -66,7 +66,7 @@ When the user asks to send selected images to Feishu:
 
 If the task includes organizing references in the repo:
 
-- store originals under `design/original-art-reference/<date-or-range>/raw/...`
+- store originals under `design/references/original-art/<date-or-range>/raw/...`
 - keep generated contact sheets or crops under `analysis/`
 - add a short README only if it helps future retrieval
 

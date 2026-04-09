@@ -1,0 +1,4 @@
+interface:
+  display_name: "Estimate"
+  short_description: "Estimates task effort by analyzing complexity, dependencies, historical velocity, and risk factors. Produces a structured estimate with confidence levels."
+  default_prompt: "Use $estimate to run the Estimate workflow in this Codex project."

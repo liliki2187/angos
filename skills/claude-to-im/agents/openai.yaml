@@ -1,0 +1,4 @@
+interface:
+  display_name: "Claude to IM"
+  short_description: "Set up, run, and diagnose the workspace IM bridge."
+  default_prompt: "Use $claude-to-im to set up, start, stop, restart, inspect, diagnose the workspace IM bridge, or send one-off text/images to Feishu."

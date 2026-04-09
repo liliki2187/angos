@@ -1,0 +1,65 @@
+name: Prototype Pages
+
+# 仅手动运行：与 pages.yml（全链条 index）分开，避免同一次 push 两次 deploy-pages 抢锁失败。
+# 需要发布「原型导航站 + design/prototypes/html」时在 Actions 里选本 workflow → Run workflow。
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 与 pages.yml 共用同一组，避免并发部署 GitHub Pages 失败
+concurrency:
+  group: "github-pages-${{ github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy Prototype Hub
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Assemble static site
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p site/design/prototypes
+          mkdir -p site/design/references/settlement-reference/2026-03-18
+          cp -R design/prototypes/html site/design/prototypes/
+          rm -rf site/design/prototypes/html/full-chain-demo/source
+          cp -R design/references/settlement-reference/2026-03-18/. site/design/references/settlement-reference/2026-03-18/
+          printf '%s\n' \
+            '<!DOCTYPE html>' \
+            '<html lang="zh-CN">' \
+            '<head>' \
+            '  <meta charset="UTF-8" />' \
+            '  <meta http-equiv="refresh" content="0; url=design/prototypes/html/prototype-hub.html" />' \
+            '  <title>ANGUS Prototype Hub Redirect</title>' \
+            '</head>' \
+            '<body>' \
+            '  <p><a href="design/prototypes/html/prototype-hub.html">跳转到原型导航页</a></p>' \
+            '</body>' \
+            '</html>' > site/index.html
+          touch site/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -4,20 +4,12 @@ on:
   push:
     branches: [main]
     paths:
-      - "**.gd"
-      - "project.godot"
-      - "export_presets.cfg"
-      - "scenes/**"
-      - "Assets/**"
+      - "gd_project/**"
       - ".github/workflows/godot-build.yml"
   pull_request:
     branches: [main]
     paths:
-      - "**.gd"
-      - "project.godot"
-      - "export_presets.cfg"
-      - "scenes/**"
-      - "Assets/**"
+      - "gd_project/**"
       - ".github/workflows/godot-build.yml"
   workflow_dispatch:
 
@@ -25,23 +17,30 @@ jobs:
   build:
     name: Build Windows
     runs-on: ubuntu-latest
-    container:
-      image: barichello/godot-ci:4.3
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Download Godot 4.6.2
+        run: |
+          wget -q "https://downloads.godotengine.org/?version=4.6.2&flavor=stable&slug=linux.x86_64.zip&platform=linux.64" -O /tmp/godot.zip
+          unzip -o /tmp/godot.zip -d /tmp/godot
+          GODOT_BIN="$(find /tmp/godot -maxdepth 1 -type f -name 'Godot_*linux.x86_64' | head -n 1)"
+          chmod +x "$GODOT_BIN"
+          echo "GODOT_BIN=$GODOT_BIN" >> "$GITHUB_ENV"
+
       - name: Download export templates
         run: |
-          wget -q https://github.com/godotengine/godot-builds/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz -O /tmp/templates.tpz
+          wget -q "https://downloads.godotengine.org/?version=4.6.2&flavor=stable&slug=export_templates.tpz&platform=templates" -O /tmp/templates.tpz
           unzip -o /tmp/templates.tpz -d /tmp/tpl
-          TPL_DIR="${HOME}/.local/share/godot/export_templates/4.3.stable"
+          TPL_DIR="${HOME}/.local/share/godot/export_templates/4.6.2.stable"
           mkdir -p "$TPL_DIR"
           cp -v /tmp/tpl/templates/* "$TPL_DIR"/
 
       - name: Make Windows preset CI-safe
         run: |
+          cd gd_project
           if [ ! -f export_presets.cfg ]; then
             echo "::error::export_presets.cfg not found"
             exit 1
@@ -58,9 +57,10 @@ jobs:
 
       - name: Build Windows (release + debug)
         run: |
+          cd gd_project
           mkdir -p build/release build/debug
-          godot --headless --export-release "Windows Desktop" build/release/Angus.exe
-          godot --headless --export-debug "Windows Desktop" build/debug/Angus.exe
+          "$GODOT_BIN" --headless --path . --export-release "Windows Desktop" build/release/Angus.exe
+          "$GODOT_BIN" --headless --path . --export-debug "Windows Desktop" build/debug/Angus.exe
           echo "=== build/debug files ==="
           ls -la build/debug
           if ! ls build/debug/*console*.exe >/dev/null 2>&1; then
@@ -71,5 +71,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Build-Windows
-          path: build/
+          path: gd_project/build/
           retention-days: 14

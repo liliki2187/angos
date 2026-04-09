@@ -1,12 +1,24 @@
 ---
 name: claude-to-im
+aliases:
+  - claude to im
+  - claude_to_im
+  - bridge
+  - start bridge
+  - restart bridge
+  - bridge status
+  - bridge logs
+  - send to feishu
+  - post to feishu
+  - send image to feishu
 description: |
   Bridge this Codex or Claude Code session to Telegram, Discord, Feishu/Lark,
-  or QQ so the user can chat with the agent from their phone.
+  or QQ so the user can chat with the agent from their phone, and use the
+  bundled Feishu send scripts for one-off text or image posts.
   Use for setup, start, stop, restart, status, logs, reconfigure, and
-  diagnosis of the claude-to-im bridge daemon.
+  diagnosis of the claude-to-im bridge daemon, plus one-off Feishu sending.
   Do not use for standalone bot development or direct IM platform SDK work.
-argument-hint: "setup | start | stop | restart | status | logs [N] | reconfigure | doctor"
+argument-hint: "setup | start | stop | restart | status | logs [N] | reconfigure | doctor | send text <message> | send images <paths...>"
 allowed-tools:
   - Bash
   - Read
@@ -29,6 +41,16 @@ Resolve `SKILL_DIR` from this file location first. If needed, fall back to `**/s
 
 Map the user request to one of these subcommands:
 
+In Codex terminal sessions, do not expect `/claude-to-im ...` to work.
+The terminal intercepts leading slash commands before the model sees them.
+Use plain text such as `claude-to-im status`, `start bridge`, or `bridge logs 100`.
+
+Treat `claude-to-im`, `claude to im`, `claude_to_im`, `bridge`,
+`start bridge`, `restart bridge`, `bridge status`, `bridge logs`, and similar bridge-management phrases as
+explicit requests for this skill.
+
+Supported commands: `setup | start | stop | restart | status | logs [N] | reconfigure | doctor | send text <message> | send images <paths...>`
+
 | User intent | Subcommand |
 | --- | --- |
 | setup, configure, connect a channel | `setup` |
@@ -39,6 +61,8 @@ Map the user request to one of these subcommands:
 | show logs, tail logs | `logs` |
 | change config, switch token, switch runtime | `reconfigure` |
 | diagnose, broken, not receiving messages, failing | `doctor` |
+| send one-off text to Feishu | `send text` |
+| send one or more repo images to Feishu | `send images` |
 
 Prefer `doctor` over `status` when the user reports a symptom.
 Extract the optional numeric argument for `logs` and default to `50`.
@@ -52,7 +76,7 @@ Before asking the user for any platform credential, read `references/setup-guide
 
 ## Config check
 
-Before `start`, `stop`, `restart`, `status`, `logs`, `reconfigure`, or `doctor`, verify that `CTI_HOME/config.env` exists.
+Before `start`, `stop`, `restart`, `status`, `logs`, `reconfigure`, `doctor`, `send text`, or `send images`, verify that `CTI_HOME/config.env` exists.
 
 - If missing in Codex, tell the user to create it from `SKILL_DIR/config.env.example` and stop.
 - Do not start the daemon without config; that creates stale PID problems.
@@ -149,6 +173,28 @@ Common fixes:
 - `npm run build` if `dist/daemon.mjs` is stale
 - `restart` if the process is stuck but still running
 - `setup` if config is missing
+
+### `send text`
+
+Run:
+
+- `node "SKILL_DIR/scripts/send-feishu-message.mjs" [chat_id] "<text>"`
+
+Use `chat_id` only when overriding `CTI_FEISHU_DEFAULT_CHAT_ID`.
+
+### `send images`
+
+Run:
+
+- `node "SKILL_DIR/scripts/send-feishu-images-post.mjs" [chat_id] [--title "<title>"] [--caption "<caption>"] [--separate] <path_or_dir> [more_paths_or_dirs...]`
+
+Notes:
+
+- Paths may be absolute or relative to the current workspace.
+- Directory inputs send image files from that directory.
+- Use `--match "<substring>"` to keep only some images from a directory.
+- Use `--recursive` if the images are nested below the given directory.
+- Use `--separate` when each image should become its own Feishu post.
 
 ## Notes
 

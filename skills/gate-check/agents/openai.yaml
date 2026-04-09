@@ -1,0 +1,4 @@
+interface:
+  display_name: "Gate Check"
+  short_description: "Validate readiness to advance between development phases. Produces a PASS/CONCERNS/FAIL verdict with specific blockers and required artifacts."
+  default_prompt: "Use $gate-check to run the Gate Check workflow in this Codex project."

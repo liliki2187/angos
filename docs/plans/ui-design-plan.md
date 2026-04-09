@@ -8,15 +8,15 @@
 
 ### 已完成/已产出
 
-- `design/htmls/ui-prototype.html`、`design/htmls/event-check-ui.html`、`design/htmls/editing-ui.html` 已补齐主菜单、事件检定、编辑界面三类网页原型
-- `scenes/EventCheck.tscn` / `scenes/EventCheck.gd` 已完成第一轮 Godot 原型，包含概率展示、对抗抵消、骰子动画和结果特效
-- `design/generated-settlement-reference/2026-03-18/` 已产出 5 套发行结算参考图和 1 套神秘特刊版式
-- `scenes/MysteryBroadsheetModal.tscn` 已把神秘特刊方向接入主菜单，验证“网页排版 -> 成图 -> Godot 模态”的迁移链路
+- `design/prototypes/html/ui-prototype.html`、`design/prototypes/html/event-check-ui.html`、`design/prototypes/html/editing-ui.html` 已补齐主菜单、事件检定、编辑界面三类网页原型
+- `gd_project/scenes/gameplay/event_check/EventCheck.tscn` / `gd_project/scenes/gameplay/event_check/EventCheck.gd` 已完成第一轮 Godot 原型，包含概率展示、对抗抵消、骰子动画和结果特效
+- `design/references/settlement-reference/2026-03-18/` 已产出 5 套发行结算参考图和 1 套神秘特刊版式
+- `gd_project/scenes/ui/modals/MysteryBroadsheetModal.tscn` 已把神秘特刊方向接入主菜单，验证“网页排版 -> 成图 -> Godot 模态”的迁移链路
 
 ### 当前重点
 
 - 从现有结算页参考图中筛出 1 套正式 UI 落地方向，并抽出可复用的组件和版式规则
-- 将 `design/htmls/editing-ui.html` 的探索结果落回 Godot 可交互界面
+- 将 `design/prototypes/html/editing-ui.html` 的探索结果落回 Godot 可交互界面
 - 为神秘特刊模态补足音效、hover 层次、纸张扭曲等感官反馈
 
 ### 当前缺口

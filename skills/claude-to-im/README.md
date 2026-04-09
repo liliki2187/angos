@@ -86,6 +86,7 @@ bash ~/code/Claude-to-IM-skill/scripts/install-codex.sh --link
 **Claude Code:** Start a new session and type `/` — you should see `claude-to-im` in the skill list. Or ask Claude: "What skills are available?"
 
 **Codex:** Start a new session and say "claude-to-im setup" or "start bridge" — Codex will recognize the skill and run the setup wizard.
+Do not type `/claude-to-im ...` in Codex terminal sessions; the terminal reserves leading slash commands and will reject unknown ones before the model sees them.
 
 ## Quick Start
 

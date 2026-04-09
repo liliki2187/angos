@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildPromptText, buildThreadOptions } from '../codex-provider.js';
+import { buildCodexCliEnv, buildPromptText, buildThreadOptions, normalizeStoredMessageContent } from '../codex-provider.js';
 
 // ── SSE utils tests ─────────────────────────────────────────
 
@@ -48,6 +48,23 @@ function parseSSEChunks(chunks: string[]): Array<{ type: string; data: string }>
 }
 
 describe('CodexProvider', () => {
+  it('aligns Windows Codex CLI env with PowerShell when available', () => {
+    if (process.platform !== 'win32') {
+      return;
+    }
+
+    const env = buildCodexCliEnv({
+      PATH: 'C:\\Windows\\System32',
+      LOCALAPPDATA: process.env.LOCALAPPDATA,
+      SYSTEMROOT: process.env.SYSTEMROOT,
+    });
+
+    assert.ok(env.COMSPEC, 'Expected COMSPEC to be set');
+    assert.ok(env.SHELL, 'Expected SHELL to be set');
+    assert.equal(env.COMSPEC, env.SHELL);
+    assert.ok((env.PATH || '').toLowerCase().includes('powershell') || (env.PATH || '').toLowerCase().includes('windowsapps'));
+  });
+
   it('emits error when SDK init fails', async () => {
     const { CodexProvider } = await import('../codex-provider.js');
     const { PendingPermissions } = await import('../permission-gateway.js');
@@ -244,6 +261,25 @@ describe('CodexProvider', () => {
     });
 
     assert.equal(chunks.length, 0);
+  });
+
+  it('drops tool_result blocks from stored assistant history normalization', () => {
+    const previous = process.env.CTI_FEISHU_HIDE_TOOL_METADATA;
+    process.env.CTI_FEISHU_HIDE_TOOL_METADATA = 'true';
+    try {
+      const normalized = normalizeStoredMessageContent(JSON.stringify([
+        { type: 'text', text: 'Final answer' },
+        { type: 'tool_result', content: 'Read src/main.ts' },
+      ]));
+
+      assert.equal(normalized, 'Final answer');
+    } finally {
+      if (previous === undefined) {
+        delete process.env.CTI_FEISHU_HIDE_TOOL_METADATA;
+      } else {
+        process.env.CTI_FEISHU_HIDE_TOOL_METADATA = previous;
+      }
+    }
   });
 
   it('does not pass model by default and skips stale Claude resume id', async () => {
@@ -558,7 +594,10 @@ describe('CodexProvider image input', () => {
     const parts = capturedInput as Array<Record<string, string>>;
     assert.equal(parts.length, 2);
     assert.equal(parts[0].type, 'text');
-    assert.equal(parts[0].text, 'Describe this image');
+    assert.ok(parts[0].text.includes('Describe this image'));
+    if (process.platform === 'win32') {
+      assert.ok(parts[0].text.includes('PowerShell as the execution shell'));
+    }
     assert.equal(parts[1].type, 'local_image');
     assert.ok(parts[1].path.endsWith('.png'), 'Temp file should have .png extension');
   });
@@ -594,7 +633,10 @@ describe('CodexProvider image input', () => {
     await collectStream(stream);
 
     assert.equal(typeof capturedInput, 'string', 'Input should be a plain string without images');
-    assert.equal(capturedInput, 'Hello');
+    assert.ok((capturedInput as string).includes('Hello'));
+    if (process.platform === 'win32') {
+      assert.ok((capturedInput as string).includes('PowerShell as the execution shell'));
+    }
   });
 
   it('builds local_image input with multiple images while summarizing non-image files', async () => {

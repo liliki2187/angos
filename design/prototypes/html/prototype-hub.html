@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANGUS - Prototype Hub</title>
+<style>
+* { box-sizing: border-box; }
+:root {
+  --bg: #0b1118;
+  --panel: rgba(16, 24, 35, 0.92);
+  --panel-2: rgba(21, 31, 45, 0.92);
+  --line: #2b3a4b;
+  --text: #e2e7ee;
+  --text-dim: #90a0b5;
+  --gold: #d49a57;
+  --gold-dim: #8f6638;
+  --accent: #2a8a8f;
+  --danger: #c75d4f;
+}
+body {
+  margin: 0;
+  font-family: "Georgia", "SimSun", serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(42, 138, 143, 0.14), transparent 28%),
+    radial-gradient(circle at top right, rgba(212, 154, 87, 0.14), transparent 24%),
+    linear-gradient(180deg, #091019 0%, #0e1822 100%);
+  min-height: 100vh;
+}
+.wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 40px 20px 56px;
+}
+.hero {
+  padding: 28px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(18, 28, 41, 0.96), rgba(12, 19, 28, 0.96));
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.32);
+}
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+h1 {
+  margin: 10px 0 12px;
+  font-size: clamp(32px, 6vw, 56px);
+  letter-spacing: 3px;
+}
+.lead {
+  margin: 0;
+  max-width: 760px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-dim);
+}
+.section {
+  margin-top: 28px;
+}
+.section-title {
+  margin: 0 0 12px;
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+.card.alt { background: var(--panel-2); }
+.card h2 {
+  margin: 0;
+  font-size: 24px;
+  color: var(--text);
+}
+.meta {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+}
+.desc {
+  margin: 0;
+  line-height: 1.65;
+  color: var(--text-dim);
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--gold-dim);
+  color: var(--gold);
+  text-decoration: none;
+  background: rgba(212, 154, 87, 0.06);
+  transition: 0.2s ease;
+}
+.btn:hover {
+  border-color: var(--gold);
+  background: rgba(212, 154, 87, 0.14);
+}
+.btn.secondary {
+  border-color: var(--accent);
+  color: #8fd5d9;
+  background: rgba(42, 138, 143, 0.08);
+}
+.btn.secondary:hover { background: rgba(42, 138, 143, 0.16); }
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.pill {
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  color: var(--text-dim);
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.02);
+}
+.note {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-left: 3px solid var(--danger);
+  background: rgba(199, 93, 79, 0.08);
+  color: #d9b4ac;
+  line-height: 1.6;
+}
+@media (max-width: 640px) {
+  .wrap { padding: 24px 14px 40px; }
+  .hero { padding: 22px; }
+}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">ANGUS Prototype Hub</div>
+      <h1>已完成网页原型入口</h1>
+      <p class="lead">
+        这里集中放目前仓库里已经能直接在网页打开的原型。你刚才点名的“骰子判定界面”和“报纸结算界面”都在这里，并且给了直达链接。
+      </p>
+      <div class="note">
+        如果你想直接看“报纸结算”，优先点“综合原型直达结算页”或下面 5 个“成刊/发行结算专页方案”。
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">核心可玩入口</h2>
+      <div class="grid">
+        <article class="card">
+          <div class="meta">已完成 · 可交互</div>
+          <h2>骰子判定界面</h2>
+          <p class="desc">
+            单独的事件检定原型。可切换 single / combined / split，可切换数值模式和骰子模式，也能加载 3 个预设案例直接试。
+          </p>
+          <div class="pill-row">
+            <span class="pill">事件检定</span>
+            <span class="pill">骰子动画</span>
+            <span class="pill">调试面板</span>
+          </div>
+          <div class="actions">
+            <a class="btn" href="./event-check-ui.html">打开原型</a>
+          </div>
+        </article>
+
+        <article class="card alt">
+          <div class="meta">已完成 · 可交互</div>
+          <h2>综合原型直达结算页</h2>
+          <p class="desc">
+            这是最早那套综合 UI 原型里的“发行结算”页面。我补了 `?page=` 直达支持，你现在可以直接落到结算页，不用再手动点进去。
+          </p>
+          <div class="pill-row">
+            <span class="pill">周刊编辑</span>
+            <span class="pill">发行结算</span>
+            <span class="pill">页面直达</span>
+          </div>
+          <div class="actions">
+            <a class="btn" href="./ui-prototype.html?page=settlement">直达结算页</a>
+            <a class="btn secondary" href="./ui-prototype.html?page=weekly-edit">直达编辑页</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="meta">2026-03-24 同步 · 可交互</div>
+          <h2>全链条网页 Demo</h2>
+          <p class="desc">
+            从上游策划仓筛选后并入的完整参考版，串起探索、split 检定、线索转故事、拖拽组版与经济结算，适合查看整条循环如何被一次性串起来。
+          </p>
+          <div class="pill-row">
+            <span class="pill">全链条</span>
+            <span class="pill">探索到结算</span>
+            <span class="pill">策划同步版</span>
+          </div>
+          <div class="actions">
+            <a class="btn" href="./full-chain-demo/world-mysteries-full-chain.html">打开全链条 Demo</a>
+            <a class="btn secondary" href="./full-chain-demo/README.md">查看说明</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="meta">已完成 · 可浏览</div>
+          <h2>成刊 / 发行结算专页</h2>
+          <p class="desc">
+            3 月 18 日新增的报纸化结算专页。支持通过 `?variant=` 切换 5 套方向，更接近正式结算页视觉探索，不是简单数值面板。
+          </p>
+          <div class="pill-row">
+            <span class="pill">报刊排版</span>
+            <span class="pill">结算专页</span>
+            <span class="pill">5 套方案</span>
+          </div>
+          <div class="actions">
+            <a class="btn" href="../../references/settlement-reference/2026-03-18/magazine-settlement-reference.html?variant=cover_desk">封面桌版</a>
+            <a class="btn secondary" href="../../references/settlement-reference/2026-03-18/magazine-settlement-reference.html?variant=sealed_briefing">审查公报版</a>
+            <a class="btn secondary" href="../../references/settlement-reference/2026-03-18/magazine-settlement-reference.html?variant=faction_pressure">势力拉扯版</a>
+            <a class="btn secondary" href="../../references/settlement-reference/2026-03-18/magazine-settlement-reference.html?variant=astral_bleed">污染失控版</a>
+            <a class="btn secondary" href="../../references/settlement-reference/2026-03-18/magazine-settlement-reference.html?variant=cartography_echo">地图回声版</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">其他已完成页面</h2>
+      <div class="grid">
+        <article class="card alt">
+          <div class="meta">已完成 · 可交互</div>
+          <h2>周刊编辑独立页</h2>
+          <p class="desc">
+            单独拆出的编辑界面原型，适合只看版面填充、栏目结构和右侧属性/销量预估。
+          </p>
+          <div class="actions">
+            <a class="btn" href="./editing-ui.html">打开编辑页</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="meta">已完成 · 可浏览</div>
+          <h2>神秘特刊单页</h2>
+          <p class="desc">
+            与 Godot 里的神秘特刊模态页对应的网页参考版式，用来验证“网页排版 -> 成图 -> 游戏内预览”的链路。
+          </p>
+          <div class="actions">
+            <a class="btn" href="../../references/settlement-reference/2026-03-18/mystery-broadsheet-reference.html">打开特刊页</a>
+          </div>
+        </article>
+
+        <article class="card alt">
+          <div class="meta">2026-03-24 同步 · 可交互</div>
+          <h2>探索 + 骰子独立 Demo</h2>
+          <p class="desc">
+            上游同步进来的独立探索原型，聚焦区域选择、组队、split 检定与对手作废骰子表现，适合单独验证探索期手感。
+          </p>
+          <div class="actions">
+            <a class="btn" href="./full-chain-demo/world-mysteries-explore-dice.html">打开探索 Demo</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </div>
+</body>
+</html>
