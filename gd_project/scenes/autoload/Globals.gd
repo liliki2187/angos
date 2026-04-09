@@ -35,7 +35,7 @@ var scene_paths := {
 	"card_collection": "res://scenes/gameplay/card_collection/CardCollection.tscn",
 	"event_check": "res://scenes/gameplay/event_check/EventCheck.tscn",
 	"weekly_run": "res://scenes/gameplay/weekly_run/WeeklyRunGame.tscn",
-	"full_chain": "res://scenes/gameplay/weekly_run/WeeklyRunGame.tscn",
+	"full_chain": "res://scenes/gameplay/full_chain/FullChainGame.tscn",
 }
 
 # === 日志工具函数 ===

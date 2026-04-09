@@ -1,0 +1,129 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/gameplay/weekly_run/phases/WeeklyRunBriefingPhase.gd" id="1_briefing_phase"]
+[ext_resource type="PackedScene" path="res://scenes/gameplay/weekly_run/components/WeeklyRunScrollableText.tscn" id="2_scrollable_text"]
+
+[node name="WeeklyRunBriefingPhase" type="MarginContainer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_briefing_phase")
+
+[node name="RootVBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="ContentSplit" type="HBoxContainer" parent="RootVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="BriefingPanel" type="PanelContainer" parent="RootVBox/ContentSplit"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.2
+
+[node name="BriefingVBox" type="VBoxContainer" parent="RootVBox/ContentSplit/BriefingPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="BriefingTitle" type="Label" parent="RootVBox/ContentSplit/BriefingPanel/BriefingVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "本周简报"
+
+[node name="BriefingHint" type="Label" parent="RootVBox/ContentSplit/BriefingPanel/BriefingVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.76, 0.82, 1)
+text = "这里展示本周起始事件、任务摘要与正式机会概览。确认后再进入探索。"
+autowrap_mode = 3
+
+[node name="BriefingScroll" parent="RootVBox/ContentSplit/BriefingPanel/BriefingVBox" instance=ExtResource("2_scrollable_text")]
+custom_minimum_size = Vector2(0, 320)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SideVBox" type="VBoxContainer" parent="RootVBox/ContentSplit"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.92
+theme_override_constants/separation = 16
+
+[node name="TasksPanel" type="PanelContainer" parent="RootVBox/ContentSplit/SideVBox"]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="TasksVBox" type="VBoxContainer" parent="RootVBox/ContentSplit/SideVBox/TasksPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TasksTitle" type="Label" parent="RootVBox/ContentSplit/SideVBox/TasksPanel/TasksVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "本周任务"
+
+[node name="TaskScroll" type="ScrollContainer" parent="RootVBox/ContentSplit/SideVBox/TasksPanel/TasksVBox"]
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="TaskList" type="VBoxContainer" parent="RootVBox/ContentSplit/SideVBox/TasksPanel/TasksVBox/TaskScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="HooksPanel" type="PanelContainer" parent="RootVBox/ContentSplit/SideVBox"]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="HooksVBox" type="VBoxContainer" parent="RootVBox/ContentSplit/SideVBox/HooksPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HooksTitle" type="Label" parent="RootVBox/ContentSplit/SideVBox/HooksPanel/HooksVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "上期余波"
+
+[node name="HookScroll" type="ScrollContainer" parent="RootVBox/ContentSplit/SideVBox/HooksPanel/HooksVBox"]
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="HookList" type="VBoxContainer" parent="RootVBox/ContentSplit/SideVBox/HooksPanel/HooksVBox/HookScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="OpportunityPanel" type="PanelContainer" parent="RootVBox"]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="OpportunityVBox" type="VBoxContainer" parent="RootVBox/OpportunityPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="OpportunityTitle" type="Label" parent="RootVBox/OpportunityPanel/OpportunityVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "机会概览"
+
+[node name="OpportunityScroll" type="ScrollContainer" parent="RootVBox/OpportunityPanel/OpportunityVBox"]
+custom_minimum_size = Vector2(0, 140)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="OpportunityList" type="VBoxContainer" parent="RootVBox/OpportunityPanel/OpportunityVBox/OpportunityScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
