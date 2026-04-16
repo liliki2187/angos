@@ -9,6 +9,7 @@
 3. `git-collaboration.md`
 4. `../technical-preferences.md`
 5. `../../production/session-state/active.md`
+6. `ai-collaboration-guidance.md`
 
 如果之后还需要更深入的产品上下文：
 

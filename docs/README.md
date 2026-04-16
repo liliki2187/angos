@@ -9,6 +9,7 @@
 - 架构决策：`architecture/`
 - 技术默认约束：`../docs/technical-preferences.md`
 - 入门与协作规则：`onboarding/`
+- AI 协作偏好与避坑规则：`onboarding/ai-collaboration-guidance.md`
 - 生产执行状态：`../production/`
 
 ## 状态说明

@@ -569,6 +569,33 @@
     .log { font-size: 0.8rem; color: var(--muted); max-height: 160px; overflow-y: auto; }
     .log p { margin: 0.35rem 0; border-left: 2px solid var(--border); padding-left: 0.5rem; }
     .prob-box { font-size: 0.78rem; color: var(--muted); background: #0f1318; border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem 0.75rem; margin-top: 0.5rem; }
+    .rule-strip { margin-top: 0.55rem; display: grid; gap: 0.45rem; }
+    .rule-strip-head { font-size: 0.78rem; color: var(--gold-dim); font-weight: 700; }
+    .rule-chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .rule-chip {
+      font-size: 0.72rem; padding: 0.22rem 0.5rem; border-radius: 999px; border: 1px solid var(--border);
+      background: #0b1220; color: #cbd5e1;
+    }
+    .rule-chip.scene { border-color: rgba(212,168,83,0.5); color: var(--gold); }
+    .rule-chip.axis { border-color: rgba(59,130,246,0.45); color: #93c5fd; }
+    .rule-chip.intervention { border-color: rgba(248,113,113,0.45); color: #fca5a5; }
+    .rule-chip.carry { border-color: rgba(34,197,94,0.4); color: #86efac; }
+    .rule-chip.chain { border-color: rgba(163,113,247,0.45); color: #d8b4fe; }
+    .rule-details { display: grid; gap: 0.28rem; font-size: 0.75rem; color: var(--muted); }
+    .carry-strip {
+      margin: 0.75rem 0 0.5rem; display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .carry-card {
+      min-width: 180px; padding: 0.5rem 0.65rem; border-radius: 8px; border: 1px solid #334155;
+      background: linear-gradient(180deg, #0f1318, #0b1220); font-size: 0.74rem; color: #cbd5e1;
+    }
+    .carry-card .k { color: var(--gold); font-weight: 700; margin-bottom: 0.18rem; }
+    .result-grid { display: grid; gap: 0.55rem; margin: 0.7rem 0; }
+    .result-box {
+      border: 1px solid #334155; border-radius: 10px; padding: 0.55rem 0.7rem; background: #0b1220;
+    }
+    .result-box h3 { margin: 0 0 0.3rem; font-size: 0.82rem; color: var(--gold-dim); }
+    .result-box p { margin: 0; font-size: 0.8rem; color: #cbd5e1; line-height: 1.45; }
     .mode-toggle { display: inline-flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
     .mode-toggle button { border: none; border-radius: 0; background: #21262d; }
     .mode-toggle button.on { background: #2d2610; color: var(--gold); }
@@ -581,6 +608,23 @@
     .die.hit { border-color: var(--ok); color: var(--ok); box-shadow: 0 0 0 1px rgba(63,185,80,0.28) inset, 0 0 10px rgba(63,185,80,0.22); }
     .die.miss { color: #ef4444; border-color: #ef4444; box-shadow: 0 0 0 1px rgba(239,68,68,0.18) inset, 0 0 10px rgba(239,68,68,0.2); }
     .die.void { border-style: dashed; color: var(--muted); text-decoration: line-through; opacity: 0.75; }
+    .die.boost { border-color: #f59e0b; color: #fbbf24; box-shadow: 0 0 0 1px rgba(245,158,11,0.28) inset, 0 0 12px rgba(245,158,11,0.28); }
+    .die.carry { border-color: #38bdf8; color: #7dd3fc; box-shadow: 0 0 0 1px rgba(56,189,248,0.22) inset, 0 0 12px rgba(56,189,248,0.28); }
+    .die.tainted { border-color: #a855f7; color: #d8b4fe; box-shadow: 0 0 0 1px rgba(168,85,247,0.22) inset, 0 0 12px rgba(168,85,247,0.25); }
+    .die.focus-pulse { animation: diceFocusPulse 0.7s ease-in-out 2; }
+    .die.locked {
+      box-shadow: 0 0 0 2px rgba(212,168,83,0.72), 0 0 18px rgba(212,168,83,0.32);
+      transform: scale(1.12);
+    }
+    .die.lockable { cursor: pointer; }
+    .die.intervention-mark {
+      box-shadow: 0 0 0 2px rgba(248,113,113,0.65), 0 0 18px rgba(248,113,113,0.35);
+      transform: scale(1.16);
+    }
+    .die.intervention-safe {
+      box-shadow: 0 0 0 2px rgba(56,189,248,0.6), 0 0 18px rgba(56,189,248,0.3);
+      transform: scale(1.14);
+    }
     .die.rolling {
       border-color: #60a5fa; color: #60a5fa;
       background: linear-gradient(160deg, #0b1220, #10223d);
@@ -600,6 +644,12 @@
       65% { transform: scale(1.12); filter: brightness(1.1); }
       100% { transform: scale(1); filter: brightness(1); }
     }
+    @keyframes diceFocusPulse {
+      0% { transform: scale(1); }
+      30% { transform: scale(1.18); }
+      60% { transform: scale(1.05); }
+      100% { transform: scale(1.15); }
+    }
     .dice-rolling-hint {
       margin-bottom: 0.45rem; font-size: 0.82rem; color: #93c5fd; letter-spacing: 0.02em;
       display: inline-flex; align-items: center; gap: 8px;
@@ -610,6 +660,49 @@
     }
     @keyframes diceSpin { to { transform: rotate(360deg); } }
     .phase-label { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.35rem; }
+    .mech-stage {
+      margin-top: 0.55rem;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 0.55rem 0.7rem;
+      background: linear-gradient(180deg, #0b1220, #0f1318);
+    }
+    .mech-stage h4 {
+      margin: 0 0 0.25rem;
+      font-size: 0.78rem;
+      color: var(--gold);
+    }
+    .mech-stage p {
+      margin: 0;
+      font-size: 0.76rem;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+    .reroll-actions {
+      margin-top: 0.55rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .reroll-status {
+      font-size: 0.78rem;
+      color: #cbd5e1;
+    }
+    .stage-banner {
+      margin: 0.55rem 0 0.35rem;
+      padding: 0.42rem 0.65rem;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 1px solid rgba(212,168,83,0.42);
+      background: rgba(29, 41, 59, 0.78);
+      color: var(--gold);
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.18) inset;
+    }
     .result-banner { font-size: 1.1rem; font-weight: 700; color: var(--gold); margin: 0.75rem 0 0.35rem; }
     .hidden { display: none !important; }
     .tip-inline { font-size: 0.78rem; color: var(--muted); }
@@ -1496,6 +1589,52 @@
 
   const DIFFICULTY_P = { easy: 0.6, normal: 0.5, hard: 1 / 3 };
   const macro = { 公信: 42, 诡名: 38, 声望: 45, 守序: 48, 狂性: 22 };
+  const SCENE_PACKAGES = {
+    science_investigation: {
+      label: "科学调查",
+      axisKey: "evidence_quality",
+      axisLabel: "证据质量",
+      riskHint: "样本、记录与校核决定素材可信度。",
+      defaultLightMod: { kind: "bonusA", amount: 1 },
+    },
+    social_probe: {
+      label: "社会暗访",
+      axisKey: "exposure",
+      axisLabel: "暴露度",
+      riskHint: "越接近真相，越容易惊动目标与舆论。",
+      defaultLightMod: { kind: "shieldFirstHit", amount: 1 },
+    },
+    archaeology_field: {
+      label: "考古现场",
+      axisKey: "stability",
+      axisLabel: "样本稳定",
+      riskHint: "现场保全和撤离同样重要。",
+      defaultLightMod: { kind: "bonusB", amount: 1 },
+    },
+    abnormal_contact: {
+      label: "异常接触",
+      axisKey: "contamination_risk",
+      axisLabel: "污染风险",
+      riskHint: "成功本身也可能带来后续代价。",
+      defaultLightMod: { kind: "taintedDie", pool: "A", amount: 1 },
+    },
+  };
+  const INTERVENTION_LABELS = {
+    seize: "收走",
+    seal: "封存",
+    decoy: "诱饵",
+    contaminate: "污染",
+  };
+  const CHAIN_PROFILES = {
+    mummy_tomb: {
+      label: "木乃伊墓室",
+      phases: [
+        { title: "前室侦察", enemyDelta: 0, kADelta: 0, kBDelta: -1 },
+        { title: "开棺取样", enemyDelta: 1, kADelta: 0, kBDelta: 0 },
+        { title: "撤离保全", enemyDelta: 1, kADelta: -1, kBDelta: 1 },
+      ],
+    },
+  };
 
   const state = {
     week: 1,
@@ -1554,6 +1693,7 @@
     therapyCards: [],
     /** 题材 → 上次公开深度/专栏/爆料取向（sci/occult/pop）；快讯不计入 */
     lastPublicStanceByTopic: {},
+    carryStates: {},
     weekEventResolved: false,
     staffEffects: [],
     dynamicNodes: [],
@@ -1693,11 +1833,13 @@
       name: "北美禁区带",
       unlocked: true,
       pulse: false,
-      hint: "初始解锁。都市传说与禁区并存。",
+      hint: "初始解锁。都市传说与禁区并存，也是当前新骰子机制的主要试玩区。",
       nodes: [
-        { id: "n51", kind: "permanent", name: "51 区外围公路", days: 2, need: { 探索: 4, 生存: 2 }, tags: ["sci", "pop"], difficulty: "normal", enemyAttr: 2, chain: null },
-        { id: "skin", kind: "permanent", name: "罗斯威尔档案残页", days: 1, need: { 探索: 3, 洞察: 3 }, tags: ["sci", "occult"], difficulty: "normal", enemyAttr: 1, chain: null },
-        { id: "temp_ufo", kind: "temp", name: "突发：雷达异常光点", days: 2, need: { 探索: 5, 生存: 3 }, tags: ["sci", "pop"], deadlineDay: 4, difficulty: "hard", enemyAttr: 3, chain: null },
+        { id: "n51", kind: "permanent", name: "51 区外围公路", days: 2, need: { 探索: 4, 生存: 2 }, tags: ["sci", "pop"], difficulty: "normal", enemyAttr: 2, scenePackage: "science_investigation", chain: null },
+        { id: "skin", kind: "permanent", name: "罗斯威尔档案残页", days: 1, need: { 探索: 3, 洞察: 3 }, tags: ["sci", "occult"], difficulty: "normal", enemyAttr: 1, scenePackage: "science_investigation", carryState: { flag: "banked_lead", value: 1, scenePackage: "science_investigation", onTiers: ["大成功", "小成功"], summary: "档案残页会在下一次科学调查中提供 1 点保底命中。" }, chain: null },
+        { id: "temp_ufo", kind: "temp", name: "突发：雷达异常光点", days: 2, need: { 探索: 5, 生存: 3 }, tags: ["sci", "pop"], deadlineDay: 4, difficulty: "hard", enemyAttr: 3, scenePackage: "social_probe", intervention: "seize", carryState: { flag: "watchlist_pressure", value: 1, onTiers: ["小成功", "失败", "大失败"], summary: "军警开始盯梢，下次社会或科学节点的对抗会更强。" }, chain: null },
+        { id: "harbor_echo_us", kind: "permanent", name: "禁区码头回声仓栈", days: 2, need: { 洞察: 3, 理性: 3 }, tags: ["pop", "sci"], difficulty: "normal", enemyAttr: 2, scenePackage: "social_probe", intervention: "seal", chain: null },
+        { id: "mountain_signal_us", kind: "permanent", name: "废站短波假信号", days: 3, need: { 探索: 4, 诡思: 3, 生存: 3 }, tags: ["occult"], difficulty: "hard", enemyAttr: 3, scenePackage: "abnormal_contact", intervention: "decoy", chain: null },
         {
           id: "hidden_gate",
           kind: "hidden",
@@ -1708,8 +1850,12 @@
           difficulty: "normal",
           enemyAttr: 4,
           unlock: (m) => m.狂性 >= 35 && m.诡名 >= 40,
+          scenePackage: "abnormal_contact",
+          intervention: "contaminate",
+          carryState: { flag: "abnormal_residue", value: 1, onTiers: ["大成功", "小成功"], summary: "带回了异常残留，下次异常接触的污染风险会继续上升。" },
           chain: null,
         },
+        { id: "mummy_vault_us", kind: "permanent", name: "北美禁区考古泄露坑道", days: 3, need: { 探索: 4, 洞察: 3, 生存: 3 }, tags: ["sci"], difficulty: "hard", enemyAttr: 3, scenePackage: "archaeology_field", chainProfile: "mummy_tomb", carryState: { flag: "sample_contaminated", value: 1, onTiers: ["小成功", "失败", "大失败"], summary: "取样不稳，下一次科学或异常检定更容易带出污染。" }, chain: null },
       ],
     },
     {
@@ -1719,8 +1865,9 @@
       pulse: false,
       hint: "需要：声望≥55 或 完成「罗斯威尔档案残页」。",
       nodes: [
-        { id: "shen", kind: "permanent", name: "神农架毛发样本采集", days: 3, need: { 探索: 5, 生存: 4 }, tags: ["sci", "pop"], difficulty: "hard", enemyAttr: 3, chain: null },
+        { id: "shen", kind: "permanent", name: "神农架毛发样本采集", days: 3, need: { 探索: 5, 生存: 4 }, tags: ["sci", "pop"], difficulty: "hard", enemyAttr: 3, scenePackage: "science_investigation", chain: null },
         { id: "chainA", kind: "permanent", name: "模糊：未解锁的链式线索", days: 2, need: { 探索: 6, 洞察: 4 }, tags: ["sci"], difficulty: "normal", enemyAttr: 2, chain: "locked", chainTitle: "链式调查 · 第二阶段" },
+        { id: "mummy_vault", kind: "permanent", name: "沙海木乃伊前厅", days: 3, need: { 探索: 4, 洞察: 3, 生存: 3 }, tags: ["sci"], difficulty: "hard", enemyAttr: 3, scenePackage: "archaeology_field", chainProfile: "mummy_tomb", carryState: { flag: "sample_contaminated", value: 1, onTiers: ["小成功", "失败", "大失败"], summary: "取样不稳，下一次科学或异常检定更容易带出污染。" }, chain: null },
       ],
     },
     {
@@ -1738,7 +1885,15 @@
     pacific: { x: 56, y: 54, label: "太平洋岛屿群" },
   };
   const NODE_MAP_POS = {
-    us: { n51: { x: 22, y: 28 }, skin: { x: 54, y: 46 }, temp_ufo: { x: 73, y: 25 }, hidden_gate: { x: 67, y: 70 } },
+    us: {
+      n51: { x: 18, y: 24 },
+      skin: { x: 46, y: 44 },
+      temp_ufo: { x: 74, y: 22 },
+      harbor_echo_us: { x: 76, y: 54 },
+      mountain_signal_us: { x: 34, y: 70 },
+      hidden_gate: { x: 62, y: 74 },
+      mummy_vault_us: { x: 20, y: 52 },
+    },
     east_asia: { shen: { x: 32, y: 40 }, chainA: { x: 68, y: 58 } },
     pacific: { easter: { x: 48, y: 46 } },
   };
@@ -2469,11 +2624,27 @@
     return sum;
   }
   function poolSizes(staffList) {
-    const s = staffSum(staffList);
-    return { nA: (s.探索 || 0) + (s.洞察 || 0) + (s.诡思 || 0), nB: (s.生存 || 0) + (s.理性 || 0) };
+    const staffObjs = staffList
+      .map((id) => STAFF.find((x) => x.id === id))
+      .filter(Boolean);
+    let nA = 0;
+    let nB = 0;
+    staffObjs.forEach((st) => {
+      const aScore = (getStaffValue(st, "探索") || 0) + (getStaffValue(st, "洞察") || 0) + (getStaffValue(st, "诡思") || 0);
+      const bScore = (getStaffValue(st, "生存") || 0) + (getStaffValue(st, "理性") || 0);
+      if (aScore >= bScore) nA += 1;
+      else nB += 1;
+    });
+    if (staffObjs.length === 0) return { nA: 0, nB: 0 };
+    return { nA, nB };
   }
   function needThresholds(need) {
-    return { kA: (need.探索 || 0) + (need.洞察 || 0) + (need.诡思 || 0), kB: (need.生存 || 0) + (need.理性 || 0) };
+    const needA = (need.探索 || 0) + (need.洞察 || 0) + (need.诡思 || 0);
+    const needB = (need.生存 || 0) + (need.理性 || 0);
+    return {
+      kA: Math.max(1, Math.ceil(needA / 4)),
+      kB: Math.max(1, Math.ceil(needB / 3)),
+    };
   }
 
   function computeExplorationP(mission, staffList) {
@@ -2483,11 +2654,17 @@
     if (mission.kind === "temp" && state.day < (mission.deadlineDay || 0)) deltaP += 0.05;
     if (mission.kind === "hidden") deltaP -= 0.05;
     const p = clamp(pBase + deltaP, 0, 1);
-    const { nA, nB } = poolSizes(staffList);
+    let { nA, nB } = poolSizes(staffList);
     const { kA, kB } = needThresholds(mission.need);
+    const context = buildSceneContext(mission);
+    const carry = getPreRollCarryModifiers(context);
+    nA = Math.max(0, nA + (carry.bonusA || 0));
+    nB = Math.max(0, nB + (carry.bonusB || 0));
+    if (context.lightMod?.kind === "bonusA") nA += context.lightMod.amount || 1;
+    if (context.lightMod?.kind === "bonusB") nB += context.lightMod.amount || 1;
     const enemyAttr = mission.enemyAttr | 0;
     const nTot = nA + nB;
-    const enemyA = nTot > 0 ? Math.floor((enemyAttr * nA) / nTot) : 0;
+    const enemyA = (nTot > 0 ? Math.floor((enemyAttr * nA) / nTot) : 0) + (carry.enemyADelta || 0);
     const enemyB = enemyAttr - enemyA;
     const nAe = Math.max(0, nA - enemyA);
     const nBe = Math.max(0, nB - enemyB);
@@ -2516,6 +2693,8 @@
       pBig: pA * pB,
       pSmall: pA * (1 - pB) + (1 - pA) * pB,
       pBothFail: (1 - pA) * (1 - pB),
+      sceneContext: context,
+      carry,
     };
   }
 
@@ -2529,19 +2708,43 @@
   }
 
   function runSplitCheck(mission, staffList) {
+    const context = buildSceneContext(mission);
+    if (context.chainProfile) return runChainCheck(mission, staffList, context);
     const meta = computeExplorationP(mission, staffList);
     const p = meta.p;
-    const { nA, nB } = poolSizes(staffList);
+    let { nA, nB } = poolSizes(staffList);
     const { kA, kB } = needThresholds(mission.need);
+    const carry = getPreRollCarryModifiers(context);
+    const notes = [];
+    nA = Math.max(0, nA + (carry.bonusA || 0));
+    nB = Math.max(0, nB + (carry.bonusB || 0));
+    if (carry.notes?.length) notes.push(...carry.notes);
+    if (context.lightMod?.kind === "bonusA") {
+      nA += context.lightMod.amount || 1;
+      notes.push(`类型包：调查池 +${context.lightMod.amount || 1} 骰。`);
+    }
+    if (context.lightMod?.kind === "bonusB") {
+      nB += context.lightMod.amount || 1;
+      notes.push(`类型包：现场池 +${context.lightMod.amount || 1} 骰。`);
+    }
+    if (context.lightMod?.kind === "shieldFirstHit") {
+      notes.push("类型包：本次第一次被收走的成功可被掩护。");
+    }
+    if (context.lightMod?.kind === "taintedDie") {
+      notes.push("类型包：本次会混入 1 颗污染骰。");
+    }
     const enemyAttr = mission.enemyAttr | 0;
     const nTot = nA + nB;
-    const enemyA = nTot > 0 ? Math.floor((enemyAttr * nA) / nTot) : 0;
+    let enemyA = nTot > 0 ? Math.floor((enemyAttr * nA) / nTot) : 0;
+    enemyA += carry.enemyADelta || 0;
     const enemyB = enemyAttr - enemyA;
     const rollHit = () => Math.random() < p;
     const rollsA = Array.from({ length: nA }, rollHit);
     const rollsB = Array.from({ length: nB }, rollHit);
     const voidA = pickRandomIndices(nA, enemyA);
     const voidB = pickRandomIndices(nB, enemyB);
+    const interventionResult = applyIntervention(context, rollsA, rollsB, voidA, voidB);
+    if (interventionResult.shielded) notes.push("掩护生效：保住了 1 颗原本会被收走的成功骰。");
     let hitsA = 0;
     for (let i = 0; i < nA; i++) if (!voidA.has(i) && rollsA[i]) hitsA++;
     let hitsB = 0;
@@ -2556,7 +2759,204 @@
       const needSum = kA + kB;
       tier = nA + nB >= 4 && totalHits <= 1 && needSum >= 4 ? "大失败" : "失败";
     }
-    return { ...meta, hitsA, hitsB, passA, passB, tier, rollsA, rollsB, voidA, voidB, enemyA, enemyB };
+    const secondaryAxis = buildSecondaryAxis(context, hitsA, hitsB, kA, kB, tier, interventionResult, carry);
+    if (secondaryAxis?.summary) notes.push(`${secondaryAxis.label}：${secondaryAxis.summary}`);
+    return {
+      ...meta,
+      hitsA,
+      hitsB,
+      passA,
+      passB,
+      tier,
+      rollsA,
+      rollsB,
+      voidA,
+      voidB,
+      enemyA,
+      enemyB,
+      sceneContext: context,
+      carry,
+      interventionResult,
+      secondaryAxis,
+      sceneNotes: notes,
+      usedCarryFlags: carry.consumedFlags || [],
+      phases: [],
+    };
+  }
+
+  function buildSceneContext(mission) {
+    const packageId = mission.scenePackage || "science_investigation";
+    const pkg = SCENE_PACKAGES[packageId] || SCENE_PACKAGES.science_investigation;
+    return {
+      packageId,
+      packageLabel: pkg.label || packageId,
+      axisKey: pkg.axisKey || "evidence_quality",
+      axisLabel: pkg.axisLabel || "副轴",
+      riskHint: pkg.riskHint || "",
+      lightMod: pkg.defaultLightMod ? { ...pkg.defaultLightMod } : {},
+      intervention: mission.intervention || null,
+      carryState: mission.carryState || null,
+      chainProfile: mission.chainProfile || null,
+      chainData: mission.chainProfile ? CHAIN_PROFILES[mission.chainProfile] || null : null,
+      preBankedLead: state.carryStates.banked_lead || null,
+      preWatchlistPressure: state.carryStates.watchlist_pressure || null,
+      preSampleContaminated: state.carryStates.sample_contaminated || null,
+      preAbnormalResidue: state.carryStates.abnormal_residue || null,
+    };
+  }
+
+  function getPreRollCarryModifiers(context) {
+    const out = { bonusA: 0, bonusB: 0, enemyADelta: 0, residueBonus: 0, notes: [], consumedFlags: [] };
+    const scenePackage = context.packageId;
+    const bankedLead = context.preBankedLead;
+    if (bankedLead && (bankedLead.scenePackage || scenePackage) === scenePackage) {
+      out.bonusA += bankedLead.value || 0;
+      out.notes.push("旧线索保底：这次科学调查先吃到存档优势。");
+      out.consumedFlags.push("banked_lead");
+    }
+    const sampleContaminated = context.preSampleContaminated;
+    if (sampleContaminated && ["science_investigation", "abnormal_contact"].includes(scenePackage)) {
+      out.bonusB -= sampleContaminated.value || 0;
+      out.notes.push("样本污染：现场池临时承受减值。");
+      out.consumedFlags.push("sample_contaminated");
+    }
+    const watchlistPressure = context.preWatchlistPressure;
+    if (watchlistPressure && ["social_probe", "science_investigation"].includes(scenePackage)) {
+      out.enemyADelta += watchlistPressure.value || 0;
+      out.notes.push("盯梢压力：调查池本次额外承受对抗。");
+      out.consumedFlags.push("watchlist_pressure");
+    }
+    const abnormalResidue = context.preAbnormalResidue;
+    if (abnormalResidue && scenePackage === "abnormal_contact") {
+      out.residueBonus += abnormalResidue.value || 0;
+      out.notes.push("异常残留：旧污染在本场继续发酵。");
+      out.consumedFlags.push("abnormal_residue");
+    }
+    return out;
+  }
+
+  function firstAliveSuccessIndex(rolls, voidSet) {
+    for (let i = 0; i < rolls.length; i++) {
+      if (!voidSet.has(i) && rolls[i]) return i;
+    }
+    return -1;
+  }
+
+  function applyIntervention(context, rollsA, rollsB, voidA, voidB) {
+    const result = { kind: context.intervention, summary: "", shielded: false };
+    switch (context.intervention) {
+      case "seize": {
+        const idx = firstAliveSuccessIndex(rollsA, voidA);
+        if (idx >= 0) {
+          if (context.lightMod?.kind === "shieldFirstHit") {
+            result.shielded = true;
+            result.summary = "对手试图查扣成功骰，但被掩护保住。";
+          } else {
+            voidA.add(idx);
+            result.summary = "对手额外收走了 1 颗调查成功骰。";
+          }
+        }
+        break;
+      }
+      case "seal": {
+        const idx = firstAliveSuccessIndex(rollsB, voidB);
+        if (idx >= 0) {
+          voidB.add(idx);
+          result.summary = "对手封存了 1 颗现场成功骰，成果被暂时压下。";
+        }
+        break;
+      }
+      case "decoy": {
+        const idx = firstAliveSuccessIndex(rollsA, voidA);
+        if (idx >= 0) {
+          voidA.add(idx);
+          result.summary = "你追上了诱饵，1 颗调查成功被转移掉。";
+        } else {
+          result.summary = "假目标消耗了注意力，但没有骗走有效成功。";
+        }
+        break;
+      }
+      case "contaminate":
+        result.summary = "成功结果会附带污染残留与后续风险。";
+        break;
+      default:
+        break;
+    }
+    return result;
+  }
+
+  function buildSecondaryAxis(context, hitsA, hitsB, kA, kB, tier, interventionResult, carry) {
+    const axisKey = context.axisKey || "evidence_quality";
+    const axisLabel = context.axisLabel || "副轴";
+    const deltaA = hitsA - kA;
+    const deltaB = hitsB - kB;
+    let score = deltaA + deltaB;
+    let summary = "";
+    if (axisKey === "evidence_quality") {
+      if (tier === "大成功") summary = "拿到可直接上稿的硬证据";
+      else if (tier === "小成功") summary = "素材成形，但还需要一次补证";
+      else summary = "证据碎裂，只能拼出残缺线索";
+    } else if (axisKey === "exposure") {
+      const exposureLevel = Math.max(0, (interventionResult.kind === "seize" ? 1 : 0) + Math.max(0, -deltaB));
+      summary = exposureLevel <= 0 ? "暴露较低" : exposureLevel === 1 ? "暴露上升，后续更容易被盯上" : "已经惊动目标与周边势力";
+      score = exposureLevel;
+    } else if (axisKey === "stability") {
+      summary = deltaB >= 0 ? "样本稳定，可直接移交后续分析" : "样本在撤离中受损，后续转化会带风险";
+      score = deltaB;
+    } else if (axisKey === "contamination_risk") {
+      let contamScore = Math.max(tier !== "失败" && tier !== "大失败" ? 1 : 2, interventionResult.kind === "contaminate" ? 2 : 1);
+      contamScore += carry.residueBonus || 0;
+      summary = contamScore <= 1 ? "轻度异常残留" : "污染明显，后续代价几乎确定";
+      if ((carry.residueBonus || 0) > 0) summary += "（旧异常残留继续放大了风险）";
+      score = contamScore;
+    } else {
+      summary = "副轴待定义";
+    }
+    return { key: axisKey, label: axisLabel, score, summary };
+  }
+
+  function runChainCheck(mission, staffList, context) {
+    const phases = [];
+    let bestTier = "大成功";
+    let finalPhase = null;
+    const phaseDefs = context.chainData?.phases || [];
+    phaseDefs.forEach((phaseDef, idx) => {
+      const phaseMission = { ...mission, enemyAttr: (mission.enemyAttr | 0) + (phaseDef.enemyDelta || 0), need: { ...mission.need } };
+      if (phaseMission.need.探索 != null) phaseMission.need.探索 = Math.max(0, phaseMission.need.探索 + (phaseDef.kADelta || 0));
+      if (phaseMission.need.生存 != null) phaseMission.need.生存 = Math.max(0, phaseMission.need.生存 + (phaseDef.kBDelta || 0));
+      const phaseContext = { ...context };
+      if (idx > 0) {
+        phaseContext.preBankedLead = null;
+        phaseContext.preWatchlistPressure = null;
+        phaseContext.preSampleContaminated = null;
+        phaseContext.preAbnormalResidue = null;
+      }
+      const phaseCheck = runSplitCheck({ ...phaseMission, chainProfile: null }, staffList);
+      phaseCheck.phaseTitle = phaseDef.title || "阶段";
+      phases.push(phaseCheck);
+      finalPhase = phaseCheck;
+      if (phaseCheck.tier === "失败" || phaseCheck.tier === "大失败") bestTier = "失败";
+      else if (phaseCheck.tier === "小成功" && bestTier === "大成功") bestTier = "小成功";
+    });
+    const first = phases[0] || {};
+    const secondaryAxis = finalPhase?.secondaryAxis ? { ...finalPhase.secondaryAxis, summary: `链式尾段结果：${finalPhase.secondaryAxis.summary}` } : null;
+    return {
+      ...(finalPhase || computeExplorationP(mission, staffList)),
+      tier: bestTier,
+      sceneContext: context,
+      secondaryAxis,
+      sceneNotes: [`链式节点：${context.chainData?.label || "阶段式检定"}。`, `共经历 ${phases.length} 段，最终按最差阶段与尾段结果综合定级。`],
+      phases,
+      rollsA: first.rollsA || [],
+      rollsB: first.rollsB || [],
+      voidA: first.voidA || new Set(),
+      voidB: first.voidB || new Set(),
+      hitsA: finalPhase?.hitsA ?? 0,
+      hitsB: finalPhase?.hitsB ?? 0,
+      passA: finalPhase?.passA ?? false,
+      passB: finalPhase?.passB ?? false,
+      usedCarryFlags: finalPhase?.usedCarryFlags || [],
+    };
   }
 
   function pickWeekEvent() {
@@ -2853,6 +3253,7 @@
         ${dispatchCountSpanHtml()}
       </div>
       <div class="tags" id="filterTags">${filterHtml}</div>
+      ${renderCarryStateStrip()}
       <p style="margin:0.75rem 0 0.5rem;"><button type="button" id="btnRecycle">回收噪音线索</button>
       <span style="color:var(--muted);font-size:0.8rem;margin-left:0.5rem;">诡名 -2，声望 +1</span></p>
       <div class="world-region-host" id="regionGrid"></div>
@@ -2980,6 +3381,61 @@
         return `<img class="${cut}" src="${st.avatar}" title="${escapeHtml(st.name)}" alt="${escapeHtml(st.name)}"/>`;
       })
       .join("")}</span>`;
+  }
+
+  function mechanicChipHtml(text, cls = "") {
+    return `<span class="rule-chip ${cls}">${escapeHtml(text)}</span>`;
+  }
+
+  function activeCarryStateEntries() {
+    return Object.entries(state.carryStates || {}).map(([key, value]) => ({ key, ...(value || {}) }));
+  }
+
+  function renderCarryStateStrip() {
+    const entries = activeCarryStateEntries();
+    if (!entries.length) return "";
+    return `<div class="carry-strip">${entries.map((entry) => `
+      <div class="carry-card">
+        <div class="k">${escapeHtml(entry.key)}</div>
+        <div>${escapeHtml(entry.summary || "已挂起，等待下一次相关检定触发。")}</div>
+      </div>`).join("")}</div>`;
+  }
+
+  function renderMissionMechanics(m, prob, extraNotes = []) {
+    const sceneContext = prob?.sceneContext || buildSceneContext(m);
+    const chips = [
+      mechanicChipHtml(`类型包：${sceneContext.packageLabel || "标准外采"}`, "scene"),
+      mechanicChipHtml(`副轴：${sceneContext.axisLabel || "副轴"}`, "axis"),
+    ];
+    if (m.intervention) chips.push(mechanicChipHtml(`干预：${INTERVENTION_LABELS[m.intervention] || m.intervention}`, "intervention"));
+    if (m.carryState) chips.push(mechanicChipHtml(`余波：${m.carryState.flag}`, "carry"));
+    if (m.chainProfile) chips.push(mechanicChipHtml("链式节点", "chain"));
+    const details = [];
+    if (sceneContext.riskHint) details.push(sceneContext.riskHint);
+    (extraNotes || []).forEach((note) => details.push(note));
+    return `<div class="rule-strip">
+      <div class="rule-strip-head">本次规则</div>
+      <div class="rule-chip-row">${chips.join("")}</div>
+      ${details.length ? `<div class="rule-details">${details.map((line) => `<div>${escapeHtml(line)}</div>`).join("")}</div>` : ""}
+    </div>`;
+  }
+
+  function renderResultMechanics(check, mission) {
+    const sections = [];
+    if (check.secondaryAxis?.summary) {
+      sections.push(`<div class="result-box"><h3>副轴结果</h3><p>${escapeHtml(`${check.secondaryAxis.label}：${check.secondaryAxis.summary}`)}</p></div>`);
+    }
+    if (check.interventionResult?.summary) {
+      sections.push(`<div class="result-box"><h3>事件干预</h3><p>${escapeHtml(`${INTERVENTION_LABELS[check.interventionResult.kind] || check.interventionResult.kind}：${check.interventionResult.summary}`)}</p></div>`);
+    }
+    if (mission.carryState?.summary && (!mission.carryState.onTiers || mission.carryState.onTiers.includes(check.tier))) {
+      sections.push(`<div class="result-box"><h3>余波写回</h3><p>${escapeHtml(mission.carryState.summary)}</p></div>`);
+    }
+    if (check.usedCarryFlags?.length) {
+      sections.push(`<div class="result-box"><h3>已消耗状态</h3><p>${escapeHtml(check.usedCarryFlags.join(" / "))}</p></div>`);
+    }
+    if (!sections.length) return "";
+    return `<div class="result-grid">${sections.join("")}</div>`;
   }
 
   function missionHeaderHtml(m, staffIds) {
@@ -3178,12 +3634,22 @@
         const eventCls = urgent ? "event-urgent" : "";
         const thumbText = n.kind === "temp" || /突发/.test(n.name) ? "!" : n.kind === "hidden" ? "隐" : "常";
         const queued = findActiveMissionByNode(r.id, n.id);
+        const chips = [];
+        if (n.scenePackage) {
+          const pkg = SCENE_PACKAGES[n.scenePackage] || {};
+          chips.push(mechanicChipHtml(pkg.label || n.scenePackage, "scene"));
+          chips.push(mechanicChipHtml(pkg.axisLabel || "副轴", "axis"));
+        }
+        if (n.intervention) chips.push(mechanicChipHtml(INTERVENTION_LABELS[n.intervention] || n.intervention, "intervention"));
+        if (n.carryState) chips.push(mechanicChipHtml(n.carryState.flag, "carry"));
+        if (n.chainProfile) chips.push(mechanicChipHtml("链式节点", "chain"));
         return `<div class="region-node-item ${eventCls} interactive" data-side-type="node" data-side-id="${n.id}" style="${match ? "" : "opacity:0.45;"}">
           <div class="event-card">
             <div class="event-thumb">${thumbText}</div>
             <div>
               <div><strong>${escapeHtml(n.name)}</strong></div>
               <div style="color:#94a3b8;margin-top:2px;">${n.kind === "permanent" ? "常驻" : n.kind === "temp" ? "临时" : "隐藏"} · ${diffZh} · 耗时${n.days}天 · 对手骰${n.enemyAttr | 0}${deadline}${chain}</div>
+              ${chips.length ? `<div class="rule-chip-row" style="margin-top:6px;">${chips.join("")}</div>` : ""}
               <div class="event-meta-row">
                 <div>${queued ? staffAvatarsHtml(queued.staffIds) : ""}</div>
                 <button type="button" data-node-open="${n.id}" ${n.chain === "locked" ? "disabled" : ""}>${queued ? "查看派遣" : "配置队伍并派遣"}</button>
@@ -3197,6 +3663,7 @@
         <h2>${escapeHtml(r.name)}</h2>
         ${dispatchCountSpanHtml()}
       </div>
+      ${renderCarryStateStrip()}
       <div class="region-map-wrap">
         <div class="region-map">${pointHtml}</div>
         <div class="region-node-side">
@@ -3330,6 +3797,7 @@
     if (!m) return;
     const ok = meetsNeed(m.need, state.selectedStaffIds);
     const prob = computeExplorationP(m, state.selectedStaffIds);
+    const carryNotes = [...(prob.carry?.notes || [])];
     elS.innerHTML = `
       <h2>${m.missionType === "leadInvestigation" ? "线索调查配置" : "探索配置"} · ${escapeHtml(m.name)}</h2>
       <div class="prob-box">
@@ -3338,11 +3806,13 @@
         <div style="margin-top:0.35rem;">大成功 ${(prob.pBig * 100).toFixed(1)}% · 小成功 ${(prob.pSmall * 100).toFixed(1)}% · 双败 ${(prob.pBothFail * 100).toFixed(1)}%</div>
         <div style="margin-top:0.35rem;font-size:0.72rem;">p=${(prob.p * 100).toFixed(1)}% ${ok ? "" : "· 未达门槛 -15%"}</div>
       </div>
+      ${renderMissionMechanics(m, prob, carryNotes)}
       <p style="font-size:0.85rem;margin-top:0.5rem;">展示：
         <span class="mode-toggle" id="modeToggle">
           <button type="button" data-mode="dice" class="${state.displayMode === "dice" ? "on" : ""}">骰子</button>
           <button type="button" data-mode="numeric" class="${state.displayMode === "numeric" ? "on" : ""}">纯数值</button>
         </span></p>
+      <p class="tip-inline" style="margin-top:0.35rem;">本版探索检定支持 <strong>一次手动锁定 + 重投剩余骰子</strong>。先看基础结果，再选择保留关键骰。</p>
       <div class="cards" id="staffPick"></div>
       <p class="row" style="margin-top:0.75rem;">
         <button type="button" id="btnRun" class="primary" ${state.selectedStaffIds.length === 0 || m.days > state.day || state.missionResolving || state.processingDayTick ? "disabled" : ""}>${state.missionResolving ? "执行中..." : `${m.missionType === "leadInvestigation" ? "派遣线索调查" : "派遣探索任务"}（预计 ${m.days} 天后判定）`}</button>
@@ -3380,7 +3850,7 @@
         const i = state.selectedStaffIds.indexOf(id);
         if (i >= 0) state.selectedStaffIds.splice(i, 1);
         else {
-          if (state.selectedStaffIds.length >= 5) state.selectedStaffIds.shift();
+          if (state.selectedStaffIds.length >= 3) state.selectedStaffIds.shift();
           state.selectedStaffIds.push(id);
         }
         renderSetup();
@@ -3436,7 +3906,7 @@
         )}<div class="tutorial-soft-sheet">
           <h4 class="tutorial-soft-h4">组小队</h4>
           <ul class="tutorial-soft-ul">
-            <li>点选队员卡片，最多 <strong>5</strong> 人。</li>
+            <li>点选队员卡片，最多 <strong>3</strong> 人。</li>
             <li>上方概率是本次外拍的参考。</li>
             <li>可在<strong>骰子</strong>与<strong>纯数字</strong>两种展示间切换。</li>
           </ul>
@@ -3509,18 +3979,27 @@
 
   function calcAnimPace(check) {
     const total = check.rollsA.length + check.rollsB.length;
-    const warmupDelay = total >= 24 ? 760 : total >= 16 ? 860 : 980;
-    const stepDelay = total >= 24 ? 84 : total >= 16 ? 96 : 108;
+    const warmupDelay = total >= 24 ? 980 : total >= 16 ? 1120 : 1280;
+    const stepDelay = total >= 24 ? 118 : total >= 16 ? 132 : 148;
     const revealStepA = 1;
     const revealStepB = 1;
     const voidStep = Math.max(1, Math.ceil((check.voidA.size + check.voidB.size) / 5));
-    const settleDelay = total >= 24 ? 520 : 620;
-    return { warmupDelay, stepDelay, revealStepA, revealStepB, voidStep, settleDelay };
+    const settleDelay = total >= 24 ? 760 : 920;
+    const stageHold = total >= 24 ? 760 : 920;
+    const focusHold = total >= 24 ? 620 : 760;
+    return { warmupDelay, stepDelay, revealStepA, revealStepB, voidStep, settleDelay, stageHold, focusHold };
   }
 
   function finalStateFromRoll(hit, isVoid) {
     if (isVoid) return { text: "", cls: "die void" };
     return hit ? { text: "✓", cls: "die hit reveal-pop" } : { text: "×", cls: "die miss reveal-pop" };
+  }
+
+  function finalStateFromMechanic(kind, hit = true) {
+    if (kind === "bonus") return { text: hit ? "✓" : "×", cls: `die ${hit ? "boost" : "miss"} reveal-pop` };
+    if (kind === "carry") return { text: hit ? "✓" : "×", cls: `die ${hit ? "carry" : "miss"} reveal-pop` };
+    if (kind === "tainted") return { text: hit ? "✓" : "×", cls: `die ${hit ? "tainted" : "miss"} reveal-pop` };
+    return finalStateFromRoll(hit, false);
   }
 
   function randomRollFace() {
@@ -3548,12 +4027,121 @@
     }
   }
 
+  function appendMechanicStage(host, title, text) {
+    const box = document.createElement("div");
+    box.className = "mech-stage";
+    box.innerHTML = `<h4>${escapeHtml(title)}</h4><p>${escapeHtml(text)}</p>`;
+    host.appendChild(box);
+    return box;
+  }
+
+  function appendStageBanner(host, text) {
+    const el = document.createElement("div");
+    el.className = "stage-banner";
+    el.textContent = text;
+    host.appendChild(el);
+    return el;
+  }
+
+  function focusDie(el, cls) {
+    if (!el) return;
+    el.classList.add("focus-pulse");
+    if (cls) el.classList.add(cls);
+  }
+
+  function clearDieFocus(el, cls) {
+    if (!el) return;
+    el.classList.remove("focus-pulse");
+    if (cls) el.classList.remove(cls);
+  }
+
   function setFinalFace(el, text, cls) {
     el.style.color = "";
     el.style.borderColor = "";
     el.style.boxShadow = "";
     el.className = cls;
     el.textContent = text || "";
+  }
+
+  function computeHitsFromSets(rollsA, rollsB, voidA, voidB) {
+    let hitsA = 0;
+    for (let i = 0; i < rollsA.length; i++) if (!voidA.has(i) && rollsA[i]) hitsA++;
+    let hitsB = 0;
+    for (let i = 0; i < rollsB.length; i++) if (!voidB.has(i) && rollsB[i]) hitsB++;
+    return { hitsA, hitsB };
+  }
+
+  async function runLockAndRerollPhase(host, phaseText, check, aEls, bEls, pace) {
+    if (!aEls.length && !bEls.length) return;
+    if (phaseText) phaseText.textContent = "锁定阶段：点击骰子锁定，确认后重投未锁定骰子";
+    appendStageBanner(host, "第二阶段：锁定与重投");
+    appendMechanicStage(host, "锁定操作", "点击要保留的骰子。你确认前不会继续，可以慢慢考虑要锁哪几颗。");
+    const lockSetA = new Set();
+    const lockSetB = new Set();
+    const all = [
+      ...aEls.map((el, idx) => ({ el, idx, pool: "A" })),
+      ...bEls.map((el, idx) => ({ el, idx, pool: "B" })),
+    ];
+    const controls = document.createElement("div");
+    controls.className = "reroll-actions";
+    controls.innerHTML = `
+      <button type="button" class="primary" id="btnConfirmReroll">确认重投未锁定骰子</button>
+      <span class="reroll-status" id="rerollStatus">已锁定 0 颗 · 将重投 ${all.length} 颗</span>`;
+    host.appendChild(controls);
+    const statusEl = controls.querySelector("#rerollStatus");
+    const confirmBtn = controls.querySelector("#btnConfirmReroll");
+    const updateStatus = () => {
+      const lockedCount = lockSetA.size + lockSetB.size;
+      const rerollCount = all.length - lockedCount;
+      if (statusEl) statusEl.textContent = `已锁定 ${lockedCount} 颗 · 将重投 ${rerollCount} 颗`;
+    };
+    const toggle = (pool, idx, el) => {
+      const set = pool === "A" ? lockSetA : lockSetB;
+      if (set.has(idx)) {
+        set.delete(idx);
+        el.classList.remove("locked");
+      } else {
+        set.add(idx);
+        el.classList.add("locked");
+      }
+      updateStatus();
+    };
+    all.forEach(({ el, idx, pool }) => {
+      el.classList.add("lockable");
+      el.addEventListener("click", () => toggle(pool, idx, el));
+    });
+    updateStatus();
+    await new Promise((resolve) => {
+      if (!confirmBtn) {
+        resolve();
+        return;
+      }
+      confirmBtn.addEventListener("click", () => resolve(), { once: true });
+    });
+    controls.remove();
+    all.forEach(({ el }) => el.classList.remove("lockable"));
+    if (phaseText) phaseText.textContent = "重投未锁定骰子...";
+    all.forEach(({ el, idx, pool }) => {
+      const locked = pool === "A" ? lockSetA.has(idx) : lockSetB.has(idx);
+      if (!locked) {
+        el.classList.add("rolling");
+      }
+    });
+    await sleep(Math.max(420, pace.stageHold - 260));
+    for (let i = 0; i < check.rollsA.length; i++) {
+      if (!lockSetA.has(i)) check.rollsA[i] = Math.random() < check.p;
+      const d = finalStateFromRoll(check.rollsA[i], false);
+      setFinalFace(aEls[i], d.text, d.cls);
+      if (lockSetA.has(i)) aEls[i].classList.add("locked");
+    }
+    for (let i = 0; i < check.rollsB.length; i++) {
+      if (!lockSetB.has(i)) check.rollsB[i] = Math.random() < check.p;
+      const d = finalStateFromRoll(check.rollsB[i], false);
+      setFinalFace(bEls[i], d.text, d.cls);
+      if (lockSetB.has(i)) bEls[i].classList.add("locked");
+    }
+    await sleep(420);
+    return { lockSetA, lockSetB };
   }
 
   function createRollingDiceRow(container, label, count) {
@@ -3588,6 +4176,17 @@
   async function animateDiceReveal(_elRes, check) {
     const holder = document.getElementById("diceAnim");
     if (!holder) return;
+    if (Array.isArray(check.phases) && check.phases.length) {
+      holder.innerHTML = `<div class="stage-banner">链式节点：${escapeHtml(check.sceneContext?.chainData?.label || "阶段式检定")}</div>` +
+        check.phases.map((phase) => `
+          <div style="margin-bottom:0.7rem;">
+            <div class="phase-label">${escapeHtml(phase.phaseTitle || "阶段")}</div>
+            ${renderDiceRow(phase.rollsA, phase.voidA, "调查池")}
+            ${renderDiceRow(phase.rollsB, phase.voidB, "现场池")}
+          </div>`).join("");
+      await sleep(980);
+      return;
+    }
     const pace = calcAnimPace(check);
     holder.innerHTML = `<div class="dice-rolling-hint"><span class="dice-spinner"></span><span id="dicePhaseText">摇骰中...</span></div><div id="diceRowsHost"></div>`;
     const host = document.getElementById("diceRowsHost");
@@ -3624,9 +4223,64 @@
 
     const pDone = phaseText();
     if (pDone) pDone.textContent = "基础结果已揭示";
-    await sleep(260);
+    appendStageBanner(host, "第一阶段：基础投掷结果");
+    await sleep(pace.stageHold);
+
+    await runLockAndRerollPhase(host, pDone, check, aEls, bEls, pace);
+
+    const carry = check.carry || {};
+    if ((carry.bonusA || 0) > 0) {
+      if (pDone) pDone.textContent = "余波触发：保底线索";
+      appendStageBanner(host, "第三阶段：余波触发");
+      appendMechanicStage(host, "余波触发", "旧线索保底生效，调查池获得额外支援。");
+      const bonusPool = document.createElement("div");
+      bonusPool.className = "dice-pool";
+      bonusPool.innerHTML = `<h3>余波·调查支援</h3><div class="dice-row">${Array.from({ length: carry.bonusA }, () => `<span class="die carry">✓</span>`).join("")}</div>`;
+      host.appendChild(bonusPool);
+      await sleep(pace.stageHold);
+    }
+    if ((carry.bonusB || 0) < 0) {
+      if (pDone) pDone.textContent = "余波触发：样本污染";
+      appendStageBanner(host, "第三阶段：余波触发");
+      appendMechanicStage(host, "余波触发", "旧污染残留生效，现场池受损。");
+      const taintPool = document.createElement("div");
+      taintPool.className = "dice-pool";
+      taintPool.innerHTML = `<h3>余波·污染标记</h3><div class="dice-row">${Array.from({ length: Math.abs(carry.bonusB) }, () => `<span class="die tainted">×</span>`).join("")}</div>`;
+      host.appendChild(taintPool);
+      await sleep(pace.stageHold);
+    }
+
+    if (check.sceneContext?.lightMod?.kind === "bonusA") {
+      if (pDone) pDone.textContent = "类型包触发：调查加骰";
+      appendStageBanner(host, "第四阶段：类型包触发");
+      appendMechanicStage(host, "类型包触发", "科学调查强化调查池，额外补入 1 颗奖励骰。");
+      const pool = document.createElement("div");
+      pool.className = "dice-pool";
+      pool.innerHTML = `<h3>类型包·奖励骰</h3><div class="dice-row"><span class="die boost">✓</span></div>`;
+      host.appendChild(pool);
+      await sleep(pace.stageHold);
+    } else if (check.sceneContext?.lightMod?.kind === "bonusB") {
+      if (pDone) pDone.textContent = "类型包触发：现场加骰";
+      appendStageBanner(host, "第四阶段：类型包触发");
+      appendMechanicStage(host, "类型包触发", "考古现场强化现场处理，额外补入 1 颗奖励骰。");
+      const pool = document.createElement("div");
+      pool.className = "dice-pool";
+      pool.innerHTML = `<h3>类型包·奖励骰</h3><div class="dice-row"><span class="die boost">✓</span></div>`;
+      host.appendChild(pool);
+      await sleep(pace.stageHold);
+    } else if (check.sceneContext?.lightMod?.kind === "taintedDie") {
+      if (pDone) pDone.textContent = "类型包触发：污染骰";
+      appendStageBanner(host, "第四阶段：类型包触发");
+      appendMechanicStage(host, "类型包触发", "异常接触会额外带出一颗污染骰。");
+      const pool = document.createElement("div");
+      pool.className = "dice-pool";
+      pool.innerHTML = `<h3>类型包·污染骰</h3><div class="dice-row"><span class="die tainted">!</span></div>`;
+      host.appendChild(pool);
+      await sleep(pace.stageHold);
+    }
 
     // 对手作废阶段：按顺序逐颗作废
+    appendStageBanner(host, "第五阶段：对手作废");
     const voidSeq = [];
     for (const idx of check.voidA) voidSeq.push({ pool: "A", idx });
     for (const idx of check.voidB) voidSeq.push({ pool: "B", idx });
@@ -3646,6 +4300,51 @@
     }
     window.clearInterval(ticker);
 
+    if (check.interventionResult?.summary) {
+      const p = phaseText();
+      if (p) p.textContent = `事件干预：${INTERVENTION_LABELS[check.interventionResult.kind] || check.interventionResult.kind}`;
+      appendStageBanner(host, "第六阶段：事件干预");
+      let targetEl = null;
+      let targetCls = "intervention-mark";
+      if (check.interventionResult.kind === "seize" || check.interventionResult.kind === "decoy") {
+        targetEl = aEls.find((el) => el.classList.contains("void"));
+      } else if (check.interventionResult.kind === "seal") {
+        targetEl = bEls.find((el) => el.classList.contains("void"));
+      } else if (check.interventionResult.kind === "contaminate") {
+        targetEl = [...aEls, ...bEls].find((el) => el.classList.contains("hit")) || aEls[0] || bEls[0];
+        targetCls = "intervention-safe";
+        if (targetEl) setFinalFace(targetEl, targetEl.textContent || "✓", "die tainted reveal-pop");
+      }
+      if (check.interventionResult.shielded) {
+        targetEl = aEls.find((el) => el.classList.contains("hit")) || aEls[0];
+        targetCls = "intervention-safe";
+      }
+      focusDie(targetEl, targetCls);
+      appendMechanicStage(host, `事件干预：${INTERVENTION_LABELS[check.interventionResult.kind] || check.interventionResult.kind}`, check.interventionResult.summary);
+      await sleep(pace.focusHold);
+      clearDieFocus(targetEl, targetCls);
+    }
+    if (check.secondaryAxis?.summary) {
+      const p = phaseText();
+      if (p) p.textContent = `副轴揭示：${check.secondaryAxis.label}`;
+      appendStageBanner(host, "第七阶段：副轴揭示");
+      appendMechanicStage(host, `副轴结果：${check.secondaryAxis.label}`, check.secondaryAxis.summary);
+      await sleep(pace.stageHold);
+    }
+
+    const recalculated = computeHitsFromSets(check.rollsA, check.rollsB, check.voidA, check.voidB);
+    check.hitsA = recalculated.hitsA;
+    check.hitsB = recalculated.hitsB;
+    check.passA = check.kA <= 0 ? true : check.hitsA >= check.kA;
+    check.passB = check.kB <= 0 ? true : check.hitsB >= check.kB;
+    if (check.passA && check.passB) check.tier = "大成功";
+    else if (check.passA || check.passB) check.tier = "小成功";
+    else {
+      const totalHits = check.hitsA + check.hitsB;
+      const needSum = check.kA + check.kB;
+      check.tier = check.rollsA.length + check.rollsB.length >= 4 && totalHits <= 1 && needSum >= 4 ? "大失败" : "失败";
+    }
+
     // 最终态面板
     holder.innerHTML = `<div>
       ${renderDiceRow(check.rollsA, new Set(), "调查池（基础）")}
@@ -3653,6 +4352,8 @@
       <div class="phase-label" style="margin-top:0.5rem;">对手作废 ${check.enemyAttr} 颗</div>
       ${renderDiceRow(check.rollsA, check.voidA, "调查·作废后")}
       ${renderDiceRow(check.rollsB, check.voidB, "现场·作废后")}
+      ${check.interventionResult?.summary ? `<div class="phase-label" style="margin-top:0.5rem;">事件干预：${escapeHtml(INTERVENTION_LABELS[check.interventionResult.kind] || check.interventionResult.kind)}</div><div class="tip-inline">${escapeHtml(check.interventionResult.summary)}</div>` : ""}
+      ${check.secondaryAxis?.summary ? `<div class="phase-label" style="margin-top:0.5rem;">副轴结果：${escapeHtml(check.secondaryAxis.label)}</div><div class="tip-inline">${escapeHtml(check.secondaryAxis.summary)}</div>` : ""}
     </div>`;
     await sleep(pace.settleDelay);
   }
@@ -3661,7 +4362,35 @@
     const m = state.mission;
     if (!m) return;
     const check = runSplitCheck(m, state.selectedStaffIds);
-    const tier = check.tier;
+    let tier = check.tier;
+    let secondaryAxis = check.secondaryAxis || null;
+    const interventionResult = check.interventionResult || null;
+    const elRes = document.getElementById("view-result");
+    const showDice = state.displayMode === "dice";
+    const missionHead = missionHeaderHtml(m, state.selectedStaffIds);
+    elRes.innerHTML = `
+      <h2>${m.missionType === "leadInvestigation" ? "线索调查结算" : "探索结算"}</h2>
+      ${missionHead}
+      <div class="result-banner" id="tierBanner">判定中...</div>
+      ${showDice ? `<div id="diceAnim"><div class="dice-rolling-hint"><span class="dice-spinner"></span><span>摇骰中...</span></div></div>`
+        : `<div class="prob-box" id="diceAnim">计算中...</div>`}
+      <div id="resultMechanicsHost"></div>
+      <p id="resultLines" style="font-size:0.9rem;color:var(--muted);"></p>
+      <p>剩余 <strong>${state.day}</strong> 日</p>
+      <button type="button" class="primary" id="btnAfterResult" disabled>继续</button>`;
+    bindMissionStaffHover(elRes);
+    setView("result");
+    renderMacro();
+    if (showDice) {
+      await animateDiceReveal(elRes, check);
+      tier = check.tier;
+      secondaryAxis = buildSecondaryAxis(check.sceneContext, check.hitsA, check.hitsB, check.kA, check.kB, tier, interventionResult, check.carry || {});
+    } else {
+      await sleep(450);
+      const h = document.getElementById("diceAnim");
+      if (h) h.innerHTML = `<div class="prob-box">调查 ${check.hitsA}/${check.nAe}（≥${check.kA}）· 现场 ${check.hitsB}/${check.nBe}（≥${check.kB}）${secondaryAxis ? ` · ${escapeHtml(secondaryAxis.label)}：${escapeHtml(secondaryAxis.summary)}` : ""}</div>`;
+    }
+
     const lines = [];
     const rewards = [];
     if (m.missionType === "leadInvestigation") {
@@ -3711,32 +4440,42 @@
       macro.狂性 = Math.min(100, macro.狂性 + 3);
       lines.push("大失败。");
     }
+    if (secondaryAxis) {
+      lines.push(`${secondaryAxis.label}：${secondaryAxis.summary}`);
+      if (secondaryAxis.key === "evidence_quality" && secondaryAxis.score >= 2) {
+        macro.公信 = Math.min(100, macro.公信 + 1);
+      } else if (secondaryAxis.key === "exposure" && secondaryAxis.score >= 1) {
+        macro.守序 = Math.max(0, macro.守序 - 1);
+      } else if (secondaryAxis.key === "stability" && secondaryAxis.score < 0) {
+        macro.守序 = Math.max(0, macro.守序 - 1);
+      } else if (secondaryAxis.key === "contamination_risk") {
+        macro.狂性 = Math.min(100, macro.狂性 + Math.max(1, secondaryAxis.score || 1));
+      }
+    }
+    if (interventionResult?.summary) {
+      lines.push(`事件干预：${INTERVENTION_LABELS[interventionResult.kind] || interventionResult.kind}。${interventionResult.summary}`);
+    }
+    if (m.carryState && (!m.carryState.onTiers || m.carryState.onTiers.includes(tier))) {
+      state.carryStates[m.carryState.flag] = {
+        value: m.carryState.value || 1,
+        scenePackage: m.carryState.scenePackage || m.scenePackage || "science_investigation",
+        summary: m.carryState.summary || "",
+      };
+      lines.push(`余波：${m.carryState.summary || m.carryState.flag}`);
+    }
+    (check.usedCarryFlags || []).forEach((flag) => {
+      delete state.carryStates[flag];
+    });
     ["公信", "诡名", "声望", "守序", "狂性"].forEach((k) => {
       macro[k] = Math.max(0, Math.min(100, macro[k]));
     });
     log(`${m.name} → 「${tier}」`);
-    const elRes = document.getElementById("view-result");
-    const showDice = state.displayMode === "dice";
-    const missionHead = missionHeaderHtml(m, state.selectedStaffIds);
-    elRes.innerHTML = `
-      <h2>${m.missionType === "leadInvestigation" ? "线索调查结算" : "探索结算"}</h2>
-      ${missionHead}
-      <div class="result-banner" id="tierBanner">判定中...</div>
-      ${showDice ? `<div id="diceAnim"><div class="dice-rolling-hint"><span class="dice-spinner"></span><span>摇骰中...</span></div></div>`
-        : `<div class="prob-box" id="diceAnim">计算中...</div>`}
-      <p style="font-size:0.9rem;color:var(--muted);">${lines.map(escapeHtml).join("<br/>")}</p>
-      <p>剩余 <strong>${state.day}</strong> 日</p>
-      <button type="button" class="primary" id="btnAfterResult" disabled>继续</button>`;
-    bindMissionStaffHover(elRes);
-    setView("result");
-    renderMacro();
-    if (showDice) {
-      await animateDiceReveal(elRes, check);
-    } else {
-      await sleep(450);
-      const h = document.getElementById("diceAnim");
-      if (h) h.innerHTML = `<div class="prob-box">调查 ${check.hitsA}/${check.nAe}（≥${check.kA}）· 现场 ${check.hitsB}/${check.nBe}（≥${check.kB}）</div>`;
-    }
+    const resultLinesEl = document.getElementById("resultLines");
+    if (resultLinesEl) resultLinesEl.innerHTML = lines.map(escapeHtml).join("<br/>");
+    const resultMechanicsHost = document.getElementById("resultMechanicsHost");
+    if (resultMechanicsHost) resultMechanicsHost.innerHTML = renderResultMechanics({ ...check, secondaryAxis }, m);
+    const tierEl = document.getElementById("tierBanner");
+    if (tierEl) tierEl.textContent = tier;
     await showRewardsPopup(rewards);
     if (week1TutorialActive() && !state.tutorialSoftW1.w1_result) {
       if (tutorialsGloballyDisabled()) {

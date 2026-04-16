@@ -21,6 +21,7 @@
 | `turn-start-events-and-cycle-tasks.md` | 每周 Day 1 的起始事件、任务生成与周内约束 |
 | `exploration-and-node-dispatch.md` | 区域/节点浏览、配队、派遣校验 |
 | `event-check-resolution.md` | 拆分二项式检定、难度映射、对手抵消 |
+| `event-check-layered-expansion.md` | 在基础检定之上定义 4-14 阶扩展、正式主线采用路线与特殊事件分层 |
 | `clue-and-content-inventory.md` | 探索结果如何进入可管理的素材库存 |
 | `content-production-and-article-generation.md` | 素材如何先转认知，再转成稿件 |
 | `editorial-layout-and-publishing-strategy.md` | 候选稿件如何组织成一期周刊 |
