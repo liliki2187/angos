@@ -689,6 +689,29 @@
       font-size: 0.78rem;
       color: #cbd5e1;
     }
+    .lock-phase-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 0.65rem;
+    }
+    .lock-zone {
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 0.6rem 0.7rem;
+      background: linear-gradient(180deg, #0b1220, #0f1318);
+    }
+    .lock-zone h4 {
+      margin: 0 0 0.3rem;
+      font-size: 0.82rem;
+      color: var(--gold-dim);
+    }
+    .lock-zone-note {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+    }
+    .lock-zone .dice-pool { margin-top: 0.35rem; }
     .stage-banner {
       margin: 0.55rem 0 0.35rem;
       padding: 0.42rem 0.65rem;
@@ -1625,13 +1648,26 @@
     decoy: "诱饵",
     contaminate: "污染",
   };
+  const SCENE_PACKAGE_LABELS = {
+    science_investigation: "科学调查",
+    social_probe: "社会暗访",
+    archaeology_field: "考古现场",
+    abnormal_contact: "异常接触",
+  };
+  const CARRY_STATE_LABELS = {
+    banked_lead: "档案保底",
+    watchlist_pressure: "盯梢压力",
+    sample_contaminated: "样本污染",
+    abnormal_residue: "异常残留",
+  };
+  const MAIN_POOL_LABEL = "行动骰池";
   const CHAIN_PROFILES = {
     mummy_tomb: {
       label: "木乃伊墓室",
       phases: [
-        { title: "前室侦察", enemyDelta: 0, kADelta: 0, kBDelta: -1 },
-        { title: "开棺取样", enemyDelta: 1, kADelta: 0, kBDelta: 0 },
-        { title: "撤离保全", enemyDelta: 1, kADelta: -1, kBDelta: 1 },
+        { title: "前室侦察", enemyDelta: 0, targetDelta: -1 },
+        { title: "开棺取样", enemyDelta: 1, targetDelta: 0 },
+        { title: "撤离保全", enemyDelta: 1, targetDelta: 1 },
       ],
     },
   };
@@ -2627,24 +2663,66 @@
     const staffObjs = staffList
       .map((id) => STAFF.find((x) => x.id === id))
       .filter(Boolean);
-    let nA = 0;
-    let nB = 0;
-    staffObjs.forEach((st) => {
-      const aScore = (getStaffValue(st, "探索") || 0) + (getStaffValue(st, "洞察") || 0) + (getStaffValue(st, "诡思") || 0);
-      const bScore = (getStaffValue(st, "生存") || 0) + (getStaffValue(st, "理性") || 0);
-      if (aScore >= bScore) nA += 1;
-      else nB += 1;
-    });
-    if (staffObjs.length === 0) return { nA: 0, nB: 0 };
-    return { nA, nB };
+    return { nA: Math.min(10, staffObjs.length), nB: 0 };
   }
-  function needThresholds(need) {
-    const needA = (need.探索 || 0) + (need.洞察 || 0) + (need.诡思 || 0);
-    const needB = (need.生存 || 0) + (need.理性 || 0);
-    return {
-      kA: Math.max(1, Math.ceil(needA / 4)),
-      kB: Math.max(1, Math.ceil(needB / 3)),
-    };
+  function scaledEnemyPressure(rawEnemy, totalDice) {
+    const raw = Math.max(0, rawEnemy | 0);
+    if (totalDice <= 1) return 0;
+    let pressure = 0;
+    if (raw >= 2) pressure = 1;
+    if (raw >= 4) pressure = 2;
+    if (raw >= 6) pressure = 3;
+    return Math.min(Math.max(0, totalDice - 1), pressure);
+  }
+  function missionTarget(need, difficulty) {
+    const totalNeed = Object.values(need || {}).reduce((sum, v) => sum + (v | 0), 0);
+    const diffBonus = difficulty === "hard" ? 2 : difficulty === "easy" ? 0 : 1;
+    if (totalNeed <= 0) return 0;
+    return Math.max(3, Math.ceil(totalNeed * 0.75) + diffBonus);
+  }
+  function rollDieValue(p) {
+    const base = 1 + Math.floor(Math.random() * 6);
+    const bias = p >= 0.58 ? 1 : p <= 0.38 ? -1 : 0;
+    return clamp(base + bias, 1, 6);
+  }
+  function classifyTier(totalScore, targetScore, maxDie, diceCount) {
+    if (totalScore >= targetScore && maxDie >= 6) return "大成功";
+    if (totalScore >= targetScore) return "小成功";
+    if (diceCount >= 3 && totalScore <= Math.max(2, targetScore - 4)) return "大失败";
+    return "失败";
+  }
+  function buildDicePlan(mission, staffList, context, carry) {
+    const baseDice = poolSizes(staffList).nA;
+    let totalDice = baseDice;
+    const notes = [...(carry.notes || [])];
+    const sources = Array.from({ length: baseDice }, () => "base");
+    if ((carry.bonusA || 0) > 0) {
+      totalDice += carry.bonusA;
+      for (let i = 0; i < carry.bonusA; i++) sources.push("carry");
+      notes.push(`余波：额外获得 ${carry.bonusA} 颗保底骰。`);
+    }
+    if ((carry.bonusB || 0) < 0) {
+      totalDice = Math.max(1, totalDice + carry.bonusB);
+      notes.push(`余波：本次基础骰减少 ${Math.abs(carry.bonusB)} 颗。`);
+    }
+    if (context.lightMod?.kind === "bonusA" || context.lightMod?.kind === "bonusB") {
+      const amount = context.lightMod.amount || 1;
+      totalDice += amount;
+      for (let i = 0; i < amount; i++) sources.push("bonus");
+      notes.push(`类型包：额外获得 ${amount} 颗奖励骰。`);
+    }
+    if (context.lightMod?.kind === "taintedDie") {
+      const amount = context.lightMod.amount || 1;
+      totalDice += amount;
+      for (let i = 0; i < amount; i++) sources.push("tainted");
+      notes.push(`类型包：额外带入 ${amount} 颗污染骰。`);
+    }
+    totalDice = Math.min(10, Math.max(1, totalDice));
+    while (sources.length > totalDice) sources.pop();
+    const targetScore = missionTarget(mission.need, mission.difficulty || "normal");
+    const enemyAttr = scaledEnemyPressure(mission.enemyAttr | 0, totalDice) + (carry.enemyADelta || 0);
+    const effectiveDice = Math.max(0, totalDice - enemyAttr);
+    return { baseDice, totalDice, targetScore, enemyAttr, effectiveDice, notes, sources };
   }
 
   function computeExplorationP(mission, staffList) {
@@ -2654,47 +2732,50 @@
     if (mission.kind === "temp" && state.day < (mission.deadlineDay || 0)) deltaP += 0.05;
     if (mission.kind === "hidden") deltaP -= 0.05;
     const p = clamp(pBase + deltaP, 0, 1);
-    let { nA, nB } = poolSizes(staffList);
-    const { kA, kB } = needThresholds(mission.need);
     const context = buildSceneContext(mission);
     const carry = getPreRollCarryModifiers(context);
-    nA = Math.max(0, nA + (carry.bonusA || 0));
-    nB = Math.max(0, nB + (carry.bonusB || 0));
-    if (context.lightMod?.kind === "bonusA") nA += context.lightMod.amount || 1;
-    if (context.lightMod?.kind === "bonusB") nB += context.lightMod.amount || 1;
-    const enemyAttr = mission.enemyAttr | 0;
-    const nTot = nA + nB;
-    const enemyA = (nTot > 0 ? Math.floor((enemyAttr * nA) / nTot) : 0) + (carry.enemyADelta || 0);
-    const enemyB = enemyAttr - enemyA;
-    const nAe = Math.max(0, nA - enemyA);
-    const nBe = Math.max(0, nB - enemyB);
-    function passProb(n, k) {
-      if (k <= 0) return 1;
-      if (n <= 0) return 0;
-      return binomialPAtLeast(n, p, k);
+    const plan = buildDicePlan(mission, staffList, context, carry);
+    let pPass = 0;
+    let pGreat = 0;
+    const trials = 520;
+    for (let t = 0; t < trials; t++) {
+      const rolls = Array.from({ length: plan.totalDice }, () => rollDieValue(p));
+      const voidSet = pickRandomIndices(plan.totalDice, plan.enemyAttr);
+      let totalScore = 0;
+      let maxDie = 0;
+      for (let i = 0; i < rolls.length; i++) {
+        if (voidSet.has(i)) continue;
+        totalScore += rolls[i];
+        maxDie = Math.max(maxDie, rolls[i]);
+      }
+      if (totalScore >= plan.targetScore) {
+        pPass += 1;
+        if (maxDie >= 6) pGreat += 1;
+      }
     }
-    const pA = passProb(nAe, kA);
-    const pB = passProb(nBe, kB);
+    const pass = pPass / trials;
+    const great = pGreat / trials;
     return {
       p,
       pBase,
       deltaP,
-      nA,
-      nB,
-      kA,
-      kB,
-      enemyAttr,
-      enemyA,
-      enemyB,
-      nAe,
-      nBe,
-      pA,
-      pB,
-      pBig: pA * pB,
-      pSmall: pA * (1 - pB) + (1 - pA) * pB,
-      pBothFail: (1 - pA) * (1 - pB),
+      nA: plan.totalDice,
+      nB: 0,
+      kA: plan.targetScore,
+      kB: 6,
+      enemyAttr: plan.enemyAttr,
+      enemyA: plan.enemyAttr,
+      enemyB: 0,
+      nAe: plan.effectiveDice,
+      nBe: 0,
+      pA: pass,
+      pB: great,
+      pBig: great,
+      pSmall: Math.max(0, pass - great),
+      pBothFail: Math.max(0, 1 - pass),
       sceneContext: context,
       carry,
+      dicePlan: plan,
     };
   }
 
@@ -2712,59 +2793,32 @@
     if (context.chainProfile) return runChainCheck(mission, staffList, context);
     const meta = computeExplorationP(mission, staffList);
     const p = meta.p;
-    let { nA, nB } = poolSizes(staffList);
-    const { kA, kB } = needThresholds(mission.need);
-    const carry = getPreRollCarryModifiers(context);
-    const notes = [];
-    nA = Math.max(0, nA + (carry.bonusA || 0));
-    nB = Math.max(0, nB + (carry.bonusB || 0));
-    if (carry.notes?.length) notes.push(...carry.notes);
-    if (context.lightMod?.kind === "bonusA") {
-      nA += context.lightMod.amount || 1;
-      notes.push(`类型包：调查池 +${context.lightMod.amount || 1} 骰。`);
-    }
-    if (context.lightMod?.kind === "bonusB") {
-      nB += context.lightMod.amount || 1;
-      notes.push(`类型包：现场池 +${context.lightMod.amount || 1} 骰。`);
-    }
-    if (context.lightMod?.kind === "shieldFirstHit") {
-      notes.push("类型包：本次第一次被收走的成功可被掩护。");
-    }
-    if (context.lightMod?.kind === "taintedDie") {
-      notes.push("类型包：本次会混入 1 颗污染骰。");
-    }
-    const enemyAttr = mission.enemyAttr | 0;
-    const nTot = nA + nB;
-    let enemyA = nTot > 0 ? Math.floor((enemyAttr * nA) / nTot) : 0;
-    enemyA += carry.enemyADelta || 0;
-    const enemyB = enemyAttr - enemyA;
-    const rollHit = () => Math.random() < p;
-    const rollsA = Array.from({ length: nA }, rollHit);
-    const rollsB = Array.from({ length: nB }, rollHit);
-    const voidA = pickRandomIndices(nA, enemyA);
-    const voidB = pickRandomIndices(nB, enemyB);
-    const interventionResult = applyIntervention(context, rollsA, rollsB, voidA, voidB);
+    const plan = meta.dicePlan;
+    const notes = [...(plan.notes || [])];
+    const rollsA = Array.from({ length: plan.totalDice }, () => rollDieValue(p));
+    const rollsB = [];
+    const sourceA = plan.sources.slice();
+    const sourceB = [];
+    const voidA = pickRandomIndices(plan.totalDice, plan.enemyAttr);
+    const voidB = new Set();
+    const interventionResult = applyIntervention(context, rollsA, rollsB, voidA, voidB, sourceA);
     if (interventionResult.shielded) notes.push("掩护生效：保住了 1 颗原本会被收走的成功骰。");
-    let hitsA = 0;
-    for (let i = 0; i < nA; i++) if (!voidA.has(i) && rollsA[i]) hitsA++;
-    let hitsB = 0;
-    for (let i = 0; i < nB; i++) if (!voidB.has(i) && rollsB[i]) hitsB++;
-    const passA = kA <= 0 ? true : hitsA >= kA;
-    const passB = kB <= 0 ? true : hitsB >= kB;
-    let tier;
-    if (passA && passB) tier = "大成功";
-    else if (passA || passB) tier = "小成功";
-    else {
-      const totalHits = hitsA + hitsB;
-      const needSum = kA + kB;
-      tier = nA + nB >= 4 && totalHits <= 1 && needSum >= 4 ? "大失败" : "失败";
+    let totalScore = 0;
+    let maxDie = 0;
+    for (let i = 0; i < rollsA.length; i++) {
+      if (voidA.has(i)) continue;
+      totalScore += rollsA[i];
+      maxDie = Math.max(maxDie, rollsA[i]);
     }
-    const secondaryAxis = buildSecondaryAxis(context, hitsA, hitsB, kA, kB, tier, interventionResult, carry);
+    const passA = totalScore >= plan.targetScore;
+    const passB = maxDie >= 6;
+    const tier = classifyTier(totalScore, plan.targetScore, maxDie, rollsA.length);
+    const secondaryAxis = buildSecondaryAxis(context, totalScore, maxDie, plan.targetScore, 6, tier, interventionResult, meta.carry || {});
     if (secondaryAxis?.summary) notes.push(`${secondaryAxis.label}：${secondaryAxis.summary}`);
     return {
       ...meta,
-      hitsA,
-      hitsB,
+      hitsA: totalScore,
+      hitsB: maxDie,
       passA,
       passB,
       tier,
@@ -2772,15 +2826,20 @@
       rollsB,
       voidA,
       voidB,
-      enemyA,
-      enemyB,
+      sourceA,
+      sourceB,
+      enemyA: plan.enemyAttr,
+      enemyB: 0,
       sceneContext: context,
-      carry,
+      carry: meta.carry,
       interventionResult,
       secondaryAxis,
       sceneNotes: notes,
-      usedCarryFlags: carry.consumedFlags || [],
+      usedCarryFlags: (meta.carry?.consumedFlags) || [],
       phases: [],
+      totalScore,
+      maxDie,
+      targetScore: plan.targetScore,
     };
   }
 
@@ -2817,13 +2876,13 @@
     const sampleContaminated = context.preSampleContaminated;
     if (sampleContaminated && ["science_investigation", "abnormal_contact"].includes(scenePackage)) {
       out.bonusB -= sampleContaminated.value || 0;
-      out.notes.push("样本污染：现场池临时承受减值。");
+      out.notes.push("样本污染：本次可用骰减少。");
       out.consumedFlags.push("sample_contaminated");
     }
     const watchlistPressure = context.preWatchlistPressure;
     if (watchlistPressure && ["social_probe", "science_investigation"].includes(scenePackage)) {
       out.enemyADelta += watchlistPressure.value || 0;
-      out.notes.push("盯梢压力：调查池本次额外承受对抗。");
+      out.notes.push("盯梢压力：本次更容易被额外压制。");
       out.consumedFlags.push("watchlist_pressure");
     }
     const abnormalResidue = context.preAbnormalResidue;
@@ -2859,10 +2918,10 @@
         break;
       }
       case "seal": {
-        const idx = firstAliveSuccessIndex(rollsB, voidB);
+        const idx = firstAliveSuccessIndex(rollsA, voidA);
         if (idx >= 0) {
-          voidB.add(idx);
-          result.summary = "对手封存了 1 颗现场成功骰，成果被暂时压下。";
+          voidA.add(idx);
+          result.summary = "对手封存了 1 颗关键行动骰，成果被暂时压下。";
         }
         break;
       }
@@ -2870,7 +2929,7 @@
         const idx = firstAliveSuccessIndex(rollsA, voidA);
         if (idx >= 0) {
           voidA.add(idx);
-          result.summary = "你追上了诱饵，1 颗调查成功被转移掉。";
+          result.summary = "你追上了诱饵，1 颗关键行动骰被转移掉。";
         } else {
           result.summary = "假目标消耗了注意力，但没有骗走有效成功。";
         }
@@ -2885,24 +2944,24 @@
     return result;
   }
 
-  function buildSecondaryAxis(context, hitsA, hitsB, kA, kB, tier, interventionResult, carry) {
+  function buildSecondaryAxis(context, totalScore, maxDie, targetScore, maxTarget, tier, interventionResult, carry) {
     const axisKey = context.axisKey || "evidence_quality";
     const axisLabel = context.axisLabel || "副轴";
-    const deltaA = hitsA - kA;
-    const deltaB = hitsB - kB;
-    let score = deltaA + deltaB;
+    const deltaScore = totalScore - targetScore;
+    const deltaMax = maxDie - maxTarget;
+    let score = deltaScore;
     let summary = "";
     if (axisKey === "evidence_quality") {
       if (tier === "大成功") summary = "拿到可直接上稿的硬证据";
       else if (tier === "小成功") summary = "素材成形，但还需要一次补证";
       else summary = "证据碎裂，只能拼出残缺线索";
     } else if (axisKey === "exposure") {
-      const exposureLevel = Math.max(0, (interventionResult.kind === "seize" ? 1 : 0) + Math.max(0, -deltaB));
+      const exposureLevel = Math.max(0, (interventionResult.kind === "seize" ? 1 : 0) + Math.max(0, -deltaScore));
       summary = exposureLevel <= 0 ? "暴露较低" : exposureLevel === 1 ? "暴露上升，后续更容易被盯上" : "已经惊动目标与周边势力";
       score = exposureLevel;
     } else if (axisKey === "stability") {
-      summary = deltaB >= 0 ? "样本稳定，可直接移交后续分析" : "样本在撤离中受损，后续转化会带风险";
-      score = deltaB;
+      summary = deltaScore >= 0 ? "样本稳定，可直接移交后续分析" : "样本在撤离中受损，后续转化会带风险";
+      score = deltaScore;
     } else if (axisKey === "contamination_risk") {
       let contamScore = Math.max(tier !== "失败" && tier !== "大失败" ? 1 : 2, interventionResult.kind === "contaminate" ? 2 : 1);
       contamScore += carry.residueBonus || 0;
@@ -2922,8 +2981,12 @@
     const phaseDefs = context.chainData?.phases || [];
     phaseDefs.forEach((phaseDef, idx) => {
       const phaseMission = { ...mission, enemyAttr: (mission.enemyAttr | 0) + (phaseDef.enemyDelta || 0), need: { ...mission.need } };
-      if (phaseMission.need.探索 != null) phaseMission.need.探索 = Math.max(0, phaseMission.need.探索 + (phaseDef.kADelta || 0));
-      if (phaseMission.need.生存 != null) phaseMission.need.生存 = Math.max(0, phaseMission.need.生存 + (phaseDef.kBDelta || 0));
+      if (phaseDef.targetDelta) {
+        phaseMission.need = {
+          ...phaseMission.need,
+          探索: Math.max(0, (phaseMission.need.探索 || 0) + phaseDef.targetDelta),
+        };
+      }
       const phaseContext = { ...context };
       if (idx > 0) {
         phaseContext.preBankedLead = null;
@@ -3396,7 +3459,7 @@
     if (!entries.length) return "";
     return `<div class="carry-strip">${entries.map((entry) => `
       <div class="carry-card">
-        <div class="k">${escapeHtml(entry.key)}</div>
+        <div class="k">${escapeHtml(CARRY_STATE_LABELS[entry.key] || entry.key)}</div>
         <div>${escapeHtml(entry.summary || "已挂起，等待下一次相关检定触发。")}</div>
       </div>`).join("")}</div>`;
   }
@@ -3408,7 +3471,7 @@
       mechanicChipHtml(`副轴：${sceneContext.axisLabel || "副轴"}`, "axis"),
     ];
     if (m.intervention) chips.push(mechanicChipHtml(`干预：${INTERVENTION_LABELS[m.intervention] || m.intervention}`, "intervention"));
-    if (m.carryState) chips.push(mechanicChipHtml(`余波：${m.carryState.flag}`, "carry"));
+    if (m.carryState) chips.push(mechanicChipHtml(`余波：${CARRY_STATE_LABELS[m.carryState.flag] || m.carryState.flag}`, "carry"));
     if (m.chainProfile) chips.push(mechanicChipHtml("链式节点", "chain"));
     const details = [];
     if (sceneContext.riskHint) details.push(sceneContext.riskHint);
@@ -3432,7 +3495,7 @@
       sections.push(`<div class="result-box"><h3>余波写回</h3><p>${escapeHtml(mission.carryState.summary)}</p></div>`);
     }
     if (check.usedCarryFlags?.length) {
-      sections.push(`<div class="result-box"><h3>已消耗状态</h3><p>${escapeHtml(check.usedCarryFlags.join(" / "))}</p></div>`);
+      sections.push(`<div class="result-box"><h3>已消耗状态</h3><p>${escapeHtml(check.usedCarryFlags.map((x) => CARRY_STATE_LABELS[x] || x).join(" / "))}</p></div>`);
     }
     if (!sections.length) return "";
     return `<div class="result-grid">${sections.join("")}</div>`;
@@ -3801,10 +3864,9 @@
     elS.innerHTML = `
       <h2>${m.missionType === "leadInvestigation" ? "线索调查配置" : "探索配置"} · ${escapeHtml(m.name)}</h2>
       <div class="prob-box">
-        <div>调查池 ${prob.nA} 骰 · 需 ${prob.kA} 成功 · P(A)≈${(prob.pA * 100).toFixed(1)}%</div>
-        <div>现场池 ${prob.nB} 骰 · 需 ${prob.kB} 成功 · P(B)≈${(prob.pB * 100).toFixed(1)}%</div>
-        <div style="margin-top:0.35rem;">大成功 ${(prob.pBig * 100).toFixed(1)}% · 小成功 ${(prob.pSmall * 100).toFixed(1)}% · 双败 ${(prob.pBothFail * 100).toFixed(1)}%</div>
-        <div style="margin-top:0.35rem;font-size:0.72rem;">p=${(prob.p * 100).toFixed(1)}% ${ok ? "" : "· 未达门槛 -15%"}</div>
+        <div>${MAIN_POOL_LABEL} ${prob.nA} 颗 · 目标总分 ${prob.kA} · 最高骰达到 6 可升级为大成功</div>
+        <div style="margin-top:0.35rem;">大成功 ${(prob.pBig * 100).toFixed(1)}% · 小成功 ${(prob.pSmall * 100).toFixed(1)}% · 失败 ${(prob.pBothFail * 100).toFixed(1)}%</div>
+        <div style="margin-top:0.35rem;font-size:0.72rem;">单骰成功率 ${(prob.p * 100).toFixed(1)}% · 原始对手值 ${m.enemyAttr | 0} · 缩放后压制 ${prob.enemyAttr}${ok ? "" : " · 未达门槛 -15%"}</div>
       </div>
       ${renderMissionMechanics(m, prob, carryNotes)}
       <p style="font-size:0.85rem;margin-top:0.5rem;">展示：
@@ -4064,24 +4126,52 @@
   }
 
   function computeHitsFromSets(rollsA, rollsB, voidA, voidB) {
-    let hitsA = 0;
-    for (let i = 0; i < rollsA.length; i++) if (!voidA.has(i) && rollsA[i]) hitsA++;
-    let hitsB = 0;
-    for (let i = 0; i < rollsB.length; i++) if (!voidB.has(i) && rollsB[i]) hitsB++;
-    return { hitsA, hitsB };
+    let totalScore = 0;
+    let maxDie = 0;
+    for (let i = 0; i < rollsA.length; i++) {
+      if (voidA.has(i)) continue;
+      totalScore += rollsA[i];
+      maxDie = Math.max(maxDie, rollsA[i]);
+    }
+    for (let i = 0; i < rollsB.length; i++) {
+      if (voidB.has(i)) continue;
+      totalScore += rollsB[i];
+      maxDie = Math.max(maxDie, rollsB[i]);
+    }
+    return { totalScore, maxDie };
   }
 
   async function runLockAndRerollPhase(host, phaseText, check, aEls, bEls, pace) {
     if (!aEls.length && !bEls.length) return;
     if (phaseText) phaseText.textContent = "锁定阶段：点击骰子锁定，确认后重投未锁定骰子";
+    host.innerHTML = "";
     appendStageBanner(host, "第二阶段：锁定与重投");
-    appendMechanicStage(host, "锁定操作", "点击要保留的骰子。你确认前不会继续，可以慢慢考虑要锁哪几颗。");
+    appendMechanicStage(host, "锁定操作", "点击要保留的骰子。保留区的骰子不会再变，待重投区的骰子在你确认后才会重投。");
     const lockSetA = new Set();
     const lockSetB = new Set();
     const all = [
       ...aEls.map((el, idx) => ({ el, idx, pool: "A" })),
       ...bEls.map((el, idx) => ({ el, idx, pool: "B" })),
     ];
+    const zoneGrid = document.createElement("div");
+    zoneGrid.className = "lock-phase-grid";
+    host.appendChild(zoneGrid);
+    const buildZone = (title, note) => {
+      const box = document.createElement("div");
+      box.className = "lock-zone";
+      box.innerHTML = `
+        <h4>${escapeHtml(title)}</h4>
+        <div class="lock-zone-note">${escapeHtml(note)}</div>
+        <div class="dice-pool"><h3>${MAIN_POOL_LABEL}</h3><div class="dice-row" data-zone-row="A"></div></div>`;
+      zoneGrid.appendChild(box);
+      return {
+        rowA: box.querySelector('[data-zone-row="A"]'),
+        rowB: null,
+      };
+    };
+    const keepZone = buildZone("保留区", "这里的骰子锁定后保持不变。");
+    const rerollZone = buildZone("待重投区", "这里只会在你点击按钮后重新投掷。");
+    aEls.forEach((el) => rerollZone.rowA.appendChild(el));
     const controls = document.createElement("div");
     controls.className = "reroll-actions";
     controls.innerHTML = `
@@ -4100,9 +4190,11 @@
       if (set.has(idx)) {
         set.delete(idx);
         el.classList.remove("locked");
+        rerollZone.rowA.appendChild(el);
       } else {
         set.add(idx);
         el.classList.add("locked");
+        keepZone.rowA.appendChild(el);
       }
       updateStatus();
     };
@@ -4137,8 +4229,10 @@
     for (let i = 0; i < check.rollsB.length; i++) {
       if (!lockSetB.has(i)) check.rollsB[i] = Math.random() < check.p;
       const d = finalStateFromRoll(check.rollsB[i], false);
-      setFinalFace(bEls[i], d.text, d.cls);
-      if (lockSetB.has(i)) bEls[i].classList.add("locked");
+      if (bEls[i]) {
+        setFinalFace(bEls[i], d.text, d.cls);
+        if (lockSetB.has(i)) bEls[i].classList.add("locked");
+      }
     }
     await sleep(420);
     return { lockSetA, lockSetB };
@@ -4181,8 +4275,7 @@
         check.phases.map((phase) => `
           <div style="margin-bottom:0.7rem;">
             <div class="phase-label">${escapeHtml(phase.phaseTitle || "阶段")}</div>
-            ${renderDiceRow(phase.rollsA, phase.voidA, "调查池")}
-            ${renderDiceRow(phase.rollsB, phase.voidB, "现场池")}
+            ${renderDiceRow(phase.rollsA, phase.voidA, MAIN_POOL_LABEL)}
           </div>`).join("");
       await sleep(980);
       return;
@@ -4191,8 +4284,8 @@
     holder.innerHTML = `<div class="dice-rolling-hint"><span class="dice-spinner"></span><span id="dicePhaseText">摇骰中...</span></div><div id="diceRowsHost"></div>`;
     const host = document.getElementById("diceRowsHost");
     if (!host) return;
-    const aEls = createRollingDiceRow(host, "调查池", check.rollsA.length);
-    const bEls = createRollingDiceRow(host, "现场池", check.rollsB.length);
+    const aEls = createRollingDiceRow(host, MAIN_POOL_LABEL, check.rollsA.length);
+    const bEls = [];
     const phaseText = () => document.getElementById("dicePhaseText");
     const ticker = window.setInterval(() => {
       const dice = holder.querySelectorAll(".die.rolling");
@@ -4203,24 +4296,13 @@
     for (let i = 0; i < aEls.length; i += pace.revealStepA) {
       const end = Math.min(aEls.length, i + pace.revealStepA);
       const p = phaseText();
-      if (p) p.textContent = `调查池停骰 ${end}/${aEls.length}`;
+      if (p) p.textContent = `${MAIN_POOL_LABEL}停骰 ${end}/${aEls.length}`;
       for (let k = i; k < end; k++) {
         const d = finalStateFromRoll(check.rollsA[k], false);
         setFinalFace(aEls[k], d.text, d.cls);
       }
       await sleep(pace.stepDelay);
     }
-    for (let i = 0; i < bEls.length; i += pace.revealStepB) {
-      const end = Math.min(bEls.length, i + pace.revealStepB);
-      const p = phaseText();
-      if (p) p.textContent = `现场池停骰 ${end}/${bEls.length}`;
-      for (let k = i; k < end; k++) {
-        const d = finalStateFromRoll(check.rollsB[k], false);
-        setFinalFace(bEls[k], d.text, d.cls);
-      }
-      await sleep(pace.stepDelay);
-    }
-
     const pDone = phaseText();
     if (pDone) pDone.textContent = "基础结果已揭示";
     appendStageBanner(host, "第一阶段：基础投掷结果");
@@ -4232,17 +4314,17 @@
     if ((carry.bonusA || 0) > 0) {
       if (pDone) pDone.textContent = "余波触发：保底线索";
       appendStageBanner(host, "第三阶段：余波触发");
-      appendMechanicStage(host, "余波触发", "旧线索保底生效，调查池获得额外支援。");
+      appendMechanicStage(host, "余波触发", "旧线索保底生效，本次额外获得保底骰。");
       const bonusPool = document.createElement("div");
       bonusPool.className = "dice-pool";
-      bonusPool.innerHTML = `<h3>余波·调查支援</h3><div class="dice-row">${Array.from({ length: carry.bonusA }, () => `<span class="die carry">✓</span>`).join("")}</div>`;
+      bonusPool.innerHTML = `<h3>余波·保底骰</h3><div class="dice-row">${Array.from({ length: carry.bonusA }, () => `<span class="die carry">✓</span>`).join("")}</div>`;
       host.appendChild(bonusPool);
       await sleep(pace.stageHold);
     }
     if ((carry.bonusB || 0) < 0) {
       if (pDone) pDone.textContent = "余波触发：样本污染";
       appendStageBanner(host, "第三阶段：余波触发");
-      appendMechanicStage(host, "余波触发", "旧污染残留生效，现场池受损。");
+      appendMechanicStage(host, "余波触发", "旧污染残留生效，本次可用骰减少。");
       const taintPool = document.createElement("div");
       taintPool.className = "dice-pool";
       taintPool.innerHTML = `<h3>余波·污染标记</h3><div class="dice-row">${Array.from({ length: Math.abs(carry.bonusB) }, () => `<span class="die tainted">×</span>`).join("")}</div>`;
@@ -4251,18 +4333,18 @@
     }
 
     if (check.sceneContext?.lightMod?.kind === "bonusA") {
-      if (pDone) pDone.textContent = "类型包触发：调查加骰";
+      if (pDone) pDone.textContent = "类型包触发：奖励骰";
       appendStageBanner(host, "第四阶段：类型包触发");
-      appendMechanicStage(host, "类型包触发", "科学调查强化调查池，额外补入 1 颗奖励骰。");
+      appendMechanicStage(host, "类型包触发", "科学调查会额外补入 1 颗奖励骰。");
       const pool = document.createElement("div");
       pool.className = "dice-pool";
       pool.innerHTML = `<h3>类型包·奖励骰</h3><div class="dice-row"><span class="die boost">✓</span></div>`;
       host.appendChild(pool);
       await sleep(pace.stageHold);
     } else if (check.sceneContext?.lightMod?.kind === "bonusB") {
-      if (pDone) pDone.textContent = "类型包触发：现场加骰";
+      if (pDone) pDone.textContent = "类型包触发：奖励骰";
       appendStageBanner(host, "第四阶段：类型包触发");
-      appendMechanicStage(host, "类型包触发", "考古现场强化现场处理，额外补入 1 颗奖励骰。");
+      appendMechanicStage(host, "类型包触发", "考古现场会额外补入 1 颗奖励骰。");
       const pool = document.createElement("div");
       pool.className = "dice-pool";
       pool.innerHTML = `<h3>类型包·奖励骰</h3><div class="dice-row"><span class="die boost">✓</span></div>`;
@@ -4333,25 +4415,19 @@
     }
 
     const recalculated = computeHitsFromSets(check.rollsA, check.rollsB, check.voidA, check.voidB);
-    check.hitsA = recalculated.hitsA;
-    check.hitsB = recalculated.hitsB;
-    check.passA = check.kA <= 0 ? true : check.hitsA >= check.kA;
-    check.passB = check.kB <= 0 ? true : check.hitsB >= check.kB;
-    if (check.passA && check.passB) check.tier = "大成功";
-    else if (check.passA || check.passB) check.tier = "小成功";
-    else {
-      const totalHits = check.hitsA + check.hitsB;
-      const needSum = check.kA + check.kB;
-      check.tier = check.rollsA.length + check.rollsB.length >= 4 && totalHits <= 1 && needSum >= 4 ? "大失败" : "失败";
-    }
+    check.hitsA = recalculated.totalScore;
+    check.hitsB = recalculated.maxDie;
+    check.totalScore = recalculated.totalScore;
+    check.maxDie = recalculated.maxDie;
+    check.passA = check.totalScore >= check.kA;
+    check.passB = check.maxDie >= 6;
+    check.tier = classifyTier(check.totalScore, check.kA, check.maxDie, check.rollsA.length);
 
     // 最终态面板
     holder.innerHTML = `<div>
-      ${renderDiceRow(check.rollsA, new Set(), "调查池（基础）")}
-      ${renderDiceRow(check.rollsB, new Set(), "现场池（基础）")}
+      ${renderDiceRow(check.rollsA, new Set(), "基础行动骰")}
       <div class="phase-label" style="margin-top:0.5rem;">对手作废 ${check.enemyAttr} 颗</div>
-      ${renderDiceRow(check.rollsA, check.voidA, "调查·作废后")}
-      ${renderDiceRow(check.rollsB, check.voidB, "现场·作废后")}
+      ${renderDiceRow(check.rollsA, check.voidA, "作废后行动骰")}
       ${check.interventionResult?.summary ? `<div class="phase-label" style="margin-top:0.5rem;">事件干预：${escapeHtml(INTERVENTION_LABELS[check.interventionResult.kind] || check.interventionResult.kind)}</div><div class="tip-inline">${escapeHtml(check.interventionResult.summary)}</div>` : ""}
       ${check.secondaryAxis?.summary ? `<div class="phase-label" style="margin-top:0.5rem;">副轴结果：${escapeHtml(check.secondaryAxis.label)}</div><div class="tip-inline">${escapeHtml(check.secondaryAxis.summary)}</div>` : ""}
     </div>`;
@@ -4384,11 +4460,11 @@
     if (showDice) {
       await animateDiceReveal(elRes, check);
       tier = check.tier;
-      secondaryAxis = buildSecondaryAxis(check.sceneContext, check.hitsA, check.hitsB, check.kA, check.kB, tier, interventionResult, check.carry || {});
+      secondaryAxis = buildSecondaryAxis(check.sceneContext, check.totalScore, check.maxDie, check.kA, 6, tier, interventionResult, check.carry || {});
     } else {
       await sleep(450);
       const h = document.getElementById("diceAnim");
-      if (h) h.innerHTML = `<div class="prob-box">调查 ${check.hitsA}/${check.nAe}（≥${check.kA}）· 现场 ${check.hitsB}/${check.nBe}（≥${check.kB}）${secondaryAxis ? ` · ${escapeHtml(secondaryAxis.label)}：${escapeHtml(secondaryAxis.summary)}` : ""}</div>`;
+      if (h) h.innerHTML = `<div class="prob-box">${MAIN_POOL_LABEL} 总分 ${check.totalScore}/${check.kA} · 最高骰 ${check.maxDie}${secondaryAxis ? ` · ${escapeHtml(secondaryAxis.label)}：${escapeHtml(secondaryAxis.summary)}` : ""}</div>`;
     }
 
     const lines = [];
@@ -4421,20 +4497,20 @@
       lines.push("大成功：高质量线索。");
       const clue = { title: m.name + " · 深度特稿素材", type: m.tags[0] || "pop", tier: 3, topicKey: newTopicKey() };
       state.clues.push(clue);
-      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：高（Tier 3）" });
+      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：高（第 3 档）" });
     } else if (tier === "小成功") {
       macro.声望 = Math.min(100, macro.声望 + 4);
       macro.诡名 += 1;
       lines.push("小成功：常规稿件素材。");
       const clue = { title: m.name + " · 常规稿件素材", type: m.tags[0] || "pop", tier: 2, topicKey: newTopicKey() };
       state.clues.push(clue);
-      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：中（Tier 2）" });
+      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：中（第 2 档）" });
     } else if (tier === "失败") {
       macro.声望 = Math.max(0, macro.声望 - 2);
       lines.push("失败：碎片线索。");
       const clue = { title: m.name + " · 碎片线索", type: m.tags[0] || "pop", tier: 1, topicKey: newTopicKey() };
       state.clues.push(clue);
-      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：低（Tier 1）" });
+      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：低（第 1 档）" });
     } else {
       macro.守序 = Math.max(0, macro.守序 - 3);
       macro.狂性 = Math.min(100, macro.狂性 + 3);
@@ -4487,11 +4563,11 @@
           [
             `${tutorialSoftFigure(
               "Assets/tutorial-result-guide.svg",
-              "结算示意：调查与现场双线判定",
-              "示意：调查池与现场池各自过线，合起来决定本次档位。",
+              "结算示意：单池总分与最高骰判定",
+              "示意：先看行动骰池总分是否达标，再看最高骰是否足够强来升级结果。",
             )}<div class="tutorial-soft-sheet">
-              <h4 class="tutorial-soft-h4">双线结果</h4>
-              <p class="tutorial-soft-lead">「调查」与「现场」<strong>各自过线</strong>，合在一起决定大获全胜、平稳交差、失手或闹大。</p>
+              <h4 class="tutorial-soft-h4">单池结果</h4>
+              <p class="tutorial-soft-lead">现在只看一组<strong>行动骰池</strong>：先看总分是否达标，再看<strong>最高骰</strong>是否足以把结果升级成大成功。</p>
               <ul class="tutorial-soft-ul">
                 <li>奖励弹窗可逐条翻看。</li>
               </ul>
