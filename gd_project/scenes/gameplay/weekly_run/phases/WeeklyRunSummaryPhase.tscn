@@ -1,0 +1,69 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/gameplay/weekly_run/phases/WeeklyRunSummaryPhase.gd" id="1_summary_phase"]
+[ext_resource type="PackedScene" path="res://scenes/gameplay/weekly_run/components/WeeklyRunScrollableText.tscn" id="2_scrollable_text"]
+
+[node name="WeeklyRunSummaryPhase" type="MarginContainer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_summary_phase")
+
+[node name="RootVBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="SummaryPanel" type="PanelContainer" parent="RootVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SummaryVBox" type="VBoxContainer" parent="RootVBox/SummaryPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="SummaryTitle" type="Label" parent="RootVBox/SummaryPanel/SummaryVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "本周结算"
+
+[node name="SummaryScroll" parent="RootVBox/SummaryPanel/SummaryVBox" instance=ExtResource("2_scrollable_text")]
+custom_minimum_size = Vector2(0, 320)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HooksPanel" type="PanelContainer" parent="RootVBox"]
+layout_mode = 2
+
+[node name="HooksVBox" type="VBoxContainer" parent="RootVBox/HooksPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HooksTitle" type="Label" parent="RootVBox/HooksPanel/HooksVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "下一周钩子"
+
+[node name="HooksText" type="RichTextLabel" parent="RootVBox/HooksPanel/HooksVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="FooterHBox" type="HBoxContainer" parent="RootVBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="FooterSpacer" type="Control" parent="RootVBox/FooterHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NextWeekBtn" type="Button" parent="RootVBox/FooterHBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(220, 46)
+text = "进入下一周"

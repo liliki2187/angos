@@ -2,9 +2,11 @@ extends RefCounted
 class_name WeeklyRunSystems
 
 const Content = preload("res://scenes/gameplay/weekly_run/content/WeeklyRunContent.gd")
+const WeeklyMaterialInventory = preload("res://scenes/gameplay/weekly_run/materials/WeeklyMaterialInventory.gd")
 const WeeklyRunState = preload("res://scenes/gameplay/weekly_run/state/WeeklyRunState.gd")
 
-static func initialize_new_run(state: WeeklyRunState) -> void:
+static func initialize_new_run(state: WeeklyRunState, material_inventory: WeeklyMaterialInventory) -> void:
+	material_inventory.clear()
 	var briefing_event_id := _roll_briefing_event_id()
 	var active_tasks := _roll_active_tasks()
 	state.reset_for_new_run(briefing_event_id, active_tasks, [])
@@ -21,9 +23,9 @@ static func begin_next_week(state: WeeklyRunState) -> void:
 static func start_explore(state: WeeklyRunState) -> void:
 	state.current_phase = "explore"
 
-static func enter_editorial(state: WeeklyRunState) -> void:
+static func enter_editorial(state: WeeklyRunState, material_inventory: WeeklyMaterialInventory) -> void:
 	state.current_phase = "editorial"
-	_rebuild_editorial_pipeline(state)
+	_rebuild_editorial_pipeline(state, material_inventory)
 
 static func build_briefing_lines(state: WeeklyRunState) -> Array[String]:
 	var lines: Array[String] = [Content.get_briefing_text(state.briefing_event_id)]
@@ -165,7 +167,7 @@ static func calculate_node_probabilities(node: Dictionary, totals: Dictionary) -
 		"fail": (1.0 - p_a) * (1.0 - p_b),
 	}
 
-static func apply_dispatch_resolution(state: WeeklyRunState, node: Dictionary, roll: Dictionary, region_name: String) -> Dictionary:
+static func apply_dispatch_resolution(state: WeeklyRunState, material_inventory: WeeklyMaterialInventory, node: Dictionary, roll: Dictionary, region_name: String) -> Dictionary:
 	state.remaining_days = max(0, state.remaining_days - int(node.days))
 	state.resolved_nodes[str(node.id)] = true
 	state.last_dispatch_roll = roll.duplicate(true)
@@ -180,7 +182,7 @@ static func apply_dispatch_resolution(state: WeeklyRunState, node: Dictionary, r
 	state.dispatch_results.append(dispatch_result)
 
 	var material := _generate_material(state, node, roll, region_name)
-	state.material_inventory.append(material)
+	material_inventory.ingest_material(material)
 	state.new_material_ids.append(str(material.id))
 
 	var phase_message := ""
@@ -224,7 +226,7 @@ static func publish_issue(state: WeeklyRunState, slot_assignment: Dictionary) ->
 	}
 	return state.settlement_preview
 
-static func settle_published_issue(state: WeeklyRunState) -> Dictionary:
+static func settle_published_issue(state: WeeklyRunState, material_inventory: WeeklyMaterialInventory) -> Dictionary:
 	var stats: Dictionary = state.settlement_preview.duplicate(true)
 	if stats.is_empty():
 		stats = calculate_editorial_stats(state, state.slot_assignment)
@@ -238,7 +240,7 @@ static func settle_published_issue(state: WeeklyRunState) -> Dictionary:
 	result.editorial_profile_after = state.editorial_profile
 	state.macro_stats.reputation += int(clamp(roundi(stats.profit / 700.0), -2, 3))
 	state.macro_stats.credibility += 1 if stats.axis_p >= stats.axis_m and stats.axis_p >= stats.axis_l else 0
-	state.macro_stats.weirdness += 1 if count_occult_new_materials(state) >= 2 else 0
+	state.macro_stats.weirdness += 1 if count_occult_new_materials(state, material_inventory) >= 2 else 0
 	state.macro_stats.order += 1 if stats.empty_slots == 0 else -1
 	state.macro_stats.mania = max(0, state.macro_stats.mania - 1 if stats.m_balance >= 1.0 else state.macro_stats.mania + 1)
 	result.commentary = _settlement_commentary(stats)
@@ -341,16 +343,16 @@ static func get_article_by_id(state: WeeklyRunState, article_id: int) -> Diction
 			return article
 	return {}
 
-static func count_occult_new_materials(state: WeeklyRunState) -> int:
+static func count_occult_new_materials(state: WeeklyRunState, material_inventory: WeeklyMaterialInventory) -> int:
 	var count := 0
-	for material in state.get_new_materials():
+	for material in material_inventory.get_materials_by_ids(state.new_material_ids):
 		if str(material.type) == "occult":
 			count += 1
 	return count
 
-static func _rebuild_editorial_pipeline(state: WeeklyRunState) -> void:
+static func _rebuild_editorial_pipeline(state: WeeklyRunState, material_inventory: WeeklyMaterialInventory) -> void:
 	state.cognition_entries.clear()
-	for material in state.material_inventory:
+	for material in material_inventory.get_all_materials():
 		state.cognition_entries.append(_cognition_from_material(material))
 	state.article_candidates.clear()
 	state.next_article_id = 1

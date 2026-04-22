@@ -19,7 +19,6 @@ var briefing_event_id := ""
 var active_tasks: Array[Dictionary] = []
 var opportunity_ids: Array[String] = []
 var dispatch_results: Array[Dictionary] = []
-var material_inventory: Array[Dictionary] = []
 var new_material_ids: Array[String] = []
 var cognition_entries: Array[Dictionary] = []
 var article_candidates: Array[Dictionary] = []
@@ -46,13 +45,13 @@ func reset_for_new_run(briefing_event_id_input: String, active_tasks_input: Arra
 	flags.clear()
 	resolved_nodes.clear()
 	log_entries.clear()
-	material_inventory.clear()
 	next_week_hooks.clear()
 	next_material_serial = 1
 	_reset_week_state(briefing_event_id_input, active_tasks_input, opportunity_ids_input)
 
 func begin_next_week(briefing_event_id_input: String, active_tasks_input: Array[Dictionary], opportunity_ids_input: Array[String]) -> void:
 	week += 1
+	log_entries.clear()
 	_reset_week_state(briefing_event_id_input, active_tasks_input, opportunity_ids_input)
 
 func append_log(text: String) -> void:
@@ -65,16 +64,6 @@ func sync_slot_assignment(slot_data: Array) -> void:
 		var slot_id := str(slot.id)
 		if not slot_assignment.has(slot_id):
 			slot_assignment[slot_id] = -1
-
-func get_new_materials() -> Array[Dictionary]:
-	var materials: Array[Dictionary] = []
-	var expected_ids := {}
-	for material_id in new_material_ids:
-		expected_ids[str(material_id)] = true
-	for material in material_inventory:
-		if bool(expected_ids.get(str(material.id), false)):
-			materials.append(material)
-	return materials
 
 func _reset_week_state(briefing_event_id_input: String, active_tasks_input: Array[Dictionary], opportunity_ids_input: Array[String]) -> void:
 	remaining_days = WEEK_DAYS

@@ -31,6 +31,7 @@ skills/.claude-to-im/logs/
 skills/.claude-to-im/runtime/
 
 # Godot local cache / exports
+.godot/
 gd_project/.godot/
 gd_project/build/
 *.import

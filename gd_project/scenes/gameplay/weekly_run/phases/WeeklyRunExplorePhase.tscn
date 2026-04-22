@@ -1,0 +1,225 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/gameplay/weekly_run/phases/WeeklyRunExplorePhase.gd" id="1_explore_phase"]
+[ext_resource type="PackedScene" path="res://scenes/gameplay/weekly_run/components/WeeklyRunScrollableText.tscn" id="2_scrollable_text"]
+
+[node name="WeeklyRunExplorePhase" type="MarginContainer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_explore_phase")
+
+[node name="RootHBox" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="LeftVBox" type="VBoxContainer" parent="RootHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.9
+theme_override_constants/separation = 16
+
+[node name="RegionPanel" type="PanelContainer" parent="RootHBox/LeftVBox"]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="RegionVBox" type="VBoxContainer" parent="RootHBox/LeftVBox/RegionPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="RegionTitle" type="Label" parent="RootHBox/LeftVBox/RegionPanel/RegionVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "区域与机会池"
+
+[node name="FilterRow" type="HBoxContainer" parent="RootHBox/LeftVBox/RegionPanel/RegionVBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BtnFilterSci" type="Button" parent="RootHBox/LeftVBox/RegionPanel/RegionVBox/FilterRow"]
+layout_mode = 2
+text = "科学纪实"
+
+[node name="BtnFilterOccult" type="Button" parent="RootHBox/LeftVBox/RegionPanel/RegionVBox/FilterRow"]
+layout_mode = 2
+text = "神秘玄学"
+
+[node name="BtnFilterPop" type="Button" parent="RootHBox/LeftVBox/RegionPanel/RegionVBox/FilterRow"]
+layout_mode = 2
+text = "大众热度"
+
+[node name="RegionScroll" type="ScrollContainer" parent="RootHBox/LeftVBox/RegionPanel/RegionVBox"]
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="RegionList" type="VBoxContainer" parent="RootHBox/LeftVBox/RegionPanel/RegionVBox/RegionScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="NodePanel" type="PanelContainer" parent="RootHBox/LeftVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="NodeVBox" type="VBoxContainer" parent="RootHBox/LeftVBox/NodePanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NodeTitle" type="Label" parent="RootHBox/LeftVBox/NodePanel/NodeVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "探索节点"
+
+[node name="RegionHintLabel" type="Label" parent="RootHBox/LeftVBox/NodePanel/NodeVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.76, 0.82, 1)
+text = "请选择区域"
+autowrap_mode = 3
+
+[node name="NodeScroll" type="ScrollContainer" parent="RootHBox/LeftVBox/NodePanel/NodeVBox"]
+custom_minimum_size = Vector2(0, 240)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="NodeList" type="VBoxContainer" parent="RootHBox/LeftVBox/NodePanel/NodeVBox/NodeScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="MiddleVBox" type="VBoxContainer" parent="RootHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.98
+theme_override_constants/separation = 16
+
+[node name="StaffPanel" type="PanelContainer" parent="RootHBox/MiddleVBox"]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="StaffVBox" type="VBoxContainer" parent="RootHBox/MiddleVBox/StaffPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="StaffTitle" type="Label" parent="RootHBox/MiddleVBox/StaffPanel/StaffVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "派遣编组"
+
+[node name="SelectedStaffLabel" type="Label" parent="RootHBox/MiddleVBox/StaffPanel/StaffVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.76, 0.82, 1)
+text = "已选择：0 / 3"
+
+[node name="StaffScroll" type="ScrollContainer" parent="RootHBox/MiddleVBox/StaffPanel/StaffVBox"]
+custom_minimum_size = Vector2(0, 220)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="StaffGrid" type="GridContainer" parent="RootHBox/MiddleVBox/StaffPanel/StaffVBox/StaffScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+
+[node name="MaterialsPanel" type="PanelContainer" parent="RootHBox/MiddleVBox"]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="MaterialsVBox" type="VBoxContainer" parent="RootHBox/MiddleVBox/MaterialsPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MaterialsTitle" type="Label" parent="RootHBox/MiddleVBox/MaterialsPanel/MaterialsVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "本周新增素材"
+
+[node name="MaterialScroll" type="ScrollContainer" parent="RootHBox/MiddleVBox/MaterialsPanel/MaterialsVBox"]
+custom_minimum_size = Vector2(0, 220)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="MaterialList" type="VBoxContainer" parent="RootHBox/MiddleVBox/MaterialsPanel/MaterialsVBox/MaterialScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="RightVBox" type="VBoxContainer" parent="RootHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.12
+theme_override_constants/separation = 16
+
+[node name="MissionPanel" type="PanelContainer" parent="RootHBox/RightVBox"]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="MissionVBox" type="VBoxContainer" parent="RootHBox/RightVBox/MissionPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MissionTitle" type="Label" parent="RootHBox/RightVBox/MissionPanel/MissionVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "派遣简报"
+
+[node name="MissionScroll" parent="RootHBox/RightVBox/MissionPanel/MissionVBox" instance=ExtResource("2_scrollable_text")]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ProbabilityLabel" type="Label" parent="RootHBox/RightVBox/MissionPanel/MissionVBox"]
+layout_mode = 2
+text = "理论结果：等待选点"
+
+[node name="DiceText" type="RichTextLabel" parent="RootHBox/RightVBox/MissionPanel/MissionVBox"]
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="ResultLabel" type="Label" parent="RootHBox/RightVBox/MissionPanel/MissionVBox"]
+layout_mode = 2
+text = "等待执行"
+
+[node name="ExecuteBtn" type="Button" parent="RootHBox/RightVBox/MissionPanel/MissionVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 46)
+text = "执行外采"
+
+[node name="LogPanel" type="PanelContainer" parent="RootHBox/RightVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LogVBox" type="VBoxContainer" parent="RootHBox/RightVBox/LogPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LogTitle" type="Label" parent="RootHBox/RightVBox/LogPanel/LogVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "探索日志"
+
+[node name="LogScroll" type="ScrollContainer" parent="RootHBox/RightVBox/LogPanel/LogVBox"]
+custom_minimum_size = Vector2(0, 220)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="LogList" type="VBoxContainer" parent="RootHBox/RightVBox/LogPanel/LogVBox/LogScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8

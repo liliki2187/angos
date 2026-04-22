@@ -1,6 +1,7 @@
 extends SceneTree
 
 const Content = preload("res://scenes/gameplay/weekly_run/content/WeeklyRunContent.gd")
+const WeeklyMaterialInventory = preload("res://scenes/gameplay/weekly_run/materials/WeeklyMaterialInventory.gd")
 const Systems = preload("res://scenes/gameplay/weekly_run/systems/WeeklyRunSystems.gd")
 const WeeklyRunState = preload("res://scenes/gameplay/weekly_run/state/WeeklyRunState.gd")
 
@@ -9,18 +10,19 @@ var _failures: Array[String] = []
 func _init() -> void:
 	randomize()
 	var state := WeeklyRunState.new()
-	Systems.initialize_new_run(state)
+	var material_inventory := WeeklyMaterialInventory.new()
+	Systems.initialize_new_run(state, material_inventory)
 	_assert_true(state.current_phase == "briefing", "新开局必须先进入 briefing。")
 
 	Systems.start_explore(state)
 	_assert_true(state.current_phase == "explore", "确认简报后必须进入 explore。")
 
-	Systems.enter_editorial(state)
+	Systems.enter_editorial(state, material_inventory)
 	_assert_true(state.current_phase == "editorial", "探索结束后必须进入 editorial。")
 
 	var slot_assignment := _fill_first_slots(state)
 	Systems.publish_issue(state, slot_assignment)
-	Systems.settle_published_issue(state)
+	Systems.settle_published_issue(state, material_inventory)
 	_assert_true(state.current_phase == "summary", "发刊结算后必须进入 summary。")
 	_assert_true(not state.published_issue.is_empty(), "summary 前必须冻结 published_issue。")
 

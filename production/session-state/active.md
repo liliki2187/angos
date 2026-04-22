@@ -1,34 +1,41 @@
 # 会话状态
 
-- **日期**：2026-04-09
-- **任务**：周循环正式 schema 迁移与 `FullChainGame` 重构准备
+- **日期**：2026-04-10
+- **任务**：周循环切片 retrospective 收尾，并完成内容生产链设计文档同步
 - **状态**：进行中
 
 ## 本轮已完成
 
-- `仓库治理基础` sprint 已正式收口，生产工作台、仓库地图、Git 协作入口与忽略规则已达到最低治理目标。
-- `docs/technical-preferences.md` 与 `docs/architecture/adr-0002-godot-ui-scene-first-and-binding-driven.md` 已明确正式 UI 的场景优先与绑定式脚本规范。
-- `design/gdd/weekly-run-loop.md` 及相邻周循环 GDD 已对齐为 `briefing -> explore -> editorial -> summary` 的顶层阶段结构。
+- `weekly_run` 已成为正式运行时真源，`briefing -> explore -> editorial -> summary` 四阶段链路已在运行时与 smoke test 中成立。
+- 当前切片 retrospective 已落盘：
+  - `production/sprints/2026-04-09-weekly-schema-migration-slice-1-retrospective.md`
+- 旧母文档、待拍板头脑风暴和实验页的目录归位已完成：
+  - `docs/archive/legacy-design/系统功能设计总集.md`
+  - `docs/archive/deferred-design/brainstorm-synthesis-cognition-2026-04-06.md`
+  - `design/prototypes/html/labs/synth-workbench-lab.html`
+- 已按 2026-04-09 全链原型规则，把以下正式 GDD 同步到一致口径：
+  - `design/gdd/game-concept.md`
+  - `design/gdd/game-pillars.md`
+  - `design/gdd/systems-index.md`
+  - `design/gdd/content-production-and-article-generation.md`
+  - `design/gdd/editorial-layout-and-publishing-strategy.md`
+  - `design/gdd/issue-settlement-and-audience-feedback.md`
+  - `design/gdd/macro-attributes-and-reality-shift.md`
 
 ## 当前真实来源
 
-- 运行时行为：`gd_project/scenes/` 与 `gd_project/Assets/`
-- Godot 项目根：`gd_project/project.godot`
+- 正式运行时：`gd_project/scenes/gameplay/weekly_run/`
 - 周循环顶层状态真源：`design/gdd/weekly-run-loop.md`
+- 正式设计顶层：`design/gdd/game-concept.md`、`design/gdd/game-pillars.md`、`design/gdd/systems-index.md`
 - 技术边界与 ADR：`docs/architecture/`
-- 技术默认值与 UI 实现硬约束：`docs/technical-preferences.md`
-- 执行状态：`production/`
-- Git 协作权威入口：`docs/onboarding/git-collaboration.md`
+- 生产状态：`production/`
 
 ## 紧接着要做的事
 
-1. 先补一份 ADR，明确 demo 周状态字段如何迁移到正式 weekly schema。
-2. 重构 `gd_project/scenes/gameplay/full_chain/FullChainGame.gd` 的顶层状态和字段命名，并在代码层引入 `briefing`。
-3. 把 demo 流程 `weekly_clues -> story_pool -> settlement` 改成 `dispatch result -> material inventory -> cognition -> article_candidates -> published_issue -> settlement_result`。
-4. 在结构稳定后，为周阶段切换与结算公式补最小自动化覆盖。
+1. 对本轮 GDD 同步结果做一次设计一致性复核，并决定是否还要继续收束参数细节。
+2. 回到运行时，处理 `ExplorePhase` 局部刷新与 `project.godot` 版本戳迁移。
+3. 为 `cognition` 与结算模块补下一轮拆分接口说明。
 
 ## 备注
 
-- 仓库治理相关目录与规则已进入维护态，不再作为当前 sprint 主线。
-- 历史分发包链路已归档到 `_obsolete/scripts/release/`，HTML 参考源码保留在 `design/prototypes/html/`。
-- 当前工作区仍有本地 `tmp/` 草稿，默认不纳入正式提交。
+- 当前这批设计文档同步已完成；若继续深入，优先走 `design-review`，而不是重新开一轮头脑风暴。

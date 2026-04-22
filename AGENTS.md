@@ -1,8 +1,9 @@
-## 设计文档（系统总集）
+## 设计文档（正式真源）
 
-- **母文档**：[`设计文档/系统功能设计总集.md`](./设计文档/系统功能设计总集.md) — 系统功能全貌、分册索引、全链原型落地对照。
-- **同步**：已确定并落地的玩法/规则/常量变更，应同步更新该总集对应章节与 §13、§14。
-- **出入提醒**：若代码/配置与总集描述不一致，助手在改完或评审时应**明确提醒**用户：择一修正文档或实现。
+- **顶层真源**：[`design/gdd/game-concept.md`](./design/gdd/game-concept.md)、[`design/gdd/game-pillars.md`](./design/gdd/game-pillars.md)、[`design/gdd/systems-index.md`](./design/gdd/systems-index.md)。
+- **同步**：已确定并落地的玩法/规则/常量变更，应先同步对应 `design/gdd/` 文档；若影响产品定位、支柱或系统边界，再同步顶层三份文档。与系统全貌、全链原型对照相关的章节仍应同步 [`docs/archive/legacy-design/系统功能设计总集.md`](./docs/archive/legacy-design/系统功能设计总集.md)（或后续替代真源）中相应段落与 §13、§14。
+- **归档提醒**：[`docs/archive/legacy-design/系统功能设计总集.md`](./docs/archive/legacy-design/系统功能设计总集.md) 为归档副本，与当前 `design/gdd/` 并行时以 `design/gdd/` 与代码为准，并在此总集注明差异。
+- **出入提醒**：若代码/配置与上述文档不一致，助手在改完或评审时应**明确提醒**用户：择一修正文档或实现。
 - **协作偏好**：后续 AI / 新对话在处理玩法、原型、UI 感知类任务前，先读 [`docs/onboarding/ai-collaboration-guidance.md`](./docs/onboarding/ai-collaboration-guidance.md)；收到新的强反馈后应同步更新该文档。
 
 ## Skills

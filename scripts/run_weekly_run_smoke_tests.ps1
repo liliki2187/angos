@@ -6,7 +6,8 @@ $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $projectPath = (Resolve-Path (Join-Path $repoRoot 'gd_project')).Path
 $tests = @(
     (Resolve-Path (Join-Path $repoRoot 'tests\godot\weekly_run\test_phase_flow.gd')).Path,
-    (Resolve-Path (Join-Path $repoRoot 'tests\godot\weekly_run\test_settlement_result.gd')).Path
+    (Resolve-Path (Join-Path $repoRoot 'tests\godot\weekly_run\test_settlement_result.gd')).Path,
+    (Resolve-Path (Join-Path $repoRoot 'tests\godot\weekly_run\test_weekly_run_layout.gd')).Path
 )
 
 if (-not $GodotPath) {

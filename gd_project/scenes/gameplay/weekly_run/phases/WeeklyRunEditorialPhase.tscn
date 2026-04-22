@@ -1,0 +1,133 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/gameplay/weekly_run/phases/WeeklyRunEditorialPhase.gd" id="1_editorial_phase"]
+[ext_resource type="PackedScene" path="res://scenes/gameplay/weekly_run/components/WeeklyRunScrollableText.tscn" id="2_scrollable_text"]
+
+[node name="WeeklyRunEditorialPhase" type="MarginContainer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_editorial_phase")
+
+[node name="RootVBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="EditorialHeader" type="PanelContainer" parent="RootVBox"]
+layout_mode = 2
+
+[node name="EditorialHeaderVBox" type="VBoxContainer" parent="RootVBox/EditorialHeader"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="EditorialTitle" type="Label" parent="RootVBox/EditorialHeader/EditorialHeaderVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "编辑部 · 候选稿与版面"
+
+[node name="EditorialSubtitle" type="Label" parent="RootVBox/EditorialHeader/EditorialHeaderVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.76, 0.82, 1)
+text = "根据素材库存与认知结果挑选候选稿件，再完成发刊布局。"
+autowrap_mode = 3
+
+[node name="EditorialColumns" type="HBoxContainer" parent="RootVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="LibraryPanel" type="PanelContainer" parent="RootVBox/EditorialColumns"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.05
+
+[node name="LibraryVBox" type="VBoxContainer" parent="RootVBox/EditorialColumns/LibraryPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LibraryTitle" type="Label" parent="RootVBox/EditorialColumns/LibraryPanel/LibraryVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "候选稿件"
+
+[node name="LibraryHint" type="Label" parent="RootVBox/EditorialColumns/LibraryPanel/LibraryVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.76, 0.82, 1)
+text = "先选稿件，再点右侧版位落稿。"
+autowrap_mode = 3
+
+[node name="ArticleScroll" type="ScrollContainer" parent="RootVBox/EditorialColumns/LibraryPanel/LibraryVBox"]
+custom_minimum_size = Vector2(0, 420)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ArticleList" type="VBoxContainer" parent="RootVBox/EditorialColumns/LibraryPanel/LibraryVBox/ArticleScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="LayoutPanel" type="PanelContainer" parent="RootVBox/EditorialColumns"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.15
+
+[node name="LayoutVBox" type="VBoxContainer" parent="RootVBox/EditorialColumns/LayoutPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LayoutTitle" type="Label" parent="RootVBox/EditorialColumns/LayoutPanel/LayoutVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "本期版面"
+
+[node name="SlotScroll" type="ScrollContainer" parent="RootVBox/EditorialColumns/LayoutPanel/LayoutVBox"]
+custom_minimum_size = Vector2(0, 420)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="SlotList" type="VBoxContainer" parent="RootVBox/EditorialColumns/LayoutPanel/LayoutVBox/SlotScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="LayoutActions" type="HBoxContainer" parent="RootVBox/EditorialColumns/LayoutPanel/LayoutVBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ClearLayoutBtn" type="Button" parent="RootVBox/EditorialColumns/LayoutPanel/LayoutVBox/LayoutActions"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 42)
+text = "清空版面"
+
+[node name="SettleBtn" type="Button" parent="RootVBox/EditorialColumns/LayoutPanel/LayoutVBox/LayoutActions"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 42)
+text = "结算本期"
+
+[node name="StatsPanel" type="PanelContainer" parent="RootVBox/EditorialColumns"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.95
+
+[node name="StatsVBox" type="VBoxContainer" parent="RootVBox/EditorialColumns/StatsPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="StatsTitle" type="Label" parent="RootVBox/EditorialColumns/StatsPanel/StatsVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "结算预估"
+
+[node name="StatsScroll" parent="RootVBox/EditorialColumns/StatsPanel/StatsVBox" instance=ExtResource("2_scrollable_text")]
+custom_minimum_size = Vector2(0, 420)
+layout_mode = 2
+size_flags_vertical = 3

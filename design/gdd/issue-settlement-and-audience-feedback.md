@@ -2,12 +2,12 @@
 
 > **状态**：草案
 > **作者**：Codex + 策划稿整理
-> **最后更新**：2026-04-06
+> **最后更新**：2026-04-10
 > **对应支柱**：传播必须推动现实偏移
 
 ## 概览
 
-这个系统把已经排好的周刊转成世界后果。它负责销量、营收、受众反馈、势力反应、宏观属性变化和下一周钩子的结算。它只消费“这一期最终发了什么”，不回头改写稿件结构。
+这个系统把已经排好的周刊转成世界后果。它负责销量、营收、受众反馈、势力反应、宏观属性变化和下一周钩子的结算。它只消费“这一期最终发了什么”，不回头改写稿件结构，同时正式接收来自排版系统的 `公开取向`、`同题疲劳` 与 `取向冲突惩罚` 结果。
 
 ## 玩家幻想
 
@@ -22,8 +22,10 @@
 3. 受众反馈必须可读。MVP 可先聚焦少量核心读者群，而不追求完整市场模拟。
 4. 发刊结算不负责重新生成稿件，只对最终刊印结果做后果计算。
 5. 势力任务完成与否必须在这里产生明确奖励或报复。
-6. 现实偏移反馈应在结算后显式展示，而不是埋在隐藏变量里。
-7. 本系统是 `weekly-run-loop.summary` 父阶段的子状态机；它写回 `settlement_result` 与 `next_week_hooks`，但不跳过结果展示直接开启新周。
+6. `抢先快讯` 不参与公开取向历史；其他公开稿件若与同题既往取向冲突，结算必须应用需求惩罚。
+7. 同题疲劳应在进入结算前已经折算为稿件有效基础值，结算只消费折算结果，不反向改写稿件。
+8. 现实偏移反馈应在结算后显式展示，而不是埋在隐藏变量里。
+9. 本系统是 `weekly-run-loop.summary` 父阶段的子状态机；它写回 `settlement_result` 与 `next_week_hooks`，但不跳过结果展示直接开启新周。
 
 ### 状态与切换
 
@@ -40,14 +42,29 @@
 - **编辑排版与发行策略** 提供最终版面和刊登稿件。
 - **四大势力任务、干预与声望** 提供任务奖励与惩罚模板。
 - **宏观属性与现实偏移** 消费稿件属性和任务结果，更新世界状态。
+- **同题公开取向历史** 在本系统中完成更新，供后续周次的排版预览与需求惩罚使用。
 - **周循环与状态** 接收订阅、资源、`settlement_result` 和 `next_week_hooks`，并在玩家确认后进入下一周 `briefing`。
+
+### 结算输入契约
+
+结算阶段默认读取 `published_issue` 中冻结的下列关键字段：
+
+| 字段 | 来源 | 用途 |
+|------|------|------|
+| `placed_articles[*].effective_base_value` | 排版系统 | 计算本期传播价值 |
+| `placed_articles[*].intrinsic_base_value` | 排版系统 | 显示同题疲劳折损 |
+| `placed_articles[*].public_stance` | 排版系统 | 计算取向冲突惩罚 |
+| `placed_articles[*].primary_topic_key` | 排版系统 | 追踪同题历史 |
+| `stats_preview` | 排版系统 | 与最终结算做对照展示 |
 
 ## 公式
 
 ### 发刊覆盖值
 
 ```
-issue_reach = base_reach + reputation_scale + issue_value + audience_modifier
+issue_reach =
+  (base_reach + reputation_scale + issue_value + audience_modifier)
+  * stance_clash_multiplier
 ```
 
 | 变量 | 类型 | 范围 | 来源 | 说明 |
@@ -56,6 +73,12 @@ issue_reach = base_reach + reputation_scale + issue_value + audience_modifier
 | `reputation_scale` | int | 0+ | 声望属性 | 声望带来的天然扩散能力 |
 | `issue_value` | int | 0+ | 排版系统 | 本期周刊综合传播价值 |
 | `audience_modifier` | int | 负到正 | 受众计算 | 受众匹配带来的修正 |
+| `stance_clash_multiplier` | float | 0.72-1.0 | 排版系统 | 同题公开取向冲突带来的需求折算 |
+
+说明：
+
+- `issue_value` 默认已经吃进同题疲劳折算后的有效基础值
+- `stance_clash_multiplier` 只在本期存在同题公开取向冲突时小于 1
 
 ### 利润
 
@@ -79,6 +102,7 @@ profit = sales_income + sponsor_income - print_cost - operation_cost - penalty_c
 | 同时命中多个势力任务 | 奖惩可叠加，但反馈必须分项展示 | 避免黑箱 |
 | 零利润或亏损 | 继续进入下一周，但状态更差 | 保持长线张力 |
 | 发刊造成重大现实偏移 | 必须在结算面板中显式展示 | 突出项目独特点 |
+| 本期存在同题公开取向冲突 | 需求必须按冲突倍率折算，并在结果面板单独说明 | 让立场代价可读 |
 
 ## 依赖
 
@@ -101,6 +125,7 @@ profit = sales_income + sponsor_income - print_cost - operation_cost - penalty_c
 
 - [ ] 发刊后会一次性返回销量、利润、势力后果和宏观属性变化。
 - [ ] 结算只消费本期周刊结构，不反向改写稿件。
+- [ ] 结算能区分“同题疲劳导致的基础值折损”和“公开取向冲突导致的需求惩罚”。
 - [ ] 至少有一种现实偏移结果会被清楚展示给玩家。
 - [ ] 势力任务成功和失败的后果可被明确区分。
 
