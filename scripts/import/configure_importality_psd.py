@@ -17,12 +17,12 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Configure Godot editor settings for PSD conversion through Importality."
     )
-    default_settings_path = Path.home() / "AppData" / "Roaming" / "Godot" / "editor_settings-4.3.tres"
+    default_settings_path = Path.home() / "AppData" / "Roaming" / "Godot" / "editor_settings-4.6.tres"
     parser.add_argument(
         "--settings-file",
         type=Path,
         default=default_settings_path,
-        help="Path to Godot editor_settings-4.3.tres.",
+        help="Path to Godot editor_settings-4.6.tres.",
     )
     return parser
 
