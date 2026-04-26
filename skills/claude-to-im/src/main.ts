@@ -23,6 +23,7 @@ import { JsonFileStore } from './store.js';
 import { SDKLLMProvider, resolveClaudeCliPath, preflightCheck } from './llm-provider.js';
 import { PendingPermissions } from './permission-gateway.js';
 import { setupLogger } from './logger.js';
+import { prepareCodexShadowHome } from './codex-shadow-home.js';
 
 const RUNTIME_DIR = path.join(CTI_HOME, 'runtime');
 const STATUS_FILE = path.join(RUNTIME_DIR, 'status.json');
@@ -38,6 +39,15 @@ function applyRuntimeEnvFromConfig(config: Config): void {
   if (config.codexWindowsShell) {
     process.env.CTI_CODEX_WINDOWS_SHELL = config.codexWindowsShell;
   }
+  if (config.codexHomeMode) {
+    process.env.CTI_CODEX_HOME_MODE = config.codexHomeMode;
+  }
+  if (config.codexShadowHome) {
+    process.env.CTI_CODEX_SHADOW_HOME = config.codexShadowHome;
+  }
+  if (config.codexSourceHome) {
+    process.env.CTI_CODEX_SOURCE_HOME = config.codexSourceHome;
+  }
 }
 
 /**
@@ -50,6 +60,10 @@ async function resolveProvider(config: Config, pendingPerms: PendingPermissions)
   const runtime = config.runtime;
 
   if (runtime === 'codex') {
+    const shadowHome = prepareCodexShadowHome();
+    if (shadowHome.mode === 'shadow' && shadowHome.codexHome) {
+      console.log(`[claude-to-im] Prepared Codex shadow home at ${shadowHome.codexHome}`);
+    }
     const { CodexProvider } = await import('./codex-provider.js');
     return new CodexProvider(pendingPerms);
   }
@@ -70,6 +84,10 @@ async function resolveProvider(config: Config, pendingPerms: PendingPermissions)
       );
     } else {
       console.log('[claude-to-im] Auto: Claude CLI not found, falling back to Codex');
+    }
+    const shadowHome = prepareCodexShadowHome();
+    if (shadowHome.mode === 'shadow' && shadowHome.codexHome) {
+      console.log(`[claude-to-im] Prepared Codex shadow home at ${shadowHome.codexHome}`);
     }
     const { CodexProvider } = await import('./codex-provider.js');
     return new CodexProvider(pendingPerms);

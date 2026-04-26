@@ -26,6 +26,7 @@ tmp/*
 .codex_tmp/
 .local/
 skills/.claude-to-im/config.env
+skills/.claude-to-im/codex-home/
 skills/.claude-to-im/data/
 skills/.claude-to-im/logs/
 skills/.claude-to-im/runtime/

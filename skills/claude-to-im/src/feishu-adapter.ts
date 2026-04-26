@@ -210,6 +210,27 @@ export function shouldPreferFeishuCard(text: string): boolean {
   return false;
 }
 
+function normalizeStreamAnchor(previousText: string, nextText: string): string {
+  if (
+    previousText.endsWith('...')
+    && previousText.length > 3
+    && nextText.startsWith(previousText.slice(0, -3))
+  ) {
+    return previousText.slice(0, -3);
+  }
+  return previousText;
+}
+
+function longestSuffixPrefixOverlapLength(previousText: string, nextText: string): number {
+  const limit = Math.min(previousText.length, nextText.length);
+  for (let overlap = limit; overlap > 0; overlap -= 1) {
+    if (previousText.slice(-overlap) === nextText.slice(0, overlap)) {
+      return overlap;
+    }
+  }
+  return 0;
+}
+
 function longestCommonPrefixLength(a: string, b: string): number {
   const limit = Math.min(a.length, b.length);
   let index = 0;
@@ -219,29 +240,29 @@ function longestCommonPrefixLength(a: string, b: string): number {
   return index;
 }
 
-function resolveStreamPrefix(fullText: string, streamedText: string): string {
-  if (!streamedText) return '';
-  if (fullText.startsWith(streamedText)) return streamedText;
+export function computeStreamTextDelta(previousText: string, nextText: string): string {
+  if (!nextText) return '';
+  if (!previousText) return nextText;
 
-  if (streamedText.endsWith('...')) {
-    const trimmed = streamedText.slice(0, -3);
-    if (trimmed && fullText.startsWith(trimmed)) {
-      return trimmed;
-    }
+  const anchor = normalizeStreamAnchor(previousText, nextText);
+  if (nextText.startsWith(anchor)) {
+    return nextText.slice(anchor.length);
+  }
+  if (anchor.endsWith(nextText)) {
+    return '';
   }
 
-  const prefixLength = longestCommonPrefixLength(fullText, streamedText);
-  return fullText.slice(0, prefixLength);
+  const overlap = longestSuffixPrefixOverlapLength(anchor, nextText);
+  const commonPrefix = longestCommonPrefixLength(anchor, nextText);
+  return nextText.slice(Math.max(overlap, commonPrefix));
 }
 
 export function computeFeishuPreviewDelta(previousRenderedText: string, nextRenderedText: string): string {
-  const prefix = resolveStreamPrefix(nextRenderedText, previousRenderedText);
-  return nextRenderedText.slice(prefix.length);
+  return computeStreamTextDelta(previousRenderedText, nextRenderedText);
 }
 
 export function computeFeishuFinalRemainder(streamedText: string, finalText: string): string {
-  const prefix = resolveStreamPrefix(finalText, streamedText);
-  return finalText.slice(prefix.length);
+  return computeStreamTextDelta(streamedText, finalText);
 }
 
 export function isFeishuStopCommandText(text: string): boolean {

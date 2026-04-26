@@ -1,5 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
+import path from 'node:path';
 import { buildCodexCliEnv, buildPromptText, buildThreadOptions, normalizeStoredMessageContent } from '../codex-provider.js';
 
 // ── SSE utils tests ─────────────────────────────────────────
@@ -62,7 +63,9 @@ describe('CodexProvider', () => {
     assert.ok(env.COMSPEC, 'Expected COMSPEC to be set');
     assert.ok(env.SHELL, 'Expected SHELL to be set');
     assert.equal(env.COMSPEC, env.SHELL);
-    assert.ok((env.PATH || '').toLowerCase().includes('powershell') || (env.PATH || '').toLowerCase().includes('windowsapps'));
+    const resolvedPath = env.PATH || env.Path || '';
+    assert.ok(resolvedPath.toLowerCase().includes('powershell') || resolvedPath.toLowerCase().includes('windowsapps'));
+    assert.ok(resolvedPath.toLowerCase().includes(path.dirname(process.execPath).toLowerCase()), 'Expected node.exe directory to be added to PATH');
   });
 
   it('emits error when SDK init fails', async () => {

@@ -24,6 +24,7 @@ import {
 } from './feishu-history.js';
 import { prependSystemPrompt } from './session-prompt.js';
 import { prependPathEntry, resolvePreferredWindowsShellPath } from './windows-shell.js';
+import { prepareCodexShadowHome } from './codex-shadow-home.js';
 
 /** MIME → file extension for temp image files. */
 const MIME_EXT: Record<string, string> = {
@@ -179,15 +180,36 @@ export function buildCodexCliEnv(
     }
   }
 
-  const shellPath = resolvePreferredWindowsShellPath(baseEnv);
-  if (process.platform === 'win32' && shellPath) {
-    const shellDir = path.dirname(shellPath);
-    const nextPath = prependPathEntry(env.Path || env.PATH, shellDir);
-    env.Path = nextPath;
-    env.PATH = nextPath;
-    env.ComSpec = shellPath;
-    env.COMSPEC = shellPath;
-    env.SHELL = shellPath;
+  if (process.platform === 'win32') {
+    let nextPath = env.Path || env.PATH;
+
+    const nodeDir = path.dirname(process.execPath);
+    nextPath = prependPathEntry(nextPath, nodeDir);
+
+    const systemRoot = baseEnv.SYSTEMROOT || baseEnv.SystemRoot || path.join('C:', 'Windows');
+    const legacyPowerShellDir = path.join(systemRoot, 'System32', 'WindowsPowerShell', 'v1.0');
+    if (fs.existsSync(legacyPowerShellDir)) {
+      nextPath = prependPathEntry(nextPath, legacyPowerShellDir);
+    }
+
+    const shellPath = resolvePreferredWindowsShellPath(baseEnv);
+    if (shellPath) {
+      const shellDir = path.dirname(shellPath);
+      nextPath = prependPathEntry(nextPath, shellDir);
+      env.ComSpec = shellPath;
+      env.COMSPEC = shellPath;
+      env.SHELL = shellPath;
+    }
+
+    if (nextPath) {
+      env.Path = nextPath;
+      env.PATH = nextPath;
+    }
+  }
+
+  const shadowHome = prepareCodexShadowHome(baseEnv);
+  if (shadowHome.mode === 'shadow' && shadowHome.codexHome) {
+    env.CODEX_HOME = shadowHome.codexHome;
   }
 
   return env;

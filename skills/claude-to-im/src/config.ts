@@ -12,6 +12,9 @@ export interface Config {
   codexSandboxMode?: 'read-only' | 'workspace-write' | 'danger-full-access';
   codexNetworkAccess?: boolean;
   codexWindowsShell?: string;
+  codexHomeMode?: 'inherit' | 'shadow';
+  codexShadowHome?: string;
+  codexSourceHome?: string;
   // Telegram
   tgBotToken?: string;
   tgChatId?: string;
@@ -88,6 +91,13 @@ function parseCodexSandboxMode(value: string | undefined): Config["codexSandboxM
   return undefined;
 }
 
+function parseCodexHomeMode(value: string | undefined): Config["codexHomeMode"] {
+  if (value === 'inherit' || value === 'shadow') {
+    return value;
+  }
+  return undefined;
+}
+
 export function loadConfig(): Config {
   let env = new Map<string, string>();
   try {
@@ -109,6 +119,9 @@ export function loadConfig(): Config {
     codexSandboxMode: parseCodexSandboxMode(env.get("CTI_CODEX_SANDBOX_MODE")),
     codexNetworkAccess: parseBoolean(env.get("CTI_CODEX_NETWORK_ACCESS")),
     codexWindowsShell: env.get("CTI_CODEX_WINDOWS_SHELL") || undefined,
+    codexHomeMode: parseCodexHomeMode(env.get("CTI_CODEX_HOME_MODE")),
+    codexShadowHome: env.get("CTI_CODEX_SHADOW_HOME") || undefined,
+    codexSourceHome: env.get("CTI_CODEX_SOURCE_HOME") || undefined,
     tgBotToken: env.get("CTI_TG_BOT_TOKEN") || undefined,
     tgChatId: env.get("CTI_TG_CHAT_ID") || undefined,
     tgAllowedUsers: splitCsv(env.get("CTI_TG_ALLOWED_USERS")),
@@ -161,6 +174,9 @@ export function saveConfig(config: Config): void {
   if (config.codexNetworkAccess !== undefined)
     out += formatEnvLine("CTI_CODEX_NETWORK_ACCESS", String(config.codexNetworkAccess));
   if (config.codexWindowsShell) out += formatEnvLine("CTI_CODEX_WINDOWS_SHELL", config.codexWindowsShell);
+  if (config.codexHomeMode) out += formatEnvLine("CTI_CODEX_HOME_MODE", config.codexHomeMode);
+  if (config.codexShadowHome) out += formatEnvLine("CTI_CODEX_SHADOW_HOME", config.codexShadowHome);
+  if (config.codexSourceHome) out += formatEnvLine("CTI_CODEX_SOURCE_HOME", config.codexSourceHome);
   out += formatEnvLine("CTI_TG_BOT_TOKEN", config.tgBotToken);
   out += formatEnvLine("CTI_TG_CHAT_ID", config.tgChatId);
   out += formatEnvLine(

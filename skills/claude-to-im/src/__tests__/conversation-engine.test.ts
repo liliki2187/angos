@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 
-import { computeStreamTextDelta } from '../../node_modules/claude-to-im/src/lib/bridge/conversation-engine.ts';
+import { computeStreamTextDelta } from '../feishu-adapter.js';
 
 describe('computeStreamTextDelta', () => {
   it('passes through plain delta chunks unchanged', () => {
@@ -15,6 +15,13 @@ describe('computeStreamTextDelta', () => {
     assert.equal(
       computeStreamTextDelta('alpha', 'alpha\nbeta'),
       '\nbeta',
+    );
+  });
+
+  it('keeps only the changed tail when cumulative text diverges after a shared prefix', () => {
+    assert.equal(
+      computeStreamTextDelta('alpha beta', 'alpha gamma'),
+      'gamma',
     );
   });
 
