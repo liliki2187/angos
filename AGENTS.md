@@ -12,7 +12,7 @@ Angus 的项目本地技能位于 `./skills`。
 ### Available skills
 
 - `claude-to-im`：把当前 Codex 或 Claude Code 会话桥接到 Telegram、Discord、飞书/Lark 或 QQ，让用户能从手机继续聊天，并可复用内置飞书发送脚本做一次性文本或图片发送。别名/触发词包括：`claude to im`、`claude_to_im`、`bridge`、`start bridge`、`restart bridge`、`bridge status`、`bridge logs`、`send to feishu`、`post to feishu`。用于桥接服务的配置、启动、停止、重启、状态检查、日志排障，以及从仓库文件做一次性飞书发送；不用于单独开发 IM Bot 或直接操作 IM 平台 SDK。（文件：`./skills/claude-to-im/SKILL.md`）
-- `openrouter-image-gen`：通过 OpenRouter 图像模型生成、编辑或规划可直接用于游戏的图片资产，包括 GPT-5 Image 透明 PNG/WebP 工作流，以及 Nano Banana / Nano Banana 2 的不透明图工作流。别名/触发词包括：`openrouter image gen`、`openrouter 生图`、`nano banana`、`nano banana 2`、`gpt-5 image transparent`、`参考图生图`、`openrouter image`、`or image gen`。适用于基于 OpenRouter 的图像生成、透明背景素材切图、参考图编辑、图标、道具、贴图、精灵、海报、主视觉、UI 横幅、角色立绘、环境图等需求。（文件：`./skills/openrouter-image-gen/SKILL.md`）
+- `openrouter-image-gen`：规划并生成可直接用于游戏的图片资产，透明 PNG/WebP 走 OpenRouter GPT-5 Image，不透明贴图/概念图/海报等走内建 `$imagegen`。别名/触发词包括：`openrouter image gen`、`openrouter 生图`、`gpt-5 image transparent`、`参考图生图`、`openrouter image`、`or image gen`；历史别名 `nano banana`、`nano banana 2` 仍归到此 skill，但实际不再调用第三方 Nano Banana 模型。（文件：`./skills/openrouter-image-gen/SKILL.md`）
 - `psd-to-godot-ui`：把 Photoshop PSD 转成可复用的 Godot UI 资产包，包含复制后的 PSD 源文件、导出的图层 PNG、扁平预览图、manifest，以及一个以 `Control` 为根节点、可被后续场景实例化的 `.tscn` 场景。适用于导入 PSD 方案稿、验证 PSD 到 Godot UI 的导入链路、PSD 改动后重新生成 UI 场景，或提前整理后续会接入游戏的 UI 美术。（文件：`./skills/psd-to-godot-ui/SKILL.md`）
 - 导入自 Claude Code Game Studios 的流程现在都以项目本地 Codex 技能形式存在于 `./skills/<skill-name>/SKILL.md`。当用户直接提到某个技能，或请求匹配的游戏制作工作流时，应使用对应技能。
 - 评审与分析类：`asset-audit`、`balance-check`、`code-review`、`design-review`、`gate-check`、`perf-profile`、`project-stage-detect`、`scope-check`、`tech-debt`。
@@ -25,7 +25,7 @@ Angus 的项目本地技能位于 `./skills`。
 
 - 如果用户明确提到某个技能，打开对应 `SKILL.md` 并按其说明执行。
 - 识别明显别名为直接点名技能。对 `claude-to-im`，包括 `claude to im`、`claude_to_im`、`bridge`、`start bridge`、`restart bridge`、`bridge status`、`bridge logs` 等桥接管理请求。
-- 识别明显别名为直接点名技能。对 `openrouter-image-gen`，包括 `openrouter image gen`、`openrouter 生图`、`openrouter image`、`or image gen`、`nano banana`、`nano banana 2`、`gpt-5 image transparent`、`透明背景生图`、`参考图生图` 等相关图像生成请求。
+- 识别明显别名为直接点名技能。对 `openrouter-image-gen`，包括 `openrouter image gen`、`openrouter 生图`、`openrouter image`、`or image gen`、`gpt-5 image transparent`、`透明背景生图`、`参考图生图` 等相关图像生成请求；若用户沿用 `nano banana`、`nano banana 2` 的旧说法，也归到此 skill，但实际改走内建 `$imagegen` 的不透明生成链路。
 - 识别明显别名为直接点名技能。对 `psd-to-godot-ui`，包括 `psd to godot ui`、`import psd`、`psd ui`、`photoshop ui import` 等 PSD 转 Godot UI 请求。
 - 相对路径优先从技能目录解析。
 - 导入的 game-studio 技能共用模板位于 `./skills/_game-studio-shared/templates`。
