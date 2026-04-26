@@ -208,14 +208,42 @@ func _build_briefing_payload() -> Dictionary:
 func _build_explore_payload() -> Dictionary:
 	var started_at := _log_flow_start("_build_explore_payload", "selected_region=%s selected_node=%s" % [selected_region_id, selected_node_id])
 	var regions: Array = []
+	var map_nodes: Array = []
 	for region in Content.REGION_DATA:
+		var region_id := str(region.id)
+		var region_enabled := Systems.is_region_unlocked(run_state, region)
 		regions.append({
-			"id": str(region.id),
+			"id": region_id,
+			"name": str(region.name),
+			"hint": str(region.hint),
 			"text": "%s\n%s" % [str(region.name), str(region.hint)],
-			"selected": selected_region_id == str(region.id),
-			"enabled": Systems.is_region_unlocked(run_state, region),
+			"selected": selected_region_id == region_id,
+			"enabled": region_enabled,
 			"min_height": 72.0,
 		})
+		if not region_enabled:
+			continue
+		for node in region.nodes:
+			if not Systems.is_node_visible(run_state, node):
+				continue
+			if not bool(filter_state.get(str(node.type), true)):
+				continue
+			var map_availability := _get_node_availability(node)
+			map_nodes.append({
+				"id": str(node.id),
+				"region_id": region_id,
+				"region_name": str(region.name),
+				"name": str(node.name),
+				"kind": str(node.kind),
+				"days": int(node.days),
+				"type": str(node.type),
+				"difficulty": str(node.difficulty),
+				"enemy": int(node.enemy),
+				"selected": selected_node_id == str(node.id),
+				"enabled": bool(map_availability.enabled),
+				"selectable": true,
+				"availability_reason": str(map_availability.reason),
+			})
 
 	var nodes: Array = []
 	var region := _get_selected_region()
@@ -230,6 +258,12 @@ func _build_explore_payload() -> Dictionary:
 			var availability := _get_node_availability(node)
 			nodes.append({
 				"id": str(node.id),
+				"name": str(node.name),
+				"kind": str(node.kind),
+				"days": int(node.days),
+				"type": str(node.type),
+				"difficulty": str(node.difficulty),
+				"enemy": int(node.enemy),
 				"text": "%s · %s\n耗时 %d 天 · %s · 对抗 %d\n%s" % [
 					str(node.name),
 					str(node.kind),
@@ -296,7 +330,14 @@ func _build_explore_payload() -> Dictionary:
 	var payload := {
 		"filters": filter_state.duplicate(true),
 		"regions": regions,
+		"map_regions": regions,
+		"map_nodes": map_nodes,
 		"region_hint": region_hint,
+		"selected_region_id": selected_region_id,
+		"selected_node_id": selected_node_id,
+		"week": run_state.week,
+		"remaining_days": run_state.remaining_days,
+		"week_days": Content.WEEK_DAYS,
 		"nodes": nodes,
 		"staff": staff,
 		"selected_staff_text": "已选择：%d / 3" % selected_staff_ids.size(),
@@ -314,7 +355,7 @@ func _build_explore_payload() -> Dictionary:
 
 func _build_mission_payload() -> Dictionary:
 	var default_payload := {
-		"summary": "从左侧区域与节点列表中选中一个外采目标。",
+		"summary": "从世界探索地图中选中一个外采地点。",
 		"probability": "理论结果：等待选点",
 		"dice": "",
 		"result": "等待执行",
@@ -508,6 +549,9 @@ func _on_region_pressed(region_id: String) -> void:
 
 func _on_node_pressed(node_id: String) -> void:
 	var started_at := _log_flow_start("_on_node_pressed", "incoming_node=%s previous_node=%s" % [node_id, selected_node_id])
+	var owning_region_id := _get_region_id_for_node(node_id)
+	if owning_region_id != "":
+		selected_region_id = owning_region_id
 	selected_node_id = node_id
 	_refresh_all()
 	_log_flow_end("_on_node_pressed", started_at, "selected_node=%s" % selected_node_id)
@@ -621,6 +665,13 @@ func _get_selected_region() -> Dictionary:
 
 func _get_selected_node() -> Dictionary:
 	return Systems.get_node_by_id(selected_region_id, selected_node_id)
+
+func _get_region_id_for_node(node_id: String) -> String:
+	for region in Content.REGION_DATA:
+		for node in region.nodes:
+			if str(node.id) == node_id:
+				return str(region.id)
+	return ""
 
 func _get_selected_staff_totals() -> Dictionary:
 	var totals := {"explore": 0, "insight": 0, "occult": 0, "survival": 0, "reason": 0, "social": 0}

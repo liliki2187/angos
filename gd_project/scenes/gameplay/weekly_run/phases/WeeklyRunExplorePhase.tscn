@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scenes/gameplay/weekly_run/phases/WeeklyRunExplorePhase.gd" id="1_explore_phase"]
 [ext_resource type="PackedScene" path="res://scenes/gameplay/weekly_run/components/WeeklyRunScrollableText.tscn" id="2_scrollable_text"]
+[ext_resource type="Script" path="res://scenes/gameplay/weekly_run/components/WeeklyRunWorldMap.gd" id="3_world_map"]
 
 [node name="WeeklyRunExplorePhase" type="MarginContainer"]
 layout_mode = 3
@@ -21,10 +22,22 @@ theme_override_constants/separation = 16
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.9
+size_flags_stretch_ratio = 1.55
 theme_override_constants/separation = 16
 
+[node name="MapPanel" type="PanelContainer" parent="RootHBox/LeftVBox"]
+custom_minimum_size = Vector2(0, 520)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MapCanvas" type="Control" parent="RootHBox/LeftVBox/MapPanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("3_world_map")
+
 [node name="RegionPanel" type="PanelContainer" parent="RootHBox/LeftVBox"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 2
 
@@ -65,6 +78,7 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 8
 
 [node name="NodePanel" type="PanelContainer" parent="RootHBox/LeftVBox"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -98,7 +112,7 @@ theme_override_constants/separation = 8
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.98
+size_flags_stretch_ratio = 0.82
 theme_override_constants/separation = 16
 
 [node name="StaffPanel" type="PanelContainer" parent="RootHBox/MiddleVBox"]

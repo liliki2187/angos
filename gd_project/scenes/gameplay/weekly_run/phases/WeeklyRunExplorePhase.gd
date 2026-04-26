@@ -12,6 +12,8 @@ const InfoCardScene = preload("res://scenes/gameplay/weekly_run/components/Weekl
 const ScrollableText = preload("res://scenes/gameplay/weekly_run/components/WeeklyRunScrollableText.gd")
 const UiStyle = preload("res://scenes/gameplay/weekly_run/components/WeeklyRunUiStyle.gd")
 
+@onready var map_panel: PanelContainer = $RootHBox/LeftVBox/MapPanel
+@onready var world_map = $RootHBox/LeftVBox/MapPanel/MapCanvas
 @onready var region_panel: PanelContainer = $RootHBox/LeftVBox/RegionPanel
 @onready var btn_filter_sci: Button = $RootHBox/LeftVBox/RegionPanel/RegionVBox/FilterRow/BtnFilterSci
 @onready var btn_filter_occult: Button = $RootHBox/LeftVBox/RegionPanel/RegionVBox/FilterRow/BtnFilterOccult
@@ -39,10 +41,15 @@ func _ready() -> void:
 	add_theme_constant_override("margin_top", 4)
 	add_theme_constant_override("margin_right", 4)
 	add_theme_constant_override("margin_bottom", 4)
-	for panel in [region_panel, node_panel, staff_panel, materials_panel, mission_panel, log_panel]:
+	for panel in [map_panel, region_panel, node_panel, staff_panel, materials_panel, mission_panel, log_panel]:
 		UiStyle.apply_panel_style(panel)
+	region_panel.visible = false
+	node_panel.visible = false
 	for button in [btn_filter_sci, btn_filter_occult, btn_filter_pop, execute_btn]:
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	world_map.filter_pressed.connect(_on_world_map_filter_pressed)
+	world_map.region_pressed.connect(_on_world_map_region_pressed)
+	world_map.node_pressed.connect(_on_world_map_node_pressed)
 	execute_btn.pressed.connect(func() -> void:
 		execute_requested.emit()
 	)
@@ -73,11 +80,24 @@ func render(payload: Dictionary) -> void:
 	result_label.add_theme_color_override("font_color", payload.get("result_color", Color(0.88, 0.76, 0.36, 1.0)))
 	execute_btn.disabled = not bool(payload.get("execute_enabled", false))
 	UiStyle.apply_button_style(execute_btn, true, bool(payload.get("execute_enabled", false)))
+	world_map.bind({
+		"filters": payload.get("filters", {}),
+		"regions": payload.get("map_regions", payload.get("regions", [])),
+		"nodes": payload.get("map_nodes", payload.get("nodes", [])),
+		"region_hint": payload.get("region_hint", ""),
+		"selected_region_id": payload.get("selected_region_id", ""),
+		"selected_node_id": payload.get("selected_node_id", ""),
+		"week": payload.get("week", 1),
+		"remaining_days": payload.get("remaining_days", 7),
+		"week_days": payload.get("week_days", 7),
+	})
 	_style_filter_button(btn_filter_sci, bool(payload.get("filters", {}).get("sci", true)))
 	_style_filter_button(btn_filter_occult, bool(payload.get("filters", {}).get("occult", true)))
 	_style_filter_button(btn_filter_pop, bool(payload.get("filters", {}).get("pop", true)))
-	_rebuild_action_items(region_list, payload.get("regions", []), "region")
-	_rebuild_action_items(node_list, payload.get("nodes", []), "node")
+	if region_panel.visible:
+		_rebuild_action_items(region_list, payload.get("regions", []), "region")
+	if node_panel.visible:
+		_rebuild_action_items(node_list, payload.get("nodes", []), "node")
 	_rebuild_action_items(staff_grid, payload.get("staff", []), "staff")
 	_rebuild_info_cards(material_list, payload.get("materials", []))
 	_rebuild_info_cards(log_list, payload.get("logs", []))
@@ -86,6 +106,15 @@ func render(payload: Dictionary) -> void:
 func _style_filter_button(button: Button, selected: bool) -> void:
 	button.custom_minimum_size = Vector2(0.0, 34.0)
 	UiStyle.apply_button_style(button, selected, true)
+
+func _on_world_map_filter_pressed(tag: String) -> void:
+	filter_toggled.emit(tag)
+
+func _on_world_map_region_pressed(region_id: String) -> void:
+	region_selected.emit(region_id)
+
+func _on_world_map_node_pressed(node_id: String) -> void:
+	node_selected.emit(node_id)
 
 func _rebuild_action_items(container: Control, items: Array, item_kind: String) -> void:
 	var started_at := _log_flow_start("_rebuild_action_items", "container=%s kind=%s items=%d existing=%d" % [container.name, item_kind, items.size(), container.get_child_count()])
