@@ -5,6 +5,7 @@
 - **归档提醒**：[`docs/archive/legacy-design/系统功能设计总集.md`](./docs/archive/legacy-design/系统功能设计总集.md) 为归档副本，与当前 `design/gdd/` 并行时以 `design/gdd/` 与代码为准，并在此总集注明差异。
 - **出入提醒**：若代码/配置与上述文档不一致，助手在改完或评审时应**明确提醒**用户：择一修正文档或实现。
 - **协作偏好**：后续 AI / 新对话在处理玩法、原型、UI 感知类任务前，先读 [`docs/onboarding/ai-collaboration-guidance.md`](./docs/onboarding/ai-collaboration-guidance.md)；收到新的强反馈后应同步更新该文档。
+- **设计采纳沉淀**：用户在讨论中明确采纳 / 待定 / 进阶 / 撤回的设计意见，统一沉淀到 [`docs/设计采纳记录.md`](./docs/设计采纳记录.md)。每次讨论中只要出现新的明确表态，AI 必须在当次回复结束前把对应条目追加进该文档；不主动塞 AI 单方面设想；用户后续撤回/调整时保留原条目并标注修订时间，不要直接覆盖。详细写入规则见该文件头部「附录 · 用法说明」。
 
 ## Skills
 
