@@ -10,6 +10,8 @@ import {
   resolveCodexHomeMode,
   resolveShadowCodexHome,
   resolveSourceCodexHome,
+  resolveSystemSkillsSyncMode,
+  syncCodexShadowHomeSystemSkills,
 } from '../codex-shadow-home.js';
 import { buildCodexCliEnv } from '../codex-provider.js';
 
@@ -24,6 +26,11 @@ describe('codex shadow home', () => {
 
   it('respects inherit mode override', () => {
     assert.equal(resolveCodexHomeMode({ CTI_CODEX_HOME_MODE: 'inherit' }), 'inherit');
+  });
+
+  it('links system skills by default and supports copy override', () => {
+    assert.equal(resolveSystemSkillsSyncMode({}), 'link');
+    assert.equal(resolveSystemSkillsSyncMode({ CTI_CODEX_SYSTEM_SKILLS_SYNC_MODE: 'copy' }), 'copy');
   });
 
   it('resolves source home from explicit override, then CODEX_HOME, then USERPROFILE', () => {
@@ -69,6 +76,51 @@ describe('codex shadow home', () => {
     assert.equal(
       fs.readFileSync(path.join(result.codexHome!, 'auth.json'), 'utf-8'),
       '{"token":"abc"}',
+    );
+  });
+
+  it('syncs the system imagegen skill into the shadow home', () => {
+    const userHome = makeTempDir('cti-user-home-skills-');
+    const sourceHome = path.join(userHome, '.codex');
+    const sourceImagegen = path.join(sourceHome, 'skills', '.system', 'imagegen');
+    fs.mkdirSync(path.join(sourceImagegen, 'references'), { recursive: true });
+    fs.writeFileSync(path.join(sourceImagegen, 'SKILL.md'), '# Image Generation Skill', 'utf-8');
+    fs.writeFileSync(path.join(sourceImagegen, 'references', 'prompting.md'), 'Prompting notes', 'utf-8');
+
+    const shadowHome = makeTempDir('cti-shadow-home-skills-');
+    const copied = syncCodexShadowHomeSystemSkills(sourceHome, shadowHome);
+    const targetImagegen = path.join(shadowHome, 'skills', '.system', 'imagegen');
+
+    assert.deepEqual(copied, ['imagegen']);
+    assert.equal(fs.realpathSync.native(targetImagegen), fs.realpathSync.native(sourceImagegen));
+    assert.equal(
+      fs.readFileSync(path.join(targetImagegen, 'SKILL.md'), 'utf-8'),
+      '# Image Generation Skill',
+    );
+    assert.equal(
+      fs.readFileSync(path.join(targetImagegen, 'references', 'prompting.md'), 'utf-8'),
+      'Prompting notes',
+    );
+  });
+
+  it('can copy the system imagegen skill when link mode is disabled', () => {
+    const userHome = makeTempDir('cti-user-home-copy-skills-');
+    const sourceHome = path.join(userHome, '.codex');
+    const sourceImagegen = path.join(sourceHome, 'skills', '.system', 'imagegen');
+    fs.mkdirSync(sourceImagegen, { recursive: true });
+    fs.writeFileSync(path.join(sourceImagegen, 'SKILL.md'), '# Copied Image Generation Skill', 'utf-8');
+
+    const shadowHome = makeTempDir('cti-shadow-home-copy-skills-');
+    const copied = syncCodexShadowHomeSystemSkills(sourceHome, shadowHome, {
+      CTI_CODEX_SYSTEM_SKILLS_SYNC_MODE: 'copy',
+    });
+    const targetImagegen = path.join(shadowHome, 'skills', '.system', 'imagegen');
+
+    assert.deepEqual(copied, ['imagegen']);
+    assert.notEqual(fs.realpathSync.native(targetImagegen), fs.realpathSync.native(sourceImagegen));
+    assert.equal(
+      fs.readFileSync(path.join(targetImagegen, 'SKILL.md'), 'utf-8'),
+      '# Copied Image Generation Skill',
     );
   });
 

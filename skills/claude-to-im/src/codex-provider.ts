@@ -170,6 +170,26 @@ function shouldPassModelToCodex(): boolean {
   return process.env.CTI_CODEX_PASS_MODEL === 'true';
 }
 
+function shouldEnableCodexImageGeneration(
+  env: NodeJS.ProcessEnv = process.env,
+): boolean {
+  return env.CTI_CODEX_IMAGE_GENERATION !== 'false';
+}
+
+export function buildCodexConfigOverrides(
+  env: NodeJS.ProcessEnv = process.env,
+): Record<string, unknown> | undefined {
+  if (!shouldEnableCodexImageGeneration(env)) {
+    return undefined;
+  }
+
+  return {
+    features: {
+      image_generation: true,
+    },
+  };
+}
+
 export function buildCodexCliEnv(
   baseEnv: NodeJS.ProcessEnv = process.env,
 ): Record<string, string> {
@@ -299,11 +319,13 @@ export class CodexProvider implements LLMProvider {
       || process.env.OPENAI_API_KEY
       || undefined;
     const baseUrl = process.env.CTI_CODEX_BASE_URL || undefined;
+    const configOverrides = buildCodexConfigOverrides();
 
     const CodexClass = this.sdk.Codex;
     this.codex = new CodexClass({
       ...(apiKey ? { apiKey } : {}),
       ...(baseUrl ? { baseUrl } : {}),
+      ...(configOverrides ? { config: configOverrides } : {}),
       env: buildCodexCliEnv(),
     });
 
@@ -450,7 +472,8 @@ export class CodexProvider implements LLMProvider {
                     }
 
                     case 'turn.failed': {
-                      const error = (event as { message?: string }).message;
+                      const error = (event as { message?: string; error?: { message?: string } }).message
+                        || (event as { error?: { message?: string } }).error?.message;
                       controller.enqueue(sseEvent('error', error || 'Turn failed'));
                       break;
                     }

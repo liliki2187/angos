@@ -1,7 +1,13 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import path from 'node:path';
-import { buildCodexCliEnv, buildPromptText, buildThreadOptions, normalizeStoredMessageContent } from '../codex-provider.js';
+import {
+  buildCodexCliEnv,
+  buildCodexConfigOverrides,
+  buildPromptText,
+  buildThreadOptions,
+  normalizeStoredMessageContent,
+} from '../codex-provider.js';
 
 // ── SSE utils tests ─────────────────────────────────────────
 
@@ -484,6 +490,20 @@ describe('Codex prompt helpers', () => {
 // ── Image input building tests ──────────────────────────────
 
 describe('Codex thread options', () => {
+  it('enables Codex native image generation by default', () => {
+    assert.deepEqual(
+      buildCodexConfigOverrides({}),
+      { features: { image_generation: true } },
+    );
+  });
+
+  it('allows disabling Codex native image generation for diagnostics', () => {
+    assert.equal(
+      buildCodexConfigOverrides({ CTI_CODEX_IMAGE_GENERATION: 'false' }),
+      undefined,
+    );
+  });
+
   it('defaults bridge-launched Codex threads to danger-full-access', () => {
     const oldSandbox = process.env.CTI_CODEX_SANDBOX_MODE;
     const oldNetwork = process.env.CTI_CODEX_NETWORK_ACCESS;
@@ -757,6 +777,37 @@ describe('CodexProvider error events', () => {
     const errorEvent = events.find(e => e.type === 'error');
     assert.ok(errorEvent, 'Should emit an error event');
     assert.equal(errorEvent!.data, 'Rate limit exceeded');
+  });
+
+  it('reads nested error.message from turn.failed event', async () => {
+    const { CodexProvider } = await import('../codex-provider.js');
+    const { PendingPermissions } = await import('../permission-gateway.js');
+    const provider = new CodexProvider(new PendingPermissions());
+
+    const mockThread = {
+      runStreamed: () => ({
+        events: (async function* () {
+          yield { type: 'turn.failed', error: { message: 'Nested failure' } };
+        })(),
+      }),
+    };
+    (provider as any).sdk = {
+      Codex: class { constructor() {} },
+    };
+    (provider as any).codex = {
+      startThread: () => mockThread,
+    };
+
+    const stream = provider.streamChat({
+      prompt: 'test',
+      sessionId: 'err-session-nested',
+    });
+
+    const chunks = await collectStream(stream);
+    const events = parseSSEChunks(chunks);
+    const errorEvent = events.find(e => e.type === 'error');
+    assert.ok(errorEvent, 'Should emit an error event');
+    assert.equal(errorEvent!.data, 'Nested failure');
   });
 
   it('reads message field from error event', async () => {

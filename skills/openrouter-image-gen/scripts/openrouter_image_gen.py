@@ -7,6 +7,7 @@ import json
 import mimetypes
 import os
 import re
+import struct
 import sys
 from dataclasses import dataclass
 from datetime import datetime
@@ -168,6 +169,7 @@ class PlannedRequest:
     negative_constraints: list[str]
     inference_notes: list[str]
     provider_object: dict[str, Any]
+    execution_mode: str
 
 
 def load_env_file(path: Path) -> dict[str, str]:
@@ -238,10 +240,10 @@ def choose_model(
             raise ValidationError("Transparent background requests must use GPT-5 Image in this skill.")
         return "openai/gpt-5-image", "Transparent background requested; GPT-5 Image is the only supported transparent model in this skill."
 
-    if normalized_model == "openai/gpt-5-image":
-        raise ValidationError("Opaque requests in this skill now route to built-in imagegen, not the OpenRouter helper script.")
-
-    raise ValidationError("Opaque requests in this skill now route to built-in imagegen, not the OpenRouter helper script.")
+    raise ValidationError(
+        "Opaque requests in this skill route to built-in imagegen, not the OpenRouter helper script. "
+        "If built-in image_gen is unavailable in the current session, stop and report that opaque image generation cannot be completed."
+    )
 
 
 def validate_count(count: int) -> None:
@@ -279,7 +281,7 @@ def map_gpt_image_resolution(asset_type: str, aspect_ratio: str | None) -> str:
     return "1536x1024"
 
 
-def validate_transparent_request(
+def validate_gpt_image_request(
     resolution: str | None,
     aspect_ratio: str | None,
     background: str,
@@ -291,10 +293,10 @@ def validate_transparent_request(
         raise ValidationError(f"Unsupported GPT Image background value: {background}. Allowed: {allowed}")
     if resolution and resolution not in GPT_IMAGE_RESOLUTIONS:
         allowed = ", ".join(sorted(GPT_IMAGE_RESOLUTIONS))
-        raise ValidationError(f"Unsupported transparent resolution: {resolution}. Allowed: {allowed}")
+        raise ValidationError(f"Unsupported GPT Image resolution: {resolution}. Allowed: {allowed}")
     if aspect_ratio and aspect_ratio not in {"1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9"}:
         raise ValidationError(
-            "Transparent GPT-5 Image requests only accept square, portrait, or landscape ratios that can map to 1024x1024, 1024x1536, or 1536x1024."
+            "GPT-5 Image requests only accept square, portrait, or landscape ratios that can map to 1024x1024, 1024x1536, or 1536x1024."
         )
     if quality not in {"low", "medium", "high", "auto"}:
         raise ValidationError("quality must be one of low, medium, high, auto")
@@ -421,6 +423,60 @@ def extension_for_mime(mime_type: str) -> str:
     }.get(mime_type, ".bin")
 
 
+def sniff_image_dimensions(raw_bytes: bytes, mime_type: str) -> tuple[int, int] | None:
+    if mime_type == "image/png" and raw_bytes.startswith(b"\x89PNG\r\n\x1a\n") and len(raw_bytes) >= 24:
+        width, height = struct.unpack(">II", raw_bytes[16:24])
+        return width, height
+    if mime_type == "image/gif" and raw_bytes[:6] in {b"GIF87a", b"GIF89a"} and len(raw_bytes) >= 10:
+        width, height = struct.unpack("<HH", raw_bytes[6:10])
+        return width, height
+    if mime_type == "image/webp" and len(raw_bytes) >= 30 and raw_bytes[:4] == b"RIFF" and raw_bytes[8:12] == b"WEBP":
+        chunk = raw_bytes[12:16]
+        if chunk == b"VP8X" and len(raw_bytes) >= 30:
+            width = int.from_bytes(raw_bytes[24:27], "little") + 1
+            height = int.from_bytes(raw_bytes[27:30], "little") + 1
+            return width, height
+        if chunk == b"VP8 ":
+            start = raw_bytes.find(b"\x9d\x01\x2a")
+            if start != -1 and len(raw_bytes) >= start + 7:
+                width, height = struct.unpack("<HH", raw_bytes[start + 3:start + 7])
+                return width & 0x3FFF, height & 0x3FFF
+        if chunk == b"VP8L" and len(raw_bytes) >= 25 and raw_bytes[20] == 0x2F:
+            bits = int.from_bytes(raw_bytes[21:25], "little")
+            width = (bits & 0x3FFF) + 1
+            height = ((bits >> 14) & 0x3FFF) + 1
+            return width, height
+    if mime_type == "image/jpeg" and raw_bytes.startswith(b"\xff\xd8"):
+        index = 2
+        while index + 9 < len(raw_bytes):
+            if raw_bytes[index] != 0xFF:
+                index += 1
+                continue
+            marker = raw_bytes[index + 1]
+            index += 2
+            if marker in {0xD8, 0xD9}:
+                continue
+            if index + 2 > len(raw_bytes):
+                break
+            segment_length = struct.unpack(">H", raw_bytes[index:index + 2])[0]
+            if segment_length < 2 or index + segment_length > len(raw_bytes):
+                break
+            if marker in {0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7, 0xC9, 0xCA, 0xCB, 0xCD, 0xCE, 0xCF}:
+                if index + 7 <= len(raw_bytes):
+                    height, width = struct.unpack(">HH", raw_bytes[index + 3:index + 7])
+                    return width, height
+                break
+            index += segment_length
+    return None
+
+
+def dimensions_match_requested(actual: tuple[int, int] | None, requested: str) -> bool:
+    if actual is None or requested == "auto":
+        return True
+    width, height = actual
+    return f"{width}x{height}" == requested
+
+
 def plan_request(args: argparse.Namespace) -> PlannedRequest:
     validate_count(args.count)
     reference_images = [Path(value).resolve() for value in args.reference_image]
@@ -441,7 +497,7 @@ def plan_request(args: argparse.Namespace) -> PlannedRequest:
 
     if args.image_size is not None:
         raise ValidationError("The OpenRouter helper script is now transparent-only and does not support --image-size. Use --resolution instead.")
-    resolution, output_format = validate_transparent_request(
+    resolution, output_format = validate_gpt_image_request(
         resolution=resolution or map_gpt_image_resolution(asset_type, aspect_ratio),
         aspect_ratio=aspect_ratio,
         background=background,
@@ -465,6 +521,7 @@ def plan_request(args: argparse.Namespace) -> PlannedRequest:
     )
 
     provider_object: dict[str, Any] = {"require_parameters": True, "allow_fallbacks": True}
+    execution_mode = "openrouter-gpt-5-image-transparent"
 
     return PlannedRequest(
         original_prompt=args.prompt,
@@ -486,6 +543,7 @@ def plan_request(args: argparse.Namespace) -> PlannedRequest:
         negative_constraints=negatives,
         inference_notes=inference_notes,
         provider_object=provider_object,
+        execution_mode=execution_mode,
     )
 
 
@@ -505,10 +563,18 @@ def save_outputs(plan: PlannedRequest, response_json: dict[str, Any], timestamp_
     for offset, entry in enumerate(images, start=image_index_start):
         mime_type, raw_bytes = parse_image_url_entry(entry)
         extension = extension_for_mime(mime_type)
+        actual_dimensions = sniff_image_dimensions(raw_bytes, mime_type)
         stem = f"{timestamp_prefix}_{plan.slug}_{offset:02d}"
         image_path = date_dir / f"{stem}{extension}"
         metadata_path = date_dir / f"{stem}.json"
         image_path.write_bytes(raw_bytes)
+        dimension_warning = None
+        if not dimensions_match_requested(actual_dimensions, plan.resolution):
+            actual_label = "unknown" if actual_dimensions is None else f"{actual_dimensions[0]}x{actual_dimensions[1]}"
+            dimension_warning = (
+                f"Provider returned image dimensions {actual_label}, which do not match requested resolution {plan.resolution}."
+            )
+            print(f"WARNING: {dimension_warning}", file=sys.stderr)
 
         metadata = {
             "timestamp": timestamp_prefix,
@@ -531,6 +597,7 @@ def save_outputs(plan: PlannedRequest, response_json: dict[str, Any], timestamp_
             "reference_images": [str(path) for path in plan.reference_images],
             "inference_notes": plan.inference_notes,
             "provider_object": plan.provider_object,
+            "execution_mode": plan.execution_mode,
             "openrouter": {
                 "id": response_json.get("id"),
                 "model": response_json.get("model"),
@@ -542,10 +609,13 @@ def save_outputs(plan: PlannedRequest, response_json: dict[str, Any], timestamp_
                 "image": str(image_path),
                 "metadata": str(metadata_path),
                 "mime_type": mime_type,
+                "actual_dimensions": list(actual_dimensions) if actual_dimensions is not None else None,
                 "bytes": len(raw_bytes),
                 "sha256": sha256_for_file(image_path),
             },
         }
+        if dimension_warning:
+            metadata["warnings"] = [dimension_warning]
         metadata_path.write_text(json.dumps(metadata, ensure_ascii=False, indent=2), encoding="utf-8")
         saved.append({"image": str(image_path), "metadata": str(metadata_path)})
     return saved
@@ -586,6 +656,7 @@ def run_generate(args: argparse.Namespace) -> int:
             "slug": plan.slug,
             "quality": plan.quality,
             "output_format": plan.output_format,
+            "execution_mode": plan.execution_mode,
             "reference_images": [str(path) for path in plan.reference_images],
             "inference_notes": plan.inference_notes,
         },
@@ -649,7 +720,7 @@ def run_doctor(_: argparse.Namespace) -> int:
         "required_models_present": {
             "openai/gpt-5-image": "openai/gpt-5-image" in model_ids,
         },
-        "opaque_route": "built-in imagegen",
+        "opaque_route": "built-in imagegen only; no OpenRouter fallback when image_gen is unavailable",
     }
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0
@@ -666,7 +737,7 @@ def build_parser() -> argparse.ArgumentParser:
     generate.add_argument("--prompt", required=True, help="Core generation prompt or edit instruction.")
     generate.add_argument("--user-request", default=None, help="Original user phrasing to record in metadata.")
     generate.add_argument("--asset-type", required=True, choices=sorted(ASSET_TYPE_SUFFIXES), help="Normalized asset category used for prompt defaults and validation.")
-    generate.add_argument("--background", default="auto", choices=["auto", "transparent", "opaque"], help="Transparent requests use GPT-5 Image. Opaque requests are rejected here because the skill now routes them to built-in imagegen.")
+    generate.add_argument("--background", default="auto", choices=["auto", "transparent", "opaque"], help="Transparent requests use GPT-5 Image. Opaque requests are rejected here because the skill routes them to built-in imagegen only.")
     generate.add_argument("--model", default="auto", help="Model alias. Use auto or gpt-5-image for the transparent OpenRouter path.")
     generate.add_argument("--count", type=int, default=1, help="How many images to generate. Supported range: 1-8.")
     generate.add_argument("--resolution", default=None, help="Literal output resolution, for example 1024x1024.")

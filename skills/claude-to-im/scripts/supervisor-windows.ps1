@@ -38,6 +38,7 @@ $PidFile    = Join-Path $RuntimeDir 'bridge.pid'
 $StatusFile = Join-Path $RuntimeDir 'status.json'
 $LogFile    = Join-Path (Join-Path $CtiHome 'logs') 'bridge.log'
 $DaemonMjs  = Join-Path (Join-Path $SkillDir 'dist') 'daemon.mjs'
+$ResetSessionsScript = Join-Path (Join-Path $SkillDir 'scripts') 'reset-sessions.mjs'
 
 $ServiceName = 'ClaudeToIMBridge'
 
@@ -154,6 +155,20 @@ function Get-NodePath {
         exit 1
     }
     return $nodePath
+}
+
+function Reset-BridgeSessions {
+    if ($env:CTI_RESTART_RESET_SESSIONS -ne 'true') {
+        return
+    }
+
+    $nodePath = Get-NodePath
+    if (-not (Test-Path $ResetSessionsScript)) {
+        Write-Warning "Session reset script not found: $ResetSessionsScript"
+        return
+    }
+
+    & $nodePath $ResetSessionsScript
 }
 
 # ── WinSW / NSSM detection ──
@@ -410,6 +425,7 @@ switch ($Command) {
         Start-Sleep -Seconds 2
 
         Ensure-Dirs
+        Reset-BridgeSessions
         Ensure-Built
 
         if ($svc) {

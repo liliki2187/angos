@@ -15,6 +15,7 @@ import {
   computeBackfillWindow,
   computeFeishuFinalRemainder,
   computeFeishuPreviewDelta,
+  extractFeishuAutoSendImagePaths,
   isFeishuClearCommandText,
   isFeishuStopCommandText,
   shouldPreferFeishuCard,
@@ -144,6 +145,38 @@ function makeReplyAwareRestClient() {
             getReadableStream: () => Readable.from([replyImage]),
             writeFile: async () => {},
           };
+        },
+      },
+    },
+  };
+}
+
+function makeImageUploadRestClient() {
+  const calls: Array<{
+    kind: 'create' | 'reply';
+    payload: Record<string, unknown>;
+  }> = [];
+  const imageUploads: Array<Record<string, unknown>> = [];
+  return {
+    calls,
+    imageUploads,
+    client: {
+      im: {
+        image: {
+          create: async (payload: Record<string, unknown>) => {
+            imageUploads.push(payload);
+            return { image_key: `img-${imageUploads.length}` };
+          },
+        },
+        message: {
+          create: async (payload: Record<string, unknown>) => {
+            calls.push({ kind: 'create', payload });
+            return { data: { message_id: `msg-${calls.length}` } };
+          },
+          reply: async (payload: Record<string, unknown>) => {
+            calls.push({ kind: 'reply', payload });
+            return { data: { message_id: `msg-${calls.length}` } };
+          },
         },
       },
     },
@@ -780,6 +813,87 @@ describe('Feishu formatting helpers', () => {
     assert.equal(adapter.getPreviewCapabilities('chat-clean'), null);
     assert.equal(await adapter.sendPreview('chat-clean', 'partial reply', 303), 'skip');
     assert.equal(calls.length, 0);
+  });
+});
+
+describe('Feishu generated image auto delivery', () => {
+  let tempDir: string | null = null;
+
+  afterEach(() => {
+    if (tempDir && fs.existsSync(tempDir)) {
+      fs.rmSync(tempDir, { recursive: true, force: true });
+    }
+    tempDir = null;
+  });
+
+  function makeGeneratedImage(relativePath: string, content = 'png'): string {
+    if (!tempDir) {
+      tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'cti-feishu-auto-img-'));
+    }
+    const filePath = path.join(tempDir, relativePath);
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    fs.writeFileSync(filePath, content);
+    return filePath;
+  }
+
+  it('extracts multiple generated image paths from a final reply', () => {
+    makeGeneratedImage(path.join('image_gen', '2026-04-28', 'a.png'));
+    makeGeneratedImage(path.join('image_gen', '2026-04-28', 'b.webp'));
+    makeGeneratedImage(path.join('other', 'ignore.png'));
+
+    const text = [
+      '图片：`image_gen/2026-04-28/a.png`',
+      '备用图：[b](<image_gen/2026-04-28/b.webp>)',
+      '不要发：other/ignore.png',
+    ].join('\n');
+
+    const paths = extractFeishuAutoSendImagePaths(text, tempDir!);
+
+    assert.deepEqual(
+      paths.map((item) => path.relative(tempDir!, item).replace(/\\/g, '/')),
+      [
+        'image_gen/2026-04-28/a.png',
+        'image_gen/2026-04-28/b.webp',
+      ],
+    );
+  });
+
+  it('uploads every generated image referenced by the final Feishu reply', async () => {
+    const first = makeGeneratedImage(path.join('image_gen', '2026-04-28', 'first.png'));
+    const second = makeGeneratedImage(path.join('image_gen', '2026-04-28', 'second.jpg'), 'jpg');
+    const store = initTestContext([
+      ['bridge_feishu_auto_send_image_paths', 'true'],
+      ['bridge_default_work_dir', tempDir!],
+    ]);
+    store.upsertChannelBinding({
+      channelType: 'feishu',
+      chatId: 'chat-images',
+      codepilotSessionId: store.createSession('test', 'model', undefined, tempDir!).id,
+      workingDirectory: tempDir!,
+      model: 'model',
+    });
+
+    const adapter = new FeishuAdapter();
+    const { client, calls, imageUploads } = makeImageUploadRestClient();
+    (adapter as any).restClient = client;
+
+    const result = await adapter.send({
+      address: { channelType: 'feishu', chatId: 'chat-images' },
+      text: `已生成：\n${first}\n${second}`,
+      parseMode: 'Markdown',
+      replyToMessageId: 'incoming-images',
+    });
+
+    assert.equal(result.ok, true);
+    assert.equal(imageUploads.length, 2);
+    assert.equal(calls.length, 2);
+    assert.equal(calls[0].kind, 'reply');
+    assert.equal(calls[1].kind, 'reply');
+    const imagePost = JSON.parse((calls[1].payload.data as { content: string }).content);
+    assert.deepEqual(
+      imagePost.zh_cn.content.map((paragraph: Array<{ image_key?: string }>) => paragraph[0].image_key),
+      ['img-1', 'img-2'],
+    );
   });
 });
 

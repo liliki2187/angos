@@ -48,6 +48,9 @@ function applyRuntimeEnvFromConfig(config: Config): void {
   if (config.codexSourceHome) {
     process.env.CTI_CODEX_SOURCE_HOME = config.codexSourceHome;
   }
+  if (config.codexImageGeneration !== undefined) {
+    process.env.CTI_CODEX_IMAGE_GENERATION = String(config.codexImageGeneration);
+  }
 }
 
 /**
@@ -63,6 +66,9 @@ async function resolveProvider(config: Config, pendingPerms: PendingPermissions)
     const shadowHome = prepareCodexShadowHome();
     if (shadowHome.mode === 'shadow' && shadowHome.codexHome) {
       console.log(`[claude-to-im] Prepared Codex shadow home at ${shadowHome.codexHome}`);
+      if (shadowHome.copiedSystemSkills.length > 0) {
+        console.log(`[claude-to-im] Synced Codex system skills: ${shadowHome.copiedSystemSkills.join(', ')}`);
+      }
     }
     const { CodexProvider } = await import('./codex-provider.js');
     return new CodexProvider(pendingPerms);
@@ -88,6 +94,9 @@ async function resolveProvider(config: Config, pendingPerms: PendingPermissions)
     const shadowHome = prepareCodexShadowHome();
     if (shadowHome.mode === 'shadow' && shadowHome.codexHome) {
       console.log(`[claude-to-im] Prepared Codex shadow home at ${shadowHome.codexHome}`);
+      if (shadowHome.copiedSystemSkills.length > 0) {
+        console.log(`[claude-to-im] Synced Codex system skills: ${shadowHome.copiedSystemSkills.join(', ')}`);
+      }
     }
     const { CodexProvider } = await import('./codex-provider.js');
     return new CodexProvider(pendingPerms);

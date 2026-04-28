@@ -2,7 +2,7 @@
 
 - **顶层真源**：[`design/gdd/game-concept.md`](./design/gdd/game-concept.md)、[`design/gdd/game-pillars.md`](./design/gdd/game-pillars.md)、[`design/gdd/systems-index.md`](./design/gdd/systems-index.md)。
 - **同步**：已确定并落地的玩法/规则/常量变更，应先同步对应 `design/gdd/` 文档；若影响产品定位、支柱或系统边界，再同步顶层三份文档。
-- **协作偏好**：后续 AI / 新对话在处理玩法、原型、UI 感知类任务前，先读 [`docs/onboarding/ai-collaboration-guidance.md`](./docs/onboarding/ai-collaboration-guidance.md)；收到新的强反馈后应同步更新该文档。
+- **协作偏好**：后续 AI / 新对话在处理玩法、原型、UI 感知类任务前，先读本文件的工作区约束，并按任务类型读取对应 `skills/` 与 `design/gdd/` 文档；收到新的强反馈后，应同步更新相关技能或设计文档。
 
 ## Skills
 

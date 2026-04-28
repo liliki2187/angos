@@ -15,6 +15,7 @@ export interface Config {
   codexHomeMode?: 'inherit' | 'shadow';
   codexShadowHome?: string;
   codexSourceHome?: string;
+  codexImageGeneration?: boolean;
   // Telegram
   tgBotToken?: string;
   tgChatId?: string;
@@ -27,6 +28,7 @@ export interface Config {
   feishuAllowedUsers?: string[];
   feishuHideToolMetadata?: boolean;
   feishuForceCard?: boolean;
+  feishuAutoSendImagePaths?: boolean;
   // Discord
   discordBotToken?: string;
   discordAllowedUsers?: string[];
@@ -122,6 +124,7 @@ export function loadConfig(): Config {
     codexHomeMode: parseCodexHomeMode(env.get("CTI_CODEX_HOME_MODE")),
     codexShadowHome: env.get("CTI_CODEX_SHADOW_HOME") || undefined,
     codexSourceHome: env.get("CTI_CODEX_SOURCE_HOME") || undefined,
+    codexImageGeneration: parseBoolean(env.get("CTI_CODEX_IMAGE_GENERATION")),
     tgBotToken: env.get("CTI_TG_BOT_TOKEN") || undefined,
     tgChatId: env.get("CTI_TG_CHAT_ID") || undefined,
     tgAllowedUsers: splitCsv(env.get("CTI_TG_ALLOWED_USERS")),
@@ -135,6 +138,9 @@ export function loadConfig(): Config {
       : undefined,
     feishuForceCard: env.has("CTI_FEISHU_FORCE_CARD")
       ? env.get("CTI_FEISHU_FORCE_CARD") === "true"
+      : undefined,
+    feishuAutoSendImagePaths: env.has("CTI_FEISHU_AUTO_SEND_IMAGE_PATHS")
+      ? env.get("CTI_FEISHU_AUTO_SEND_IMAGE_PATHS") === "true"
       : undefined,
     discordBotToken: env.get("CTI_DISCORD_BOT_TOKEN") || undefined,
     discordAllowedUsers: splitCsv(env.get("CTI_DISCORD_ALLOWED_USERS")),
@@ -177,6 +183,8 @@ export function saveConfig(config: Config): void {
   if (config.codexHomeMode) out += formatEnvLine("CTI_CODEX_HOME_MODE", config.codexHomeMode);
   if (config.codexShadowHome) out += formatEnvLine("CTI_CODEX_SHADOW_HOME", config.codexShadowHome);
   if (config.codexSourceHome) out += formatEnvLine("CTI_CODEX_SOURCE_HOME", config.codexSourceHome);
+  if (config.codexImageGeneration !== undefined)
+    out += formatEnvLine("CTI_CODEX_IMAGE_GENERATION", String(config.codexImageGeneration));
   out += formatEnvLine("CTI_TG_BOT_TOKEN", config.tgBotToken);
   out += formatEnvLine("CTI_TG_CHAT_ID", config.tgChatId);
   out += formatEnvLine(
@@ -195,6 +203,8 @@ export function saveConfig(config: Config): void {
     out += formatEnvLine("CTI_FEISHU_HIDE_TOOL_METADATA", String(config.feishuHideToolMetadata));
   if (config.feishuForceCard !== undefined)
     out += formatEnvLine("CTI_FEISHU_FORCE_CARD", String(config.feishuForceCard));
+  if (config.feishuAutoSendImagePaths !== undefined)
+    out += formatEnvLine("CTI_FEISHU_AUTO_SEND_IMAGE_PATHS", String(config.feishuAutoSendImagePaths));
   out += formatEnvLine("CTI_DISCORD_BOT_TOKEN", config.discordBotToken);
   out += formatEnvLine(
     "CTI_DISCORD_ALLOWED_USERS",
@@ -291,6 +301,8 @@ export function configToSettings(config: Config): Map<string, string> {
     m.set("bridge_feishu_hide_tool_metadata", String(config.feishuHideToolMetadata));
   if (config.feishuForceCard !== undefined)
     m.set("bridge_feishu_force_card", String(config.feishuForceCard));
+  if (config.feishuAutoSendImagePaths !== undefined)
+    m.set("bridge_feishu_auto_send_image_paths", String(config.feishuAutoSendImagePaths));
 
   // ── QQ ──
   // Upstream keys: bridge_qq_enabled, bridge_qq_app_id, bridge_qq_app_secret,

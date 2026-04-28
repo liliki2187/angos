@@ -280,6 +280,15 @@ const FEISHU_COMPLETION_NOTICE = '\u641e\u5b8c\u5566';
 const FEISHU_CLEAR_NOTICE = '\u6e05\u6389\u4e86\uff0c\u4ece\u8fd9\u6761\u4e4b\u540e\u91cd\u65b0\u7b97';
 const FEISHU_BUSY_CLEAR_NOTICE = '\u6536\u5230\uff0c\u505c\u5b8c\u8fd9\u6761\u5c31\u6e05\u6389';
 const FEISHU_SEND_DEDUP_WINDOW_MS = 15_000;
+const FEISHU_AUTO_IMAGE_RECENT_WINDOW_MS = 10 * 60_000;
+const FEISHU_IMAGE_UPLOAD_LIMIT_BYTES = 10 * 1024 * 1024;
+const FEISHU_IMAGES_PER_POST = 9;
+const FEISHU_IMAGE_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.gif', '.webp', '.bmp']);
+const IMAGE_PATH_PATTERNS = [
+  /<?[/\\]?[A-Za-z]:[\\/][^<>\r\n]*?\.(?:png|jpe?g|gif|webp|bmp)\b>?/gi,
+  /<?(?:\.{1,2}[\\/])?image_gen[\\/][^<>\r\n]*?\.(?:png|jpe?g|gif|webp|bmp)\b>?/gi,
+  /<?(?:\.{1,2}[\\/])?skills[\\/]\.claude-to-im[\\/]codex-home[\\/]generated_images[\\/][^<>\r\n]*?\.(?:png|jpe?g|gif|webp|bmp)\b>?/gi,
+];
 
 export function buildMentionPostContent(userId: string, text: string): string {
   return JSON.stringify({
@@ -294,6 +303,103 @@ export function buildMentionPostContent(userId: string, text: string): string {
 
 export function buildBusyMentionPostContent(userId: string, text: string): string {
   return buildMentionPostContent(userId, text);
+}
+
+function normalizeForPathCompare(filePath: string): string {
+  const resolved = path.resolve(filePath);
+  return process.platform === 'win32' ? resolved.toLowerCase() : resolved;
+}
+
+function isPathInside(childPath: string, parentPath: string): boolean {
+  const child = normalizeForPathCompare(childPath);
+  const parent = normalizeForPathCompare(parentPath);
+  return child === parent || child.startsWith(parent.endsWith(path.sep) ? parent : `${parent}${path.sep}`);
+}
+
+function cleanCandidateImagePath(rawPath: string): string {
+  let cleaned = rawPath.trim()
+    .replace(/^<+/, '')
+    .replace(/>+$/, '')
+    .replace(/^`+/, '')
+    .replace(/`+$/, '');
+
+  cleaned = cleaned.replace(/^[/\\]([A-Za-z]:[\\/])/, '$1');
+  return cleaned;
+}
+
+function resolveCandidateImagePath(candidate: string, workDir: string): string {
+  const cleaned = cleanCandidateImagePath(candidate);
+  if (/^[A-Za-z]:[\\/]/.test(cleaned)) {
+    return path.resolve(cleaned);
+  }
+  return path.resolve(workDir, cleaned);
+}
+
+function isSupportedImageFile(filePath: string): boolean {
+  return FEISHU_IMAGE_EXTENSIONS.has(path.extname(filePath).toLowerCase());
+}
+
+function isAllowedAutoSendImagePath(filePath: string, workDir: string): boolean {
+  const generatedDir = path.join(workDir, 'image_gen');
+  const shadowGeneratedDir = path.join(workDir, 'skills', '.claude-to-im', 'codex-home', 'generated_images');
+  const normalized = normalizeForPathCompare(filePath);
+  const generatedMarker = `${path.sep}generated_images${path.sep}`;
+  const shadowMarker = `${path.sep}.claude-to-im${path.sep}codex-home${path.sep}`;
+
+  return (
+    isPathInside(filePath, generatedDir) ||
+    isPathInside(filePath, shadowGeneratedDir) ||
+    (normalized.includes(generatedMarker) && normalized.includes(shadowMarker))
+  );
+}
+
+export function extractFeishuAutoSendImagePaths(text: string, workDir: string): string[] {
+  const candidates: string[] = [];
+  for (const pattern of IMAGE_PATH_PATTERNS) {
+    pattern.lastIndex = 0;
+    for (const match of text.matchAll(pattern)) {
+      if (match[0]) {
+        candidates.push(match[0]);
+      }
+    }
+  }
+
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const candidate of candidates) {
+    const resolved = resolveCandidateImagePath(candidate, workDir);
+    const key = normalizeForPathCompare(resolved);
+    if (seen.has(key)) continue;
+    seen.add(key);
+
+    if (!isSupportedImageFile(resolved)) continue;
+    if (!isAllowedAutoSendImagePath(resolved, workDir)) continue;
+    try {
+      const stat = fs.statSync(resolved);
+      if (!stat.isFile() || stat.size <= 0) continue;
+    } catch {
+      continue;
+    }
+    out.push(resolved);
+  }
+  return out;
+}
+
+function buildImagePostContent(title: string, imageKeys: string[]): string {
+  return JSON.stringify({
+    zh_cn: {
+      title,
+      content: imageKeys.map((imageKey) => [{ tag: 'img', image_key: imageKey }]),
+    },
+  });
+}
+
+function chunkItems<T>(items: T[], size: number): T[][] {
+  const chunks: T[][] = [];
+  for (let index = 0; index < items.length; index += size) {
+    chunks.push(items.slice(index, index + size));
+  }
+  return chunks;
 }
 
 export function computeBackfillWindow(
@@ -357,6 +463,7 @@ export class FeishuAdapter extends BaseFeishuAdapter {
   private previewStates = new Map<string, FeishuPreviewState>();
   private taskStates = new Map<string, FeishuTaskState>();
   private recentSends = new Map<string, FeishuRecentSend>();
+  private recentAutoImagePaths = new Map<string, number>();
 
   private forceCardReplies(): boolean {
     try {
@@ -376,6 +483,17 @@ export class FeishuAdapter extends BaseFeishuAdapter {
 
   private streamingPreviewEnabled(): boolean {
     return !this.forceCardReplies() && !this.hideToolMetadata();
+  }
+
+  private autoSendImagePathsEnabled(): boolean {
+    try {
+      const setting = getBridgeContext().store.getSetting('bridge_feishu_auto_send_image_paths');
+      if (setting === 'true') return true;
+      if (setting === 'false') return false;
+    } catch {
+      // Fall through to env/default.
+    }
+    return process.env.CTI_FEISHU_AUTO_SEND_IMAGE_PATHS !== 'false';
   }
 
   async handleIncomingEvent(data: FeishuMessageEventData): Promise<void> {
@@ -684,6 +802,7 @@ export class FeishuAdapter extends BaseFeishuAdapter {
     ) {
       const remainder = computeFeishuFinalRemainder(previewState.lastRenderedText, text);
       if (!remainder.trim()) {
+        await this.maybeAutoSendImagesForMessage(message);
         if (taskState) {
           taskState.responseDelivered = true;
         }
@@ -698,6 +817,9 @@ export class FeishuAdapter extends BaseFeishuAdapter {
       text,
       parseMode,
     });
+    if (result.ok) {
+      await this.maybeAutoSendImagesForMessage(message);
+    }
     if (result.ok && taskState) {
       if (message.parseMode === 'Markdown' && !message.inlineButtons) {
         taskState.responseDelivered = true;
@@ -1092,6 +1214,149 @@ export class FeishuAdapter extends BaseFeishuAdapter {
 
   private async sendAsText(chatId: string, text: string, replyToMessageId?: string): Promise<SendResult> {
     return this.sendPayload(chatId, 'text', JSON.stringify({ text }), replyToMessageId);
+  }
+
+  private resolveAutoImageWorkDir(message: OutboundMessage): string {
+    try {
+      const binding = router.resolve(message.address);
+      if (binding.workingDirectory) {
+        return binding.workingDirectory;
+      }
+    } catch {
+      // Best effort; fall back to store/default cwd.
+    }
+
+    try {
+      const workDir = getBridgeContext().store.getSetting('bridge_default_work_dir');
+      if (workDir) {
+        return workDir;
+      }
+    } catch {
+      // Best effort.
+    }
+
+    return process.cwd();
+  }
+
+  private shouldSkipAutoImageDelivery(text: string): boolean {
+    return /飞书消息\s*ID|已发到飞书群|sent to feishu/i.test(text);
+  }
+
+  private filterFreshAutoImagePaths(chatId: string, imagePaths: string[]): string[] {
+    const now = Date.now();
+    for (const [key, sentAt] of this.recentAutoImagePaths) {
+      if (now - sentAt > FEISHU_AUTO_IMAGE_RECENT_WINDOW_MS) {
+        this.recentAutoImagePaths.delete(key);
+      }
+    }
+
+    const fresh: string[] = [];
+    for (const imagePath of imagePaths) {
+      const key = `${chatId}\u0000${normalizeForPathCompare(imagePath)}`;
+      if (this.recentAutoImagePaths.has(key)) {
+        continue;
+      }
+      this.recentAutoImagePaths.set(key, now);
+      fresh.push(imagePath);
+    }
+    return fresh;
+  }
+
+  private async maybeAutoSendImagesForMessage(message: OutboundMessage): Promise<void> {
+    if (!this.autoSendImagePathsEnabled()) return;
+    if (message.inlineButtons && message.inlineButtons.length > 0) return;
+    if (message.parseMode === 'HTML') return;
+    if (this.shouldSkipAutoImageDelivery(message.text)) return;
+
+    const workDir = this.resolveAutoImageWorkDir(message);
+    const imagePaths = extractFeishuAutoSendImagePaths(message.text, workDir);
+    if (imagePaths.length === 0) return;
+
+    const freshPaths = this.filterFreshAutoImagePaths(message.address.chatId, imagePaths);
+    if (freshPaths.length === 0) return;
+
+    const result = await this.sendImagePathPosts(
+      message.address.chatId,
+      freshPaths,
+      message.replyToMessageId,
+    );
+    if (!result.ok) {
+      console.warn('[feishu-adapter] Auto image delivery failed:', result.error || 'unknown error');
+      await this.sendAsText(
+        message.address.chatId,
+        `图片自动发送失败：${result.error || 'unknown error'}`,
+        message.replyToMessageId,
+      );
+    }
+  }
+
+  private async uploadImagePath(filePath: string): Promise<string> {
+    const restClient = (this as any).restClient;
+    if (!restClient?.im?.image?.create) {
+      throw new Error('Feishu image upload API is unavailable');
+    }
+
+    const stat = fs.statSync(filePath);
+    if (stat.size > FEISHU_IMAGE_UPLOAD_LIMIT_BYTES) {
+      throw new Error(`${path.basename(filePath)} exceeds Feishu 10 MB image upload limit`);
+    }
+
+    const response = await restClient.im.image.create({
+      data: {
+        image_type: 'message',
+        image: fs.readFileSync(filePath),
+      },
+    });
+
+    const imageKey = response?.image_key || response?.data?.image_key;
+    if (!imageKey) {
+      throw new Error(`Feishu image upload failed for ${path.basename(filePath)}`);
+    }
+    return imageKey;
+  }
+
+  private async sendImagePathPosts(
+    chatId: string,
+    imagePaths: string[],
+    replyToMessageId?: string,
+  ): Promise<SendResult> {
+    let lastMessageId: string | undefined;
+    const chunks = chunkItems(imagePaths, FEISHU_IMAGES_PER_POST);
+
+    for (const [chunkIndex, chunk] of chunks.entries()) {
+      const imageKeys: string[] = [];
+      for (const imagePath of chunk) {
+        imageKeys.push(await this.uploadImagePath(imagePath));
+      }
+
+      const title = chunks.length === 1
+        ? (imagePaths.length === 1 ? path.basename(imagePaths[0]) : '生成图片')
+        : `生成图片 (${chunkIndex + 1}/${chunks.length})`;
+      const result = await this.sendPayload(
+        chatId,
+        'post',
+        buildImagePostContent(title, imageKeys),
+        replyToMessageId,
+      );
+      if (!result.ok) {
+        return result;
+      }
+      lastMessageId = result.messageId;
+    }
+
+    try {
+      getBridgeContext().store.insertAuditLog({
+        channelType: 'feishu',
+        chatId,
+        direction: 'outbound',
+        messageId: lastMessageId || '',
+        summary: `[AUTO_IMAGES] Sent ${imagePaths.length} generated image(s)`,
+      });
+    } catch {
+      // Best effort.
+    }
+
+    return { ok: true, messageId: lastMessageId };
   }
 
   private async sendPermissionCard(

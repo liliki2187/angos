@@ -1,6 +1,6 @@
 ---
 name: openrouter-image-gen
-description: Plan and generate game-ready images with a hybrid workflow: OpenRouter GPT-5 Image for transparent PNG/WebP assets, and built-in imagegen for opaque textures, concepts, posters, UI banners, portraits, environments, and other non-transparent images. Use when the user asks for OpenRouter image generation, openrouter image gen, openrouter 生图, GPT-5 Image transparent PNGs, reference-image image-to-image generation, game textures, icons, key art, splash art, posters, UI banners, decals, portraits, environment art, props, sprites, or similar visual asset generation tasks. Legacy Nano Banana or Nano Banana 2 phrasing should still trigger this skill, but opaque requests must route to built-in imagegen instead of third-party models.
+description: Plan and generate game-ready images with a hybrid workflow: OpenRouter GPT-5 Image for transparent PNG/WebP assets, and built-in imagegen for opaque textures, concepts, posters, UI banners, portraits, environments, and other non-transparent images. Use when the user asks for OpenRouter image generation, openrouter image gen, openrouter 生图, GPT-5 Image transparent PNGs, reference-image image-to-image generation, game textures, icons, key art, splash art, posters, UI banners, decals, portraits, environment art, props, sprites, or similar visual asset generation tasks. Legacy Nano Banana or Nano Banana 2 phrasing should still trigger this skill, but opaque requests must route to built-in imagegen instead of third-party models. If built-in imagegen / image_gen is unavailable, report that the request cannot be completed in the current session instead of using an OpenRouter opaque fallback.
 ---
 
 # OpenRouter Image Gen
@@ -27,19 +27,33 @@ Use this skill to plan and run game production image generation with two executi
 4. Choose the execution path:
    - `background=transparent` -> OpenRouter helper script
    - `background=opaque` -> built-in `$imagegen`
-5. Only check `config.env` in this skill folder when the request routes to the OpenRouter helper script. Opaque requests must not be blocked on missing OpenRouter config.
+   - `background=opaque` but built-in `image_gen` is unavailable -> fail with a clear explanation; do not use OpenRouter as a fallback
+5. Only check `config.env` in this skill folder when the request routes to the OpenRouter helper script. Opaque requests must not be blocked on missing OpenRouter config because they do not use OpenRouter.
 6. Validate parameters before sending any API request or tool call. If the request is outside the supported matrix, stop immediately and explain what must change.
 7. Execute the selected path:
    - OpenRouter path: run the Python script in this folder
    - Built-in opaque path: call `image_gen`, then copy the selected output from `$CODEX_HOME/generated_images/...` into the workspace
 8. Return the saved image paths and metadata JSON paths to the user.
 
+## Claude-to-IM / IM Triggering
+
+When this skill is triggered from a `claude-to-im` bridged Codex session, keep the same routing contract:
+
+- If the IM user asks for an opaque game or project image and the actual tool list exposes built-in `image_gen`, use the built-in `$imagegen` path.
+- If the bridged Codex SDK/CLI session does not expose built-in `image_gen`, fail directly and tell the user that `$imagegen` is unavailable in the current bridge session.
+- Treat built-in `$imagegen` / `image_gen` as a conversation tool capability, not a shell executable. Do not search for an `image_gen` command on `PATH`.
+- Do not run `scripts/openrouter_image_gen.py` for opaque requests, including bridge sessions where `$imagegen` is unavailable.
+- Save project-bound outputs under `image_gen/YYYY-MM-DD/` and write the sidecar JSON metadata.
+- After saving the image, report the workspace path. For Feishu delivery, the bridge can reuse the `claude-to-im send images` workflow or `skills/claude-to-im/scripts/send-feishu-images-post.mjs`.
+- If the user asks for transparent output, keep using the transparent routing rules below unless the project explicitly changes that policy.
+
 ## Routing Rules
 
 - If the user wants a transparent background, route to `openai/gpt-5-image` only.
 - If the user wants a non-transparent image, route to built-in `$imagegen` only.
+- If `image_gen` is unavailable, stop and report failure instead of using OpenRouter.
 - If the user explicitly says `nano banana` or `nano banana 2`, treat that as legacy wording for an opaque request and still route to built-in `$imagegen`.
-- If the user explicitly says `gpt-5-image` for a non-transparent request, explain that this skill now uses built-in `$imagegen` for opaque outputs and keep the request on the opaque path unless they actually need transparency.
+- If the user explicitly says `gpt-5-image` for a non-transparent request, explain that this skill uses built-in `$imagegen` for opaque outputs and cannot fall back to OpenRouter when `$imagegen` is unavailable.
 - Treat reference-image generation as a normal path for both routes, but keep the request conservative and validate local file existence first.
 
 ## Common Asset Types
@@ -137,6 +151,8 @@ For opaque textures, concepts, posters, portraits, banners, and other non-transp
   - `execution_mode: "built-in-imagegen-opaque"`
   - `routing_reason`
   - `built_in_source_image`
+
+If `$imagegen` / `image_gen` is unavailable in a bridge session, stop and report that opaque generation cannot be completed from that session. Do not use OpenRouter as an opaque fallback.
 
 ## Output Rules
 

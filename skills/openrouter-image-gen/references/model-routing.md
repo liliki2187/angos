@@ -13,6 +13,7 @@ Use this file whenever you need to choose a model, normalize size parameters, or
 
 - `background=transparent` -> only `openai/gpt-5-image`
 - `background=opaque` -> only built-in `image_gen`
+- If built-in `image_gen` is unavailable, fail directly and tell the user the current session cannot complete opaque image generation.
 
 ## Legacy Terms
 
@@ -55,6 +56,7 @@ For opaque requests in this skill:
 - use built-in `image_gen`
 - express size or framing needs in the prompt bundle instead of OpenRouter `image_config`
 - if the result is project-bound, copy the selected built-in output into workspace `image_gen/YYYY-MM-DD/` and write a sidecar JSON
+- if built-in `image_gen` is unavailable, stop and report failure instead of falling back to OpenRouter
 
 ## Reference Images
 
