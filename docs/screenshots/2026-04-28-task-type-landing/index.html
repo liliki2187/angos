@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>派遣任务类型落地截图说明 · 2026-04-28</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121a2b;
+      --panel-2: #172238;
+      --line: #2d3a55;
+      --text: #e5edf8;
+      --muted: #9fb0c8;
+      --gold: #d6a84f;
+      --blue: #78a8ff;
+      --red: #ff8a8a;
+      --purple: #b9a2ff;
+      --green: #86efac;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(80, 120, 220, 0.22), transparent 30%),
+        radial-gradient(circle at 80% 10%, rgba(153, 86, 255, 0.18), transparent 28%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .page {
+      width: min(1280px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    header {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 24px;
+      background: rgba(18, 26, 43, 0.88);
+      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.32);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      color: var(--gold);
+      font-size: clamp(24px, 4vw, 40px);
+      letter-spacing: 0.03em;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      color: var(--gold);
+      font-size: 22px;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      color: #f2d28a;
+    }
+
+    p { margin: 0 0 10px; }
+
+    .sub {
+      color: var(--muted);
+      max-width: 880px;
+      margin: 0;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      background: rgba(23, 34, 56, 0.7);
+    }
+
+    .pill b {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .pill span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0;
+      padding: 10px;
+      border: 1px solid rgba(45, 58, 85, 0.86);
+      border-radius: 14px;
+      background: rgba(11, 16, 32, 0.88);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav a {
+      display: inline-block;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--text);
+      background: rgba(23, 34, 56, 0.72);
+      font-size: 14px;
+    }
+
+    section {
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(18, 26, 43, 0.86);
+      overflow: hidden;
+    }
+
+    .section-head {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(23, 34, 56, 0.78);
+    }
+
+    .section-head p { color: var(--muted); }
+
+    .shot {
+      display: grid;
+      grid-template-columns: minmax(300px, 0.45fr) minmax(0, 0.55fr);
+      gap: 18px;
+      padding: 20px;
+      border-top: 1px solid rgba(45, 58, 85, 0.62);
+    }
+
+    .shot:first-of-type { border-top: 0; }
+
+    .meta {
+      align-self: start;
+      position: sticky;
+      top: 82px;
+    }
+
+    .kicker {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(11, 16, 32, 0.65);
+      font-size: 13px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 12px 0;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(11, 16, 32, 0.55);
+      font-size: 13px;
+    }
+
+    .white { color: #bfdbfe; border-color: rgba(120, 168, 255, 0.6); }
+    .red { color: #fecaca; border-color: rgba(255, 138, 138, 0.72); }
+    .deep { color: #ddd6fe; border-color: rgba(185, 162, 255, 0.72); }
+    .high { color: #fde68a; border-color: rgba(214, 168, 79, 0.72); }
+    .bonus { color: var(--green); border-color: rgba(134, 239, 172, 0.72); }
+
+    .notes {
+      margin: 12px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .notes li { margin: 4px 0; }
+
+    figure {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      background: #050914;
+    }
+
+    figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    figcaption {
+      padding: 9px 12px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      background: rgba(11, 16, 32, 0.8);
+    }
+
+    .footer {
+      margin-top: 20px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+      .summary { grid-template-columns: 1fr 1fr; }
+      .shot { grid-template-columns: 1fr; }
+      .meta { position: static; }
+      .nav { position: static; }
+    }
+
+    @media (max-width: 560px) {
+      .summary { grid-template-columns: 1fr; }
+      .page { width: min(100vw - 20px, 1280px); padding-top: 14px; }
+      header, .shot, .section-head { padding: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>派遣任务类型落地截图说明</h1>
+      <p class="sub">本页汇总 2026-04-28 的 HTML 原型真实截图，把“白色调查 / 红色截稿 / 深度调查连续任务 / 高危五档 / 再追一次 bonus”的改动按玩家流程串起来，避免逐张图片翻找。</p>
+      <div class="summary">
+        <div class="pill"><b>展示入口</b><span>北美禁区带首区试玩</span></div>
+        <div class="pill"><b>任务类型</b><span>区域卡 + 配置页双重说明</span></div>
+        <div class="pill"><b>连续任务</b><span>罗斯威尔链逐阶段生成</span></div>
+        <div class="pill"><b>终局惊喜</b><span>再追一次 + 更糟黑骰</span></div>
+      </div>
+    </header>
+
+    <nav class="nav">
+      <a href="#overview">首区总览</a>
+      <a href="#setup">配置页差异</a>
+      <a href="#chain">连续任务推进</a>
+      <a href="#highrisk">高危阶段</a>
+      <a href="#bonus">再追一次</a>
+    </nav>
+
+    <section id="overview">
+      <div class="section-head">
+        <h2>一、首区总览：先让玩家看懂任务不同</h2>
+        <p>区域地图和右侧任务卡会直接显示任务类型，不需要等到结算后才知道自己接了什么任务。</p>
+      </div>
+
+      <article class="shot">
+        <div class="meta">
+          <span class="kicker">01 · 区域任务类型总览</span>
+          <h3>北美禁区带的三类入口</h3>
+          <p>首区现在同时展示白色调查、红色截稿和深度调查链。任务点上的短标识与右侧说明共同告诉玩家：这些不是同一种普通派遣。</p>
+          <div class="tags">
+            <span class="tag white">白色调查</span>
+            <span class="tag red">红色截稿</span>
+            <span class="tag deep">深度调查</span>
+          </div>
+          <ul class="notes">
+            <li>`51 区外围公路`：可反复追踪。</li>
+            <li>`突发：雷达异常光点`：一次性窗口。</li>
+            <li>`罗斯威尔档案残页`：连续任务起点。</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="01-region-task-type-overview.png" alt="北美禁区带任务类型总览截图" loading="lazy" />
+          <figcaption>区域列表右侧已显示任务类型、标签与行为说明。</figcaption>
+        </figure>
+      </article>
+    </section>
+
+    <section id="setup">
+      <div class="section-head">
+        <h2>二、点击后的配置页：任务类型必须讲清楚</h2>
+        <p>玩家点进任务后，概率面板上方先出现任务类型说明，避免只看到骰池和成功率。</p>
+      </div>
+
+      <article class="shot">
+        <div class="meta">
+          <span class="kicker">02 · 白色调查配置</span>
+          <h3>`51 区外围公路`</h3>
+          <p>配置页说明“失败不封死题材，后续可继续累积同一条调查线”。这是常规低压调查的示例。</p>
+          <div class="tags"><span class="tag white">白色调查</span></div>
+          <ul class="notes">
+            <li>玩家点击任务后能再次看到类型说明。</li>
+            <li>完成后会记录“已追踪次数”。</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="02-white-investigation-setup.png" alt="白色调查配置页截图" loading="lazy" />
+          <figcaption>白色调查说明在配置页顶部，位于概率面板之前。</figcaption>
+        </figure>
+      </article>
+
+      <article class="shot">
+        <div class="meta">
+          <span class="kicker">03 · 红色截稿配置</span>
+          <h3>`突发：雷达异常光点`</h3>
+          <p>红色截稿配置页明确写出“一次性情报窗口”，并提示失败后入口会消失；同时标记为高危五档。</p>
+          <div class="tags">
+            <span class="tag red">红色截稿</span>
+            <span class="tag high">高危五档</span>
+          </div>
+          <ul class="notes">
+            <li>派遣前就知道这是红色临时情报。</li>
+            <li>失败关闭和高危五档不是隐藏规则。</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="03-red-deadline-setup.png" alt="红色截稿配置页截图" loading="lazy" />
+          <figcaption>红色任务的风险说明与高危标签同屏展示。</figcaption>
+        </figure>
+      </article>
+
+      <article class="shot">
+        <div class="meta">
+          <span class="kicker">04 · 深度调查第一阶段配置</span>
+          <h3>`罗斯威尔档案残页`</h3>
+          <p>深度调查不是单次刷任务，而是连续任务起点。配置页说明完成后会变成下一阶段。</p>
+          <div class="tags">
+            <span class="tag white">白色调查</span>
+            <span class="tag deep">深度调查 · 第一阶段</span>
+          </div>
+        </div>
+        <figure>
+          <img src="04-deep-chain-stage1-setup.png" alt="深度调查第一阶段配置页截图" loading="lazy" />
+          <figcaption>第一阶段任务说明突出“完成后推进为下一阶段”。</figcaption>
+        </figure>
+      </article>
+    </section>
+
+    <section id="chain">
+      <div class="section-head">
+        <h2>三、连续任务推进：完成后变成下一阶段</h2>
+        <p>深度调查链每完成一段，地图上出现下一阶段，让玩家感到事件在推进，而不是同一任务重复刷。</p>
+      </div>
+
+      <article class="shot">
+        <div class="meta">
+          <span class="kicker">05 · 第一阶段结算</span>
+          <h3>生成下一阶段</h3>
+          <p>结算说明写出“地图上出现下一阶段”，奖励弹窗也会提示连续任务推进。</p>
+          <div class="tags"><span class="tag deep">连续任务推进</span></div>
+        </div>
+        <figure>
+          <img src="05-deep-chain-stage1-result-and-next-node.png" alt="深度调查第一阶段结算截图" loading="lazy" />
+          <figcaption>第一阶段结算后，下一阶段被加入地图。</figcaption>
+        </figure>
+      </article>
+
+      <article class="shot">
+        <div class="meta">
+          <span class="kicker">06 · 第二阶段出现</span>
+          <h3>`气象站抄本互证`</h3>
+          <p>回到区域后，玩家能在地图和任务卡上看到新的第二阶段，不需要读日志翻找。</p>
+          <div class="tags"><span class="tag deep">深度调查 · 第二阶段</span></div>
+        </div>
+        <figure>
+          <img src="06-region-after-stage2-spawned.png" alt="深度调查第二阶段出现在地图截图" loading="lazy" />
+          <figcaption>第二阶段作为新任务出现在北美禁区带。</figcaption>
+        </figure>
+      </article>
+
+      <article class="shot">
+        <div class="meta">
+          <span class="kicker">07 · 第二阶段配置</span>
+          <h3>普通解释风险</h3>
+          <p>第二阶段说明开始提示普通解释风险：继续推进可能提高公信，也可能削弱怪谈报道的煞有介事。</p>
+          <div class="tags"><span class="tag deep">真相风险</span></div>
+        </div>
+        <figure>
+          <img src="07-deep-chain-stage2-setup.png" alt="深度调查第二阶段配置页截图" loading="lazy" />
+          <figcaption>第二阶段配置页开始强调“真相风险”。</figcaption>
+        </figure>
+      </article>
+    </section>
+
+    <section id="highrisk">
+      <div class="section-head">
+        <h2>四、高危阶段：五档结果成为高危任务特点</h2>
+        <p>深度链后半段开始使用高危五档，任务卡和配置页都会提前说明成功也可能有反噬，失败也可能有线索。</p>
+      </div>
+
+      <article class="shot">
+        <div class="meta">
+          <span class="kicker">08 · 第三阶段出现</span>
+          <h3>`废弃雷达站夜访`</h3>
+          <p>地图生成高危第三阶段，右侧卡片标出“高危深度调查”。</p>
+          <div class="tags">
+            <span class="tag deep">深度调查</span>
+            <span class="tag high">高危五档</span>
+          </div>
+        </div>
+        <figure>
+          <img src="08-region-high-risk-stage3-spawned.png" alt="高危第三阶段出现在地图截图" loading="lazy" />
+          <figcaption>连续任务后半段转入高危五档。</figcaption>
+        </figure>
+      </article>
+
+      <article class="shot">
+        <div class="meta">
+          <span class="kicker">09 · 第三阶段配置</span>
+          <h3>高危五档说明</h3>
+          <p>配置页明确说明“成功也可能反噬，失败也可能留下下一步线索”。</p>
+          <div class="tags"><span class="tag high">高危五档</span></div>
+        </div>
+        <figure>
+          <img src="09-high-risk-stage3-setup.png" alt="高危第三阶段配置页截图" loading="lazy" />
+          <figcaption>玩家派遣前已经知道这是高危任务。</figcaption>
+        </figure>
+      </article>
+
+      <article class="shot">
+        <div class="meta">
+          <span class="kicker">10 · 最终阶段出现</span>
+          <h3>`封存录音的三秒空白`</h3>
+          <p>最终阶段出现在地图上，作为连续任务终局，为后面的 bonus 事件做铺垫。</p>
+          <div class="tags">
+            <span class="tag deep">最终阶段</span>
+            <span class="tag bonus">终局 bonus</span>
+          </div>
+        </div>
+        <figure>
+          <img src="10-region-final-stage-spawned.png" alt="最终阶段出现在地图截图" loading="lazy" />
+          <figcaption>终局任务进入地图，玩家可主动派遣。</figcaption>
+        </figure>
+      </article>
+
+      <article class="shot">
+        <div class="meta">
+          <span class="kicker">11 · 最终阶段配置</span>
+          <h3>bonus 预告</h3>
+          <p>最终阶段配置页直接提示：五档结算后，中间档可能出现“再追一次？”惊喜事件。</p>
+          <div class="tags">
+            <span class="tag high">高危五档</span>
+            <span class="tag bonus">终局 bonus</span>
+          </div>
+        </div>
+        <figure>
+          <img src="11-final-stage-setup-with-bonus-note.png" alt="最终阶段配置页含 bonus 提示截图" loading="lazy" />
+          <figcaption>bonus 不是隐藏彩蛋，派遣前已有轻提示。</figcaption>
+        </figure>
+      </article>
+    </section>
+
+    <section id="bonus">
+      <div class="section-head">
+        <h2>五、再追一次：终局惊喜事件</h2>
+        <p>最终阶段结算卡在中间档时，插入临时事件。玩家可以收手，也可以消耗行动点加入更糟黑骰。</p>
+      </div>
+
+      <article class="shot">
+        <div class="meta">
+          <span class="kicker">12 · 再追一次弹窗</span>
+          <h3>玩家明确选择</h3>
+          <p>弹窗明确写出成本：消耗 1 行动点、加入更糟黑骰、对手作废 +1、灾厄链 +2。</p>
+          <div class="tags">
+            <span class="tag bonus">再追一次</span>
+            <span class="tag high">更糟黑骰</span>
+          </div>
+          <ul class="notes">
+            <li>玩家可以取消，不自动推进。</li>
+            <li>这符合“需要决策就给明确按钮”的约束。</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="12-push-bonus-event.png" alt="再追一次临时事件弹窗截图" loading="lazy" />
+          <figcaption>再追一次作为临时事件出现，而不是全局常驻重投。</figcaption>
+        </figure>
+      </article>
+
+      <article class="shot">
+        <div class="meta">
+          <span class="kicker">13 · 再追结果</span>
+          <h3>更糟黑骰与灾厄链</h3>
+          <p>确认后进入 bonus 判定，结果页显示“更糟黑骰已加入”，并显示对手作废、灾厄链和剩余行动点。</p>
+          <div class="tags">
+            <span class="tag bonus">bonus 判定</span>
+            <span class="tag red">灾厄链</span>
+          </div>
+        </div>
+        <figure>
+          <img src="13-push-bonus-result.png" alt="再追一次结果页截图" loading="lazy" />
+          <figcaption>再追结果清晰展示成本和后果。</figcaption>
+        </figure>
+      </article>
+    </section>
+
+    <p class="footer">本页为本地静态说明页，可直接双击打开；截图来源：HTML 全链条原型真实渲染。</p>
+  </main>
+</body>
+</html>

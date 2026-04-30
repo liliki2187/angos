@@ -64,6 +64,11 @@
     weekEventResolved: false,
     staffEffects: [],
     dynamicNodes: [],
+    retiredMissionIds: {},
+    completedMissionIds: {},
+    whiteInvestigationLog: {},
+    calamityMeter: 0,
+    pushBudgetWeekly: 1,
     debugShowEventEffects: false,
     weekEventResult: "",
     regionLeadEvents: {},
@@ -202,9 +207,104 @@
       pulse: false,
       hint: "初始解锁。都市传说与禁区并存。",
       nodes: [
-        { id: "n51", kind: "permanent", name: "51 区外围公路", days: 2, need: { 探索: 4, 生存: 2 }, tags: ["sci", "pop"], difficulty: "normal", enemyAttr: 2, chain: null },
-        { id: "skin", kind: "permanent", name: "罗斯威尔档案残页", days: 1, need: { 探索: 3, 洞察: 3 }, tags: ["sci", "occult"], difficulty: "normal", enemyAttr: 1, chain: null },
-        { id: "temp_ufo", kind: "temp", name: "突发：雷达异常光点", days: 2, need: { 探索: 5, 生存: 3 }, tags: ["sci", "pop"], deadlineDay: 4, difficulty: "hard", enemyAttr: 3, chain: null },
+        {
+          id: "n51",
+          kind: "permanent",
+          name: "51 区外围公路",
+          days: 2,
+          need: { 探索: 4, 生存: 2 },
+          tags: ["sci", "pop"],
+          difficulty: "normal",
+          enemyAttr: 2,
+          checkType: "white",
+          taskTypeTitle: "白色调查",
+          taskTypeDesc: "可反复追踪的常驻题材。即使失败，也会留下低价值疑点，后续派遣会继续累积同一条调查线。",
+          chain: null,
+        },
+        {
+          id: "skin",
+          kind: "permanent",
+          name: "罗斯威尔档案残页",
+          days: 1,
+          need: { 探索: 3, 洞察: 3 },
+          tags: ["sci", "occult"],
+          difficulty: "normal",
+          enemyAttr: 1,
+          checkType: "white",
+          chainType: "deep",
+          chainStage: 1,
+          taskTypeTitle: "深度调查 · 第一阶段",
+          taskTypeDesc: "连续任务起点。完成后不会简单结束，而会在地图上变成下一阶段，让玩家逐步接近真相风险。",
+          nextNode: {
+            id: "roswell_weather_copy",
+            kind: "temp",
+            name: "气象站抄本互证",
+            days: 1,
+            need: { 洞察: 4, 理性: 3 },
+            tags: ["sci", "occult"],
+            difficulty: "normal",
+            enemyAttr: 2,
+            checkType: "white",
+            chainType: "deep",
+            chainStage: 2,
+            taskTypeTitle: "深度调查 · 第二阶段",
+            taskTypeDesc: "开始接触普通解释风险。继续推进可能提高公信，也可能削弱怪谈报道的煞有介事。",
+            nextNode: {
+              id: "roswell_radar_night",
+              kind: "temp",
+              name: "废弃雷达站夜访",
+              days: 2,
+              need: { 探索: 4, 洞察: 4, 生存: 2 },
+              tags: ["sci", "occult"],
+              difficulty: "hard",
+              enemyAttr: 3,
+              checkType: "white",
+              riskTier: "high",
+              chainType: "deep",
+              chainStage: 3,
+              taskTypeTitle: "高危深度调查 · 第三阶段",
+              taskTypeDesc: "高危五档任务。成功也可能反噬，失败也可能留下下一步线索。",
+              nextNode: {
+                id: "roswell_tape_blank",
+                kind: "temp",
+                name: "封存录音的三秒空白",
+                days: 2,
+                need: { 洞察: 5, 诡思: 3, 理性: 3 },
+                tags: ["sci", "occult"],
+                difficulty: "hard",
+                enemyAttr: 4,
+                checkType: "white",
+                riskTier: "high",
+                chainType: "deep",
+                chainStage: 4,
+                chainFinal: true,
+                allowPushBonus: true,
+                taskTypeTitle: "高危深度调查 · 最终阶段",
+                taskTypeDesc: "连续任务终局。五档结算后，若结果卡在中间档，可能出现「再追一次？」惊喜事件。",
+                chain: null,
+              },
+              chain: null,
+            },
+            chain: null,
+          },
+          chain: null,
+        },
+        {
+          id: "temp_ufo",
+          kind: "temp",
+          name: "突发：雷达异常光点",
+          days: 2,
+          need: { 探索: 5, 生存: 3 },
+          tags: ["sci", "pop"],
+          deadlineDay: 4,
+          difficulty: "hard",
+          enemyAttr: 3,
+          checkType: "red",
+          riskTier: "high",
+          taskTypeTitle: "红色截稿 · 临时情报",
+          taskTypeDesc: "一次性情报窗口。派遣后无论成败都会关闭；失败时入口从地图消失，但高危五档可能留下低价值线索。",
+          chain: null,
+        },
         {
           id: "hidden_gate",
           kind: "hidden",
@@ -245,7 +345,15 @@
     pacific: { x: 56, y: 54, label: "太平洋岛屿群" },
   };
   const NODE_MAP_POS = {
-    us: { n51: { x: 22, y: 28 }, skin: { x: 54, y: 46 }, temp_ufo: { x: 73, y: 25 }, hidden_gate: { x: 67, y: 70 } },
+    us: {
+      n51: { x: 22, y: 28 },
+      skin: { x: 54, y: 46 },
+      temp_ufo: { x: 73, y: 25 },
+      hidden_gate: { x: 67, y: 70 },
+      roswell_weather_copy: { x: 48, y: 58 },
+      roswell_radar_night: { x: 60, y: 64 },
+      roswell_tape_blank: { x: 69, y: 56 },
+    },
     east_asia: { shen: { x: 32, y: 40 }, chainA: { x: 68, y: 58 } },
     pacific: { easter: { x: 48, y: 46 } },
   };
@@ -1261,6 +1369,8 @@
   }
 
   function nodeVisible(node) {
+    if (!node || state.retiredMissionIds[node.id]) return false;
+    if (node.chainType === "deep" && state.completedMissionIds[node.id]) return false;
     if (node.kind !== "hidden") return true;
     if (typeof node.unlock === "function") return node.unlock(macro);
     return true;
@@ -1272,6 +1382,192 @@
     if (state.filters.occult && t.includes("occult")) return true;
     if (state.filters.pop && t.includes("pop")) return true;
     return false;
+  }
+
+  function missionTypeBadges(m) {
+    const badges = [];
+    if ((m.checkType || "white") === "red") badges.push({ text: "红色截稿", cls: "red" });
+    else badges.push({ text: "白色调查", cls: "white" });
+    if (m.chainType === "deep") badges.push({ text: `深度调查${m.chainStage ? `·第${m.chainStage}阶段` : ""}`, cls: "deep" });
+    if (m.riskTier === "high") badges.push({ text: "高危五档", cls: "high" });
+    if (m.allowPushBonus) badges.push({ text: "终局 bonus", cls: "bonus" });
+    return badges;
+  }
+
+  function missionTypeBadgesHtml(m) {
+    return missionTypeBadges(m)
+      .map((b) => `<span class="task-type-chip task-${b.cls}">${escapeHtml(b.text)}</span>`)
+      .join("");
+  }
+
+  function missionTypeTitle(m) {
+    if (m.taskTypeTitle) return m.taskTypeTitle;
+    if ((m.checkType || "white") === "red") return "红色截稿";
+    if (m.chainType === "deep") return "深度调查";
+    if (m.riskTier === "high") return "高危任务";
+    return "白色调查";
+  }
+
+  function missionTypeDesc(m) {
+    if (m.taskTypeDesc) return m.taskTypeDesc;
+    if ((m.checkType || "white") === "red") return "一次性情报窗口。失败后入口关闭，不再作为可派遣任务出现。";
+    if (m.chainType === "deep") return "连续任务。完成后会推进为下一阶段，越接近真相，风险越高。";
+    if (m.riskTier === "high") return "高危任务。结算使用五档结果，成功也可能带来反噬。";
+    return "可反复追踪的调查任务。失败不会封死题材，后续可继续累积信息。";
+  }
+
+  function missionTypePanelHtml(m, compact) {
+    const progress = m.checkType === "white" && state.whiteInvestigationLog[m.id]
+      ? `<div style="margin-top:0.25rem;">已追踪 ${state.whiteInvestigationLog[m.id]} 次，本题材会继续累积信息。</div>`
+      : "";
+    const chain = m.chainType === "deep"
+      ? `<div style="margin-top:0.25rem;">连续任务：本阶段完成后会在地图上推进为下一阶段，直到最终完结。</div>`
+      : "";
+    const red = m.checkType === "red"
+      ? `<div style="margin-top:0.25rem;color:#fecaca;">红色截稿：派遣后窗口会关闭；失败会从地图上消失。</div>`
+      : "";
+    const high = m.riskTier === "high"
+      ? `<div style="margin-top:0.25rem;color:#fde68a;">高危五档：可能出现「成功但反噬」或「失败但有线索」。</div>`
+      : "";
+    const inner = `<div><strong>${escapeHtml(missionTypeTitle(m))}</strong> ${missionTypeBadgesHtml(m)}</div>
+      <div style="margin-top:0.25rem;">${escapeHtml(missionTypeDesc(m))}</div>
+      ${progress}${chain}${red}${high}`;
+    if (compact) return `<div class="task-type-summary">${inner}</div>`;
+    return `<div class="prob-box task-type-panel">${inner}</div>`;
+  }
+
+  function missionPointMark(n) {
+    if (n.checkType === "red") return "截";
+    if (n.chainType === "deep") return n.riskTier === "high" ? "危" : "链";
+    if (n.riskTier === "high") return "危";
+    if (n.kind === "hidden") return "隐";
+    if (n.kind === "temp" || /突发/.test(n.name)) return "!";
+    return "常";
+  }
+
+  function mapHighRiskTier(m, baseTier) {
+    if (m.riskTier !== "high") return { id: baseTier, label: baseTier, clueTier: baseTier === "大成功" ? 3 : baseTier === "小成功" ? 2 : baseTier === "失败" ? 1 : 0 };
+    if (baseTier === "大成功") return { id: "crit_success", label: "大成功", clueTier: 3 };
+    if (baseTier === "小成功") {
+      const costly = m.chainStage >= 3 || (m.tags || []).includes("occult") || macro.诡名 >= 45;
+      return costly
+        ? { id: "success_cost", label: "成功但反噬", clueTier: 3 }
+        : { id: "partial", label: "部分成功", clueTier: 2 };
+    }
+    if (baseTier === "失败") return { id: "fail_clue", label: "失败但有线索", clueTier: 1 };
+    return { id: "crit_fail", label: "大失败", clueTier: 0 };
+  }
+
+  function clueTypeFromMission(m) {
+    return (m.tags || [])[0] || "pop";
+  }
+
+  function addMissionClue(m, titleSuffix, tier, rewards, desc) {
+    if (tier <= 0) return null;
+    const clue = { title: `${m.name} · ${titleSuffix}`, type: clueTypeFromMission(m), tier, topicKey: newTopicKey() };
+    state.clues.push(clue);
+    rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: desc || `线索品质：Tier ${tier}` });
+    return clue;
+  }
+
+  function applyHighRiskOutcome(m, high, lines, rewards, prefix) {
+    const p = prefix || "";
+    if (high.id === "crit_success") {
+      addMacro({ 声望: 6, 公信: (m.tags || []).includes("sci") ? 3 : 0, 诡名: (m.tags || []).includes("occult") ? 4 : 1 });
+      lines.push(`${p}大成功：录音、目击者与雷达记录三方对上。`);
+      addMissionClue(m, "高危强线索", 3, rewards, "高危五档：大成功（Tier 3）");
+    } else if (high.id === "success_cost") {
+      addMacro({ 声望: 4, 公信: -2, 狂性: 2, 诡名: 2 });
+      lines.push(`${p}成功但反噬：拿到独家，但基地新闻官也记住了你的名字。`);
+      addMissionClue(m, "反噬独家素材", 3, rewards, "高危五档：成功但反噬（Tier 3，附带宏观代价）");
+    } else if (high.id === "partial") {
+      addMacro({ 声望: 2, 诡名: 1 });
+      lines.push(`${p}部分成功：照片能用，只有最关键的三秒糊成了灰。`);
+      addMissionClue(m, "不完整素材", 2, rewards, "高危五档：部分成功（Tier 2）");
+    } else if (high.id === "fail_clue") {
+      addMacro({ 声望: -1, 狂性: 1 });
+      lines.push(`${p}失败但有线索：任务失败，但对方反复提到一个旧地名。`);
+      addMissionClue(m, "失败残留线索", 1, rewards, "高危五档：失败但有线索（Tier 1）");
+    } else {
+      addMacro({ 守序: -3, 狂性: 4, 公信: -2 });
+      lines.push(`${p}大失败：设备烧毁，受访者失联，只剩一段空白磁带。`);
+    }
+  }
+
+  function recordWhiteInvestigation(m, lines) {
+    if ((m.checkType || "white") !== "white") return;
+    state.whiteInvestigationLog[m.id] = (state.whiteInvestigationLog[m.id] || 0) + 1;
+    if (m.id === "n51") {
+      const count = state.whiteInvestigationLog[m.id];
+      lines.push(`白色调查：本题材已追踪 ${count} 次，后续派遣会继续累积禁区周边证词。`);
+    }
+  }
+
+  function retireRedMission(m, lines) {
+    if (m.checkType !== "red") return;
+    state.retiredMissionIds[m.id] = true;
+    lines.push("红色截稿：情报窗口已关闭，该任务会从地图上消失。");
+  }
+
+  function advanceDeepChain(m, lines, rewards) {
+    if (m.chainType !== "deep") return;
+    state.completedMissionIds[m.id] = true;
+    if (!m.nextNode) {
+      lines.push("深度调查：连续任务已完结，真相风险暂时收束。");
+      return;
+    }
+    if (state.completedMissionIds[m.nextNode.id]) return;
+    const alreadyVisible = getRegionNodes({ id: m.regionId, nodes: [] }).some((node) => node.id === m.nextNode.id);
+    if (!alreadyVisible) addDynamicNode(m.regionId, m.nextNode, 6);
+    lines.push(`深度调查：当前阶段完成，地图上出现下一阶段「${m.nextNode.name}」。`);
+    rewards.push({ icon: "→", title: `连续任务推进：${m.nextNode.name}`, desc: missionTypeDesc(m.nextNode) });
+  }
+
+  function shouldOfferPushBonus(m, high) {
+    if (!m.allowPushBonus || m.pushBonusUsed || state.pushBudgetWeekly <= 0) return false;
+    return high && ["success_cost", "partial", "fail_clue"].includes(high.id);
+  }
+
+  async function resolvePushBonus(m, showDice) {
+    const ok = await showConfirmPopup(
+      "临时事件：录音里还有三秒",
+      `<p style="margin:0 0 0.5rem;">你已经准备收工，但技术员说空白段里也许藏着东西。</p>
+       <p style="margin:0;color:#fbbf24;">再追一次会消耗 1 行动点，并加入更糟黑骰：对手作废 +1，灾厄链 +2。</p>`,
+      dayDateLabel(),
+    );
+    if (!ok) return false;
+    state.pushBudgetWeekly -= 1;
+    state.calamityMeter += 2;
+    const bonusMission = { ...m, enemyAttr: (m.enemyAttr | 0) + 1, pushBonusUsed: true };
+    const bonusCheck = runSplitCheck(bonusMission, state.selectedStaffIds);
+    const bonusHigh = mapHighRiskTier(bonusMission, bonusCheck.tier);
+    const tb = document.getElementById("tierBanner");
+    if (tb) tb.textContent = `再追一次：${bonusHigh.label}`;
+    const outcome = document.getElementById("bonusOutcome");
+    if (outcome) outcome.innerHTML = `<div class="prob-box" style="border-color:#b45309;">
+      <strong>更糟黑骰已加入</strong><br/>
+      对手作废 +1 · 灾厄链 ${state.calamityMeter}/10 · 剩余追查行动点 ${state.pushBudgetWeekly}
+    </div>`;
+    if (showDice) {
+      const h = document.getElementById("diceAnim");
+      if (h) h.innerHTML = `<div class="dice-rolling-hint"><span class="dice-spinner"></span><span>再追一次：更糟黑骰加入...</span></div>`;
+      await animateDiceReveal(document.getElementById("view-result"), bonusCheck);
+    } else {
+      await sleep(450);
+      const h = document.getElementById("diceAnim");
+      if (h) h.innerHTML = `<div class="prob-box">再追一次 · 调查 ${bonusCheck.hitsA}/${bonusCheck.nAe}（≥${bonusCheck.kA}）· 现场 ${bonusCheck.hitsB}/${bonusCheck.nBe}（≥${bonusCheck.kB}）· 对手作废 +1</div>`;
+    }
+    const bonusLines = [];
+    const bonusRewards = [];
+    applyHighRiskOutcome(bonusMission, bonusHigh, bonusLines, bonusRewards, "再追一次：");
+    if (bonusHigh.id === "crit_fail") {
+      addMacro({ 公信: -2, 狂性: 3 });
+      bonusLines.push("灾厄链：官方辟谣和员工失眠将在下周事件权重中留下回声。");
+    }
+    const finalOutcome = document.getElementById("bonusOutcome");
+    if (finalOutcome) finalOutcome.innerHTML += `<div class="prob-box" style="margin-top:0.5rem;border-color:#7c3aed;">${bonusLines.map(escapeHtml).join("<br/>")}</div>`;
+    await showRewardsPopup(bonusRewards);
+    return true;
   }
 
   function renderWeekStart() {
@@ -1510,6 +1806,7 @@
       <div class="mission-head-top">
         <div class="mission-main">
           <span class="mission-tag ${typeCls}">${typeTag}</span>
+          ${missionTypeBadgesHtml(m)}
           <span class="mission-name">${escapeHtml(m.name)}</span>
         </div>
         <span class="mission-prog">${prog}</span>
@@ -1634,12 +1931,12 @@
         const pos = nodePos[n.id] || { x: 20 + Math.random() * 60, y: 20 + Math.random() * 60 };
         const diff = n.difficulty || "normal";
         const diffZh = diff === "easy" ? "简单" : diff === "hard" ? "困难" : "普通";
-        const urgent = n.kind === "temp" || /突发/.test(n.name);
+        const urgent = n.kind === "temp" || /突发/.test(n.name) || n.checkType === "red";
         const kindCls = `${n.kind === "temp" ? "temp" : ""} ${urgent ? "urgent" : ""} ${hiddenCls}`.trim();
-        const marker = urgent ? "!" : n.kind === "hidden" ? "隐" : "常";
+        const marker = missionPointMark(n);
         const disabled = !match || n.chain === "locked";
         const queued = findActiveMissionByNode(r.id, n.id);
-        return `<button type="button" class="region-point ${kindCls}" data-point-type="node" data-point-id="${n.id}" data-node="${n.id}" style="left:${pos.x}%;top:${pos.y}%;" ${disabled ? "disabled" : ""} title="${escapeHtml(n.name)} · ${diffZh}">
+        return `<button type="button" class="region-point ${kindCls}" data-point-type="node" data-point-id="${n.id}" data-node="${n.id}" style="left:${pos.x}%;top:${pos.y}%;" ${disabled ? "disabled" : ""} title="${escapeHtml(n.name)} · ${diffZh} · ${escapeHtml(missionTypeTitle(n))}">
           <span class="point-mark">${marker}</span>${escapeHtml(n.name)}${queued ? `<span class="assigned-mark" title="已派遣">派</span>` : ""}
         </button>`;
       })
@@ -1681,9 +1978,9 @@
         const diffZh = diff === "easy" ? "简单" : diff === "hard" ? "困难" : "普通";
         const deadline = n.kind === "temp" && n.deadlineDay != null ? ` · 截止 第${n.deadlineDay}天前` : "";
         const chain = n.chain === "locked" ? " · 链式未解锁" : "";
-        const urgent = n.kind === "temp" || /突发/.test(n.name);
+        const urgent = n.kind === "temp" || /突发/.test(n.name) || n.checkType === "red";
         const eventCls = urgent ? "event-urgent" : "";
-        const thumbText = n.kind === "temp" || /突发/.test(n.name) ? "!" : n.kind === "hidden" ? "隐" : "常";
+        const thumbText = missionPointMark(n);
         const queued = findActiveMissionByNode(r.id, n.id);
         return `<div class="region-node-item ${eventCls} interactive" data-side-type="node" data-side-id="${n.id}" style="${match ? "" : "opacity:0.45;"}">
           <div class="event-card">
@@ -1691,6 +1988,7 @@
             <div>
               <div><strong>${escapeHtml(n.name)}</strong></div>
               <div style="color:#94a3b8;margin-top:2px;">${n.kind === "permanent" ? "常驻" : n.kind === "temp" ? "临时" : "隐藏"} · ${diffZh} · 耗时${n.days}天 · 对手骰${n.enemyAttr | 0}${deadline}${chain}</div>
+              ${missionTypePanelHtml(n, true)}
               <div class="event-meta-row">
                 <div>${queued ? staffAvatarsHtml(queued.staffIds) : ""}</div>
                 <button type="button" data-node-open="${n.id}" ${n.chain === "locked" ? "disabled" : ""}>${queued ? "查看派遣" : "配置队伍并派遣"}</button>
@@ -1839,6 +2137,7 @@
     const prob = computeExplorationP(m, state.selectedStaffIds);
     elS.innerHTML = `
       <h2>${m.missionType === "leadInvestigation" ? "线索调查配置" : "探索配置"} · ${escapeHtml(m.name)}</h2>
+      ${missionTypePanelHtml(m, false)}
       <div class="prob-box">
         <div>调查池 ${prob.nA} 骰 · 需 ${prob.kA} 成功 · P(A)≈${(prob.pA * 100).toFixed(1)}%</div>
         <div>现场池 ${prob.nB} 骰 · 需 ${prob.kB} 成功 · P(B)≈${(prob.pB * 100).toFixed(1)}%</div>
@@ -2169,6 +2468,7 @@
     if (!m) return;
     const check = runSplitCheck(m, state.selectedStaffIds);
     const tier = check.tier;
+    const highTier = mapHighRiskTier(m, tier);
     const lines = [];
     const rewards = [];
     if (m.missionType === "leadInvestigation") {
@@ -2191,37 +2491,40 @@
           macro.声望 = Math.max(0, macro.声望 - (tier === "大失败" ? 2 : 1));
         }
       }
-    } else if (tier === "大成功") {
-      macro.声望 = Math.min(100, macro.声望 + 6);
-      macro.公信 += m.tags.includes("sci") ? 4 : 0;
-      macro.诡名 += m.tags.includes("occult") ? 5 : 2;
-      if (m.kind === "hidden") macro.狂性 = Math.min(100, macro.狂性 + 4);
-      lines.push("大成功：高质量线索。");
-      const clue = { title: m.name + " · 深度特稿素材", type: m.tags[0] || "pop", tier: 3, topicKey: newTopicKey() };
-      state.clues.push(clue);
-      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：高（Tier 3）" });
-    } else if (tier === "小成功") {
-      macro.声望 = Math.min(100, macro.声望 + 4);
-      macro.诡名 += 1;
-      lines.push("小成功：常规稿件素材。");
-      const clue = { title: m.name + " · 常规稿件素材", type: m.tags[0] || "pop", tier: 2, topicKey: newTopicKey() };
-      state.clues.push(clue);
-      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：中（Tier 2）" });
-    } else if (tier === "失败") {
-      macro.声望 = Math.max(0, macro.声望 - 2);
-      lines.push("失败：碎片线索。");
-      const clue = { title: m.name + " · 碎片线索", type: m.tags[0] || "pop", tier: 1, topicKey: newTopicKey() };
-      state.clues.push(clue);
-      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：低（Tier 1）" });
+    } else if (m.riskTier === "high") {
+      applyHighRiskOutcome(m, highTier, lines, rewards, "");
     } else {
-      macro.守序 = Math.max(0, macro.守序 - 3);
-      macro.狂性 = Math.min(100, macro.狂性 + 3);
-      lines.push("大失败。");
+      if (tier === "大成功") {
+        macro.声望 = Math.min(100, macro.声望 + 6);
+        macro.公信 += m.tags.includes("sci") ? 4 : 0;
+        macro.诡名 += m.tags.includes("occult") ? 5 : 2;
+        if (m.kind === "hidden") macro.狂性 = Math.min(100, macro.狂性 + 4);
+        lines.push("大成功：高质量线索。");
+        addMissionClue(m, "深度特稿素材", 3, rewards, "线索品质：高（Tier 3）");
+      } else if (tier === "小成功") {
+        macro.声望 = Math.min(100, macro.声望 + 4);
+        macro.诡名 += 1;
+        lines.push("小成功：常规稿件素材。");
+        addMissionClue(m, "常规稿件素材", 2, rewards, "线索品质：中（Tier 2）");
+      } else if (tier === "失败") {
+        macro.声望 = Math.max(0, macro.声望 - 2);
+        lines.push("失败：碎片线索。");
+        addMissionClue(m, "碎片线索", 1, rewards, "线索品质：低（Tier 1）");
+      } else {
+        macro.守序 = Math.max(0, macro.守序 - 3);
+        macro.狂性 = Math.min(100, macro.狂性 + 3);
+        lines.push("大失败。");
+      }
+    }
+    if (m.missionType !== "leadInvestigation") {
+      recordWhiteInvestigation(m, lines);
+      advanceDeepChain(m, lines, rewards);
+      retireRedMission(m, lines);
     }
     ["公信", "诡名", "声望", "守序", "狂性"].forEach((k) => {
       macro[k] = Math.max(0, Math.min(100, macro[k]));
     });
-    log(`${m.name} → 「${tier}」`);
+    log(`${m.name} → 「${m.riskTier === "high" ? highTier.label : tier}」`);
     const elRes = document.getElementById("view-result");
     const showDice = state.displayMode === "dice";
     const missionHead = missionHeaderHtml(m, state.selectedStaffIds);
@@ -2232,6 +2535,7 @@
       ${showDice ? `<div id="diceAnim"><div class="dice-rolling-hint"><span class="dice-spinner"></span><span>摇骰中...</span></div></div>`
         : `<div class="prob-box" id="diceAnim">计算中...</div>`}
       <p style="font-size:0.9rem;color:var(--muted);">${lines.map(escapeHtml).join("<br/>")}</p>
+      <div id="bonusOutcome"></div>
       <p>剩余 <strong>${state.day}</strong> 日</p>
       <button type="button" class="primary" id="btnAfterResult" disabled>继续</button>`;
     bindMissionStaffHover(elRes);
@@ -2244,7 +2548,12 @@
       const h = document.getElementById("diceAnim");
       if (h) h.innerHTML = `<div class="prob-box">调查 ${check.hitsA}/${check.nAe}（≥${check.kA}）· 现场 ${check.hitsB}/${check.nBe}（≥${check.kB}）</div>`;
     }
+    const tbBeforeRewards = document.getElementById("tierBanner");
+    if (tbBeforeRewards) tbBeforeRewards.textContent = m.riskTier === "high" ? highTier.label : tier;
     await showRewardsPopup(rewards);
+    if (shouldOfferPushBonus(m, highTier)) {
+      await resolvePushBonus(m, showDice);
+    }
     if (week1TutorialActive() && !state.tutorialSoftW1.w1_result) {
       if (tutorialsGloballyDisabled()) {
         state.tutorialSoftW1.w1_result = true;
@@ -2277,7 +2586,7 @@
       }
     }
     const tb = document.getElementById("tierBanner");
-    if (tb) tb.textContent = tier;
+    if (tb && !/^再追一次/.test(tb.textContent || "")) tb.textContent = m.riskTier === "high" ? highTier.label : tier;
     const goBtn = document.getElementById("btnAfterResult");
     if (goBtn) goBtn.disabled = false;
     document.getElementById("btnAfterResult").onclick = () => {
@@ -3831,6 +4140,7 @@
     state.pendingClues = [];
     state.pendingReports = [];
     state.topicSynthOrder = {};
+    state.pushBudgetWeekly = 1;
     cleanupWeekScopedEffects();
     initRegionLeadEvents();
     state.phase = "explore";
