@@ -1,8 +1,1676 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>世界未解之谜周刊 · 全链条 Demo</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap");
+    :root {
+      --bg: #0d1117; --panel: #161b22; --border: #30363d; --text: #e6edf3; --muted: #8b949e;
+      --gold: #d4a853; --gold-dim: #8a7038; --danger: #f85149; --ok: #3fb950; --mystic: #a371f7; --sci: #58a6ff;
+      --line: #334155; --soft: #94a3b8; --primary: #3b82f6; --good: #22c55e; --bad: #ef4444;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh;
+      font-family: "Noto Serif SC", "Songti SC", Georgia, serif;
+      background: radial-gradient(ellipse at 50% 0%, #1a2332 0%, var(--bg) 55%);
+      color: var(--text); line-height: 1.5;
+    }
+    #app { max-width: 1320px; margin: 0 auto; padding: 1rem 1.25rem 2rem; min-height: 100vh; }
+    h1 { font-size: 1.35rem; font-weight: 700; letter-spacing: 0.06em; color: var(--gold); margin: 0 0 0.25rem; }
+    .sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.75rem; }
+    .bar-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; margin-bottom: 1rem; }
+    @media (max-width: 720px) { .bar-row { grid-template-columns: repeat(2, 1fr); } }
+    .stat { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 0.45rem 0.55rem; font-size: 0.75rem; }
+    .stat b { display: block; color: var(--gold); font-size: 0.7rem; }
+    .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.1rem; margin-bottom: 1rem; }
+    .panel h2 { margin: 0 0 0.6rem; font-size: 1rem; color: var(--gold-dim); font-weight: 600; }
+    .view-title-row {
+      display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+      gap: 0.35rem 1rem; margin: 0 0 0.6rem;
+    }
+    .view-title-row h2 { margin: 0; flex: 1 1 auto; min-width: 0; }
+    .dispatch-count {
+      font-size: 0.95rem; font-weight: 600; color: var(--gold-dim); letter-spacing: 0.02em; white-space: nowrap;
+    }
+    .row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    button, .btn {
+      font-family: inherit; cursor: pointer; border-radius: 6px; border: 1px solid var(--border);
+      background: linear-gradient(180deg, #2d333b, #21262d); color: var(--text); padding: 0.45rem 0.85rem; font-size: 0.85rem;
+    }
+    button:hover { border-color: var(--gold-dim); color: var(--gold); }
+    button.primary { background: linear-gradient(180deg, #4a3f1a, #2d2610); border-color: var(--gold-dim); color: var(--gold); }
+    button:disabled { opacity: 0.45; cursor: not-allowed; }
+    button.nm-btn { background: linear-gradient(180deg, #2563eb, #1d4ed8); border-color: #1d4ed8; color: #fff; }
+    button.nm-sec { background: #1e293b; border-color: #475569; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .tag { font-size: 0.72rem; padding: 0.2rem 0.45rem; border-radius: 4px; border: 1px solid var(--border); color: var(--muted); }
+    .tag.on { border-color: var(--gold); color: var(--gold); background: rgba(212, 168, 83, 0.08); }
+    .map-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.65rem; }
+    .world-region-host { width: 100%; }
+    .world-map-wrap { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 10px; }
+    @media (max-width: 980px) { .world-map-wrap { grid-template-columns: 1fr; } }
+    .world-map {
+      position: relative; min-height: 300px; border: 1px solid var(--border); border-radius: 10px;
+      background:
+        radial-gradient(circle at 18% 34%, rgba(88,166,255,0.18) 0 18%, transparent 19%),
+        radial-gradient(circle at 52% 44%, rgba(63,185,80,0.14) 0 21%, transparent 22%),
+        radial-gradient(circle at 80% 54%, rgba(163,113,247,0.16) 0 18%, transparent 19%),
+        linear-gradient(180deg, #0b1320, #0a1018);
+      overflow: hidden;
+    }
+    .world-map::after {
+      content: "WORLD INVESTIGATION MAP";
+      position: absolute; right: 10px; bottom: 8px; font-size: 11px; color: #6b7280; letter-spacing: 0.08em;
+    }
+    .map-point {
+      position: absolute; transform: translate(-50%, -50%); min-width: 86px; padding: 4px 8px;
+      border: 1px solid #4b5563; border-radius: 999px; background: rgba(15,23,42,0.92); color: #cbd5e1;
+      font-size: 12px; cursor: pointer; text-align: center;
+    }
+    .map-point .event-dot {
+      position: absolute;
+      right: -3px;
+      top: -4px;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+      border-radius: 999px;
+      background: #ef4444;
+      color: #fff;
+      border: 1px solid rgba(248,113,113,0.85);
+      display: inline-grid;
+      place-items: center;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1;
+      box-shadow: 0 0 0 2px rgba(15,23,42,0.88);
+    }
+    .map-point.has-event { border-color: rgba(248,113,113,0.75); }
+    .map-point:hover:not(.locked) { border-color: var(--gold); color: var(--gold); }
+    .map-point::before {
+      content: ""; position: absolute; left: 50%; top: 50%; width: 7px; height: 7px; border-radius: 50%;
+      background: #60a5fa; transform: translate(-50%, -50%); z-index: -1;
+      box-shadow: 0 0 0 5px rgba(96,165,250,0.16), 0 0 14px rgba(96,165,250,0.4);
+    }
+    .map-point.locked { opacity: 0.5; cursor: not-allowed; }
+    .map-point.pulse::before { box-shadow: 0 0 0 8px rgba(163,113,247,0.22), 0 0 18px rgba(163,113,247,0.55); }
+    .map-side { border: 1px solid var(--border); border-radius: 10px; background: #0b1220; padding: 8px; }
+    .map-side h3 { margin: 0 0 6px; font-size: 0.88rem; color: var(--gold); }
+    .map-side .entry { border: 1px solid #334155; border-radius: 8px; padding: 7px; margin-bottom: 6px; font-size: 12px; }
+    .map-side .entry.has-event { border-color: rgba(248,113,113,0.6); background: rgba(127,29,29,0.14); }
+    .event-hint {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(248,113,113,0.8);
+      color: #fca5a5;
+      font-size: 11px;
+      line-height: 1.4;
+      background: rgba(127,29,29,0.22);
+    }
+    .evt-debug { font-size: 12px; color: var(--muted); margin: 4px 0 8px; }
+    .region-map-wrap { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 10px; }
+    @media (max-width: 980px) { .region-map-wrap { grid-template-columns: 1fr; } }
+    .region-map {
+      position: relative; min-height: 300px; border: 1px solid var(--border); border-radius: 10px;
+      background:
+        radial-gradient(circle at 24% 28%, rgba(88,166,255,0.14) 0 15%, transparent 16%),
+        radial-gradient(circle at 48% 58%, rgba(63,185,80,0.12) 0 17%, transparent 18%),
+        radial-gradient(circle at 77% 36%, rgba(163,113,247,0.14) 0 16%, transparent 17%),
+        linear-gradient(180deg, #0a111b, #0b1220);
+      overflow: hidden;
+    }
+    .region-point {
+      position: absolute; transform: translate(-50%, -50%); min-width: 82px; padding: 4px 8px;
+      border: 1px solid #475569; border-radius: 999px; background: rgba(15,23,42,0.94); color: #cbd5e1;
+      font-size: 12px; text-align: center; cursor: pointer;
+    }
+    .region-point .point-mark {
+      display: inline-grid;
+      place-items: center;
+      width: 16px;
+      height: 16px;
+      margin-right: 4px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.5);
+      font-size: 11px;
+      line-height: 1;
+      font-weight: 700;
+      background: rgba(15,23,42,0.92);
+      color: #e2e8f0;
+      vertical-align: -2px;
+    }
+    .region-point .assigned-mark {
+      position: absolute;
+      right: -4px;
+      top: -6px;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(250,204,21,0.85);
+      background: rgba(120,53,15,0.95);
+      color: #fde68a;
+      font-size: 10px;
+      font-weight: 800;
+      display: inline-grid;
+      place-items: center;
+      box-shadow: 0 0 0 2px rgba(15,23,42,0.9);
+      line-height: 1;
+    }
+    .region-point:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
+    .region-point:disabled { opacity: 0.45; cursor: not-allowed; }
+    .region-point.temp { border-color: rgba(248,81,73,0.5); }
+    .region-point.urgent { border-color: rgba(249,115,22,0.7); }
+    .region-point.urgent .point-mark { border-color: rgba(249,115,22,0.8); color: #fdba74; }
+    .region-point.lead { border-color: rgba(34,197,94,0.7); }
+    .region-point.lead .point-mark { border-color: rgba(34,197,94,0.8); color: #86efac; }
+    .region-point.hidden-node { border-style: dashed; border-color: rgba(163,113,247,0.7); }
+    .region-point.is-linked { box-shadow: 0 0 0 2px rgba(212,168,83,0.42), 0 0 14px rgba(212,168,83,0.28); border-color: var(--gold); color: var(--gold); }
+    .region-point::before {
+      content: ""; position: absolute; left: 50%; top: 50%; width: 6px; height: 6px; border-radius: 50%;
+      transform: translate(-50%, -50%); z-index: -1; background: #60a5fa;
+      box-shadow: 0 0 0 5px rgba(96,165,250,0.16), 0 0 14px rgba(96,165,250,0.35);
+    }
+    .region-node-side { border: 1px solid var(--border); border-radius: 10px; background: #0b1220; padding: 8px; }
+    .region-node-side h3 { margin: 0 0 6px; font-size: 0.9rem; color: var(--gold); }
+    .region-node-item { border: 1px solid #334155; border-radius: 8px; padding: 7px; margin-bottom: 6px; font-size: 12px; background: #0f172a; }
+    .lead-item { border: 1px solid #3f3f46; border-radius: 8px; padding: 7px; margin-bottom: 6px; background: #111827; font-size: 12px; }
+    .region-node-item.event-urgent {
+      border-color: rgba(249, 115, 22, 0.7);
+      background: rgba(124, 45, 18, 0.22);
+    }
+    .region-node-item.event-clue,
+    .lead-item.event-clue {
+      border-color: rgba(34, 197, 94, 0.7);
+      background: rgba(20, 83, 45, 0.2);
+    }
+    .region-node-item.interactive,
+    .lead-item.interactive {
+      cursor: pointer;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+    }
+    .region-node-item.interactive:hover,
+    .lead-item.interactive:hover,
+    .region-node-item.is-linked,
+    .lead-item.is-linked {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 1px rgba(212,168,83,0.35);
+      transform: translateY(-1px);
+    }
+    .region-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 10px;
+    }
+    .next-day-big {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      min-width: 240px;
+      justify-content: center;
+      border-radius: 12px;
+      border: 1px solid rgba(212,168,83,0.78);
+      background: linear-gradient(180deg, rgba(74,63,26,0.95), rgba(45,38,16,0.92));
+      color: var(--gold);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.45), 0 0 0 1px rgba(212,168,83,0.18) inset;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: none;
+    }
+    .next-day-big:hover:not(:disabled) {
+      border-color: rgba(250,204,21,0.95);
+      color: #fde68a;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5), 0 0 0 1px rgba(250,204,21,0.22) inset;
+    }
+    .next-day-big:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .next-day-big .arrow {
+      width: 28px;
+      height: 18px;
+      position: relative;
+      filter: drop-shadow(0 2px 6px rgba(250,204,21,0.25));
+      flex: 0 0 auto;
+    }
+    .next-day-big .arrow::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 4px;
+      background: #facc15;
+      border-radius: 999px;
+      box-shadow: 0 0 0 1px rgba(250,204,21,0.22) inset;
+    }
+    .next-day-big .arrow::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%) rotate(45deg);
+      width: 10px;
+      height: 10px;
+      border-right: 4px solid #facc15;
+      border-top: 4px solid #facc15;
+      border-radius: 2px;
+    }
+    .modal-mask {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.58);
+      backdrop-filter: blur(2px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-card {
+      width: min(540px, 92vw);
+      border-radius: 14px;
+      border: 1px solid rgba(212,168,83,0.45);
+      background: linear-gradient(180deg, rgba(17,24,39,0.98), rgba(11,18,32,0.98));
+      box-shadow: 0 18px 50px rgba(0,0,0,0.55);
+      padding: 14px 14px 12px;
+    }
+    .modal-title {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .modal-title h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+    }
+    .modal-date {
+      font-size: 0.82rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .modal-body {
+      border-top: 1px solid rgba(148,163,184,0.18);
+      padding-top: 10px;
+      color: #cbd5e1;
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .mission-head {
+      border: 1px solid rgba(212,168,83,0.42);
+      background: linear-gradient(180deg, rgba(20,29,45,0.95), rgba(13,20,34,0.94));
+      border-radius: 10px;
+      padding: 9px 10px;
+      margin: 0.35rem 0 0.65rem;
+    }
+    .mission-head-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .mission-main {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-width: 0;
+    }
+    .mission-tag {
+      font-size: 11px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      border: 1px solid #64748b;
+      color: #cbd5e1;
+      background: rgba(30,41,59,0.7);
+      white-space: nowrap;
+    }
+    .mission-tag.lead { border-color: rgba(34,197,94,0.65); color: #86efac; }
+    .mission-tag.normal { border-color: rgba(96,165,250,0.65); color: #93c5fd; }
+    .mission-name {
+      font-weight: 700;
+      color: #e2e8f0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .mission-prog {
+      font-size: 12px;
+      color: #facc15;
+      white-space: nowrap;
+    }
+    .mission-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 10px;
+      font-size: 12px;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+    }
+    .mission-meta b { color: #e2e8f0; font-weight: 600; }
+    .mission-staff {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .mission-staff-label {
+      font-size: 12px;
+      color: #94a3b8;
+      white-space: nowrap;
+    }
+    .mission-staff-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+    .mission-staff-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 2px 8px 2px 2px;
+      border-radius: 999px;
+      border: 1px solid rgba(100,116,139,0.55);
+      background: rgba(15,23,42,0.76);
+      cursor: default;
+    }
+    .mission-staff-chip img {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      object-fit: cover;
+      border: 1px solid rgba(148,163,184,0.4);
+    }
+    .mission-staff-chip .nm {
+      font-size: 12px;
+      color: #e2e8f0;
+      white-space: nowrap;
+    }
+    .staff-hover-card {
+      position: fixed;
+      z-index: 2600;
+      width: 250px;
+      border-radius: 10px;
+      border: 1px solid rgba(212,168,83,0.5);
+      background: linear-gradient(180deg, rgba(15,23,42,0.98), rgba(11,18,32,0.98));
+      box-shadow: 0 16px 32px rgba(0,0,0,0.5);
+      padding: 8px;
+      pointer-events: none;
+    }
+    .staff-hover-head {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .staff-hover-head img {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid rgba(148,163,184,0.35);
+    }
+    .staff-hover-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+    .staff-hover-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+      font-size: 11px;
+      color: #cbd5e1;
+    }
+    .staff-hover-grid span {
+      border: 1px solid rgba(71,85,105,0.55);
+      border-radius: 6px;
+      padding: 3px 2px;
+      text-align: center;
+      background: rgba(15,23,42,0.72);
+    }
+    .reward-box {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid rgba(71,85,105,0.55);
+      border-radius: 10px;
+      padding: 10px;
+      background: rgba(15,23,42,0.72);
+      margin-top: 8px;
+    }
+    .reward-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 10px;
+      border: 1px solid rgba(212,168,83,0.45);
+      display: grid;
+      place-items: center;
+      font-size: 26px;
+      background: linear-gradient(180deg, rgba(30,41,59,0.95), rgba(15,23,42,0.95));
+    }
+    .reward-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 3px;
+    }
+    .reward-desc {
+      font-size: 12px;
+      color: #94a3b8;
+      line-height: 1.45;
+    }
+    .event-card {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 8px;
+      align-items: start;
+    }
+    .event-thumb {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      border: 1px solid #475569;
+      background: linear-gradient(145deg, #1e293b, #0f172a);
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+      color: #e2e8f0;
+      font-weight: 700;
+      user-select: none;
+    }
+    .event-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .assigned-avatars {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      min-height: 24px;
+    }
+    .assigned-avatars img {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      border: 1px solid #0f172a;
+      object-fit: cover;
+      margin-left: -6px;
+      box-shadow: 0 0 0 1px rgba(148,163,184,0.35);
+      background: #0b1220;
+    }
+    .assigned-avatars img:first-child { margin-left: 0; }
+    .assigned-avatars img.cut-tail {
+      clip-path: inset(0 42% 0 0);
+      margin-right: -8px;
+    }
+    .region {
+      border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem;
+      background: linear-gradient(145deg, #1c2128, #13171c); cursor: pointer;
+    }
+    .region:hover:not(.locked) { border-color: var(--gold-dim); box-shadow: 0 0 0 1px rgba(212, 168, 83, 0.2); }
+    .region.locked { opacity: 0.55; cursor: not-allowed; }
+    .region .name { font-weight: 700; color: var(--gold); font-size: 0.95rem; }
+    .region .hint { font-size: 0.75rem; color: var(--muted); margin-top: 0.35rem; }
+    .pulse { animation: pulse 1.6s ease-in-out infinite; }
+    @keyframes pulse { 50% { box-shadow: 0 0 12px 2px rgba(163, 113, 247, 0.35); } }
+    .nodes { display: flex; flex-direction: column; gap: 0.5rem; }
+    .node { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; padding: 0.65rem 0.75rem; border-radius: 8px; border: 1px solid var(--border); background: #12161c; }
+    .node:hover { border-color: var(--mystic); }
+    .node.hidden-node { border-style: dashed; opacity: 0.92; }
+    .node .meta { font-size: 0.72rem; color: var(--muted); }
+    .badge { font-size: 0.65rem; padding: 0.15rem 0.35rem; border-radius: 3px; border: 1px solid var(--border); white-space: nowrap; }
+    .badge.perm { color: var(--sci); border-color: rgba(88, 166, 255, 0.4); }
+    .badge.temp { color: var(--danger); border-color: rgba(248, 81, 73, 0.4); }
+    .badge.hid { color: var(--mystic); border-color: rgba(163, 113, 247, 0.45); }
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(136px, 1fr)); gap: 0.5rem; }
+    .staff-card { border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem 0.55rem; font-size: 0.78rem; cursor: pointer; background: #0f1318; }
+    .staff-card.selected { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(212, 168, 83, 0.35); }
+    .staff-card .t { font-weight: 700; margin-bottom: 0.25rem; }
+    .staff-card .portrait {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      margin-bottom: 0.35rem;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      background: #f3f3f3;
+    }
+    .staff-card dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 0.1rem 0.35rem; font-size: 0.72rem; color: var(--muted); }
+    .log { font-size: 0.8rem; color: var(--muted); max-height: 160px; overflow-y: auto; }
+    .log p { margin: 0.35rem 0; border-left: 2px solid var(--border); padding-left: 0.5rem; }
+    .prob-box { font-size: 0.78rem; color: var(--muted); background: #0f1318; border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem 0.75rem; margin-top: 0.5rem; }
+    .rule-strip { margin-top: 0.55rem; display: grid; gap: 0.45rem; }
+    .rule-strip-head { font-size: 0.78rem; color: var(--gold-dim); font-weight: 700; }
+    .rule-chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .rule-chip {
+      font-size: 0.72rem; padding: 0.22rem 0.5rem; border-radius: 999px; border: 1px solid var(--border);
+      background: #0b1220; color: #cbd5e1;
+    }
+    .rule-chip.scene { border-color: rgba(212,168,83,0.5); color: var(--gold); }
+    .rule-chip.axis { border-color: rgba(59,130,246,0.45); color: #93c5fd; }
+    .rule-chip.intervention { border-color: rgba(248,113,113,0.45); color: #fca5a5; }
+    .rule-chip.carry { border-color: rgba(34,197,94,0.4); color: #86efac; }
+    .rule-chip.chain { border-color: rgba(163,113,247,0.45); color: #d8b4fe; }
+    .rule-details { display: grid; gap: 0.28rem; font-size: 0.75rem; color: var(--muted); }
+    .carry-strip {
+      margin: 0.75rem 0 0.5rem; display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .carry-card {
+      min-width: 180px; padding: 0.5rem 0.65rem; border-radius: 8px; border: 1px solid #334155;
+      background: linear-gradient(180deg, #0f1318, #0b1220); font-size: 0.74rem; color: #cbd5e1;
+    }
+    .carry-card .k { color: var(--gold); font-weight: 700; margin-bottom: 0.18rem; }
+    .result-grid { display: grid; gap: 0.55rem; margin: 0.7rem 0; }
+    .result-box {
+      border: 1px solid #334155; border-radius: 10px; padding: 0.55rem 0.7rem; background: #0b1220;
+    }
+    .result-box h3 { margin: 0 0 0.3rem; font-size: 0.82rem; color: var(--gold-dim); }
+    .result-box p { margin: 0; font-size: 0.8rem; color: #cbd5e1; line-height: 1.45; }
+    .mode-toggle { display: inline-flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+    .mode-toggle button { border: none; border-radius: 0; background: #21262d; }
+    .mode-toggle button.on { background: #2d2610; color: var(--gold); }
+    .dice-pool h3 { margin: 0 0 0.35rem; font-size: 0.85rem; color: var(--gold-dim); }
+    .dice-row { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .die {
+      width: 2rem; height: 2rem; border-radius: 6px; border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center;
+      font-size: 0.95rem; font-weight: 700; background: #0d1117; transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+    }
+    .die.hit { border-color: var(--ok); color: var(--ok); box-shadow: 0 0 0 1px rgba(63,185,80,0.28) inset, 0 0 10px rgba(63,185,80,0.22); }
+    .die.miss { color: #ef4444; border-color: #ef4444; box-shadow: 0 0 0 1px rgba(239,68,68,0.18) inset, 0 0 10px rgba(239,68,68,0.2); }
+    .die.void { border-style: dashed; color: var(--muted); text-decoration: line-through; opacity: 0.75; }
+    .die.boost { border-color: #f59e0b; color: #fbbf24; box-shadow: 0 0 0 1px rgba(245,158,11,0.28) inset, 0 0 12px rgba(245,158,11,0.28); }
+    .die.carry { border-color: #38bdf8; color: #7dd3fc; box-shadow: 0 0 0 1px rgba(56,189,248,0.22) inset, 0 0 12px rgba(56,189,248,0.28); }
+    .die.tainted { border-color: #a855f7; color: #d8b4fe; box-shadow: 0 0 0 1px rgba(168,85,247,0.22) inset, 0 0 12px rgba(168,85,247,0.25); }
+    .die.focus-pulse { animation: diceFocusPulse 0.7s ease-in-out 2; }
+    .die.locked {
+      box-shadow: 0 0 0 2px rgba(212,168,83,0.72), 0 0 18px rgba(212,168,83,0.32);
+      transform: scale(1.12);
+    }
+    .die.lockable { cursor: pointer; }
+    .die.intervention-mark {
+      box-shadow: 0 0 0 2px rgba(248,113,113,0.65), 0 0 18px rgba(248,113,113,0.35);
+      transform: scale(1.16);
+    }
+    .die.intervention-safe {
+      box-shadow: 0 0 0 2px rgba(56,189,248,0.6), 0 0 18px rgba(56,189,248,0.3);
+      transform: scale(1.14);
+    }
+    .die.rolling {
+      border-color: #60a5fa; color: #60a5fa;
+      background: linear-gradient(160deg, #0b1220, #10223d);
+      animation: diceRolling 0.22s linear infinite;
+      box-shadow: 0 0 0 1px rgba(96,165,250,0.2) inset, 0 0 14px rgba(59,130,246,0.35);
+    }
+    .die.reveal-pop { animation: diceRevealPop 0.22s ease-out; }
+    @keyframes diceRolling {
+      0% { transform: translateY(0) rotate(0deg) scale(1); }
+      25% { transform: translateY(-2px) rotate(7deg) scale(1.08); }
+      50% { transform: translateY(1px) rotate(-6deg) scale(0.98); }
+      75% { transform: translateY(-1px) rotate(5deg) scale(1.06); }
+      100% { transform: translateY(0) rotate(0deg) scale(1); }
+    }
+    @keyframes diceRevealPop {
+      0% { transform: scale(0.86); filter: brightness(1.3); }
+      65% { transform: scale(1.12); filter: brightness(1.1); }
+      100% { transform: scale(1); filter: brightness(1); }
+    }
+    @keyframes diceFocusPulse {
+      0% { transform: scale(1); }
+      30% { transform: scale(1.18); }
+      60% { transform: scale(1.05); }
+      100% { transform: scale(1.15); }
+    }
+    .dice-rolling-hint {
+      margin-bottom: 0.45rem; font-size: 0.82rem; color: #93c5fd; letter-spacing: 0.02em;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .dice-spinner {
+      width: 14px; height: 14px; border: 2px solid #1e3a8a; border-top-color: #60a5fa; border-radius: 50%;
+      animation: diceSpin 0.7s linear infinite;
+    }
+    @keyframes diceSpin { to { transform: rotate(360deg); } }
+    .phase-label { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.35rem; }
+    .mech-stage {
+      margin-top: 0.55rem;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 0.55rem 0.7rem;
+      background: linear-gradient(180deg, #0b1220, #0f1318);
+    }
+    .mech-stage h4 {
+      margin: 0 0 0.25rem;
+      font-size: 0.78rem;
+      color: var(--gold);
+    }
+    .mech-stage p {
+      margin: 0;
+      font-size: 0.76rem;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+    .reroll-actions {
+      margin-top: 0.55rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .reroll-status {
+      font-size: 0.78rem;
+      color: #cbd5e1;
+    }
+    .lock-phase-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 0.65rem;
+    }
+    .lock-zone {
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 0.6rem 0.7rem;
+      background: linear-gradient(180deg, #0b1220, #0f1318);
+    }
+    .lock-zone h4 {
+      margin: 0 0 0.3rem;
+      font-size: 0.82rem;
+      color: var(--gold-dim);
+    }
+    .lock-zone-note {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+    }
+    .lock-zone .dice-pool { margin-top: 0.35rem; }
+    .stage-banner {
+      margin: 0.55rem 0 0.35rem;
+      padding: 0.42rem 0.65rem;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 1px solid rgba(212,168,83,0.42);
+      background: rgba(29, 41, 59, 0.78);
+      color: var(--gold);
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.18) inset;
+    }
+    .result-banner { font-size: 1.1rem; font-weight: 700; color: var(--gold); margin: 0.75rem 0 0.35rem; }
+    .hidden { display: none !important; }
+    .tip-inline { font-size: 0.78rem; color: var(--muted); }
+    .next-day-fab {
+      position: fixed;
+      right: 20px;
+      bottom: 18px;
+      z-index: 1200;
+      min-width: 126px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(212,168,83,0.58);
+      background: linear-gradient(145deg, #1f2937, #111827);
+      color: var(--gold);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+      font-weight: 700;
+    }
+    .next-day-fab:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+    footer { margin-top: 1rem; font-size: 0.72rem; color: var(--muted); text-align: center; }
+
+    /* 报刊组版（与 design/gdd/editorial-layout-and-publishing-strategy.md / design/gdd/issue-settlement-and-audience-feedback.md / index.html 对齐） */
+    .nm-wrap { font-family: "Segoe UI", system-ui, sans-serif; }
+    .nm-grid { display: grid; grid-template-columns: 0.9fr 1.55fr 0.85fr; gap: 14px; }
+    @media (max-width: 1100px) { .nm-grid { grid-template-columns: 1fr; } }
+    .nm-card {
+      background: linear-gradient(180deg, #111827, #0b1220); border: 1px solid var(--line); border-radius: 12px; padding: 12px;
+    }
+    .nm-card h2 { margin: 0 0 10px; font-size: 18px; color: var(--text); }
+    .nm-stories { max-height: 520px; overflow: auto; display: grid; gap: 8px; margin-top: 10px; }
+    .nm-story {
+      border: 1px solid #334155; background: #0b1220; border-radius: 10px; padding: 8px; cursor: grab; display: grid; gap: 6px;
+    }
+    .nm-story:active { cursor: grabbing; }
+    .nm-story.dragging { opacity: 0.5; border-color: #60a5fa; }
+    .nm-story.synergy { border-color: #22c55e; box-shadow: 0 0 0 1px #166534 inset; background: #0a1a12; }
+    .nm-story-title { font-size: 14px; font-weight: 600; }
+    .nm-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+    .nm-chip { font-size: 11px; border: 1px solid #475569; border-radius: 999px; padding: 2px 8px; color: #cbd5e1; background: #111827; }
+    .nm-chip.ex { border-color: var(--gold); color: var(--gold); }
+    .nm-slot-grid { display: grid; gap: 8px; }
+    .nm-slot {
+      border: 1px dashed #64748b; border-radius: 10px; padding: 8px; background: #0b1220; display: grid; gap: 6px; min-height: 100px;
+    }
+    .nm-slot.drag-over { border-color: #60a5fa; box-shadow: 0 0 0 1px #60a5fa inset; background: #0c1730; }
+    .nm-slot.good-preview { border-color: #22c55e; box-shadow: 0 0 0 1px #22c55e inset; }
+    .nm-slot.bad-preview { border-color: #ef4444; box-shadow: 0 0 0 1px #ef4444 inset; }
+    .nm-slot.synergy { border-color: #22c55e; box-shadow: 0 0 0 1px #22c55e inset; background: #0a1a12; }
+    .nm-slot-header { display: flex; justify-content: space-between; font-size: 12px; color: #cbd5e1; }
+    .nm-sum-grid { display: grid; grid-template-columns: 1fr auto; gap: 6px 10px; font-size: 13px; align-items: center; }
+    .nm-sum-grid .k { color: #cbd5e1; }
+    .nm-sum-grid .v { text-align: right; font-variant-numeric: tabular-nums; }
+    .nm-divider { border-top: 1px solid #334155; margin: 8px 0; }
+    .nm-big { font-size: 26px; font-weight: 700; margin: 4px 0; font-variant-numeric: tabular-nums; }
+    .nm-tip { margin-top: 8px; font-size: 12px; color: var(--soft); line-height: 1.4; background: #0b1220; border: 1px solid #334155; border-radius: 8px; padding: 8px; }
+    .nm-toast {
+      position: fixed; right: 16px; top: 16px; background: #0b1220; border: 1px solid #475569; color: #e2e8f0;
+      padding: 10px 12px; border-radius: 10px; box-shadow: 0 12px 28px rgba(0,0,0,0.35); z-index: 1000; display: none; gap: 8px; align-items: center; font-size: 13px;
+    }
+    .nm-toast.show { display: inline-flex; }
+    .nm-impact { font-size: 12px; border-radius: 8px; padding: 6px 8px; border: 1px solid #334155; background: #0b1220; color: #cbd5e1; }
+    .nm-impact.good { border-color: #166534; color: #86efac; }
+    .nm-impact.bad { border-color: #991b1b; color: #fca5a5; }
+    .nm-impact.warn { border-color: #92400e; color: #fcd34d; }
+    /* 拟物报纸版面（6 个版位：两页 x (头版大位 + 两个子位)） */
+    .paper-spread {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      align-items: start;
+      min-width: 0;
+    }
+    .paper-spread.paper-mode-fluid .paper-page {
+      min-height: 520px;
+      height: auto;
+    }
+    .paper-spread.paper-mode-fluid .paper-slot {
+      min-height: 140px;
+      height: auto;
+    }
+    .paper-spread.paper-mode-fixed .paper-page {
+      aspect-ratio: 3 / 4.6;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      height: auto;
+    }
+    .paper-spread.paper-mode-fixed .paper-grid {
+      flex: 1;
+      min-height: 0;
+      grid-template-rows: 58% 42%;
+    }
+    .paper-spread.paper-mode-fixed .paper-slot {
+      min-height: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+    .paper-spread.paper-mode-fixed .paper-story-title {
+      -webkit-line-clamp: 2;
+    }
+    .paper-spread.paper-mode-fixed .paper-story-title.small {
+      -webkit-line-clamp: 1;
+    }
+    .paper-spread.paper-mode-fixed .paper-img {
+      height: clamp(54px, 12vh, 90px);
+    }
+    .paper-spread.paper-mode-fixed .paper-body {
+      max-height: 86px;
+      overflow: hidden;
+    }
+    .paper-spread.paper-visual-enhanced .paper-page {
+      border-color: rgba(120,94,62,0.45);
+      background:
+        radial-gradient(circle at 20% 15%, rgba(255,255,255,0.35), transparent 45%),
+        repeating-linear-gradient(0deg, rgba(116,84,50,0.04) 0 1px, transparent 1px 3px),
+        linear-gradient(180deg, #f7efe2, #efe2cf 70%, #e8d8c0);
+      box-shadow: 0 16px 30px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.35) inset;
+    }
+    .paper-spread.paper-visual-enhanced .paper-header {
+      background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.38));
+      border-bottom-color: rgba(70,52,32,0.22);
+    }
+    .paper-spread.paper-visual-enhanced .paper-name {
+      letter-spacing: 0.11em;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+    }
+    .paper-spread.paper-visual-enhanced .paper-slot {
+      border-color: rgba(84,62,38,0.22);
+      background: rgba(255,255,255,0.32);
+    }
+    .paper-spread.paper-visual-enhanced .paper-story-title,
+    .paper-spread.paper-visual-enhanced .paper-story-title.small {
+      font-family: "Noto Serif SC", "Songti SC", Georgia, serif;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+    }
+    .paper-spread.paper-visual-enhanced .paper-attr {
+      width: 15px;
+      height: 15px;
+      border-radius: 999px;
+      border: 1px solid rgba(120,34,25,0.52);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.5) inset;
+    }
+    .paper-spread.paper-visual-enhanced .paper-img {
+      background:
+        radial-gradient(circle at 30% 30%, rgba(31,41,55,0.1), transparent 42%),
+        linear-gradient(180deg, rgba(31,41,55,0.08), rgba(31,41,55,0.03));
+      border-color: rgba(84,62,38,0.2);
+    }
+    .paper-spread.paper-visual-enhanced .paper-body {
+      color: rgba(61,46,29,0.78);
+      letter-spacing: 0.08em;
+    }
+    @media (max-width: 980px) { .paper-spread { grid-template-columns: 1fr; } }
+    .paper-page {
+      border-radius: 14px;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: linear-gradient(180deg, #f4eadb, #efe2cf);
+      color: #1f2937;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+      overflow: hidden;
+      position: relative;
+      min-height: 520px;
+      min-width: 280px;
+    }
+    .paper-header {
+      padding: 10px 12px 8px;
+      border-bottom: 1px solid rgba(31,41,55,0.15);
+      background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.25));
+    }
+    .paper-name {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      letter-spacing: 0.08em;
+      font-weight: 800;
+      text-align: center;
+      margin: 0;
+    }
+    .paper-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      opacity: 0.8;
+      margin-top: 6px;
+    }
+    .paper-grid {
+      padding: 10px 12px 12px;
+      display: grid;
+      grid-template-rows: 1.25fr 1fr;
+      gap: 10px;
+    }
+    .paper-row2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .paper-slot {
+      border: 2px solid rgba(31,41,55,0.15);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.45);
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+      min-height: 140px;
+    }
+    .paper-slot.drag-over { border-color: rgba(59,130,246,0.65); box-shadow: 0 0 0 2px rgba(59,130,246,0.25) inset; }
+    .paper-slot.good-preview { border-color: rgba(34,197,94,0.7); box-shadow: 0 0 0 2px rgba(34,197,94,0.18) inset; }
+    .paper-slot.bad-preview { border-color: rgba(239,68,68,0.7); box-shadow: 0 0 0 2px rgba(239,68,68,0.16) inset; }
+    .paper-slot-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12px;
+      opacity: 0.85;
+    }
+    .paper-multi {
+      font-weight: 800;
+      color: #7c2d12;
+    }
+    .paper-multi.empty {
+      color: #92400e;
+      background: rgba(250,204,21,0.22);
+      border: 1px solid rgba(146,64,14,0.25);
+      padding: 1px 6px;
+      border-radius: 999px;
+      justify-self: start;
+    }
+    .paper-story-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1.2;
+      margin: 0;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .paper-story-title.small {
+      font-size: 15px;
+      -webkit-line-clamp: 2;
+    }
+    .paper-attrs { display: inline-flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+    .paper-attr {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      background: #ef4444;
+      border: 1px solid rgba(127,29,29,0.45);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.45) inset;
+    }
+    .paper-attr.t1 { background: #ef4444; }
+    .paper-attr.t2 { background: #f97316; }
+    .paper-attr.t3 { background: #3b82f6; }
+    .paper-attr.t4 { background: #22c55e; }
+    .paper-img {
+      height: 86px;
+      border-radius: 10px;
+      border: 1px solid rgba(31,41,55,0.18);
+      background: linear-gradient(180deg, rgba(31,41,55,0.06), rgba(31,41,55,0.02));
+      position: relative;
+      overflow: hidden;
+    }
+    .paper-img::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 25% 35%, rgba(31,41,55,0.06), transparent 45%),
+        radial-gradient(circle at 70% 60%, rgba(31,41,55,0.06), transparent 55%);
+    }
+    .paper-body {
+      font-family: "Times New Roman", Georgia, serif;
+      font-size: 12px;
+      line-height: 1.45;
+      color: rgba(31,41,55,0.78);
+      display: grid;
+      gap: 3px;
+    }
+    .paper-body span { letter-spacing: 0.06em; }
+    .paper-empty {
+      display: grid;
+      place-items: center;
+      color: rgba(31,41,55,0.45);
+      border: 2px dashed rgba(31,41,55,0.15);
+      border-radius: 10px;
+      padding: 10px;
+      font-weight: 700;
+    }
+    .nm-impact-list { display: grid; gap: 4px; }
+    .nm-impact-row { display: flex; justify-content: space-between; gap: 8px; }
+    .nm-ok { color: var(--good); }
+    .nm-warn { color: #f59e0b; }
+    .nm-bad { color: var(--bad); }
+    .sum-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; margin-top: 0.75rem; }
+    .sum-panel h2 { color: var(--gold); font-size: 1rem; margin-bottom: 0.5rem; }
+
+    /* 故事合成台 */
+    .syn-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; }
+    @media (max-width: 980px) { .syn-grid { grid-template-columns: 1fr; } }
+    .syn-card { background: #0f1318; border: 1px solid var(--border); border-radius: 10px; padding: 0.8rem; }
+    .syn-card h3 { margin: 0 0 0.5rem; color: var(--gold); font-size: 0.95rem; }
+    .syn-list { display: grid; gap: 0.4rem; max-height: 300px; overflow: auto; }
+    .syn-list-deck { grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); }
+    .syn-item {
+      border: 1px solid #3b4756; border-radius: 8px; background: #0b1220; padding: 0.45rem 0.55rem; cursor: grab;
+      display: grid; gap: 0.25rem; font-size: 0.78rem;
+    }
+    .syn-item:active { cursor: grabbing; }
+    .syn-item-slotted { opacity: 0.55; border-style: dashed; }
+    .syn-slotted-hint { font-size: 10px; color: var(--gold-dim); }
+    .syn-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+    .syn-badge { font-size: 11px; padding: 1px 6px; border-radius: 99px; border: 1px solid #4b5563; color: #cbd5e1; }
+    .syn-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 0.6rem; }
+    .syn-workbench-host { min-height: 120px; margin-bottom: 0.55rem; }
+    .syn-slots-arch {
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; justify-content: flex-start;
+    }
+    .syn-slot-cell {
+      flex: 1 1 140px; max-width: 200px; display: flex; flex-direction: column; gap: 4px;
+    }
+    .syn-slot-required .syn-drop-slot {
+      background: linear-gradient(180deg, rgba(127, 29, 29, 0.45), rgba(30, 20, 22, 0.92));
+      border: 1px solid rgba(248, 113, 113, 0.45);
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25);
+    }
+    .syn-slot-required .syn-slot-label { color: #fecaca; }
+    .syn-slot-internal .syn-drop-slot {
+      background: linear-gradient(180deg, rgba(30, 58, 138, 0.42), rgba(15, 23, 42, 0.92));
+      border: 1px solid rgba(96, 165, 250, 0.5);
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+    }
+    .syn-slot-internal .syn-slot-label { color: #bfdbfe; }
+    .syn-slots-internal-mode { padding: 4px 0; }
+    button.syn-recipe-internal {
+      border-color: rgba(59, 130, 246, 0.65);
+      color: #93c5fd;
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98));
+    }
+    button.syn-recipe-internal:hover { border-color: #60a5fa; color: #e0f2fe; }
+    button.syn-recipe-internal.primary {
+      border-color: #3b82f6;
+      color: #eff6ff;
+      box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.35);
+    }
+    .syn-slot-optional .syn-drop-slot {
+      border: 1px dashed rgba(212, 168, 83, 0.55);
+      background: rgba(15, 23, 42, 0.65);
+    }
+    .syn-slot-optional .syn-slot-label { color: var(--gold-dim); }
+    .syn-slot-label { font-size: 11px; font-weight: 600; letter-spacing: 0.02em; }
+    .syn-drop-slot {
+      border-radius: 10px; min-height: 76px; padding: 6px 8px; display: flex; align-items: center; justify-content: center;
+      text-align: center; transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .syn-drop-slot.syn-drop-has-card { align-items: stretch; justify-content: stretch; }
+    .syn-slot-placeholder { font-size: 11px; color: #9ca3af; line-height: 1.35; }
+    .syn-slot-filled {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; width: 100%;
+      font-size: 11px; color: var(--text); text-align: left;
+    }
+    .syn-slot-chip-title { line-height: 1.35; word-break: break-word; }
+    .syn-slot-clear {
+      flex-shrink: 0; width: 22px; height: 22px; padding: 0; line-height: 1; border-radius: 6px;
+      border: 1px solid var(--border); background: #1e293b; color: var(--muted); cursor: pointer; font-size: 14px;
+    }
+    .syn-slot-clear:hover { color: var(--gold); border-color: var(--gold-dim); }
+    .syn-slot-research {
+      min-height: 64px; margin-top: 6px; border: 1px dashed #64748b; border-radius: 10px; padding: 8px;
+      background: rgba(11, 18, 32, 0.85);
+    }
+    .syn-research-guide { margin-top: 0.5rem; margin-bottom: 0.35rem; }
+    .syn-preview-pre {
+      margin: 0; padding: 0.5rem 0.6rem; border-radius: 8px; border: 1px dashed #4b5563; background: #0b1220;
+      font-size: 0.75rem; color: var(--soft); line-height: 1.45; white-space: pre-wrap; font-family: inherit;
+    }
+    .syn-reports { max-height: 260px; overflow: auto; display: grid; gap: 8px; }
+    .syn-report { border: 1px solid #334155; border-radius: 8px; padding: 0.5rem; background: #0b1220; font-size: 0.8rem; }
+    .syn-help { font-size: 0.8rem; color: var(--muted); line-height: 1.45; }
+
+    /* 合成台演示 Modal */
+    #synthDemoLabModal .modal-card { max-width: 640px; }
+    .synth-demo-stage {
+      position: relative; margin-top: 0.45rem; padding: 12px; background: linear-gradient(180deg, #111827, #0b1220);
+      border: 1px solid var(--line); border-radius: 12px; overflow: hidden; min-height: 200px;
+    }
+    .synth-demo-row { display: grid; grid-template-columns: 1fr 1.15fr; gap: 14px; align-items: start; }
+    @media (max-width: 560px) { .synth-demo-row { grid-template-columns: 1fr; } }
+    .synth-demo-label { font-size: 11px; font-weight: 700; color: var(--text); margin: 0 0 8px; }
+    .synth-demo-mini-card {
+      padding: 8px 10px; border-radius: 8px; border: 1px solid #475569; background: #0b1220; font-size: 11px; margin-bottom: 8px;
+      max-width: 160px;
+    }
+    .synth-demo-slots-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+    .syn-demo-cell { flex: 1 1 120px; max-width: 160px; }
+    .syn-demo-placeholder { font-size: 10px; color: #9ca3af; }
+    .syn-demo-chip { font-size: 11px; color: var(--text); text-align: left; width: 100%; }
+    .synth-demo-source-pulse {
+      animation: synthDemoSourcePulse 0.42s ease-in-out infinite alternate;
+    }
+    @keyframes synthDemoSourcePulse {
+      from { box-shadow: 0 0 0 0 rgba(212, 168, 83, 0); border-color: #334155; }
+      to { box-shadow: 0 0 0 2px rgba(212, 168, 83, 0.28); border-color: rgba(212, 168, 83, 0.75); }
+    }
+    .synth-demo-flyer {
+      position: absolute; left: 0; top: 0; pointer-events: none; z-index: 8;
+      max-width: 140px; padding: 6px 8px; background: #0b1220; border: 1px solid rgba(212, 168, 83, 0.55);
+      border-radius: 8px; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35); opacity: 0; visibility: hidden;
+      font-size: 11px; will-change: transform, opacity;
+    }
+    .synth-demo-flyer-visible { visibility: visible; }
+    .synth-demo-result {
+      margin-top: 10px; text-align: center; font-size: 12px; color: var(--gold); min-height: 1.2em;
+    }
+    .synth-demo-result-flash { animation: synthDemoResultFlash 0.75s ease-out 1; }
+    @keyframes synthDemoResultFlash {
+      0%, 100% { opacity: 1; filter: none; }
+      40% { opacity: 1; filter: brightness(1.25); text-shadow: 0 0 12px rgba(212, 168, 83, 0.45); }
+    }
+
+    /* 第一周软引导 *    #tutorialSoftModal .modal-card { max-width: 440px; }
+    #tutorialSoftBody {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text);
+      max-height: min(52vh, 320px);
+      overflow-y: auto;
+    }
+    .tutorial-soft-first-row {
+      padding: 0 1rem 0.35rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .tutorial-soft-first-row label { cursor: pointer; display: flex; gap: 0.45rem; align-items: flex-start; }
+    .tutorial-soft-first-row input { margin-top: 0.2rem; flex-shrink: 0; }
+    .tutorial-soft-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    #tutorialSoftPageInd {
+      font-size: 0.78rem;
+      color: var(--muted);
+      flex: 1;
+      text-align: center;
+      min-width: 5rem;
+    }
+    #tutorialSoftPrev { flex-shrink: 0; }
+    #tutorialSoftNext { flex-shrink: 0; margin-left: auto; }
+    #tutorialSoftBody .tutorial-soft-sheet { margin: 0; }
+    #tutorialSoftBody .tutorial-soft-sheet + .tutorial-soft-sheet { margin-top: 0.65rem; }
+    #tutorialSoftBody .tutorial-soft-h4 {
+      margin: 0 0 0.4rem;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+    #tutorialSoftBody .tutorial-soft-lead { margin: 0 0 0.45rem; line-height: 1.55; }
+    #tutorialSoftBody .tutorial-soft-ul {
+      margin: 0;
+      padding-left: 1.15rem;
+      line-height: 1.5;
+    }
+    #tutorialSoftBody .tutorial-soft-ul li { margin: 0.28rem 0; }
+    #tutorialSoftBody .tutorial-soft-note {
+      margin: 0.5rem 0 0;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    #tutorialSoftBody .tutorial-soft-section {
+      margin-top: 0.55rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--line);
+    }
+
+    /* 报纸填入演示实验：与正式组版一致的 nm-story + 拟物报纸（效果 B） */
+    #paperDemoLabModal .modal-card { max-width: 720px; }
+    .paper-demo-stage-real {
+      position: relative;
+      margin-top: 0.45rem;
+      padding: 12px;
+      background: linear-gradient(180deg, #111827, #0b1220);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .paper-demo-real-row {
+      display: grid;
+      grid-template-columns: minmax(200px, 0.95fr) minmax(260px, 1.1fr);
+      gap: 14px;
+      align-items: start;
+    }
+    @media (max-width: 640px) {
+      .paper-demo-real-row { grid-template-columns: 1fr; }
+    }
+    .paper-demo-section-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 8px;
+    }
+    .paper-demo-source-card.nm-story {
+      cursor: default;
+      max-width: 100%;
+    }
+    .paper-demo-source-pulse {
+      animation: paperDemoSourcePulse 0.42s ease-in-out infinite alternate;
+    }
+    @keyframes paperDemoSourcePulse {
+      from { box-shadow: 0 0 0 0 rgba(212, 168, 83, 0); border-color: #334155; }
+      to { box-shadow: 0 0 0 2px rgba(212, 168, 83, 0.28); border-color: rgba(212, 168, 83, 0.75); }
+    }
+    #paperDemoLabModal .paper-demo-spread-single {
+      display: block;
+      max-width: 100%;
+    }
+    #paperDemoLabModal .paper-demo-spread-single .paper-page {
+      min-height: 0;
+      min-width: 0;
+      max-width: 340px;
+    }
+    #paperDemoLabModal .paper-demo-spread-single .paper-name {
+      font-size: 22px;
+    }
+    #paperDemoLabModal .paper-demo-spread-single .paper-grid {
+      grid-template-rows: 1fr;
+      min-height: 160px;
+      padding: 8px 10px 12px;
+    }
+    #paperDemoLabModal .paper-demo-spread-single .paper-slot {
+      min-height: 140px;
+    }
+    #paperDemoLabModal .paper-demo-spread-single .paper-empty {
+      min-height: 72px;
+    }
+    .paper-demo-landed {
+      display: grid;
+      gap: 6px;
+    }
+    .paper-demo-landed .paper-story-title { margin: 0; }
+    .paper-demo-slot-flash.paper-slot {
+      animation: paperDemoPaperSlotFlash 0.6s ease-out 1;
+    }
+    @keyframes paperDemoPaperSlotFlash {
+      0%, 100% { box-shadow: inherit; }
+      40% {
+        box-shadow: 0 0 0 2px rgba(180, 120, 50, 0.55) inset, 0 0 12px rgba(212, 168, 83, 0.25);
+      }
+    }
+    .paper-demo-slot-filled.paper-slot .paper-slot-header { opacity: 1; }
+    .paper-demo-flyer {
+      position: absolute;
+      left: 0;
+      top: 0;
+      pointer-events: none;
+      z-index: 8;
+      width: max-content;
+      max-width: 200px;
+      padding: 8px 10px;
+      background: #0b1220;
+      border: 1px solid #475569;
+      border-radius: 10px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+      opacity: 0;
+      visibility: hidden;
+      will-change: transform, opacity;
+    }
+    .paper-demo-flyer-visible { visibility: visible; }
+    .paper-demo-flyer-b { transition: none; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="phase-explore">
+      <header>
+        <h1>《世界未解之谜周刊》· 全链条 Demo</h1>
+        <p class="sub">
+          <strong>探索</strong>（地图/骰子）→ <strong>线索成稿</strong> → <strong>拖拽组版</strong> → <strong>结算本期</strong>（与
+          <code>design/gdd/editorial-layout-and-publishing-strategy.md</code> / <code>design/gdd/issue-settlement-and-audience-feedback.md</code> 规则对齐）
+        </p>
+      </header>
+      <div class="bar-row" id="macro"></div>
+      <div class="row" style="margin-bottom: 0.75rem; justify-content: space-between;">
+        <div class="row">
+          <strong id="weekLabel"></strong>
+          <span id="dayLabel" style="color: var(--muted); font-size: 0.85rem;"></span>
+        </div>
+        <button type="button" id="btnEndWeek" class="primary" title="进入编辑部组版与结算">结束探索周 · 进入编辑部</button>
+      </div>
+      <div id="view-weekStart" class="panel hidden"></div>
+      <div id="view-global" class="panel hidden"></div>
+      <div id="view-region" class="panel hidden"></div>
+      <div id="view-setup" class="panel hidden"></div>
+      <div id="view-result" class="panel hidden"></div>
+      <div class="panel">
+        <h2>行动日志</h2>
+        <div class="log" id="log"></div>
+      </div>
+      <button type="button" id="btnNextDay" class="next-day-fab">下一天</button>
+    </div>
+    <div id="dayPopup" class="modal-mask hidden" role="dialog" aria-modal="true" aria-labelledby="dayPopupTitle">
+      <div class="modal-card">
+        <div class="modal-title">
+          <h3 id="dayPopupTitle">新的一天</h3>
+          <div class="modal-date" id="dayPopupDate"></div>
+        </div>
+        <div class="modal-body" id="dayPopupBody"></div>
+        <div class="modal-actions">
+          <button type="button" class="primary" id="dayPopupOk">继续</button>
+        </div>
+      </div>
+    </div>
+    <div id="confirmPopup" class="modal-mask hidden" role="dialog" aria-modal="true" aria-labelledby="confirmPopupTitle">
+      <div class="modal-card">
+        <div class="modal-title">
+          <h3 id="confirmPopupTitle">提示</h3>
+          <div class="modal-date" id="confirmPopupDate"></div>
+        </div>
+        <div class="modal-body" id="confirmPopupBody"></div>
+        <div class="modal-actions">
+          <button type="button" id="confirmPopupCancel">取消</button>
+          <button type="button" class="primary" id="confirmPopupOk">确认</button>
+        </div>
+      </div>
+    </div>
+    <div id="staffHoverCard" class="staff-hover-card hidden" aria-hidden="true"></div>
+    <div id="rewardPopup" class="modal-mask hidden" role="dialog" aria-modal="true" aria-labelledby="rewardPopupTitle">
+      <div class="modal-card">
+        <div class="modal-title">
+          <h3 id="rewardPopupTitle">结算奖励</h3>
+          <div class="modal-date" id="rewardPopupStep"></div>
+        </div>
+        <div class="modal-body" id="rewardPopupBody"></div>
+        <div class="modal-actions">
+          <button type="button" class="primary" id="rewardPopupNext">下一项</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="tutorialSoftModal" class="modal-mask hidden" role="dialog" aria-modal="true" aria-labelledby="tutorialSoftTitle">
+      <div class="modal-card">
+        <div class="modal-title">
+          <h3 id="tutorialSoftTitle">提示</h3>
+        </div>
+        <div class="modal-body" id="tutorialSoftBody"></div>
+        <div id="tutorialSoftFirstRow" class="tutorial-soft-first-row hidden">
+          <label>
+            <input type="checkbox" id="tutorialSoftNever" />
+            <span>不再进行任何新手引导（本机记住；清除本站浏览器数据后可恢复）</span>
+          </label>
+        </div>
+        <div class="modal-actions tutorial-soft-actions">
+          <button type="button" id="tutorialSoftPrev">上一页</button>
+          <span id="tutorialSoftPageInd" class="hidden"></span>
+          <button type="button" class="primary" id="tutorialSoftNext">知道了</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="paperDemoLabModal" class="modal-mask hidden" role="dialog" aria-modal="true" aria-labelledby="paperDemoLabTitle">
+      <div class="modal-card">
+        <div class="modal-title">
+          <h3 id="paperDemoLabTitle">报刊填入演示（实验）</h3>
+        </div>
+        <div class="modal-body">
+          <p style="margin:0 0 0.55rem;font-size:0.88rem;color:var(--muted);line-height:1.55;">
+            与正式全链条<strong>第一周组版</strong>所用演示相同：<strong>左侧故事库卡片</strong> + <strong>拟物增强报纸头版槽位</strong>；<strong>效果 B</strong>（来源高亮 + 插值飞入）；<strong>每次播完间隔 1 秒自动重播</strong>。也可点「重播」立即重来；正式流程中可在组版工具栏点「报刊填入演示」再次打开。
+          </p>
+          <div class="paper-demo-stage paper-demo-stage-real" id="paperDemoStage">
+            <div class="paper-demo-real-row">
+              <div class="paper-demo-lib-col">
+                <div class="paper-demo-section-label">1）本期故事库（与主界面相同控件样式）</div>
+                <div class="nm-story paper-demo-source-card" id="paperDemoSourceChip">
+                  <div class="nm-story-title">示例报道：港区异常回波</div>
+                  <div class="nm-chips">
+                    <span class="nm-chip ex">探索稿</span>
+                    <span class="nm-chip">标签:时政 / 经济</span>
+                    <span class="nm-chip">质量:Gold</span>
+                  </div>
+                  <div class="nm-tip" style="margin-top:6px;font-size:11px;padding:6px;">拖到中间头版版位</div>
+                </div>
+              </div>
+              <div class="paper-demo-paper-col">
+                <div class="paper-demo-section-label">2）拟物报纸 · 头版（与组版「当期版面」一致主题）</div>
+                <div class="paper-spread paper-mode-fixed paper-visual-enhanced paper-demo-spread-single">
+                  <section class="paper-page">
+                    <div class="paper-header">
+                      <div class="paper-name">DOG NEWS</div>
+                      <div class="paper-meta">
+                        <span>1930年3月</span><span>第1周</span><span>演示页</span>
+                      </div>
+                    </div>
+                    <div class="paper-grid">
+                      <div class="paper-slot" id="paperDemoTargetSlot">
+                        <div class="paper-slot-header">
+                          <span>头版</span>
+                          <div class="paper-multi empty">头版奖励系数 x3.0</div>
+                        </div>
+                        <div class="paper-empty" id="paperDemoEmptyHint">拖拽报道到此处</div>
+                        <div class="paper-demo-landed hidden" id="paperDemoLandedBlock">
+                          <div class="paper-story-title">示例报道：港区异常回波</div>
+                          <div class="paper-attrs">
+                            <span class="paper-attr t1" title="时政"></span>
+                            <span class="paper-attr t2" title="经济"></span>
+                          </div>
+                          <div class="paper-img" aria-hidden="true"></div>
+                          <div class="paper-body">
+                            <span>**** **** **** ****</span>
+                            <span>**** **** **** ****</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+            <div class="paper-demo-flyer" id="paperDemoFlyer" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="paperDemoReplay">重播</button>
+          <button type="button" class="primary" id="paperDemoClose">关闭</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="synthDemoLabModal" class="modal-mask hidden" role="dialog" aria-modal="true" aria-labelledby="synthDemoLabTitle">
+      <div class="modal-card">
+        <div class="modal-title">
+          <h3 id="synthDemoLabTitle">合成台拖拽演示</h3>
+        </div>
+        <div class="modal-body">
+          <p style="margin:0 0 0.55rem;font-size:0.88rem;color:var(--muted);line-height:1.55;">
+            与正式合成台一致：<strong>红色背板</strong>为必要槽，<strong>金色虚线</strong>为可选工具槽。示意顺序为现象 → 情报 → 合成示意；播完间隔约 2 秒自动重播，也可点「重播」。
+          </p>
+          <div class="synth-demo-stage" id="synthDemoStage">
+            <div class="synth-demo-row">
+              <div>
+                <div class="synth-demo-label">素材（示意）</div>
+                <div class="synth-demo-mini-card" id="synthDemoCardPhen">现象样本 · 演示</div>
+                <div class="synth-demo-mini-card" id="synthDemoCardIntel">情报摘要 · 演示</div>
+              </div>
+              <div>
+                <div class="synth-demo-label">卡槽（类型1 抢先报道）</div>
+                <div class="synth-demo-slots-wrap">
+                  <div class="syn-slot-cell syn-slot-required syn-demo-cell">
+                    <div class="syn-slot-label">现象（必要）</div>
+                    <div class="syn-drop-slot" id="synthDemoDropPhen"><span class="syn-demo-placeholder">拖入现象</span></div>
+                  </div>
+                  <div class="syn-slot-cell syn-slot-required syn-demo-cell">
+                    <div class="syn-slot-label">情报（必要）</div>
+                    <div class="syn-drop-slot" id="synthDemoDropIntel"><span class="syn-demo-placeholder">拖入情报</span></div>
+                  </div>
+                  <div class="syn-slot-cell syn-slot-optional syn-demo-cell">
+                    <div class="syn-slot-label">工具（可选）</div>
+                    <div class="syn-drop-slot" id="synthDemoDropTool"><span class="syn-demo-placeholder">可选</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="synth-demo-result" id="synthDemoResult" aria-live="polite"></div>
+            <div class="synth-demo-flyer" id="synthDemoFlyer" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="synthDemoReplay">重播</button>
+          <button type="button" class="primary" id="synthDemoClose">关闭</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="phase-synthesis" class="hidden">
+      <h1>编辑部 · 故事合成台</h1>
+      <div class="row" style="margin-bottom:0.65rem;flex-wrap:wrap;gap:10px;align-items:center;">
+        <p class="sub" id="synthesisSub" style="margin:0;flex:1;min-width:220px;">将探索获得的素材与认知进行合成，产出可刊登报道。</p>
+        <button type="button" class="nm-sec" id="btnSynthDemoLab">合成拖拽演示</button>
+      </div>
+      <div class="syn-grid">
+        <section class="syn-card">
+          <h3>1) 素材仓</h3>
+          <p class="syn-help" style="margin:0 0 0.5rem;">拖拽卡牌到右侧卡槽。公开报道用<strong>红/金</strong>槽；<strong>爆料卡</strong>仅用于「爆炸性新闻」，不可合成获得。</p>
+          <div class="row" style="margin-bottom:0.5rem;">
+            <button type="button" id="tabPhenomenon">现象牌</button>
+            <button type="button" id="tabIntel">情报牌</button>
+            <button type="button" id="tabCognition">认知牌</button>
+            <button type="button" id="tabTool">工具牌</button>
+            <button type="button" id="tabTipOff">爆料卡</button>
+            <button type="button" id="tabStaff">主笔</button>
+            <button type="button" id="tabTherapy">干预</button>
+          </div>
+          <div id="synInventory" class="syn-list syn-list-deck"></div>
+          <div class="syn-actions">
+            <button type="button" id="clearSelection">清空卡槽</button>
+          </div>
+        </section>
+        <section class="syn-card">
+          <h3>2) 报道类型与卡槽</h3>
+          <div class="row" style="margin-bottom:0.5rem;align-items:stretch;">
+            <button type="button" class="primary" id="recipe1">抢先快讯</button>
+            <button type="button" id="recipe2">深度报道</button>
+            <button type="button" id="recipe3">个人专栏</button>
+            <button type="button" id="recipe4">爆炸性新闻</button>
+            <button type="button" class="syn-recipe-internal" id="recipeInternal">内审定调</button>
+          </div>
+          <div id="synWorkbench" class="syn-workbench-host" aria-live="polite"></div>
+          <pre class="syn-preview-pre" id="synSynthPreview"></pre>
+          <div class="syn-actions">
+            <button type="button" class="primary" id="craftBtn">执行合成</button>
+            <button type="button" id="toEditorialBtn">进入组版</button>
+          </div>
+          <p class="syn-help" id="synthesisHint"></p>
+        </section>
+      </div>
+      <section class="syn-card" style="margin-top:10px;">
+        <h3>3) 本周已合成报道</h3>
+        <div id="synReports" class="syn-reports"></div>
+      </section>
+    </div>
+
+    <div id="phase-editorial" class="hidden nm-wrap">
+      <h1 style="font-family: inherit;">编辑部 · 报刊组版</h1>
+      <p class="sub" id="editorialSub">将本周探索得到的线索稿与补充稿件拖入版位，点击「结算本期」。</p>
+      <div class="nm-grid">
+        <section class="nm-card">
+          <h2>1) 本期故事库</h2>
+          <div class="row">
+            <button type="button" class="nm-btn" id="regenBtn">重新生成故事库</button>
+            <label>数量
+              <select id="storyCount">
+                <option value="8">8</option>
+                <option value="10" selected>10</option>
+                <option value="12">12</option>
+              </select>
+            </label>
+          </div>
+          <p class="tip-inline">探索稿带「探索稿」标签；不足条数用随机都市报道补足（与原型一致）。</p>
+          <div class="nm-stories" id="storyList"></div>
+        </section>
+        <section class="nm-card">
+          <h2>2) 当期版面</h2>
+          <div class="nm-slot-grid" id="slotList"></div>
+          <div class="nm-divider"></div>
+          <div class="row">
+            <button type="button" class="nm-sec" id="btnPaperDemoLab" style="display:none">报刊填入演示</button>
+            <button type="button" class="nm-sec" id="clearBtn">清空版面</button>
+            <button type="button" class="nm-sec" id="paperModeToggle">切换版面模式</button>
+            <button type="button" class="nm-sec" id="paperVisualToggle">拟物增强：关</button>
+            <button type="button" class="nm-btn" id="settleBtn">结算本期</button>
+          </div>
+        </section>
+        <section class="nm-card">
+          <h2>3) 结算面板</h2>
+          <div class="nm-sum-grid" id="liveStats"></div>
+          <div class="nm-divider"></div>
+          <div id="resultBox">
+            <div class="k">尚未结算</div>
+            <div class="nm-tip">拖拽报道到版位后点击「结算本期」。</div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div id="phase-summary" class="hidden sum-panel">
+      <h2>本周流程完成</h2>
+      <p id="summaryText" style="color: var(--muted); font-size: 0.9rem;"></p>
+      <p style="margin-top: 0.75rem;"><button type="button" class="primary" id="btnNextWeek">进入下一周 · 继续探索</button></p>
+    </div>
+
+    <div class="nm-toast" id="toast"></div>
+    <footer>本地单机 · 双击打开 · 无外部依赖</footer>
+  </div>
+  <script>
 (function () {
   "use strict";
 
   const DIFFICULTY_P = { easy: 0.6, normal: 0.5, hard: 1 / 3 };
   const macro = { 公信: 42, 诡名: 38, 声望: 45, 守序: 48, 狂性: 22 };
+  const SCENE_PACKAGES = {
+    science_investigation: {
+      label: "科学调查",
+      axisKey: "evidence_quality",
+      axisLabel: "证据质量",
+      riskHint: "样本、记录与校核决定素材可信度。",
+      defaultLightMod: { kind: "bonusA", amount: 1 },
+    },
+    social_probe: {
+      label: "社会暗访",
+      axisKey: "exposure",
+      axisLabel: "暴露度",
+      riskHint: "越接近真相，越容易惊动目标与舆论。",
+      defaultLightMod: { kind: "shieldFirstHit", amount: 1 },
+    },
+    archaeology_field: {
+      label: "考古现场",
+      axisKey: "stability",
+      axisLabel: "样本稳定",
+      riskHint: "现场保全和撤离同样重要。",
+      defaultLightMod: { kind: "bonusB", amount: 1 },
+    },
+    abnormal_contact: {
+      label: "异常接触",
+      axisKey: "contamination_risk",
+      axisLabel: "污染风险",
+      riskHint: "成功本身也可能带来后续代价。",
+      defaultLightMod: { kind: "taintedDie", pool: "A", amount: 1 },
+    },
+  };
+  const INTERVENTION_LABELS = {
+    seize: "收走",
+    seal: "封存",
+    decoy: "诱饵",
+    contaminate: "污染",
+  };
+  const SCENE_PACKAGE_LABELS = {
+    science_investigation: "科学调查",
+    social_probe: "社会暗访",
+    archaeology_field: "考古现场",
+    abnormal_contact: "异常接触",
+  };
+  const CARRY_STATE_LABELS = {
+    banked_lead: "档案保底",
+    watchlist_pressure: "盯梢压力",
+    sample_contaminated: "样本污染",
+    abnormal_residue: "异常残留",
+  };
+  const MAIN_POOL_LABEL = "行动骰池";
+  const CHAIN_PROFILES = {
+    mummy_tomb: {
+      label: "木乃伊墓室",
+      phases: [
+        { title: "前室侦察", enemyDelta: 0, targetDelta: -1 },
+        { title: "开棺取样", enemyDelta: 1, targetDelta: 0 },
+        { title: "撤离保全", enemyDelta: 1, targetDelta: 1 },
+      ],
+    },
+  };
 
   const state = {
     week: 1,
@@ -61,26 +1729,10 @@
     therapyCards: [],
     /** 题材 → 上次公开深度/专栏/爆料取向（sci/occult/pop）；快讯不计入 */
     lastPublicStanceByTopic: {},
+    carryStates: {},
     weekEventResolved: false,
     staffEffects: [],
     dynamicNodes: [],
-    retiredMissionIds: {},
-    completedMissionIds: {},
-    chainStageResults: {},
-    whiteInvestigationLog: {},
-    calamityMeter: 0,
-    pushBudgetWeekly: 1,
-    selectedToolDiceIds: [],
-    pendingDiceSelection: null,
-    toolDiceInventory: [
-      { id: "tool_cam_1", name: "夜视相机组", faces: [{ attr: "洞察", value: 1 }, { attr: "洞察", value: 2 }, { attr: "探索", value: 1 }, { attr: "探索", value: 1 }, { blank: true }, { blank: true }] },
-      { id: "tool_tip_1", name: "匿名热线录音", faces: [{ attr: "人脉", value: 2 }, { attr: "人脉", value: 1 }, { attr: "洞察", value: 1 }, { attr: "造势", value: 1 }, { blank: true }, { blank: true }] },
-    ],
-    tempStaffIds: [],
-    tempHireUsed: false,
-    staffDiceOverrides: {},
-    staffLevels: {},
-    staffDebuffs: {},
     debugShowEventEffects: false,
     weekEventResult: "",
     regionLeadEvents: {},
@@ -211,302 +1863,19 @@
     return `topic_${state.nextTopicSeq++}`;
   }
 
-  const ATTR_KEYS = ["探索", "生存", "洞察", "想象", "理性", "笔力", "胆识", "诡思", "人脉", "造势"];
-  const ATTR_DOMAIN = {
-    探索: "外勤",
-    生存: "外勤",
-    胆识: "外勤",
-    洞察: "认知",
-    理性: "认知",
-    诡思: "认知",
-    笔力: "内容",
-    想象: "内容",
-    造势: "内容",
-    人脉: "关系",
-  };
-  const DOMAIN_CLASS = { 外勤: "field", 认知: "cog", 内容: "content", 关系: "social" };
-
-  const face = (attr, value, extra) => ({ attr, value, ...(extra || {}) });
-  const blankFace = (label) => ({ blank: true, label: label || "空" });
-
   const REGIONS = [
     {
       id: "us",
       name: "北美禁区带",
       unlocked: true,
       pulse: false,
-      hint: "初始解锁。都市传说与禁区并存。",
+      hint: "初始解锁。都市传说与禁区并存，也是当前新骰子机制的主要试玩区。",
       nodes: [
-        {
-          id: "ball_light_kitchen",
-          kind: "permanent",
-          name: "球状闪电 · 厨房火球",
-          days: 1,
-          need: { 理性: 2, 洞察: 2 },
-          tags: ["sci", "occult"],
-          difficulty: "normal",
-          enemyAttr: 1,
-          checkType: "white",
-          chainType: "deep",
-          chainStage: 1,
-          chainStageTotal: 4,
-          chainId: "ball_lightning",
-          taskTypeTitle: "深度调查 · 球状闪电第一环",
-          taskTypeDesc: "调查厨房火球、磁化餐具与环形焦痕。成功后推进到气象站记录。",
-          nextNode: {
-            id: "ball_light_weather",
-            kind: "temp",
-            name: "球状闪电 · 气象站记录",
-            days: 1,
-            need: { 理性: 3, 人脉: 1 },
-            tags: ["sci"],
-            difficulty: "normal",
-            enemyAttr: 2,
-            checkType: "white",
-            chainType: "deep",
-            chainStage: 2,
-            chainStageTotal: 4,
-            chainId: "ball_lightning",
-            previousStageId: "ball_light_kitchen",
-            taskTypeTitle: "深度调查 · 球状闪电第二环",
-            taskTypeDesc: "核对电场曲线与被改写的气象记录，开始接触机构口径。",
-            nextNode: {
-              id: "ball_light_substation",
-              kind: "temp",
-              name: "球状闪电 · 废弃变电所",
-              days: 2,
-              need: { 理性: 3, 生存: 2, 洞察: 2 },
-              tags: ["sci", "occult"],
-              difficulty: "hard",
-              enemyAttr: 3,
-              checkType: "white",
-              riskTier: "high",
-              chainType: "deep",
-              chainStage: 3,
-              chainStageTotal: 4,
-              chainId: "ball_lightning",
-              previousStageId: "ball_light_weather",
-              taskTypeTitle: "高危深度调查 · 球状闪电第三环",
-              taskTypeDesc: "废弃变电所残留非民用设备编号。高危任务，失败可能造成队员状态损伤。",
-              nextNode: {
-                id: "ball_light_experiment",
-                kind: "temp",
-                name: "球状闪电 · 复现实验",
-                days: 2,
-                need: { 理性: 4, 胆识: 2, 诡思: 2 },
-                tags: ["sci", "occult"],
-                difficulty: "hard",
-                enemyAttr: 4,
-                checkType: "white",
-                riskTier: "high",
-                isBlackDiceTask: true,
-                blackDiceTheme: "ball_lightning",
-                chainType: "deep",
-                chainStage: 4,
-                chainStageTotal: 4,
-                chainId: "ball_lightning",
-                previousStageId: "ball_light_substation",
-                chainFinal: true,
-                taskTypeTitle: "黑骰任务 · 球状闪电终局",
-                taskTypeDesc: "火球像地球神经元一样回应观测。黑骰会感应、接地或同步你的骰子。",
-                chain: null,
-              },
-              chain: null,
-            },
-            chain: null,
-          },
-          chain: null,
-        },
-        {
-          id: "n51",
-          kind: "permanent",
-          name: "51 区外围公路",
-          days: 2,
-          need: { 探索: 4, 生存: 2 },
-          tags: ["sci", "pop"],
-          difficulty: "normal",
-          enemyAttr: 2,
-          checkType: "white",
-          taskTypeTitle: "白色调查",
-          taskTypeDesc: "可反复追踪的常驻题材。即使失败，也会留下低价值疑点，后续派遣会继续累积同一条调查线。",
-          chain: null,
-        },
-        {
-          id: "skin",
-          kind: "permanent",
-          name: "罗斯威尔档案残页",
-          days: 1,
-          need: { 探索: 3, 洞察: 3 },
-          tags: ["sci", "occult"],
-          difficulty: "normal",
-          enemyAttr: 1,
-          checkType: "white",
-          chainType: "deep",
-          chainStage: 1,
-          chainStageTotal: 4,
-          chainId: "roswell_demo",
-          taskTypeTitle: "深度调查 · 第一阶段",
-          taskTypeDesc: "连续任务起点。完成后不会简单结束，而会在地图上变成下一阶段，让玩家逐步接近真相风险。",
-          nextNode: {
-            id: "roswell_weather_copy",
-            kind: "temp",
-            name: "气象站抄本互证",
-            days: 1,
-            need: { 洞察: 4, 理性: 3 },
-            tags: ["sci", "occult"],
-            difficulty: "normal",
-            enemyAttr: 2,
-            checkType: "white",
-            chainType: "deep",
-            chainStage: 2,
-            chainStageTotal: 4,
-            chainId: "roswell_demo",
-            previousStageId: "skin",
-            taskTypeTitle: "深度调查 · 第二阶段",
-            taskTypeDesc: "开始接触普通解释风险。继续推进可能提高公信，也可能削弱怪谈报道的煞有介事。",
-            nextNode: {
-              id: "roswell_radar_night",
-              kind: "temp",
-              name: "废弃雷达站夜访",
-              days: 2,
-              need: { 探索: 4, 洞察: 4, 生存: 2 },
-              tags: ["sci", "occult"],
-              difficulty: "hard",
-              enemyAttr: 3,
-              checkType: "white",
-              riskTier: "high",
-              chainType: "deep",
-              chainStage: 3,
-              chainStageTotal: 4,
-              chainId: "roswell_demo",
-              previousStageId: "roswell_weather_copy",
-          taskTypeTitle: "高危深度调查 · 第三阶段",
-          taskTypeDesc: "高危任务。需求更高，失败可能带来 debuff，但本环没有黑骰。",
-              nextNode: {
-                id: "roswell_tape_blank",
-                kind: "temp",
-                name: "封存录音的三秒空白",
-                days: 2,
-                need: { 洞察: 5, 诡思: 3, 理性: 3 },
-                tags: ["sci", "occult"],
-                difficulty: "hard",
-                enemyAttr: 4,
-                checkType: "white",
-                riskTier: "high",
-                isBlackDiceTask: true,
-                chainType: "deep",
-                chainStage: 4,
-                chainStageTotal: 4,
-                chainId: "roswell_demo",
-                previousStageId: "roswell_radar_night",
-                chainFinal: true,
-                allowPushBonus: true,
-                taskTypeTitle: "黑骰深度调查 · 最终阶段",
-                taskTypeDesc: "连续任务终局。进入后使用关卡专属黑骰机制与四档结果。",
-                chain: null,
-              },
-              chain: null,
-            },
-            chain: null,
-          },
-          chain: null,
-        },
-        {
-          id: "temp_ufo",
-          kind: "temp",
-          name: "突发：雷达异常光点",
-          days: 2,
-          need: { 探索: 5, 生存: 3 },
-          tags: ["sci", "pop"],
-          deadlineDay: 4,
-          difficulty: "hard",
-          enemyAttr: 3,
-          checkType: "red",
-          riskTier: "high",
-          taskTypeTitle: "红色截稿 · 临时情报",
-          taskTypeDesc: "一次性情报窗口。成功、失败或超过截止日期后都会关闭；这是高危任务，但没有黑骰。",
-          chain: null,
-        },
-        {
-          id: "bus330_witness",
-          kind: "permanent",
-          name: "330 末班车 · 乘客口述",
-          days: 1,
-          need: { 人脉: 2, 洞察: 2 },
-          tags: ["occult", "pop"],
-          difficulty: "normal",
-          enemyAttr: 1,
-          checkType: "white",
-          chainType: "deep",
-          chainStage: 1,
-          chainStageTotal: 4,
-          chainId: "bus330",
-          taskTypeTitle: "深度调查 · 330 末班车第一环",
-          taskTypeDesc: "从乘客、旧报和读者来信里核实末班车传闻。成功后会推进到废弃总站。",
-          nextNode: {
-            id: "bus330_depot",
-            kind: "temp",
-            name: "330 末班车 · 废弃总站",
-            days: 1,
-            need: { 探索: 2, 洞察: 3 },
-            tags: ["occult", "pop"],
-            difficulty: "normal",
-            enemyAttr: 2,
-            checkType: "white",
-            chainType: "deep",
-            chainStage: 2,
-            chainStageTotal: 4,
-            chainId: "bus330",
-            previousStageId: "bus330_witness",
-            taskTypeTitle: "深度调查 · 330 末班车第二环",
-            taskTypeDesc: "调查旧总站调度记录与泥迹座椅，关系线索开始转入现场。",
-            nextNode: {
-              id: "bus330_station",
-              kind: "temp",
-              name: "330 末班车 · 无名站牌",
-              days: 2,
-              need: { 探索: 3, 胆识: 2, 诡思: 1 },
-              tags: ["occult"],
-              difficulty: "hard",
-              enemyAttr: 3,
-              checkType: "white",
-              riskTier: "high",
-              chainType: "deep",
-              chainStage: 3,
-              chainStageTotal: 4,
-              chainId: "bus330",
-              previousStageId: "bus330_depot",
-              taskTypeTitle: "高危深度调查 · 330 末班车第三环",
-              taskTypeDesc: "地图上不存在的站牌。高危任务，失败后果较重，但本环没有黑骰。",
-              nextNode: {
-                id: "bus330_tape",
-                kind: "temp",
-                name: "330 末班车 · 最后三秒录像",
-                days: 2,
-                need: { 胆识: 3, 诡思: 3, 洞察: 2 },
-                tags: ["occult"],
-                difficulty: "hard",
-                enemyAttr: 4,
-                checkType: "white",
-                riskTier: "high",
-                isBlackDiceTask: true,
-                blackDiceTheme: "bus330",
-                chainType: "deep",
-                chainStage: 4,
-                chainStageTotal: 4,
-                chainId: "bus330",
-                previousStageId: "bus330_station",
-                chainFinal: true,
-                taskTypeTitle: "黑骰任务 · 330 末班车终局",
-                taskTypeDesc: "鬼混入乘客之中。黑骰会混入或替换你的骰子，具体机制在黑骰任务中展示。",
-                chain: null,
-              },
-              chain: null,
-            },
-            chain: null,
-          },
-          chain: null,
-        },
+        { id: "n51", kind: "permanent", name: "51 区外围公路", days: 2, need: { 探索: 4, 生存: 2 }, tags: ["sci", "pop"], difficulty: "normal", enemyAttr: 2, scenePackage: "science_investigation", chain: null },
+        { id: "skin", kind: "permanent", name: "罗斯威尔档案残页", days: 1, need: { 探索: 3, 洞察: 3 }, tags: ["sci", "occult"], difficulty: "normal", enemyAttr: 1, scenePackage: "science_investigation", carryState: { flag: "banked_lead", value: 1, scenePackage: "science_investigation", onTiers: ["大成功", "小成功"], summary: "档案残页会在下一次科学调查中提供 1 点保底命中。" }, chain: null },
+        { id: "temp_ufo", kind: "temp", name: "突发：雷达异常光点", days: 2, need: { 探索: 5, 生存: 3 }, tags: ["sci", "pop"], deadlineDay: 4, difficulty: "hard", enemyAttr: 3, scenePackage: "social_probe", intervention: "seize", carryState: { flag: "watchlist_pressure", value: 1, onTiers: ["小成功", "失败", "大失败"], summary: "军警开始盯梢，下次社会或科学节点的对抗会更强。" }, chain: null },
+        { id: "harbor_echo_us", kind: "permanent", name: "禁区码头回声仓栈", days: 2, need: { 洞察: 3, 理性: 3 }, tags: ["pop", "sci"], difficulty: "normal", enemyAttr: 2, scenePackage: "social_probe", intervention: "seal", chain: null },
+        { id: "mountain_signal_us", kind: "permanent", name: "废站短波假信号", days: 3, need: { 探索: 4, 诡思: 3, 生存: 3 }, tags: ["occult"], difficulty: "hard", enemyAttr: 3, scenePackage: "abnormal_contact", intervention: "decoy", chain: null },
         {
           id: "hidden_gate",
           kind: "hidden",
@@ -517,8 +1886,12 @@
           difficulty: "normal",
           enemyAttr: 4,
           unlock: (m) => m.狂性 >= 35 && m.诡名 >= 40,
+          scenePackage: "abnormal_contact",
+          intervention: "contaminate",
+          carryState: { flag: "abnormal_residue", value: 1, onTiers: ["大成功", "小成功"], summary: "带回了异常残留，下次异常接触的污染风险会继续上升。" },
           chain: null,
         },
+        { id: "mummy_vault_us", kind: "permanent", name: "北美禁区考古泄露坑道", days: 3, need: { 探索: 4, 洞察: 3, 生存: 3 }, tags: ["sci"], difficulty: "hard", enemyAttr: 3, scenePackage: "archaeology_field", chainProfile: "mummy_tomb", carryState: { flag: "sample_contaminated", value: 1, onTiers: ["小成功", "失败", "大失败"], summary: "取样不稳，下一次科学或异常检定更容易带出污染。" }, chain: null },
       ],
     },
     {
@@ -528,8 +1901,9 @@
       pulse: false,
       hint: "需要：声望≥55 或 完成「罗斯威尔档案残页」。",
       nodes: [
-        { id: "shen", kind: "permanent", name: "神农架毛发样本采集", days: 3, need: { 探索: 5, 生存: 4 }, tags: ["sci", "pop"], difficulty: "hard", enemyAttr: 3, chain: null },
+        { id: "shen", kind: "permanent", name: "神农架毛发样本采集", days: 3, need: { 探索: 5, 生存: 4 }, tags: ["sci", "pop"], difficulty: "hard", enemyAttr: 3, scenePackage: "science_investigation", chain: null },
         { id: "chainA", kind: "permanent", name: "模糊：未解锁的链式线索", days: 2, need: { 探索: 6, 洞察: 4 }, tags: ["sci"], difficulty: "normal", enemyAttr: 2, chain: "locked", chainTitle: "链式调查 · 第二阶段" },
+        { id: "mummy_vault", kind: "permanent", name: "沙海木乃伊前厅", days: 3, need: { 探索: 4, 洞察: 3, 生存: 3 }, tags: ["sci"], difficulty: "hard", enemyAttr: 3, scenePackage: "archaeology_field", chainProfile: "mummy_tomb", carryState: { flag: "sample_contaminated", value: 1, onTiers: ["小成功", "失败", "大失败"], summary: "取样不稳，下一次科学或异常检定更容易带出污染。" }, chain: null },
       ],
     },
     {
@@ -548,21 +1922,13 @@
   };
   const NODE_MAP_POS = {
     us: {
-      n51: { x: 22, y: 28 },
-      skin: { x: 54, y: 46 },
-      temp_ufo: { x: 73, y: 25 },
-      hidden_gate: { x: 67, y: 70 },
-      roswell_weather_copy: { x: 48, y: 58 },
-      roswell_radar_night: { x: 60, y: 64 },
-      roswell_tape_blank: { x: 69, y: 56 },
-      bus330_witness: { x: 18, y: 60 },
-      bus330_depot: { x: 30, y: 67 },
-      bus330_station: { x: 42, y: 73 },
-      bus330_tape: { x: 54, y: 78 },
-      ball_light_kitchen: { x: 28, y: 18 },
-      ball_light_weather: { x: 40, y: 20 },
-      ball_light_substation: { x: 52, y: 22 },
-      ball_light_experiment: { x: 64, y: 20 },
+      n51: { x: 18, y: 24 },
+      skin: { x: 46, y: 44 },
+      temp_ufo: { x: 74, y: 22 },
+      harbor_echo_us: { x: 76, y: 54 },
+      mountain_signal_us: { x: 34, y: 70 },
+      hidden_gate: { x: 62, y: 74 },
+      mummy_vault_us: { x: 20, y: 52 },
     },
     east_asia: { shen: { x: 32, y: 40 }, chainA: { x: 68, y: 58 } },
     pacific: { easter: { x: 48, y: 46 } },
@@ -579,115 +1945,14 @@
   }
 
   const STAFF = [
-    {
-      id: "s1",
-      name: "印第安纳穷死",
-      avatar: "Assets/avatars/s1_indiana.png",
-      specialty: ["探索", "胆识"],
-      探索: 3, 生存: 2, 洞察: 2, 想象: 2, 理性: 2, 笔力: 1, 胆识: 4, 诡思: 1, 人脉: 2, 造势: 1,
-      diceFaces: [face("探索", 2), face("探索", 1), face("胆识", 2), face("生存", 1), face("洞察", 1), blankFace()],
-      growthBranches: [
-        { id: "field", name: "荒野采访", desc: "探索1 -> 探索2", replaceIndex: 1, face: face("探索", 2) },
-        { id: "bold", name: "不要命追踪", desc: "胆识2 -> 胆识3", replaceIndex: 2, face: face("胆识", 3) },
-      ],
-    },
-    {
-      id: "s2",
-      name: "末日时钟",
-      avatar: "Assets/avatars/s2_doomclock.png",
-      specialty: ["洞察", "理性"],
-      探索: 2, 生存: 3, 洞察: 3, 想象: 1, 理性: 3, 笔力: 2, 胆识: 2, 诡思: 0, 人脉: 3, 造势: 1,
-      diceFaces: [face("洞察", 2), face("理性", 2), face("洞察", 1), face("人脉", 1), face("生存", 1), blankFace()],
-      growthBranches: [
-        { id: "warning", name: "提前预警", desc: "空面 -> 洞察1", replaceIndex: 5, face: face("洞察", 1) },
-        { id: "rational", name: "冷静校验", desc: "理性2 -> 理性3", replaceIndex: 1, face: face("理性", 3) },
-      ],
-    },
-    {
-      id: "s3",
-      name: "火鸡科学家",
-      avatar: "Assets/avatars/s3_turkey_scientist.png",
-      specialty: ["理性", "诡思"],
-      探索: 1, 生存: 1, 洞察: 2, 想象: 3, 理性: 4, 笔力: 1, 胆识: 1, 诡思: 4, 人脉: 1, 造势: 2,
-      diceFaces: [face("理性", 3), face("理性", 2), face("诡思", 2), face("洞察", 1), face("造势", 1), blankFace()],
-      growthBranches: [
-        { id: "lab", name: "复现实验", desc: "理性2 -> 理性3", replaceIndex: 1, face: face("理性", 3) },
-        { id: "weird", name: "异常理论", desc: "造势1 -> 诡思2", replaceIndex: 4, face: face("诡思", 2) },
-      ],
-    },
-    {
-      id: "s4",
-      name: "薛定谔",
-      avatar: "Assets/avatars/s4_schrodinger.png",
-      specialty: ["想象", "诡思"],
-      探索: 2, 生存: 1, 洞察: 1, 想象: 4, 理性: 2, 笔力: 2, 胆识: 2, 诡思: 2, 人脉: 1, 造势: 2,
-      diceFaces: [face("想象", 2), face("诡思", 2), face("笔力", 1), face("洞察", 1), face("造势", 1), blankFace()],
-      growthBranches: [
-        { id: "column", name: "怪谈专栏", desc: "笔力1 -> 笔力2", replaceIndex: 2, face: face("笔力", 2) },
-        { id: "vision", name: "半醒灵感", desc: "空面 -> 诡思1", replaceIndex: 5, face: face("诡思", 1) },
-      ],
-    },
-    {
-      id: "s5",
-      name: "主角",
-      avatar: "Assets/avatars/s5_protagonist.png",
-      specialty: ["洞察", "笔力"],
-      探索: 2, 生存: 1, 洞察: 4, 想象: 3, 理性: 3, 笔力: 4, 胆识: 2, 诡思: 1, 人脉: 2, 造势: 3,
-      diceFaces: [face("洞察", 2), face("笔力", 2), face("造势", 2), face("理性", 1), face("人脉", 1), blankFace()],
-      growthBranches: [
-        { id: "editor", name: "主编判断", desc: "人脉1 -> 洞察2", replaceIndex: 4, face: face("洞察", 2) },
-        { id: "headline", name: "封面标题", desc: "造势2 -> 造势3", replaceIndex: 2, face: face("造势", 3) },
-      ],
-    },
-    {
-      id: "s6",
-      name: "伪人",
-      avatar: "Assets/avatars/s6_impostor.png",
-      specialty: ["人脉", "探索"],
-      探索: 3, 生存: 2, 洞察: 2, 想象: 1, 理性: 1, 笔力: 1, 胆识: 2, 诡思: 2, 人脉: 4, 造势: 1,
-      diceFaces: [face("人脉", 2), face("探索", 2), face("洞察", 1), face("诡思", 1), face("生存", 1), blankFace()],
-      growthBranches: [
-        { id: "contact", name: "像谁都认识", desc: "人脉2 -> 人脉3", replaceIndex: 0, face: face("人脉", 3) },
-        { id: "mask", name: "身份错位", desc: "空面 -> 人脉1", replaceIndex: 5, face: face("人脉", 1) },
-      ],
-    },
-    {
-      id: "s7",
-      name: "娜娜",
-      avatar: "Assets/avatars/s7_nana.png",
-      specialty: ["人脉", "洞察"],
-      探索: 2, 生存: 2, 洞察: 3, 想象: 2, 理性: 3, 笔力: 2, 胆识: 2, 诡思: 0, 人脉: 4, 造势: 2,
-      diceFaces: [face("人脉", 2), face("洞察", 2), face("理性", 1), face("笔力", 1), face("造势", 1), blankFace()],
-      growthBranches: [
-        { id: "interview", name: "温和套话", desc: "笔力1 -> 人脉2", replaceIndex: 3, face: face("人脉", 2) },
-        { id: "clue", name: "细节记忆", desc: "理性1 -> 洞察2", replaceIndex: 2, face: face("洞察", 2) },
-      ],
-    },
-    {
-      id: "s8",
-      name: "艾灵",
-      avatar: "Assets/avatars/s8_ailing.png",
-      specialty: ["理性", "诡思"],
-      探索: 1, 生存: 2, 洞察: 3, 想象: 3, 理性: 4, 笔力: 2, 胆识: 2, 诡思: 3, 人脉: 1, 造势: 1,
-      diceFaces: [face("理性", 2), face("诡思", 2), face("洞察", 2), face("生存", 1), face("笔力", 1), blankFace()],
-      growthBranches: [
-        { id: "sanity", name: "理性锚定", desc: "生存1 -> 理性2", replaceIndex: 3, face: face("理性", 2) },
-        { id: "echo", name: "异常共鸣", desc: "笔力1 -> 诡思2", replaceIndex: 4, face: face("诡思", 2) },
-      ],
-    },
-  ];
-
-  const TEMP_STAFF_POOL = [
-    {
-      id: "temp_stringer",
-      name: "临时线人",
-      avatar: makeAvatar("线", "#16a34a", "#86efac"),
-      temporary: true,
-      specialty: ["人脉", "洞察"],
-      探索: 1, 生存: 1, 洞察: 2, 想象: 1, 理性: 1, 笔力: 1, 胆识: 1, 诡思: 1, 人脉: 3, 造势: 1,
-      diceFaces: [face("人脉", 2), face("人脉", 1), face("洞察", 1), face("探索", 1), blankFace(), blankFace()],
-      growthBranches: [],
-    },
+    { id: "s1", name: "印第安纳穷死", avatar: "Assets/avatars/s1_indiana.png", 探索: 3, 生存: 2, 洞察: 2, 诡思: 1, 理性: 2 },
+    { id: "s2", name: "末日时钟", avatar: "Assets/avatars/s2_doomclock.png", 探索: 2, 生存: 3, 洞察: 3, 诡思: 0, 理性: 3 },
+    { id: "s3", name: "火鸡科学家", avatar: "Assets/avatars/s3_turkey_scientist.png", 探索: 1, 生存: 1, 洞察: 2, 诡思: 4, 理性: 1 },
+    { id: "s4", name: "薛定谔", avatar: "Assets/avatars/s4_schrodinger.png", 探索: 2, 生存: 1, 洞察: 1, 诡思: 1, 理性: 2 },
+    { id: "s5", name: "主角", avatar: "Assets/avatars/s5_protagonist.png", 探索: 1, 生存: 1, 洞察: 4, 诡思: 1, 理性: 3 },
+    { id: "s6", name: "伪人", avatar: "Assets/avatars/s6_impostor.png", 探索: 3, 生存: 2, 洞察: 2, 诡思: 1, 理性: 2 },
+    { id: "s7", name: "娜娜", avatar: "Assets/avatars/s7_nana.png", 探索: 2, 生存: 2, 洞察: 3, 诡思: 0, 理性: 3 },
+    { id: "s8", name: "艾灵", avatar: "Assets/avatars/s8_ailing.png", 探索: 1, 生存: 2, 洞察: 3, 诡思: 2, 理性: 4 },
   ];
 
   const TAG_LABEL = { sci: "科学纪实", occult: "神秘玄学", pop: "世俗流量" };
@@ -695,7 +1960,6 @@
   const COGNITION_NAME_POOL = ["局部重力异常假说", "群体记忆偏移假说", "生态能量流理论", "低频共振干预理论", "时空弯曲第一法则", "超个体意识假说"];
   const TOOL_NAME_POOL = ["DNA测序工具组", "光谱分析仪", "口述档案检索器", "夜视相机组"];
   const ROLL_FACES = ["✓", "×", "?", "", "", ""];
-  const STAFF_BY_ID = new Map([...STAFF, ...TEMP_STAFF_POOL].map((s) => [s.id, s]));
 
   const el = {
     synInventory: null,
@@ -741,118 +2005,6 @@
     });
   }
 
-  function getAllStaff() {
-    return [...STAFF, ...TEMP_STAFF_POOL.filter((s) => state.tempStaffIds.includes(s.id))];
-  }
-
-  function findStaff(id) {
-    if (!id) return null;
-    return getAllStaff().find((s) => s.id === id) || STAFF_BY_ID.get(id) || null;
-  }
-
-  function faceText(f) {
-    if (!f) return "空";
-    if (f.blank) return f.label || "空";
-    const risk = f.risk ? " + 风险" : "";
-    const special = f.special ? ` + ${f.special}` : "";
-    return `${f.attr}${f.value || 0}${special}${risk}`;
-  }
-
-  function faceClass(f) {
-    if (!f || f.blank) return "face-blank";
-    const domain = ATTR_DOMAIN[f.attr] || "";
-    return `face-${DOMAIN_CLASS[domain] || "misc"} ${f.risk ? "face-risk" : ""}`.trim();
-  }
-
-  function diceFacesForStaff(staff) {
-    if (!staff) return [];
-    const override = state.staffDiceOverrides[staff.id];
-    if (override && Array.isArray(override.faces)) return override.faces;
-    return staff.diceFaces || [];
-  }
-
-  function diceFacesHtml(faces, relevantNeed) {
-    return `<div class="dice-face-row">${(faces || []).map((f) => {
-      const relevant = f && f.attr && relevantNeed && relevantNeed[f.attr] != null ? " is-relevant" : "";
-      return `<span class="dice-face ${faceClass(f)}${relevant}" title="${escapeHtml(faceText(f))}">${escapeHtml(faceText(f))}</span>`;
-    }).join("")}</div>`;
-  }
-
-  function specialtyHtml(staff) {
-    return (staff.specialty || [])
-      .map((a) => `<span class="attr-chip attr-${DOMAIN_CLASS[ATTR_DOMAIN[a]] || "misc"}">${escapeHtml(a)}</span>`)
-      .join("");
-  }
-
-  function staffDetailHtml(staff, relevantNeed) {
-    if (!staff) return "";
-    const branches = (staff.growthBranches || []).map((b) => `
-      <div class="growth-branch">
-        <strong>${escapeHtml(b.name)}</strong>
-        <span>${escapeHtml(b.desc || "")}</span>
-      </div>`).join("");
-    return `<div class="staff-detail-card">
-      <div class="staff-detail-head">
-        <img src="${staff.avatar}" alt="${escapeHtml(staff.name)}"/>
-        <div>
-          <div class="staff-detail-name">${escapeHtml(staff.name)}${staff.temporary ? "（临时）" : ""}</div>
-          <div class="staff-detail-spec">${specialtyHtml(staff)}</div>
-        </div>
-      </div>
-      <div class="staff-detail-section">
-        <div class="staff-detail-label">完整 6 面角色骰</div>
-        ${diceFacesHtml(diceFacesForStaff(staff), relevantNeed)}
-      </div>
-      <div class="staff-detail-section">
-        <div class="staff-detail-label">属性总览</div>
-        <div class="staff-detail-attrs">${ATTR_KEYS.map((k) => `<span>${k} ${getStaffValue(staff, k)}</span>`).join("")}</div>
-      </div>
-      <div class="staff-detail-section">
-        <div class="staff-detail-label">下次升级分支（预览）</div>
-        ${branches || `<span class="tip-inline">暂无升级分支。</span>`}
-      </div>
-    </div>`;
-  }
-
-  function previewUpgradeFaces(staff, branch) {
-    const faces = diceFacesForStaff(staff).map((f) => ({ ...f }));
-    if (!branch) return faces;
-    if (branch.replaceIndex != null && branch.face) faces[branch.replaceIndex] = branch.face;
-    else if (branch.face && faces.length < 6) faces.push(branch.face);
-    return faces.slice(0, 6);
-  }
-
-  function showUpgradeModal(staff) {
-    if (!staff || staff.temporary) return;
-    const branches = staff.growthBranches || [];
-    const body = branches.length
-      ? branches.map((b, idx) => `<div class="upgrade-option">
-          <h4>${escapeHtml(b.name)}</h4>
-          <p>${escapeHtml(b.desc || "")}</p>
-          <div class="upgrade-compare">
-            <div><strong>当前</strong>${diceFacesHtml(diceFacesForStaff(staff), {})}</div>
-            <div><strong>升级后</strong>${diceFacesHtml(previewUpgradeFaces(staff, b), {})}</div>
-          </div>
-          <button type="button" data-upgrade-branch="${idx}" class="primary">选择此分支</button>
-        </div>`).join("")
-      : `<p>暂无可用升级分支。</p>`;
-    showConfirmPopup(`${staff.name} · 升级预览`, `<div class="upgrade-modal">${body}</div>`, "每次升级都会改变骰面").then(() => {});
-    setTimeout(() => {
-      document.querySelectorAll("[data-upgrade-branch]").forEach((btn) => {
-        btn.onclick = () => {
-          const branch = branches[Number(btn.getAttribute("data-upgrade-branch"))];
-          if (!branch) return;
-          state.staffDiceOverrides[staff.id] = { faces: previewUpgradeFaces(staff, branch) };
-          state.staffLevels[staff.id] = (state.staffLevels[staff.id] || 1) + 1;
-          const ok = document.getElementById("confirmPopupOk");
-          if (ok) ok.click();
-          log(`${staff.name} 升级：${branch.name}`);
-          if (state.view === "setup") renderSetup();
-        };
-      });
-    }, 0);
-  }
-
   function cleanupWeekScopedEffects() {
     state.staffEffects = state.staffEffects.filter((e) => e.duration === "permanent" || e.startWeek >= state.week);
     state.dynamicNodes = state.dynamicNodes.filter((x) => x.expireWeek >= state.week);
@@ -864,197 +2016,6 @@
       if (eff.staffId === person.id && eff.stat === stat) v += eff.delta;
     }
     return Math.max(0, v);
-  }
-
-  function missionMaxStaff(m) {
-    return m && (m.isBlackDiceTask || m.riskTier === "high" || m.isHighRisk) ? 5 : 3;
-  }
-
-  function rollOneDie(faces) {
-    const list = faces && faces.length ? faces : [blankFace()];
-    return { face: list[Math.floor(Math.random() * list.length)] || blankFace(), faceIndex: 0 };
-  }
-
-  function rollCharacterDice(mission, staffIds) {
-    const rolls = [];
-    (staffIds || []).forEach((id) => {
-      const staff = findStaff(id);
-      if (!staff) return;
-      const faces = diceFacesForStaff(staff);
-      const idx = Math.floor(Math.random() * Math.max(1, faces.length));
-      rolls.push({
-        id: `roll_${id}_${rolls.length}`,
-        kind: staff.temporary ? "tempStaff" : "staff",
-        staffId: id,
-        staffName: staff.name,
-        avatar: staff.avatar,
-        faceIndex: idx,
-        face: faces[idx] || blankFace(),
-        locked: !!((faces[idx] || {}).noReroll || (mission && mission.noReroll)),
-      });
-    });
-    (state.selectedToolDiceIds || []).forEach((id) => {
-      const tool = state.toolDiceInventory.find((x) => x.id === id);
-      if (!tool) return;
-      const idx = Math.floor(Math.random() * Math.max(1, tool.faces.length));
-      rolls.push({
-        id: `roll_${id}_${rolls.length}`,
-        kind: "tool",
-        toolId: id,
-        staffName: tool.name,
-        avatar: "",
-        faceIndex: idx,
-        face: tool.faces[idx] || blankFace(),
-        locked: true,
-      });
-    });
-    return rolls;
-  }
-
-  function makeBlackFace(label, effect) {
-    return { black: true, label, effect };
-  }
-
-  function blackDiceForMission(mission, baseRolls) {
-    if (!mission || !mission.isBlackDiceTask) return [];
-    if (mission.blackDiceTheme === "bus330") {
-      const list = [
-        { id: "black_bus_mix", theme: "bus330", face: makeBlackFace("混入", "mix"), desc: "一颗负面乘客骰混入己方骰池。" },
-        { id: "black_bus_replace", theme: "bus330", face: makeBlackFace("替座", "replace"), desc: "一颗角色骰被可疑乘客替换。" },
-      ];
-      return list;
-    }
-    if (mission.blackDiceTheme === "ball_lightning") {
-      return [
-        { id: "black_light_sense", theme: "ball_lightning", face: makeBlackFace("感应", "sense"), desc: "复制一个己方成功属性为黑骰压力。" },
-        { id: "black_light_ground", theme: "ball_lightning", face: makeBlackFace("接地", "ground"), desc: "最高点骰成为导体，成功也会带来反噬。" },
-      ];
-    }
-    return [{ id: "black_generic", theme: "generic", face: makeBlackFace("干扰", "pressure"), desc: "黑骰增加本次任务压力。" }];
-  }
-
-  function applyBlackDiceToRolls(mission, rolls, blackDice) {
-    const next = rolls.slice();
-    const notes = [];
-    const pressure = {};
-    (blackDice || []).forEach((b, idx) => {
-      const effect = b.face && b.face.effect;
-      if (mission.blackDiceTheme === "bus330" && effect === "mix") {
-        next.push({
-          id: `black_mix_${idx}`,
-          kind: "black",
-          staffName: "可疑乘客",
-          avatar: "",
-          face: { attr: "诡思", value: -1, black: true, label: "鬼乘客" },
-          locked: true,
-          black: true,
-        });
-        notes.push("黑骰·混入：可疑乘客骰混进了你的骰池。");
-      } else if (mission.blackDiceTheme === "bus330" && effect === "replace") {
-        const targetIndex = next.findIndex((r) => r.kind === "staff" || r.kind === "tempStaff");
-        if (targetIndex >= 0) {
-          const target = next[targetIndex];
-          next[targetIndex] = {
-            id: `black_replace_${idx}`,
-            kind: "black",
-            staffName: `${target.staffName}？`,
-            avatar: target.avatar,
-            face: { attr: "胆识", value: -2, black: true, label: "替座" },
-            locked: true,
-            black: true,
-          };
-          notes.push(`黑骰·替座：${target.staffName} 的骰子被替换成了可疑乘客。`);
-        }
-      } else if (mission.blackDiceTheme === "ball_lightning" && effect === "sense") {
-        const best = next.filter((r) => r.face && r.face.attr && !r.face.blank).sort((a, b) => (b.face.value || 0) - (a.face.value || 0))[0];
-        if (best) {
-          pressure[best.face.attr] = (pressure[best.face.attr] || 0) + Math.max(1, best.face.value || 1);
-          notes.push(`黑骰·感应：异常复制了 ${best.staffName} 的 ${faceText(best.face)}。`);
-        }
-      } else if (mission.blackDiceTheme === "ball_lightning" && effect === "ground") {
-        const best = next.filter((r) => r.face && r.face.attr && !r.face.blank).sort((a, b) => (b.face.value || 0) - (a.face.value || 0))[0];
-        if (best) {
-          best.grounded = true;
-          notes.push(`黑骰·接地：${best.staffName} 的骰子成为导体，成功会带来狂性回流。`);
-        }
-      } else {
-        pressure.探索 = (pressure.探索 || 0) + 1;
-        notes.push("黑骰·干扰：本次任务压力上升。");
-      }
-    });
-    return { rolls: next, pressure, notes };
-  }
-
-  function rollContribution(rolls, selectedIds) {
-    const selected = new Set(selectedIds || []);
-    const sum = {};
-    (rolls || []).forEach((r) => {
-      if (!selected.has(r.id)) return;
-      const f = r.face || {};
-      if (!f.attr || f.blank) return;
-      sum[f.attr] = (sum[f.attr] || 0) + (f.value || 0);
-    });
-    Object.keys(sum).forEach((k) => {
-      if (sum[k] < 0) sum[k] = 0;
-    });
-    return sum;
-  }
-
-  function blackPressureTotal(pressure) {
-    return Object.values(pressure || {}).reduce((a, b) => a + (b || 0), 0);
-  }
-
-  function blackDiceTier(mission, success, contribution, pressure, selectedRolls) {
-    const needTotal = Object.values(mission.need || {}).reduce((a, b) => a + (b || 0), 0);
-    const gotTotal = Object.values(contribution || {}).reduce((a, b) => a + (b || 0), 0);
-    const pressureTotal = blackPressureTotal(pressure);
-    const blackSelected = (selectedRolls || []).some((r) => r.black);
-    if (success && gotTotal >= needTotal + 2 && pressureTotal <= 1 && !blackSelected) return "大成功";
-    if (success) return "成功";
-    if (!success && (blackSelected || pressureTotal >= 3)) return "大失败";
-    return "失败";
-  }
-
-  function needMetByContribution(need, sum) {
-    return Object.keys(need || {}).every((k) => (sum[k] || 0) >= (need[k] || 0));
-  }
-
-  function autoSelectRollsForNeed(rolls, need) {
-    const ids = [];
-    const totals = {};
-    const relevant = (rolls || []).filter((r) => r.face && r.face.attr && need && need[r.face.attr] != null);
-    relevant
-      .sort((a, b) => (b.face.value || 0) - (a.face.value || 0))
-      .forEach((r) => {
-        const attr = r.face.attr;
-        if ((totals[attr] || 0) >= (need[attr] || 0)) return;
-        ids.push(r.id);
-        totals[attr] = (totals[attr] || 0) + (r.face.value || 0);
-      });
-    if (!needMetByContribution(need, totals)) {
-      (rolls || []).forEach((r) => {
-        if (ids.includes(r.id)) return;
-        const f = r.face || {};
-        if (!f.attr || f.blank) return;
-        ids.push(r.id);
-      });
-    }
-    return ids;
-  }
-
-  function riskLabelForMission(mission, staffIds) {
-    const rolls = [];
-    (staffIds || []).forEach((id) => {
-      const staff = findStaff(id);
-      if (!staff) return;
-      rolls.push(...diceFacesForStaff(staff).map((face) => ({ face })));
-    });
-    const totalFaces = rolls.length || 1;
-    const good = rolls.filter((r) => r.face && r.face.attr && mission.need && mission.need[r.face.attr] != null).length;
-    const ratio = good / totalFaces;
-    if (ratio >= 0.52) return "低";
-    if (ratio >= 0.32) return "中";
-    return "高";
   }
 
   function addDynamicNode(regionId, node, durationWeeks) {
@@ -1086,7 +2047,7 @@
             kind: "temp",
             name: `线索追查：${r.name}临时异动`,
             days: 2,
-            need: { 人脉: 2, 洞察: 2 },
+            need: { 探索: 4, 洞察: 3 },
             tags: ["pop", "occult"],
             difficulty: "normal",
             enemyAttr: 2,
@@ -1137,11 +2098,10 @@
       leadId: lead.id,
       name: `线索调查：${lead.title}`,
       days: lead.days || 2,
-      need: lead.need || { 人脉: 2, 洞察: 2 },
+      need: lead.need || { 探索: 4, 洞察: 3 },
       tags: lead.tags || ["sci", "occult"],
       difficulty: lead.difficulty || (lead.reliability >= 0.65 ? "normal" : "hard"),
       enemyAttr: lead.enemyAttr != null ? lead.enemyAttr : (lead.reliability >= 0.65 ? 2 : 3),
-      useCharacterDice: true,
       chain: null,
     };
     lead.assigned = true;
@@ -1691,20 +2651,78 @@
   function staffSum(staffList) {
     const sum = {};
     staffList.forEach((id) => {
-      const p = findStaff(id);
+      const p = STAFF.find((x) => x.id === id);
       if (!p) return;
-      ATTR_KEYS.forEach((k) => {
+      ["探索", "生存", "洞察", "诡思", "理性"].forEach((k) => {
         sum[k] = (sum[k] || 0) + getStaffValue(p, k);
       });
     });
     return sum;
   }
   function poolSizes(staffList) {
-    const s = staffSum(staffList);
-    return { nA: (s.探索 || 0) + (s.洞察 || 0) + (s.诡思 || 0), nB: (s.生存 || 0) + (s.理性 || 0) };
+    const staffObjs = staffList
+      .map((id) => STAFF.find((x) => x.id === id))
+      .filter(Boolean);
+    return { nA: Math.min(10, staffObjs.length), nB: 0 };
   }
-  function needThresholds(need) {
-    return { kA: (need.探索 || 0) + (need.洞察 || 0) + (need.诡思 || 0), kB: (need.生存 || 0) + (need.理性 || 0) };
+  function scaledEnemyPressure(rawEnemy, totalDice) {
+    const raw = Math.max(0, rawEnemy | 0);
+    if (totalDice <= 1) return 0;
+    let pressure = 0;
+    if (raw >= 2) pressure = 1;
+    if (raw >= 4) pressure = 2;
+    if (raw >= 6) pressure = 3;
+    return Math.min(Math.max(0, totalDice - 1), pressure);
+  }
+  function missionTarget(need, difficulty) {
+    const totalNeed = Object.values(need || {}).reduce((sum, v) => sum + (v | 0), 0);
+    const diffBonus = difficulty === "hard" ? 2 : difficulty === "easy" ? 0 : 1;
+    if (totalNeed <= 0) return 0;
+    return Math.max(3, Math.ceil(totalNeed * 0.75) + diffBonus);
+  }
+  function rollDieValue(p) {
+    const base = 1 + Math.floor(Math.random() * 6);
+    const bias = p >= 0.58 ? 1 : p <= 0.38 ? -1 : 0;
+    return clamp(base + bias, 1, 6);
+  }
+  function classifyTier(totalScore, targetScore, maxDie, diceCount) {
+    if (totalScore >= targetScore && maxDie >= 6) return "大成功";
+    if (totalScore >= targetScore) return "小成功";
+    if (diceCount >= 3 && totalScore <= Math.max(2, targetScore - 4)) return "大失败";
+    return "失败";
+  }
+  function buildDicePlan(mission, staffList, context, carry) {
+    const baseDice = poolSizes(staffList).nA;
+    let totalDice = baseDice;
+    const notes = [...(carry.notes || [])];
+    const sources = Array.from({ length: baseDice }, () => "base");
+    if ((carry.bonusA || 0) > 0) {
+      totalDice += carry.bonusA;
+      for (let i = 0; i < carry.bonusA; i++) sources.push("carry");
+      notes.push(`余波：额外获得 ${carry.bonusA} 颗保底骰。`);
+    }
+    if ((carry.bonusB || 0) < 0) {
+      totalDice = Math.max(1, totalDice + carry.bonusB);
+      notes.push(`余波：本次基础骰减少 ${Math.abs(carry.bonusB)} 颗。`);
+    }
+    if (context.lightMod?.kind === "bonusA" || context.lightMod?.kind === "bonusB") {
+      const amount = context.lightMod.amount || 1;
+      totalDice += amount;
+      for (let i = 0; i < amount; i++) sources.push("bonus");
+      notes.push(`类型包：额外获得 ${amount} 颗奖励骰。`);
+    }
+    if (context.lightMod?.kind === "taintedDie") {
+      const amount = context.lightMod.amount || 1;
+      totalDice += amount;
+      for (let i = 0; i < amount; i++) sources.push("tainted");
+      notes.push(`类型包：额外带入 ${amount} 颗污染骰。`);
+    }
+    totalDice = Math.min(10, Math.max(1, totalDice));
+    while (sources.length > totalDice) sources.pop();
+    const targetScore = missionTarget(mission.need, mission.difficulty || "normal");
+    const enemyAttr = scaledEnemyPressure(mission.enemyAttr | 0, totalDice) + (carry.enemyADelta || 0);
+    const effectiveDice = Math.max(0, totalDice - enemyAttr);
+    return { baseDice, totalDice, targetScore, enemyAttr, effectiveDice, notes, sources };
   }
 
   function computeExplorationP(mission, staffList) {
@@ -1714,55 +2732,51 @@
     if (mission.kind === "temp" && state.day < (mission.deadlineDay || 0)) deltaP += 0.05;
     if (mission.kind === "hidden") deltaP -= 0.05;
     const p = clamp(pBase + deltaP, 0, 1);
-    const { nA, nB } = poolSizes(staffList);
-    const { kA, kB } = needThresholds(mission.need);
-    const enemyAttr = mission.enemyAttr | 0;
-    const nTot = nA + nB;
-    const enemyA = nTot > 0 ? Math.floor((enemyAttr * nA) / nTot) : 0;
-    const enemyB = enemyAttr - enemyA;
-    const nAe = Math.max(0, nA - enemyA);
-    const nBe = Math.max(0, nB - enemyB);
-    function passProb(n, k) {
-      if (k <= 0) return 1;
-      if (n <= 0) return 0;
-      return binomialPAtLeast(n, p, k);
+    const context = buildSceneContext(mission);
+    const carry = getPreRollCarryModifiers(context);
+    const plan = buildDicePlan(mission, staffList, context, carry);
+    let pPass = 0;
+    let pGreat = 0;
+    const trials = 520;
+    for (let t = 0; t < trials; t++) {
+      const rolls = Array.from({ length: plan.totalDice }, () => rollDieValue(p));
+      const voidSet = pickRandomIndices(plan.totalDice, plan.enemyAttr);
+      let totalScore = 0;
+      let maxDie = 0;
+      for (let i = 0; i < rolls.length; i++) {
+        if (voidSet.has(i)) continue;
+        totalScore += rolls[i];
+        maxDie = Math.max(maxDie, rolls[i]);
+      }
+      if (totalScore >= plan.targetScore) {
+        pPass += 1;
+        if (maxDie >= 6) pGreat += 1;
+      }
     }
-    const pA = passProb(nAe, kA);
-    const pB = passProb(nBe, kB);
+    const pass = pPass / trials;
+    const great = pGreat / trials;
     return {
       p,
       pBase,
       deltaP,
-      nA,
-      nB,
-      kA,
-      kB,
-      enemyAttr,
-      enemyA,
-      enemyB,
-      nAe,
-      nBe,
-      pA,
-      pB,
-      pBig: pA * pB,
-      pSmall: pA * (1 - pB) + (1 - pA) * pB,
-      pBothFail: (1 - pA) * (1 - pB),
+      nA: plan.totalDice,
+      nB: 0,
+      kA: plan.targetScore,
+      kB: 6,
+      enemyAttr: plan.enemyAttr,
+      enemyA: plan.enemyAttr,
+      enemyB: 0,
+      nAe: plan.effectiveDice,
+      nBe: 0,
+      pA: pass,
+      pB: great,
+      pBig: great,
+      pSmall: Math.max(0, pass - great),
+      pBothFail: Math.max(0, 1 - pass),
+      sceneContext: context,
+      carry,
+      dicePlan: plan,
     };
-  }
-
-  function computeCharacterDicePreview(mission, staffList) {
-    const risk = riskLabelForMission(mission, staffList);
-    const relevant = {};
-    (staffList || []).forEach((id) => {
-      const st = findStaff(id);
-      if (!st) return;
-      diceFacesForStaff(st).forEach((f) => {
-        if (f && f.attr && mission.need && mission.need[f.attr] != null) {
-          relevant[f.attr] = (relevant[f.attr] || 0) + 1;
-        }
-      });
-    });
-    return { risk, relevant };
   }
 
   function pickRandomIndices(len, count) {
@@ -1775,34 +2789,237 @@
   }
 
   function runSplitCheck(mission, staffList) {
+    const context = buildSceneContext(mission);
+    if (context.chainProfile) return runChainCheck(mission, staffList, context);
     const meta = computeExplorationP(mission, staffList);
     const p = meta.p;
-    const { nA, nB } = poolSizes(staffList);
-    const { kA, kB } = needThresholds(mission.need);
-    const enemyAttr = mission.enemyAttr | 0;
-    const nTot = nA + nB;
-    const enemyA = nTot > 0 ? Math.floor((enemyAttr * nA) / nTot) : 0;
-    const enemyB = enemyAttr - enemyA;
-    const rollHit = () => Math.random() < p;
-    const rollsA = Array.from({ length: nA }, rollHit);
-    const rollsB = Array.from({ length: nB }, rollHit);
-    const voidA = pickRandomIndices(nA, enemyA);
-    const voidB = pickRandomIndices(nB, enemyB);
-    let hitsA = 0;
-    for (let i = 0; i < nA; i++) if (!voidA.has(i) && rollsA[i]) hitsA++;
-    let hitsB = 0;
-    for (let i = 0; i < nB; i++) if (!voidB.has(i) && rollsB[i]) hitsB++;
-    const passA = kA <= 0 ? true : hitsA >= kA;
-    const passB = kB <= 0 ? true : hitsB >= kB;
-    let tier;
-    if (passA && passB) tier = "大成功";
-    else if (passA || passB) tier = "小成功";
-    else {
-      const totalHits = hitsA + hitsB;
-      const needSum = kA + kB;
-      tier = nA + nB >= 4 && totalHits <= 1 && needSum >= 4 ? "大失败" : "失败";
+    const plan = meta.dicePlan;
+    const notes = [...(plan.notes || [])];
+    const rollsA = Array.from({ length: plan.totalDice }, () => rollDieValue(p));
+    const rollsB = [];
+    const sourceA = plan.sources.slice();
+    const sourceB = [];
+    const voidA = pickRandomIndices(plan.totalDice, plan.enemyAttr);
+    const voidB = new Set();
+    const interventionResult = applyIntervention(context, rollsA, rollsB, voidA, voidB, sourceA);
+    if (interventionResult.shielded) notes.push("掩护生效：保住了 1 颗原本会被收走的成功骰。");
+    let totalScore = 0;
+    let maxDie = 0;
+    for (let i = 0; i < rollsA.length; i++) {
+      if (voidA.has(i)) continue;
+      totalScore += rollsA[i];
+      maxDie = Math.max(maxDie, rollsA[i]);
     }
-    return { ...meta, hitsA, hitsB, passA, passB, tier, rollsA, rollsB, voidA, voidB, enemyA, enemyB };
+    const passA = totalScore >= plan.targetScore;
+    const passB = maxDie >= 6;
+    const tier = classifyTier(totalScore, plan.targetScore, maxDie, rollsA.length);
+    const secondaryAxis = buildSecondaryAxis(context, totalScore, maxDie, plan.targetScore, 6, tier, interventionResult, meta.carry || {});
+    if (secondaryAxis?.summary) notes.push(`${secondaryAxis.label}：${secondaryAxis.summary}`);
+    return {
+      ...meta,
+      hitsA: totalScore,
+      hitsB: maxDie,
+      passA,
+      passB,
+      tier,
+      rollsA,
+      rollsB,
+      voidA,
+      voidB,
+      sourceA,
+      sourceB,
+      enemyA: plan.enemyAttr,
+      enemyB: 0,
+      sceneContext: context,
+      carry: meta.carry,
+      interventionResult,
+      secondaryAxis,
+      sceneNotes: notes,
+      usedCarryFlags: (meta.carry?.consumedFlags) || [],
+      phases: [],
+      totalScore,
+      maxDie,
+      targetScore: plan.targetScore,
+    };
+  }
+
+  function buildSceneContext(mission) {
+    const packageId = mission.scenePackage || "science_investigation";
+    const pkg = SCENE_PACKAGES[packageId] || SCENE_PACKAGES.science_investigation;
+    return {
+      packageId,
+      packageLabel: pkg.label || packageId,
+      axisKey: pkg.axisKey || "evidence_quality",
+      axisLabel: pkg.axisLabel || "副轴",
+      riskHint: pkg.riskHint || "",
+      lightMod: pkg.defaultLightMod ? { ...pkg.defaultLightMod } : {},
+      intervention: mission.intervention || null,
+      carryState: mission.carryState || null,
+      chainProfile: mission.chainProfile || null,
+      chainData: mission.chainProfile ? CHAIN_PROFILES[mission.chainProfile] || null : null,
+      preBankedLead: state.carryStates.banked_lead || null,
+      preWatchlistPressure: state.carryStates.watchlist_pressure || null,
+      preSampleContaminated: state.carryStates.sample_contaminated || null,
+      preAbnormalResidue: state.carryStates.abnormal_residue || null,
+    };
+  }
+
+  function getPreRollCarryModifiers(context) {
+    const out = { bonusA: 0, bonusB: 0, enemyADelta: 0, residueBonus: 0, notes: [], consumedFlags: [] };
+    const scenePackage = context.packageId;
+    const bankedLead = context.preBankedLead;
+    if (bankedLead && (bankedLead.scenePackage || scenePackage) === scenePackage) {
+      out.bonusA += bankedLead.value || 0;
+      out.notes.push("旧线索保底：这次科学调查先吃到存档优势。");
+      out.consumedFlags.push("banked_lead");
+    }
+    const sampleContaminated = context.preSampleContaminated;
+    if (sampleContaminated && ["science_investigation", "abnormal_contact"].includes(scenePackage)) {
+      out.bonusB -= sampleContaminated.value || 0;
+      out.notes.push("样本污染：本次可用骰减少。");
+      out.consumedFlags.push("sample_contaminated");
+    }
+    const watchlistPressure = context.preWatchlistPressure;
+    if (watchlistPressure && ["social_probe", "science_investigation"].includes(scenePackage)) {
+      out.enemyADelta += watchlistPressure.value || 0;
+      out.notes.push("盯梢压力：本次更容易被额外压制。");
+      out.consumedFlags.push("watchlist_pressure");
+    }
+    const abnormalResidue = context.preAbnormalResidue;
+    if (abnormalResidue && scenePackage === "abnormal_contact") {
+      out.residueBonus += abnormalResidue.value || 0;
+      out.notes.push("异常残留：旧污染在本场继续发酵。");
+      out.consumedFlags.push("abnormal_residue");
+    }
+    return out;
+  }
+
+  function firstAliveSuccessIndex(rolls, voidSet) {
+    for (let i = 0; i < rolls.length; i++) {
+      if (!voidSet.has(i) && rolls[i]) return i;
+    }
+    return -1;
+  }
+
+  function applyIntervention(context, rollsA, rollsB, voidA, voidB) {
+    const result = { kind: context.intervention, summary: "", shielded: false };
+    switch (context.intervention) {
+      case "seize": {
+        const idx = firstAliveSuccessIndex(rollsA, voidA);
+        if (idx >= 0) {
+          if (context.lightMod?.kind === "shieldFirstHit") {
+            result.shielded = true;
+            result.summary = "对手试图查扣成功骰，但被掩护保住。";
+          } else {
+            voidA.add(idx);
+            result.summary = "对手额外收走了 1 颗调查成功骰。";
+          }
+        }
+        break;
+      }
+      case "seal": {
+        const idx = firstAliveSuccessIndex(rollsA, voidA);
+        if (idx >= 0) {
+          voidA.add(idx);
+          result.summary = "对手封存了 1 颗关键行动骰，成果被暂时压下。";
+        }
+        break;
+      }
+      case "decoy": {
+        const idx = firstAliveSuccessIndex(rollsA, voidA);
+        if (idx >= 0) {
+          voidA.add(idx);
+          result.summary = "你追上了诱饵，1 颗关键行动骰被转移掉。";
+        } else {
+          result.summary = "假目标消耗了注意力，但没有骗走有效成功。";
+        }
+        break;
+      }
+      case "contaminate":
+        result.summary = "成功结果会附带污染残留与后续风险。";
+        break;
+      default:
+        break;
+    }
+    return result;
+  }
+
+  function buildSecondaryAxis(context, totalScore, maxDie, targetScore, maxTarget, tier, interventionResult, carry) {
+    const axisKey = context.axisKey || "evidence_quality";
+    const axisLabel = context.axisLabel || "副轴";
+    const deltaScore = totalScore - targetScore;
+    const deltaMax = maxDie - maxTarget;
+    let score = deltaScore;
+    let summary = "";
+    if (axisKey === "evidence_quality") {
+      if (tier === "大成功") summary = "拿到可直接上稿的硬证据";
+      else if (tier === "小成功") summary = "素材成形，但还需要一次补证";
+      else summary = "证据碎裂，只能拼出残缺线索";
+    } else if (axisKey === "exposure") {
+      const exposureLevel = Math.max(0, (interventionResult.kind === "seize" ? 1 : 0) + Math.max(0, -deltaScore));
+      summary = exposureLevel <= 0 ? "暴露较低" : exposureLevel === 1 ? "暴露上升，后续更容易被盯上" : "已经惊动目标与周边势力";
+      score = exposureLevel;
+    } else if (axisKey === "stability") {
+      summary = deltaScore >= 0 ? "样本稳定，可直接移交后续分析" : "样本在撤离中受损，后续转化会带风险";
+      score = deltaScore;
+    } else if (axisKey === "contamination_risk") {
+      let contamScore = Math.max(tier !== "失败" && tier !== "大失败" ? 1 : 2, interventionResult.kind === "contaminate" ? 2 : 1);
+      contamScore += carry.residueBonus || 0;
+      summary = contamScore <= 1 ? "轻度异常残留" : "污染明显，后续代价几乎确定";
+      if ((carry.residueBonus || 0) > 0) summary += "（旧异常残留继续放大了风险）";
+      score = contamScore;
+    } else {
+      summary = "副轴待定义";
+    }
+    return { key: axisKey, label: axisLabel, score, summary };
+  }
+
+  function runChainCheck(mission, staffList, context) {
+    const phases = [];
+    let bestTier = "大成功";
+    let finalPhase = null;
+    const phaseDefs = context.chainData?.phases || [];
+    phaseDefs.forEach((phaseDef, idx) => {
+      const phaseMission = { ...mission, enemyAttr: (mission.enemyAttr | 0) + (phaseDef.enemyDelta || 0), need: { ...mission.need } };
+      if (phaseDef.targetDelta) {
+        phaseMission.need = {
+          ...phaseMission.need,
+          探索: Math.max(0, (phaseMission.need.探索 || 0) + phaseDef.targetDelta),
+        };
+      }
+      const phaseContext = { ...context };
+      if (idx > 0) {
+        phaseContext.preBankedLead = null;
+        phaseContext.preWatchlistPressure = null;
+        phaseContext.preSampleContaminated = null;
+        phaseContext.preAbnormalResidue = null;
+      }
+      const phaseCheck = runSplitCheck({ ...phaseMission, chainProfile: null }, staffList);
+      phaseCheck.phaseTitle = phaseDef.title || "阶段";
+      phases.push(phaseCheck);
+      finalPhase = phaseCheck;
+      if (phaseCheck.tier === "失败" || phaseCheck.tier === "大失败") bestTier = "失败";
+      else if (phaseCheck.tier === "小成功" && bestTier === "大成功") bestTier = "小成功";
+    });
+    const first = phases[0] || {};
+    const secondaryAxis = finalPhase?.secondaryAxis ? { ...finalPhase.secondaryAxis, summary: `链式尾段结果：${finalPhase.secondaryAxis.summary}` } : null;
+    return {
+      ...(finalPhase || computeExplorationP(mission, staffList)),
+      tier: bestTier,
+      sceneContext: context,
+      secondaryAxis,
+      sceneNotes: [`链式节点：${context.chainData?.label || "阶段式检定"}。`, `共经历 ${phases.length} 段，最终按最差阶段与尾段结果综合定级。`],
+      phases,
+      rollsA: first.rollsA || [],
+      rollsB: first.rollsB || [],
+      voidA: first.voidA || new Set(),
+      voidB: first.voidB || new Set(),
+      hitsA: finalPhase?.hitsA ?? 0,
+      hitsB: finalPhase?.hitsB ?? 0,
+      passA: finalPhase?.passA ?? false,
+      passB: finalPhase?.passB ?? false,
+      usedCarryFlags: finalPhase?.usedCarryFlags || [],
+    };
   }
 
   function pickWeekEvent() {
@@ -2000,8 +3217,6 @@
   }
 
   function nodeVisible(node) {
-    if (!node || state.retiredMissionIds[node.id]) return false;
-    if (node.checkType === "red" && node.deadlineDay != null && dayIndexInWeek() > node.deadlineDay) return false;
     if (node.kind !== "hidden") return true;
     if (typeof node.unlock === "function") return node.unlock(macro);
     return true;
@@ -2013,228 +3228,6 @@
     if (state.filters.occult && t.includes("occult")) return true;
     if (state.filters.pop && t.includes("pop")) return true;
     return false;
-  }
-
-  function missionTypeBadges(m) {
-    const badges = [];
-    if ((m.checkType || "white") === "red") badges.push({ text: "红色截稿", cls: "red" });
-    else badges.push({ text: "白色调查", cls: "white" });
-    if (m.chainType === "deep") badges.push({ text: `深度调查${m.chainStage ? `·第${m.chainStage}阶段` : ""}`, cls: "deep" });
-    if (m.isBlackDiceTask) badges.push({ text: "黑骰任务", cls: "bonus" });
-    else if (m.riskTier === "high" || m.isHighRisk) badges.push({ text: "高危任务", cls: "high" });
-    if (m.allowPushBonus) badges.push({ text: "可再追", cls: "bonus" });
-    return badges;
-  }
-
-  function missionTypeBadgesHtml(m) {
-    return missionTypeBadges(m)
-      .map((b) => `<span class="task-type-chip task-${b.cls}">${escapeHtml(b.text)}</span>`)
-      .join("");
-  }
-
-  function missionTypeTitle(m) {
-    if (m.taskTypeTitle) return m.taskTypeTitle;
-    if ((m.checkType || "white") === "red") return "红色截稿";
-    if (m.isBlackDiceTask) return "黑骰任务";
-    if (m.chainType === "deep") return "深度调查";
-    if (m.riskTier === "high") return "高危任务";
-    return "白色调查";
-  }
-
-  function missionTypeDesc(m) {
-    if (m.taskTypeDesc) return m.taskTypeDesc;
-    if ((m.checkType || "white") === "red") return "一次性情报窗口。成功、失败或超过截止日期后关闭。";
-    if (m.isBlackDiceTask) return "使用关卡专属黑骰机制，结果分大成功 / 成功 / 失败 / 大失败。";
-    if (m.chainType === "deep") return "连续任务。完成后会推进为下一阶段，越接近真相，风险越高。";
-    if (m.riskTier === "high") return "高危任务。难度更高、失败后果更重，但没有黑骰特殊机制。";
-    return "可反复追踪的调查任务。失败不会封死题材，后续可继续累积信息。";
-  }
-
-  function missionTypePanelHtml(m, compact) {
-    const progress = m.checkType === "white" && state.whiteInvestigationLog[m.id]
-      ? `<div style="margin-top:0.25rem;">已追踪 ${state.whiteInvestigationLog[m.id]} 次，本题材会继续累积信息。</div>`
-      : "";
-    const chain = m.chainType === "deep"
-      ? `<div style="margin-top:0.25rem;">连续任务：本阶段完成后会在地图上推进为下一阶段，直到最终完结。</div>`
-      : "";
-    const red = m.checkType === "red"
-      ? `<div style="margin-top:0.25rem;color:#fecaca;">红色截稿：成功、失败或过期后都会关闭并从地图消失。</div>`
-      : "";
-    const high = m.riskTier === "high"
-      ? `<div style="margin-top:0.25rem;color:#fde68a;">高危任务：需求更高，失败可能带来 debuff；不等于黑骰任务。</div>`
-      : "";
-    const inner = `<div><strong>${escapeHtml(missionTypeTitle(m))}</strong> ${missionTypeBadgesHtml(m)}</div>
-      <div style="margin-top:0.25rem;">${escapeHtml(missionTypeDesc(m))}</div>
-      ${progress}${chain}${red}${high}`;
-    if (compact) return `<div class="task-type-summary">${inner}</div>`;
-    return `<div class="prob-box task-type-panel">${inner}</div>`;
-  }
-
-  function missionPointMark(n) {
-    if (n.checkType === "red") return "截";
-    if (n.isBlackDiceTask) return "黑";
-    if (n.chainType === "deep") return n.riskTier === "high" ? "危" : "链";
-    if (n.riskTier === "high") return "危";
-    if (n.kind === "hidden") return "隐";
-    if (n.kind === "temp" || /突发/.test(n.name)) return "!";
-    return "常";
-  }
-
-  function mapHighRiskTier(m, baseTier) {
-    if (m.riskTier !== "high") return { id: baseTier, label: baseTier, clueTier: baseTier === "大成功" ? 3 : baseTier === "小成功" ? 2 : baseTier === "失败" ? 1 : 0 };
-    if (baseTier === "大成功") return { id: "crit_success", label: "大成功", clueTier: 3 };
-    if (baseTier === "小成功") {
-      const costly = m.chainStage >= 3 || (m.tags || []).includes("occult") || macro.诡名 >= 45;
-      return costly
-        ? { id: "success_cost", label: "成功但反噬", clueTier: 3 }
-        : { id: "partial", label: "部分成功", clueTier: 2 };
-    }
-    if (baseTier === "失败") return { id: "fail_clue", label: "失败但有线索", clueTier: 1 };
-    return { id: "crit_fail", label: "大失败", clueTier: 0 };
-  }
-
-  function clueTypeFromMission(m) {
-    return (m.tags || [])[0] || "pop";
-  }
-
-  function addMissionClue(m, titleSuffix, tier, rewards, desc) {
-    if (tier <= 0) return null;
-    const clue = { title: `${m.name} · ${titleSuffix}`, type: clueTypeFromMission(m), tier, topicKey: newTopicKey() };
-    state.clues.push(clue);
-    rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: desc || `线索品质：Tier ${tier}` });
-    return clue;
-  }
-
-  function applyHighRiskOutcome(m, high, lines, rewards, prefix) {
-    const p = prefix || "";
-    if (high.id === "crit_success") {
-      addMacro({ 声望: 6, 公信: (m.tags || []).includes("sci") ? 3 : 0, 诡名: (m.tags || []).includes("occult") ? 4 : 1 });
-      lines.push(`${p}大成功：录音、目击者与雷达记录三方对上。`);
-      addMissionClue(m, "高危强线索", 3, rewards, "高危五档：大成功（Tier 3）");
-    } else if (high.id === "success_cost") {
-      addMacro({ 声望: 4, 公信: -2, 狂性: 2, 诡名: 2 });
-      lines.push(`${p}成功但反噬：拿到独家，但基地新闻官也记住了你的名字。`);
-      addMissionClue(m, "反噬独家素材", 3, rewards, "高危五档：成功但反噬（Tier 3，附带宏观代价）");
-    } else if (high.id === "partial") {
-      addMacro({ 声望: 2, 诡名: 1 });
-      lines.push(`${p}部分成功：照片能用，只有最关键的三秒糊成了灰。`);
-      addMissionClue(m, "不完整素材", 2, rewards, "高危五档：部分成功（Tier 2）");
-    } else if (high.id === "fail_clue") {
-      addMacro({ 声望: -1, 狂性: 1 });
-      lines.push(`${p}失败但有线索：任务失败，但对方反复提到一个旧地名。`);
-      addMissionClue(m, "失败残留线索", 1, rewards, "高危五档：失败但有线索（Tier 1）");
-    } else {
-      addMacro({ 守序: -3, 狂性: 4, 公信: -2 });
-      lines.push(`${p}大失败：设备烧毁，受访者失联，只剩一段空白磁带。`);
-    }
-  }
-
-  function applyStandardOutcome(m, tier, lines, rewards) {
-    if (tier === "大成功") {
-      macro.声望 = Math.min(100, macro.声望 + 6);
-      macro.公信 += (m.tags || []).includes("sci") ? 4 : 0;
-      macro.诡名 += (m.tags || []).includes("occult") ? 5 : 2;
-      if (m.kind === "hidden") macro.狂性 = Math.min(100, macro.狂性 + 4);
-      lines.push("大成功：高质量线索。");
-      addMissionClue(m, "深度特稿素材", 3, rewards, "线索品质：高（Tier 3）");
-    } else if (tier === "小成功" || tier === "成功") {
-      macro.声望 = Math.min(100, macro.声望 + 4);
-      macro.诡名 += 1;
-      lines.push(`${m.riskTier === "high" ? "高危任务成功" : "成功"}：获得可用素材。`);
-      addMissionClue(m, m.riskTier === "high" ? "高危任务素材" : "常规稿件素材", m.riskTier === "high" ? 3 : 2, rewards, m.riskTier === "high" ? "高危任务：成功（Tier 3）" : "线索品质：中（Tier 2）");
-    } else if (tier === "失败") {
-      macro.声望 = Math.max(0, macro.声望 - 2);
-      if (m.riskTier === "high") {
-        addMacro({ 狂性: 2, 守序: -1 });
-        lines.push("高危任务失败：获得弱线索，但队伍状态受损。");
-        addMissionClue(m, "高危弱线索", 1, rewards, "高危任务：失败仍保留弱线索（Tier 1）");
-        rewards.push({ icon: "!", title: "高危后果", desc: "狂性 +2，守序 -1。本任务没有黑骰，但失败代价更重。" });
-      } else {
-        lines.push("失败：碎片线索。");
-        addMissionClue(m, "碎片线索", 1, rewards, "线索品质：低（Tier 1）");
-      }
-    } else {
-      macro.守序 = Math.max(0, macro.守序 - 3);
-      macro.狂性 = Math.min(100, macro.狂性 + 3);
-      lines.push("大失败。");
-    }
-  }
-
-  function recordWhiteInvestigation(m, lines) {
-    if ((m.checkType || "white") !== "white") return;
-    state.whiteInvestigationLog[m.id] = (state.whiteInvestigationLog[m.id] || 0) + 1;
-    if (m.id === "n51") {
-      const count = state.whiteInvestigationLog[m.id];
-      lines.push(`白色调查：本题材已追踪 ${count} 次，后续派遣会继续累积禁区周边证词。`);
-    }
-  }
-
-  function retireRedMission(m, lines) {
-    if (m.checkType !== "red") return;
-    state.retiredMissionIds[m.id] = true;
-    lines.push("红色截稿：情报窗口已关闭，该任务会从地图上消失。");
-  }
-
-  function advanceDeepChain(m, lines, rewards) {
-    if (m.chainType !== "deep") return;
-    state.completedMissionIds[m.id] = true;
-    state.chainStageResults[m.id] = `${m.name} 已完成，获得阶段素材。`;
-    if (!m.nextNode) {
-      lines.push("深度调查：连续任务已完结，真相风险暂时收束。");
-      return;
-    }
-    if (state.completedMissionIds[m.nextNode.id]) return;
-    const alreadyVisible = getRegionNodes({ id: m.regionId, nodes: [] }).some((node) => node.id === m.nextNode.id);
-    if (!alreadyVisible) addDynamicNode(m.regionId, m.nextNode, 6);
-    lines.push(`深度调查：当前阶段完成，地图上出现下一阶段「${m.nextNode.name}」。`);
-    rewards.push({ icon: "→", title: `连续任务推进：${m.nextNode.name}`, desc: missionTypeDesc(m.nextNode) });
-  }
-
-  function shouldOfferPushBonus(m, high) {
-    if (!m.allowPushBonus || m.pushBonusUsed || state.pushBudgetWeekly <= 0) return false;
-    return high && ["success_cost", "partial", "fail_clue"].includes(high.id);
-  }
-
-  async function resolvePushBonus(m, showDice) {
-    const ok = await showConfirmPopup(
-      "临时事件：录音里还有三秒",
-      `<p style="margin:0 0 0.5rem;">你已经准备收工，但技术员说空白段里也许藏着东西。</p>
-       <p style="margin:0;color:#fbbf24;">再追一次会消耗 1 行动点，并加入更糟黑骰：对手作废 +1，灾厄链 +2。</p>`,
-      dayDateLabel(),
-    );
-    if (!ok) return false;
-    state.pushBudgetWeekly -= 1;
-    state.calamityMeter += 2;
-    const bonusMission = { ...m, enemyAttr: (m.enemyAttr | 0) + 1, pushBonusUsed: true };
-    const bonusCheck = runSplitCheck(bonusMission, state.selectedStaffIds);
-    const bonusHigh = mapHighRiskTier(bonusMission, bonusCheck.tier);
-    const tb = document.getElementById("tierBanner");
-    if (tb) tb.textContent = `再追一次：${bonusHigh.label}`;
-    const outcome = document.getElementById("bonusOutcome");
-    if (outcome) outcome.innerHTML = `<div class="prob-box" style="border-color:#b45309;">
-      <strong>更糟黑骰已加入</strong><br/>
-      对手作废 +1 · 灾厄链 ${state.calamityMeter}/10 · 剩余追查行动点 ${state.pushBudgetWeekly}
-    </div>`;
-    if (showDice) {
-      const h = document.getElementById("diceAnim");
-      if (h) h.innerHTML = `<div class="dice-rolling-hint"><span class="dice-spinner"></span><span>再追一次：更糟黑骰加入...</span></div>`;
-      await animateDiceReveal(document.getElementById("view-result"), bonusCheck);
-    } else {
-      await sleep(450);
-      const h = document.getElementById("diceAnim");
-      if (h) h.innerHTML = `<div class="prob-box">再追一次 · 调查 ${bonusCheck.hitsA}/${bonusCheck.nAe}（≥${bonusCheck.kA}）· 现场 ${bonusCheck.hitsB}/${bonusCheck.nBe}（≥${bonusCheck.kB}）· 对手作废 +1</div>`;
-    }
-    const bonusLines = [];
-    const bonusRewards = [];
-    applyHighRiskOutcome(bonusMission, bonusHigh, bonusLines, bonusRewards, "再追一次：");
-    if (bonusHigh.id === "crit_fail") {
-      addMacro({ 公信: -2, 狂性: 3 });
-      bonusLines.push("灾厄链：官方辟谣和员工失眠将在下周事件权重中留下回声。");
-    }
-    const finalOutcome = document.getElementById("bonusOutcome");
-    if (finalOutcome) finalOutcome.innerHTML += `<div class="prob-box" style="margin-top:0.5rem;border-color:#7c3aed;">${bonusLines.map(escapeHtml).join("<br/>")}</div>`;
-    await showRewardsPopup(bonusRewards);
-    return true;
   }
 
   function renderWeekStart() {
@@ -2323,6 +3316,7 @@
         ${dispatchCountSpanHtml()}
       </div>
       <div class="tags" id="filterTags">${filterHtml}</div>
+      ${renderCarryStateStrip()}
       <p style="margin:0.75rem 0 0.5rem;"><button type="button" id="btnRecycle">回收噪音线索</button>
       <span style="color:var(--muted);font-size:0.8rem;margin-left:0.5rem;">诡名 -2，声望 +1</span></p>
       <div class="world-region-host" id="regionGrid"></div>
@@ -2444,12 +3438,67 @@
     const visible = ids.slice(0, maxVisible);
     return `<span class="assigned-avatars">${visible
       .map((id, idx) => {
-        const st = findStaff(id);
+        const st = STAFF.find((s) => s.id === id);
         if (!st) return "";
         const cut = idx === maxVisible - 1 && ids.length > maxVisible ? "cut-tail" : "";
         return `<img class="${cut}" src="${st.avatar}" title="${escapeHtml(st.name)}" alt="${escapeHtml(st.name)}"/>`;
       })
       .join("")}</span>`;
+  }
+
+  function mechanicChipHtml(text, cls = "") {
+    return `<span class="rule-chip ${cls}">${escapeHtml(text)}</span>`;
+  }
+
+  function activeCarryStateEntries() {
+    return Object.entries(state.carryStates || {}).map(([key, value]) => ({ key, ...(value || {}) }));
+  }
+
+  function renderCarryStateStrip() {
+    const entries = activeCarryStateEntries();
+    if (!entries.length) return "";
+    return `<div class="carry-strip">${entries.map((entry) => `
+      <div class="carry-card">
+        <div class="k">${escapeHtml(CARRY_STATE_LABELS[entry.key] || entry.key)}</div>
+        <div>${escapeHtml(entry.summary || "已挂起，等待下一次相关检定触发。")}</div>
+      </div>`).join("")}</div>`;
+  }
+
+  function renderMissionMechanics(m, prob, extraNotes = []) {
+    const sceneContext = prob?.sceneContext || buildSceneContext(m);
+    const chips = [
+      mechanicChipHtml(`类型包：${sceneContext.packageLabel || "标准外采"}`, "scene"),
+      mechanicChipHtml(`副轴：${sceneContext.axisLabel || "副轴"}`, "axis"),
+    ];
+    if (m.intervention) chips.push(mechanicChipHtml(`干预：${INTERVENTION_LABELS[m.intervention] || m.intervention}`, "intervention"));
+    if (m.carryState) chips.push(mechanicChipHtml(`余波：${CARRY_STATE_LABELS[m.carryState.flag] || m.carryState.flag}`, "carry"));
+    if (m.chainProfile) chips.push(mechanicChipHtml("链式节点", "chain"));
+    const details = [];
+    if (sceneContext.riskHint) details.push(sceneContext.riskHint);
+    (extraNotes || []).forEach((note) => details.push(note));
+    return `<div class="rule-strip">
+      <div class="rule-strip-head">本次规则</div>
+      <div class="rule-chip-row">${chips.join("")}</div>
+      ${details.length ? `<div class="rule-details">${details.map((line) => `<div>${escapeHtml(line)}</div>`).join("")}</div>` : ""}
+    </div>`;
+  }
+
+  function renderResultMechanics(check, mission) {
+    const sections = [];
+    if (check.secondaryAxis?.summary) {
+      sections.push(`<div class="result-box"><h3>副轴结果</h3><p>${escapeHtml(`${check.secondaryAxis.label}：${check.secondaryAxis.summary}`)}</p></div>`);
+    }
+    if (check.interventionResult?.summary) {
+      sections.push(`<div class="result-box"><h3>事件干预</h3><p>${escapeHtml(`${INTERVENTION_LABELS[check.interventionResult.kind] || check.interventionResult.kind}：${check.interventionResult.summary}`)}</p></div>`);
+    }
+    if (mission.carryState?.summary && (!mission.carryState.onTiers || mission.carryState.onTiers.includes(check.tier))) {
+      sections.push(`<div class="result-box"><h3>余波写回</h3><p>${escapeHtml(mission.carryState.summary)}</p></div>`);
+    }
+    if (check.usedCarryFlags?.length) {
+      sections.push(`<div class="result-box"><h3>已消耗状态</h3><p>${escapeHtml(check.usedCarryFlags.map((x) => CARRY_STATE_LABELS[x] || x).join(" / "))}</p></div>`);
+    }
+    if (!sections.length) return "";
+    return `<div class="result-grid">${sections.join("")}</div>`;
   }
 
   function missionHeaderHtml(m, staffIds) {
@@ -2465,7 +3514,7 @@
       .map((k) => `${k}${m.need[k] | 0}`)
       .join(" / ");
     const staffHtml = (staffIds || []).map((id) => {
-      const st = findStaff(id);
+      const st = STAFF.find((s) => s.id === id);
       if (!st) return "";
       return `<span class="mission-staff-chip" data-staff-preview="${st.id}"><img src="${st.avatar}" alt="${escapeHtml(st.name)}"/><span class="nm">${escapeHtml(st.name)}</span></span>`;
     }).join("");
@@ -2473,7 +3522,6 @@
       <div class="mission-head-top">
         <div class="mission-main">
           <span class="mission-tag ${typeCls}">${typeTag}</span>
-          ${missionTypeBadgesHtml(m)}
           <span class="mission-name">${escapeHtml(m.name)}</span>
         </div>
         <span class="mission-prog">${prog}</span>
@@ -2503,7 +3551,11 @@
         <div class="staff-hover-name">${escapeHtml(st.name)}</div>
       </div>
       <div class="staff-hover-grid">
-        ${(st.specialty || []).map((a) => `<span>${escapeHtml(a)} 专精</span>`).join("") || "<span>综合角色</span>"}
+        <span>探索 ${st.探索}</span>
+        <span>生存 ${st.生存}</span>
+        <span>洞察 ${st.洞察}</span>
+        <span>诡思 ${st.诡思}</span>
+        <span>理性 ${st.理性}</span>
       </div>`;
     };
     const place = (ev) => {
@@ -2514,7 +3566,7 @@
     };
     chips.forEach((chip) => {
       chip.addEventListener("mouseenter", (ev) => {
-        const st = findStaff(chip.getAttribute("data-staff-preview"));
+        const st = STAFF.find((s) => s.id === chip.getAttribute("data-staff-preview"));
         if (!st) return;
         renderCard(st);
         card.classList.remove("hidden");
@@ -2544,7 +3596,7 @@
   }
 
   function dispatchStaffCounts() {
-    const total = getAllStaff().length;
+    const total = STAFF.length;
     const assigned = assignedStaffSet().size;
     return { available: total - assigned, total };
   }
@@ -2564,7 +3616,6 @@
 
   function openNodeMission(regionId, node) {
     if (!node || node.chain === "locked") return;
-    if (state.completedMissionIds[node.id]) return;
     const queued = findActiveMissionByNode(regionId, node.id);
     if (queued) {
       openQueuedMission(queued);
@@ -2574,21 +3625,6 @@
     state.selectedStaffIds = [];
     renderSetup();
     setView("setup");
-  }
-
-  function chainStatusText(n) {
-    if (!n.chainType) return "";
-    const total = n.chainStageTotal || (n.chainFinal ? n.chainStage : 4);
-    const prefix = n.chainStage ? `第 ${n.chainStage}/${total} 环` : "连续任务";
-    if (state.completedMissionIds[n.id]) return `${prefix} · 已完成`;
-    if (n.isBlackDiceTask) return `${prefix} · 黑骰终局`;
-    if (n.riskTier === "high") return `${prefix} · 高危`;
-    return `${prefix} · 当前调查环`;
-  }
-
-  function previousChainResult(n) {
-    if (!n.previousStageId) return "";
-    return state.chainStageResults[n.previousStageId] || "";
   }
 
   function visibleRegionLeads(regionId) {
@@ -2610,13 +3646,12 @@
         const pos = nodePos[n.id] || { x: 20 + Math.random() * 60, y: 20 + Math.random() * 60 };
         const diff = n.difficulty || "normal";
         const diffZh = diff === "easy" ? "简单" : diff === "hard" ? "困难" : "普通";
-        const urgent = n.kind === "temp" || /突发/.test(n.name) || n.checkType === "red";
-        const completed = !!state.completedMissionIds[n.id];
-        const kindCls = `${n.kind === "temp" ? "temp" : ""} ${urgent ? "urgent" : ""} ${hiddenCls} ${completed ? "completed-node" : ""}`.trim();
-        const marker = completed ? "✓" : missionPointMark(n);
-        const disabled = !match || n.chain === "locked" || completed;
+        const urgent = n.kind === "temp" || /突发/.test(n.name);
+        const kindCls = `${n.kind === "temp" ? "temp" : ""} ${urgent ? "urgent" : ""} ${hiddenCls}`.trim();
+        const marker = urgent ? "!" : n.kind === "hidden" ? "隐" : "常";
+        const disabled = !match || n.chain === "locked";
         const queued = findActiveMissionByNode(r.id, n.id);
-        return `<button type="button" class="region-point ${kindCls}" data-point-type="node" data-point-id="${n.id}" data-node="${n.id}" style="left:${pos.x}%;top:${pos.y}%;" ${disabled ? "disabled" : ""} title="${escapeHtml(n.name)} · ${diffZh} · ${escapeHtml(missionTypeTitle(n))}">
+        return `<button type="button" class="region-point ${kindCls}" data-point-type="node" data-point-id="${n.id}" data-node="${n.id}" style="left:${pos.x}%;top:${pos.y}%;" ${disabled ? "disabled" : ""} title="${escapeHtml(n.name)} · ${diffZh}">
           <span class="point-mark">${marker}</span>${escapeHtml(n.name)}${queued ? `<span class="assigned-mark" title="已派遣">派</span>` : ""}
         </button>`;
       })
@@ -2658,23 +3693,29 @@
         const diffZh = diff === "easy" ? "简单" : diff === "hard" ? "困难" : "普通";
         const deadline = n.kind === "temp" && n.deadlineDay != null ? ` · 截止 第${n.deadlineDay}天前` : "";
         const chain = n.chain === "locked" ? " · 链式未解锁" : "";
-        const urgent = n.kind === "temp" || /突发/.test(n.name) || n.checkType === "red";
-        const completed = !!state.completedMissionIds[n.id];
-        const eventCls = `${urgent ? "event-urgent" : ""} ${completed ? "event-completed" : ""}`.trim();
-        const thumbText = completed ? "✓" : missionPointMark(n);
+        const urgent = n.kind === "temp" || /突发/.test(n.name);
+        const eventCls = urgent ? "event-urgent" : "";
+        const thumbText = n.kind === "temp" || /突发/.test(n.name) ? "!" : n.kind === "hidden" ? "隐" : "常";
         const queued = findActiveMissionByNode(r.id, n.id);
+        const chips = [];
+        if (n.scenePackage) {
+          const pkg = SCENE_PACKAGES[n.scenePackage] || {};
+          chips.push(mechanicChipHtml(pkg.label || n.scenePackage, "scene"));
+          chips.push(mechanicChipHtml(pkg.axisLabel || "副轴", "axis"));
+        }
+        if (n.intervention) chips.push(mechanicChipHtml(INTERVENTION_LABELS[n.intervention] || n.intervention, "intervention"));
+        if (n.carryState) chips.push(mechanicChipHtml(n.carryState.flag, "carry"));
+        if (n.chainProfile) chips.push(mechanicChipHtml("链式节点", "chain"));
         return `<div class="region-node-item ${eventCls} interactive" data-side-type="node" data-side-id="${n.id}" style="${match ? "" : "opacity:0.45;"}">
           <div class="event-card">
             <div class="event-thumb">${thumbText}</div>
             <div>
               <div><strong>${escapeHtml(n.name)}</strong></div>
               <div style="color:#94a3b8;margin-top:2px;">${n.kind === "permanent" ? "常驻" : n.kind === "temp" ? "临时" : "隐藏"} · ${diffZh} · 耗时${n.days}天 · 对手骰${n.enemyAttr | 0}${deadline}${chain}</div>
-              ${n.chainType ? `<div class="chain-progress">${escapeHtml(chainStatusText(n))}</div>` : ""}
-              ${previousChainResult(n) ? `<div class="chain-prev">上一环：${escapeHtml(previousChainResult(n))}</div>` : ""}
-              ${missionTypePanelHtml(n, true)}
+              ${chips.length ? `<div class="rule-chip-row" style="margin-top:6px;">${chips.join("")}</div>` : ""}
               <div class="event-meta-row">
                 <div>${queued ? staffAvatarsHtml(queued.staffIds) : ""}</div>
-                <button type="button" data-node-open="${n.id}" ${n.chain === "locked" || completed ? "disabled" : ""}>${completed ? "已完成" : queued ? "查看派遣" : "配置队伍并派遣"}</button>
+                <button type="button" data-node-open="${n.id}" ${n.chain === "locked" ? "disabled" : ""}>${queued ? "查看派遣" : "配置队伍并派遣"}</button>
               </div>
             </div>
           </div>
@@ -2685,6 +3726,7 @@
         <h2>${escapeHtml(r.name)}</h2>
         ${dispatchCountSpanHtml()}
       </div>
+      ${renderCarryStateStrip()}
       <div class="region-map-wrap">
         <div class="region-map">${pointHtml}</div>
         <div class="region-node-side">
@@ -2812,50 +3854,27 @@
     syncRegionLinkedState(root, state.regionLinkedTarget);
   }
 
-  function showStaffDetail(staff, relevantNeed) {
-    if (!staff) return;
-    showConfirmPopup(
-      `${staff.name} · 角色骰详情`,
-      staffDetailHtml(staff, relevantNeed || (state.mission && state.mission.need) || {}),
-      "角色骰系统",
-    );
-  }
-
   function renderSetup() {
     const m = state.mission;
     const elS = document.getElementById("view-setup");
     if (!m) return;
     const ok = meetsNeed(m.need, state.selectedStaffIds);
     const prob = computeExplorationP(m, state.selectedStaffIds);
-    const dicePreview = computeCharacterDicePreview(m, state.selectedStaffIds);
-    const toolDiceHtml = (state.toolDiceInventory || []).map((tool) => {
-      const used = !!tool.used;
-      const sel = state.selectedToolDiceIds.includes(tool.id);
-      return `<button type="button" class="tool-dice-pick ${sel ? "selected" : ""}" data-tool-dice="${tool.id}" ${used ? "disabled" : ""}>
-        <strong>${escapeHtml(tool.name)}</strong>
-        <span>${used ? "已消耗" : "一次性道具骰"}</span>
-      </button>`;
-    }).join("");
-    const tempHireAvailable = !state.tempHireUsed && !state.tempStaffIds.includes("temp_stringer");
+    const carryNotes = [...(prob.carry?.notes || [])];
     elS.innerHTML = `
       <h2>${m.missionType === "leadInvestigation" ? "线索调查配置" : "探索配置"} · ${escapeHtml(m.name)}</h2>
-      ${missionTypePanelHtml(m, false)}
       <div class="prob-box">
-        <div><strong>角色骰风险：</strong>${dicePreview.risk}</div>
-        <div style="margin-top:0.35rem;">需求：${escapeHtml(Object.keys(m.need || {}).map((k) => `${k}${m.need[k]}`).join(" / ") || "无")}</div>
-        <div style="margin-top:0.35rem;font-size:0.72rem;color:#94a3b8;">本任务会投出所选角色的专属骰；结算时可手动选择有效骰面，或使用自动选择。</div>
-        <div style="margin-top:0.35rem;font-size:0.72rem;color:#64748b;">旧 split 预览：调查池 ${prob.nA} / 现场池 ${prob.nB}${ok ? "" : " · 原属性未达门槛"}</div>
+        <div>${MAIN_POOL_LABEL} ${prob.nA} 颗 · 目标总分 ${prob.kA} · 最高骰达到 6 可升级为大成功</div>
+        <div style="margin-top:0.35rem;">大成功 ${(prob.pBig * 100).toFixed(1)}% · 小成功 ${(prob.pSmall * 100).toFixed(1)}% · 失败 ${(prob.pBothFail * 100).toFixed(1)}%</div>
+        <div style="margin-top:0.35rem;font-size:0.72rem;">单骰成功率 ${(prob.p * 100).toFixed(1)}% · 原始对手值 ${m.enemyAttr | 0} · 缩放后压制 ${prob.enemyAttr}${ok ? "" : " · 未达门槛 -15%"}</div>
       </div>
-      <div class="prob-box">
-        <div><strong>一次性道具骰</strong> <span class="tip-inline">不占人数；使用后消耗；计入总骰数。</span></div>
-        <div class="tool-dice-row">${toolDiceHtml || `<span class="tip-inline">暂无道具骰</span>`}</div>
-        <p style="margin:0.45rem 0 0;"><button type="button" id="btnHireTemp" ${tempHireAvailable ? "" : "disabled"}>雇佣本周临时线人（$1200，纳入人数限制）</button></p>
-      </div>
+      ${renderMissionMechanics(m, prob, carryNotes)}
       <p style="font-size:0.85rem;margin-top:0.5rem;">展示：
         <span class="mode-toggle" id="modeToggle">
           <button type="button" data-mode="dice" class="${state.displayMode === "dice" ? "on" : ""}">骰子</button>
           <button type="button" data-mode="numeric" class="${state.displayMode === "numeric" ? "on" : ""}">纯数值</button>
         </span></p>
+      <p class="tip-inline" style="margin-top:0.35rem;">本版探索检定支持 <strong>一次手动锁定 + 重投剩余骰子</strong>。先看基础结果，再选择保留关键骰。</p>
       <div class="cards" id="staffPick"></div>
       <p class="row" style="margin-top:0.75rem;">
         <button type="button" id="btnRun" class="primary" ${state.selectedStaffIds.length === 0 || m.days > state.day || state.missionResolving || state.processingDayTick ? "disabled" : ""}>${state.missionResolving ? "执行中..." : `${m.missionType === "leadInvestigation" ? "派遣线索调查" : "派遣探索任务"}（预计 ${m.days} 天后判定）`}</button>
@@ -2870,66 +3889,34 @@
         renderSetup();
       };
     });
-    document.querySelectorAll("[data-tool-dice]").forEach((btn) => {
-      btn.onclick = () => {
-        const id = btn.getAttribute("data-tool-dice");
-        if (state.selectedToolDiceIds.includes(id)) state.selectedToolDiceIds = state.selectedToolDiceIds.filter((x) => x !== id);
-        else state.selectedToolDiceIds.push(id);
-        renderSetup();
-      };
-    });
-    const hireBtn = document.getElementById("btnHireTemp");
-    if (hireBtn) {
-      hireBtn.onclick = () => {
-        state.tempHireUsed = true;
-        state.tempStaffIds.push("temp_stringer");
-        addMacro({ 声望: -1 });
-        log("本周雇佣临时线人：花费不菲，但获得一颗完整临时角色骰。");
-        renderSetup();
-      };
-    }
     const pick = document.getElementById("staffPick");
     const allowQueueId = m && m.missionQueueId ? m.missionQueueId : null;
-    const maxStaff = missionMaxStaff(m);
-    const relevantNeed = m.need || {};
-    const staffList = getAllStaff().filter((p) => !isStaffAssigned(p.id, allowQueueId) || state.selectedStaffIds.includes(p.id));
+    const staffList = STAFF.filter((p) => !isStaffAssigned(p.id, allowQueueId) || state.selectedStaffIds.includes(p.id));
     pick.innerHTML = staffList.map((p) => {
       const sel = state.selectedStaffIds.includes(p.id);
+      const exp = {
+        探索: getStaffValue(p, "探索"),
+        生存: getStaffValue(p, "生存"),
+        洞察: getStaffValue(p, "洞察"),
+        诡思: getStaffValue(p, "诡思"),
+        理性: getStaffValue(p, "理性"),
+      };
       return `<div class="staff-card ${sel ? "selected" : ""}" data-staff="${p.id}">
         <img class="portrait" src="${p.avatar}" alt="${escapeHtml(p.name)}"/>
-        <div class="t">${escapeHtml(p.name)}${p.temporary ? " · 临时" : ""}</div>
-        <div class="staff-spec">${specialtyHtml(p)}</div>
-        <div class="staff-dice-mini">${diceFacesHtml(diceFacesForStaff(p), relevantNeed)}</div>
-        <p class="row" style="margin:0.35rem 0 0;">
-          <button type="button" class="staff-detail-btn" data-staff-detail="${p.id}">详情 / 骰面</button>
-          ${p.temporary ? "" : `<button type="button" class="staff-detail-btn" data-staff-upgrade="${p.id}">升级预览</button>`}
-        </p>
-      </div>`;
+        <div class="t">${escapeHtml(p.name)}</div>
+        <dl><dt>探索</dt><dd>${exp.探索}</dd><dt>生存</dt><dd>${exp.生存}</dd><dt>洞察</dt><dd>${exp.洞察}</dd><dt>诡思</dt><dd>${exp.诡思}</dd><dt>理性</dt><dd>${exp.理性}</dd></dl></div>`;
     }).join("");
     pick.querySelectorAll(".staff-card").forEach((c) => {
-      c.addEventListener("click", (ev) => {
-        if (ev && ev.target && ev.target.closest && ev.target.closest("button")) return;
+      c.addEventListener("click", () => {
         const id = c.getAttribute("data-staff");
         const i = state.selectedStaffIds.indexOf(id);
         if (i >= 0) state.selectedStaffIds.splice(i, 1);
         else {
-          if (state.selectedStaffIds.length >= maxStaff) state.selectedStaffIds.shift();
+          if (state.selectedStaffIds.length >= 3) state.selectedStaffIds.shift();
           state.selectedStaffIds.push(id);
         }
         renderSetup();
       });
-    });
-    pick.querySelectorAll("[data-staff-detail]").forEach((btn) => {
-      btn.onclick = (ev) => {
-        ev.stopPropagation();
-        showStaffDetail(findStaff(btn.getAttribute("data-staff-detail")), relevantNeed);
-      };
-    });
-    pick.querySelectorAll("[data-staff-upgrade]").forEach((btn) => {
-      btn.onclick = (ev) => {
-        ev.stopPropagation();
-        showUpgradeModal(findStaff(btn.getAttribute("data-staff-upgrade")));
-      };
     });
     document.getElementById("btnRun").onclick = async () => {
       if (!state.mission || state.selectedStaffIds.length === 0) return;
@@ -2981,9 +3968,8 @@
         )}<div class="tutorial-soft-sheet">
           <h4 class="tutorial-soft-h4">组小队</h4>
           <ul class="tutorial-soft-ul">
-            <li>点选队员卡片：普通任务最多 <strong>3</strong> 人，高危任务最多 <strong>5</strong> 人。</li>
-            <li>卡片上展示专精；点「详情 / 骰面」可查看完整 6 面角色骰。</li>
-            <li>上方风险预览是本次外拍的参考。</li>
+            <li>点选队员卡片，最多 <strong>3</strong> 人。</li>
+            <li>上方概率是本次外拍的参考。</li>
             <li>可在<strong>骰子</strong>与<strong>纯数字</strong>两种展示间切换。</li>
           </ul>
         </div>`,
@@ -3010,94 +3996,6 @@
       })
       .join("");
     return `<div class="dice-pool"><h3>${label}</h3><div class="dice-row">${cells}</div></div>`;
-  }
-
-  function renderCharacterRollsHtml(rolls, selectedIds, need) {
-    const selected = new Set(selectedIds || []);
-    return `<div class="character-roll-grid">${(rolls || []).map((r) => {
-      const selectedCls = selected.has(r.id) ? " selected" : "";
-      const relevant = r.face && r.face.attr && need && need[r.face.attr] != null ? " relevant" : "";
-      const locked = r.locked ? " locked" : "";
-      const avatar = r.avatar ? `<img src="${r.avatar}" alt="${escapeHtml(r.staffName)}"/>` : `<span class="tool-avatar">道</span>`;
-      const black = r.black ? " black-roll" : "";
-      const grounded = r.grounded ? " grounded-roll" : "";
-      return `<button type="button" class="character-roll${selectedCls}${relevant}${locked}${black}${grounded}" data-roll-id="${r.id}" ${r.locked && r.kind === "tool" ? "" : ""}>
-        <span class="roll-owner">${avatar}<span>${escapeHtml(r.staffName)}</span></span>
-        <span class="dice-face ${faceClass(r.face)}">${escapeHtml(faceText(r.face))}</span>
-      </button>`;
-    }).join("")}</div>`;
-  }
-
-  function contributionText(sum, need) {
-    const keys = Object.keys(need || {});
-    if (!keys.length) return "无需求";
-    return keys.map((k) => `${k} ${sum[k] || 0}/${need[k] || 0}`).join(" · ");
-  }
-
-  function showDiceSelectionPopup(mission, rolls) {
-    const auto = autoSelectRollsForNeed(rolls, mission.need || {});
-    let selectedIds = auto.slice();
-    return new Promise((resolve) => {
-      const wrap = document.getElementById("confirmPopup");
-      const body = document.getElementById("confirmPopupBody");
-      const date = document.getElementById("confirmPopupDate");
-      const ttl = document.getElementById("confirmPopupTitle");
-      const ok = document.getElementById("confirmPopupOk");
-      const cancel = document.getElementById("confirmPopupCancel");
-      if (!wrap || !body || !date || !ttl || !ok || !cancel) {
-        resolve({ selectedIds, sum: rollContribution(rolls, selectedIds), success: needMetByContribution(mission.need || {}, rollContribution(rolls, selectedIds)) });
-        return;
-      }
-      ttl.textContent = "角色骰判定 · 选择有效骰";
-      date.textContent = mission.name || "";
-      const render = () => {
-        const sum = rollContribution(rolls, selectedIds);
-        const okNow = needMetByContribution(mission.need || {}, sum);
-        body.innerHTML = `<p style="margin:0 0 0.45rem;color:#cbd5e1;">选择本次要计入判定的骰面；可直接使用自动选择。</p>
-          <div class="prob-box" style="margin-bottom:0.5rem;">需求：${escapeHtml(contributionText(sum, mission.need || {}))} · ${okNow ? "达标" : "未达标"}</div>
-          ${renderCharacterRollsHtml(rolls, selectedIds, mission.need || {})}
-          <p class="row" style="margin-top:0.55rem;">
-            <button type="button" id="btnAutoRollPick">自动选择</button>
-            <button type="button" id="btnSelectAllRolls">全选</button>
-            <button type="button" id="btnClearRollPick">清空</button>
-          </p>`;
-        body.querySelectorAll("[data-roll-id]").forEach((btn) => {
-          btn.onclick = () => {
-            const id = btn.getAttribute("data-roll-id");
-            if (selectedIds.includes(id)) selectedIds = selectedIds.filter((x) => x !== id);
-            else selectedIds.push(id);
-            render();
-          };
-        });
-        const autoBtn = document.getElementById("btnAutoRollPick");
-        const allBtn = document.getElementById("btnSelectAllRolls");
-        const clearBtn = document.getElementById("btnClearRollPick");
-        if (autoBtn) autoBtn.onclick = () => { selectedIds = autoSelectRollsForNeed(rolls, mission.need || {}); render(); };
-        if (allBtn) allBtn.onclick = () => { selectedIds = rolls.map((r) => r.id); render(); };
-        if (clearBtn) clearBtn.onclick = () => { selectedIds = []; render(); };
-      };
-      const cleanup = (result) => {
-        wrap.classList.add("hidden");
-        ok.removeEventListener("click", onOk);
-        cancel.removeEventListener("click", onCancel);
-        resolve(result);
-      };
-      const onOk = () => {
-        const sum = rollContribution(rolls, selectedIds);
-        cleanup({ selectedIds: selectedIds.slice(), sum, success: needMetByContribution(mission.need || {}, sum) });
-      };
-      const onCancel = () => {
-        selectedIds = autoSelectRollsForNeed(rolls, mission.need || {});
-        const sum = rollContribution(rolls, selectedIds);
-        cleanup({ selectedIds: selectedIds.slice(), sum, success: needMetByContribution(mission.need || {}, sum) });
-      };
-      ok.textContent = "确认骰面";
-      cancel.textContent = "使用自动选择";
-      ok.addEventListener("click", onOk);
-      cancel.addEventListener("click", onCancel);
-      wrap.classList.remove("hidden");
-      render();
-    });
   }
 
   function enqueueCurrentMission() {
@@ -3130,15 +4028,10 @@
       log("派遣失败：队员已被其他任务占用。");
       return;
     }
-    (state.selectedToolDiceIds || []).forEach((id) => {
-      const tool = state.toolDiceInventory.find((x) => x.id === id);
-      if (tool) tool.used = true;
-    });
     state.activeMissions.push(rec);
-    log(`已派遣：${m.name}（预计 ${rec.remainingDays} 天后判定）${state.selectedToolDiceIds.length ? "；已消耗一次性道具骰。" : ""}`);
+    log(`已派遣：${m.name}（预计 ${rec.remainingDays} 天后判定）`);
     state.mission = null;
     state.selectedStaffIds = [];
-    state.selectedToolDiceIds = [];
     updateNextDayButton();
   }
 
@@ -3148,18 +4041,27 @@
 
   function calcAnimPace(check) {
     const total = check.rollsA.length + check.rollsB.length;
-    const warmupDelay = total >= 24 ? 760 : total >= 16 ? 860 : 980;
-    const stepDelay = total >= 24 ? 84 : total >= 16 ? 96 : 108;
+    const warmupDelay = total >= 24 ? 980 : total >= 16 ? 1120 : 1280;
+    const stepDelay = total >= 24 ? 118 : total >= 16 ? 132 : 148;
     const revealStepA = 1;
     const revealStepB = 1;
     const voidStep = Math.max(1, Math.ceil((check.voidA.size + check.voidB.size) / 5));
-    const settleDelay = total >= 24 ? 520 : 620;
-    return { warmupDelay, stepDelay, revealStepA, revealStepB, voidStep, settleDelay };
+    const settleDelay = total >= 24 ? 760 : 920;
+    const stageHold = total >= 24 ? 760 : 920;
+    const focusHold = total >= 24 ? 620 : 760;
+    return { warmupDelay, stepDelay, revealStepA, revealStepB, voidStep, settleDelay, stageHold, focusHold };
   }
 
   function finalStateFromRoll(hit, isVoid) {
     if (isVoid) return { text: "", cls: "die void" };
     return hit ? { text: "✓", cls: "die hit reveal-pop" } : { text: "×", cls: "die miss reveal-pop" };
+  }
+
+  function finalStateFromMechanic(kind, hit = true) {
+    if (kind === "bonus") return { text: hit ? "✓" : "×", cls: `die ${hit ? "boost" : "miss"} reveal-pop` };
+    if (kind === "carry") return { text: hit ? "✓" : "×", cls: `die ${hit ? "carry" : "miss"} reveal-pop` };
+    if (kind === "tainted") return { text: hit ? "✓" : "×", cls: `die ${hit ? "tainted" : "miss"} reveal-pop` };
+    return finalStateFromRoll(hit, false);
   }
 
   function randomRollFace() {
@@ -3187,12 +4089,153 @@
     }
   }
 
+  function appendMechanicStage(host, title, text) {
+    const box = document.createElement("div");
+    box.className = "mech-stage";
+    box.innerHTML = `<h4>${escapeHtml(title)}</h4><p>${escapeHtml(text)}</p>`;
+    host.appendChild(box);
+    return box;
+  }
+
+  function appendStageBanner(host, text) {
+    const el = document.createElement("div");
+    el.className = "stage-banner";
+    el.textContent = text;
+    host.appendChild(el);
+    return el;
+  }
+
+  function focusDie(el, cls) {
+    if (!el) return;
+    el.classList.add("focus-pulse");
+    if (cls) el.classList.add(cls);
+  }
+
+  function clearDieFocus(el, cls) {
+    if (!el) return;
+    el.classList.remove("focus-pulse");
+    if (cls) el.classList.remove(cls);
+  }
+
   function setFinalFace(el, text, cls) {
     el.style.color = "";
     el.style.borderColor = "";
     el.style.boxShadow = "";
     el.className = cls;
     el.textContent = text || "";
+  }
+
+  function computeHitsFromSets(rollsA, rollsB, voidA, voidB) {
+    let totalScore = 0;
+    let maxDie = 0;
+    for (let i = 0; i < rollsA.length; i++) {
+      if (voidA.has(i)) continue;
+      totalScore += rollsA[i];
+      maxDie = Math.max(maxDie, rollsA[i]);
+    }
+    for (let i = 0; i < rollsB.length; i++) {
+      if (voidB.has(i)) continue;
+      totalScore += rollsB[i];
+      maxDie = Math.max(maxDie, rollsB[i]);
+    }
+    return { totalScore, maxDie };
+  }
+
+  async function runLockAndRerollPhase(host, phaseText, check, aEls, bEls, pace) {
+    if (!aEls.length && !bEls.length) return;
+    if (phaseText) phaseText.textContent = "锁定阶段：点击骰子锁定，确认后重投未锁定骰子";
+    host.innerHTML = "";
+    appendStageBanner(host, "第二阶段：锁定与重投");
+    appendMechanicStage(host, "锁定操作", "点击要保留的骰子。保留区的骰子不会再变，待重投区的骰子在你确认后才会重投。");
+    const lockSetA = new Set();
+    const lockSetB = new Set();
+    const all = [
+      ...aEls.map((el, idx) => ({ el, idx, pool: "A" })),
+      ...bEls.map((el, idx) => ({ el, idx, pool: "B" })),
+    ];
+    const zoneGrid = document.createElement("div");
+    zoneGrid.className = "lock-phase-grid";
+    host.appendChild(zoneGrid);
+    const buildZone = (title, note) => {
+      const box = document.createElement("div");
+      box.className = "lock-zone";
+      box.innerHTML = `
+        <h4>${escapeHtml(title)}</h4>
+        <div class="lock-zone-note">${escapeHtml(note)}</div>
+        <div class="dice-pool"><h3>${MAIN_POOL_LABEL}</h3><div class="dice-row" data-zone-row="A"></div></div>`;
+      zoneGrid.appendChild(box);
+      return {
+        rowA: box.querySelector('[data-zone-row="A"]'),
+        rowB: null,
+      };
+    };
+    const keepZone = buildZone("保留区", "这里的骰子锁定后保持不变。");
+    const rerollZone = buildZone("待重投区", "这里只会在你点击按钮后重新投掷。");
+    aEls.forEach((el) => rerollZone.rowA.appendChild(el));
+    const controls = document.createElement("div");
+    controls.className = "reroll-actions";
+    controls.innerHTML = `
+      <button type="button" class="primary" id="btnConfirmReroll">确认重投未锁定骰子</button>
+      <span class="reroll-status" id="rerollStatus">已锁定 0 颗 · 将重投 ${all.length} 颗</span>`;
+    host.appendChild(controls);
+    const statusEl = controls.querySelector("#rerollStatus");
+    const confirmBtn = controls.querySelector("#btnConfirmReroll");
+    const updateStatus = () => {
+      const lockedCount = lockSetA.size + lockSetB.size;
+      const rerollCount = all.length - lockedCount;
+      if (statusEl) statusEl.textContent = `已锁定 ${lockedCount} 颗 · 将重投 ${rerollCount} 颗`;
+    };
+    const toggle = (pool, idx, el) => {
+      const set = pool === "A" ? lockSetA : lockSetB;
+      if (set.has(idx)) {
+        set.delete(idx);
+        el.classList.remove("locked");
+        rerollZone.rowA.appendChild(el);
+      } else {
+        set.add(idx);
+        el.classList.add("locked");
+        keepZone.rowA.appendChild(el);
+      }
+      updateStatus();
+    };
+    all.forEach(({ el, idx, pool }) => {
+      el.classList.add("lockable");
+      el.addEventListener("click", () => toggle(pool, idx, el));
+    });
+    updateStatus();
+    await new Promise((resolve) => {
+      if (!confirmBtn) {
+        resolve();
+        return;
+      }
+      confirmBtn.addEventListener("click", () => resolve(), { once: true });
+    });
+    controls.remove();
+    all.forEach(({ el }) => el.classList.remove("lockable"));
+    if (phaseText) phaseText.textContent = "重投未锁定骰子...";
+    all.forEach(({ el, idx, pool }) => {
+      const locked = pool === "A" ? lockSetA.has(idx) : lockSetB.has(idx);
+      if (!locked) {
+        el.classList.add("rolling");
+      }
+    });
+    await sleep(Math.max(420, pace.stageHold - 260));
+    for (let i = 0; i < check.rollsA.length; i++) {
+      if (!lockSetA.has(i)) check.rollsA[i] = Math.random() < check.p;
+      const d = finalStateFromRoll(check.rollsA[i], false);
+      setFinalFace(aEls[i], d.text, d.cls);
+      if (lockSetA.has(i)) aEls[i].classList.add("locked");
+    }
+    for (let i = 0; i < check.rollsB.length; i++) {
+      if (!lockSetB.has(i)) check.rollsB[i] = Math.random() < check.p;
+      const d = finalStateFromRoll(check.rollsB[i], false);
+      if (bEls[i]) {
+        setFinalFace(bEls[i], d.text, d.cls);
+        if (lockSetB.has(i)) bEls[i].classList.add("locked");
+      }
+    }
+    await sleep(420);
+    return { lockSetA, lockSetB };
   }
 
   function createRollingDiceRow(container, label, count) {
@@ -3227,12 +4270,22 @@
   async function animateDiceReveal(_elRes, check) {
     const holder = document.getElementById("diceAnim");
     if (!holder) return;
+    if (Array.isArray(check.phases) && check.phases.length) {
+      holder.innerHTML = `<div class="stage-banner">链式节点：${escapeHtml(check.sceneContext?.chainData?.label || "阶段式检定")}</div>` +
+        check.phases.map((phase) => `
+          <div style="margin-bottom:0.7rem;">
+            <div class="phase-label">${escapeHtml(phase.phaseTitle || "阶段")}</div>
+            ${renderDiceRow(phase.rollsA, phase.voidA, MAIN_POOL_LABEL)}
+          </div>`).join("");
+      await sleep(980);
+      return;
+    }
     const pace = calcAnimPace(check);
     holder.innerHTML = `<div class="dice-rolling-hint"><span class="dice-spinner"></span><span id="dicePhaseText">摇骰中...</span></div><div id="diceRowsHost"></div>`;
     const host = document.getElementById("diceRowsHost");
     if (!host) return;
-    const aEls = createRollingDiceRow(host, "调查池", check.rollsA.length);
-    const bEls = createRollingDiceRow(host, "现场池", check.rollsB.length);
+    const aEls = createRollingDiceRow(host, MAIN_POOL_LABEL, check.rollsA.length);
+    const bEls = [];
     const phaseText = () => document.getElementById("dicePhaseText");
     const ticker = window.setInterval(() => {
       const dice = holder.querySelectorAll(".die.rolling");
@@ -3243,29 +4296,73 @@
     for (let i = 0; i < aEls.length; i += pace.revealStepA) {
       const end = Math.min(aEls.length, i + pace.revealStepA);
       const p = phaseText();
-      if (p) p.textContent = `调查池停骰 ${end}/${aEls.length}`;
+      if (p) p.textContent = `${MAIN_POOL_LABEL}停骰 ${end}/${aEls.length}`;
       for (let k = i; k < end; k++) {
         const d = finalStateFromRoll(check.rollsA[k], false);
         setFinalFace(aEls[k], d.text, d.cls);
       }
       await sleep(pace.stepDelay);
     }
-    for (let i = 0; i < bEls.length; i += pace.revealStepB) {
-      const end = Math.min(bEls.length, i + pace.revealStepB);
-      const p = phaseText();
-      if (p) p.textContent = `现场池停骰 ${end}/${bEls.length}`;
-      for (let k = i; k < end; k++) {
-        const d = finalStateFromRoll(check.rollsB[k], false);
-        setFinalFace(bEls[k], d.text, d.cls);
-      }
-      await sleep(pace.stepDelay);
-    }
-
     const pDone = phaseText();
     if (pDone) pDone.textContent = "基础结果已揭示";
-    await sleep(260);
+    appendStageBanner(host, "第一阶段：基础投掷结果");
+    await sleep(pace.stageHold);
+
+    await runLockAndRerollPhase(host, pDone, check, aEls, bEls, pace);
+
+    const carry = check.carry || {};
+    if ((carry.bonusA || 0) > 0) {
+      if (pDone) pDone.textContent = "余波触发：保底线索";
+      appendStageBanner(host, "第三阶段：余波触发");
+      appendMechanicStage(host, "余波触发", "旧线索保底生效，本次额外获得保底骰。");
+      const bonusPool = document.createElement("div");
+      bonusPool.className = "dice-pool";
+      bonusPool.innerHTML = `<h3>余波·保底骰</h3><div class="dice-row">${Array.from({ length: carry.bonusA }, () => `<span class="die carry">✓</span>`).join("")}</div>`;
+      host.appendChild(bonusPool);
+      await sleep(pace.stageHold);
+    }
+    if ((carry.bonusB || 0) < 0) {
+      if (pDone) pDone.textContent = "余波触发：样本污染";
+      appendStageBanner(host, "第三阶段：余波触发");
+      appendMechanicStage(host, "余波触发", "旧污染残留生效，本次可用骰减少。");
+      const taintPool = document.createElement("div");
+      taintPool.className = "dice-pool";
+      taintPool.innerHTML = `<h3>余波·污染标记</h3><div class="dice-row">${Array.from({ length: Math.abs(carry.bonusB) }, () => `<span class="die tainted">×</span>`).join("")}</div>`;
+      host.appendChild(taintPool);
+      await sleep(pace.stageHold);
+    }
+
+    if (check.sceneContext?.lightMod?.kind === "bonusA") {
+      if (pDone) pDone.textContent = "类型包触发：奖励骰";
+      appendStageBanner(host, "第四阶段：类型包触发");
+      appendMechanicStage(host, "类型包触发", "科学调查会额外补入 1 颗奖励骰。");
+      const pool = document.createElement("div");
+      pool.className = "dice-pool";
+      pool.innerHTML = `<h3>类型包·奖励骰</h3><div class="dice-row"><span class="die boost">✓</span></div>`;
+      host.appendChild(pool);
+      await sleep(pace.stageHold);
+    } else if (check.sceneContext?.lightMod?.kind === "bonusB") {
+      if (pDone) pDone.textContent = "类型包触发：奖励骰";
+      appendStageBanner(host, "第四阶段：类型包触发");
+      appendMechanicStage(host, "类型包触发", "考古现场会额外补入 1 颗奖励骰。");
+      const pool = document.createElement("div");
+      pool.className = "dice-pool";
+      pool.innerHTML = `<h3>类型包·奖励骰</h3><div class="dice-row"><span class="die boost">✓</span></div>`;
+      host.appendChild(pool);
+      await sleep(pace.stageHold);
+    } else if (check.sceneContext?.lightMod?.kind === "taintedDie") {
+      if (pDone) pDone.textContent = "类型包触发：污染骰";
+      appendStageBanner(host, "第四阶段：类型包触发");
+      appendMechanicStage(host, "类型包触发", "异常接触会额外带出一颗污染骰。");
+      const pool = document.createElement("div");
+      pool.className = "dice-pool";
+      pool.innerHTML = `<h3>类型包·污染骰</h3><div class="dice-row"><span class="die tainted">!</span></div>`;
+      host.appendChild(pool);
+      await sleep(pace.stageHold);
+    }
 
     // 对手作废阶段：按顺序逐颗作废
+    appendStageBanner(host, "第五阶段：对手作废");
     const voidSeq = [];
     for (const idx of check.voidA) voidSeq.push({ pool: "A", idx });
     for (const idx of check.voidB) voidSeq.push({ pool: "B", idx });
@@ -3285,13 +4382,54 @@
     }
     window.clearInterval(ticker);
 
+    if (check.interventionResult?.summary) {
+      const p = phaseText();
+      if (p) p.textContent = `事件干预：${INTERVENTION_LABELS[check.interventionResult.kind] || check.interventionResult.kind}`;
+      appendStageBanner(host, "第六阶段：事件干预");
+      let targetEl = null;
+      let targetCls = "intervention-mark";
+      if (check.interventionResult.kind === "seize" || check.interventionResult.kind === "decoy") {
+        targetEl = aEls.find((el) => el.classList.contains("void"));
+      } else if (check.interventionResult.kind === "seal") {
+        targetEl = bEls.find((el) => el.classList.contains("void"));
+      } else if (check.interventionResult.kind === "contaminate") {
+        targetEl = [...aEls, ...bEls].find((el) => el.classList.contains("hit")) || aEls[0] || bEls[0];
+        targetCls = "intervention-safe";
+        if (targetEl) setFinalFace(targetEl, targetEl.textContent || "✓", "die tainted reveal-pop");
+      }
+      if (check.interventionResult.shielded) {
+        targetEl = aEls.find((el) => el.classList.contains("hit")) || aEls[0];
+        targetCls = "intervention-safe";
+      }
+      focusDie(targetEl, targetCls);
+      appendMechanicStage(host, `事件干预：${INTERVENTION_LABELS[check.interventionResult.kind] || check.interventionResult.kind}`, check.interventionResult.summary);
+      await sleep(pace.focusHold);
+      clearDieFocus(targetEl, targetCls);
+    }
+    if (check.secondaryAxis?.summary) {
+      const p = phaseText();
+      if (p) p.textContent = `副轴揭示：${check.secondaryAxis.label}`;
+      appendStageBanner(host, "第七阶段：副轴揭示");
+      appendMechanicStage(host, `副轴结果：${check.secondaryAxis.label}`, check.secondaryAxis.summary);
+      await sleep(pace.stageHold);
+    }
+
+    const recalculated = computeHitsFromSets(check.rollsA, check.rollsB, check.voidA, check.voidB);
+    check.hitsA = recalculated.totalScore;
+    check.hitsB = recalculated.maxDie;
+    check.totalScore = recalculated.totalScore;
+    check.maxDie = recalculated.maxDie;
+    check.passA = check.totalScore >= check.kA;
+    check.passB = check.maxDie >= 6;
+    check.tier = classifyTier(check.totalScore, check.kA, check.maxDie, check.rollsA.length);
+
     // 最终态面板
     holder.innerHTML = `<div>
-      ${renderDiceRow(check.rollsA, new Set(), "调查池（基础）")}
-      ${renderDiceRow(check.rollsB, new Set(), "现场池（基础）")}
+      ${renderDiceRow(check.rollsA, new Set(), "基础行动骰")}
       <div class="phase-label" style="margin-top:0.5rem;">对手作废 ${check.enemyAttr} 颗</div>
-      ${renderDiceRow(check.rollsA, check.voidA, "调查·作废后")}
-      ${renderDiceRow(check.rollsB, check.voidB, "现场·作废后")}
+      ${renderDiceRow(check.rollsA, check.voidA, "作废后行动骰")}
+      ${check.interventionResult?.summary ? `<div class="phase-label" style="margin-top:0.5rem;">事件干预：${escapeHtml(INTERVENTION_LABELS[check.interventionResult.kind] || check.interventionResult.kind)}</div><div class="tip-inline">${escapeHtml(check.interventionResult.summary)}</div>` : ""}
+      ${check.secondaryAxis?.summary ? `<div class="phase-label" style="margin-top:0.5rem;">副轴结果：${escapeHtml(check.secondaryAxis.label)}</div><div class="tip-inline">${escapeHtml(check.secondaryAxis.summary)}</div>` : ""}
     </div>`;
     await sleep(pace.settleDelay);
   }
@@ -3299,26 +4437,36 @@
   async function runMission(onContinue) {
     const m = state.mission;
     if (!m) return;
-    const useCharacterDice = true;
-    let check = null;
-    let tier = "失败";
-    let diceSelection = null;
-    if (useCharacterDice) {
-      const baseRolls = rollCharacterDice(m, state.selectedStaffIds);
-      const blackDice = blackDiceForMission(m, baseRolls);
-      const blackApplied = applyBlackDiceToRolls(m, baseRolls, blackDice);
-      const rolls = blackApplied.rolls;
-      diceSelection = await showDiceSelectionPopup(m, rolls);
-      const selectedRolls = rolls.filter((r) => diceSelection.selectedIds.includes(r.id));
-      tier = m.isBlackDiceTask
-        ? blackDiceTier(m, diceSelection.success, diceSelection.sum, blackApplied.pressure, selectedRolls)
-        : diceSelection.success ? "小成功" : "失败";
-      check = { characterDice: true, rolls, selectedIds: diceSelection.selectedIds, contribution: diceSelection.sum, tier, blackDice, blackNotes: blackApplied.notes, blackPressure: blackApplied.pressure };
-    } else {
-      check = runSplitCheck(m, state.selectedStaffIds);
+    const check = runSplitCheck(m, state.selectedStaffIds);
+    let tier = check.tier;
+    let secondaryAxis = check.secondaryAxis || null;
+    const interventionResult = check.interventionResult || null;
+    const elRes = document.getElementById("view-result");
+    const showDice = state.displayMode === "dice";
+    const missionHead = missionHeaderHtml(m, state.selectedStaffIds);
+    elRes.innerHTML = `
+      <h2>${m.missionType === "leadInvestigation" ? "线索调查结算" : "探索结算"}</h2>
+      ${missionHead}
+      <div class="result-banner" id="tierBanner">判定中...</div>
+      ${showDice ? `<div id="diceAnim"><div class="dice-rolling-hint"><span class="dice-spinner"></span><span>摇骰中...</span></div></div>`
+        : `<div class="prob-box" id="diceAnim">计算中...</div>`}
+      <div id="resultMechanicsHost"></div>
+      <p id="resultLines" style="font-size:0.9rem;color:var(--muted);"></p>
+      <p>剩余 <strong>${state.day}</strong> 日</p>
+      <button type="button" class="primary" id="btnAfterResult" disabled>继续</button>`;
+    bindMissionStaffHover(elRes);
+    setView("result");
+    renderMacro();
+    if (showDice) {
+      await animateDiceReveal(elRes, check);
       tier = check.tier;
+      secondaryAxis = buildSecondaryAxis(check.sceneContext, check.totalScore, check.maxDie, check.kA, 6, tier, interventionResult, check.carry || {});
+    } else {
+      await sleep(450);
+      const h = document.getElementById("diceAnim");
+      if (h) h.innerHTML = `<div class="prob-box">${MAIN_POOL_LABEL} 总分 ${check.totalScore}/${check.kA} · 最高骰 ${check.maxDie}${secondaryAxis ? ` · ${escapeHtml(secondaryAxis.label)}：${escapeHtml(secondaryAxis.summary)}` : ""}</div>`;
     }
-    const highTier = mapHighRiskTier(m, tier);
+
     const lines = [];
     const rewards = [];
     if (m.missionType === "leadInvestigation") {
@@ -3341,75 +4489,70 @@
           macro.声望 = Math.max(0, macro.声望 - (tier === "大失败" ? 2 : 1));
         }
       }
-    } else if (m.isBlackDiceTask) {
-      (check.blackNotes || []).forEach((x) => lines.push(x));
-      if (tier === "大成功") {
-        addMacro({ 声望: 6, 诡名: 3 });
-        lines.push("黑骰任务大成功：你拿到了危险素材，并暂时避开主要反噬。");
-        addMissionClue(m, "黑骰强素材", 3, rewards, "黑骰任务：大成功（Tier 3）");
-      } else if (tier === "成功") {
-        addMacro({ 声望: 4, 诡名: 2, 狂性: 1 });
-        lines.push("黑骰任务成功：关键素材到手，但异常留下了轻微回声。");
-        addMissionClue(m, "黑骰关键素材", 3, rewards, "黑骰任务：成功（Tier 3，轻微反噬）");
-      } else if (tier === "失败") {
-        addMacro({ 声望: -1, 狂性: 2 });
-        lines.push("黑骰任务失败：没有拿稳真相，但留下了弱线索和压力。");
-        addMissionClue(m, "黑骰弱线索", 1, rewards, "黑骰任务：失败（Tier 1）");
-      } else {
-        addMacro({ 公信: -2, 守序: -3, 狂性: 5 });
-        lines.push("黑骰任务大失败：异常反过来污染了队伍，本局后续风险上升。");
-        state.staffDebuffs[state.selectedStaffIds[0] || "global"] = { riskFace: true, source: m.name };
-        rewards.push({ icon: "!", title: "黑骰大失败 debuff", desc: "一名队员获得风险面标记；本局后续同类任务会更危险。" });
-      }
+    } else if (tier === "大成功") {
+      macro.声望 = Math.min(100, macro.声望 + 6);
+      macro.公信 += m.tags.includes("sci") ? 4 : 0;
+      macro.诡名 += m.tags.includes("occult") ? 5 : 2;
+      if (m.kind === "hidden") macro.狂性 = Math.min(100, macro.狂性 + 4);
+      lines.push("大成功：高质量线索。");
+      const clue = { title: m.name + " · 深度特稿素材", type: m.tags[0] || "pop", tier: 3, topicKey: newTopicKey() };
+      state.clues.push(clue);
+      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：高（第 3 档）" });
+    } else if (tier === "小成功") {
+      macro.声望 = Math.min(100, macro.声望 + 4);
+      macro.诡名 += 1;
+      lines.push("小成功：常规稿件素材。");
+      const clue = { title: m.name + " · 常规稿件素材", type: m.tags[0] || "pop", tier: 2, topicKey: newTopicKey() };
+      state.clues.push(clue);
+      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：中（第 2 档）" });
+    } else if (tier === "失败") {
+      macro.声望 = Math.max(0, macro.声望 - 2);
+      lines.push("失败：碎片线索。");
+      const clue = { title: m.name + " · 碎片线索", type: m.tags[0] || "pop", tier: 1, topicKey: newTopicKey() };
+      state.clues.push(clue);
+      rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: "线索品质：低（第 1 档）" });
     } else {
-      applyStandardOutcome(m, tier, lines, rewards);
+      macro.守序 = Math.max(0, macro.守序 - 3);
+      macro.狂性 = Math.min(100, macro.狂性 + 3);
+      lines.push("大失败。");
     }
-    if (m.missionType !== "leadInvestigation") {
-      recordWhiteInvestigation(m, lines);
-      advanceDeepChain(m, lines, rewards);
-      retireRedMission(m, lines);
+    if (secondaryAxis) {
+      lines.push(`${secondaryAxis.label}：${secondaryAxis.summary}`);
+      if (secondaryAxis.key === "evidence_quality" && secondaryAxis.score >= 2) {
+        macro.公信 = Math.min(100, macro.公信 + 1);
+      } else if (secondaryAxis.key === "exposure" && secondaryAxis.score >= 1) {
+        macro.守序 = Math.max(0, macro.守序 - 1);
+      } else if (secondaryAxis.key === "stability" && secondaryAxis.score < 0) {
+        macro.守序 = Math.max(0, macro.守序 - 1);
+      } else if (secondaryAxis.key === "contamination_risk") {
+        macro.狂性 = Math.min(100, macro.狂性 + Math.max(1, secondaryAxis.score || 1));
+      }
     }
+    if (interventionResult?.summary) {
+      lines.push(`事件干预：${INTERVENTION_LABELS[interventionResult.kind] || interventionResult.kind}。${interventionResult.summary}`);
+    }
+    if (m.carryState && (!m.carryState.onTiers || m.carryState.onTiers.includes(tier))) {
+      state.carryStates[m.carryState.flag] = {
+        value: m.carryState.value || 1,
+        scenePackage: m.carryState.scenePackage || m.scenePackage || "science_investigation",
+        summary: m.carryState.summary || "",
+      };
+      lines.push(`余波：${m.carryState.summary || m.carryState.flag}`);
+    }
+    (check.usedCarryFlags || []).forEach((flag) => {
+      delete state.carryStates[flag];
+    });
     ["公信", "诡名", "声望", "守序", "狂性"].forEach((k) => {
       macro[k] = Math.max(0, Math.min(100, macro[k]));
     });
-    log(`${m.name} → 「${m.isBlackDiceTask ? highTier.label : tier}」`);
-    const elRes = document.getElementById("view-result");
-    const showDice = state.displayMode === "dice";
-    const missionHead = missionHeaderHtml(m, state.selectedStaffIds);
-    elRes.innerHTML = `
-      <h2>${m.missionType === "leadInvestigation" ? "线索调查结算" : "探索结算"}</h2>
-      ${missionHead}
-      <div class="result-banner" id="tierBanner">判定中...</div>
-      ${showDice ? `<div id="diceAnim"><div class="dice-rolling-hint"><span class="dice-spinner"></span><span>摇骰中...</span></div></div>`
-        : `<div class="prob-box" id="diceAnim">计算中...</div>`}
-      <p style="font-size:0.9rem;color:var(--muted);">${lines.map(escapeHtml).join("<br/>")}</p>
-      <div id="bonusOutcome"></div>
-      <p>剩余 <strong>${state.day}</strong> 日</p>
-      <button type="button" class="primary" id="btnAfterResult" disabled>继续</button>`;
-    bindMissionStaffHover(elRes);
-    setView("result");
-    renderMacro();
-    if (check.characterDice) {
-      const h = document.getElementById("diceAnim");
-      if (h) h.innerHTML = `<div class="prob-box">
-        <strong>角色骰结果：</strong>${escapeHtml(contributionText(check.contribution || {}, m.need || {}))}
-        ${check.blackNotes && check.blackNotes.length ? `<div style="margin-top:0.35rem;color:#fca5a5;">${check.blackNotes.map(escapeHtml).join("<br/>")}</div>` : ""}
-        <div style="margin-top:0.5rem;">${renderCharacterRollsHtml(check.rolls, check.selectedIds, m.need || {})}</div>
-      </div>`;
-      await sleep(450);
-    } else if (showDice) {
-      await animateDiceReveal(elRes, check);
-    } else {
-      await sleep(450);
-      const h = document.getElementById("diceAnim");
-      if (h) h.innerHTML = `<div class="prob-box">调查 ${check.hitsA}/${check.nAe}（≥${check.kA}）· 现场 ${check.hitsB}/${check.nBe}（≥${check.kB}）</div>`;
-    }
-    const tbBeforeRewards = document.getElementById("tierBanner");
-    if (tbBeforeRewards) tbBeforeRewards.textContent = tier;
+    log(`${m.name} → 「${tier}」`);
+    const resultLinesEl = document.getElementById("resultLines");
+    if (resultLinesEl) resultLinesEl.innerHTML = lines.map(escapeHtml).join("<br/>");
+    const resultMechanicsHost = document.getElementById("resultMechanicsHost");
+    if (resultMechanicsHost) resultMechanicsHost.innerHTML = renderResultMechanics({ ...check, secondaryAxis }, m);
+    const tierEl = document.getElementById("tierBanner");
+    if (tierEl) tierEl.textContent = tier;
     await showRewardsPopup(rewards);
-    if (shouldOfferPushBonus(m, highTier)) {
-      await resolvePushBonus(m, showDice);
-    }
     if (week1TutorialActive() && !state.tutorialSoftW1.w1_result) {
       if (tutorialsGloballyDisabled()) {
         state.tutorialSoftW1.w1_result = true;
@@ -3420,11 +4563,11 @@
           [
             `${tutorialSoftFigure(
               "Assets/tutorial-result-guide.svg",
-              "结算示意：调查与现场双线判定",
-              "示意：调查池与现场池各自过线，合起来决定本次档位。",
+              "结算示意：单池总分与最高骰判定",
+              "示意：先看行动骰池总分是否达标，再看最高骰是否足够强来升级结果。",
             )}<div class="tutorial-soft-sheet">
-              <h4 class="tutorial-soft-h4">双线结果</h4>
-              <p class="tutorial-soft-lead">「调查」与「现场」<strong>各自过线</strong>，合在一起决定大获全胜、平稳交差、失手或闹大。</p>
+              <h4 class="tutorial-soft-h4">单池结果</h4>
+              <p class="tutorial-soft-lead">现在只看一组<strong>行动骰池</strong>：先看总分是否达标，再看<strong>最高骰</strong>是否足以把结果升级成大成功。</p>
               <ul class="tutorial-soft-ul">
                 <li>奖励弹窗可逐条翻看。</li>
               </ul>
@@ -3442,7 +4585,7 @@
       }
     }
     const tb = document.getElementById("tierBanner");
-    if (tb && !/^再追一次/.test(tb.textContent || "")) tb.textContent = tier;
+    if (tb) tb.textContent = tier;
     const goBtn = document.getElementById("btnAfterResult");
     if (goBtn) goBtn.disabled = false;
     document.getElementById("btnAfterResult").onclick = () => {
@@ -3591,8 +4734,6 @@
     ttl.textContent = title || "提示";
     date.textContent = dateText || "";
     body.innerHTML = bodyHtml || "";
-    ok.textContent = "确认";
-    cancel.textContent = "取消";
     wrap.classList.remove("hidden");
     return new Promise((resolve) => {
       const done = (v) => {
@@ -4998,11 +6139,6 @@
     state.pendingClues = [];
     state.pendingReports = [];
     state.topicSynthOrder = {};
-    state.pushBudgetWeekly = 1;
-    state.tempStaffIds = [];
-    state.tempHireUsed = false;
-    state.selectedToolDiceIds = [];
-    state.toolDiceInventory.forEach((x) => { x.used = false; });
     cleanupWeekScopedEffects();
     initRegionLeadEvents();
     state.phase = "explore";
@@ -5198,38 +6334,11 @@
     return true;
   }
 
-  function maybeEnableDebugBlackDice() {
-    const p = new URLSearchParams(window.location.search || "");
-    if (p.get("debugBlackDice") !== "1") return;
-    addDynamicNode("us", {
-      id: "debug_bus330_tape",
-      kind: "temp",
-      name: "330 末班车 · 最后三秒录像（调试）",
-      days: 1,
-      need: { 胆识: 3, 诡思: 3, 洞察: 2 },
-      tags: ["occult"],
-      difficulty: "hard",
-      enemyAttr: 4,
-      checkType: "white",
-      riskTier: "high",
-      isBlackDiceTask: true,
-      blackDiceTheme: "bus330",
-      chainType: "deep",
-      chainStage: 4,
-      chainStageTotal: 4,
-      chainId: "bus330",
-      chainFinal: true,
-      taskTypeTitle: "黑骰任务 · 330 末班车终局",
-      taskTypeDesc: "调试入口：鬼混入乘客之中。黑骰会混入或替换你的骰子。",
-    }, 1);
-  }
-
   function init() {
     renderMacro();
     tickHeader();
     setInterval(tickHeader, 500);
     initRegionLeadEvents();
-    maybeEnableDebugBlackDice();
     bindSynthesisUi();
     bindEditorialUi();
     bindPaperDemoLabUi();
@@ -5243,3 +6352,7 @@
 
   init();
 })();
+
+</script>
+</body>
+</html>

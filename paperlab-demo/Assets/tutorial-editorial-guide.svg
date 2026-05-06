@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 168" width="400" height="168" role="img" aria-labelledby="teTitle">
+  <title id="teTitle">&#x7ec4;&#x7248;&#x793a;&#x610f;</title>
+  <defs>
+    <linearGradient id="te_bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/><stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="168" fill="url(#te_bg)" rx="8"/>
+  <text x="200" y="22" text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x7ec4;&#x7248; &#xb7; &#x6545;&#x4e8b;&#x62d6;&#x5165;&#x7248;&#x4f4d;</text>
+  <rect x="12" y="36" width="100" height="120" fill="#0b1220" stroke="#334155" stroke-width="1.2" rx="6"/>
+  <text x="62" y="54" text-anchor="middle" fill="#d4a853" font-size="9" font-weight="600" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x6545;&#x4e8b;&#x5e93;</text>
+  <rect x="22" y="64" width="80" height="22" rx="3" fill="#1e293b" stroke="#475569"/>
+  <rect x="22" y="92" width="80" height="22" rx="3" fill="#1e293b" stroke="#475569"/>
+  <rect x="22" y="120" width="80" height="22" rx="3" fill="#422006" stroke="#d4a853"/>
+  <path d="M 118 96 L 148 96" stroke="#64748b" stroke-width="1.5"/>
+  <polygon points="152,96 146,93 146,99" fill="#64748b"/>
+  <rect x="158" y="36" width="230" height="120" fill="#0f172a" stroke="#d4a853" stroke-width="1" rx="6"/>
+  <text x="273" y="56" text-anchor="middle" fill="#d4a853" font-size="10" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x62a5;&#x7eb8;</text>
+  <rect x="172" y="66" width="100" height="48" rx="4" fill="#1c1917" stroke="#b45309" stroke-width="1.2"/>
+  <text x="222" y="92" text-anchor="middle" fill="#fcd34d" font-size="8" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x5934;&#x7248;</text>
+  <rect x="278" y="66" width="98" height="36" rx="4" fill="#1c1917" stroke="#57534e"/>
+  <text x="327" y="86" text-anchor="middle" fill="#a8a29e" font-size="8" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x5185;&#x9875;</text>
+  <rect x="172" y="122" width="204" height="26" rx="3" fill="#1c1917" stroke="#44403c"/>
+  <text x="274" y="139" text-anchor="middle" fill="#78716c" font-size="7" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x66f4;&#x591a;&#x7248;&#x4f4d;&#x2026;</text>
+</svg>

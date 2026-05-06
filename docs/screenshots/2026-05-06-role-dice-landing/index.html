@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>角色骰系统落地截图说明 · 2026-05-06</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121a2b;
+      --line: #2c3954;
+      --text: #e5edf8;
+      --muted: #9fb0c8;
+      --gold: #d6a84f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+      background: radial-gradient(circle at 18% 0%, rgba(79, 120, 220, 0.22), transparent 28%), var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    main { width: min(1280px, calc(100vw - 32px)); margin: 0 auto; padding: 28px 0 48px; }
+    header, section { border: 1px solid var(--line); border-radius: 18px; background: rgba(18, 26, 43, 0.88); }
+    header { padding: 24px; margin-bottom: 16px; }
+    h1 { margin: 0 0 8px; color: var(--gold); font-size: 34px; }
+    h2 { margin: 0 0 8px; color: var(--gold); }
+    p { margin: 0 0 10px; color: var(--muted); }
+    .grid { display: grid; grid-template-columns: 0.38fr 0.62fr; gap: 18px; padding: 18px; border-top: 1px solid var(--line); }
+    .grid:first-child { border-top: 0; }
+    .meta { align-self: start; position: sticky; top: 14px; }
+    .tag { display: inline-block; margin: 0 6px 6px 0; padding: 3px 8px; border: 1px solid var(--line); border-radius: 999px; font-size: 13px; color: #cbd5e1; }
+    figure { margin: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #050914; }
+    img { display: block; width: 100%; height: auto; }
+    figcaption { padding: 8px 12px; color: var(--muted); border-top: 1px solid var(--line); font-size: 13px; }
+    ul { color: var(--muted); padding-left: 20px; }
+    .note { margin-top: 14px; padding: 12px; border: 1px solid rgba(214, 168, 79, 0.35); border-radius: 12px; background: rgba(120, 53, 15, 0.18); color: #fde68a; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } .meta { position: static; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>角色骰系统落地截图说明</h1>
+    <p>本页汇总 2026-05-06 角色骰系统分批落地后的真实浏览器截图。截图覆盖：角色骰数据与详情、普通任务角色骰选骰、一次性道具骰、深度调查链灰化环、330 黑骰任务配置入口。</p>
+    <div>
+      <span class="tag">角色骰系统</span>
+      <span class="tag">普通达标判定</span>
+      <span class="tag">深度调查链 UI</span>
+      <span class="tag">黑骰任务入口</span>
+    </div>
+  </header>
+
+  <section>
+    <article class="grid">
+      <div class="meta">
+        <h2>01 · 首区任务总览</h2>
+        <p>北美禁区带现在展示多条连续任务链与黑骰调试入口，任务卡中已区分白色、红色、深度、高危与黑骰。</p>
+        <ul>
+          <li>330 公交车链和球状闪电链都在首区可见。</li>
+          <li>黑骰任务用“黑”标识，高危任务仍只是高难。</li>
+        </ul>
+      </div>
+      <figure>
+        <img src="01-region-overview-role-dice.png" alt="首区任务总览" />
+        <figcaption>区域地图与侧栏任务卡。</figcaption>
+      </figure>
+    </article>
+
+    <article class="grid">
+      <div class="meta">
+        <h2>02 · 普通任务配置页</h2>
+        <p>配置页从旧精确概率预览改为角色骰风险提示，并展示一次性道具骰和临时线人入口。</p>
+        <ul>
+          <li>普通任务最多 3 人。</li>
+          <li>道具骰不占人数，但计入总骰数。</li>
+        </ul>
+      </div>
+      <figure>
+        <img src="02-role-dice-setup.png" alt="角色骰配置页" />
+        <figcaption>角色骰风险、任务需求、道具骰入口。</figcaption>
+      </figure>
+    </article>
+
+    <article class="grid">
+      <div class="meta">
+        <h2>03 · 角色详情 6 面骰</h2>
+        <p>角色卡只显示专精；点击“详情 / 骰面”后才显示完整 6 面、属性总览与升级分支预览。</p>
+      </div>
+      <figure>
+        <img src="03-role-detail-six-faces.png" alt="角色骰详情" />
+        <figcaption>角色详情弹窗展示完整 6 面角色骰。</figcaption>
+      </figure>
+    </article>
+
+    <article class="grid">
+      <div class="meta">
+        <h2>04 · 已选择角色与道具骰</h2>
+        <p>任务配置页中可以选择角色，也可以选择一次性道具骰。角色卡上只显示专精和骰面摘要。</p>
+      </div>
+      <figure>
+        <img src="04-selected-role-dice-and-tools.png" alt="选择角色和道具骰" />
+        <figcaption>角色专精、相关骰面和一次性道具骰。</figcaption>
+      </figure>
+    </article>
+
+    <article class="grid">
+      <div class="meta">
+        <h2>05 · 角色骰选骰弹窗</h2>
+        <p>普通任务投出角色骰后，玩家可手动选择有效骰面，也可自动选择、全选或清空。</p>
+        <ul>
+          <li>本截图中任务需求是 `探索4 + 生存2`。</li>
+          <li>弹窗直接显示当前累计是否达标。</li>
+        </ul>
+      </div>
+      <figure>
+        <img src="05-dice-selection-popup.png" alt="角色骰选骰弹窗" />
+        <figcaption>角色骰判定的核心交互。</figcaption>
+      </figure>
+    </article>
+
+    <article class="grid">
+      <div class="meta">
+        <h2>06 · 深度链灰化已完成环</h2>
+        <p>完成 330 公交车第一环后，旧任务点保留为灰色 / 勾选状态，下一环在地图上出现。</p>
+        <ul>
+          <li>地图上能看到连续任务路径。</li>
+          <li>侧栏中已完成任务不可再派遣。</li>
+        </ul>
+      </div>
+      <figure>
+        <img src="06-deep-chain-completed-ring.png" alt="深度调查链完成环" />
+        <figcaption>深度调查链 UI：旧环保留，下一环出现。</figcaption>
+      </figure>
+    </article>
+
+    <article class="grid">
+      <div class="meta">
+        <h2>07 · 黑骰任务配置入口</h2>
+        <p>330 公交车终局作为黑骰任务进入配置页。它和高危任务分离：高危只是高难，黑骰任务才有特殊机制。</p>
+        <ul>
+          <li>任务卡写明“黑骰任务”。</li>
+          <li>本次截图覆盖配置入口；黑骰结算动效后续还需补图验证。</li>
+        </ul>
+      </div>
+      <figure>
+        <img src="07-black-dice-task-setup.png" alt="黑骰任务配置入口" />
+        <figcaption>330 黑骰终局配置页。</figcaption>
+      </figure>
+    </article>
+  </section>
+
+  <p class="note">未完全覆盖：黑骰结算后的选骰/四档结果截图，当前自动截图脚本在推进终局结算时不稳定。代码已接入黑骰接口与主题机制，后续可单独补一张黑骰结算动效截图。</p>
+</main>
+</body>
+</html>

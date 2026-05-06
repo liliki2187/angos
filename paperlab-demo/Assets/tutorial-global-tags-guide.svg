@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width="400" height="120" role="img" aria-labelledby="tgtTitle">
+  <title id="tgtTitle">&#x5168;&#x7403;&#x5730;&#x56fe;&#x9898;&#x6750;&#x7b5b;&#x9009;&#x793a;&#x610f;</title>
+  <defs>
+    <linearGradient id="tgt_bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="120" fill="url(#tgt_bg)" rx="8"/>
+  <text x="200" y="22" text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x9876;&#x90e8;&#x6807;&#x7b7e;&#xff08;&#x4e0e;&#x5168;&#x7403;&#x5730;&#x56fe;&#x4e00;&#x81f4;&#xff09;</text>
+  <rect x="24" y="36" width="352" height="44" rx="6" fill="#0b1220" stroke="#334155" stroke-width="1.2"/>
+  <text x="200" y="56" text-anchor="middle" fill="#64748b" font-size="8" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x70b9;&#x51fb;&#x5207;&#x6362;&#xff1a;&#x5f00;&#x5173;&#x67d0;&#x7c7b;&#x9898;&#x6750;&#x7684;&#x5730;&#x56fe;&#x70b9;&#x4e0e;&#x5217;&#x8868;&#x663e;&#x793a;</text>
+  <rect x="40" y="64" width="72" height="24" rx="12" fill="#422006" stroke="#d4a853" stroke-width="1.2"/>
+  <text x="76" y="81" text-anchor="middle" fill="#fcd34d" font-size="9" font-weight="600" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x79d1;&#x5b66;</text>
+  <rect x="124" y="64" width="72" height="24" rx="12" fill="#422006" stroke="#d4a853" stroke-width="1.2"/>
+  <text x="160" y="81" text-anchor="middle" fill="#fcd34d" font-size="9" font-weight="600" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x79d8;&#x95fb;</text>
+  <rect x="208" y="64" width="72" height="24" rx="12" fill="#1e293b" stroke="#475569" stroke-width="1.2"/>
+  <text x="244" y="81" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x5927;&#x4f17;</text>
+  <text x="296" y="81" fill="#64748b" font-size="8" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x2026;</text>
+  <text x="200" y="108" text-anchor="middle" fill="#64748b" font-size="8" font-family="Segoe UI,Microsoft YaHei,sans-serif">&#x91d1;&#x8272;&#x4e3a;&#x5f53;&#x524d;&#x9009;&#x4e2d;&#xff1b;&#x7070;&#x6846;&#x4e3a;&#x5173;&#x95ed;&#x7b5b;&#x9009;</text>
+</svg>
