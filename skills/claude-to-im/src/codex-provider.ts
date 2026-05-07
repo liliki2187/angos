@@ -236,6 +236,7 @@ export function buildCodexCliEnv(
 }
 
 type CodexSandboxMode = 'read-only' | 'workspace-write' | 'danger-full-access';
+type CodexModelReasoningEffort = 'minimal' | 'low' | 'medium' | 'high' | 'xhigh';
 
 function normalizeSandboxMode(value?: string): CodexSandboxMode | undefined {
   switch (value?.trim()) {
@@ -259,6 +260,19 @@ function resolveNetworkAccessEnabled(sandboxMode: CodexSandboxMode): boolean | u
   return sandboxMode === 'danger-full-access' ? true : undefined;
 }
 
+function resolveModelReasoningEffort(): CodexModelReasoningEffort | undefined {
+  switch (process.env.CTI_CODEX_MODEL_REASONING_EFFORT?.trim()) {
+    case 'minimal':
+    case 'low':
+    case 'medium':
+    case 'high':
+    case 'xhigh':
+      return process.env.CTI_CODEX_MODEL_REASONING_EFFORT.trim() as CodexModelReasoningEffort;
+    default:
+      return undefined;
+  }
+}
+
 function looksLikeClaudeModel(model?: string): boolean {
   return !!model && /^claude[-_]/i.test(model);
 }
@@ -277,6 +291,7 @@ export function buildThreadOptions(
 ): Record<string, unknown> {
   const sandboxMode = resolveSandboxMode();
   const networkAccessEnabled = resolveNetworkAccessEnabled(sandboxMode);
+  const modelReasoningEffort = resolveModelReasoningEffort();
 
   return {
     ...(shouldPassModelToCodex() && params.model ? { model: params.model } : {}),
@@ -284,6 +299,7 @@ export function buildThreadOptions(
     approvalPolicy: toApprovalPolicy(params.permissionMode),
     sandboxMode,
     ...(networkAccessEnabled !== undefined ? { networkAccessEnabled } : {}),
+    ...(modelReasoningEffort ? { modelReasoningEffort } : {}),
   };
 }
 

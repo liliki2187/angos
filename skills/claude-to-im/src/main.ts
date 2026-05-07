@@ -36,6 +36,12 @@ function applyRuntimeEnvFromConfig(config: Config): void {
   if (config.codexNetworkAccess !== undefined) {
     process.env.CTI_CODEX_NETWORK_ACCESS = String(config.codexNetworkAccess);
   }
+  if (config.codexPassModel !== undefined) {
+    process.env.CTI_CODEX_PASS_MODEL = String(config.codexPassModel);
+  }
+  if (config.codexModelReasoningEffort) {
+    process.env.CTI_CODEX_MODEL_REASONING_EFFORT = config.codexModelReasoningEffort;
+  }
   if (config.codexWindowsShell) {
     process.env.CTI_CODEX_WINDOWS_SHELL = config.codexWindowsShell;
   }

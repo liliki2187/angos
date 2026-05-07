@@ -508,10 +508,12 @@ describe('Codex thread options', () => {
     const oldSandbox = process.env.CTI_CODEX_SANDBOX_MODE;
     const oldNetwork = process.env.CTI_CODEX_NETWORK_ACCESS;
     const oldPassModel = process.env.CTI_CODEX_PASS_MODEL;
+    const oldReasoningEffort = process.env.CTI_CODEX_MODEL_REASONING_EFFORT;
 
     delete process.env.CTI_CODEX_SANDBOX_MODE;
     delete process.env.CTI_CODEX_NETWORK_ACCESS;
     delete process.env.CTI_CODEX_PASS_MODEL;
+    delete process.env.CTI_CODEX_MODEL_REASONING_EFFORT;
 
     try {
       const options = buildThreadOptions({
@@ -525,6 +527,7 @@ describe('Codex thread options', () => {
       assert.equal(options.networkAccessEnabled, true);
       assert.equal(options.workingDirectory, 'D:/repo');
       assert.ok(!Object.prototype.hasOwnProperty.call(options, 'model'));
+      assert.ok(!Object.prototype.hasOwnProperty.call(options, 'modelReasoningEffort'));
     } finally {
       if (oldSandbox === undefined) delete process.env.CTI_CODEX_SANDBOX_MODE;
       else process.env.CTI_CODEX_SANDBOX_MODE = oldSandbox;
@@ -534,17 +537,22 @@ describe('Codex thread options', () => {
 
       if (oldPassModel === undefined) delete process.env.CTI_CODEX_PASS_MODEL;
       else process.env.CTI_CODEX_PASS_MODEL = oldPassModel;
+
+      if (oldReasoningEffort === undefined) delete process.env.CTI_CODEX_MODEL_REASONING_EFFORT;
+      else process.env.CTI_CODEX_MODEL_REASONING_EFFORT = oldReasoningEffort;
     }
   });
 
-  it('honors explicit sandbox, network, and model forwarding overrides', () => {
+  it('honors explicit sandbox, network, model forwarding, and reasoning overrides', () => {
     const oldSandbox = process.env.CTI_CODEX_SANDBOX_MODE;
     const oldNetwork = process.env.CTI_CODEX_NETWORK_ACCESS;
     const oldPassModel = process.env.CTI_CODEX_PASS_MODEL;
+    const oldReasoningEffort = process.env.CTI_CODEX_MODEL_REASONING_EFFORT;
 
     process.env.CTI_CODEX_SANDBOX_MODE = 'workspace-write';
     process.env.CTI_CODEX_NETWORK_ACCESS = 'false';
     process.env.CTI_CODEX_PASS_MODEL = 'true';
+    process.env.CTI_CODEX_MODEL_REASONING_EFFORT = 'xhigh';
 
     try {
       const options = buildThreadOptions({
@@ -557,6 +565,7 @@ describe('Codex thread options', () => {
       assert.equal(options.sandboxMode, 'workspace-write');
       assert.equal(options.networkAccessEnabled, false);
       assert.equal(options.model, 'gpt-5-codex');
+      assert.equal(options.modelReasoningEffort, 'xhigh');
     } finally {
       if (oldSandbox === undefined) delete process.env.CTI_CODEX_SANDBOX_MODE;
       else process.env.CTI_CODEX_SANDBOX_MODE = oldSandbox;
@@ -566,6 +575,9 @@ describe('Codex thread options', () => {
 
       if (oldPassModel === undefined) delete process.env.CTI_CODEX_PASS_MODEL;
       else process.env.CTI_CODEX_PASS_MODEL = oldPassModel;
+
+      if (oldReasoningEffort === undefined) delete process.env.CTI_CODEX_MODEL_REASONING_EFFORT;
+      else process.env.CTI_CODEX_MODEL_REASONING_EFFORT = oldReasoningEffort;
     }
   });
 });

@@ -157,8 +157,51 @@ function Get-NodePath {
     return $nodePath
 }
 
+function Get-ConfigEnvValue {
+    param([string]$Name)
+
+    $configPath = Join-Path $CtiHome 'config.env'
+    if (-not (Test-Path $configPath)) {
+        return $null
+    }
+
+    foreach ($line in Get-Content $configPath) {
+        $trimmed = $line.Trim()
+        if (-not $trimmed -or $trimmed.StartsWith('#')) {
+            continue
+        }
+        $idx = $trimmed.IndexOf('=')
+        if ($idx -lt 0) {
+            continue
+        }
+        $key = $trimmed.Substring(0, $idx).Trim()
+        if ($key -ne $Name) {
+            continue
+        }
+        $value = $trimmed.Substring($idx + 1).Trim()
+        if (
+            ($value.StartsWith('"') -and $value.EndsWith('"')) -or
+            ($value.StartsWith("'") -and $value.EndsWith("'"))
+        ) {
+            $value = $value.Substring(1, $value.Length - 2)
+        }
+        return $value
+    }
+
+    return $null
+}
+
 function Reset-BridgeSessions {
-    if ($env:CTI_RESTART_RESET_SESSIONS -ne 'true') {
+    $resetSessions = $env:CTI_RESTART_RESET_SESSIONS
+    if ([string]::IsNullOrWhiteSpace($resetSessions)) {
+        $resetSessions = Get-ConfigEnvValue 'CTI_RESTART_RESET_SESSIONS'
+    }
+
+    if ([string]::IsNullOrWhiteSpace($resetSessions)) {
+        return
+    }
+
+    if ($resetSessions.Trim().ToLowerInvariant() -ne 'true') {
         return
     }
 

@@ -11,6 +11,8 @@ export interface Config {
   defaultMode: string;
   codexSandboxMode?: 'read-only' | 'workspace-write' | 'danger-full-access';
   codexNetworkAccess?: boolean;
+  codexPassModel?: boolean;
+  codexModelReasoningEffort?: 'minimal' | 'low' | 'medium' | 'high' | 'xhigh';
   codexWindowsShell?: string;
   codexHomeMode?: 'inherit' | 'shadow';
   codexShadowHome?: string;
@@ -100,6 +102,19 @@ function parseCodexHomeMode(value: string | undefined): Config["codexHomeMode"] 
   return undefined;
 }
 
+function parseCodexModelReasoningEffort(value: string | undefined): Config["codexModelReasoningEffort"] {
+  if (
+    value === 'minimal' ||
+    value === 'low' ||
+    value === 'medium' ||
+    value === 'high' ||
+    value === 'xhigh'
+  ) {
+    return value;
+  }
+  return undefined;
+}
+
 export function loadConfig(): Config {
   let env = new Map<string, string>();
   try {
@@ -120,6 +135,8 @@ export function loadConfig(): Config {
     defaultMode: env.get("CTI_DEFAULT_MODE") || "code",
     codexSandboxMode: parseCodexSandboxMode(env.get("CTI_CODEX_SANDBOX_MODE")),
     codexNetworkAccess: parseBoolean(env.get("CTI_CODEX_NETWORK_ACCESS")),
+    codexPassModel: parseBoolean(env.get("CTI_CODEX_PASS_MODEL")),
+    codexModelReasoningEffort: parseCodexModelReasoningEffort(env.get("CTI_CODEX_MODEL_REASONING_EFFORT")),
     codexWindowsShell: env.get("CTI_CODEX_WINDOWS_SHELL") || undefined,
     codexHomeMode: parseCodexHomeMode(env.get("CTI_CODEX_HOME_MODE")),
     codexShadowHome: env.get("CTI_CODEX_SHADOW_HOME") || undefined,
@@ -179,6 +196,10 @@ export function saveConfig(config: Config): void {
   if (config.codexSandboxMode) out += formatEnvLine("CTI_CODEX_SANDBOX_MODE", config.codexSandboxMode);
   if (config.codexNetworkAccess !== undefined)
     out += formatEnvLine("CTI_CODEX_NETWORK_ACCESS", String(config.codexNetworkAccess));
+  if (config.codexPassModel !== undefined)
+    out += formatEnvLine("CTI_CODEX_PASS_MODEL", String(config.codexPassModel));
+  if (config.codexModelReasoningEffort)
+    out += formatEnvLine("CTI_CODEX_MODEL_REASONING_EFFORT", config.codexModelReasoningEffort);
   if (config.codexWindowsShell) out += formatEnvLine("CTI_CODEX_WINDOWS_SHELL", config.codexWindowsShell);
   if (config.codexHomeMode) out += formatEnvLine("CTI_CODEX_HOME_MODE", config.codexHomeMode);
   if (config.codexShadowHome) out += formatEnvLine("CTI_CODEX_SHADOW_HOME", config.codexShadowHome);
