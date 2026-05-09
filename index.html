@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Angus 原型入口</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #090d14;
+      --panel: #111821;
+      --panel-2: #0d1320;
+      --line: #263244;
+      --gold: #d4a853;
+      --text: #e5edf6;
+      --muted: #92a2b7;
+      --blue: #60a5fa;
+      --red: #f97373;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 18% 22%, rgba(96, 165, 250, 0.14), transparent 32%),
+        radial-gradient(circle at 78% 28%, rgba(212, 168, 83, 0.10), transparent 28%),
+        linear-gradient(180deg, #0c1220, var(--bg));
+    }
+    main {
+      width: min(1040px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 48px 0;
+    }
+    header {
+      margin-bottom: 28px;
+      border-bottom: 1px solid rgba(212, 168, 83, 0.35);
+      padding-bottom: 20px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      color: var(--gold);
+      font-size: clamp(30px, 5vw, 54px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+    .primary-card {
+      display: grid;
+      gap: 18px;
+      padding: 24px;
+      border: 1px solid rgba(212, 168, 83, 0.56);
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(17, 24, 39, 0.96), rgba(12, 19, 32, 0.96));
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.36);
+    }
+    .card-title {
+      margin: 0;
+      font-size: 24px;
+      color: #fff4cf;
+    }
+    .card-desc {
+      margin: 0;
+      color: #c6d2e2;
+      line-height: 1.65;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+    a.button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 18px;
+      border: 1px solid rgba(212, 168, 83, 0.75);
+      border-radius: 6px;
+      background: #7a560d;
+      color: #fff7df;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    a.button.secondary {
+      border-color: rgba(148, 163, 184, 0.45);
+      background: #1d2736;
+      color: #dbe7f5;
+      font-weight: 700;
+    }
+    a.button:hover {
+      filter: brightness(1.12);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .link-card {
+      min-height: 132px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(13, 19, 32, 0.86);
+    }
+    .link-card h2 {
+      margin: 0 0 8px;
+      font-size: 17px;
+      color: #f5d58b;
+    }
+    .link-card p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 13px;
+    }
+    .link-card a {
+      color: var(--blue);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .tag {
+      padding: 5px 8px;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 12px;
+      background: rgba(2, 6, 23, 0.36);
+    }
+    footer {
+      margin-top: 24px;
+      color: #6f7d90;
+      font-size: 12px;
+    }
+    @media (max-width: 760px) {
+      main { padding: 28px 0; }
+      .grid { grid-template-columns: 1fr; }
+      .primary-card { padding: 18px; }
+      a.button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Angus 原型入口</h1>
+      <p class="lead">双击根目录的这个页面即可进入当前 HTML 全链条原型；所有链接都使用相对路径，移动仓库目录后仍可用。</p>
+    </header>
+
+    <section class="primary-card" aria-labelledby="main-demo-title">
+      <div>
+        <h2 class="card-title" id="main-demo-title">《世界未解之谜周刊》当前 HTML 试玩原型</h2>
+        <p class="card-desc">这是目前用于验证玩法的网页试玩版入口：探索地图、任务配置、角色骰、合成、报刊组版与结算都从这里进入。它不是 Godot 正式运行版。</p>
+      </div>
+      <div class="actions">
+        <a class="button" href="design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?v=20260509-deep-chain-entry">开始试玩当前原型</a>
+        <a class="button secondary" href="design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?paperlab=1&v=20260509-deep-chain-entry">报刊组版实验</a>
+      </div>
+    </section>
+
+    <section class="grid" aria-label="常用入口">
+      <article class="link-card">
+        <h2>探索骰子旧页</h2>
+        <p>早期探索骰子 HTML 参考页，主要用于比对旧玩法表达。</p>
+        <a href="design/prototypes/html/full-chain-demo/world-mysteries-explore-dice.html">打开旧探索页</a>
+      </article>
+      <article class="link-card">
+        <h2>设计真源</h2>
+        <p>当前玩法文档入口，处理规则分歧时优先看这里。</p>
+        <a href="design/gdd/systems-index.md">打开系统索引</a>
+      </article>
+      <article class="link-card">
+        <h2>协作说明</h2>
+        <p>AI 协作偏好、截图规则、设计采纳沉淀等工作流约定。</p>
+        <a href="docs/onboarding/ai-collaboration-guidance.md">打开协作指南</a>
+      </article>
+    </section>
+
+    <div class="tag-row" aria-label="提示">
+      <span class="tag">推荐入口：当前 HTML 试玩原型</span>
+      <span class="tag">离线可用</span>
+      <span class="tag">相对路径</span>
+      <span class="tag">带版本参数防缓存</span>
+    </div>
+
+    <footer>本地文件入口，不依赖服务器。正式 Godot 运行时请用根目录的 launch_angus_demo.cmd；若浏览器限制 Markdown 预览，文档链接可在编辑器或文件管理器中打开。</footer>
+  </main>
+</body>
+</html>

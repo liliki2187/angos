@@ -1,0 +1,390 @@
+<!--
+PROTOTYPE - NOT FOR PRODUCTION
+Question: Can a regular stacked task button smoothly unfold into a linear deep-chain entry?
+Date: 2026-05-09
+-->
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>深度连续任务入口实验</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #08111d;
+      --panel: #111a2a;
+      --panel-2: #151f34;
+      --panel-3: #202b43;
+      --line: rgba(186, 160, 255, 0.66);
+      --line-soft: rgba(186, 160, 255, 0.34);
+      --gold: #d9ad52;
+      --gold-bright: #ffe18b;
+      --ink: #eef4ff;
+      --muted: #a8b5ca;
+      --ease: cubic-bezier(0.18, 0.88, 0.28, 1);
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(58, 87, 130, 0.34), transparent 38%),
+        linear-gradient(180deg, #0b1422, var(--bg));
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", system-ui, sans-serif;
+    }
+
+    .demo {
+      width: min(720px, calc(100vw - 24px));
+      min-height: 240px;
+      display: grid;
+      place-items: center;
+    }
+
+    .chain-entry {
+      position: relative;
+      width: min(680px, 100%);
+      height: 170px;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      outline: none;
+      isolation: isolate;
+    }
+
+    .chain-card {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(330px, calc(100vw - 42px));
+      min-height: 72px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 11px;
+      padding: 12px 13px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background:
+        linear-gradient(135deg, rgba(33, 28, 58, 0.98), rgba(14, 25, 42, 0.98)),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.045) 0 1px, transparent 1px 10px);
+      box-shadow:
+        0 18px 42px rgba(0, 0, 0, 0.36),
+        inset 0 0 28px rgba(139, 108, 246, 0.12);
+      transition:
+        transform 420ms var(--ease),
+        opacity 240ms ease,
+        border-color 240ms ease,
+        box-shadow 240ms ease,
+        background 240ms ease;
+      pointer-events: none;
+    }
+
+    .card-current {
+      z-index: 4;
+      transform: translate(-50%, -50%);
+    }
+
+    .card-next {
+      z-index: 3;
+      transform: translate(calc(-50% + 12px), calc(-50% + 10px)) scale(0.985);
+      border-color: var(--line-soft);
+      background:
+        linear-gradient(135deg, rgba(45, 37, 79, 0.9), rgba(18, 29, 48, 0.94)),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 10px);
+      opacity: 0.78;
+    }
+
+    .card-future {
+      z-index: 2;
+      transform: translate(calc(-50% + 24px), calc(-50% + 20px)) scale(0.97);
+      border-color: rgba(186, 160, 255, 0.26);
+      background:
+        linear-gradient(135deg, rgba(56, 45, 93, 0.78), rgba(19, 30, 49, 0.86)),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 10px);
+      opacity: 0.56;
+    }
+
+    .card-body,
+    .card-next-mark,
+    .stage-chip {
+      transition: opacity 240ms ease, transform 300ms var(--ease);
+    }
+
+    .card-next .card-body,
+    .card-next .stage-chip,
+    .card-future .card-body,
+    .card-future .stage-chip,
+    .card-future .card-next-mark {
+      opacity: 0;
+    }
+
+    .chain-line {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 1;
+      width: 42px;
+      height: 2px;
+      transform: translate(-50%, -50%) scaleX(0.28);
+      transform-origin: center;
+      border-top: 2px dashed rgba(217, 173, 82, 0.9);
+      opacity: 0;
+      transition: opacity 220ms ease, transform 420ms var(--ease);
+      pointer-events: none;
+    }
+
+    .chain-line::after {
+      content: "";
+      position: absolute;
+      right: -5px;
+      top: -5px;
+      width: 8px;
+      height: 8px;
+      border-top: 2px solid rgba(217, 173, 82, 0.95);
+      border-right: 2px solid rgba(217, 173, 82, 0.95);
+      transform: rotate(45deg);
+    }
+
+    .stage-chip {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(226, 203, 255, 0.72);
+      border-radius: 50%;
+      color: #f8e7ff;
+      font-weight: 900;
+      line-height: 1;
+      background: radial-gradient(circle, rgba(139, 108, 246, 0.54), rgba(20, 26, 43, 0.95));
+      box-shadow: 0 0 18px rgba(139, 108, 246, 0.3);
+    }
+
+    .card-body {
+      min-width: 0;
+      text-align: left;
+    }
+
+    .card-kicker {
+      display: block;
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+
+    .card-title {
+      display: block;
+      margin-top: 3px;
+      overflow: hidden;
+      color: #f5f8ff;
+      font-size: 15px;
+      font-weight: 850;
+      line-height: 1.25;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .card-next-mark {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border: 1px dashed rgba(217, 173, 82, 0.72);
+      border-radius: 8px;
+      color: var(--gold-bright);
+      font-weight: 900;
+      background: rgba(76, 55, 119, 0.52);
+    }
+
+    .card-current .card-next-mark {
+      opacity: 0.92;
+    }
+
+    .chain-entry:hover:not(.is-open) .card-current,
+    .chain-entry:focus-visible:not(.is-open) .card-current {
+      transform: translate(calc(-50% - 24px), calc(-50% - 2px));
+      border-color: rgba(247, 214, 136, 0.72);
+      box-shadow:
+        0 20px 46px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(217, 173, 82, 0.12),
+        inset 0 0 30px rgba(139, 108, 246, 0.15);
+    }
+
+    .chain-entry:hover:not(.is-open) .card-next,
+    .chain-entry:focus-visible:not(.is-open) .card-next {
+      transform: translate(calc(-50% + 34px), calc(-50% + 6px)) scale(0.99);
+      border-color: rgba(247, 214, 136, 0.45);
+      opacity: 0.84;
+    }
+
+    .chain-entry:hover:not(.is-open) .card-future,
+    .chain-entry:focus-visible:not(.is-open) .card-future {
+      transform: translate(calc(-50% + 58px), calc(-50% + 18px)) scale(0.975);
+      opacity: 0.64;
+    }
+
+    .chain-entry:hover:not(.is-open) .chain-line,
+    .chain-entry:focus-visible:not(.is-open) .chain-line {
+      transform: translate(-50%, -50%) scaleX(0.34);
+      opacity: 0.24;
+    }
+
+    .chain-entry:hover:not(.is-open) .card-current .card-next-mark,
+    .chain-entry:focus-visible:not(.is-open) .card-current .card-next-mark {
+      transform: translateX(3px);
+      opacity: 0.72;
+    }
+
+    .chain-entry.is-open .card-current {
+      transform: translate(calc(-50% - 178px), -50%);
+      border-color: rgba(247, 214, 136, 0.9);
+      box-shadow:
+        0 20px 46px rgba(0, 0, 0, 0.42),
+        0 0 0 1px rgba(217, 173, 82, 0.18),
+        inset 0 0 30px rgba(139, 108, 246, 0.15);
+    }
+
+    .chain-entry.is-open .card-next {
+      transform: translate(calc(-50% + 178px), -50%) scale(1);
+      border-color: rgba(247, 214, 136, 0.72);
+      opacity: 1;
+    }
+
+    .chain-entry.is-open .card-future {
+      transform: translate(calc(-50% + 190px), calc(-50% + 12px)) scale(0.985);
+      opacity: 0.48;
+    }
+
+    .chain-entry.is-open .card-next .card-body,
+    .chain-entry.is-open .card-next .stage-chip {
+      opacity: 1;
+    }
+
+    .chain-entry.is-open .chain-line {
+      transform: translate(-50%, -50%) scaleX(1);
+      opacity: 1;
+    }
+
+    .chain-entry.is-open .card-current .card-next-mark {
+      opacity: 0;
+      transform: translateX(8px);
+    }
+
+    @media (max-width: 720px) {
+      .chain-entry {
+        height: 230px;
+      }
+
+      .chain-entry:hover:not(.is-open) .card-current,
+      .chain-entry:focus-visible:not(.is-open) .card-current {
+        transform: translate(calc(-50% - 10px), calc(-50% - 24px));
+      }
+
+      .chain-entry:hover:not(.is-open) .card-next,
+      .chain-entry:focus-visible:not(.is-open) .card-next {
+        transform: translate(calc(-50% + 10px), calc(-50% + 28px)) scale(0.99);
+      }
+
+      .chain-entry:hover:not(.is-open) .card-future,
+      .chain-entry:focus-visible:not(.is-open) .card-future {
+        transform: translate(calc(-50% + 20px), calc(-50% + 46px)) scale(0.975);
+      }
+
+      .chain-entry.is-open .card-current {
+        transform: translate(-50%, calc(-50% - 48px));
+      }
+
+      .chain-entry.is-open .card-next {
+        transform: translate(-50%, calc(-50% + 48px)) scale(1);
+      }
+
+      .chain-entry.is-open .card-future {
+        transform: translate(calc(-50% + 12px), calc(-50% + 58px)) scale(0.985);
+      }
+
+      .chain-line {
+        width: 36px;
+        transform: translate(-50%, -50%) rotate(90deg) scaleX(0.28);
+      }
+
+      .chain-entry:hover:not(.is-open) .chain-line,
+      .chain-entry:focus-visible:not(.is-open) .chain-line {
+        transform: translate(-50%, -50%) rotate(90deg) scaleX(0.34);
+      }
+
+      .chain-entry.is-open .chain-line {
+        transform: translate(-50%, -50%) rotate(90deg) scaleX(1);
+      }
+    }
+
+    @media (max-width: 420px) {
+      .card-title {
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="demo" aria-label="深度连续任务入口实验">
+    <button class="chain-entry" id="chainEntry" type="button" aria-pressed="false" aria-label="深度调查：330 末班车乘客口述。悬停或点击展开下一条线索。">
+      <span class="chain-line" aria-hidden="true"></span>
+
+      <span class="chain-card card-future" aria-hidden="true">
+        <span class="stage-chip">?</span>
+        <span class="card-body">
+          <span class="card-kicker">未揭示</span>
+          <span class="card-title">?</span>
+        </span>
+        <span class="card-next-mark">?</span>
+      </span>
+
+      <span class="chain-card card-next">
+        <span class="stage-chip">2</span>
+        <span class="card-body">
+          <span class="card-kicker">下一条线索</span>
+          <span class="card-title">?</span>
+        </span>
+        <span class="card-next-mark">?</span>
+      </span>
+
+      <span class="chain-card card-current">
+        <span class="stage-chip">1</span>
+        <span class="card-body">
+          <span class="card-kicker">深度调查</span>
+          <span class="card-title">330 末班车 · 乘客口述</span>
+        </span>
+        <span class="card-next-mark">?</span>
+      </span>
+    </button>
+  </main>
+
+  <script>
+    // PROTOTYPE - NOT FOR PRODUCTION
+    // Question: Can click keep the same stacked object unfolded as a linear chain?
+    // Date: 2026-05-09
+    const entry = document.getElementById("chainEntry");
+
+    entry.addEventListener("click", () => {
+      const isOpen = !entry.classList.contains("is-open");
+      entry.classList.toggle("is-open", isOpen);
+      entry.setAttribute("aria-pressed", String(isOpen));
+    });
+  </script>
+</body>
+</html>

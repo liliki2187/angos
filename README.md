@@ -3,6 +3,11 @@
 本仓库包含 Angus 的 Godot MVP、历史 HTML 原型、设计文档，以及项目本地自动化技能。
 当前生效的 Godot 运行时位于 `gd_project/`，配套文档与工具位于 `docs/` 和 `scripts/`。
 
+## 快速打开
+
+- 网页原型入口：双击仓库根目录的 `index.html`。
+- Godot 运行时入口：双击 `launch_angus_demo.cmd`，或用 Godot 打开 `gd_project/project.godot`。
+
 ## 规范位置
 
 - 运行时项目根目录：`gd_project/`
