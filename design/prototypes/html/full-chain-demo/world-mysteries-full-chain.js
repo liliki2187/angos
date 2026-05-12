@@ -1117,18 +1117,65 @@
     return ids;
   }
 
-  function riskLabelForMission(mission, staffIds) {
-    const rolls = [];
+  function teamDiceNeedStats(mission, staffIds) {
+    const need = (mission && mission.need) || {};
+    const needKeys = Object.keys(need);
+    const relevant = {};
+    const values = {};
+    let totalFaces = 0;
+    let relevantFaces = 0;
+    let blankFaces = 0;
+    let contributingStaff = 0;
+    let nonContributingStaff = 0;
     (staffIds || []).forEach((id) => {
       const staff = findStaff(id);
       if (!staff) return;
-      rolls.push(...diceFacesForStaff(staff).map((face) => ({ face })));
+      let staffRelevantFaces = 0;
+      diceFacesForStaff(staff).forEach((face) => {
+        totalFaces += 1;
+        if (!face || face.blank) {
+          blankFaces += 1;
+          return;
+        }
+        if (face.attr && need[face.attr] != null) {
+          relevant[face.attr] = (relevant[face.attr] || 0) + 1;
+          relevantFaces += 1;
+          staffRelevantFaces += 1;
+          values[face.attr] = (values[face.attr] || 0) + (face.value || 0);
+        }
+      });
+      if (staffRelevantFaces > 0) contributingStaff += 1;
+      else nonContributingStaff += 1;
     });
-    const totalFaces = rolls.length || 1;
-    const good = rolls.filter((r) => r.face && r.face.attr && mission.need && mission.need[r.face.attr] != null).length;
-    const ratio = good / totalFaces;
-    if (ratio >= 0.52) return "低";
-    if (ratio >= 0.32) return "中";
+    const gaps = needKeys
+      .map((k) => ({ k, gap: Math.max(0, (need[k] || 0) - (values[k] || 0)) }))
+      .filter((x) => x.gap > 0);
+    const needValue = needKeys.reduce((sum, k) => sum + (need[k] || 0), 0);
+    const coveredValue = needKeys.reduce((sum, k) => sum + Math.min(values[k] || 0, need[k] || 0), 0);
+    const coverage = needValue > 0 ? coveredValue / needValue : 0;
+    return {
+      relevant,
+      values,
+      totalFaces,
+      relevantFaces,
+      blankFaces,
+      contributingStaff,
+      nonContributingStaff,
+      gaps,
+      needValue,
+      coveredValue,
+      coverage,
+    };
+  }
+
+  function riskLabelForMission(mission, staffIds) {
+    const selectedCount = (staffIds || []).length;
+    if (!selectedCount) return "高";
+    const stats = teamDiceNeedStats(mission, staffIds);
+    if (!stats.relevantFaces) return "高";
+    const needAxisCount = Math.max(1, Object.keys((mission && mission.need) || {}).length);
+    if (!stats.gaps.length && stats.relevantFaces >= needAxisCount + 1) return "低";
+    if (stats.coverage >= 0.6 || stats.relevantFaces >= needAxisCount + 1) return "中";
     return "高";
   }
 
@@ -1827,35 +1874,23 @@
 
   function computeCharacterDicePreview(mission, staffList) {
     const risk = riskLabelForMission(mission, staffList);
-    const relevant = {};
-    let totalFaces = 0;
-    let relevantFaces = 0;
-    let blankFaces = 0;
-    const values = {};
-    (staffList || []).forEach((id) => {
-      const st = findStaff(id);
-      if (!st) return;
-      diceFacesForStaff(st).forEach((f) => {
-        totalFaces += 1;
-        if (!f || f.blank) {
-          blankFaces += 1;
-          return;
-        }
-        if (f && f.attr && mission.need && mission.need[f.attr] != null) {
-          relevant[f.attr] = (relevant[f.attr] || 0) + 1;
-          relevantFaces += 1;
-          values[f.attr] = (values[f.attr] || 0) + (f.value || 0);
-        }
-      });
-    });
-    const gaps = Object.keys(mission.need || {})
-      .map((k) => ({ k, gap: Math.max(0, (mission.need[k] || 0) - (values[k] || 0)) }))
-      .filter((x) => x.gap > 0);
-    const gapText = gaps.length ? `缺口 ${gaps.map((x) => `${x.k}${x.gap}`).join(" / ")}` : "需求面值已覆盖";
-    const reason = totalFaces
-      ? `相关面 ${relevantFaces}/${totalFaces}，空面 ${blankFaces}，${gapText}`
+    const stats = teamDiceNeedStats(mission, staffList);
+    const gapText = stats.gaps.length ? `缺口 ${stats.gaps.map((x) => `${x.k}${x.gap}`).join(" / ")}` : "需求面值已覆盖";
+    const idleText = stats.nonContributingStaff ? `，${stats.nonContributingStaff} 人无相关面` : "";
+    const coverageText = stats.needValue ? `覆盖 ${stats.coveredValue}/${stats.needValue}` : "无明确需求";
+    const reason = stats.totalFaces
+      ? `有效相关面 ${stats.relevantFaces}，${coverageText}，空面 ${stats.blankFaces}，${gapText}${idleText}`
       : "尚未选择角色骰";
-    return { risk, relevant, totalFaces, relevantFaces, blankFaces, values, gaps, reason };
+    return {
+      risk,
+      relevant: stats.relevant,
+      totalFaces: stats.totalFaces,
+      relevantFaces: stats.relevantFaces,
+      blankFaces: stats.blankFaces,
+      values: stats.values,
+      gaps: stats.gaps,
+      reason,
+    };
   }
 
   function pickRandomIndices(len, count) {
@@ -2722,6 +2757,139 @@
     return (state.regionLeadEvents[regionId] || []).filter((lead) => !lead.investigated);
   }
 
+  const MAP_LABEL_CANDIDATES = (() => {
+    const dxList = [0, -72, 72, -118, 118, -168, 168, -220, 220, -300, 300, -360, 360];
+    const dyList = [0, -48, 48, -96, 96, -144, 144, -192, 192];
+    const seen = new Set();
+    const candidates = [];
+    dyList.forEach((dy) => {
+      dxList.forEach((dx) => {
+        const key = `${dx}:${dy}`;
+        if (seen.has(key)) return;
+        seen.add(key);
+        candidates.push({ dx, dy });
+      });
+    });
+    return candidates.sort((a, b) => {
+      const am = Math.abs(a.dx) + Math.abs(a.dy);
+      const bm = Math.abs(b.dx) + Math.abs(b.dy);
+      return am - bm || Math.abs(a.dy) - Math.abs(b.dy) || Math.abs(a.dx) - Math.abs(b.dx);
+    });
+  })();
+
+  function mapLabelPriority(el) {
+    if (el.classList.contains("region-chain-entry")) return el.classList.contains("is-open") ? 0 : 1;
+    if (el.classList.contains("node-black")) return 2;
+    if (el.classList.contains("node-danger") || el.classList.contains("node-red") || el.classList.contains("urgent")) return 3;
+    if (el.classList.contains("lead")) return 5;
+    return 4;
+  }
+
+  function unionRects(rects) {
+    const valid = rects.filter((rect) => rect && rect.width > 0 && rect.height > 0);
+    if (!valid.length) return null;
+    return valid.reduce(
+      (acc, rect) => ({
+        left: Math.min(acc.left, rect.left),
+        top: Math.min(acc.top, rect.top),
+        right: Math.max(acc.right, rect.right),
+        bottom: Math.max(acc.bottom, rect.bottom),
+        width: Math.max(acc.right, rect.right) - Math.min(acc.left, rect.left),
+        height: Math.max(acc.bottom, rect.bottom) - Math.min(acc.top, rect.top),
+      }),
+      {
+        left: valid[0].left,
+        top: valid[0].top,
+        right: valid[0].right,
+        bottom: valid[0].bottom,
+        width: valid[0].width,
+        height: valid[0].height,
+      },
+    );
+  }
+
+  function mapLabelRect(el) {
+    if (!el.classList.contains("region-chain-entry")) return el.getBoundingClientRect();
+    const chainRects = Array.from(el.querySelectorAll(".chain-card, .chain-link")).map((x) => x.getBoundingClientRect());
+    return unionRects(chainRects) || el.getBoundingClientRect();
+  }
+
+  function inflateRect(rect, pad) {
+    return {
+      left: rect.left - pad,
+      top: rect.top - pad,
+      right: rect.right + pad,
+      bottom: rect.bottom + pad,
+      width: rect.width + pad * 2,
+      height: rect.height + pad * 2,
+    };
+  }
+
+  function overlapArea(a, b) {
+    const w = Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left));
+    const h = Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
+    return w * h;
+  }
+
+  function mapBoundsPenalty(rect, mapRect) {
+    const pad = 8;
+    return (
+      Math.max(0, mapRect.left + pad - rect.left) +
+      Math.max(0, rect.right - (mapRect.right - pad)) +
+      Math.max(0, mapRect.top + pad - rect.top) +
+      Math.max(0, rect.bottom - (mapRect.bottom - pad))
+    );
+  }
+
+  function applyMapOffset(el, candidate) {
+    el.style.setProperty("--map-offset-x", `${candidate.dx}px`);
+    el.style.setProperty("--map-offset-y", `${candidate.dy}px`);
+  }
+
+  function resolveRegionMapLabelCollisions(root) {
+    const map = root && root.querySelector ? root.querySelector(".region-map") : null;
+    if (!map) return;
+    const mapRect = map.getBoundingClientRect();
+    const items = Array.from(map.querySelectorAll(".region-chain-entry, .region-point"))
+      .map((el, index) => ({ el, index, priority: mapLabelPriority(el) }))
+      .sort((a, b) => a.priority - b.priority || a.index - b.index);
+    const previousTransitions = new Map();
+    items.forEach(({ el }) => {
+      previousTransitions.set(el, el.style.transition || "");
+      el.style.transition = "none";
+    });
+    const placed = [];
+    items.forEach(({ el }) => {
+      applyMapOffset(el, MAP_LABEL_CANDIDATES[0]);
+      let best = null;
+      MAP_LABEL_CANDIDATES.forEach((candidate) => {
+        applyMapOffset(el, candidate);
+        const rect = inflateRect(mapLabelRect(el), 6);
+        const overlap = placed.reduce((sum, placedRect) => sum + overlapArea(rect, placedRect), 0);
+        const bounds = mapBoundsPenalty(rect, mapRect);
+        const movement = Math.abs(candidate.dx) + Math.abs(candidate.dy);
+        const score = (overlap > 0 ? 1000000 + overlap * 1000 : 0) + bounds * 200 + movement * 0.25;
+        if (!best || score < best.score) best = { candidate, rect, score };
+      });
+      if (!best) return;
+      applyMapOffset(el, best.candidate);
+      placed.push(best.rect);
+    });
+    const restoreTransitions = () => {
+      items.forEach(({ el }) => {
+        el.style.transition = previousTransitions.get(el) || "";
+      });
+    };
+    if (window.requestAnimationFrame) window.requestAnimationFrame(restoreTransitions);
+    else window.setTimeout(restoreTransitions, 0);
+  }
+
+  function scheduleRegionMapLabelLayout(root) {
+    const run = () => resolveRegionMapLabelCollisions(root);
+    if (window.requestAnimationFrame) window.requestAnimationFrame(run);
+    else window.setTimeout(run, 0);
+  }
+
   function deepChainMapEntryHtml(region, n, pos, meta) {
     const total = n.chainStageTotal || (n.chainFinal ? n.chainStage : 4);
     const stage = n.chainStage || 1;
@@ -2978,6 +3146,7 @@
       });
     });
     bindRegionLinking(elR);
+    scheduleRegionMapLabelLayout(elR);
     const nd = document.getElementById("btnNextDayRegion");
     if (nd) nd.onclick = () => advanceOneDay();
     document.getElementById("backRegion").onclick = () => {

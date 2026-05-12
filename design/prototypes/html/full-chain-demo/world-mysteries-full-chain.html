@@ -186,10 +186,13 @@
       animation:blackPulse 1.8s ease-in-out infinite;
     }
     .region-point {
-      position: absolute; transform: translate(-50%, -50%); min-width: 82px; padding: 4px 8px;
+      position: absolute;
+      transform: translate(calc(-50% + var(--map-offset-x, 0px)), calc(-50% + var(--map-offset-y, 0px)));
+      min-width: 82px; padding: 4px 8px;
       border: 1px solid #475569; border-radius: 999px; background: rgba(15,23,42,0.94); color: #cbd5e1;
       font-size: 12px; text-align: center; cursor: pointer;
       z-index:3;
+      transition: transform 180ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
     }
     .region-point .point-mark {
       display: inline-grid;
@@ -268,7 +271,7 @@
       top:0;
       width:250px;
       height:88px;
-      transform:translate(-50%,-50%);
+      transform:translate(calc(-50% + var(--map-offset-x, 0px)), calc(-50% + var(--map-offset-y, 0px)));
       border:0;
       padding:0;
       background:transparent;
@@ -276,6 +279,7 @@
       cursor:pointer;
       z-index:4;
       isolation:isolate;
+      transition:transform 180ms ease;
     }
     .region-chain-entry.is-open,
     .region-chain-entry:hover:not(:disabled),
@@ -6898,6 +6902,6 @@
 })();
 
   </script>
-  <script src="world-mysteries-full-chain.js?v=20260509-deep-chain-entry"></script>
+  <script src="world-mysteries-full-chain.js?v=20260511-map-label-avoidance-v2"></script>
 </body>
 </html>

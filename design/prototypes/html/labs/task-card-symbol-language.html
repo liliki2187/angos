@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Angus 任务卡视觉符号实验</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080d16;
+      --panel: rgba(13, 20, 32, 0.92);
+      --panel-2: rgba(17, 25, 39, 0.9);
+      --line: rgba(145, 163, 184, 0.28);
+      --muted: #94a3b8;
+      --text: #e8eef7;
+      --gold: #d6aa57;
+      --blue: #61a5fa;
+      --green: #35d07f;
+      --red: #fb5f57;
+      --orange: #f6a43d;
+      --violet: #aa8cff;
+      --black: #05060a;
+      --shadow: rgba(0, 0, 0, 0.42);
+      --radius: 8px;
+      font-family: "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 10%, rgba(56, 189, 248, 0.08), transparent 30%),
+        radial-gradient(circle at 78% 20%, rgba(170, 140, 255, 0.08), transparent 32%),
+        var(--bg);
+    }
+    button {
+      font: inherit;
+      color: inherit;
+      border: 0;
+      cursor: pointer;
+    }
+    .page {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 22px;
+    }
+    .topbar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: end;
+      margin-bottom: 14px;
+      border-bottom: 1px solid rgba(214, 170, 87, 0.28);
+      padding-bottom: 12px;
+    }
+    h1 {
+      margin: 0;
+      color: var(--gold);
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+    .sub {
+      margin-top: 6px;
+      color: #a8b6ca;
+      font-size: 13px;
+    }
+    .status-strip {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 30px;
+      padding: 4px 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(13, 20, 32, 0.78);
+      color: #cbd5e1;
+      font-size: 12px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(480px, 1.05fr) minmax(420px, 0.95fr);
+      gap: 16px;
+    }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.94), rgba(10, 15, 24, 0.94));
+      box-shadow: 0 20px 42px rgba(0, 0, 0, 0.28);
+      overflow: hidden;
+    }
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(8, 13, 22, 0.62);
+    }
+    .panel-head h2 {
+      margin: 0;
+      color: var(--gold);
+      font-size: 16px;
+    }
+    .panel-head .hint {
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .map {
+      position: relative;
+      min-height: 650px;
+      background:
+        linear-gradient(rgba(8, 13, 22, 0.38), rgba(8, 13, 22, 0.58)),
+        url("../full-chain-demo/Assets/world-map-background.svg") center/cover no-repeat,
+        #07101e;
+      overflow: hidden;
+    }
+    .map:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(96,165,250,0.12) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(96,165,250,0.12) 1px, transparent 1px);
+      background-size: 120px 120px;
+      opacity: 0.55;
+      pointer-events: none;
+    }
+    .map-node {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 34px;
+      max-width: 260px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.38);
+      background: rgba(10, 15, 24, 0.94);
+      box-shadow: 0 12px 26px var(--shadow);
+      font-size: 12px;
+      white-space: nowrap;
+      z-index: 2;
+      transition: transform 180ms ease;
+    }
+    .map-node.blue { border-color: rgba(96, 165, 250, 0.72); color: #bfdbfe; }
+    .map-node.green { border-color: rgba(53, 208, 127, 0.78); color: #bbf7d0; }
+    .map-node.red { border-color: rgba(251, 95, 87, 0.9); color: #fecaca; background: rgba(54, 12, 14, 0.94); }
+    .map-node.violet { border-color: rgba(170, 140, 255, 0.78); color: #ddd6fe; border-radius: 8px; }
+    .map-node.black { border-color: rgba(251, 95, 87, 0.9); color: #fef2f2; background: rgba(3, 5, 10, 0.96); }
+    .map-node .mini-badge,
+    .map-node .deadline-mini {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 26px;
+      height: 22px;
+      padding: 0 6px;
+      border-radius: 999px;
+      border: 1px solid currentColor;
+      font-weight: 800;
+    }
+    .map-node .deadline-mini {
+      gap: 4px;
+      min-width: 54px;
+      color: #fff7ed;
+      border-color: rgba(251, 95, 87, 0.92);
+      background: rgba(127, 29, 29, 0.72);
+      box-shadow: inset 0 0 10px rgba(251, 95, 87, 0.2);
+    }
+    .map-node .deadline-mini svg.icon { width: 14px; height: 14px; }
+    .stack-node {
+      position: absolute;
+      left: 42%;
+      top: 27%;
+      width: 260px;
+      height: 76px;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+    }
+    .stack-page {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 36px 1fr auto;
+      gap: 8px;
+      align-items: center;
+      padding: 9px 10px;
+      border: 1px solid rgba(170, 140, 255, 0.78);
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(28, 22, 54, 0.98), rgba(12, 17, 31, 0.98));
+      box-shadow: 0 18px 36px var(--shadow);
+      transition: transform 240ms ease, border-color 180ms ease;
+    }
+    .stack-page.back-1 { transform: translate(10px, 9px) scale(0.985); opacity: 0.72; }
+    .stack-page.back-2 { transform: translate(20px, 18px) scale(0.97); opacity: 0.42; }
+    .stack-node:hover .stack-page.front { transform: translate(-10px, -2px); border-color: var(--gold); }
+    .stack-node:hover .stack-page.back-1 { transform: translate(34px, 6px) scale(0.99); }
+    .stack-node:hover .stack-page.back-2 { transform: translate(58px, 17px) scale(0.975); opacity: 0.54; }
+    .stack-title {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 800;
+    }
+    .stack-kicker {
+      color: var(--gold);
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+    .side {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      background: rgba(8, 13, 22, 0.35);
+    }
+    .task-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 10px;
+      padding: 10px;
+      min-height: 110px;
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: var(--radius);
+      background: rgba(13, 20, 32, 0.86);
+      overflow: hidden;
+    }
+    .task-card:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: rgba(148, 163, 184, 0.45);
+    }
+    .task-card.clue {
+      border-color: rgba(53, 208, 127, 0.52);
+      background: linear-gradient(90deg, rgba(7, 36, 28, 0.9), rgba(13, 20, 32, 0.86));
+    }
+    .task-card.clue:before { background: var(--green); }
+    .task-card.white:before { background: var(--blue); }
+    .task-card.red {
+      border-color: rgba(251, 95, 87, 0.68);
+      background: linear-gradient(90deg, rgba(58, 13, 17, 0.92), rgba(20, 18, 26, 0.88));
+    }
+    .task-card.red:before { background: var(--red); }
+    .task-card.red .task-top {
+      padding-right: 74px;
+    }
+    .task-card.deep {
+      border-color: rgba(170, 140, 255, 0.55);
+      background: linear-gradient(90deg, rgba(35, 24, 70, 0.92), rgba(13, 20, 32, 0.88));
+    }
+    .task-card.deep:before { background: var(--violet); }
+    .task-card.black {
+      border-color: rgba(251, 95, 87, 0.66);
+      background: linear-gradient(90deg, rgba(4, 6, 12, 0.98), rgba(32, 12, 17, 0.9));
+    }
+    .task-card.black:before { background: #111827; box-shadow: 0 0 12px rgba(251, 95, 87, 0.6); }
+    .task-card:hover {
+      border-color: rgba(214, 170, 87, 0.72);
+      box-shadow: 0 0 0 1px rgba(214, 170, 87, 0.18), 0 18px 34px rgba(0, 0, 0, 0.28);
+    }
+    .task-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      border: 1px solid currentColor;
+      background: rgba(15, 23, 42, 0.68);
+      color: #cbd5e1;
+    }
+    .clue .task-icon { color: var(--green); }
+    .white .task-icon { color: var(--blue); }
+    .red .task-icon { color: var(--red); }
+    .deep .task-icon { color: var(--violet); }
+    .black .task-icon { color: #fef2f2; background: #02040a; }
+    .task-main {
+      min-width: 0;
+      display: grid;
+      gap: 8px;
+    }
+    .task-top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: start;
+    }
+    .task-title {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.25;
+      font-weight: 850;
+      color: #f8fafc;
+    }
+    .task-sub {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
+    }
+    .meta-row,
+    .need-row,
+    .action-row,
+    .symbol-grid {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-height: 24px;
+      padding: 3px 7px;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      border-radius: 999px;
+      background: rgba(8, 13, 22, 0.72);
+      color: #cbd5e1;
+      font-size: 12px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .chip.time { color: #f8fafc; border-color: rgba(214, 170, 87, 0.55); background: rgba(120, 53, 15, 0.22); }
+    .chip.deadline { color: #fee2e2; border-color: rgba(251, 95, 87, 0.78); background: rgba(127, 29, 29, 0.34); }
+    .chip.enemy { color: #bfdbfe; border-color: rgba(96, 165, 250, 0.45); }
+    .chip.danger { color: #fde68a; border-color: rgba(246, 164, 61, 0.62); background: rgba(120, 53, 15, 0.24); }
+    .chip.black { color: #fecaca; border-color: rgba(251, 95, 87, 0.72); background: rgba(2, 4, 10, 0.92); }
+    .chip.assigned { color: #bbf7d0; border-color: rgba(53, 208, 127, 0.56); }
+    .countdown {
+      display: grid;
+      place-items: center;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      min-width: 62px;
+      height: 50px;
+      border: 1px solid rgba(251, 95, 87, 0.84);
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(127, 29, 29, 0.94), rgba(59, 7, 12, 0.94));
+      color: #fff;
+      box-shadow: inset 0 0 18px rgba(251, 95, 87, 0.14);
+    }
+    .countdown small {
+      display: block;
+      font-size: 10px;
+      color: #fecaca;
+      line-height: 1;
+    }
+    .countdown strong {
+      font-size: 19px;
+      line-height: 1.05;
+    }
+    .deadline-strip {
+      display: inline-flex;
+      width: max-content;
+      max-width: 100%;
+      gap: 6px;
+      align-items: center;
+      padding: 5px 8px;
+      border: 1px solid rgba(251, 95, 87, 0.48);
+      border-radius: 999px;
+      background: rgba(127, 29, 29, 0.28);
+      color: #fee2e2;
+      font-size: 12px;
+      font-weight: 850;
+    }
+    .deadline-strip svg.icon { width: 15px; height: 15px; color: var(--red); }
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-height: 26px;
+      padding: 3px 8px;
+      border: 1px solid rgba(148, 163, 184, 0.34);
+      border-radius: 999px;
+      background: rgba(8, 13, 22, 0.56);
+      color: #dbeafe;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .status-chip.ready { color: #bbf7d0; border-color: rgba(53, 208, 127, 0.52); }
+    .status-chip.urgent { color: #fecaca; border-color: rgba(251, 95, 87, 0.68); background: rgba(127, 29, 29, 0.22); }
+    .action-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 112px;
+      justify-content: initial;
+      margin-top: 2px;
+    }
+    .action-row .need-row { min-width: 0; }
+    .action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 30px;
+      width: 112px;
+      padding: 5px 10px;
+      border-radius: 7px;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      background: #202a37;
+      color: #e5eefb;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .action.primary {
+      border-color: rgba(214, 170, 87, 0.55);
+      background: linear-gradient(180deg, rgba(155, 107, 24, 0.92), rgba(94, 63, 16, 0.92));
+      color: #fff7ed;
+    }
+    .tiny-flow {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: #bbf7d0;
+      font-size: 11px;
+    }
+    .next-clue {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 8px;
+      border: 1px dashed rgba(170, 140, 255, 0.6);
+      border-radius: 7px;
+      color: #ddd6fe;
+      background: rgba(33, 24, 61, 0.42);
+      font-size: 12px;
+    }
+    .legend {
+      margin-top: 16px;
+    }
+    .legend .panel-head { border-top: 1px solid var(--line); }
+    .symbol-grid {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(110px, 1fr));
+      gap: 8px;
+      padding: 12px;
+    }
+    .symbol-card {
+      min-height: 92px;
+      padding: 9px;
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: var(--radius);
+      background: rgba(13, 20, 32, 0.78);
+      display: grid;
+      align-content: start;
+      gap: 6px;
+    }
+    .symbol-card .task-icon { width: 34px; height: 34px; }
+    .symbol-card strong { font-size: 12px; }
+    .symbol-card span { font-size: 11px; color: var(--muted); line-height: 1.35; }
+    svg.icon {
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+      vertical-align: -4px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .task-icon svg.icon { width: 21px; height: 21px; }
+    .die-face {
+      display: inline-grid;
+      grid-template-columns: repeat(2, 4px);
+      grid-template-rows: repeat(2, 4px);
+      gap: 4px;
+      width: 18px;
+      height: 18px;
+      padding: 3px;
+      border-radius: 4px;
+      border: 1px solid currentColor;
+    }
+    .die-face i {
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: currentColor;
+    }
+    @media (max-width: 1080px) {
+      .layout { grid-template-columns: 1fr; }
+      .map { min-height: 540px; }
+      .symbol-grid { grid-template-columns: repeat(4, minmax(120px, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute">
+    <symbol id="i-clue" viewBox="0 0 24 24">
+      <path d="M6 3h9l3 3v15H6z"></path><path d="M15 3v4h4"></path><path d="M9 11h6"></path><path d="M9 15h4"></path>
+    </symbol>
+    <symbol id="i-search" viewBox="0 0 24 24">
+      <circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M15.5 15.5 21 21"></path>
+    </symbol>
+    <symbol id="i-loop" viewBox="0 0 24 24">
+      <path d="M17 2v5h-5"></path><path d="M7 22v-5h5"></path><path d="M20 11a8 8 0 0 0-13-6"></path><path d="M4 13a8 8 0 0 0 13 6"></path>
+    </symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24">
+      <rect x="4" y="5" width="16" height="15" rx="2"></rect><path d="M8 3v4"></path><path d="M16 3v4"></path><path d="M4 10h16"></path>
+    </symbol>
+    <symbol id="i-timer" viewBox="0 0 24 24">
+      <path d="M10 2h4"></path><path d="M12 14V8"></path><circle cx="12" cy="14" r="8"></circle><path d="M18 6l2-2"></path>
+    </symbol>
+    <symbol id="i-stack" viewBox="0 0 24 24">
+      <path d="M7 7h11v13H7z"></path><path d="M4 4h11v13"></path><path d="M10 11h5"></path><path d="M10 15h4"></path>
+    </symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24">
+      <path d="m12 3 10 18H2z"></path><path d="M12 9v5"></path><path d="M12 18h.01"></path>
+    </symbol>
+    <symbol id="i-die" viewBox="0 0 24 24">
+      <rect x="4" y="4" width="16" height="16" rx="4"></rect><circle cx="9" cy="9" r="1"></circle><circle cx="15" cy="9" r="1"></circle><circle cx="9" cy="15" r="1"></circle><circle cx="15" cy="15" r="1"></circle>
+    </symbol>
+    <symbol id="i-team" viewBox="0 0 24 24">
+      <circle cx="9" cy="8" r="3"></circle><circle cx="17" cy="9" r="2.5"></circle><path d="M3 20a6 6 0 0 1 12 0"></path><path d="M14 18a5 5 0 0 1 7 2"></path>
+    </symbol>
+    <symbol id="i-arrow-task" viewBox="0 0 24 24">
+      <path d="M4 12h12"></path><path d="m12 8 4 4-4 4"></path><rect x="17" y="5" width="4" height="14" rx="1"></rect>
+    </symbol>
+  </svg>
+
+  <main class="page">
+    <header class="topbar">
+      <div>
+        <h1>任务卡视觉符号实验</h1>
+        <div class="sub">线索、耗时、倒计时、深度链、危险、黑骰与派遣状态的同屏落地稿。</div>
+      </div>
+      <div class="status-strip">
+        <span class="stat"><svg class="icon"><use href="#i-calendar"></use></svg>第 1 周 · 剩 7 日</span>
+        <span class="stat"><svg class="icon"><use href="#i-team"></use></svg>可派遣 3 人</span>
+      </div>
+    </header>
+
+    <section class="layout">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>北美禁区带</h2>
+          <span class="hint">地图入口也使用同一套符号</span>
+        </div>
+        <div class="map">
+          <button class="map-node green" style="left: 22%; top: 22%;">
+            <span class="mini-badge"><svg class="icon"><use href="#i-clue"></use></svg></span>
+            民间传言
+          </button>
+          <button class="map-node blue" style="left: 25%; top: 53%;">
+            <span class="mini-badge"><svg class="icon"><use href="#i-loop"></use></svg></span>
+            51 区外围公路
+          </button>
+          <button class="map-node red" style="left: 76%; top: 38%;">
+            <span class="deadline-mini"><svg class="icon"><use href="#i-timer"></use></svg>剩2天</span>
+            <span>雷达异常光点</span>
+          </button>
+          <button class="map-node black" style="left: 70%; top: 70%;">
+            <span class="mini-badge"><svg class="icon"><use href="#i-die"></use></svg></span>
+            黑磁录像
+          </button>
+          <div class="stack-node" title="深度链入口">
+            <div class="stack-page back-2"></div>
+            <div class="stack-page back-1"></div>
+            <div class="stack-page front">
+              <span class="task-icon"><svg class="icon"><use href="#i-stack"></use></svg></span>
+              <span>
+                <span class="stack-kicker">深度调查</span>
+                <span class="stack-title">球状闪电 · 厨房火球</span>
+              </span>
+              <span class="chip">?</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>区域节点情报</h2>
+          <span class="hint">文字降级，符号承担第一层信息</span>
+        </div>
+        <div class="side">
+          <article class="task-card clue">
+            <div class="task-icon"><svg class="icon"><use href="#i-clue"></use></svg></div>
+            <div class="task-main">
+              <div class="task-top">
+                <div>
+                  <h3 class="task-title">北美禁区带 非正式研究记录</h3>
+                </div>
+                <span class="status-chip ready"><svg class="icon"><use href="#i-search"></use></svg>待核实</span>
+              </div>
+              <div class="meta-row">
+                <span class="chip time"><svg class="icon"><use href="#i-calendar"></use></svg>耗时 2天</span>
+                <span class="tiny-flow"><svg class="icon"><use href="#i-search"></use></svg>调查 <svg class="icon"><use href="#i-arrow-task"></use></svg> 新任务</span>
+              </div>
+              <div class="action-row">
+                <span class="need-row"><span class="chip">人脉</span><span class="chip">洞察</span></span>
+                <button class="action primary"><svg class="icon"><use href="#i-search"></use></svg>派人调查</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="task-card white">
+            <div class="task-icon"><svg class="icon"><use href="#i-loop"></use></svg></div>
+            <div class="task-main">
+              <div class="task-top">
+                <div>
+                  <h3 class="task-title">51 区外围公路</h3>
+                </div>
+              </div>
+              <div class="meta-row">
+                <span class="chip time"><svg class="icon"><use href="#i-calendar"></use></svg>耗时 2天</span>
+                <span class="chip enemy"><svg class="icon"><use href="#i-die"></use></svg>对手骰 2</span>
+              </div>
+              <div class="action-row">
+                <span class="need-row"><span class="chip">探索 4</span><span class="chip">生存 2</span></span>
+                <button class="action primary"><svg class="icon"><use href="#i-team"></use></svg>派遣</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="task-card red">
+            <div class="task-icon"><svg class="icon"><use href="#i-timer"></use></svg></div>
+            <div class="task-main">
+              <div class="task-top">
+                <div>
+                  <h3 class="task-title">突发：雷达异常光点</h3>
+                </div>
+                <div class="countdown"><small>剩余</small><strong>2天</strong></div>
+              </div>
+              <div class="meta-row">
+                <span class="chip time"><svg class="icon"><use href="#i-calendar"></use></svg>耗时 2天</span>
+                <span class="chip danger"><svg class="icon"><use href="#i-warn"></use></svg>危险</span>
+                <span class="chip enemy"><svg class="icon"><use href="#i-die"></use></svg>对手骰 3</span>
+              </div>
+              <div class="action-row">
+                <span class="need-row"><span class="chip">探索 5</span><span class="chip">生存 3</span></span>
+                <button class="action primary"><svg class="icon"><use href="#i-team"></use></svg>抢派</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="task-card deep">
+            <div class="task-icon"><svg class="icon"><use href="#i-stack"></use></svg></div>
+            <div class="task-main">
+              <div class="task-top">
+                <div>
+                  <h3 class="task-title">球状闪电 · 厨房火球</h3>
+                </div>
+              </div>
+              <div class="meta-row">
+                <span class="chip time"><svg class="icon"><use href="#i-calendar"></use></svg>耗时 1天</span>
+                <span class="next-clue"><svg class="icon"><use href="#i-stack"></use></svg>下一页：?</span>
+                <span class="chip enemy"><svg class="icon"><use href="#i-die"></use></svg>对手骰 1</span>
+              </div>
+              <div class="action-row">
+                <span class="need-row"><span class="chip">理性 2</span><span class="chip">洞察 2</span></span>
+                <button class="action primary"><svg class="icon"><use href="#i-team"></use></svg>继续调查</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="task-card black">
+            <div class="task-icon"><svg class="icon"><use href="#i-die"></use></svg></div>
+            <div class="task-main">
+              <div class="task-top">
+                <div>
+                  <h3 class="task-title">黑磁：最后三秒录像</h3>
+                </div>
+                <span class="chip black"><svg class="icon"><use href="#i-die"></use></svg>黑骰</span>
+              </div>
+              <div class="meta-row">
+                <span class="chip time"><svg class="icon"><use href="#i-calendar"></use></svg>耗时 2天</span>
+                <span class="chip enemy"><svg class="icon"><use href="#i-die"></use></svg>对手骰 4</span>
+              </div>
+              <div class="action-row">
+                <span class="need-row"><span class="chip">胆识 3</span><span class="chip">诡思 3</span><span class="chip">洞察 2</span></span>
+                <button class="action primary"><svg class="icon"><use href="#i-team"></use></svg>进入任务</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel legend">
+      <div class="panel-head">
+        <h2>视觉组件词典草案</h2>
+        <span class="hint">先看识别度，再决定是否并入正式原型</span>
+      </div>
+      <div class="symbol-grid">
+        <div class="symbol-card"><span class="task-icon" style="color:var(--green)"><svg class="icon"><use href="#i-clue"></use></svg></span><strong>线索</strong><span>可能生成任务，不等同任务。</span></div>
+        <div class="symbol-card"><span class="task-icon" style="color:var(--gold)"><svg class="icon"><use href="#i-calendar"></use></svg></span><strong>耗时</strong><span>写明“耗时 2天”，不要只写数字。</span></div>
+        <div class="symbol-card"><span class="task-icon" style="color:var(--red)"><svg class="icon"><use href="#i-timer"></use></svg></span><strong>截稿倒计时</strong><span>右侧大块写“剩余 2天”。</span></div>
+        <div class="symbol-card"><span class="task-icon" style="color:var(--violet)"><svg class="icon"><use href="#i-stack"></use></svg></span><strong>深度链</strong><span>当前档案加下一页问号。</span></div>
+        <div class="symbol-card"><span class="task-icon" style="color:var(--orange)"><svg class="icon"><use href="#i-warn"></use></svg></span><strong>危险</strong><span>难度和后果标识，不是类型。</span></div>
+        <div class="symbol-card"><span class="task-icon" style="color:#fecaca;background:#02040a"><svg class="icon"><use href="#i-die"></use></svg></span><strong>黑骰</strong><span>特殊判定入口，和危险分开。</span></div>
+        <div class="symbol-card"><span class="task-icon" style="color:var(--blue)"><svg class="icon"><use href="#i-die"></use></svg></span><strong>对手骰</strong><span>判定压力，数字跟在骰子旁。</span></div>
+        <div class="symbol-card"><span class="task-icon" style="color:var(--green)"><svg class="icon"><use href="#i-team"></use></svg></span><strong>已派遣</strong><span>头像或小队印章表达占用。</span></div>
+      </div>
+    </section>
+  </main>
+  <script>
+    (() => {
+      const candidates = (() => {
+        const dxList = [0, -96, 96, -150, 150, -220, 220];
+        const dyList = [0, -44, 44, -88, 88, -132, 132];
+        return dyList.flatMap((dy) => dxList.map((dx) => ({ dx, dy })))
+          .sort((a, b) => {
+            const am = Math.abs(a.dx) + Math.abs(a.dy);
+            const bm = Math.abs(b.dx) + Math.abs(b.dy);
+            return am - bm || Math.abs(a.dy) - Math.abs(b.dy) || Math.abs(a.dx) - Math.abs(b.dx);
+          });
+      })();
+
+      const inflate = (rect, pad) => ({
+        left: rect.left - pad,
+        right: rect.right + pad,
+        top: rect.top - pad,
+        bottom: rect.bottom + pad,
+      });
+      const offsetRect = (rect, dx, dy) => ({
+        left: rect.left + dx,
+        right: rect.right + dx,
+        top: rect.top + dy,
+        bottom: rect.bottom + dy,
+      });
+      const overlaps = (a, b) => !(a.right <= b.left || a.left >= b.right || a.bottom <= b.top || a.top >= b.bottom);
+      const inside = (inner, outer) =>
+        inner.left >= outer.left && inner.right <= outer.right && inner.top >= outer.top && inner.bottom <= outer.bottom;
+
+      function avoidMapLabelOverlap() {
+        document.querySelectorAll(".map").forEach((map) => {
+          const mapRect = map.getBoundingClientRect();
+          const reserved = [];
+          const stack = map.querySelector(".stack-node");
+          if (stack) {
+            const stackRect = stack.getBoundingClientRect();
+            // Reserve a little extra room for the stack hover fan-out.
+            reserved.push({
+              left: stackRect.left - 22,
+              right: stackRect.right + 72,
+              top: stackRect.top - 12,
+              bottom: stackRect.bottom + 30,
+            });
+          }
+
+          const nodes = Array.from(map.querySelectorAll(".map-node"));
+          nodes.forEach((node) => {
+            node.style.transform = "translate(-50%, -50%)";
+          });
+
+          nodes.forEach((node) => {
+            let best = candidates[0];
+            node.style.transform = "translate(-50%, -50%)";
+            const baseRect = inflate(node.getBoundingClientRect(), 8);
+            let placedRect = baseRect;
+            for (const candidate of candidates) {
+              const rect = offsetRect(baseRect, candidate.dx, candidate.dy);
+              const valid = inside(rect, mapRect) && reserved.every((other) => !overlaps(rect, other));
+              if (valid) {
+                best = candidate;
+                placedRect = rect;
+                break;
+              }
+            }
+            node.style.transform = `translate(-50%, -50%) translate(${best.dx}px, ${best.dy}px)`;
+            reserved.push(placedRect);
+          });
+        });
+      }
+
+      avoidMapLabelOverlap();
+      requestAnimationFrame(avoidMapLabelOverlap);
+      window.addEventListener("load", avoidMapLabelOverlap);
+      window.addEventListener("resize", avoidMapLabelOverlap);
+    })();
+  </script>
+</body>
+</html>

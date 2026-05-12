@@ -10,6 +10,7 @@
 4. `../technical-preferences.md`
 5. `../../production/session-state/active.md`
 6. `ai-collaboration-guidance.md`
+7. 涉及 UI / 交互 / 原型呈现时，再读 `ui-interaction-guidelines.md`
 
 如果之后还需要更深入的产品上下文：
 
