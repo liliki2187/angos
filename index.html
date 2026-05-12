@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Angus 原型入口</title>
+  <title>Angus 任务探索 UI 入口</title>
   <style>
     :root {
       color-scheme: dark;
@@ -157,26 +157,31 @@
 <body>
   <main>
     <header>
-      <h1>Angus 原型入口</h1>
-      <p class="lead">双击根目录的这个页面即可进入当前 HTML 全链条原型；所有链接都使用相对路径，移动仓库目录后仍可用。</p>
+      <h1>Angus 任务探索 UI 入口</h1>
+      <p class="lead">当前主入口优先进入已确认的任务探索 UI 实验页；完整全链试玩保留为次级入口，避免误把旧任务卡壳层当成当前 UI 版本。</p>
     </header>
 
     <section class="primary-card" aria-labelledby="main-demo-title">
       <div>
-        <h2 class="card-title" id="main-demo-title">《世界未解之谜周刊》当前 HTML 试玩原型</h2>
-        <p class="card-desc">这是目前用于验证玩法的网页试玩版入口：探索地图、任务配置、角色骰、合成、报刊组版与结算都从这里进入。它不是 Godot 正式运行版。</p>
+        <h2 class="card-title" id="main-demo-title">任务探索页 UI 当前版本</h2>
+        <p class="card-desc">这里体验刚确认过的任务探索 UI：地图任务标识、任务卡符号、耗时与倒计时、深度链叠层、危险与黑骰表达都在这个页面验证。完整全链试玩还保留旧任务卡壳层，所以放到次级入口。</p>
       </div>
       <div class="actions">
-        <a class="button" href="design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?v=20260511-map-label-avoidance-v2">开始试玩当前原型</a>
-        <a class="button secondary" href="design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?paperlab=1&v=20260511-map-label-avoidance-v2">报刊组版实验</a>
+        <a class="button" href="design/prototypes/html/labs/task-card-symbol-language.html?v=20260512-index-primary">进入任务探索 UI 当前版</a>
+        <a class="button secondary" href="design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?v=20260512-index-secondary">全链试玩（旧任务卡壳层）</a>
       </div>
     </section>
 
     <section class="grid" aria-label="常用入口">
       <article class="link-card">
-        <h2>任务卡符号实验</h2>
-        <p>把线索、耗时、倒计时、深度链、危险和黑骰等符号放进地图任务界面中预览。</p>
-        <a href="design/prototypes/html/labs/task-card-symbol-language.html">打开符号实验页</a>
+        <h2>完整全链试玩</h2>
+        <p>用于跑通探索、任务配置、角色骰、合成、报刊组版与结算；任务探索卡片尚未完全套用当前 UI 实验页。</p>
+        <a href="design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?v=20260512-index-secondary">打开全链试玩</a>
+      </article>
+      <article class="link-card">
+        <h2>报刊组版实验</h2>
+        <p>组版与结算相关实验入口，和任务探索 UI 当前版不是同一个验证页面。</p>
+        <a href="design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?paperlab=1&v=20260512-index-secondary">打开组版实验</a>
       </article>
       <article class="link-card">
         <h2>探索骰子旧页</h2>
@@ -196,7 +201,7 @@
     </section>
 
     <div class="tag-row" aria-label="提示">
-      <span class="tag">推荐入口：当前 HTML 试玩原型</span>
+      <span class="tag">推荐入口：任务探索 UI 当前版</span>
       <span class="tag">离线可用</span>
       <span class="tag">相对路径</span>
       <span class="tag">带版本参数防缓存</span>
