@@ -714,9 +714,11 @@
   </main>
   <script>
     (() => {
+      const LABEL_SAFE_PAD = 14;
+      const STACK_SAFE_PAD = 34;
       const candidates = (() => {
-        const dxList = [0, -96, 96, -150, 150, -220, 220];
-        const dyList = [0, -44, 44, -88, 88, -132, 132];
+        const dxList = [0, -96, 96, -150, 150, -220, 220, -300, 300];
+        const dyList = [0, -44, 44, -88, 88, -132, 132, -176, 176];
         return dyList.flatMap((dy) => dxList.map((dx) => ({ dx, dy })))
           .sort((a, b) => {
             const am = Math.abs(a.dx) + Math.abs(a.dy);
@@ -731,6 +733,18 @@
         top: rect.top - pad,
         bottom: rect.bottom + pad,
       });
+      const unionRects = (rects) => {
+        const valid = rects.filter((rect) => rect && rect.width > 0 && rect.height > 0);
+        if (!valid.length) return null;
+        return valid.reduce((acc, rect) => ({
+          left: Math.min(acc.left, rect.left),
+          right: Math.max(acc.right, rect.right),
+          top: Math.min(acc.top, rect.top),
+          bottom: Math.max(acc.bottom, rect.bottom),
+          width: Math.max(acc.right, rect.right) - Math.min(acc.left, rect.left),
+          height: Math.max(acc.bottom, rect.bottom) - Math.min(acc.top, rect.top),
+        }), valid[0]);
+      };
       const offsetRect = (rect, dx, dy) => ({
         left: rect.left + dx,
         right: rect.right + dx,
@@ -747,25 +761,29 @@
           const reserved = [];
           const stack = map.querySelector(".stack-node");
           if (stack) {
-            const stackRect = stack.getBoundingClientRect();
-            // Reserve a little extra room for the stack hover fan-out.
+            const stackPages = Array.from(stack.querySelectorAll(".stack-page")).map((page) => page.getBoundingClientRect());
+            const stackRect = unionRects(stackPages) || stack.getBoundingClientRect();
+            // Reserve readable space for page shadows and the hover fan-out, not only geometric intersection.
             reserved.push({
-              left: stackRect.left - 22,
-              right: stackRect.right + 72,
-              top: stackRect.top - 12,
-              bottom: stackRect.bottom + 30,
+              left: stackRect.left - STACK_SAFE_PAD,
+              right: stackRect.right + STACK_SAFE_PAD + 34,
+              top: stackRect.top - STACK_SAFE_PAD,
+              bottom: stackRect.bottom + STACK_SAFE_PAD,
             });
           }
 
           const nodes = Array.from(map.querySelectorAll(".map-node"));
+          const previousTransitions = new Map();
           nodes.forEach((node) => {
+            previousTransitions.set(node, node.style.transition || "");
+            node.style.transition = "none";
             node.style.transform = "translate(-50%, -50%)";
           });
 
           nodes.forEach((node) => {
             let best = candidates[0];
             node.style.transform = "translate(-50%, -50%)";
-            const baseRect = inflate(node.getBoundingClientRect(), 8);
+            const baseRect = inflate(node.getBoundingClientRect(), LABEL_SAFE_PAD);
             let placedRect = baseRect;
             for (const candidate of candidates) {
               const rect = offsetRect(baseRect, candidate.dx, candidate.dy);
@@ -778,6 +796,11 @@
             }
             node.style.transform = `translate(-50%, -50%) translate(${best.dx}px, ${best.dy}px)`;
             reserved.push(placedRect);
+          });
+          requestAnimationFrame(() => {
+            nodes.forEach((node) => {
+              node.style.transition = previousTransitions.get(node) || "";
+            });
           });
         });
       }
