@@ -2864,7 +2864,8 @@
       let best = null;
       MAP_LABEL_CANDIDATES.forEach((candidate) => {
         applyMapOffset(el, candidate);
-        const rect = inflateRect(mapLabelRect(el), 6);
+        const safePad = el.classList.contains("region-chain-entry") ? 34 : 14;
+        const rect = inflateRect(mapLabelRect(el), safePad);
         const overlap = placed.reduce((sum, placedRect) => sum + overlapArea(rect, placedRect), 0);
         const bounds = mapBoundsPenalty(rect, mapRect);
         const movement = Math.abs(candidate.dx) + Math.abs(candidate.dy);
@@ -2977,6 +2978,64 @@
     return svg + ghosts.join("");
   }
 
+  function deadlineRemainingDays(m) {
+    if (!m || m.deadlineDay == null) return null;
+    return Math.max(0, (m.deadlineDay | 0) - dayIndexInWeek());
+  }
+
+  function regionTaskTone(m) {
+    if (m && m.isBlackDiceTask) return "black";
+    if (m && (m.checkType || "white") === "red") return "red";
+    if (m && m.chainType === "deep") return "deep";
+    return "white";
+  }
+
+  function regionTaskIcon(m, fallback) {
+    if (fallback === "clue") return "文";
+    if (m && m.isBlackDiceTask) return "骰";
+    if (m && (m.checkType || "white") === "red") return "截";
+    if (m && m.chainType === "deep") return "页";
+    if (m && (m.riskTier === "high" || m.isHighRisk)) return "!";
+    return "↻";
+  }
+
+  function regionChip(text, cls) {
+    return `<span class="region-task-chip ${cls || ""}">${escapeHtml(text)}</span>`;
+  }
+
+  function regionNeedChipsHtml(need) {
+    return Object.entries(need || {})
+      .map(([key, value]) => regionChip(`${key}${value | 0}`, "need"))
+      .join("");
+  }
+
+  function regionLeadNeed(lead) {
+    return lead.need || { 人脉: 2, 洞察: 2 };
+  }
+
+  function regionLeadDays(lead) {
+    return lead.days || 2;
+  }
+
+  function regionNodeActionLabel(n, queued, completed) {
+    if (completed) return "已完成";
+    if (queued) return "查看派遣";
+    if (n.isBlackDiceTask) return "进入任务";
+    if ((n.checkType || "white") === "red") return "抢派";
+    if (n.chainType === "deep") return "继续调查";
+    return "派遣";
+  }
+
+  function regionNodeMetaHtml(n, queued) {
+    const chips = [regionChip(`耗时 ${n.days}天`, "time")];
+    if (n.chainType === "deep" && n.nextNode) chips.push(`<span class="region-next-chip">下一页：?</span>`);
+    if (!n.isBlackDiceTask && (n.riskTier === "high" || n.isHighRisk)) chips.push(regionChip("△ 危险", "danger"));
+    if (n.isBlackDiceTask) chips.push(regionChip("骰 黑骰", "black"));
+    if ((n.enemyAttr | 0) > 0) chips.push(regionChip(`▣ 对手骰 ${n.enemyAttr | 0}`, "enemy"));
+    if (queued) chips.push(regionChip("已派遣", "assigned"));
+    return chips.join("");
+  }
+
   function renderRegion() {
     const r = REGIONS.find((x) => x.id === state.regionId);
     const elR = document.getElementById("view-region");
@@ -3003,8 +3062,12 @@
         if (n.chainType === "deep") {
           return deepChainMapEntryHtml(r, n, pos, { match, disabled, queued, diffZh });
         }
+        const deadlineLeft = (n.checkType || "white") === "red" ? deadlineRemainingDays(n) : null;
+        const markerHtml = deadlineLeft == null
+          ? `<span class="point-mark">${marker}</span>`
+          : `<span class="point-mark point-deadline">剩${deadlineLeft}天</span>`;
         return `<button type="button" class="region-point ${kindCls}" data-point-type="node" data-point-id="${n.id}" data-node="${n.id}" style="left:${pos.x}%;top:${pos.y}%;" ${disabled ? "disabled" : ""} title="${escapeHtml(n.name)} · ${diffZh} · ${escapeHtml(missionTypeTitle(n))}">
-          <span class="point-mark">${marker}</span>${escapeHtml(n.name)}${queued ? `<span class="assigned-mark" title="已派遣">派</span>` : ""}
+          ${markerHtml}${escapeHtml(n.name)}${queued ? `<span class="assigned-mark" title="已派遣">派</span>` : ""}
         </button>`;
       })
       .join("");
@@ -3021,66 +3084,45 @@
     const leadHtml = leads
       .map((lead) => {
         const queued = findActiveMissionByLead(r.id, lead.id);
-        return `<div class="lead-item event-clue interactive" data-side-type="lead" data-side-id="${lead.id}">
-        <div class="event-card">
-          <div class="event-thumb" title="线索事件默认图">?</div>
-          <div>
-            <div><strong>${escapeHtml(lead.title)}</strong></div>
-            <div style="color:#94a3b8;margin-top:2px;">线索事件 · 可靠度未知</div>
-            <div class="event-meta-row">
-              <div>${queued ? staffAvatarsHtml(queued.staffIds) : ""}</div>
-              <button type="button" data-lead-investigate="${lead.id}" ${lead.investigated ? "disabled" : ""}>${queued ? "查看派遣" : "配置队伍并调查"}</button>
-            </div>
-            ${lead.result ? `<div style="margin-top:6px;color:#cbd5e1;">${escapeHtml(lead.result)}</div>` : ""}
+        return `<div class="lead-item region-task-card clue interactive" data-side-type="lead" data-side-id="${lead.id}">
+        <div class="region-task-icon">${regionTaskIcon(null, "clue")}</div>
+        <div class="region-task-main">
+          <h4 class="region-task-title">${escapeHtml(lead.title)}</h4>
+          <div class="region-task-meta">
+            ${regionChip(`耗时 ${regionLeadDays(lead)}天`, "time")}
+            <span class="region-flow-chip">调查 -> 新任务</span>
+            ${queued ? regionChip("已派遣", "assigned") : ""}
           </div>
+          <div class="region-task-action">
+            <div class="region-task-needs">${regionNeedChipsHtml(regionLeadNeed(lead))}</div>
+            <button type="button" class="region-task-button" data-lead-investigate="${lead.id}" ${lead.investigated ? "disabled" : ""}>${queued ? "查看派遣" : "派人调查"}</button>
+          </div>
+          ${lead.result ? `<div class="region-task-result">${escapeHtml(lead.result)}</div>` : ""}
         </div>
       </div>`;
       })
       .join("");
     const nodeCardHtml = (n) => {
         const match = filterNodeTags(n);
-        const diff = n.difficulty || "normal";
-        const diffZh = diff === "easy" ? "简单" : diff === "hard" ? "困难" : "普通";
-        const deadline = n.kind === "temp" && n.deadlineDay != null ? ` · 截止 第${n.deadlineDay}天前` : "";
-        const chain = n.chain === "locked" ? " · 链式未解锁" : "";
-        const urgent = n.kind === "temp" || /突发/.test(n.name) || n.checkType === "red";
         const completed = !!state.completedMissionIds[n.id];
-        const eventCls = `${urgent ? "event-urgent" : ""} ${completed ? "event-completed" : ""}`.trim();
-        const thumbText = completed ? "✓" : missionPointMark(n);
         const queued = findActiveMissionByNode(r.id, n.id);
-        return `<div class="region-node-item ${eventCls} interactive" data-side-type="node" data-side-id="${n.id}" style="${match ? "" : "opacity:0.45;"}">
-          <div class="event-card">
-            <div class="event-thumb">${thumbText}</div>
-            <div>
-              <div><strong>${escapeHtml(n.name)}</strong></div>
-              <div style="color:#94a3b8;margin-top:2px;">${n.kind === "permanent" ? "常驻" : n.kind === "temp" ? "临时" : "隐藏"} · ${diffZh} · 耗时${n.days}天 · 对手骰${n.enemyAttr | 0}${deadline}${chain}</div>
-              ${n.chainType ? `<div class="chain-progress">${escapeHtml(chainStatusText(n))}</div>` : ""}
-              ${previousChainResult(n) ? `<div class="chain-prev">上一环：${escapeHtml(previousChainResult(n))}</div>` : ""}
-              ${missionTypePanelHtml(n, true)}
-              <div class="event-meta-row">
-                <div>${queued ? staffAvatarsHtml(queued.staffIds) : ""}</div>
-                <button type="button" data-node-open="${n.id}" ${n.chain === "locked" || completed ? "disabled" : ""}>${completed ? "已完成" : queued ? "查看派遣" : "配置队伍并派遣"}</button>
-              </div>
+        const tone = regionTaskTone(n);
+        const deadlineLeft = tone === "red" ? deadlineRemainingDays(n) : null;
+        return `<div class="region-node-item region-task-card ${tone} interactive${match ? "" : " is-filtered"}${completed ? " is-completed" : ""}" data-side-type="node" data-side-id="${n.id}">
+          <div class="region-task-icon">${completed ? "✓" : regionTaskIcon(n)}</div>
+          <div class="region-task-main">
+            <h4 class="region-task-title">${escapeHtml(n.name)}</h4>
+            <div class="region-task-meta">${regionNodeMetaHtml(n, queued)}</div>
+            <div class="region-task-action">
+              <div class="region-task-needs">${regionNeedChipsHtml(n.need)}</div>
+              <button type="button" class="region-task-button" data-node-open="${n.id}" ${n.chain === "locked" || completed ? "disabled" : ""}>${regionNodeActionLabel(n, queued, completed)}</button>
             </div>
+            ${previousChainResult(n) ? `<div class="region-task-prev">上一页：${escapeHtml(previousChainResult(n))}</div>` : ""}
           </div>
+          ${deadlineLeft == null ? "" : `<div class="region-task-countdown"><small>剩余</small><strong>${deadlineLeft}天</strong></div>`}
         </div>`;
     };
-    const groupedNodes = {};
-    visibleNodeList.forEach((n) => {
-      const key = missionGroupKey(n);
-      if (!groupedNodes[key]) groupedNodes[key] = [];
-      groupedNodes[key].push(n);
-    });
-    const sideHtml = MISSION_GROUPS
-      .filter((g) => groupedNodes[g.key] && groupedNodes[g.key].length)
-      .map((g) => `<section class="mission-group ${g.key}">
-        <div class="mission-group-head">
-          <span>${escapeHtml(g.title)}</span>
-          <span class="mission-group-rule">${escapeHtml(g.rule)}</span>
-        </div>
-        ${groupedNodes[g.key].map(nodeCardHtml).join("")}
-      </section>`)
-      .join("");
+    const sideHtml = visibleNodeList.map(nodeCardHtml).join("");
     elR.innerHTML = `<div class="view-title-row">
         <h2>${escapeHtml(r.name)}</h2>
         ${dispatchCountSpanHtml()}
@@ -3089,8 +3131,7 @@
         <div class="region-map">${pointHtml}</div>
         <div class="region-node-side">
           <h3>区域节点情报</h3>
-          <div class="mechanic-strip"><strong>本区机制</strong><span>白色调查</span><span>红色截稿</span><span>深度链</span><span>危险标识</span><span>黑骰入口</span></div>
-          ${leadHtml}${sideHtml}
+          <div class="region-task-list">${leadHtml}${sideHtml}</div>
           <div class="region-actions">
             <button type="button" id="btnNextDayRegion" class="next-day-big"><span class="arrow" aria-hidden="true"></span><span>下一天</span></button>
           </div>
