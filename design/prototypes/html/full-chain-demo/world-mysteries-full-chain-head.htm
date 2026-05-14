@@ -609,6 +609,298 @@
       animation: diceSpin 0.7s linear infinite;
     }
     @keyframes diceSpin { to { transform: rotate(360deg); } }
+    .modal-mask.dice-select-modal .modal-card {
+      width:min(800px,94vw);
+      max-height:calc(100vh - 32px);
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+    }
+    .modal-mask.dice-select-modal .modal-title { flex:0 0 auto; }
+    .modal-mask.dice-select-modal .modal-body { min-height:0; overflow:auto; padding-right:4px; }
+    .modal-mask.dice-select-modal .modal-actions {
+      flex:0 0 auto;
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px solid rgba(148,163,184,0.16);
+      background:linear-gradient(180deg, rgba(11,18,32,0.76), rgba(11,18,32,0.98));
+    }
+    .dice-select-shell { display:grid; gap:10px; }
+    .dice-select-head { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:start; }
+    .dice-select-head p { margin:4px 0 0; color:#cbd5e1; font-size:13px; line-height:1.5; }
+    .dice-select-stage { color:var(--gold); font-weight:900; letter-spacing:0.02em; }
+    .dice-select-result {
+      min-width:84px;
+      border:1px solid rgba(148,163,184,0.38);
+      border-radius:999px;
+      background:rgba(15,23,42,0.78);
+      color:#94a3b8;
+      padding:4px 10px;
+      text-align:center;
+      font-size:12px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+    .dice-select-result.is-met { border-color:rgba(34,197,94,0.72); color:#bbf7d0; background:rgba(20,83,45,0.2); }
+    .dice-need-panel {
+      border:1px solid rgba(51,65,85,0.9);
+      border-radius:10px;
+      background:#0b1220;
+      padding:9px;
+      display:grid;
+      gap:7px;
+    }
+    .dice-need-title { color:#94a3b8; font-size:12px; }
+    .dice-need-row { display:grid; gap:4px; }
+    .dice-need-line { display:flex; justify-content:space-between; gap:10px; color:#cbd5e1; font-size:12px; }
+    .dice-need-line strong { color:#f8fafc; }
+    .dice-need-row.is-met .dice-need-line strong { color:#86efac; }
+    .dice-need-meter { height:7px; border-radius:999px; background:#1e293b; overflow:hidden; }
+    .dice-need-meter span { display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,#60a5fa,#d4a853); transition:width 0.22s ease; }
+    .dice-need-row.is-met .dice-need-meter span { background:linear-gradient(90deg,#22c55e,#86efac); }
+    .black-intervention-panel {
+      border:1px solid rgba(248,113,113,0.54);
+      border-radius:10px;
+      background:linear-gradient(180deg, rgba(127,29,29,0.28), rgba(15,23,42,0.76));
+      padding:9px;
+      display:grid;
+      gap:7px;
+    }
+    .black-intervention-panel.is-active { animation:blackInterventionPulse 0.86s ease-out; box-shadow:0 0 0 1px rgba(248,113,113,0.32), 0 0 20px rgba(248,113,113,0.16); }
+    .black-intervention-head { display:flex; justify-content:space-between; gap:10px; align-items:center; color:#fecaca; font-size:12px; }
+    .black-intervention-head strong { color:#fca5a5; }
+    .black-intervention-head span { color:#fda4af; }
+    .black-intervention-row { display:flex; flex-wrap:wrap; gap:6px; }
+    .black-intervention-die {
+      width:48px;
+      height:48px;
+      border-radius:10px;
+      display:grid;
+      place-items:center;
+      border:1px solid rgba(248,113,113,0.8);
+      background:radial-gradient(circle at 34% 22%, rgba(255,255,255,0.12), transparent 28%), #2b0d12;
+      color:#fecaca;
+      font-weight:900;
+      font-size:13px;
+      box-shadow:0 0 16px rgba(248,113,113,0.18);
+    }
+    .black-intervention-panel.is-active .black-intervention-die { animation:blackDiceDrop 0.52s cubic-bezier(0.18,1.28,0.32,1); }
+    .black-intervention-panel ul { margin:0; padding-left:1.1rem; color:#fecaca; font-size:12px; line-height:1.5; }
+    @keyframes blackInterventionPulse {
+      0% { transform:translateY(-4px) scale(0.98); filter:brightness(1.35); }
+      62% { transform:translateY(1px) scale(1.01); filter:brightness(1.08); }
+      100% { transform:translateY(0) scale(1); filter:brightness(1); }
+    }
+    .selected-dice-tray {
+      border:1px solid rgba(212,168,83,0.36);
+      border-radius:10px;
+      background:rgba(74,55,22,0.16);
+      padding:8px;
+      display:grid;
+      gap:7px;
+    }
+    .selected-dice-tray.is-waiting { border-color:rgba(148,163,184,0.25); background:rgba(15,23,42,0.42); }
+    .selected-dice-head { display:flex; justify-content:space-between; gap:10px; align-items:center; color:#fde68a; font-size:12px; }
+    .selected-dice-head span { color:#94a3b8; }
+    .selected-dice-list { display:flex; flex-wrap:wrap; gap:6px; min-height:30px; align-items:center; position:relative; }
+    .selected-dice-chip {
+      display:inline-grid;
+      grid-template-columns:auto;
+      gap:1px;
+      min-width:66px;
+      border:1px solid rgba(148,163,184,0.36);
+      border-radius:8px;
+      background:#0b1220;
+      padding:5px 7px;
+      color:#cbd5e1;
+      font-size:11px;
+      animation:selectedDicePop 0.18s ease-out;
+    }
+    .selected-dice-chip b { color:#f8fafc; font-size:12px; line-height:1.1; }
+    .selected-dice-chip small { color:#94a3b8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:86px; }
+    .selected-dice-chip.contributes { border-color:rgba(212,168,83,0.62); box-shadow:0 0 12px rgba(212,168,83,0.12); }
+    .selected-dice-chip.black { border-color:rgba(248,113,113,0.76); color:#fecaca; background:rgba(127,29,29,0.24); }
+    .selected-dice-chip.waste { opacity:0.72; border-style:dashed; }
+    .selected-dice-empty { color:#64748b; font-size:12px; }
+    .dice-impact-panel {
+      min-height:72px;
+      border:1px solid rgba(148,163,184,0.28);
+      border-radius:10px;
+      background:rgba(15,23,42,0.68);
+      padding:8px 9px;
+      display:grid;
+      align-content:center;
+      gap:4px;
+    }
+    .dice-impact-panel.good { border-color:rgba(212,168,83,0.52); background:rgba(74,55,22,0.16); }
+    .dice-impact-panel.good.selected { box-shadow:0 0 0 1px rgba(212,168,83,0.24), 0 0 14px rgba(212,168,83,0.12); }
+    .dice-impact-panel.black { border-color:rgba(248,113,113,0.58); background:rgba(127,29,29,0.2); }
+    .dice-impact-panel.muted,
+    .dice-impact-panel.is-waiting { border-style:dashed; color:#94a3b8; }
+    .dice-impact-head { display:flex; justify-content:space-between; gap:10px; align-items:center; font-size:12px; }
+    .dice-impact-head strong { color:#fde68a; }
+    .dice-impact-head span { color:#94a3b8; }
+    .dice-impact-title { color:#f8fafc; font-weight:900; font-size:13px; }
+    .dice-impact-copy { color:#cbd5e1; font-size:12px; line-height:1.45; }
+    @keyframes selectedDicePop {
+      0% { transform:scale(0.92); opacity:0.4; }
+      100% { transform:scale(1); opacity:1; }
+    }
+    .dice-fly-ghost {
+      position:fixed;
+      z-index:2600;
+      pointer-events:none;
+      margin:0;
+      animation:diceFlyToTray 0.58s cubic-bezier(0.17,0.84,0.26,1) forwards;
+    }
+    .dice-resolution-card {
+      border:1px solid rgba(148,163,184,0.32);
+      border-radius:12px;
+      background:linear-gradient(180deg, rgba(15,23,42,0.9), rgba(2,6,23,0.66));
+      padding:10px;
+      display:grid;
+      gap:10px;
+      animation:diceResolutionEnter 0.34s ease-out;
+    }
+    .dice-resolution-card.is-met { border-color:rgba(34,197,94,0.46); }
+    .dice-resolution-card.is-miss { border-color:rgba(248,113,113,0.38); }
+    .dice-resolution-card.result-crit { animation:diceResolutionEnter 0.34s ease-out, diceResultCrit 0.86s ease-out 0.08s; }
+    .dice-resolution-card.result-success { animation:diceResolutionEnter 0.34s ease-out, diceResultSuccess 0.7s ease-out 0.08s; }
+    .dice-resolution-card.result-fail,
+    .dice-resolution-card.result-bad { animation:diceResolutionEnter 0.34s ease-out, diceResultFail 0.68s ease-out 0.08s; }
+    .dice-resolution-head { display:flex; justify-content:space-between; gap:12px; align-items:start; }
+    .dice-resolution-head strong { display:block; color:var(--gold); font-size:15px; }
+    .dice-resolution-head span { display:block; color:#94a3b8; font-size:12px; margin-top:2px; }
+    .dice-resolution-head em {
+      min-width:74px;
+      border-radius:999px;
+      padding:4px 10px;
+      text-align:center;
+      color:#fde68a;
+      border:1px solid rgba(212,168,83,0.52);
+      background:rgba(74,55,22,0.22);
+      font-style:normal;
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .dice-resolution-rolls .character-roll { min-height:118px; }
+    .character-roll-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(128px,1fr)); gap:8px; }
+    .character-roll {
+      text-align:center;
+      display:grid;
+      grid-template-rows:auto auto auto;
+      justify-items:center;
+      gap:6px;
+      min-height:126px;
+      padding:9px 8px;
+      border-color:rgba(148,163,184,0.38);
+      background:linear-gradient(180deg, rgba(15,23,42,0.86), rgba(2,6,23,0.72));
+      color:#cbd5e1;
+    }
+    .character-roll:disabled { opacity:1; cursor:default; }
+    .character-roll:not(:disabled):hover { border-color:rgba(212,168,83,0.7); color:#f8fafc; }
+    .character-roll.selected {
+      border-color:var(--gold);
+      background:linear-gradient(180deg, rgba(74,55,22,0.46), rgba(15,23,42,0.86));
+      box-shadow:0 0 0 1px rgba(212,168,83,0.38), 0 0 18px rgba(212,168,83,0.16);
+    }
+    .character-roll.is-select-pulse .roll-die,
+    .character-roll.selected .roll-die { animation:diceSelectPulse 0.34s ease-out; }
+    .character-roll.relevant .roll-die { box-shadow:0 0 0 1px rgba(212,168,83,0.36), 0 0 14px rgba(212,168,83,0.18); }
+    .character-roll.black-roll { border-color:rgba(248,113,113,0.78); background:rgba(127,29,29,0.22); }
+    .character-roll.is-black-entering .roll-die { animation:blackDiceDrop 0.54s cubic-bezier(0.18,1.28,0.32,1); }
+    .character-roll.grounded-roll { border-color:rgba(96,165,250,0.82); box-shadow:0 0 12px rgba(96,165,250,0.2); }
+    .roll-die {
+      width:58px;
+      height:58px;
+      border-radius:12px;
+      border:1px solid rgba(148,163,184,0.5);
+      display:grid;
+      place-items:center;
+      background:radial-gradient(circle at 30% 22%, rgba(255,255,255,0.14), transparent 28%), linear-gradient(145deg,#111827,#020617);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,0.04), 0 8px 18px rgba(0,0,0,0.24);
+    }
+    .roll-die.face-field { border-color:rgba(251,146,60,0.72); color:#fed7aa; }
+    .roll-die.face-cog { border-color:rgba(96,165,250,0.78); color:#bfdbfe; }
+    .roll-die.face-content { border-color:rgba(250,204,21,0.72); color:#fde68a; }
+    .roll-die.face-social { border-color:rgba(34,197,94,0.72); color:#bbf7d0; }
+    .roll-die.face-blank { border-style:dashed; color:#64748b; }
+    .roll-die.face-risk,
+    .roll-die.face-black { background:rgba(127,29,29,0.36); border-color:rgba(248,113,113,0.84); color:#fecaca; }
+    .roll-die.face-rolling {
+      color:#93c5fd;
+      border-color:#60a5fa;
+      background:linear-gradient(160deg,#0b1220,#10223d);
+      animation:diceRolling 0.22s linear infinite;
+      box-shadow:0 0 0 1px rgba(96,165,250,0.2) inset, 0 0 16px rgba(59,130,246,0.36);
+    }
+    .character-roll.is-landing .roll-die { animation:diceLand 0.32s cubic-bezier(0.2,1.3,0.2,1); }
+    .roll-die-face { font-weight:900; font-size:14px; line-height:1.1; padding:0 4px; overflow-wrap:anywhere; }
+    .roll-owner { display:flex; align-items:center; justify-content:center; gap:6px; width:100%; font-size:12px; color:#cbd5e1; min-width:0; }
+    .roll-owner span:last-child { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .roll-owner img { width:24px; height:24px; border-radius:999px; object-fit:cover; border:1px solid var(--line); flex:0 0 auto; }
+    .roll-state { font-size:11px; color:#94a3b8; }
+    .character-roll.selected .roll-state { color:#fde68a; }
+    .character-roll.is-rolling .roll-state { color:#93c5fd; }
+    .character-roll.is-readonly { pointer-events:none; }
+    @keyframes diceLand {
+      0% { transform:translateY(-12px) rotate(15deg) scale(1.14); filter:brightness(1.35); }
+      58% { transform:translateY(2px) rotate(-4deg) scale(0.96); }
+      100% { transform:translateY(0) rotate(0deg) scale(1); filter:brightness(1); }
+    }
+    @keyframes diceSelectPulse {
+      0% { transform:scale(1); box-shadow:0 0 0 rgba(212,168,83,0); }
+      45% { transform:scale(1.08); box-shadow:0 0 22px rgba(212,168,83,0.28); }
+      100% { transform:scale(1); }
+    }
+    @keyframes diceFlyToTray {
+      0% { transform:translate(0,0) scale(1); opacity:1; }
+      78% { opacity:0.88; }
+      100% { transform:translate(var(--fly-dx), var(--fly-dy)) scale(0.58); opacity:0; }
+    }
+    @keyframes blackDiceDrop {
+      0% { transform:translateY(-18px) rotate(-12deg) scale(1.2); opacity:0; filter:brightness(1.8); }
+      62% { transform:translateY(3px) rotate(4deg) scale(0.96); opacity:1; }
+      100% { transform:translateY(0) rotate(0deg) scale(1); filter:brightness(1); }
+    }
+    @keyframes diceResolutionEnter {
+      0% { transform:translateY(8px) scale(0.99); opacity:0.45; }
+      100% { transform:translateY(0) scale(1); opacity:1; }
+    }
+    @keyframes diceResultSuccess {
+      0% { background:rgba(20,83,45,0.2); }
+      100% { background:linear-gradient(180deg, rgba(15,23,42,0.9), rgba(2,6,23,0.66)); }
+    }
+    @keyframes diceResultFail {
+      0% { transform:translateX(-3px); background:rgba(127,29,29,0.24); }
+      40% { transform:translateX(3px); }
+      100% { transform:translateX(0); background:linear-gradient(180deg, rgba(15,23,42,0.9), rgba(2,6,23,0.66)); }
+    }
+    @keyframes diceResultCrit {
+      0% { transform:scale(0.98); box-shadow:0 0 0 rgba(250,204,21,0); }
+      45% { transform:scale(1.02); box-shadow:0 0 26px rgba(250,204,21,0.28); }
+      100% { transform:scale(1); box-shadow:0 0 0 rgba(250,204,21,0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .roll-die.face-rolling,
+      .character-roll.is-landing .roll-die,
+      .character-roll.is-select-pulse .roll-die,
+      .character-roll.selected .roll-die,
+      .character-roll.is-black-entering .roll-die,
+      .black-intervention-panel.is-active,
+      .black-intervention-panel.is-active .black-intervention-die,
+      .selected-dice-chip,
+      .dice-fly-ghost,
+      .dice-resolution-card { animation:none !important; }
+    }
+    @media (max-width: 620px) {
+      .modal-mask.dice-select-modal { padding:10px; align-items:stretch; }
+      .modal-mask.dice-select-modal .modal-card { width:100%; max-height:calc(100vh - 20px); border-radius:12px; padding:12px; }
+      .modal-mask.dice-select-modal .modal-actions { gap:6px; }
+      .dice-select-head { grid-template-columns:1fr; }
+      .dice-select-result { justify-self:start; }
+      .character-roll-grid { grid-template-columns:repeat(auto-fit,minmax(112px,1fr)); }
+    }
     .phase-label { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.35rem; }
     .result-banner { font-size: 1.1rem; font-weight: 700; color: var(--gold); margin: 0.75rem 0 0.35rem; }
     .hidden { display: none !important; }

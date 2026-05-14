@@ -1,21 +1,25 @@
 # GDD 索引
 
-本目录是 Angus 当前正式玩法设计层。阅读和更新时，以 `game-concept.md -> game-pillars.md -> systems-index.md` 作为上层真源；其余 GDD 默认服务于“7 天周循环 + 内容生产链 + 势力干预与长期反馈”这条主链。
+本目录是 Angus 当前正式玩法设计层。阅读和更新时，以 `core-experience.md -> game-concept.md -> game-pillars.md -> gameplay-design-principles.md -> systems-index.md` 作为上层真源；其余 GDD 默认服务于“7 天周循环 + 内容生产链 + 势力干预与长期反馈”这条主链。
 
 ## 建议阅读顺序
 
 | 顺序 | 文档 | 作用 |
 |------|------|------|
-| 1 | `game-concept.md` | 定义产品身份、核心幻想、范围与 MVP 假设 |
-| 2 | `game-pillars.md` | 作为范围判断与实现取舍的决策过滤器 |
-| 3 | `systems-index.md` | 作为当前系统真源与设计优先级索引 |
+| 1 | `core-experience.md` | 定义核心体验 One Page，作为 AI 与团队的最高层体验锚点 |
+| 2 | `game-concept.md` | 定义产品身份、核心幻想、范围与 MVP 假设 |
+| 3 | `game-pillars.md` | 作为范围判断与实现取舍的决策过滤器 |
+| 4 | `gameplay-design-principles.md` | 把核心体验翻译成玩法规则设计准绳 |
+| 5 | `systems-index.md` | 作为当前系统真源与设计优先级索引 |
 
 ## 当前正式文档
 
 | 文档 | 用途 |
 |------|------|
+| `core-experience.md` | 核心体验 One Page；定义玩家情绪曲线、真相观、反噬边界与跨模块设计判断题 |
 | `game-concept.md` | 产品身份、核心幻想、范围与循环的高层定义 |
 | `game-pillars.md` | 作为范围判断与实现取舍的决策过滤器 |
+| `gameplay-design-principles.md` | 玩法规则设计原则；指导任务、骰子、黑骰、深度链、路线和反噬设计 |
 | `systems-index.md` | 当前系统真源、系统地图与设计优先级 |
 | `weekly-run-loop.md` | 周结构、阶段切换、长期状态与周内状态划分 |
 | `turn-start-events-and-cycle-tasks.md` | 每周 Day 1 的起始事件、任务生成与周内约束 |

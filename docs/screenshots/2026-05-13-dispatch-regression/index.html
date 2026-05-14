@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2026-05-13 派遣全链回归截图</title>
+  <style>
+    body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#10141d;color:#eef2ff;line-height:1.6;}
+    main{max-width:1180px;margin:0 auto;padding:32px 18px 56px;}
+    h1{font-size:28px;margin:0 0 8px;}
+    h2{font-size:20px;margin:28px 0 10px;}
+    p{color:#cbd5e1;margin:0 0 18px;}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;}
+    figure{margin:0;background:#171d2a;border:1px solid #2d3748;border-radius:8px;overflow:hidden;}
+    img{display:block;width:100%;height:auto;}
+    figcaption{padding:10px 12px;color:#d8dee9;font-size:14px;}
+    pre{white-space:pre-wrap;background:#0b1020;border:1px solid #253044;border-radius:8px;padding:12px;color:#cbd5e1;overflow:auto;}
+  </style>
+</head>
+<body>
+<main>
+  <h1>派遣配置全链回归截图</h1>
+  <p>覆盖路径：完整全链默认新版 → 全球地图 → 北美 → 突发任务 → 角色/道具/临时线人 → 开始调查 → 下一天 → 到期结算 → 回区域。生成时间：2026-05-13。</p>
+  <p>关键断言：配置页隐藏浮动下一天；已选道具进入本次骰池；到期掷骰包含已消耗的一次性道具骰和临时线人；红色截稿任务结算后关闭；390px 窄屏无横向滚动。</p>
+  <div class="grid">
+    <figure><a href="01-region-before-dispatch.png"><img src="01-region-before-dispatch.png" alt="进入完整全链默认新版后，北美区域的突发任务仍可从真实区域地图打开。" /></a><figcaption>进入完整全链默认新版后，北美区域的突发任务仍可从真实区域地图打开。</figcaption></figure>
+    <figure><a href="02-setup-selected-tool-temp.png"><img src="02-setup-selected-tool-temp.png" alt="新版派遣配置：本次骰池、一次性道具、临时线人和候选角色选择同屏生效。" /></a><figcaption>新版派遣配置：本次骰池、一次性道具、临时线人和候选角色选择同屏生效。</figcaption></figure>
+    <figure><a href="03-region-assigned.png"><img src="03-region-assigned.png" alt="点击开始调查后返回区域，任务进入已派遣状态。" /></a><figcaption>点击开始调查后返回区域，任务进入已派遣状态。</figcaption></figure>
+    <figure><a href="04-dice-selection-with-tool-temp.png"><img src="04-dice-selection-with-tool-temp.png" alt="推进到期结算时，掷骰池同时包含夜视相机组和临时线人。" /></a><figcaption>推进到期结算时，掷骰池同时包含夜视相机组和临时线人。</figcaption></figure>
+    <figure><a href="05-result-after-settlement.png"><img src="05-result-after-settlement.png" alt="采用推荐后进入真实结算页，奖励弹窗已完成。" /></a><figcaption>采用推荐后进入真实结算页，奖励弹窗已完成。</figcaption></figure>
+    <figure><a href="06-region-after-red-retired.png"><img src="06-region-after-red-retired.png" alt="红色截稿任务结算后从区域地图关闭。" /></a><figcaption>红色截稿任务结算后从区域地图关闭。</figcaption></figure>
+    <figure><a href="07-mobile-region-entry.png"><img src="07-mobile-region-entry.png" alt="窄屏区域入口截图。" /></a><figcaption>窄屏区域入口截图。</figcaption></figure>
+    <figure><a href="08-mobile-dispatch-setup-selected.png"><img src="08-mobile-dispatch-setup-selected.png" alt="窄屏新版派遣配置已选状态截图。" /></a><figcaption>窄屏新版派遣配置已选状态截图。</figcaption></figure>
+  </div>
+  <h2>自动断言摘要</h2>
+  <pre>{
+  "setupAudit": {
+    "hasNewShell": true,
+    "nextHidden": true,
+    "hasSummary": true,
+    "hasPool": true,
+    "hasResources": true,
+    "hasRisk": true,
+    "hasCandidates": true,
+    "actionText": "开始调查（2天后判定）"
+  },
+  "selectedAudit": {
+    "selectedStaff": [
+      "s1",
+      "s6",
+      "temp_stringer"
+    ],
+    "poolText": "本次骰池\n已选 3/3 人 \n印第安纳穷死\n探索+3 / 生存+1\n探索2\n探索1\n胆识2\n生存1\n洞察1\n空\n伪人\n探索+2 / 生存+1\n人脉2\n探索2\n洞察1\n诡思1\n生存1\n空\n临时线人 · 临时\n探索+1\n人脉2\n人脉1\n洞察1\n探索1\n空\n空\n道\n夜视相机组\n不占人数 · 一次性\n洞察1\n洞察2\n探索1\n探索1\n空\n空\n需求覆盖\n风险：中\n探索\n8 / 5 · 已覆盖\n生存\n2 / 3 · 缺 1\n缺口 生存1；相关面 8，空面 6。\n加入 艾灵：生存+1；加入后仍缺 生存1；风险 中\n开始调查（2天后判定）\n可出发；最多 3 人，当前 3 人。",
+    "runDisabled": false
+  },
+  "assignedAudit": {
+    "buttonText": "查看派遣",
+    "hasAssignedChip": true,
+    "hasAssignedMark": true
+  },
+  "diceAudit": {
+    "hasTool": true,
+    "hasTemp": true,
+    "diceCount": 4
+  },
+  "rewardClicks": 2,
+  "retiredAudit": {
+    "hasTempUfoButton": false,
+    "hasTempUfoPoint": false
+  },
+  "mobileAudit": {
+    "width": 390,
+    "scrollWidth": 390,
+    "hasHorizontalOverflow": false,
+    "hasPool": true,
+    "hasAction": true,
+    "overflowing": []
+  }
+}</pre>
+</main>
+</body>
+</html>

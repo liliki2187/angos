@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2026-05-13 派遣截稿任务头复验</title>
+  <style>body{margin:0;background:#10141d;color:#eef2ff;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.6;}main{max-width:1180px;margin:0 auto;padding:32px 18px 56px;}h1{font-size:28px;margin:0 0 8px;}p{color:#cbd5e1;margin:0 0 18px;}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:18px;}figure{margin:0;background:#171d2a;border:1px solid #2d3748;border-radius:8px;overflow:hidden;}img{display:block;width:100%;height:auto;}figcaption{padding:10px 12px;color:#d8dee9;font-size:14px;}pre{white-space:pre-wrap;background:#0b1020;border:1px solid #253044;border-radius:8px;padding:12px;color:#cbd5e1;overflow:auto;}</style>
+</head>
+<body><main>
+<h1>派遣截稿任务头复验</h1>
+<p>桌面主视口验证：移除重复的“红色截稿”标签和旧红条，将最重要的剩余时间提升为右侧倒计时块。</p>
+<div class="grid">
+<figure><a href="01-deadline-header-empty.png"><img src="01-deadline-header-empty.png" alt="截稿任务头空骰池" /></a><figcaption>01 · 空骰池状态：右侧显示“截稿关闭 / 剩余 3天”，下方只保留低权重后果说明。</figcaption></figure>
+<figure><a href="02-deadline-header-selected.png"><img src="02-deadline-header-selected.png" alt="截稿任务头已选状态" /></a><figcaption>02 · 已选状态：倒计时块保留，派遣配置链路仍可正常开始调查。</figcaption></figure>
+</div>
+<h2>自动断言摘要</h2>
+<pre>{
+  "emptyAudit": {
+    "taskText": "突发：雷达异常光点\n危险\n探索任务 · 耗时 2天 · 需求 探索5 / 生存3\n截稿关闭\n剩余 3天\n成功或失败后都会结束；失败可能造成队员状态损伤",
+    "hasRedTag": false,
+    "hasDangerTag": true,
+    "hasDeadlineBlock": true,
+    "hasStrongRemaining": true,
+    "hasWarningBox": false,
+    "deadlineWidth": 126,
+    "deadlineHeight": 55
+  },
+  "selectedAudit": {
+    "selected": [
+      "s1",
+      "s6",
+      "temp_stringer"
+    ],
+    "hasToolInPool": true,
+    "runDisabled": false
+  }
+}</pre>
+</main></body></html>

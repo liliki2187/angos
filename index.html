@@ -158,16 +158,17 @@
   <main>
     <header>
       <h1>Angus 任务探索 UI 入口</h1>
-      <p class="lead">当前入口优先进入已确认的任务探索 UI；完整全链试玩已同步区域任务卡、地图符号、耗时与倒计时、深度链叠层等当前版本表达。</p>
+      <p class="lead">当前入口优先进入完整全链试玩；已同步全球地图选择、区域任务卡、派遣配置、地图符号、耗时与倒计时、深度链叠层等当前版本表达。</p>
     </header>
 
     <section class="primary-card" aria-labelledby="main-demo-title">
       <div>
-        <h2 class="card-title" id="main-demo-title">任务探索页 UI 当前版本</h2>
-        <p class="card-desc">这里体验刚确认过的任务探索 UI：地图任务标识、任务卡符号、耗时与倒计时、深度链叠层、危险与黑骰表达都在这个页面验证。完整全链试玩也已同步这套区域任务卡表达。</p>
+        <h2 class="card-title" id="main-demo-title">完整全链试玩当前版本</h2>
+        <p class="card-desc">这里体验刚确认过的探索 UI：全球地图先选区域，再进入选中区域；区域内继续验证任务符号、派遣配置、本次骰池、耗时与倒计时、深度链叠层、危险与黑骰表达。</p>
       </div>
       <div class="actions">
-        <a class="button" href="design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?v=20260513-full-chain-task-ui-sync">进入完整全链试玩</a>
+        <a class="button" href="design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?v=20260513-dice-roll-v7">进入完整全链试玩</a>
+        <a class="button secondary" href="design/prototypes/html/labs/dice-animation-lab.html?v=20260513-dice-motion-lab-v1">骰子动效实验页</a>
         <a class="button secondary" href="design/prototypes/html/labs/task-card-symbol-language.html?v=20260512-label-safe-zone">任务探索 UI 实验页</a>
       </div>
     </section>
@@ -175,8 +176,8 @@
     <section class="grid" aria-label="常用入口">
       <article class="link-card">
         <h2>完整全链试玩</h2>
-        <p>用于跑通探索、任务配置、角色骰、合成、报刊组版与结算；区域任务卡已同步当前任务探索 UI。</p>
-        <a href="design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?v=20260513-full-chain-task-ui-sync">打开全链试玩</a>
+        <p>用于跑通探索、任务配置、角色骰、合成、报刊组版与结算；全球地图与区域任务卡已同步当前探索 UI。</p>
+        <a href="design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?v=20260513-dice-roll-v7">打开全链试玩</a>
       </article>
       <article class="link-card">
         <h2>报刊组版实验</h2>
@@ -184,9 +185,19 @@
         <a href="design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?paperlab=1&v=20260512-index-secondary">打开组版实验</a>
       </article>
       <article class="link-card">
+        <h2>旧派遣配置回退</h2>
+        <p>新版派遣配置已进入完整全链默认路径；这里仅用于对照旧版配置页。</p>
+        <a href="design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?dispatchold=1&v=20260513-dice-roll-v7">打开旧派遣页</a>
+      </article>
+      <article class="link-card">
         <h2>探索骰子旧页</h2>
         <p>早期探索骰子 HTML 参考页，主要用于比对旧玩法表达。</p>
         <a href="design/prototypes/html/full-chain-demo/world-mysteries-explore-dice.html">打开旧探索页</a>
+      </article>
+      <article class="link-card">
+        <h2>骰子动效实验</h2>
+        <p>独立视觉实验页，分类查看摇骰、停骰、计入飞入、黑骰介入、锁定 / 重投与结果收束；尚未套用到完整全链。</p>
+        <a href="design/prototypes/html/labs/dice-animation-lab.html?v=20260513-dice-motion-lab-v1">打开动效实验</a>
       </article>
       <article class="link-card">
         <h2>设计真源</h2>
@@ -201,7 +212,7 @@
     </section>
 
     <div class="tag-row" aria-label="提示">
-      <span class="tag">推荐入口：任务探索 UI 当前版</span>
+      <span class="tag">推荐入口：完整全链试玩当前版</span>
       <span class="tag">离线可用</span>
       <span class="tag">相对路径</span>
       <span class="tag">带版本参数防缓存</span>

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>派遣配置默认落地截图说明 · 2026-05-13</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121a2b;
+      --line: #2d3a55;
+      --text: #e5edf8;
+      --muted: #9fb0c8;
+      --gold: #d6a84f;
+      --blue: #78a8ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .page { width: min(1280px, calc(100vw - 32px)); margin: 0 auto; padding: 28px 0 48px; }
+    header,
+    article {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(18, 26, 43, 0.86);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
+    }
+    header { padding: 22px; }
+    h1 { margin: 0 0 8px; color: var(--gold); font-size: clamp(24px, 4vw, 38px); }
+    h2 { margin: 0 0 8px; color: #f2d28a; font-size: 20px; }
+    p { margin: 0 0 10px; }
+    .sub { color: var(--muted); max-width: 900px; }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px;
+      background: rgba(15, 23, 42, 0.72);
+    }
+    .pill b { display: block; color: var(--text); }
+    .pill span { color: var(--muted); font-size: 14px; }
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(11, 16, 32, 0.92);
+    }
+    .nav a {
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(120, 168, 255, 0.10);
+    }
+    article { margin: 16px 0; padding: 16px; }
+    .meta { color: var(--muted); font-size: 14px; }
+    img {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #050814;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 6px;
+      background: rgba(120, 168, 255, 0.12);
+      color: #dbeafe;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>派遣配置默认落地截图说明</h1>
+      <p class="sub">本页汇总 2026-05-13 的派遣配置默认落地。完整全链试玩现在默认使用新版派遣配置；旧版配置页通过 <code>?dispatchold=1</code> 保留为回退 / 对照入口。</p>
+      <div class="summary">
+        <div class="pill"><b>默认路径</b><span>不带派遣参数即可进入新版配置页。</span></div>
+        <div class="pill"><b>本次骰池</b><span>角色槽、道具槽、需求覆盖成为配置主区。</span></div>
+        <div class="pill"><b>主操作聚焦</b><span>派遣页隐藏浮动“下一天”，保留开始调查。</span></div>
+        <div class="pill"><b>回退口子</b><span><code>?dispatchold=1</code> 打开旧派遣配置。</span></div>
+      </div>
+    </header>
+
+    <nav class="nav" aria-label="截图导航">
+      <a href="#entry">01 入口</a>
+      <a href="#default">02 默认新版</a>
+      <a href="#selected">03 已选配置</a>
+      <a href="#fallback">04 旧版回退</a>
+      <a href="../2026-05-13-dispatch-review-poc/index.html">改动标注对照</a>
+    </nav>
+
+    <article id="entry">
+      <h2>01 · 根入口更新</h2>
+      <p class="meta">文件：<code>01-index-dispatch-default-entry.png</code></p>
+      <p>根入口说明完整全链试玩已包含派遣配置当前版；侧栏入口改为“旧派遣配置回退”，用于对照旧版。</p>
+      <img src="01-index-dispatch-default-entry.png" alt="根入口显示旧派遣配置回退入口截图" />
+    </article>
+
+    <article id="default">
+      <h2>02 · 默认路径进入新版派遣配置</h2>
+      <p class="meta">文件：<code>02-default-dispatch-config.png</code></p>
+      <p>不带派遣实验参数打开完整全链，进入“突发：雷达异常光点”后直接显示新版配置页：任务摘要变为窄条，本次骰池与需求覆盖成为主判断区。</p>
+      <img src="02-default-dispatch-config.png" alt="默认路径进入新版派遣配置截图" />
+    </article>
+
+    <article id="selected">
+      <h2>03 · 已选择角色与道具后的默认新版</h2>
+      <p class="meta">文件：<code>03-default-dispatch-selected.png</code></p>
+      <p>选入 2 名角色与夜视相机组后，需求覆盖、缺口、风险和开始调查按钮实时更新，验证新版配置页的核心交互已经进入默认路径。</p>
+      <img src="03-default-dispatch-selected.png" alt="默认路径中已选择角色与道具后的新版派遣配置截图" />
+    </article>
+
+    <article id="fallback">
+      <h2>04 · 旧版配置回退入口</h2>
+      <p class="meta">文件：<code>04-old-dispatch-fallback.png</code></p>
+      <p>使用 <code>?dispatchold=1</code> 可以回到旧版派遣配置页，便于继续比较改动成本和视觉差异。</p>
+      <img src="04-old-dispatch-fallback.png" alt="旧版派遣配置回退截图" />
+    </article>
+  </main>
+</body>
+</html>

@@ -1,0 +1,828 @@
+<!--
+PROTOTYPE - NOT FOR PRODUCTION
+Question: 角色骰判定需要哪些可复用的动作语言，才能让玩家看懂摇骰、黑骰、计入和收束？
+Date: 2026-05-13
+-->
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>角色骰动效实验台</title>
+  <style>
+    :root {
+      --bg: #070b13;
+      --panel: #101826;
+      --panel-2: #0b1220;
+      --line: rgba(148, 163, 184, 0.28);
+      --line-strong: rgba(212, 168, 83, 0.48);
+      --gold: #d4a853;
+      --gold-soft: #fde68a;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --blue: #60a5fa;
+      --green: #34d399;
+      --red: #f87171;
+      --red-deep: #45151c;
+      --shadow: rgba(0, 0, 0, 0.46);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        linear-gradient(rgba(7, 11, 19, 0.86), rgba(7, 11, 19, 0.94)),
+        radial-gradient(circle at 16% 18%, rgba(96, 165, 250, 0.13), transparent 28%),
+        radial-gradient(circle at 86% 10%, rgba(248, 113, 113, 0.12), transparent 22%),
+        #05070d;
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    button, a { font: inherit; }
+    button,
+    .link-button {
+      border: 1px solid rgba(148, 163, 184, 0.32);
+      border-radius: 8px;
+      background: #172033;
+      color: #dbeafe;
+      min-height: 36px;
+      padding: 7px 10px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    button:hover,
+    .link-button:hover { border-color: rgba(212, 168, 83, 0.7); color: #fff7d6; }
+    button.primary {
+      border-color: rgba(212, 168, 83, 0.72);
+      background: linear-gradient(180deg, rgba(91, 69, 28, 0.92), rgba(42, 35, 18, 0.94));
+      color: var(--gold-soft);
+      font-weight: 900;
+    }
+
+    .app {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 18px 0 26px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+    h1 {
+      margin: 0;
+      color: var(--gold-soft);
+      font-size: 24px;
+      line-height: 1.2;
+    }
+    .sub {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .top-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .lab-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.03fr) minmax(330px, 0.97fr);
+      gap: 12px;
+      align-items: start;
+    }
+
+    .section {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.68);
+      box-shadow: 0 16px 36px var(--shadow);
+      padding: 11px;
+      overflow: hidden;
+    }
+    .section + .section { margin-top: 12px; }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .section h2 {
+      margin: 0;
+      color: var(--gold);
+      font-size: 16px;
+      line-height: 1.25;
+    }
+    .tagline {
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .dice-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+      gap: 8px;
+    }
+    .dice-card {
+      min-height: 132px;
+      display: grid;
+      justify-items: center;
+      align-content: center;
+      gap: 7px;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      border-radius: 9px;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.86), rgba(2, 6, 23, 0.72));
+      padding: 9px;
+      position: relative;
+      overflow: hidden;
+    }
+    .dice-card.selected {
+      border-color: rgba(212, 168, 83, 0.72);
+      box-shadow: 0 0 0 1px rgba(212, 168, 83, 0.2), 0 0 18px rgba(212, 168, 83, 0.12);
+    }
+    .dice-card.black {
+      border-color: rgba(248, 113, 113, 0.72);
+      background: linear-gradient(180deg, rgba(69, 21, 28, 0.72), rgba(15, 23, 42, 0.72));
+    }
+    .dice-card.muted { opacity: 0.66; }
+    .dice-card.locked::after {
+      content: "锁";
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: #bfdbfe;
+      border: 1px solid rgba(96, 165, 250, 0.52);
+      background: rgba(30, 64, 175, 0.18);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .die {
+      width: 62px;
+      height: 62px;
+      border-radius: 13px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      display: grid;
+      place-items: center;
+      color: #dbeafe;
+      background:
+        radial-gradient(circle at 30% 21%, rgba(255, 255, 255, 0.16), transparent 27%),
+        linear-gradient(145deg, #111827, #020617);
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+        0 10px 20px rgba(0, 0, 0, 0.32);
+      transform-origin: 50% 60%;
+      position: relative;
+    }
+    .die b {
+      display: block;
+      max-width: 54px;
+      padding: 0 4px;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.08;
+      overflow-wrap: anywhere;
+      font-weight: 900;
+    }
+    .die.field { border-color: rgba(251, 146, 60, 0.72); color: #fed7aa; }
+    .die.cog { border-color: rgba(96, 165, 250, 0.78); color: #bfdbfe; }
+    .die.social { border-color: rgba(52, 211, 153, 0.74); color: #bbf7d0; }
+    .die.content { border-color: rgba(250, 204, 21, 0.72); color: #fde68a; }
+    .die.blank { border-style: dashed; color: #64748b; }
+    .die.black {
+      border-color: rgba(248, 113, 113, 0.86);
+      color: #fecaca;
+      background:
+        radial-gradient(circle at 34% 22%, rgba(255, 255, 255, 0.14), transparent 28%),
+        linear-gradient(145deg, #45151c, #12070a);
+      box-shadow: 0 0 0 1px rgba(248, 113, 113, 0.24) inset, 0 0 18px rgba(248, 113, 113, 0.24);
+    }
+
+    .caption {
+      width: 100%;
+      color: #cbd5e1;
+      font-size: 12px;
+      text-align: center;
+      line-height: 1.35;
+    }
+    .caption strong {
+      display: block;
+      color: #f8fafc;
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .tray-zone {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, 0.72fr);
+      gap: 10px;
+      align-items: stretch;
+    }
+    .tray {
+      min-height: 118px;
+      border: 1px solid rgba(212, 168, 83, 0.42);
+      border-radius: 10px;
+      background: rgba(74, 55, 22, 0.15);
+      padding: 9px;
+      display: grid;
+      align-content: start;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .tray-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--gold-soft);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .tray-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      min-height: 58px;
+      align-content: start;
+    }
+    .chip {
+      min-width: 72px;
+      border: 1px solid rgba(148, 163, 184, 0.36);
+      border-radius: 8px;
+      background: #0b1220;
+      padding: 6px 8px;
+      display: grid;
+      gap: 2px;
+      animation: chipPop 0.18s ease-out;
+    }
+    .chip b { color: #f8fafc; font-size: 12px; }
+    .chip small { color: var(--muted); font-size: 11px; white-space: nowrap; }
+    .chip.good { border-color: rgba(212, 168, 83, 0.68); box-shadow: 0 0 14px rgba(212, 168, 83, 0.12); }
+    .chip.black { border-color: rgba(248, 113, 113, 0.72); background: rgba(69, 21, 28, 0.42); }
+    .chip.bad { border-style: dashed; opacity: 0.72; }
+
+    .impact {
+      border: 1px solid rgba(148, 163, 184, 0.26);
+      border-radius: 10px;
+      background: rgba(2, 6, 23, 0.42);
+      padding: 9px;
+      display: grid;
+      align-content: center;
+      gap: 5px;
+      min-height: 118px;
+    }
+    .impact strong { color: var(--gold-soft); font-size: 13px; }
+    .impact span { color: #cbd5e1; font-size: 12px; line-height: 1.45; }
+
+    .black-panel {
+      border: 1px solid rgba(248, 113, 113, 0.54);
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(69, 21, 28, 0.58), rgba(15, 23, 42, 0.74));
+      padding: 10px;
+      display: grid;
+      gap: 10px;
+    }
+    .black-panel.active {
+      animation: blackPanelPulse 0.82s ease-out;
+      box-shadow: 0 0 0 1px rgba(248, 113, 113, 0.24), 0 0 24px rgba(248, 113, 113, 0.18);
+    }
+    .black-panel-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: #fecaca;
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .black-track {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .result-tile {
+      min-height: 96px;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      border-radius: 9px;
+      background: rgba(2, 6, 23, 0.42);
+      padding: 9px;
+      display: grid;
+      gap: 6px;
+      align-content: center;
+      text-align: center;
+    }
+    .result-tile strong { color: #f8fafc; font-size: 15px; }
+    .result-tile span { color: var(--muted); font-size: 12px; }
+    .result-tile.success.active { border-color: rgba(52, 211, 153, 0.62); animation: resultSuccess 0.72s ease-out; }
+    .result-tile.fail.active { border-color: rgba(248, 113, 113, 0.62); animation: resultFail 0.72s ease-out; }
+    .result-tile.crit.active { border-color: rgba(250, 204, 21, 0.78); animation: resultCrit 0.9s ease-out; }
+
+    .motion-roll { animation: diceTumble 0.24s linear infinite, diceBlur 0.42s ease-in-out infinite; }
+    .motion-land { animation: diceLand 0.32s cubic-bezier(0.2, 1.3, 0.2, 1); }
+    .motion-select { animation: selectPulse 0.34s ease-out; }
+    .motion-black-drop { animation: blackDrop 0.52s cubic-bezier(0.18, 1.28, 0.32, 1); }
+    .motion-corrupt { animation: corruptFlicker 0.72s steps(2, end); }
+    .motion-lock { animation: lockClick 0.26s ease-out; }
+    .motion-reroll { animation: rerollSpin 0.56s ease-in-out; }
+
+    .fly-ghost {
+      position: fixed;
+      z-index: 50;
+      pointer-events: none;
+      animation: flyToTray 0.52s cubic-bezier(0.17, 0.84, 0.26, 1) forwards;
+    }
+
+    .audit-strip {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .motion-token {
+      min-height: 64px;
+      border: 1px solid rgba(148, 163, 184, 0.26);
+      border-radius: 8px;
+      background: rgba(2, 6, 23, 0.42);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: #cbd5e1;
+      font-size: 12px;
+      padding: 7px;
+    }
+
+    @keyframes diceTumble {
+      0% { transform: translateY(0) rotate(0deg) scale(1); }
+      24% { transform: translateY(-5px) rotate(9deg) scale(1.08); }
+      50% { transform: translateY(2px) rotate(-8deg) scale(0.98); }
+      78% { transform: translateY(-2px) rotate(5deg) scale(1.05); }
+      100% { transform: translateY(0) rotate(0deg) scale(1); }
+    }
+    @keyframes diceBlur {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.28) blur(0.2px); }
+    }
+    @keyframes diceLand {
+      0% { transform: translateY(-12px) rotate(15deg) scale(1.14); filter: brightness(1.35); }
+      58% { transform: translateY(2px) rotate(-4deg) scale(0.96); }
+      100% { transform: translateY(0) rotate(0deg) scale(1); filter: brightness(1); }
+    }
+    @keyframes selectPulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 rgba(212, 168, 83, 0); }
+      45% { transform: scale(1.08); box-shadow: 0 0 22px rgba(212, 168, 83, 0.28); }
+      100% { transform: scale(1); }
+    }
+    @keyframes chipPop {
+      0% { transform: scale(0.88); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes flyToTray {
+      0% { transform: translate(0, 0) scale(1); opacity: 1; }
+      78% { opacity: 0.88; }
+      100% { transform: translate(var(--dx), var(--dy)) scale(0.58); opacity: 0; }
+    }
+    @keyframes blackDrop {
+      0% { transform: translateY(-18px) rotate(-12deg) scale(1.2); opacity: 0; filter: brightness(1.8); }
+      62% { transform: translateY(3px) rotate(4deg) scale(0.96); opacity: 1; }
+      100% { transform: translateY(0) rotate(0deg) scale(1); filter: brightness(1); }
+    }
+    @keyframes blackPanelPulse {
+      0% { transform: translateY(-4px) scale(0.99); filter: brightness(1.36); }
+      70% { transform: translateY(1px) scale(1.01); filter: brightness(1.06); }
+      100% { transform: translateY(0) scale(1); filter: brightness(1); }
+    }
+    @keyframes corruptFlicker {
+      0% { transform: translateX(0); filter: hue-rotate(0deg); }
+      18% { transform: translateX(-2px); filter: hue-rotate(-18deg); }
+      34% { transform: translateX(2px); filter: hue-rotate(14deg); }
+      52% { transform: translateX(-1px); filter: brightness(1.3); }
+      100% { transform: translateX(0); filter: none; }
+    }
+    @keyframes lockClick {
+      0% { transform: scale(1); }
+      45% { transform: scale(0.92); }
+      100% { transform: scale(1); }
+    }
+    @keyframes rerollSpin {
+      0% { transform: rotate(0deg) scale(1); }
+      55% { transform: rotate(210deg) scale(1.08); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+    @keyframes resultSuccess {
+      0% { transform: translateY(6px); background: rgba(20, 83, 45, 0.18); }
+      100% { transform: translateY(0); background: rgba(2, 6, 23, 0.42); }
+    }
+    @keyframes resultFail {
+      0% { transform: translateX(-3px); background: rgba(69, 21, 28, 0.3); }
+      40% { transform: translateX(3px); }
+      100% { transform: translateX(0); background: rgba(2, 6, 23, 0.42); }
+    }
+    @keyframes resultCrit {
+      0% { transform: scale(0.96); box-shadow: 0 0 0 rgba(250, 204, 21, 0); }
+      45% { transform: scale(1.04); box-shadow: 0 0 26px rgba(250, 204, 21, 0.28); }
+      100% { transform: scale(1); box-shadow: 0 0 0 rgba(250, 204, 21, 0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+    }
+
+    @media (max-width: 900px) {
+      .lab-grid { grid-template-columns: 1fr; }
+      .tray-zone { grid-template-columns: 1fr; }
+      .black-track { grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); }
+      .result-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .audit-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px) {
+      .app { width: min(100vw - 20px, 1180px); padding-top: 10px; }
+      .topbar { grid-template-columns: 1fr; }
+      .top-actions { justify-content: stretch; }
+      .top-actions button, .top-actions a { flex: 1 1 120px; }
+      h1 { font-size: 20px; }
+      .section-head { align-items: flex-start; flex-direction: column; gap: 4px; }
+      .tagline { white-space: normal; }
+      .dice-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .dice-card { min-height: 126px; }
+      .result-grid { grid-template-columns: 1fr; }
+      .audit-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <h1>角色骰动效实验台</h1>
+        <div class="sub">独立视觉实验页：用于比较骰子动作语言，尚未套用到完整全链试玩。</div>
+      </div>
+      <div class="top-actions">
+        <button type="button" class="primary" id="replayAll">重播全部</button>
+        <button type="button" id="pauseLoop">暂停循环</button>
+        <a class="link-button" href="../full-chain-demo/world-mysteries-full-chain.html?v=20260513-dice-roll-v7">返回全链</a>
+      </div>
+    </header>
+
+    <div class="lab-grid">
+      <div>
+        <section class="section" id="rollSection">
+          <div class="section-head">
+            <h2>01 · 基础摇骰与停骰</h2>
+            <span class="tagline">先快速抖动，再逐颗落定</span>
+          </div>
+          <div class="dice-row" id="rollDice">
+            <div class="dice-card" data-face="洞察2" data-kind="cog"><div class="die cog"><b>洞察2</b></div><div class="caption"><strong>摇骰中</strong>脸谱快速变化</div></div>
+            <div class="dice-card" data-face="胆识2" data-kind="field"><div class="die field"><b>胆识2</b></div><div class="caption"><strong>落定</strong>轻微回弹</div></div>
+            <div class="dice-card" data-face="诡思1" data-kind="content"><div class="die content"><b>诡思1</b></div><div class="caption"><strong>揭示</strong>亮度脉冲</div></div>
+            <div class="dice-card muted" data-face="空" data-kind="blank"><div class="die blank"><b>空</b></div><div class="caption"><strong>空面</strong>虚线降权</div></div>
+          </div>
+          <div class="controls">
+            <button type="button" data-run="roll">重播摇骰</button>
+            <button type="button" data-run="settle">只看停骰</button>
+          </div>
+        </section>
+
+        <section class="section" id="selectSection">
+          <div class="section-head">
+            <h2>02 · 选择、计入与飞入槽</h2>
+            <span class="tagline">点击骰面，反馈进入计入槽</span>
+          </div>
+          <div class="tray-zone">
+            <div class="dice-row" id="selectDice">
+              <button type="button" class="dice-card selected" data-pick="洞察2" data-tag="补需求" data-tone="good"><div class="die cog"><b>洞察2</b></div><div class="caption"><strong>补需求</strong>计入后高亮</div></button>
+              <button type="button" class="dice-card" data-pick="理性2" data-tag="不计" data-tone="bad"><div class="die cog"><b>理性2</b></div><div class="caption"><strong>任务外骰面</strong>可选但降权</div></button>
+              <button type="button" class="dice-card black" data-pick="替座" data-tag="黑骰" data-tone="black"><div class="die black"><b>替座</b></div><div class="caption"><strong>黑骰压力</strong>红色计入</div></button>
+            </div>
+            <div class="tray" id="tray">
+              <div class="tray-head"><span>计入槽</span><span id="trayCount">1 颗已选</span></div>
+              <div class="tray-list" id="trayList">
+                <span class="chip good"><b>洞察2</b><small>补需求</small></span>
+              </div>
+            </div>
+          </div>
+          <div class="controls">
+            <button type="button" data-run="fly">重播飞入</button>
+            <button type="button" id="clearTray">清空计入槽</button>
+          </div>
+        </section>
+
+        <section class="section" id="blackSection">
+          <div class="section-head">
+            <h2>03 · 黑骰介入与改写</h2>
+            <span class="tagline">红色冲击，不和普通成功混淆</span>
+          </div>
+          <div class="black-panel" id="blackPanel">
+            <div class="black-panel-head"><span>黑骰介入</span><span>混入 / 替座 / 污染</span></div>
+            <div class="black-track" id="blackTrack">
+              <div class="dice-card"><div class="die cog"><b>洞察2</b></div><div class="caption"><strong>原骰</strong>可计入</div></div>
+              <div class="dice-card"><div class="die field"><b>胆识2</b></div><div class="caption"><strong>原骰</strong>可计入</div></div>
+              <div class="dice-card black"><div class="die black"><b>混入</b></div><div class="caption"><strong>黑骰</strong>额外加入</div></div>
+              <div class="dice-card black"><div class="die black"><b>替座</b></div><div class="caption"><strong>黑骰</strong>替换队员</div></div>
+              <div class="dice-card"><div class="die content"><b>诡思1</b></div><div class="caption"><strong>标记</strong>被污染</div></div>
+            </div>
+          </div>
+          <div class="controls">
+            <button type="button" data-run="black">重播黑骰介入</button>
+            <button type="button" data-run="corrupt">只看污染闪烁</button>
+          </div>
+        </section>
+      </div>
+
+      <div>
+        <section class="section">
+          <div class="section-head">
+            <h2>04 · 固定状态：锁定、无效、重投</h2>
+            <span class="tagline">状态靠动作 + 边框，不靠长说明</span>
+          </div>
+          <div class="dice-row" id="stateDice">
+            <div class="dice-card locked selected"><div class="die cog"><b>洞察2</b></div><div class="caption"><strong>锁定</strong>保留本颗</div></div>
+            <div class="dice-card muted"><div class="die content"><b>想象2</b></div><div class="caption"><strong>任务外</strong>不补需求</div></div>
+            <div class="dice-card"><div class="die field"><b>生存1</b></div><div class="caption"><strong>重投</strong>旋转换面</div></div>
+            <div class="dice-card black"><div class="die black"><b>鬼乘客</b></div><div class="caption"><strong>不可净化</strong>保留压力</div></div>
+          </div>
+          <div class="controls">
+            <button type="button" data-run="state">重播状态动作</button>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2>05 · 骰面影响槽</h2>
+            <span class="tagline">选择时固定显示本颗影响</span>
+          </div>
+          <div class="impact" id="impactBox">
+            <strong>洞察2 · 薛定谔</strong>
+            <span>已计入洞察+2。这个槽位用于承接 hover / click 的即时解释。</span>
+          </div>
+          <div class="controls">
+            <button type="button" data-impact="good">补需求</button>
+            <button type="button" data-impact="bad">任务外</button>
+            <button type="button" data-impact="black">黑骰</button>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2>06 · 结果收束</h2>
+            <span class="tagline">四档结果用不同收束节奏</span>
+          </div>
+          <div class="result-grid" id="resultGrid">
+            <div class="result-tile crit"><strong>大成功</strong><span>金色放大</span></div>
+            <div class="result-tile success"><strong>成功</strong><span>绿色上浮</span></div>
+            <div class="result-tile fail"><strong>失败</strong><span>短促震动</span></div>
+            <div class="result-tile fail"><strong>大失败</strong><span>红色裂响</span></div>
+          </div>
+          <div class="controls">
+            <button type="button" data-run="result">重播结果</button>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2>动作词典</h2>
+            <span class="tagline">当前实验页覆盖的动作分类</span>
+          </div>
+          <div class="audit-strip">
+            <div class="motion-token">摇骰<br/>roll</div>
+            <div class="motion-token">停骰<br/>settle</div>
+            <div class="motion-token">计入<br/>select</div>
+            <div class="motion-token">飞入<br/>fly</div>
+            <div class="motion-token">黑骰<br/>black</div>
+            <div class="motion-token">收束<br/>result</div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // PROTOTYPE - NOT FOR PRODUCTION
+    // Question: 角色骰判定需要哪些可复用的动作语言，才能让玩家看懂摇骰、黑骰、计入和收束？
+    // Date: 2026-05-13
+    const faces = ["探索?", "生存?", "理性?", "洞察?", "诡思?", "空"];
+    let loopOn = true;
+    let loopTimer = null;
+
+    function qs(selector, root = document) { return root.querySelector(selector); }
+    function qsa(selector, root = document) { return Array.from(root.querySelectorAll(selector)); }
+    function wait(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
+
+    function restartAnimation(el, cls) {
+      el.classList.remove(cls);
+      void el.offsetWidth;
+      el.classList.add(cls);
+    }
+
+    function dieIn(card) { return qs(".die", card); }
+
+    async function runRoll() {
+      const cards = qsa("#rollDice .dice-card");
+      cards.forEach((card) => {
+        const die = dieIn(card);
+        die.className = `die ${card.dataset.kind || ""} motion-roll`;
+        die.querySelector("b").textContent = faces[Math.floor(Math.random() * faces.length)];
+      });
+      for (let tick = 0; tick < 6; tick++) {
+        cards.forEach((card, idx) => {
+          const die = dieIn(card);
+          die.querySelector("b").textContent = faces[(idx + tick) % faces.length];
+        });
+        await wait(120);
+      }
+      for (const card of cards) {
+        const die = dieIn(card);
+        die.className = `die ${card.dataset.kind || ""}`;
+        die.querySelector("b").textContent = card.dataset.face;
+        restartAnimation(die, "motion-land");
+        await wait(160);
+      }
+    }
+
+    async function runSettle() {
+      for (const card of qsa("#rollDice .dice-card")) {
+        restartAnimation(dieIn(card), "motion-land");
+        await wait(120);
+      }
+    }
+
+    function updateTrayCount() {
+      const chips = qsa("#trayList .chip");
+      qs("#trayCount").textContent = chips.length ? `${chips.length} 颗已选` : "未选择";
+    }
+
+    function addChip(face, tag, tone) {
+      const chip = document.createElement("span");
+      chip.className = `chip ${tone || ""}`;
+      chip.innerHTML = `<b>${face}</b><small>${tag}</small>`;
+      qs("#trayList").appendChild(chip);
+      updateTrayCount();
+    }
+
+    function flyFromCard(card, face, tag, tone) {
+      const die = dieIn(card);
+      const start = die.getBoundingClientRect();
+      const target = qs("#trayList").getBoundingClientRect();
+      const ghost = die.cloneNode(true);
+      ghost.classList.add("fly-ghost");
+      ghost.style.left = `${start.left}px`;
+      ghost.style.top = `${start.top}px`;
+      ghost.style.width = `${start.width}px`;
+      ghost.style.height = `${start.height}px`;
+      ghost.style.setProperty("--dx", `${target.left + 18 - start.left}px`);
+      ghost.style.setProperty("--dy", `${target.top + 10 - start.top}px`);
+      document.body.appendChild(ghost);
+      restartAnimation(die, "motion-select");
+      setTimeout(() => {
+        ghost.remove();
+        addChip(face, tag, tone);
+      }, 420);
+    }
+
+    function clearTray() {
+      qs("#trayList").innerHTML = "";
+      updateTrayCount();
+    }
+
+    async function runFly() {
+      clearTray();
+      const picks = qsa("#selectDice .dice-card");
+      for (const card of picks) {
+        flyFromCard(card, card.dataset.pick, card.dataset.tag, card.dataset.tone);
+        await wait(280);
+      }
+    }
+
+    async function runBlack() {
+      const panel = qs("#blackPanel");
+      restartAnimation(panel, "active");
+      const cards = qsa("#blackTrack .dice-card");
+      for (const card of cards) {
+        if (card.classList.contains("black")) restartAnimation(dieIn(card), "motion-black-drop");
+        else restartAnimation(dieIn(card), "motion-corrupt");
+        await wait(110);
+      }
+    }
+
+    function runCorrupt() {
+      qsa("#blackTrack .dice-card:not(.black) .die").forEach((die) => restartAnimation(die, "motion-corrupt"));
+    }
+
+    async function runState() {
+      const dice = qsa("#stateDice .die");
+      restartAnimation(dice[0], "motion-lock");
+      await wait(140);
+      restartAnimation(dice[1], "motion-corrupt");
+      await wait(140);
+      restartAnimation(dice[2], "motion-reroll");
+      await wait(140);
+      restartAnimation(dice[3], "motion-black-drop");
+    }
+
+    async function runResult() {
+      const tiles = qsa("#resultGrid .result-tile");
+      tiles.forEach((tile) => tile.classList.remove("active"));
+      for (const tile of tiles) {
+        void tile.offsetWidth;
+        tile.classList.add("active");
+        await wait(130);
+      }
+    }
+
+    function setImpact(type) {
+      const box = qs("#impactBox");
+      if (type === "black") {
+        box.style.borderColor = "rgba(248,113,113,0.58)";
+        box.style.background = "rgba(69,21,28,0.3)";
+        box.innerHTML = "<strong>替座 · 艾灵?</strong><span>已进入计入槽；不会补任务需求，但会把异常压力带入本次判定。</span>";
+        restartAnimation(box, "motion-corrupt");
+      } else if (type === "bad") {
+        box.style.borderColor = "rgba(148,163,184,0.28)";
+        box.style.background = "rgba(2,6,23,0.42)";
+        box.innerHTML = "<strong>理性2 · 末日时钟</strong><span>当前任务不读取这个属性，通常不需要计入。</span>";
+        restartAnimation(box, "motion-lock");
+      } else {
+        box.style.borderColor = "rgba(212,168,83,0.58)";
+        box.style.background = "rgba(74,55,22,0.18)";
+        box.innerHTML = "<strong>洞察2 · 薛定谔</strong><span>已计入洞察+2。这个槽位用于承接 hover / click 的即时解释。</span>";
+        restartAnimation(box, "motion-select");
+      }
+    }
+
+    async function replayAll() {
+      await runRoll();
+      await runFly();
+      await runBlack();
+      await runState();
+      setImpact("black");
+      await wait(180);
+      await runResult();
+    }
+
+    function startLoop() {
+      if (loopTimer) clearInterval(loopTimer);
+      loopTimer = setInterval(() => {
+        if (loopOn) replayAll();
+      }, 7200);
+    }
+
+    qsa("[data-run]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const run = btn.dataset.run;
+        if (run === "roll") runRoll();
+        if (run === "settle") runSettle();
+        if (run === "fly") runFly();
+        if (run === "black") runBlack();
+        if (run === "corrupt") runCorrupt();
+        if (run === "state") runState();
+        if (run === "result") runResult();
+      });
+    });
+
+    qsa("#selectDice .dice-card").forEach((card) => {
+      card.addEventListener("click", () => flyFromCard(card, card.dataset.pick, card.dataset.tag, card.dataset.tone));
+    });
+    qsa("[data-impact]").forEach((btn) => btn.addEventListener("click", () => setImpact(btn.dataset.impact)));
+    qs("#clearTray").addEventListener("click", clearTray);
+    qs("#replayAll").addEventListener("click", replayAll);
+    qs("#pauseLoop").addEventListener("click", () => {
+      loopOn = !loopOn;
+      qs("#pauseLoop").textContent = loopOn ? "暂停循环" : "继续循环";
+    });
+
+    replayAll();
+    startLoop();
+  </script>
+</body>
+</html>

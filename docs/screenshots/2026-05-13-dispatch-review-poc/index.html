@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>派遣配置改动标注试样 · 2026-05-13</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121a2b;
+      --line: #2d3a55;
+      --text: #e5edf8;
+      --muted: #9fb0c8;
+      --gold: #d6a84f;
+      --blue: #78a8ff;
+      --orange: #fb923c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .page { width: min(1280px, calc(100vw - 32px)); margin: 0 auto; padding: 28px 0 48px; }
+    header,
+    article {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(18, 26, 43, 0.86);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
+    }
+    header { padding: 22px; }
+    h1 { margin: 0 0 8px; color: var(--gold); font-size: clamp(24px, 4vw, 38px); }
+    h2 { margin: 0 0 8px; color: #f2d28a; font-size: 20px; }
+    p { margin: 0 0 10px; }
+    .sub { color: var(--muted); max-width: 920px; }
+    .notice {
+      margin-top: 14px;
+      border: 1px solid rgba(251, 146, 60, 0.65);
+      border-radius: 12px;
+      padding: 10px;
+      background: rgba(124, 45, 18, 0.24);
+      color: #fed7aa;
+    }
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(11, 16, 32, 0.92);
+    }
+    .nav a {
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(120, 168, 255, 0.10);
+    }
+    article { margin: 16px 0; padding: 16px; }
+    .meta { color: var(--muted); font-size: 14px; }
+    img {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #050814;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 6px;
+      background: rgba(120, 168, 255, 0.12);
+      color: #dbeafe;
+    }
+    strong { color: #fed7aa; }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>派遣配置改动标注试样</h1>
+      <p class="sub">本页用于验证复杂 UI 交付时的“旧版 / 新版 / 新版标注版”说明方式。标注图由截图脚本根据真实 DOM 元素位置临时叠加，不是 AI 生图。</p>
+      <p class="notice">结论：此方式适合复杂页面说明“本次到底改了哪里”。正式验收仍以无标注截图和真实运行路径为准。</p>
+    </header>
+
+    <nav class="nav" aria-label="截图导航">
+      <a href="#before">01 旧版</a>
+      <a href="#after">02 新版</a>
+      <a href="#annotated">03 标注版</a>
+      <a href="../2026-05-13-dispatch-lab-ui/index.html">派遣实验截图说明</a>
+    </nav>
+
+    <article id="before">
+      <h2>01 · 旧版同状态</h2>
+      <p class="meta">文件：<code>01-before-stable-dispatch.png</code></p>
+      <p>旧版派遣页以说明文字、预览槽位和角色卡平铺为主，玩家需要自己把任务需求、道具、候选角色和风险联系起来。</p>
+      <img src="01-before-stable-dispatch.png" alt="旧版派遣配置同状态截图" />
+    </article>
+
+    <article id="after">
+      <h2>02 · 新版同状态</h2>
+      <p class="meta">文件：<code>02-after-dispatch-lab.png</code></p>
+      <p>新版把任务摘要、本次骰池、需求覆盖、临时资源和候选角色重新分层，使用真实角色与道具状态验证页面手感。</p>
+      <img src="02-after-dispatch-lab.png" alt="新版派遣配置同状态截图" />
+    </article>
+
+    <article id="annotated">
+      <h2>03 · 新版程序化标注</h2>
+      <p class="meta">文件：<code>03-after-dispatch-lab-annotated.png</code></p>
+      <p>橙色框线标出本次主要改动区：<strong>任务摘要固定槽、本次骰池主区域、临时资源分层、候选角色排序、主操作聚焦</strong>。</p>
+      <img src="03-after-dispatch-lab-annotated.png" alt="新版派遣配置程序化标注截图" />
+    </article>
+  </main>
+</body>
+</html>

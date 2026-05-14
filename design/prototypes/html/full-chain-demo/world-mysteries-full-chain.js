@@ -84,6 +84,7 @@
     debugShowEventEffects: false,
     weekEventResult: "",
     regionLeadEvents: {},
+    globalSelectedRegionId: "us",
     missionResolving: false,
     regionLinkedTarget: null,
     openDeepChainId: null,
@@ -94,6 +95,7 @@
     paperLayoutMode: "fixed",
     paperLabMode: false,
     paperVisualMode: "normal",
+    dispatchOldSetupMode: false,
     /** 第 1 周软引导：已关闭过的 key，本局内不再弹出；新周目从第 1 周开始时随页面或 nextWeek 清空 */
     tutorialSoftW1: {},
   };
@@ -103,6 +105,7 @@
   const TUTORIAL_LS_FIRST_PANEL_DONE = "wm_angos_tutorial_intro_offer_done_v1";
 
   function tutorialsGloballyDisabled() {
+    if (state.debugSkipTutorials) return true;
     try {
       return localStorage.getItem(TUTORIAL_LS_DISABLE_ALL) === "1";
     } catch (_) {
@@ -243,7 +246,7 @@
           kind: "permanent",
           name: "球状闪电 · 厨房火球",
           days: 1,
-          need: { 理性: 2, 洞察: 2 },
+          need: { 理性: 2, 洞察: 1 },
           tags: ["sci", "occult"],
           difficulty: "normal",
           enemyAttr: 1,
@@ -323,7 +326,7 @@
           kind: "permanent",
           name: "51 区外围公路",
           days: 2,
-          need: { 探索: 4, 生存: 2 },
+          need: { 探索: 2, 生存: 1 },
           tags: ["sci", "pop"],
           difficulty: "normal",
           enemyAttr: 2,
@@ -337,7 +340,7 @@
           kind: "permanent",
           name: "罗斯威尔档案残页",
           days: 1,
-          need: { 探索: 3, 洞察: 3 },
+          need: { 探索: 2, 洞察: 1 },
           tags: ["sci", "occult"],
           difficulty: "normal",
           enemyAttr: 1,
@@ -353,7 +356,7 @@
             kind: "temp",
             name: "气象站抄本互证",
             days: 1,
-            need: { 洞察: 4, 理性: 3 },
+            need: { 洞察: 3, 理性: 2 },
             tags: ["sci", "occult"],
             difficulty: "normal",
             enemyAttr: 2,
@@ -370,7 +373,7 @@
               kind: "temp",
               name: "废弃雷达站夜访",
               days: 2,
-              need: { 探索: 4, 洞察: 4, 生存: 2 },
+              need: { 探索: 3, 洞察: 3, 生存: 2 },
               tags: ["sci", "occult"],
               difficulty: "hard",
               enemyAttr: 3,
@@ -381,8 +384,8 @@
               chainStageTotal: 4,
               chainId: "roswell_demo",
               previousStageId: "roswell_weather_copy",
-          taskTypeTitle: "高危深度调查 · 第三阶段",
-          taskTypeDesc: "高危任务。需求更高，失败可能带来 debuff，但本环没有黑骰。",
+              taskTypeTitle: "高危深度调查 · 第三阶段",
+              taskTypeDesc: "高危任务。需求更高，失败可能带来 debuff，但本环没有黑骰。",
               nextNode: {
                 id: "roswell_tape_blank",
                 kind: "temp",
@@ -417,7 +420,7 @@
           kind: "temp",
           name: "突发：雷达异常光点",
           days: 2,
-          need: { 探索: 5, 生存: 3 },
+          need: { 探索: 2, 生存: 1, 胆识: 1 },
           tags: ["sci", "pop"],
           deadlineDay: 4,
           difficulty: "hard",
@@ -433,7 +436,7 @@
           kind: "permanent",
           name: "330 末班车 · 乘客口述",
           days: 1,
-          need: { 人脉: 2, 洞察: 2 },
+          need: { 人脉: 2, 洞察: 1 },
           tags: ["occult", "pop"],
           difficulty: "normal",
           enemyAttr: 1,
@@ -449,7 +452,7 @@
             kind: "temp",
             name: "330 末班车 · 废弃总站",
             days: 1,
-            need: { 探索: 2, 洞察: 3 },
+            need: { 探索: 1, 洞察: 2 },
             tags: ["occult", "pop"],
             difficulty: "normal",
             enemyAttr: 2,
@@ -529,8 +532,8 @@
       pulse: false,
       hint: "需要：声望≥55 或 完成「罗斯威尔档案残页」。",
       nodes: [
-        { id: "shen", kind: "permanent", name: "神农架毛发样本采集", days: 3, need: { 探索: 5, 生存: 4 }, tags: ["sci", "pop"], difficulty: "hard", enemyAttr: 3, chain: null },
-        { id: "chainA", kind: "permanent", name: "模糊：未解锁的链式线索", days: 2, need: { 探索: 6, 洞察: 4 }, tags: ["sci"], difficulty: "normal", enemyAttr: 2, chain: "locked", chainTitle: "链式调查 · 第二阶段" },
+        { id: "shen", kind: "permanent", name: "神农架毛发样本采集", days: 3, need: { 探索: 2, 生存: 1 }, tags: ["sci", "pop"], difficulty: "normal", enemyAttr: 2, chain: null },
+        { id: "chainA", kind: "permanent", name: "模糊：未解锁的链式线索", days: 2, need: { 探索: 3, 洞察: 2 }, tags: ["sci"], difficulty: "normal", enemyAttr: 2, chain: "locked", chainTitle: "链式调查 · 第二阶段" },
       ],
     },
     {
@@ -539,7 +542,7 @@
       unlocked: false,
       pulse: false,
       hint: "需要：公信≥60（观测合作）或 守序≥60（许可）。",
-      nodes: [{ id: "easter", kind: "permanent", name: "复活节岛石像热异常", days: 3, need: { 探索: 4, 理性: 3 }, tags: ["sci"], difficulty: "normal", enemyAttr: 2, chain: null }],
+      nodes: [{ id: "easter", kind: "permanent", name: "复活节岛石像热异常", days: 3, need: { 探索: 2, 理性: 1 }, tags: ["sci"], difficulty: "normal", enemyAttr: 2, chain: null }],
     },
   ];
   const REGION_MAP_POS = {
@@ -753,6 +756,7 @@
 
   function faceText(f) {
     if (!f) return "空";
+    if (f.black) return f.label || "黑骰";
     if (f.blank) return f.label || "空";
     const risk = f.risk ? " + 风险" : "";
     const special = f.special ? ` + ${f.special}` : "";
@@ -760,6 +764,7 @@
   }
 
   function faceClass(f) {
+    if (f && f.black) return "face-black";
     if (!f || f.blank) return "face-blank";
     const domain = ATTR_DOMAIN[f.attr] || "";
     return `face-${DOMAIN_CLASS[domain] || "misc"} ${f.risk ? "face-risk" : ""}`.trim();
@@ -780,10 +785,11 @@
     }).join("")}</div>`;
   }
 
-  function diceNetHtml(faces, relevantNeed) {
+  function diceNetHtml(faces, relevantNeed, extraClass) {
     const list = (faces || []).slice(0, 6);
     while (list.length < 6) list.push(blankFace());
-    return `<div class="dice-net">${list.map((f, idx) => {
+    const cls = extraClass ? ` ${extraClass}` : "";
+    return `<div class="dice-net${cls}">${list.map((f, idx) => {
       const relevant = f && f.attr && relevantNeed && relevantNeed[f.attr] != null;
       const muted = !relevant && !(f && f.blank) ? " is-muted" : "";
       const rel = relevant ? " is-relevant" : "";
@@ -950,7 +956,7 @@
     return { face: list[Math.floor(Math.random() * list.length)] || blankFace(), faceIndex: 0 };
   }
 
-  function rollCharacterDice(mission, staffIds) {
+  function rollCharacterDice(mission, staffIds, toolDiceIds) {
     const rolls = [];
     (staffIds || []).forEach((id) => {
       const staff = findStaff(id);
@@ -968,7 +974,8 @@
         locked: !!((faces[idx] || {}).noReroll || (mission && mission.noReroll)),
       });
     });
-    (state.selectedToolDiceIds || []).forEach((id) => {
+    const toolIds = Array.isArray(toolDiceIds) ? toolDiceIds : (state.selectedToolDiceIds || []);
+    toolIds.forEach((id) => {
       const tool = state.toolDiceInventory.find((x) => x.id === id);
       if (!tool) return;
       const idx = Math.floor(Math.random() * Math.max(1, tool.faces.length));
@@ -1080,40 +1087,78 @@
   }
 
   function blackDiceTier(mission, success, contribution, pressure, selectedRolls) {
-    const needTotal = Object.values(mission.need || {}).reduce((a, b) => a + (b || 0), 0);
+    const target = needTargetValue(mission.need || {});
     const gotTotal = Object.values(contribution || {}).reduce((a, b) => a + (b || 0), 0);
     const pressureTotal = blackPressureTotal(pressure);
     const blackSelected = (selectedRolls || []).some((r) => r.black);
-    if (success && gotTotal >= needTotal + 2 && pressureTotal <= 1 && !blackSelected) return "大成功";
+    if (success && gotTotal >= target + 2 && pressureTotal <= 1 && !blackSelected) return "大成功";
     if (success) return "成功";
     if (!success && (blackSelected || pressureTotal >= 3)) return "大失败";
     return "失败";
   }
 
+  function needTargetValue(need) {
+    const keys = Object.keys(need || {});
+    if (!keys.length) return 0;
+    const total = keys.reduce((acc, key) => acc + Math.max(0, need[key] || 0), 0);
+    const floor = total >= 4 ? 2 : 1;
+    return Math.max(floor, Math.ceil(total / 3));
+  }
+
+  function contributionTotalForNeed(need, sum) {
+    return Object.keys(need || {}).reduce((acc, key) => acc + Math.max(0, (sum && sum[key]) || 0), 0);
+  }
+
   function needMetByContribution(need, sum) {
-    return Object.keys(need || {}).every((k) => (sum[k] || 0) >= (need[k] || 0));
+    const target = needTargetValue(need);
+    if (!target) return true;
+    return contributionTotalForNeed(need, sum) >= target;
+  }
+
+  function successChanceForNeed(need, faceLists) {
+    const target = needTargetValue(need);
+    if (!target) return 1;
+    const keys = new Set(Object.keys(need || {}));
+    const sources = (faceLists || []).filter((faces) => faces && faces.length);
+    if (!sources.length) return 0;
+    let dp = Array(target + 1).fill(0);
+    dp[0] = 1;
+    let total = 1;
+    sources.forEach((faces) => {
+      const next = Array(target + 1).fill(0);
+      const list = faces && faces.length ? faces : [blankFace()];
+      total *= list.length;
+      list.forEach((face) => {
+        const value = face && !face.blank && !face.black && face.attr && keys.has(face.attr)
+          ? Math.max(0, face.value || 0)
+          : 0;
+        dp.forEach((count, cur) => {
+          if (!count) return;
+          next[Math.min(target, cur + value)] += count;
+        });
+      });
+      dp = next;
+    });
+    return total ? dp[target] / total : 0;
+  }
+
+  function formatChance(chance) {
+    if (!Number.isFinite(chance)) return "未知";
+    return `${Math.round(Math.max(0, Math.min(1, chance)) * 100)}%`;
   }
 
   function autoSelectRollsForNeed(rolls, need) {
     const ids = [];
-    const totals = {};
-    const relevant = (rolls || []).filter((r) => r.face && r.face.attr && need && need[r.face.attr] != null);
+    const target = needTargetValue(need);
+    let total = 0;
+    const relevant = (rolls || []).filter((r) => r.face && !r.black && !r.face.black && r.face.attr && need && need[r.face.attr] != null && (r.face.value || 0) > 0);
     relevant
       .sort((a, b) => (b.face.value || 0) - (a.face.value || 0))
       .forEach((r) => {
-        const attr = r.face.attr;
-        if ((totals[attr] || 0) >= (need[attr] || 0)) return;
+        if (target && total >= target) return;
         ids.push(r.id);
-        totals[attr] = (totals[attr] || 0) + (r.face.value || 0);
+        total += Math.max(0, r.face.value || 0);
       });
-    if (!needMetByContribution(need, totals)) {
-      (rolls || []).forEach((r) => {
-        if (ids.includes(r.id)) return;
-        const f = r.face || {};
-        if (!f.attr || f.blank) return;
-        ids.push(r.id);
-      });
-    }
     return ids;
   }
 
@@ -1127,11 +1172,14 @@
     let blankFaces = 0;
     let contributingStaff = 0;
     let nonContributingStaff = 0;
+    const faceLists = [];
     (staffIds || []).forEach((id) => {
       const staff = findStaff(id);
       if (!staff) return;
+      const faces = diceFacesForStaff(staff);
+      faceLists.push(faces);
       let staffRelevantFaces = 0;
-      diceFacesForStaff(staff).forEach((face) => {
+      faces.forEach((face) => {
         totalFaces += 1;
         if (!face || face.blank) {
           blankFaces += 1;
@@ -1165,6 +1213,8 @@
       needValue,
       coveredValue,
       coverage,
+      targetValue: needTargetValue(need),
+      successChance: successChanceForNeed(need, faceLists),
     };
   }
 
@@ -1173,9 +1223,8 @@
     if (!selectedCount) return "高";
     const stats = teamDiceNeedStats(mission, staffIds);
     if (!stats.relevantFaces) return "高";
-    const needAxisCount = Math.max(1, Object.keys((mission && mission.need) || {}).length);
-    if (!stats.gaps.length && stats.relevantFaces >= needAxisCount + 1) return "低";
-    if (stats.coverage >= 0.6 || stats.relevantFaces >= needAxisCount + 1) return "中";
+    if (stats.successChance >= 0.55) return "低";
+    if (stats.successChance >= 0.3) return "中";
     return "高";
   }
 
@@ -1785,6 +1834,7 @@
       const node = document.getElementById("view-" + v);
       if (node) node.classList.toggle("hidden", v !== name);
     });
+    updateNextDayButton();
   }
 
   function binomialPAtLeast(n, p, k) {
@@ -2149,13 +2199,20 @@
     else badges.push({ text: "白色调查", cls: "white" });
     if (m.chainType === "deep") badges.push({ text: `深度调查${m.chainStage ? `·第${m.chainStage}阶段` : ""}`, cls: "deep" });
     if (m.isBlackDiceTask) badges.push({ text: "黑骰任务", cls: "bonus" });
-    if (!m.isBlackDiceTask && (m.riskTier === "high" || m.isHighRisk)) badges.push({ text: "! 危险", cls: "danger" });
+    if (!m.isBlackDiceTask && (m.riskTier === "high" || m.isHighRisk)) badges.push({ text: "危险", cls: "danger" });
     if (m.allowPushBonus) badges.push({ text: "可再追", cls: "bonus" });
     return badges;
   }
 
   function missionTypeBadgesHtml(m) {
     return missionTypeBadges(m)
+      .map((b) => `<span class="task-type-chip task-${b.cls}">${escapeHtml(b.text)}</span>`)
+      .join("");
+  }
+
+  function dispatchTaskBadgesHtml(m) {
+    return missionTypeBadges(m)
+      .filter((b) => b.cls !== "red" && b.cls !== "white")
       .map((b) => `<span class="task-type-chip task-${b.cls}">${escapeHtml(b.text)}</span>`)
       .join("");
   }
@@ -2473,6 +2530,186 @@
     );
   }
 
+  function globalRegionUnlockItems(region) {
+    if (!region || region.unlocked) return [];
+    if (region.id === "east_asia") {
+      const roswellDone = state.clues.some((c) => (c.title || "").includes("罗斯威尔")) || !!state.completedMissionIds.skin;
+      return [
+        { label: "声望", value: macro.声望, max: 55, gap: macro.声望 >= 55 ? "已满足" : `还差 ${55 - macro.声望}` },
+        { label: "罗斯威尔残页", value: roswellDone ? 1 : 0, max: 1, gap: roswellDone ? "已完成" : "完成北美深度链第一环" },
+      ];
+    }
+    if (region.id === "pacific") {
+      return [
+        { label: "公信", value: macro.公信, max: 60, gap: macro.公信 >= 60 ? "已满足" : `还差 ${60 - macro.公信}` },
+        { label: "守序", value: macro.守序, max: 60, gap: macro.守序 >= 60 ? "已满足" : `还差 ${60 - macro.守序}` },
+      ];
+    }
+    return [{ label: "线索", value: 0, max: 1, gap: "等待前置情报" }];
+  }
+
+  function globalProgressText(region) {
+    if (!region || region.unlocked) return "";
+    const items = globalRegionUnlockItems(region);
+    if (!items.length) return "?";
+    const best = Math.max(...items.map((x) => Math.round((Math.min(x.value, x.max) / Math.max(1, x.max)) * 100)));
+    return `${best}%`;
+  }
+
+  function globalRegionStats(data) {
+    const nodes = data.visibleNodes || [];
+    const leads = data.leads || [];
+    return {
+      targets: data.r.unlocked ? nodes.length : 0,
+      timed: data.r.unlocked ? nodes.filter((n) => (n.checkType || "white") === "red" || n.deadlineDay != null || /突发/.test(n.name)).length : 0,
+      leads: data.r.unlocked ? leads.length : 0,
+      deep: data.r.unlocked ? nodes.filter((n) => n.chainType === "deep").length : 0,
+    };
+  }
+
+  function globalSummaryCard(label, value, iconText, tone) {
+    return `<div class="global-summary-card ${tone ? `tone-${escapeHtml(tone)}` : ""}">
+      <div><span>${escapeHtml(label)}</span><span>${escapeHtml(iconText)}</span></div>
+      <strong>${escapeHtml(value)}</strong>
+    </div>`;
+  }
+
+  function globalIntelChip(text, tone) {
+    return `<span class="global-intel-chip ${tone ? escapeHtml(tone) : ""}">${escapeHtml(text)}</span>`;
+  }
+
+  function globalNeedText(need) {
+    return Object.entries(need || {})
+      .map(([key, value]) => `${key}${value | 0}`)
+      .join(" / ");
+  }
+
+  function globalIntelRowHtml({ tone = "", mark = "目", title, chips = [], read = "概览" }) {
+    return `<div class="global-intel-row ${escapeHtml(tone)}" aria-disabled="true">
+      <span class="global-intel-mark">${escapeHtml(mark)}</span>
+      <div class="global-intel-copy">
+        <strong>${escapeHtml(title)}</strong>
+        <div class="global-intel-meta">${chips.join("")}</div>
+      </div>
+      <span class="global-intel-read">${escapeHtml(read)}</span>
+    </div>`;
+  }
+
+  function globalNodePreviewHtml(regionId, node, locked = false) {
+    const queued = findActiveMissionByNode(regionId, node.id);
+    const tone = regionTaskTone(node);
+    const deadlineLeft = tone === "red" ? deadlineRemainingDays(node) : null;
+    const needText = globalNeedText(node.need);
+    const chips = [
+      globalIntelChip(`耗时 ${node.days || 1}天`, "time"),
+      node.chainType === "deep" ? globalIntelChip(node.chainStage ? `深度链 ${node.chainStage}` : "深度链") : "",
+      tone === "red" && deadlineLeft != null ? globalIntelChip(`剩余 ${deadlineLeft}天`, "time") : "",
+      node.enemyAttr ? globalIntelChip(`对手骰 ${node.enemyAttr}`) : "",
+      needText ? globalIntelChip(needText, "need") : "",
+      previousChainResult(node) ? globalIntelChip("承接上一页") : "",
+      queued ? globalIntelChip("已派遣") : "",
+    ].filter(Boolean);
+    return globalIntelRowHtml({
+      tone: locked ? "locked" : tone,
+      mark: locked ? "影" : tone === "red" ? "截" : node.chainType === "deep" ? "页" : "目",
+      title: locked ? `${node.name}（轮廓）` : node.name,
+      chips,
+      read: locked ? "待解锁" : "概览",
+    });
+  }
+
+  function globalLeadPreviewHtml(regionId, lead) {
+    const queued = findActiveMissionByLead(regionId, lead.id);
+    const needText = globalNeedText(regionLeadNeed(lead));
+    const chips = [
+      globalIntelChip(`耗时 ${regionLeadDays(lead)}天`, "time"),
+      globalIntelChip("调查后生成任务"),
+      needText ? globalIntelChip(needText, "need") : "",
+      queued ? globalIntelChip("已派遣") : "",
+    ].filter(Boolean);
+    return globalIntelRowHtml({
+      tone: "clue",
+      mark: "线",
+      title: lead.title,
+      chips,
+    });
+  }
+
+  function globalUnlockedPreviewHtml(data) {
+    const rows = [
+      ...data.leads.map((lead) => globalLeadPreviewHtml(data.r.id, lead)),
+      ...data.visibleNodes.map((node) => globalNodePreviewHtml(data.r.id, node)),
+    ];
+    const shown = rows.slice(0, 3).join("");
+    const more = Math.max(0, rows.length - 3);
+    return `<section class="global-preview-section">
+      <div class="global-preview-head">
+        <h4>地区情报概况</h4>
+        <span>进入地区后选择具体任务</span>
+      </div>
+      <div class="global-intel-list">${shown || `<div class="tip-inline">暂无可见情报。</div>`}</div>
+      ${more ? `<div class="tip-inline">另有 ${more} 项情报将在地区页展开。</div>` : ""}
+    </section>`;
+  }
+
+  function globalLockedPreviewHtml(data) {
+    const unlocks = globalRegionUnlockItems(data.r).map((item) => {
+      const pct = Math.max(0, Math.min(100, Math.round((Math.min(item.value, item.max) / Math.max(1, item.max)) * 100)));
+      return `<div class="global-unlock-item">
+        <div class="global-unlock-line">
+          <strong>${escapeHtml(item.label)}</strong><span>${escapeHtml(item.value)} / ${escapeHtml(item.max)}</span>
+        </div>
+        <div class="global-unlock-meter">
+          <span style="width:${pct}%;"></span>
+        </div>
+        <div style="color:#94a3b8;font-size:12px;">${escapeHtml(item.gap)}</div>
+      </div>`;
+    }).join("");
+    const previewNodes = (data.visibleNodes || [])
+      .slice(0, 3)
+      .map((node) => globalNodePreviewHtml(data.r.id, node, true))
+      .join("");
+    return `<section class="global-preview-section">
+      <div class="global-preview-head">
+        <h4>解锁进度</h4>
+        <span>达成条件后进入地区</span>
+      </div>
+      <div class="global-unlock-list">${unlocks}</div>
+      ${previewNodes ? `<div class="global-intel-list">${previewNodes}</div>` : `<div class="tip-inline">暂无可预览目标。</div>`}
+    </section>`;
+  }
+
+  function globalRegionDetailHtml(data, mode) {
+    const stats = globalRegionStats(data);
+    const unlocked = data.r.unlocked;
+    const summary = unlocked
+      ? [
+        globalSummaryCard("可见目标", stats.targets, "◎", ""),
+        globalSummaryCard("限时机会", stats.timed, "◷", "red"),
+        globalSummaryCard("线索", stats.leads, "□", "green"),
+        globalSummaryCard("深度链", stats.deep, "▣", "violet"),
+      ].join("")
+      : [
+        globalSummaryCard("可见目标", 0, "◎", ""),
+        globalSummaryCard("缺口", globalRegionUnlockItems(data.r).length, "🔒", ""),
+        globalSummaryCard("线索", "待开", "□", "green"),
+        globalSummaryCard("深度链", "待开", "▣", "violet"),
+      ].join("");
+    const body = unlocked ? globalUnlockedPreviewHtml(data) : globalLockedPreviewHtml(data);
+    return `<div class="global-detail">
+      <div class="global-detail-head">
+        <div>
+          <div class="global-detail-eyebrow">${mode === "preview" ? "悬停预览" : unlocked ? "已选 · 可进入" : "已选 · 未解锁"}</div>
+          <h3>${escapeHtml(data.r.name)}</h3>
+          <p>${escapeHtml(data.r.hint)}</p>
+        </div>
+        <span class="global-detail-status ${unlocked ? "open" : ""}">${unlocked ? "可进入" : "进度缺口"}</span>
+      </div>
+      <div class="global-summary-grid">${summary}</div>
+      ${body}
+    </div>`;
+  }
+
   function renderGlobal() {
     unlockRegions();
     const elG = document.getElementById("view-global");
@@ -2484,9 +2721,7 @@
         <h2>全球地图</h2>
         ${dispatchCountSpanHtml()}
       </div>
-      <div class="tags" id="filterTags">${filterHtml}</div>
-      <p style="margin:0.75rem 0 0.5rem;"><button type="button" id="btnRecycle">回收噪音线索</button>
-      <span style="color:var(--muted);font-size:0.8rem;margin-left:0.5rem;">诡名 -2，声望 +1</span></p>
+      <div class="tags" id="filterTags" style="margin-bottom:0.75rem;">${filterHtml}</div>
       <div class="world-region-host" id="regionGrid"></div>
       <p style="margin-top:0.75rem;"><button type="button" id="backFromGlobal">返回回合简报</button></p>`;
     document.querySelectorAll("#filterTags .tag").forEach((btn) => {
@@ -2498,12 +2733,6 @@
         renderGlobal();
       });
     });
-    document.getElementById("btnRecycle").onclick = () => {
-      macro.诡名 = Math.max(0, macro.诡名 - 2);
-      macro.声望 = Math.min(100, macro.声望 + 1);
-      log("回收噪音线索：诡名 -2，声望 +1。");
-      renderMacro();
-    };
     const grid = document.getElementById("regionGrid");
     const regionData = REGIONS.map((r) => {
       const visibleNodes = getRegionNodes(r).filter(nodeVisible).filter(filterNodeTags);
@@ -2512,56 +2741,133 @@
       const has = visibleNodes.length > 0;
       return { r, visibleNodes, leads, eventCount, has };
     });
+    if (!REGIONS.some((r) => r.id === state.globalSelectedRegionId)) state.globalSelectedRegionId = "us";
+    const dataById = Object.fromEntries(regionData.map((d) => [d.r.id, d]));
+    const selectedData = dataById[state.globalSelectedRegionId] || regionData[0];
     const pointsHtml = regionData.map(({ r, visibleNodes, eventCount, has }) => {
       const pos = REGION_MAP_POS[r.id] || { x: 50, y: 50, label: r.name };
-      const cls = `map-point ${r.unlocked ? "" : "locked"} ${r.pulse && has ? "pulse" : ""} ${eventCount > 0 ? "has-event" : ""}`;
-      const hint = `${r.unlocked ? "可进入" : "未解锁"}${r.unlocked && has ? ` · 目标${visibleNodes.length}` : ""}${eventCount > 0 ? ` · 事件${eventCount}` : ""}`;
-      return `<button type="button" class="${cls}" data-region="${r.id}" style="left:${pos.x}%;top:${pos.y}%;" title="${escapeHtml(hint)}">${escapeHtml(pos.label)}${eventCount > 0 ? `<span class="event-dot">${eventCount > 9 ? "9+" : eventCount}</span>` : ""}</button>`;
+      const selected = r.id === selectedData.r.id;
+      const progress = !r.unlocked ? globalProgressText(r) : "";
+      const countText = r.unlocked ? (eventCount > 0 ? (eventCount > 9 ? "9+" : eventCount) : "") : progress;
+      const cls = `map-point ${r.unlocked ? "" : "locked"} ${r.pulse && has ? "pulse" : ""} ${eventCount > 0 ? "has-event" : ""} ${countText ? "has-badge" : ""}`;
+      const selectedStyle = selected ? "border-color:rgba(212,168,83,0.9);background:rgba(74,55,22,0.95);color:#fff4cf;box-shadow:0 0 0 1px rgba(212,168,83,0.22),0 14px 26px rgba(0,0,0,0.42);" : "";
+      const lockedStyle = r.unlocked ? "" : "cursor:pointer;opacity:0.72;";
+      const hint = `${r.unlocked ? "可进入" : "未解锁"}${r.unlocked && has ? ` · 目标${visibleNodes.length}` : ""}${eventCount > 0 ? ` · 事件${eventCount}` : ""}${progress ? ` · 进度${progress}` : ""}`;
+      const badgeStyle = r.unlocked ? "" : "background:#1f2937;border-color:#64748b;color:#cbd5e1;";
+      const badgeHtml = countText ? `<span class="event-dot" style="${badgeStyle}">${escapeHtml(countText)}</span>` : "";
+      return `<button type="button" class="${cls}" data-region="${r.id}" style="left:${pos.x}%;top:${pos.y}%;${lockedStyle}${selectedStyle}" title="${escapeHtml(hint)}"><span class="map-point-title">${escapeHtml(pos.label)}</span>${badgeHtml}</button>`;
     }).join("");
-    const listHtml = regionData.map(({ r, visibleNodes, eventCount }) => `
-      <div class="entry ${eventCount > 0 ? "has-event" : ""}">
-        <div><strong>${escapeHtml(r.name)}</strong> ${r.unlocked ? "" : "（未解锁）"}</div>
-        <div style="color:#94a3b8;margin-top:3px;">${escapeHtml(r.hint)}</div>
-        <div style="margin-top:3px;color:#cbd5e1;">可见目标：${visibleNodes.length}${eventCount > 0 ? `<span class="event-hint">事件 ${eventCount}</span>` : ""}</div>
-      </div>`).join("");
+    const choiceHtml = regionData.map((d) => {
+      const selected = d.r.id === selectedData.r.id;
+      const sub = d.r.unlocked ? `可进入 · ${d.eventCount} 项情报` : `未解锁 · ${globalProgressText(d.r)}`;
+      return `<button type="button" class="global-region-choice ${selected ? "is-selected" : ""} ${d.r.unlocked ? "" : "is-locked"}" data-region="${d.r.id}">
+        <strong>${escapeHtml(d.r.name)}</strong>
+        <span>${escapeHtml(sub)}</span>
+      </button>`;
+    }).join("");
     grid.innerHTML = `
-      <div class="world-map-wrap">
-        <div class="world-map">${pointsHtml}</div>
-        <div class="map-side">
-          <h3>区域情报</h3>
-          ${listHtml}
-          <div class="region-actions">
-            <button type="button" id="btnNextDayGlobal" class="next-day-big"><span class="arrow" aria-hidden="true"></span><span>下一天</span></button>
+      <div class="world-map-wrap" style="grid-template-columns:repeat(auto-fit,minmax(min(360px,100%),1fr));align-items:stretch;">
+        <div class="world-map" style="min-height:520px;height:min(720px,calc(100vh - 260px));background:linear-gradient(rgba(6,11,18,0.30),rgba(6,11,18,0.62)),url('Assets/world-map-background.svg') center/cover no-repeat,#07101e;">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0.72;">
+            <path d="M20 35 C 36 18, 62 24, 78 44" fill="none" stroke="rgba(212,168,83,0.32)" stroke-width="0.8" stroke-dasharray="3 3"></path>
+            <path d="M20 35 C 34 56, 45 62, 56 54" fill="none" stroke="rgba(212,168,83,0.28)" stroke-width="0.8" stroke-dasharray="3 3"></path>
+            <path d="M56 54 C 64 48, 72 47, 78 44" fill="none" stroke="rgba(212,168,83,0.24)" stroke-width="0.8" stroke-dasharray="3 3"></path>
+          </svg>
+          ${pointsHtml}
+          <div class="tags" style="position:absolute;left:10px;bottom:10px;max-width:calc(100% - 20px);">
+            <span class="tag on">当前选中</span>
+          </div>
+        </div>
+        <div class="map-side global-side">
+          <div class="global-side-head">
+            <div class="global-side-title">
+              <h3>选择取材地区</h3>
+              <p>查看地区情报概况，进入地区后再选择具体任务。</p>
+            </div>
+            <div class="global-region-selector" id="globalRegionChoices">${choiceHtml}</div>
+          </div>
+          <div id="globalRegionDetail">${globalRegionDetailHtml(selectedData, "selected")}</div>
+          <div class="region-actions global-bottom-actions">
+            <button type="button" id="btnEnterSelectedRegion" class="primary global-enter-action" ${selectedData.r.unlocked ? "" : "disabled"}>
+              <span class="global-enter-icon" aria-hidden="true">${selectedData.r.unlocked ? "→" : "×"}</span>
+              <span class="global-enter-label">${selectedData.r.unlocked ? `进入 · ${escapeHtml(selectedData.r.name)}` : `未解锁 · ${escapeHtml(selectedData.r.name)}`}</span>
+            </button>
           </div>
         </div>
       </div>`;
-    grid.querySelectorAll(".map-point:not(.locked)").forEach((div) => {
+    const paintLinkedState = (focusId, mode) => {
+      const selectedId = state.globalSelectedRegionId;
+      grid.querySelectorAll("[data-region]").forEach((node) => {
+        const nodeId = node.getAttribute("data-region");
+        const isChoice = node.classList.contains("global-region-choice");
+        const isFocused = nodeId === focusId;
+        const isSelected = nodeId === selectedId;
+        if (isChoice) {
+          node.classList.toggle("is-selected", isSelected);
+          node.classList.toggle("is-preview", isFocused && !isSelected && mode === "preview");
+          return;
+        }
+        node.style.borderColor = isFocused || isSelected ? "rgba(212,168,83,0.9)" : "";
+        node.style.background = isSelected ? "rgba(74,55,22,0.95)" : "";
+        node.style.color = isSelected ? "#fff4cf" : "";
+        node.style.boxShadow = isFocused || isSelected ? "0 0 0 1px rgba(212,168,83,0.26),0 16px 30px rgba(0,0,0,0.48)" : "";
+      });
+    };
+    const updateEnterButton = (data) => {
+      const enterBtn = document.getElementById("btnEnterSelectedRegion");
+      if (!enterBtn || !data) return;
+      enterBtn.disabled = !data.r.unlocked;
+      const icon = enterBtn.querySelector(".global-enter-icon");
+      const label = enterBtn.querySelector(".global-enter-label");
+      if (icon) icon.textContent = data.r.unlocked ? "→" : "×";
+      if (label) label.textContent = data.r.unlocked ? `进入 · ${data.r.name}` : `未解锁 · ${data.r.name}`;
+    };
+    const renderSelectedRegion = (id) => {
+      const data = dataById[id] || selectedData;
+      const detail = document.getElementById("globalRegionDetail");
+      if (detail) detail.innerHTML = globalRegionDetailHtml(data, "selected");
+      updateEnterButton(data);
+      paintLinkedState(id, "selected");
+    };
+    const selectGlobalRegion = (id) => {
+      const data = dataById[id];
+      if (!data) return;
+      state.globalSelectedRegionId = id;
+      renderSelectedRegion(id);
+    };
+    const restoreSelected = () => paintLinkedState(state.globalSelectedRegionId, "selected");
+    paintLinkedState(state.globalSelectedRegionId, "selected");
+    grid.querySelectorAll(".map-point, .global-region-choice").forEach((div) => {
+      div.addEventListener("mouseenter", () => paintLinkedState(div.getAttribute("data-region"), "preview"));
+      div.addEventListener("mouseleave", restoreSelected);
       div.addEventListener("click", () => {
-        const id = div.getAttribute("data-region");
-        const r = REGIONS.find((x) => x.id === id);
-        if (!r || !r.unlocked) return;
-        state.regionId = id;
-        renderRegion();
-        setView("region");
+        selectGlobalRegion(div.getAttribute("data-region"));
       });
     });
-    const ndg = document.getElementById("btnNextDayGlobal");
-    if (ndg) ndg.onclick = () => advanceOneDay();
+    const enterBtn = document.getElementById("btnEnterSelectedRegion");
+    if (enterBtn) enterBtn.onclick = () => {
+      const selected = dataById[state.globalSelectedRegionId];
+      if (!selected || !selected.r.unlocked) return;
+      state.regionId = selected.r.id;
+      renderRegion();
+      setView("region");
+    };
     document.getElementById("backFromGlobal").onclick = () => renderWeekStart();
+    updateNextDayButton();
     scheduleWeek1SoftTutorial(
       "w1_global",
       "第一周 · 世界取材地图",
       [
         `${tutorialSoftFigure(
           "Assets/tutorial-map-guide.svg",
-          "取材地图示意：左侧可点区域，右侧区域情报列表与地图联动高亮",
-          "上图为界面结构示意（非本局实时画面）。左：点陆块上的区域；右：「区域情报」与地图对应，可联动高亮。",
+          "取材地图示意：左侧可点区域，右侧显示选中区域详情",
+          "上图为界面结构示意（非本局实时画面）。左：点陆块上的区域；右：只显示当前选中区域的目标、缺口与进入按钮。",
         )}<div class="tutorial-soft-sheet">
           <h4 class="tutorial-soft-h4">这张地图做什么用？</h4>
-          <p class="tutorial-soft-lead">这是您的<strong>取材地图</strong>：当前可探索的地域一览。</p>
+          <p class="tutorial-soft-lead">这是您的<strong>取材地图</strong>：先选一个区域，再进入当地版面。</p>
           <ul class="tutorial-soft-ul">
-            <li>点陆块上的<strong>区域</strong>，进入当地版面。</li>
-            <li>右侧情报与地图点位<strong>联动高亮</strong>，方便对号入座。</li>
+            <li>地图点和右侧小卡都可以<strong>预览 / 选中区域</strong>。</li>
+            <li>主要操作在右下角：<strong>进入选中区域</strong>。</li>
           </ul>
         </div>`,
         `${tutorialSoftFigure(
@@ -2579,7 +2885,7 @@
         `<div class="tutorial-soft-sheet">
           <h4 class="tutorial-soft-h4">推进时间</h4>
           <ul class="tutorial-soft-ul">
-            <li><strong>下一天</strong>：本页右侧大按钮、区域内同款，或屏幕<strong>左下角悬浮按钮</strong>。</li>
+            <li><strong>下一天</strong>：本页右下角次级按钮，或进入区域后使用区域内同款按钮。</li>
             <li>时间推进后，到期的外派会<strong>依次结算</strong>。</li>
           </ul>
           <p class="tutorial-soft-note">本周内本提示只出现一次。</p>
@@ -2600,11 +2906,11 @@
     return findActiveMission((x) => x.regionId === regionId && x.mission && x.mission.missionType === "leadInvestigation" && x.mission.leadId === leadId);
   }
 
-  function staffAvatarsHtml(ids) {
+  function staffAvatarsHtml(ids, extraClass = "", maxVisible = 4) {
     if (!ids || !ids.length) return "";
-    const maxVisible = 4;
     const visible = ids.slice(0, maxVisible);
-    return `<span class="assigned-avatars">${visible
+    const cls = extraClass ? ` ${extraClass}` : "";
+    return `<span class="assigned-avatars${cls}">${visible
       .map((id, idx) => {
         const st = findStaff(id);
         if (!st) return "";
@@ -2612,6 +2918,29 @@
         return `<img class="${cut}" src="${st.avatar}" title="${escapeHtml(st.name)}" alt="${escapeHtml(st.name)}"/>`;
       })
       .join("")}</span>`;
+  }
+
+  function mapAssignedAvatarsHtml(ids) {
+    return staffAvatarsHtml(ids, "map-assigned-avatars", 3);
+  }
+
+  function assignedStaffNames(ids) {
+    return (ids || [])
+      .map((id) => findStaff(id))
+      .filter(Boolean)
+      .map((st) => st.name)
+      .join("、");
+  }
+
+  function regionAssignedStatusHtml(queued) {
+    if (!queued) return "";
+    const names = assignedStaffNames(queued.staffIds);
+    const title = names ? `已派遣：${names}` : "已派遣";
+    return `<span class="region-assigned-status" title="${escapeHtml(title)}">已派遣</span>`;
+  }
+
+  function regionTaskTitleHtml(title, queued) {
+    return `<h4 class="region-task-title"><span class="title-text">${escapeHtml(title)}</span>${regionAssignedStatusHtml(queued)}</h4>`;
   }
 
   function missionHeaderHtml(m, staffIds) {
@@ -2718,8 +3047,9 @@
 
   function openQueuedMission(rec) {
     if (!rec || !rec.mission) return;
-    state.mission = { ...rec.mission, missionQueueId: rec.id };
+    state.mission = { ...rec.mission, missionQueueId: rec.id, toolDiceIds: (rec.toolDiceIds || []).slice() };
     state.selectedStaffIds = rec.staffIds.slice();
+    state.selectedToolDiceIds = [];
     renderSetup();
     setView("setup");
   }
@@ -2734,6 +3064,7 @@
     }
     state.mission = { regionId, ...node };
     state.selectedStaffIds = [];
+    state.selectedToolDiceIds = [];
     renderSetup();
     setView("setup");
   }
@@ -2899,7 +3230,7 @@
     const expand = pos.x > 66 ? "expand-left" : "expand-right";
     const finalKind = n.isBlackDiceTask ? " chain-black" : n.riskTier === "high" ? " chain-danger" : "";
     const disabled = meta.disabled ? "disabled" : "";
-    const queuedMark = meta.queued ? `<span class="assigned-mark" title="已派遣">派</span>` : "";
+    const queuedMark = meta.queued ? mapAssignedAvatarsHtml(meta.queued.staffIds) : "";
     const nextKicker = n.nextNode ? "下一条线索" : "终局";
     const nextTitle = n.nextNode ? "?" : "完结";
     const futureTitle = n.nextNode ? "?" : "";
@@ -3032,7 +3363,6 @@
     if (!n.isBlackDiceTask && (n.riskTier === "high" || n.isHighRisk)) chips.push(regionChip("△ 危险", "danger"));
     if (n.isBlackDiceTask) chips.push(regionChip("骰 黑骰", "black"));
     if ((n.enemyAttr | 0) > 0) chips.push(regionChip(`▣ 对手骰 ${n.enemyAttr | 0}`, "enemy"));
-    if (queued) chips.push(regionChip("已派遣", "assigned"));
     return chips.join("");
   }
 
@@ -3066,8 +3396,8 @@
         const markerHtml = deadlineLeft == null
           ? `<span class="point-mark">${marker}</span>`
           : `<span class="point-mark point-deadline">剩${deadlineLeft}天</span>`;
-        return `<button type="button" class="region-point ${kindCls}" data-point-type="node" data-point-id="${n.id}" data-node="${n.id}" style="left:${pos.x}%;top:${pos.y}%;" ${disabled ? "disabled" : ""} title="${escapeHtml(n.name)} · ${diffZh} · ${escapeHtml(missionTypeTitle(n))}">
-          ${markerHtml}${escapeHtml(n.name)}${queued ? `<span class="assigned-mark" title="已派遣">派</span>` : ""}
+        return `<button type="button" class="region-point ${kindCls}${queued ? " has-assignees" : ""}" data-point-type="node" data-point-id="${n.id}" data-node="${n.id}" style="left:${pos.x}%;top:${pos.y}%;" ${disabled ? "disabled" : ""} title="${escapeHtml(n.name)} · ${diffZh} · ${escapeHtml(missionTypeTitle(n))}">
+          ${markerHtml}<span class="point-title">${escapeHtml(n.name)}</span>${queued ? mapAssignedAvatarsHtml(queued.staffIds) : ""}
         </button>`;
       })
       .join("");
@@ -3075,8 +3405,8 @@
       .map((lead, idx) => {
         const pos = nodePos[`lead_${lead.id}`] || { x: 16 + (idx % 3) * 20, y: 18 + Math.floor(idx / 3) * 16 };
         const queued = findActiveMissionByLead(r.id, lead.id);
-        return `<button type="button" class="region-point lead" data-point-type="lead" data-point-id="${lead.id}" data-lead="${lead.id}" style="left:${pos.x}%;top:${pos.y}%;" title="${escapeHtml(lead.title)}">
-          <span class="point-mark">?</span>${escapeHtml(lead.title)}${queued ? `<span class="assigned-mark" title="已派遣">派</span>` : ""}
+        return `<button type="button" class="region-point lead${queued ? " has-assignees" : ""}" data-point-type="lead" data-point-id="${lead.id}" data-lead="${lead.id}" style="left:${pos.x}%;top:${pos.y}%;" title="${escapeHtml(lead.title)}">
+          <span class="point-mark">?</span><span class="point-title">${escapeHtml(lead.title)}</span>${queued ? mapAssignedAvatarsHtml(queued.staffIds) : ""}
         </button>`;
       })
       .join("");
@@ -3087,11 +3417,10 @@
         return `<div class="lead-item region-task-card clue interactive" data-side-type="lead" data-side-id="${lead.id}">
         <div class="region-task-icon">${regionTaskIcon(null, "clue")}</div>
         <div class="region-task-main">
-          <h4 class="region-task-title">${escapeHtml(lead.title)}</h4>
+          ${regionTaskTitleHtml(lead.title, queued)}
           <div class="region-task-meta">
             ${regionChip(`耗时 ${regionLeadDays(lead)}天`, "time")}
             <span class="region-flow-chip">调查 -> 新任务</span>
-            ${queued ? regionChip("已派遣", "assigned") : ""}
           </div>
           <div class="region-task-action">
             <div class="region-task-needs">${regionNeedChipsHtml(regionLeadNeed(lead))}</div>
@@ -3111,7 +3440,7 @@
         return `<div class="region-node-item region-task-card ${tone} interactive${match ? "" : " is-filtered"}${completed ? " is-completed" : ""}" data-side-type="node" data-side-id="${n.id}">
           <div class="region-task-icon">${completed ? "✓" : regionTaskIcon(n)}</div>
           <div class="region-task-main">
-            <h4 class="region-task-title">${escapeHtml(n.name)}</h4>
+            ${regionTaskTitleHtml(n.name, queued)}
             <div class="region-task-meta">${regionNodeMetaHtml(n, queued)}</div>
             <div class="region-task-action">
               <div class="region-task-needs">${regionNeedChipsHtml(n.need)}</div>
@@ -3136,8 +3465,7 @@
             <button type="button" id="btnNextDayRegion" class="next-day-big"><span class="arrow" aria-hidden="true"></span><span>下一天</span></button>
           </div>
         </div>
-      </div>
-      <p><button type="button" id="backRegion">返回全球</button></p>`;
+      </div>`;
     elR.querySelectorAll(".region-point").forEach((btn) => {
       btn.addEventListener("click", () => {
         const pointType = btn.getAttribute("data-point-type");
@@ -3190,10 +3518,6 @@
     scheduleRegionMapLabelLayout(elR);
     const nd = document.getElementById("btnNextDayRegion");
     if (nd) nd.onclick = () => advanceOneDay();
-    document.getElementById("backRegion").onclick = () => {
-      renderGlobal();
-      setView("global");
-    };
     scheduleWeek1SoftTutorial(
       "w1_region",
       "第一周 · 区域版面",
@@ -3344,7 +3668,417 @@
     </div>`;
   }
 
+  function dispatchLabSelectedTools() {
+    return (state.selectedToolDiceIds || [])
+      .map((id) => state.toolDiceInventory.find((x) => x.id === id && !x.used))
+      .filter(Boolean);
+  }
+
+  function dispatchLabNeedStats(m, staffIds, tools) {
+    const need = (m && m.need) || {};
+    const needKeys = Object.keys(need);
+    const values = {};
+    let totalFaces = 0;
+    let relevantFaces = 0;
+    let blankFaces = 0;
+    const faceLists = [];
+    (staffIds || []).forEach((id) => {
+      const staff = findStaff(id);
+      if (!staff) return;
+      const faces = diceFacesForStaff(staff);
+      faceLists.push(faces);
+      faces.forEach((face) => {
+        totalFaces += 1;
+        if (!face || face.blank) {
+          blankFaces += 1;
+          return;
+        }
+        if (face.attr && need[face.attr] != null) {
+          relevantFaces += 1;
+          values[face.attr] = (values[face.attr] || 0) + (face.value || 0);
+        }
+      });
+    });
+    (tools || []).forEach((tool) => {
+      const faces = tool.faces || [];
+      faceLists.push(faces);
+      faces.forEach((face) => {
+        totalFaces += 1;
+        if (!face || face.blank) {
+          blankFaces += 1;
+          return;
+        }
+        if (face.attr && need[face.attr] != null) {
+          relevantFaces += 1;
+          values[face.attr] = (values[face.attr] || 0) + (face.value || 0);
+        }
+      });
+    });
+    const gaps = needKeys
+      .map((k) => ({ k, gap: Math.max(0, (need[k] || 0) - (values[k] || 0)), value: values[k] || 0, need: need[k] || 0 }))
+      .filter((x) => x.gap > 0);
+    const needValue = needKeys.reduce((sum, k) => sum + (need[k] || 0), 0);
+    const coveredValue = needKeys.reduce((sum, k) => sum + Math.min(values[k] || 0, need[k] || 0), 0);
+    const selectedStaff = (staffIds || []).map(findStaff).filter(Boolean);
+    const nonContributingStaff = selectedStaff.filter((staff) => !staffFitSummary(staff, need).covers.length).length;
+    const targetValue = needTargetValue(need);
+    const potentialValue = needKeys.reduce((sum, k) => sum + (values[k] || 0), 0);
+    const successChance = successChanceForNeed(need, faceLists);
+    return { need, needKeys, values, totalFaces, relevantFaces, blankFaces, gaps, needValue, coveredValue, nonContributingStaff, targetValue, potentialValue, successChance };
+  }
+
+  function dispatchLabRisk(m, stats, selectedCount) {
+    if (!selectedCount) return { label: "高", reason: "尚未选择角色，无法构成骰池。" };
+    if (!stats.relevantFaces) return { label: "高", reason: "当前骰池没有命中任务需求的相关面。" };
+    const chanceText = `实际达标率约 ${formatChance(stats.successChance)}`;
+    const targetText = `有效点目标 ${stats.targetValue || 0}，潜在相关点 ${stats.potentialValue || 0}`;
+    const idleText = stats.nonContributingStaff ? `；${stats.nonContributingStaff} 名角色无相关面` : "";
+    if (stats.successChance <= 0) {
+      return { label: "高", reason: `当前骰池按实际掷骰无法达标；${targetText}；相关面 ${stats.relevantFaces}，空面 ${stats.blankFaces}${idleText}。` };
+    }
+    if (stats.successChance >= 0.55) {
+      return { label: "低", reason: `${chanceText}；${targetText}；相关面 ${stats.relevantFaces}，空面 ${stats.blankFaces}${idleText}。` };
+    }
+    if (stats.successChance >= 0.3) {
+      return { label: "中", reason: `${chanceText}；${targetText}；相关面 ${stats.relevantFaces}，空面 ${stats.blankFaces}${idleText}。` };
+    }
+    return { label: "高", reason: `${chanceText} 偏低；${targetText}；相关面 ${stats.relevantFaces}，空面 ${stats.blankFaces}${idleText}。` };
+  }
+
+  function dispatchLabNeedRowsHtml(m, stats) {
+    const need = (m && m.need) || {};
+    const keys = Object.keys(need);
+    if (!keys.length) return `<div class="tip-inline">本任务没有明确需求。</div>`;
+    const target = stats.targetValue || needTargetValue(need);
+    const potential = stats.potentialValue || keys.reduce((sum, k) => sum + (stats.values[k] || 0), 0);
+    const targetPct = target ? Math.max(0, Math.min(100, Math.round((potential / target) * 100))) : 100;
+    const targetRow = `<div class="dispatch-need-row ${potential >= target ? "is-met" : ""}">
+      <div class="dispatch-need-line"><strong>有效点</strong><span>潜在 ${escapeHtml(potential)} / 目标 ${escapeHtml(target)} · 实掷约 ${escapeHtml(formatChance(stats.successChance))}</span></div>
+      <div class="dispatch-meter"><span style="width:${targetPct}%"></span></div>
+    </div>`;
+    return targetRow + keys.map((k) => {
+      const value = stats.values[k] || 0;
+      const req = need[k] || 0;
+      const pct = req ? Math.max(0, Math.min(100, Math.round((value / req) * 100))) : 100;
+      const met = value >= req;
+      return `<div class="dispatch-need-row ${met ? "is-met" : ""}">
+        <div class="dispatch-need-line"><strong>${escapeHtml(k)}</strong><span>${escapeHtml(value)} / ${escapeHtml(req)}${met ? " · 已覆盖" : ` · 缺 ${req - value}`}</span></div>
+        <div class="dispatch-meter"><span style="width:${pct}%;"></span></div>
+      </div>`;
+    }).join("");
+  }
+
+  function dispatchLabSummaryValue(m, key) {
+    if (key === "deadline") {
+      const left = deadlineRemainingDays(m);
+      return left == null ? "无" : `${left}天`;
+    }
+    if (key === "need") return Object.keys(m.need || {}).map((k) => `${k}${m.need[k]}`).join(" / ") || "无";
+    return "";
+  }
+
+  function dispatchLabTaskSummaryHtml(m) {
+    const red = (m.checkType || "white") === "red";
+    const danger = m.riskTier === "high" || m.isHighRisk;
+    const deadlineLeft = red ? deadlineRemainingDays(m) : null;
+    const kindText = m.missionType === "leadInvestigation" ? "线索调查" : "探索任务";
+    const needText = dispatchLabSummaryValue(m, "need");
+    const meta = [
+      kindText,
+      `耗时 ${m.days}天`,
+      needText && needText !== "无" ? `需求 ${needText}` : "",
+    ].filter(Boolean).join(" · ");
+    const deadlineHtml = red ? `<div class="dispatch-deadline-block">
+      <span>截稿关闭</span>
+      <strong>${deadlineLeft == null ? "到期" : `剩余 ${deadlineLeft}天`}</strong>
+    </div>` : "";
+    const consequence = [
+      red ? "成功或失败后都会结束" : "",
+      danger ? "失败可能造成队员状态损伤" : "",
+      m.chainType === "deep" ? "完成后推进下一页" : "",
+      m.isBlackDiceTask ? "进入黑骰特殊判定" : "",
+    ].filter(Boolean).join("；");
+    return `<section class="dispatch-lab-task">
+      <div class="dispatch-task-head">
+        <div>
+          <div class="dispatch-task-title">${escapeHtml(m.name)}</div>
+          <div class="dispatch-task-tags">${dispatchTaskBadgesHtml(m)}<span class="dispatch-task-meta">${escapeHtml(meta)}</span></div>
+        </div>
+        ${deadlineHtml}
+      </div>
+      ${consequence ? `<div class="dispatch-consequence">${escapeHtml(consequence)}</div>` : ""}
+    </section>`;
+  }
+
+  function dispatchLabStaffSlotHtml(staff, m) {
+    const fit = staffFitSummary(staff, m.need || {});
+    return `<div class="dispatch-slot-card">
+      <div class="dispatch-slot-head">
+        <img src="${staff.avatar}" alt="${escapeHtml(staff.name)}"/>
+        <div>
+          <div class="dispatch-slot-name">${escapeHtml(staff.name)}${staff.temporary ? " · 临时" : ""}</div>
+          <div class="dispatch-staff-fit">${escapeHtml(fit.contribution)}</div>
+        </div>
+      </div>
+      ${diceNetHtml(diceFacesForStaff(staff), m.need || {}, "dispatch-dice-net dispatch-slot-net")}
+    </div>`;
+  }
+
+  function dispatchLabPoolHtml(m, maxStaff, tempHireAvailable) {
+    const selectedStaff = (state.selectedStaffIds || []).map(findStaff).filter(Boolean);
+    const tools = dispatchLabSelectedTools();
+    const emptyCount = Math.max(0, maxStaff - selectedStaff.length);
+    const slots = [
+      ...selectedStaff.map((staff) => dispatchLabStaffSlotHtml(staff, m)),
+      ...Array.from({ length: emptyCount }, (_, i) => `<div class="dispatch-slot-card empty">角色槽 ${selectedStaff.length + i + 1}/${maxStaff}<br/><span>点击下方角色加入骰池</span></div>`),
+    ].join("");
+    const toolCards = tools.map((tool) => `<div class="pool-card tool">
+      <div class="pool-card-head"><span class="tool-avatar">道</span><div><div class="pool-card-name">${escapeHtml(tool.name)}</div><div class="risk-reason">不占人数 · 一次性</div></div></div>
+      ${diceFacesHtml(tool.faces || [], m.need || {}, "pool-dice-faces")}
+    </div>`).join("");
+    return `<div class="dispatch-lab-panel">
+      <div class="dispatch-lab-panel-title"><span>本次骰池</span><span>已选 ${selectedStaff.length}/${maxStaff} 人 ${capacitySlotsHtml(selectedStaff.length, maxStaff)}</span></div>
+      <div class="dispatch-slot-grid">${slots}</div>
+      <div class="dispatch-lab-tools">${toolCards || `<div class="pool-card empty" style="min-height:54px;">道具骰空槽 · 可在下方选择一次性道具</div>`}</div>
+      ${dispatchLabResourcesHtml(tempHireAvailable)}
+    </div>`;
+  }
+
+  function dispatchLabRunBlockHtml(m, stats, risk, maxStaff) {
+    const selectedCount = state.selectedStaffIds.length;
+    const disabledReason = !selectedCount
+      ? "先选择至少 1 名角色"
+      : m.days > state.day
+        ? "剩余天数不足"
+        : state.missionResolving || state.processingDayTick
+          ? "当前正在结算"
+          : "";
+    return `<aside class="dispatch-lab-panel">
+      <div class="dispatch-lab-panel-title"><span>需求覆盖</span><span class="task-type-chip task-${risk.label === "高" ? "danger" : risk.label === "中" ? "high" : "white"}">风险：${escapeHtml(risk.label)}</span></div>
+      ${dispatchLabNeedRowsHtml(m, stats)}
+      <div class="dispatch-risk-box">${escapeHtml(risk.reason)}</div>
+      <div id="dispatchHoverPreview" class="dispatch-hover-preview">悬停角色卡，预览加入后会补哪些需求。</div>
+      <div class="dispatch-lab-actions">
+        <button type="button" id="btnRun" class="primary" ${disabledReason ? "disabled" : ""}>${state.missionResolving ? "执行中..." : `${m.missionType === "leadInvestigation" ? "开始线索调查" : "开始调查"}（${m.days}天后判定）`}</button>
+        <div class="risk-reason">${disabledReason ? escapeHtml(disabledReason) : `可出发；最多 ${maxStaff} 人，当前 ${selectedCount} 人。`}</div>
+      </div>
+    </aside>`;
+  }
+
+  function dispatchLabResourcesHtml(tempHireAvailable) {
+    const toolCards = (state.toolDiceInventory || []).map((tool) => {
+      const used = !!tool.used;
+      const selected = state.selectedToolDiceIds.includes(tool.id);
+      return `<button type="button" class="dispatch-resource-card ${selected ? "selected" : ""}" data-tool-dice="${tool.id}" ${used ? "disabled" : ""}>
+        <strong>${escapeHtml(tool.name)}</strong>
+        <small>${used ? "已消耗" : "一次性道具 · 不占人数"}</small>
+        ${diceFacesHtml(tool.faces || [], state.mission ? state.mission.need : {}, "pool-dice-faces")}
+      </button>`;
+    }).join("");
+    return `<div class="dispatch-support-strip">
+      <div class="dispatch-support-head"><span>追加骰</span><span class="risk-reason">一次性道具不占人数；临时线人占角色槽</span></div>
+      <div class="dispatch-resource-grid">
+        ${toolCards || `<span class="tip-inline">暂无道具骰</span>`}
+        <button type="button" id="btnHireTemp" class="dispatch-resource-card" ${tempHireAvailable ? "" : "disabled"}>
+          <strong>雇佣本周临时线人</strong>
+          <small>${tempHireAvailable ? "$1200 · 占人数限制 · 完整角色骰" : "本周已雇佣或不可用"}</small>
+        </button>
+      </div>
+    </div>`;
+  }
+
+  function dispatchLabStaffHoverText(staff, m, maxStaff) {
+    const ids = state.selectedStaffIds.slice();
+    const exists = ids.includes(staff.id);
+    if (!exists) {
+      if (ids.length >= maxStaff) ids.shift();
+      ids.push(staff.id);
+    }
+    const stats = dispatchLabNeedStats(m, ids, dispatchLabSelectedTools());
+    const risk = dispatchLabRisk(m, stats, ids.length);
+    const fit = staffFitSummary(staff, m.need || {});
+    const gapText = stats.gaps.length ? `加入后仍缺 ${stats.gaps.map((x) => `${x.k}${x.gap}`).join(" / ")}` : "加入后需求面值已覆盖";
+    return `${exists ? "移出" : "加入"} ${staff.name}：${fit.contribution}；${gapText}；风险 ${risk.label}`;
+  }
+
+  function dispatchLabStaffCardHtml(staff, m, maxStaff) {
+    const selected = state.selectedStaffIds.includes(staff.id);
+    const fit = staffFitSummary(staff, m.need || {});
+    const hover = dispatchLabStaffHoverText(staff, m, maxStaff);
+    return `<div class="dispatch-staff-card ${selected ? "selected" : ""}" data-staff="${staff.id}" data-hover="${escapeHtml(hover)}">
+      <div class="dispatch-staff-head">
+        <img src="${staff.avatar}" alt="${escapeHtml(staff.name)}"/>
+        <div>
+          <div class="dispatch-staff-name">${escapeHtml(staff.name)}${staff.temporary ? " · 临时" : ""}</div>
+          <div class="staff-spec">${specialtyHtml(staff)}</div>
+        </div>
+      </div>
+      <div class="dispatch-staff-fit">${escapeHtml(fit.line)}<br/>${escapeHtml(fit.contribution)}</div>
+      ${diceNetHtml(diceFacesForStaff(staff), m.need || {}, "dispatch-dice-net")}
+      <div class="dispatch-staff-actions">
+        <button type="button" class="staff-detail-btn" data-staff-detail="${staff.id}">详情 / 骰面</button>
+      </div>
+    </div>`;
+  }
+
+  function dispatchLabSortedStaff(staffList, need) {
+    const rank = { 高: 3, 中: 2, 低: 1 };
+    return staffList.slice().sort((a, b) => {
+      const aSel = state.selectedStaffIds.includes(a.id) ? 1 : 0;
+      const bSel = state.selectedStaffIds.includes(b.id) ? 1 : 0;
+      if (aSel !== bSel) return bSel - aSel;
+      const af = staffFitSummary(a, need || {});
+      const bf = staffFitSummary(b, need || {});
+      if (rank[af.fit] !== rank[bf.fit]) return rank[bf.fit] - rank[af.fit];
+      return (bf.stats.relevantValues || 0) - (af.stats.relevantValues || 0);
+    });
+  }
+
+  function renderSetupLab() {
+    const m = state.mission;
+    const elS = document.getElementById("view-setup");
+    if (!m) return;
+    const maxStaff = missionMaxStaff(m);
+    const relevantNeed = m.need || {};
+    const selectedTools = dispatchLabSelectedTools();
+    const stats = dispatchLabNeedStats(m, state.selectedStaffIds, selectedTools);
+    const risk = dispatchLabRisk(m, stats, state.selectedStaffIds.length);
+    const tempHireAvailable = !state.tempHireUsed && !state.tempStaffIds.includes("temp_stringer");
+    const allowQueueId = m && m.missionQueueId ? m.missionQueueId : null;
+    const staffList = dispatchLabSortedStaff(
+      getAllStaff().filter((p) => !isStaffAssigned(p.id, allowQueueId) || state.selectedStaffIds.includes(p.id)),
+      relevantNeed,
+    );
+    elS.innerHTML = `<div class="dispatch-lab-shell">
+      <div class="dispatch-lab-top">
+        <div>
+          <h2>${m.missionType === "leadInvestigation" ? "线索调查配置" : "探索配置"}</h2>
+          <div class="risk-reason">组本次骰池，覆盖任务需求后开始调查。</div>
+        </div>
+      </div>
+      ${dispatchLabTaskSummaryHtml(m)}
+      <div class="dispatch-lab-builder">
+        ${dispatchLabPoolHtml(m, maxStaff, tempHireAvailable)}
+        ${dispatchLabRunBlockHtml(m, stats, risk, maxStaff)}
+      </div>
+      <section class="dispatch-lab-panel">
+        <div class="dispatch-candidate-head">
+          <div class="dispatch-lab-panel-title" style="margin:0;"><span>候选角色</span><span class="risk-reason">默认按本任务贡献排序</span></div>
+          <span class="mode-toggle" id="modeToggle">
+            <button type="button" data-mode="dice" class="${state.displayMode === "dice" ? "on" : ""}">骰子</button>
+            <button type="button" data-mode="numeric" class="${state.displayMode === "numeric" ? "on" : ""}">纯数值</button>
+          </span>
+        </div>
+        <div class="dispatch-staff-grid" id="staffPick">${staffList.map((p) => dispatchLabStaffCardHtml(p, m, maxStaff)).join("")}</div>
+      </section>
+      <p class="row" style="margin-top:0;">
+        ${m.missionQueueId ? `<button type="button" id="btnUndoDispatch">撤销派遣</button>` : ""}
+        <button type="button" id="btnCancelSetup">返回区域</button>
+      </p>
+      <p class="tip-inline">已派遣待判定任务：${state.activeMissions.length}。返回区域后点击「下一天」推进并触发到期判定。</p>
+    </div>`;
+
+    document.querySelectorAll("#modeToggle button").forEach((b) => {
+      b.onclick = () => {
+        state.displayMode = b.getAttribute("data-mode");
+        renderSetup();
+      };
+    });
+    document.querySelectorAll("[data-tool-dice]").forEach((btn) => {
+      btn.onclick = () => {
+        const id = btn.getAttribute("data-tool-dice");
+        if (state.selectedToolDiceIds.includes(id)) state.selectedToolDiceIds = state.selectedToolDiceIds.filter((x) => x !== id);
+        else state.selectedToolDiceIds.push(id);
+        renderSetup();
+      };
+    });
+    const hireBtn = document.getElementById("btnHireTemp");
+    if (hireBtn) {
+      hireBtn.onclick = () => {
+        state.tempHireUsed = true;
+        state.tempStaffIds.push("temp_stringer");
+        addMacro({ 声望: -1 });
+        log("本周雇佣临时线人：花费不菲，但获得一颗完整临时角色骰。");
+        renderSetup();
+      };
+    }
+    const hover = document.getElementById("dispatchHoverPreview");
+    document.querySelectorAll("#staffPick .dispatch-staff-card").forEach((c) => {
+      c.addEventListener("mouseenter", () => {
+        if (hover) hover.textContent = c.getAttribute("data-hover") || "";
+      });
+      c.addEventListener("mouseleave", () => {
+        if (hover) hover.textContent = "悬停角色卡，预览加入后会补哪些需求。";
+      });
+      c.addEventListener("click", (ev) => {
+        if (ev && ev.target && ev.target.closest && ev.target.closest("button")) return;
+        const id = c.getAttribute("data-staff");
+        const i = state.selectedStaffIds.indexOf(id);
+        if (i >= 0) state.selectedStaffIds.splice(i, 1);
+        else {
+          if (state.selectedStaffIds.length >= maxStaff) state.selectedStaffIds.shift();
+          state.selectedStaffIds.push(id);
+        }
+        renderSetup();
+      });
+    });
+    document.querySelectorAll("[data-staff-detail]").forEach((btn) => {
+      btn.onclick = (ev) => {
+        ev.stopPropagation();
+        showStaffDetail(findStaff(btn.getAttribute("data-staff-detail")), relevantNeed);
+      };
+    });
+    document.getElementById("btnRun").onclick = async () => {
+      if (!state.mission || state.selectedStaffIds.length === 0) return;
+      if (state.mission.days > state.day) return;
+      if (state.missionResolving) return;
+      enqueueCurrentMission();
+      renderRegion();
+      setView("region");
+    };
+    const undoBtn = document.getElementById("btnUndoDispatch");
+    if (undoBtn) {
+      undoBtn.onclick = () => {
+        const idx = state.activeMissions.findIndex((x) => x.id === m.missionQueueId);
+        if (idx >= 0) {
+          const rec = state.activeMissions[idx];
+          if (rec.mission && rec.mission.missionType === "leadInvestigation") {
+            const leads = state.regionLeadEvents[rec.regionId] || [];
+            const lead = leads.find((x) => x.id === rec.mission.leadId);
+            if (lead && !lead.investigated) lead.assigned = false;
+          }
+          (rec.toolDiceIds || []).forEach((id) => {
+            const tool = state.toolDiceInventory.find((x) => x.id === id);
+            if (tool) tool.used = false;
+          });
+          state.activeMissions.splice(idx, 1);
+          log(`已撤销派遣：${m.name}`);
+        }
+        state.mission = null;
+        state.selectedStaffIds = [];
+        state.selectedToolDiceIds = [];
+        renderRegion();
+        setView("region");
+      };
+    }
+    document.getElementById("btnCancelSetup").onclick = () => {
+      if (state.mission && state.mission.missionType === "leadInvestigation" && !state.mission.missionQueueId) {
+        const leads = state.regionLeadEvents[state.mission.regionId] || [];
+        const lead = leads.find((x) => x.id === state.mission.leadId);
+        if (lead && !lead.investigated) lead.assigned = false;
+      }
+      state.mission = null;
+      state.selectedStaffIds = [];
+      renderRegion();
+      setView("region");
+    };
+  }
+
   function renderSetup() {
+    if (!state.dispatchOldSetupMode) {
+      renderSetupLab();
+      return;
+    }
     const m = state.mission;
     const elS = document.getElementById("view-setup");
     if (!m) return;
@@ -3384,7 +4118,7 @@
         <button type="button" id="btnCancelSetup">返回区域</button>
       </p>
       ${m.days > state.day ? `<p style="color:var(--danger);font-size:0.85rem;">剩余天数不足，无法在本周内完成。</p>` : ""}
-      <p class="tip-inline" style="margin-top:0.5rem;">已派遣待判定任务：${state.activeMissions.length}。点击右下角「下一天」推进并触发到期判定。</p>`;
+      <p class="tip-inline" style="margin-top:0.5rem;">已派遣待判定任务：${state.activeMissions.length}。返回区域后点击「下一天」推进并触发到期判定。</p>`;
     document.querySelectorAll("#modeToggle button").forEach((b) => {
       b.onclick = () => {
         state.displayMode = b.getAttribute("data-mode");
@@ -3471,11 +4205,16 @@
             const lead = leads.find((x) => x.id === rec.mission.leadId);
             if (lead && !lead.investigated) lead.assigned = false;
           }
+          (rec.toolDiceIds || []).forEach((id) => {
+            const tool = state.toolDiceInventory.find((x) => x.id === id);
+            if (tool) tool.used = false;
+          });
           state.activeMissions.splice(idx, 1);
           log(`已撤销派遣：${m.name}`);
         }
         state.mission = null;
         state.selectedStaffIds = [];
+        state.selectedToolDiceIds = [];
         renderRegion();
         setView("region");
       };
@@ -3533,31 +4272,266 @@
     return `<div class="dice-pool"><h3>${label}</h3><div class="dice-row">${cells}</div></div>`;
   }
 
-  function renderCharacterRollsHtml(rolls, selectedIds, need) {
+  function rollingFacePlaceholder(idx) {
+    const pool = ["探索?", "生存?", "理性?", "洞察?", "诡思?", "空"];
+    return pool[Math.abs((idx | 0) + Math.floor(Date.now() / 160)) % pool.length];
+  }
+
+  function contributionProgressHtml(sum, need, ready) {
+    const keys = Object.keys(need || {});
+    if (!keys.length) return `<div class="dice-need-panel"><div class="dice-need-line">本任务没有明确需求。</div></div>`;
+    const target = needTargetValue(need);
+    const currentTotal = ready ? contributionTotalForNeed(need, sum || {}) : 0;
+    const totalMet = currentTotal >= target;
+    const totalPct = target ? Math.max(0, Math.min(100, Math.round((currentTotal / target) * 100))) : 100;
+    const totalRow = `<div class="dice-need-row${totalMet ? " is-met" : ""}">
+      <div class="dice-need-line"><span>有效点</span><strong>${ready ? `${currentTotal}/${target}` : `0/${target}`}</strong></div>
+      <div class="dice-need-meter"><span style="width:${ready ? totalPct : 0}%"></span></div>
+    </div>`;
+    const rows = keys.map((k) => {
+      const current = sum && sum[k] ? sum[k] : 0;
+      const target = need[k] || 0;
+      const met = current >= target;
+      const pct = Math.max(0, Math.min(100, Math.round((current / Math.max(1, target)) * 100)));
+      return `<div class="dice-need-row${met ? " is-met" : ""}">
+        <div class="dice-need-line"><span>${escapeHtml(k)}</span><strong>${ready ? `${current}/${target}` : `0/${target}`}</strong></div>
+        <div class="dice-need-meter"><span style="width:${ready ? pct : 0}%"></span></div>
+      </div>`;
+    }).join("");
+    return `<div class="dice-need-panel">
+      <div class="dice-need-title">${ready ? "已计入 / 有效点目标" : "等待停骰"}</div>
+      ${totalRow}
+      <div class="dice-need-title">相关属性贡献</div>
+      ${rows}
+    </div>`;
+  }
+
+  function blackDiceInterventionHtml(context) {
+    const ctx = context || {};
+    const blackDice = ctx.blackDice || [];
+    const notes = ctx.blackNotes || [];
+    if (!blackDice.length && !notes.length) return "";
+    const dice = blackDice.map((b) => `<span class="black-intervention-die">${escapeHtml(faceText(b.face))}</span>`).join("");
+    const lines = notes.map((n) => `<li>${escapeHtml(n)}</li>`).join("");
+    return `<div class="black-intervention-panel${ctx.active ? " is-active" : ""}">
+      <div class="black-intervention-head">
+        <strong>黑骰介入</strong>
+        <span>${blackDice.length ? `已掷出 ${blackDice.length} 颗黑骰` : "异常压力已生效"}</span>
+      </div>
+      ${dice ? `<div class="black-intervention-row">${dice}</div>` : ""}
+      ${lines ? `<ul>${lines}</ul>` : ""}
+    </div>`;
+  }
+
+  function selectedDiceTrayHtml(rolls, selectedIds, need, ready) {
+    if (!ready) {
+      return `<div class="selected-dice-tray is-waiting">
+        <div class="selected-dice-head"><strong>计入槽</strong><span>停骰后选择</span></div>
+        <div class="selected-dice-empty">等待选择计入判定的骰面</div>
+      </div>`;
+    }
     const selected = new Set(selectedIds || []);
-    return `<div class="character-roll-grid">${(rolls || []).map((r) => {
+    const picked = (rolls || []).filter((r) => selected.has(r.id));
+    const chips = picked.map((r) => {
+      const contributes = r.face && r.face.attr && need && need[r.face.attr] != null && !r.black;
+      const waste = !contributes && !r.black;
+      const tag = r.black ? "黑骰" : contributes ? "补需求" : "不计";
+      const source = r.staffName ? `${r.staffName} · ${tag}` : tag;
+      return `<span class="selected-dice-chip${contributes ? " contributes" : ""}${r.black ? " black" : ""}${waste ? " waste" : ""}">
+        <b>${escapeHtml(faceText(r.face))}</b><small>${escapeHtml(source)}</small>
+      </span>`;
+    }).join("");
+    const contributeCount = picked.filter((r) => r.face && r.face.attr && need && need[r.face.attr] != null && !r.black).length;
+    const blackCount = picked.filter((r) => r.black).length;
+    const wasteCount = Math.max(0, picked.length - contributeCount - blackCount);
+    const summary = picked.length
+      ? [`${picked.length} 颗已选`, contributeCount ? `${contributeCount} 颗补需求` : "", blackCount ? `${blackCount} 颗黑骰` : "", wasteCount ? `${wasteCount} 颗不计` : ""].filter(Boolean).join(" · ")
+      : "未选择";
+    return `<div class="selected-dice-tray">
+      <div class="selected-dice-head"><strong>计入槽</strong><span>${escapeHtml(summary)}</span></div>
+      <div class="selected-dice-list">${chips || `<div class="selected-dice-empty">没有骰面计入，本次将按 0 贡献结算</div>`}</div>
+    </div>`;
+  }
+
+  function diceImpactMeta(roll, need, selectedNow) {
+    if (!roll) {
+      return {
+        tone: "idle",
+        badge: "待选择",
+        title: "停骰后选择骰面",
+        copy: "点击骰面会把它加入或移出计入槽。",
+      };
+    }
+    const text = faceText(roll.face);
+    if (roll.black) {
+      return {
+        tone: "black",
+        badge: selectedNow ? "黑骰已计入" : "黑骰压力",
+        title: `${text} · ${roll.staffName || ""}`,
+        copy: selectedNow ? "已进入计入槽；不会补任务需求，但会把异常压力带入本次判定。" : "来自黑骰介入；可选择，但不会补任务需求。",
+      };
+    }
+    if (!roll.face || roll.face.blank) {
+      return {
+        tone: "muted",
+        badge: selectedNow ? "空面已选" : "空面",
+        title: `${text} · ${roll.staffName || ""}`,
+        copy: selectedNow ? "空面已进入计入槽；本次不提供需求贡献。" : "不提供需求贡献，默认不推荐计入。",
+      };
+    }
+    const relevant = roll.face.attr && need && need[roll.face.attr] != null;
+    if (relevant) {
+      return {
+        tone: selectedNow ? "good selected" : "good",
+        badge: selectedNow ? "正在补需求" : "可补需求",
+        title: `${roll.face.attr}+${roll.face.value} · ${roll.staffName || ""}`,
+        copy: selectedNow ? `已计入 ${roll.face.attr}+${roll.face.value}。` : `点击后计入 ${roll.face.attr}+${roll.face.value}。`,
+      };
+    }
+    return {
+      tone: "muted",
+      badge: selectedNow ? "已选但不计" : "任务外骰面",
+      title: `${text} · ${roll.staffName || ""}`,
+      copy: selectedNow ? "已进入计入槽，但当前任务不读取这个属性。" : "当前任务不读取这个属性，通常不需要计入。",
+    };
+  }
+
+  function diceImpactPanelHtml(rolls, selectedIds, need, focusId, ready) {
+    if (!ready) {
+      return `<div class="dice-impact-panel is-waiting">
+        <div class="dice-impact-head"><strong>骰面影响</strong><span>等待停骰</span></div>
+        <div class="dice-impact-copy">停骰后会显示当前骰面对任务需求的影响。</div>
+      </div>`;
+    }
+    const selected = new Set(selectedIds || []);
+    const source = rolls || [];
+    const focus = source.find((r) => r.id === focusId)
+      || source.find((r) => selected.has(r.id) && r.face && r.face.attr && need && need[r.face.attr] != null && !r.black)
+      || source.find((r) => selected.has(r.id))
+      || source.find((r) => r.face && r.face.attr && need && need[r.face.attr] != null && !r.black)
+      || source[0];
+    const meta = diceImpactMeta(focus, need, focus ? selected.has(focus.id) : false);
+    return `<div class="dice-impact-panel ${escapeHtml(meta.tone)}">
+      <div class="dice-impact-head"><strong>骰面影响</strong><span>${escapeHtml(meta.badge)}</span></div>
+      <div class="dice-impact-title">${escapeHtml(meta.title)}</div>
+      <div class="dice-impact-copy">${escapeHtml(meta.copy)}</div>
+    </div>`;
+  }
+
+  function renderCharacterRollsHtml(rolls, selectedIds, need, options) {
+    const opts = options || {};
+    const selected = new Set(selectedIds || []);
+    const stage = opts.stage || "select";
+    const revealCount = opts.revealCount == null ? (rolls || []).length : opts.revealCount;
+    const readOnly = !!opts.readOnly;
+    return `<div class="character-roll-grid${stage === "rolling" ? " is-rolling-stage" : ""}">${(rolls || []).map((r, idx) => {
+      const revealed = stage !== "rolling" || idx < revealCount;
+      const isRolling = !revealed;
+      const isLanding = stage === "rolling" && revealed && idx === revealCount - 1;
       const selectedCls = selected.has(r.id) ? " selected" : "";
       const relevant = r.face && r.face.attr && need && need[r.face.attr] != null ? " relevant" : "";
       const locked = r.locked ? " locked" : "";
       const avatar = r.avatar ? `<img src="${r.avatar}" alt="${escapeHtml(r.staffName)}"/>` : `<span class="tool-avatar">道</span>`;
       const black = r.black ? " black-roll" : "";
       const grounded = r.grounded ? " grounded-roll" : "";
-      return `<button type="button" class="character-roll${selectedCls}${relevant}${locked}${black}${grounded}" data-roll-id="${r.id}" ${r.locked && r.kind === "tool" ? "" : ""}>
+      const disabled = isRolling || readOnly ? "disabled" : "";
+      const faceLabel = isRolling ? rollingFacePlaceholder(idx) : faceText(r.face);
+      const faceCls = isRolling ? "face-rolling" : faceClass(r.face);
+      const selectedNow = selected.has(r.id);
+      const stateText = isRolling
+        ? "摇骰中"
+        : r.black
+          ? (selectedNow ? "黑骰计入" : "黑骰压力")
+          : !r.face || r.face.blank
+            ? "空面"
+            : selectedNow && relevant
+              ? "计入判定"
+              : selectedNow
+                ? "已选 · 不计需求"
+                : relevant
+                  ? "可计入"
+                  : "本任务不计入";
+      return `<button type="button" class="character-roll${selectedCls}${relevant}${locked}${black}${grounded}${isRolling ? " is-rolling" : ""}${isLanding ? " is-landing" : ""}${opts.blackActive && r.black ? " is-black-entering" : ""}${readOnly ? " is-readonly" : ""}" data-roll-id="${r.id}" aria-pressed="${selectedNow ? "true" : "false"}" title="${escapeHtml(diceImpactMeta(r, need, selectedNow).copy)}" ${disabled}>
+        <span class="roll-die ${faceCls}">
+          <span class="roll-die-face">${escapeHtml(faceLabel)}</span>
+        </span>
         <span class="roll-owner">${avatar}<span>${escapeHtml(r.staffName)}</span></span>
-        <span class="dice-face ${faceClass(r.face)}">${escapeHtml(faceText(r.face))}</span>
+        <span class="roll-state">${escapeHtml(stateText)}</span>
       </button>`;
     }).join("")}</div>`;
+  }
+
+  function animateDiceToTray(sourceButton) {
+    if (!sourceButton || !document.body) return;
+    const die = sourceButton.querySelector(".roll-die");
+    const tray = document.querySelector("#confirmPopup .selected-dice-list") || document.querySelector("#confirmPopup .selected-dice-tray");
+    if (!die || !tray) return;
+    const start = die.getBoundingClientRect();
+    const target = tray.getBoundingClientRect();
+    if (!start.width || !start.height || !target.width || !target.height) return;
+    const ghost = die.cloneNode(true);
+    ghost.className = `${die.className} dice-fly-ghost`;
+    ghost.style.left = `${start.left}px`;
+    ghost.style.top = `${start.top}px`;
+    ghost.style.width = `${start.width}px`;
+    ghost.style.height = `${start.height}px`;
+    ghost.style.setProperty("--fly-dx", `${target.left + Math.min(28, target.width / 2) - start.left}px`);
+    ghost.style.setProperty("--fly-dy", `${target.top + Math.min(18, target.height / 2) - start.top}px`);
+    document.body.appendChild(ghost);
+    sourceButton.classList.remove("is-select-pulse");
+    void sourceButton.offsetWidth;
+    sourceButton.classList.add("is-select-pulse");
+    window.setTimeout(() => {
+      ghost.remove();
+    }, 620);
   }
 
   function contributionText(sum, need) {
     const keys = Object.keys(need || {});
     if (!keys.length) return "无需求";
-    return keys.map((k) => `${k} ${sum[k] || 0}/${need[k] || 0}`).join(" · ");
+    const target = needTargetValue(need);
+    const total = contributionTotalForNeed(need, sum || {});
+    return `有效点 ${total}/${target} · ${keys.map((k) => `${k} ${sum[k] || 0}/${need[k] || 0}`).join(" · ")}`;
   }
 
-  function showDiceSelectionPopup(mission, rolls) {
+  function renderCharacterDiceResolutionHtml(mission, check, tier) {
+    const need = (mission && mission.need) || {};
+    const met = needMetByContribution(need, check.contribution || {});
+    const tierText = tier || check.tier || "";
+    const tierClass = tierText === "大成功"
+      ? "result-crit"
+      : tierText === "成功"
+        ? "result-success"
+        : tierText === "大失败"
+          ? "result-bad"
+          : "result-fail";
+    return `<div class="dice-resolution-card ${met ? "is-met" : "is-miss"} ${tierClass}">
+      <div class="dice-resolution-head">
+        <div>
+          <strong>角色骰收束</strong>
+          <span>${escapeHtml(mission && mission.name ? mission.name : "本次判定")}</span>
+        </div>
+        <em>${escapeHtml(tierText)}</em>
+      </div>
+      ${contributionProgressHtml(check.contribution || {}, need, true)}
+      ${blackDiceInterventionHtml(check)}
+      ${selectedDiceTrayHtml(check.rolls || [], check.selectedIds || [], need, true)}
+      <div class="dice-resolution-rolls">
+        ${renderCharacterRollsHtml(check.rolls || [], check.selectedIds || [], need, { stage: "final", readOnly: true })}
+      </div>
+    </div>`;
+  }
+
+  function showDiceSelectionPopup(mission, rolls, context) {
+    const ctx = context || {};
+    const baseRolls = ctx.baseRolls && ctx.baseRolls.length ? ctx.baseRolls : rolls;
+    const hasBlackIntervention = !!((ctx.blackDice && ctx.blackDice.length) || (ctx.blackNotes && ctx.blackNotes.length));
     const auto = autoSelectRollsForNeed(rolls, mission.need || {});
-    let selectedIds = auto.slice();
+    let selectedIds = [];
+    let stage = "rolling";
+    let revealCount = 0;
+    let resolved = false;
+    let focusRollId = null;
     return new Promise((resolve) => {
       const wrap = document.getElementById("confirmPopup");
       const body = document.getElementById("confirmPopupBody");
@@ -3569,55 +4543,111 @@
         resolve({ selectedIds, sum: rollContribution(rolls, selectedIds), success: needMetByContribution(mission.need || {}, rollContribution(rolls, selectedIds)) });
         return;
       }
-      ttl.textContent = "角色骰判定 · 选择有效骰";
+      wrap.classList.add("dice-select-modal");
+      ttl.textContent = "角色骰判定";
       date.textContent = mission.name || "";
       const render = () => {
+        const currentRolls = stage === "rolling" ? baseRolls : rolls;
         const sum = rollContribution(rolls, selectedIds);
         const okNow = needMetByContribution(mission.need || {}, sum);
-        body.innerHTML = `<p style="margin:0 0 0.45rem;color:#cbd5e1;">选择本次要计入判定的骰面；可直接使用自动选择。</p>
-          <div class="prob-box" style="margin-bottom:0.5rem;">需求：${escapeHtml(contributionText(sum, mission.need || {}))} · ${okNow ? "达标" : "未达标"}</div>
-          ${renderCharacterRollsHtml(rolls, selectedIds, mission.need || {})}
-          <p class="row" style="margin-top:0.55rem;">
-            <button type="button" id="btnAutoRollPick">自动选择</button>
-            <button type="button" id="btnSelectAllRolls">全选</button>
-            <button type="button" id="btnClearRollPick">清空</button>
-          </p>`;
+        const finalReady = stage !== "rolling";
+        const selectReady = stage === "select";
+        const stageText = stage === "rolling"
+          ? `基础骰摇骰中 · ${revealCount}/${baseRolls.length}`
+          : stage === "black"
+            ? "黑骰介入 · 骰池被改写"
+            : "停骰完成 · 选择计入判定的骰面";
+        const helperText = stage === "rolling"
+          ? "先看每名角色掷出的基础骰。若本任务存在黑骰，异常会在基础骰停住后介入。"
+          : stage === "black"
+            ? "黑骰正在改写骰池：混入、替座或标记会直接改变你接下来能选择的骰面。"
+            : "发亮骰面更适合当前任务；你可以改选最终计入的骰面。";
+        body.innerHTML = `<div class="dice-select-shell">
+          <div class="dice-select-head">
+            <div>
+              <div class="dice-select-stage">${escapeHtml(stageText)}</div>
+              <p>${escapeHtml(helperText)}</p>
+            </div>
+            <div class="dice-select-result ${selectReady && okNow ? "is-met" : ""}">${selectReady ? (okNow ? "达标" : "未达标") : stage === "black" ? "黑骰介入" : "等待停骰"}</div>
+          </div>
+          ${contributionProgressHtml(sum, mission.need || {}, selectReady)}
+          ${stage === "black" || selectReady ? blackDiceInterventionHtml({ ...ctx, active: stage === "black" }) : ""}
+          ${selectedDiceTrayHtml(rolls, selectedIds, mission.need || {}, selectReady)}
+          ${diceImpactPanelHtml(rolls, selectedIds, mission.need || {}, focusRollId, selectReady)}
+          ${renderCharacterRollsHtml(currentRolls, selectedIds, mission.need || {}, { stage: stage === "rolling" ? "rolling" : "select", revealCount, readOnly: stage === "black", blackActive: stage === "black" })}
+        </div>`;
         body.querySelectorAll("[data-roll-id]").forEach((btn) => {
+          const id = btn.getAttribute("data-roll-id");
+          btn.onfocus = () => {
+            if (!selectReady) return;
+            focusRollId = id;
+            render();
+          };
           btn.onclick = () => {
-            const id = btn.getAttribute("data-roll-id");
-            if (selectedIds.includes(id)) selectedIds = selectedIds.filter((x) => x !== id);
-            else selectedIds.push(id);
+            if (!selectReady) return;
+            focusRollId = id;
+            if (selectedIds.includes(id)) {
+              selectedIds = selectedIds.filter((x) => x !== id);
+            } else {
+              animateDiceToTray(btn);
+              selectedIds.push(id);
+            }
             render();
           };
         });
-        const autoBtn = document.getElementById("btnAutoRollPick");
-        const allBtn = document.getElementById("btnSelectAllRolls");
-        const clearBtn = document.getElementById("btnClearRollPick");
-        if (autoBtn) autoBtn.onclick = () => { selectedIds = autoSelectRollsForNeed(rolls, mission.need || {}); render(); };
-        if (allBtn) allBtn.onclick = () => { selectedIds = rolls.map((r) => r.id); render(); };
-        if (clearBtn) clearBtn.onclick = () => { selectedIds = []; render(); };
+        ok.disabled = !selectReady;
+        cancel.disabled = !selectReady;
+        ok.textContent = selectReady ? `确认计入（${okNow ? "达标" : "未达标"}）` : "确认计入";
+        cancel.textContent = selectReady ? "采用推荐" : "等待停骰";
       };
       const cleanup = (result) => {
+        resolved = true;
         wrap.classList.add("hidden");
+        wrap.classList.remove("dice-select-modal");
+        ok.disabled = false;
+        cancel.disabled = false;
         ok.removeEventListener("click", onOk);
         cancel.removeEventListener("click", onCancel);
         resolve(result);
       };
       const onOk = () => {
+        if (stage !== "select") return;
         const sum = rollContribution(rolls, selectedIds);
         cleanup({ selectedIds: selectedIds.slice(), sum, success: needMetByContribution(mission.need || {}, sum) });
       };
       const onCancel = () => {
+        if (stage !== "select") return;
         selectedIds = autoSelectRollsForNeed(rolls, mission.need || {});
         const sum = rollContribution(rolls, selectedIds);
         cleanup({ selectedIds: selectedIds.slice(), sum, success: needMetByContribution(mission.need || {}, sum) });
       };
-      ok.textContent = "确认骰面";
-      cancel.textContent = "使用自动选择";
+      ok.textContent = "确认计入";
+      cancel.textContent = "采用推荐";
       ok.addEventListener("click", onOk);
       cancel.addEventListener("click", onCancel);
       wrap.classList.remove("hidden");
       render();
+      (async () => {
+        await sleep(480);
+        for (let i = 1; i <= (baseRolls || []).length; i++) {
+          if (resolved) return;
+          revealCount = i;
+          render();
+          await sleep(260);
+        }
+        if (resolved) return;
+        if (hasBlackIntervention) {
+          stage = "black";
+          revealCount = rolls.length;
+          render();
+          await sleep(900);
+          if (resolved) return;
+        }
+        stage = "select";
+        selectedIds = auto.slice();
+        focusRollId = selectedIds[0] || (rolls[0] && rolls[0].id) || null;
+        render();
+      })();
     });
   }
 
@@ -3632,17 +4662,25 @@
           return;
         }
         state.activeMissions[idx].staffIds = state.selectedStaffIds.slice();
+        state.activeMissions[idx].toolDiceIds = state.activeMissions[idx].toolDiceIds || [];
+        state.activeMissions[idx].mission = { ...state.activeMissions[idx].mission, toolDiceIds: state.activeMissions[idx].toolDiceIds.slice() };
         log(`已更新派遣：${m.name}（仍需 ${state.activeMissions[idx].remainingDays} 天判定）`);
       }
       state.mission = null;
       state.selectedStaffIds = [];
+      state.selectedToolDiceIds = [];
       updateNextDayButton();
       return;
     }
+    const toolDiceIds = (state.selectedToolDiceIds || []).filter((id) => {
+      const tool = state.toolDiceInventory.find((x) => x.id === id);
+      return tool && !tool.used;
+    });
     const rec = {
       id: `q_${Date.now()}_${Math.floor(Math.random() * 10000)}`,
-      mission: { ...m },
+      mission: { ...m, toolDiceIds },
       staffIds: state.selectedStaffIds.slice(),
+      toolDiceIds,
       remainingDays: m.days | 0,
       regionId: m.regionId,
       status: "running",
@@ -3651,12 +4689,12 @@
       log("派遣失败：队员已被其他任务占用。");
       return;
     }
-    (state.selectedToolDiceIds || []).forEach((id) => {
+    toolDiceIds.forEach((id) => {
       const tool = state.toolDiceInventory.find((x) => x.id === id);
       if (tool) tool.used = true;
     });
     state.activeMissions.push(rec);
-    log(`已派遣：${m.name}（预计 ${rec.remainingDays} 天后判定）${state.selectedToolDiceIds.length ? "；已消耗一次性道具骰。" : ""}`);
+    log(`已派遣：${m.name}（预计 ${rec.remainingDays} 天后判定）${toolDiceIds.length ? "；已消耗一次性道具骰。" : ""}`);
     state.mission = null;
     state.selectedStaffIds = [];
     state.selectedToolDiceIds = [];
@@ -3825,11 +4863,12 @@
     let tier = "失败";
     let diceSelection = null;
     if (useCharacterDice) {
-      const baseRolls = rollCharacterDice(m, state.selectedStaffIds);
+      const missionToolDiceIds = Array.isArray(m.toolDiceIds) ? m.toolDiceIds : state.selectedToolDiceIds;
+      const baseRolls = rollCharacterDice(m, state.selectedStaffIds, missionToolDiceIds);
       const blackDice = blackDiceForMission(m, baseRolls);
       const blackApplied = applyBlackDiceToRolls(m, baseRolls, blackDice);
       const rolls = blackApplied.rolls;
-      diceSelection = await showDiceSelectionPopup(m, rolls);
+      diceSelection = await showDiceSelectionPopup(m, rolls, { baseRolls, blackDice, blackNotes: blackApplied.notes, blackPressure: blackApplied.pressure });
       const selectedRolls = rolls.filter((r) => diceSelection.selectedIds.includes(r.id));
       tier = m.isBlackDiceTask
         ? blackDiceTier(m, diceSelection.success, diceSelection.sum, blackApplied.pressure, selectedRolls)
@@ -3912,11 +4951,7 @@
     renderMacro();
     if (check.characterDice) {
       const h = document.getElementById("diceAnim");
-      if (h) h.innerHTML = `<div class="prob-box">
-        <strong>角色骰结果：</strong>${escapeHtml(contributionText(check.contribution || {}, m.need || {}))}
-        ${check.blackNotes && check.blackNotes.length ? `<div style="margin-top:0.35rem;color:#fca5a5;">${check.blackNotes.map(escapeHtml).join("<br/>")}</div>` : ""}
-        <div style="margin-top:0.5rem;">${renderCharacterRollsHtml(check.rolls, check.selectedIds, m.need || {})}</div>
-      </div>`;
+      if (h) h.innerHTML = renderCharacterDiceResolutionHtml(m, check, tier);
       await sleep(450);
     } else if (showDice) {
       await animateDiceReveal(elRes, check);
@@ -3969,6 +5004,7 @@
     document.getElementById("btnAfterResult").onclick = () => {
       state.mission = null;
       state.selectedStaffIds = [];
+      state.selectedToolDiceIds = [];
       renderMacro();
       if (typeof onContinue === "function") {
         onContinue();
@@ -3982,6 +5018,16 @@
     };
   }
 
+  function renderCurrentRegionOrGlobal() {
+    if (state.regionId && REGIONS.some((r) => r.id === state.regionId)) {
+      renderRegion();
+      setView("region");
+      return;
+    }
+    renderGlobal();
+    setView("global");
+  }
+
   function resolveQueuedMissions() {
     if (!state.todayResolutionQueue.length) {
       state.processingDayTick = false;
@@ -3990,17 +5036,17 @@
       if (state.day <= 0) {
         enterSynthesisPhase();
       } else {
-        // 每日判定队列结束后，统一回到全球地图，方便继续派遣
-        renderGlobal();
-        setView("global");
+        // 每日判定队列结束后回到当前地区，继续安排本地区派遣。
+        renderCurrentRegionOrGlobal();
       }
       return;
     }
     const total = state.dayResolutionInfo ? state.dayResolutionInfo.total : state.todayResolutionQueue.length;
     const next = state.todayResolutionQueue.shift();
     state.dayResolutionInfo = { current: total - state.todayResolutionQueue.length, total };
-    state.mission = { ...next.mission };
+    state.mission = { ...next.mission, toolDiceIds: (next.toolDiceIds || []).slice() };
     state.selectedStaffIds = next.staffIds.slice();
+    state.selectedToolDiceIds = (next.toolDiceIds || []).slice();
     state.missionResolving = true;
     runMission(() => {
       next.status = "resolved";
@@ -4044,9 +5090,7 @@
     if (!due.length) {
       state.processingDayTick = false;
       updateNextDayButton();
-      // 当天没有到期判定，也统一回到全球地图
-      renderGlobal();
-      setView("global");
+      renderCurrentRegionOrGlobal();
       if (state.day <= 0) enterSynthesisPhase();
       return;
     }
@@ -4177,7 +5221,11 @@
   }
 
   function updateNextDayButton() {
-    const btns = [document.getElementById("btnNextDay"), document.getElementById("btnNextDayRegion"), document.getElementById("btnNextDayGlobal")].filter(Boolean);
+    const floatingNextDay = document.getElementById("btnNextDay");
+    if (floatingNextDay) floatingNextDay.classList.toggle("hidden", state.view === "global" || state.view === "setup" || state.view === "region");
+    const endWeek = document.getElementById("btnEndWeek");
+    if (endWeek) endWeek.classList.toggle("hidden", state.view === "setup");
+    const btns = [document.getElementById("btnNextDay"), document.getElementById("btnNextDayRegion")].filter(Boolean);
     if (!btns.length) return;
     const disabled = state.phase !== "explore" || state.processingDayTick || state.missionResolving || state.view === "result";
     btns.forEach((btn) => {
@@ -5745,11 +6793,80 @@
     }, 1);
   }
 
+  function createDirectDebugBlackDiceMission() {
+    return {
+      id: "debug_bus330_tape",
+      kind: "temp",
+      name: "330 末班车 · 最后三秒录像（调试）",
+      days: 1,
+      need: { 胆识: 3, 诡思: 3, 洞察: 2 },
+      tags: ["occult"],
+      difficulty: "hard",
+      enemyAttr: 4,
+      checkType: "white",
+      riskTier: "high",
+      isBlackDiceTask: true,
+      blackDiceTheme: "bus330",
+      chainType: "deep",
+      chainStage: 4,
+      chainStageTotal: 4,
+      chainId: "bus330",
+      chainFinal: true,
+      taskTypeTitle: "黑骰任务 · 330 末班车终局",
+      taskTypeDesc: "调试入口：鬼混入乘客之中。黑骰会混入或替换你的骰子。",
+    };
+  }
+
+  function maybeEnterDebugBlackDiceMode() {
+    const p = new URLSearchParams(window.location.search || "");
+    const mode = p.get("debugBlackDice");
+    if (!["1", "roll"].includes(mode)) return false;
+    if (state.tutorialSoftW1) {
+      Object.keys(state.tutorialSoftW1).forEach((key) => { state.tutorialSoftW1[key] = true; });
+    }
+    state.phase = "explore";
+    state.debugSkipTutorials = true;
+    state.regionId = "us";
+    state.mission = { regionId: "us", ...createDirectDebugBlackDiceMission() };
+    state.selectedStaffIds = ["s8", "s1", "s2", "s3", "s4"];
+    state.selectedToolDiceIds = [];
+    state.dayResolutionInfo = { current: 1, total: 1 };
+    state.processingDayTick = true;
+    renderRegion();
+    setView("region");
+    updateNextDayButton();
+    requestAnimationFrame(() => {
+      runMission(() => {
+        state.processingDayTick = false;
+        state.dayResolutionInfo = null;
+        state.mission = null;
+        state.selectedStaffIds = [];
+        state.selectedToolDiceIds = [];
+        renderRegion();
+        setView("region");
+        updateNextDayButton();
+      }).catch((err) => {
+        console.error(err);
+        state.processingDayTick = false;
+        updateNextDayButton();
+      });
+    });
+    return true;
+  }
+
+  function maybeConfigureDispatchSetupMode() {
+    const p = new URLSearchParams(window.location.search || "");
+    const hash = (window.location.hash || "").toLowerCase();
+    state.dispatchOldSetupMode = p.get("dispatchold") === "1" || p.get("oldsetup") === "1" || hash === "#dispatchold";
+    if (p.get("dispatchlab") === "1" || hash === "#dispatchlab") state.dispatchOldSetupMode = false;
+  }
+
   function init() {
     renderMacro();
     tickHeader();
     setInterval(tickHeader, 500);
     initRegionLeadEvents();
+    maybeConfigureDispatchSetupMode();
     maybeEnableDebugBlackDice();
     bindSynthesisUi();
     bindEditorialUi();
@@ -5757,6 +6874,7 @@
     bindSynthDemoLabUi();
     log("全链条开始：探索 → 故事合成 → 编辑部组版 → 结算。");
     if (!maybeEnterPaperLabMode()) {
+      if (maybeEnterDebugBlackDiceMode()) return;
       renderWeekStart();
       updateNextDayButton();
     }
