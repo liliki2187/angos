@@ -1,0 +1,27 @@
+{
+  "motionLabel": "方案 C · 斜轴单向",
+  "activeEffect": "snap",
+  "buttons": [
+    {
+      "effect": "axis",
+      "text": "A 原方案一 纵轴单向快转"
+    },
+    {
+      "effect": "tumble",
+      "text": "B 横轴急旋 只把纵轴换成横轴"
+    },
+    {
+      "effect": "snap",
+      "text": "C 斜轴单向 斜轴持续同向快转"
+    }
+  ],
+  "chips": [
+    "原地不位移",
+    "斜轴单向",
+    "方案一节奏"
+  ],
+  "canvas": {
+    "width": 858,
+    "height": 310
+  }
+}

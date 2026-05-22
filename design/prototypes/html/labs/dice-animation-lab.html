@@ -1,21 +1,21 @@
 <!--
 PROTOTYPE - NOT FOR PRODUCTION
-Question: 角色骰判定需要哪些可复用的动作语言，才能让玩家看懂摇骰、黑骰、计入和收束？
-Date: 2026-05-13
+Question: 在不改变角色骰判定界面布局的前提下，原地快速旋转的实体骰动效哪个方向更合适？
+Date: 2026-05-22
 -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>角色骰动效实验台</title>
+  <title>角色骰原地急旋实验</title>
   <style>
     :root {
-      --bg: #070b13;
-      --panel: #101826;
-      --panel-2: #0b1220;
+      --bg: #060a12;
+      --panel: rgba(8, 14, 26, 0.88);
+      --panel-2: rgba(15, 23, 42, 0.78);
       --line: rgba(148, 163, 184, 0.28);
-      --line-strong: rgba(212, 168, 83, 0.48);
+      --line-strong: rgba(212, 168, 83, 0.58);
       --gold: #d4a853;
       --gold-soft: #fde68a;
       --text: #e5e7eb;
@@ -23,44 +23,52 @@ Date: 2026-05-13
       --blue: #60a5fa;
       --green: #34d399;
       --red: #f87171;
-      --red-deep: #45151c;
-      --shadow: rgba(0, 0, 0, 0.46);
     }
 
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       min-height: 100vh;
       color: var(--text);
       background:
-        linear-gradient(rgba(7, 11, 19, 0.86), rgba(7, 11, 19, 0.94)),
-        radial-gradient(circle at 16% 18%, rgba(96, 165, 250, 0.13), transparent 28%),
-        radial-gradient(circle at 86% 10%, rgba(248, 113, 113, 0.12), transparent 22%),
-        #05070d;
+        radial-gradient(circle at 18% 12%, rgba(96, 165, 250, 0.14), transparent 30%),
+        radial-gradient(circle at 82% 4%, rgba(212, 168, 83, 0.12), transparent 25%),
+        linear-gradient(180deg, #09111f, #05070d 66%);
       font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
       letter-spacing: 0;
     }
 
-    button, a { font: inherit; }
+    button,
+    a {
+      font: inherit;
+    }
+
     button,
     .link-button {
-      border: 1px solid rgba(148, 163, 184, 0.32);
-      border-radius: 8px;
-      background: #172033;
-      color: #dbeafe;
       min-height: 36px;
-      padding: 7px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.34);
+      background: rgba(23, 32, 51, 0.92);
+      color: #dbeafe;
       cursor: pointer;
-      text-decoration: none;
+      padding: 7px 11px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      text-decoration: none;
+      gap: 6px;
     }
+
     button:hover,
-    .link-button:hover { border-color: rgba(212, 168, 83, 0.7); color: #fff7d6; }
-    button.primary {
+    .link-button:hover {
       border-color: rgba(212, 168, 83, 0.72);
-      background: linear-gradient(180deg, rgba(91, 69, 28, 0.92), rgba(42, 35, 18, 0.94));
+      color: #fff7d6;
+    }
+
+    button.primary {
+      border-color: rgba(212, 168, 83, 0.78);
+      background: linear-gradient(180deg, rgba(91, 69, 28, 0.95), rgba(42, 35, 18, 0.95));
       color: var(--gold-soft);
       font-weight: 900;
     }
@@ -68,7 +76,7 @@ Date: 2026-05-13
     .app {
       width: min(1180px, calc(100vw - 32px));
       margin: 0 auto;
-      padding: 18px 0 26px;
+      padding: 18px 0 28px;
     }
 
     .topbar {
@@ -76,22 +84,25 @@ Date: 2026-05-13
       grid-template-columns: minmax(0, 1fr) auto;
       gap: 14px;
       align-items: center;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+      margin-bottom: 12px;
       padding-bottom: 12px;
-      margin-bottom: 14px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.18);
     }
+
     h1 {
       margin: 0;
       color: var(--gold-soft);
       font-size: 24px;
       line-height: 1.2;
     }
+
     .sub {
-      margin-top: 4px;
+      margin-top: 5px;
       color: var(--muted);
       font-size: 13px;
-      line-height: 1.5;
+      line-height: 1.45;
     }
+
     .top-actions {
       display: flex;
       flex-wrap: wrap;
@@ -99,385 +110,441 @@ Date: 2026-05-13
       gap: 8px;
     }
 
-    .lab-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.03fr) minmax(330px, 0.97fr);
-      gap: 12px;
-      align-items: start;
+    .lab-note {
+      margin-bottom: 12px;
+      border: 1px solid rgba(96, 165, 250, 0.32);
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.66);
+      color: #cbd5e1;
+      padding: 9px 12px;
+      font-size: 13px;
+      line-height: 1.45;
     }
 
-    .section {
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: rgba(15, 23, 42, 0.68);
-      box-shadow: 0 16px 36px var(--shadow);
-      padding: 11px;
-      overflow: hidden;
+    .judge-modal {
+      border: 1px solid rgba(212, 168, 83, 0.48);
+      border-radius: 12px;
+      background:
+        radial-gradient(circle at 24% 8%, rgba(96, 165, 250, 0.12), transparent 28%),
+        linear-gradient(180deg, rgba(9, 17, 31, 0.96), rgba(3, 7, 14, 0.94));
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+      padding: 14px;
     }
-    .section + .section { margin-top: 12px; }
-    .section-head {
+
+    .judge-head {
       display: flex;
+      align-items: flex-start;
       justify-content: space-between;
-      gap: 10px;
-      align-items: center;
-      margin-bottom: 10px;
+      gap: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.14);
     }
-    .section h2 {
-      margin: 0;
-      color: var(--gold);
-      font-size: 16px;
-      line-height: 1.25;
+
+    .judge-title {
+      display: grid;
+      gap: 5px;
+      min-width: 0;
     }
-    .tagline {
-      color: var(--muted);
-      font-size: 12px;
+
+    .judge-title strong {
+      color: var(--gold-soft);
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    .judge-title span {
+      color: #cbd5e1;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .task-state {
+      display: grid;
+      gap: 7px;
+      justify-items: end;
+      color: #cbd5e1;
+      font-size: 13px;
       white-space: nowrap;
     }
 
-    .dice-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
-      gap: 8px;
-    }
-    .dice-card {
-      min-height: 132px;
-      display: grid;
-      justify-items: center;
-      align-content: center;
-      gap: 7px;
-      border: 1px solid rgba(148, 163, 184, 0.28);
-      border-radius: 9px;
-      background: linear-gradient(180deg, rgba(15, 23, 42, 0.86), rgba(2, 6, 23, 0.72));
-      padding: 9px;
-      position: relative;
-      overflow: hidden;
-    }
-    .dice-card.selected {
-      border-color: rgba(212, 168, 83, 0.72);
-      box-shadow: 0 0 0 1px rgba(212, 168, 83, 0.2), 0 0 18px rgba(212, 168, 83, 0.12);
-    }
-    .dice-card.black {
-      border-color: rgba(248, 113, 113, 0.72);
-      background: linear-gradient(180deg, rgba(69, 21, 28, 0.72), rgba(15, 23, 42, 0.72));
-    }
-    .dice-card.muted { opacity: 0.66; }
-    .dice-card.locked::after {
-      content: "锁";
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      width: 24px;
-      height: 24px;
+    .state-pill {
+      min-height: 30px;
+      padding: 5px 12px;
       border-radius: 999px;
-      display: grid;
-      place-items: center;
-      color: #bfdbfe;
-      border: 1px solid rgba(96, 165, 250, 0.52);
-      background: rgba(30, 64, 175, 0.18);
-      font-size: 12px;
-      font-weight: 900;
-    }
-
-    .die {
-      width: 62px;
-      height: 62px;
-      border-radius: 13px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      display: grid;
-      place-items: center;
-      color: #dbeafe;
-      background:
-        radial-gradient(circle at 30% 21%, rgba(255, 255, 255, 0.16), transparent 27%),
-        linear-gradient(145deg, #111827, #020617);
-      box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.05),
-        0 10px 20px rgba(0, 0, 0, 0.32);
-      transform-origin: 50% 60%;
-      position: relative;
-    }
-    .die b {
-      display: block;
-      max-width: 54px;
-      padding: 0 4px;
-      text-align: center;
-      font-size: 14px;
-      line-height: 1.08;
-      overflow-wrap: anywhere;
-      font-weight: 900;
-    }
-    .die.field { border-color: rgba(251, 146, 60, 0.72); color: #fed7aa; }
-    .die.cog { border-color: rgba(96, 165, 250, 0.78); color: #bfdbfe; }
-    .die.social { border-color: rgba(52, 211, 153, 0.74); color: #bbf7d0; }
-    .die.content { border-color: rgba(250, 204, 21, 0.72); color: #fde68a; }
-    .die.blank { border-style: dashed; color: #64748b; }
-    .die.black {
-      border-color: rgba(248, 113, 113, 0.86);
+      border: 1px solid rgba(248, 113, 113, 0.45);
+      background: rgba(127, 29, 29, 0.34);
       color: #fecaca;
-      background:
-        radial-gradient(circle at 34% 22%, rgba(255, 255, 255, 0.14), transparent 28%),
-        linear-gradient(145deg, #45151c, #12070a);
-      box-shadow: 0 0 0 1px rgba(248, 113, 113, 0.24) inset, 0 0 18px rgba(248, 113, 113, 0.24);
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
     }
 
-    .caption {
-      width: 100%;
-      color: #cbd5e1;
-      font-size: 12px;
-      text-align: center;
-      line-height: 1.35;
-    }
-    .caption strong {
-      display: block;
-      color: #f8fafc;
-      font-size: 12px;
-      margin-bottom: 2px;
-    }
-
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+    .judge-summary {
+      display: grid;
+      grid-template-columns: minmax(240px, 0.85fr) minmax(0, 1.15fr);
+      gap: 10px;
       margin-top: 10px;
     }
 
-    .tray-zone {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(220px, 0.72fr);
-      gap: 10px;
-      align-items: stretch;
-    }
-    .tray {
-      min-height: 118px;
-      border: 1px solid rgba(212, 168, 83, 0.42);
+    .summary-box {
+      border: 1px solid rgba(148, 163, 184, 0.24);
       border-radius: 10px;
-      background: rgba(74, 55, 22, 0.15);
-      padding: 9px;
+      background: rgba(15, 23, 42, 0.54);
+      padding: 10px;
+      min-height: 78px;
+    }
+
+    .summary-title {
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .meter {
       display: grid;
-      align-content: start;
+      gap: 6px;
+      color: #cbd5e1;
+      font-size: 12px;
+    }
+
+    .meter-row {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr) 36px;
       gap: 8px;
-      position: relative;
+      align-items: center;
+    }
+
+    .bar {
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(51, 65, 85, 0.72);
       overflow: hidden;
     }
-    .tray-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      color: var(--gold-soft);
-      font-size: 12px;
-      font-weight: 900;
-    }
-    .tray-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-      min-height: 58px;
-      align-content: start;
-    }
-    .chip {
-      min-width: 72px;
-      border: 1px solid rgba(148, 163, 184, 0.36);
-      border-radius: 8px;
-      background: #0b1220;
-      padding: 6px 8px;
-      display: grid;
-      gap: 2px;
-      animation: chipPop 0.18s ease-out;
-    }
-    .chip b { color: #f8fafc; font-size: 12px; }
-    .chip small { color: var(--muted); font-size: 11px; white-space: nowrap; }
-    .chip.good { border-color: rgba(212, 168, 83, 0.68); box-shadow: 0 0 14px rgba(212, 168, 83, 0.12); }
-    .chip.black { border-color: rgba(248, 113, 113, 0.72); background: rgba(69, 21, 28, 0.42); }
-    .chip.bad { border-style: dashed; opacity: 0.72; }
 
-    .impact {
-      border: 1px solid rgba(148, 163, 184, 0.26);
-      border-radius: 10px;
-      background: rgba(2, 6, 23, 0.42);
-      padding: 9px;
-      display: grid;
-      align-content: center;
-      gap: 5px;
-      min-height: 118px;
+    .bar i {
+      display: block;
+      height: 100%;
+      width: var(--w);
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--blue), rgba(96, 165, 250, 0.28));
     }
-    .impact strong { color: var(--gold-soft); font-size: 13px; }
-    .impact span { color: #cbd5e1; font-size: 12px; line-height: 1.45; }
 
-    .black-panel {
-      border: 1px solid rgba(248, 113, 113, 0.54);
-      border-radius: 10px;
-      background: linear-gradient(180deg, rgba(69, 21, 28, 0.58), rgba(15, 23, 42, 0.74));
-      padding: 10px;
-      display: grid;
-      gap: 10px;
+    .bar.good i {
+      background: linear-gradient(90deg, var(--green), rgba(52, 211, 153, 0.32));
     }
-    .black-panel.active {
-      animation: blackPanelPulse 0.82s ease-out;
-      box-shadow: 0 0 0 1px rgba(248, 113, 113, 0.24), 0 0 24px rgba(248, 113, 113, 0.18);
+
+    .count-slot {
+      border-color: rgba(212, 168, 83, 0.52);
+      background: rgba(74, 55, 22, 0.2);
     }
-    .black-panel-head {
+
+    .slot-content {
+      min-height: 36px;
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      color: #fecaca;
-      font-size: 12px;
-      font-weight: 900;
-    }
-    .black-track {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 8px;
+      color: #fef3c7;
+      font-size: 13px;
     }
 
-    .result-grid {
+    .slot-content small {
+      color: #94a3b8;
+    }
+
+    .judge-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 280px;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .dice-panel,
+    .side-panel {
+      border: 1px solid rgba(96, 165, 250, 0.26);
+      border-radius: 10px;
+      background: rgba(2, 6, 23, 0.44);
+      min-height: 390px;
+      overflow: hidden;
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 11px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+    }
+
+    .panel-head strong {
+      color: var(--gold-soft);
+      font-size: 15px;
+    }
+
+    .panel-head span {
+      color: #93c5fd;
+      font-size: 12px;
+    }
+
+    .dice-board {
+      position: relative;
+      height: 310px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      background:
+        radial-gradient(circle at 28% 18%, rgba(96, 165, 250, 0.18), transparent 34%),
+        radial-gradient(circle at 72% 66%, rgba(212, 168, 83, 0.12), transparent 30%),
+        linear-gradient(180deg, rgba(6, 13, 26, 0.94), rgba(2, 6, 23, 0.96));
+    }
+
+    .dice-board::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border-radius: 12px;
+      background:
+        linear-gradient(90deg, rgba(96, 165, 250, 0.11) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(96, 165, 250, 0.08) 1px, transparent 1px);
+      background-size: 52px 52px;
+      opacity: 0.48;
+      pointer-events: none;
+    }
+
+    .dice-board::after {
+      content: "";
+      position: absolute;
+      left: 18%;
+      right: 18%;
+      top: 18%;
+      bottom: 18%;
+      border-radius: 50%;
+      border: 2px solid rgba(212, 168, 83, 0.22);
+      transform: rotate(-7deg);
+      pointer-events: none;
+    }
+
+    #diceCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      z-index: 1;
+    }
+
+    .board-label {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      z-index: 2;
+    }
+
+    .board-chip {
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      border-radius: 8px;
+      background: rgba(2, 6, 23, 0.62);
+      padding: 5px 8px;
+      color: #cbd5e1;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .board-chip.good {
+      color: #bbf7d0;
+    }
+
+    .effect-tabs {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 8px;
-    }
-    .result-tile {
-      min-height: 96px;
-      border: 1px solid rgba(148, 163, 184, 0.28);
-      border-radius: 9px;
-      background: rgba(2, 6, 23, 0.42);
-      padding: 9px;
-      display: grid;
-      gap: 6px;
-      align-content: center;
-      text-align: center;
-    }
-    .result-tile strong { color: #f8fafc; font-size: 15px; }
-    .result-tile span { color: var(--muted); font-size: 12px; }
-    .result-tile.success.active { border-color: rgba(52, 211, 153, 0.62); animation: resultSuccess 0.72s ease-out; }
-    .result-tile.fail.active { border-color: rgba(248, 113, 113, 0.62); animation: resultFail 0.72s ease-out; }
-    .result-tile.crit.active { border-color: rgba(250, 204, 21, 0.78); animation: resultCrit 0.9s ease-out; }
-
-    .motion-roll { animation: diceTumble 0.24s linear infinite, diceBlur 0.42s ease-in-out infinite; }
-    .motion-land { animation: diceLand 0.32s cubic-bezier(0.2, 1.3, 0.2, 1); }
-    .motion-select { animation: selectPulse 0.34s ease-out; }
-    .motion-black-drop { animation: blackDrop 0.52s cubic-bezier(0.18, 1.28, 0.32, 1); }
-    .motion-corrupt { animation: corruptFlicker 0.72s steps(2, end); }
-    .motion-lock { animation: lockClick 0.26s ease-out; }
-    .motion-reroll { animation: rerollSpin 0.56s ease-in-out; }
-
-    .fly-ghost {
-      position: fixed;
-      z-index: 50;
-      pointer-events: none;
-      animation: flyToTray 0.52s cubic-bezier(0.17, 0.84, 0.26, 1) forwards;
+      padding: 10px 10px 0;
     }
 
-    .audit-strip {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+    .effect-tab {
+      min-height: 58px;
+      align-items: flex-start;
+      justify-content: center;
+      flex-direction: column;
+      gap: 3px;
+      text-align: left;
+      background: rgba(10, 18, 32, 0.8);
+    }
+
+    .effect-tab strong {
+      color: #e5e7eb;
+      font-size: 13px;
+      line-height: 1.2;
+    }
+
+    .effect-tab span {
+      color: #93c5fd;
+      font-size: 11px;
+      line-height: 1.25;
+    }
+
+    .effect-tab.is-active {
+      border-color: rgba(212, 168, 83, 0.86);
+      background: linear-gradient(180deg, rgba(72, 53, 20, 0.88), rgba(12, 19, 32, 0.94));
+    }
+
+    .effect-tab.is-active strong {
+      color: var(--gold-soft);
+    }
+
+    .dice-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
       gap: 8px;
+      padding: 10px;
+      min-height: 58px;
     }
-    .motion-token {
-      min-height: 64px;
-      border: 1px solid rgba(148, 163, 184, 0.26);
-      border-radius: 8px;
-      background: rgba(2, 6, 23, 0.42);
+
+    .dice-controls button {
+      min-width: 112px;
+    }
+
+    .side-panel {
       display: grid;
-      place-items: center;
-      text-align: center;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .side-section {
+      padding: 10px 11px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+    }
+
+    .side-section:last-child {
+      border-bottom: 0;
+    }
+
+    .side-section h3 {
+      margin: 0 0 8px;
+      color: var(--gold);
+      font-size: 14px;
+    }
+
+    .side-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 7px 0;
       color: #cbd5e1;
       font-size: 12px;
-      padding: 7px;
+      border-top: 1px solid rgba(148, 163, 184, 0.08);
     }
 
-    @keyframes diceTumble {
-      0% { transform: translateY(0) rotate(0deg) scale(1); }
-      24% { transform: translateY(-5px) rotate(9deg) scale(1.08); }
-      50% { transform: translateY(2px) rotate(-8deg) scale(0.98); }
-      78% { transform: translateY(-2px) rotate(5deg) scale(1.05); }
-      100% { transform: translateY(0) rotate(0deg) scale(1); }
-    }
-    @keyframes diceBlur {
-      0%, 100% { filter: brightness(1); }
-      50% { filter: brightness(1.28) blur(0.2px); }
-    }
-    @keyframes diceLand {
-      0% { transform: translateY(-12px) rotate(15deg) scale(1.14); filter: brightness(1.35); }
-      58% { transform: translateY(2px) rotate(-4deg) scale(0.96); }
-      100% { transform: translateY(0) rotate(0deg) scale(1); filter: brightness(1); }
-    }
-    @keyframes selectPulse {
-      0% { transform: scale(1); box-shadow: 0 0 0 rgba(212, 168, 83, 0); }
-      45% { transform: scale(1.08); box-shadow: 0 0 22px rgba(212, 168, 83, 0.28); }
-      100% { transform: scale(1); }
-    }
-    @keyframes chipPop {
-      0% { transform: scale(0.88); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    @keyframes flyToTray {
-      0% { transform: translate(0, 0) scale(1); opacity: 1; }
-      78% { opacity: 0.88; }
-      100% { transform: translate(var(--dx), var(--dy)) scale(0.58); opacity: 0; }
-    }
-    @keyframes blackDrop {
-      0% { transform: translateY(-18px) rotate(-12deg) scale(1.2); opacity: 0; filter: brightness(1.8); }
-      62% { transform: translateY(3px) rotate(4deg) scale(0.96); opacity: 1; }
-      100% { transform: translateY(0) rotate(0deg) scale(1); filter: brightness(1); }
-    }
-    @keyframes blackPanelPulse {
-      0% { transform: translateY(-4px) scale(0.99); filter: brightness(1.36); }
-      70% { transform: translateY(1px) scale(1.01); filter: brightness(1.06); }
-      100% { transform: translateY(0) scale(1); filter: brightness(1); }
-    }
-    @keyframes corruptFlicker {
-      0% { transform: translateX(0); filter: hue-rotate(0deg); }
-      18% { transform: translateX(-2px); filter: hue-rotate(-18deg); }
-      34% { transform: translateX(2px); filter: hue-rotate(14deg); }
-      52% { transform: translateX(-1px); filter: brightness(1.3); }
-      100% { transform: translateX(0); filter: none; }
-    }
-    @keyframes lockClick {
-      0% { transform: scale(1); }
-      45% { transform: scale(0.92); }
-      100% { transform: scale(1); }
-    }
-    @keyframes rerollSpin {
-      0% { transform: rotate(0deg) scale(1); }
-      55% { transform: rotate(210deg) scale(1.08); }
-      100% { transform: rotate(360deg) scale(1); }
-    }
-    @keyframes resultSuccess {
-      0% { transform: translateY(6px); background: rgba(20, 83, 45, 0.18); }
-      100% { transform: translateY(0); background: rgba(2, 6, 23, 0.42); }
-    }
-    @keyframes resultFail {
-      0% { transform: translateX(-3px); background: rgba(69, 21, 28, 0.3); }
-      40% { transform: translateX(3px); }
-      100% { transform: translateX(0); background: rgba(2, 6, 23, 0.42); }
-    }
-    @keyframes resultCrit {
-      0% { transform: scale(0.96); box-shadow: 0 0 0 rgba(250, 204, 21, 0); }
-      45% { transform: scale(1.04); box-shadow: 0 0 26px rgba(250, 204, 21, 0.28); }
-      100% { transform: scale(1); box-shadow: 0 0 0 rgba(250, 204, 21, 0); }
+    .side-line:first-of-type {
+      border-top: 0;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+    .side-line strong {
+      color: #f8fafc;
+      text-align: right;
     }
 
-    @media (max-width: 900px) {
-      .lab-grid { grid-template-columns: 1fr; }
-      .tray-zone { grid-template-columns: 1fr; }
-      .black-track { grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); }
-      .result-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .audit-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .selected-dice {
+      min-height: 64px;
+      border: 1px dashed rgba(212, 168, 83, 0.44);
+      border-radius: 9px;
+      background: rgba(74, 55, 22, 0.14);
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px;
+      color: #fde68a;
+      font-size: 12px;
     }
+
+    .mini-die {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      border: 1px solid rgba(212, 168, 83, 0.55);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      background: linear-gradient(145deg, rgba(59, 36, 10, 0.96), rgba(8, 12, 22, 0.96));
+      color: #fed7aa;
+      flex: 0 0 auto;
+    }
+
+    .judge-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(148, 163, 184, 0.12);
+      color: #94a3b8;
+      font-size: 12px;
+    }
+
+    .footer-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    @media (max-width: 920px) {
+      .topbar,
+      .judge-summary,
+      .judge-body {
+        grid-template-columns: 1fr;
+      }
+
+      .top-actions,
+      .task-state,
+      .footer-actions {
+        justify-content: flex-start;
+        justify-items: start;
+      }
+
+      .side-panel {
+        min-height: auto;
+      }
+    }
+
     @media (max-width: 560px) {
-      .app { width: min(100vw - 20px, 1180px); padding-top: 10px; }
-      .topbar { grid-template-columns: 1fr; }
-      .top-actions { justify-content: stretch; }
-      .top-actions button, .top-actions a { flex: 1 1 120px; }
-      h1 { font-size: 20px; }
-      .section-head { align-items: flex-start; flex-direction: column; gap: 4px; }
-      .tagline { white-space: normal; }
-      .dice-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .dice-card { min-height: 126px; }
-      .result-grid { grid-template-columns: 1fr; }
-      .audit-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .app {
+        width: min(100vw - 20px, 680px);
+      }
+
+      .judge-modal {
+        padding: 10px;
+      }
+
+      .judge-head,
+      .judge-footer {
+        display: grid;
+      }
+
+      .dice-board {
+        height: 280px;
+      }
+
+      .meter-row {
+        grid-template-columns: 74px minmax(0, 1fr) 32px;
+      }
+
+      .dice-controls {
+        justify-content: stretch;
+      }
+
+      .dice-controls button {
+        min-width: 0;
+        flex: 1 1 140px;
+      }
+
+      .effect-tabs {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -485,344 +552,763 @@ Date: 2026-05-13
   <main class="app">
     <header class="topbar">
       <div>
-        <h1>角色骰动效实验台</h1>
-        <div class="sub">独立视觉实验页：用于比较骰子动作语言，尚未套用到完整全链试玩。</div>
+        <h1>角色骰原地急旋实验</h1>
+        <div class="sub">视觉实验页，尚未套用到完整全链试玩。保留判定弹窗布局，只比较骰子原地快速单向旋转的轴向差异和换轴顺序；本页可直接双击打开，不依赖本地服务器。</div>
       </div>
       <div class="top-actions">
-        <button type="button" class="primary" id="replayAll">重播全部</button>
-        <button type="button" id="pauseLoop">暂停循环</button>
-        <a class="link-button" href="../full-chain-demo/world-mysteries-full-chain.html?v=20260513-dice-roll-v7">返回全链</a>
+        <button class="primary" id="replayThrow">重播当前方案</button>
+        <button id="toggleLoop">继续循环</button>
+        <a class="link-button" href="../../html/full-chain-demo/world-mysteries-full-chain.html">返回完整全链</a>
       </div>
     </header>
 
-    <div class="lab-grid">
-      <div>
-        <section class="section" id="rollSection">
-          <div class="section-head">
-            <h2>01 · 基础摇骰与停骰</h2>
-            <span class="tagline">先快速抖动，再逐颗落定</span>
-          </div>
-          <div class="dice-row" id="rollDice">
-            <div class="dice-card" data-face="洞察2" data-kind="cog"><div class="die cog"><b>洞察2</b></div><div class="caption"><strong>摇骰中</strong>脸谱快速变化</div></div>
-            <div class="dice-card" data-face="胆识2" data-kind="field"><div class="die field"><b>胆识2</b></div><div class="caption"><strong>落定</strong>轻微回弹</div></div>
-            <div class="dice-card" data-face="诡思1" data-kind="content"><div class="die content"><b>诡思1</b></div><div class="caption"><strong>揭示</strong>亮度脉冲</div></div>
-            <div class="dice-card muted" data-face="空" data-kind="blank"><div class="die blank"><b>空</b></div><div class="caption"><strong>空面</strong>虚线降权</div></div>
-          </div>
-          <div class="controls">
-            <button type="button" data-run="roll">重播摇骰</button>
-            <button type="button" data-run="settle">只看停骰</button>
-          </div>
-        </section>
-
-        <section class="section" id="selectSection">
-          <div class="section-head">
-            <h2>02 · 选择、计入与飞入槽</h2>
-            <span class="tagline">点击骰面，反馈进入计入槽</span>
-          </div>
-          <div class="tray-zone">
-            <div class="dice-row" id="selectDice">
-              <button type="button" class="dice-card selected" data-pick="洞察2" data-tag="补需求" data-tone="good"><div class="die cog"><b>洞察2</b></div><div class="caption"><strong>补需求</strong>计入后高亮</div></button>
-              <button type="button" class="dice-card" data-pick="理性2" data-tag="不计" data-tone="bad"><div class="die cog"><b>理性2</b></div><div class="caption"><strong>任务外骰面</strong>可选但降权</div></button>
-              <button type="button" class="dice-card black" data-pick="替座" data-tag="黑骰" data-tone="black"><div class="die black"><b>替座</b></div><div class="caption"><strong>黑骰压力</strong>红色计入</div></button>
-            </div>
-            <div class="tray" id="tray">
-              <div class="tray-head"><span>计入槽</span><span id="trayCount">1 颗已选</span></div>
-              <div class="tray-list" id="trayList">
-                <span class="chip good"><b>洞察2</b><small>补需求</small></span>
-              </div>
-            </div>
-          </div>
-          <div class="controls">
-            <button type="button" data-run="fly">重播飞入</button>
-            <button type="button" id="clearTray">清空计入槽</button>
-          </div>
-        </section>
-
-        <section class="section" id="blackSection">
-          <div class="section-head">
-            <h2>03 · 黑骰介入与改写</h2>
-            <span class="tagline">红色冲击，不和普通成功混淆</span>
-          </div>
-          <div class="black-panel" id="blackPanel">
-            <div class="black-panel-head"><span>黑骰介入</span><span>混入 / 替座 / 污染</span></div>
-            <div class="black-track" id="blackTrack">
-              <div class="dice-card"><div class="die cog"><b>洞察2</b></div><div class="caption"><strong>原骰</strong>可计入</div></div>
-              <div class="dice-card"><div class="die field"><b>胆识2</b></div><div class="caption"><strong>原骰</strong>可计入</div></div>
-              <div class="dice-card black"><div class="die black"><b>混入</b></div><div class="caption"><strong>黑骰</strong>额外加入</div></div>
-              <div class="dice-card black"><div class="die black"><b>替座</b></div><div class="caption"><strong>黑骰</strong>替换队员</div></div>
-              <div class="dice-card"><div class="die content"><b>诡思1</b></div><div class="caption"><strong>标记</strong>被污染</div></div>
-            </div>
-          </div>
-          <div class="controls">
-            <button type="button" data-run="black">重播黑骰介入</button>
-            <button type="button" data-run="corrupt">只看污染闪烁</button>
-          </div>
-        </section>
-      </div>
-
-      <div>
-        <section class="section">
-          <div class="section-head">
-            <h2>04 · 固定状态：锁定、无效、重投</h2>
-            <span class="tagline">状态靠动作 + 边框，不靠长说明</span>
-          </div>
-          <div class="dice-row" id="stateDice">
-            <div class="dice-card locked selected"><div class="die cog"><b>洞察2</b></div><div class="caption"><strong>锁定</strong>保留本颗</div></div>
-            <div class="dice-card muted"><div class="die content"><b>想象2</b></div><div class="caption"><strong>任务外</strong>不补需求</div></div>
-            <div class="dice-card"><div class="die field"><b>生存1</b></div><div class="caption"><strong>重投</strong>旋转换面</div></div>
-            <div class="dice-card black"><div class="die black"><b>鬼乘客</b></div><div class="caption"><strong>不可净化</strong>保留压力</div></div>
-          </div>
-          <div class="controls">
-            <button type="button" data-run="state">重播状态动作</button>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="section-head">
-            <h2>05 · 骰面影响槽</h2>
-            <span class="tagline">选择时固定显示本颗影响</span>
-          </div>
-          <div class="impact" id="impactBox">
-            <strong>洞察2 · 薛定谔</strong>
-            <span>已计入洞察+2。这个槽位用于承接 hover / click 的即时解释。</span>
-          </div>
-          <div class="controls">
-            <button type="button" data-impact="good">补需求</button>
-            <button type="button" data-impact="bad">任务外</button>
-            <button type="button" data-impact="black">黑骰</button>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="section-head">
-            <h2>06 · 结果收束</h2>
-            <span class="tagline">四档结果用不同收束节奏</span>
-          </div>
-          <div class="result-grid" id="resultGrid">
-            <div class="result-tile crit"><strong>大成功</strong><span>金色放大</span></div>
-            <div class="result-tile success"><strong>成功</strong><span>绿色上浮</span></div>
-            <div class="result-tile fail"><strong>失败</strong><span>短促震动</span></div>
-            <div class="result-tile fail"><strong>大失败</strong><span>红色裂响</span></div>
-          </div>
-          <div class="controls">
-            <button type="button" data-run="result">重播结果</button>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="section-head">
-            <h2>动作词典</h2>
-            <span class="tagline">当前实验页覆盖的动作分类</span>
-          </div>
-          <div class="audit-strip">
-            <div class="motion-token">摇骰<br/>roll</div>
-            <div class="motion-token">停骰<br/>settle</div>
-            <div class="motion-token">计入<br/>select</div>
-            <div class="motion-token">飞入<br/>fly</div>
-            <div class="motion-token">黑骰<br/>black</div>
-            <div class="motion-token">收束<br/>result</div>
-          </div>
-        </section>
-      </div>
+    <div class="lab-note">
+      本页不再改变判定界面信息架构；各方案全部沿用原方案一的速率、加减速度、摇动时长和停稳曲线，只比较纵轴、横轴、斜轴和先纵后横的轴向变化。骰子仍是 Canvas 中按 8 个共享顶点与 6 个闭合面的程序化实体模型；文字和骰点先生成到离屏骰面贴图，再随骰面一起映射投影，不回退成 CSS 薄片、透明线框或屏幕坐标标签。
     </div>
+
+    <section class="judge-modal" aria-label="角色骰判定弹窗布局实验">
+      <header class="judge-head">
+        <div class="judge-title">
+          <strong>角色骰判定</strong>
+          <span>锁定 / 重投阶段 · 先保留判定布局，再比较原地急旋表现</span>
+        </div>
+        <div class="task-state">
+          <span>球状闪电 · 厨房火球</span>
+          <span class="state-pill" id="resultPill">未达标</span>
+        </div>
+      </header>
+
+      <div class="judge-summary">
+        <section class="summary-box">
+          <div class="summary-title">本次判定结果</div>
+          <div class="meter">
+            <div class="meter-row">
+              <span>有效点</span>
+              <span class="bar" style="--w: 52%"><i></i></span>
+              <strong>1/3</strong>
+            </div>
+            <div class="meter-row">
+              <span>锁定骰</span>
+              <span class="bar good" style="--w: 34%"><i></i></span>
+              <strong>1</strong>
+            </div>
+          </div>
+        </section>
+        <section class="summary-box count-slot">
+          <div class="summary-title">计入槽</div>
+          <div class="slot-content">
+            <span><strong>探索2</strong> 已锁定，等待补足洞察 / 理性</span>
+            <small>不改变原有槽位语义</small>
+          </div>
+        </section>
+      </div>
+
+      <div class="judge-body">
+        <section class="dice-panel">
+          <div class="panel-head">
+            <strong>骰子判定区</strong>
+            <span id="motionLabel">方案 A · 原版纵轴</span>
+          </div>
+          <div class="effect-tabs" aria-label="原地旋转动效方案">
+            <button class="effect-tab is-active" data-effect="axis">
+              <strong>A 原方案一</strong>
+              <span>纵轴单向快转</span>
+            </button>
+            <button class="effect-tab" data-effect="tumble">
+              <strong>B 横轴急旋</strong>
+              <span>只把纵轴换成横轴</span>
+            </button>
+            <button class="effect-tab" data-effect="snap">
+              <strong>C 斜轴单向</strong>
+              <span>斜轴持续同向快转</span>
+            </button>
+            <button class="effect-tab" data-effect="sequence">
+              <strong>D 先纵后横</strong>
+              <span>前段纵轴，后段横轴</span>
+            </button>
+          </div>
+          <div class="dice-board">
+            <canvas id="diceCanvas" aria-label="顶视角模型骰投入动画"></canvas>
+            <div class="board-label">
+              <span class="board-chip good" id="chipPrimary">原地不位移</span>
+              <span class="board-chip" id="chipSecondary">纵轴单向</span>
+              <span class="board-chip" id="chipTertiary">方案一节奏</span>
+            </div>
+          </div>
+          <div class="dice-controls">
+            <button id="lockSelected">锁定所选骰面</button>
+            <button id="rerollUnlocked">重投未锁定</button>
+            <button class="primary" id="confirmPick">确认计入</button>
+          </div>
+        </section>
+
+        <aside class="side-panel">
+          <div class="panel-head">
+            <strong>本次判定</strong>
+            <span>布局保持</span>
+          </div>
+          <section class="side-section">
+            <h3>当前选择</h3>
+            <div class="selected-dice">
+              <div class="mini-die">探索2</div>
+              <div>已锁定 1 颗；其余骰子在原位快速旋转，不再从盘外飞入。</div>
+            </div>
+          </section>
+          <section class="side-section">
+            <h3>需求拆解</h3>
+            <div class="side-line"><span>探索</span><strong>2 / 2</strong></div>
+            <div class="side-line"><span>理性</span><strong>0 / 1</strong></div>
+            <div class="side-line"><span>洞察</span><strong>0 / 1</strong></div>
+          </section>
+          <section class="side-section">
+            <h3>操作状态</h3>
+            <div class="side-line"><span>锁定</span><strong>保持不动</strong></div>
+            <div class="side-line"><span>未锁定</span><strong>原地急旋</strong></div>
+            <div class="side-line"><span>黑骰</span><strong>同位混入</strong></div>
+          </section>
+        </aside>
+      </div>
+
+      <footer class="judge-footer">
+        <span>实验口径：只换骰子原地旋转表现，不重排判定弹窗结构。</span>
+        <div class="footer-actions">
+          <button id="showBlack">演示黑骰混入</button>
+          <button id="resetNormal">恢复普通骰组</button>
+        </div>
+      </footer>
+    </section>
   </main>
 
   <script>
-    // PROTOTYPE - NOT FOR PRODUCTION
-    // Question: 角色骰判定需要哪些可复用的动作语言，才能让玩家看懂摇骰、黑骰、计入和收束？
-    // Date: 2026-05-13
-    const faces = ["探索?", "生存?", "理性?", "洞察?", "诡思?", "空"];
-    let loopOn = true;
-    let loopTimer = null;
+    const canvas = document.getElementById("diceCanvas");
+    const ctx = canvas.getContext("2d");
+    const replayThrow = document.getElementById("replayThrow");
+    const toggleLoop = document.getElementById("toggleLoop");
+    const rerollUnlocked = document.getElementById("rerollUnlocked");
+    const showBlack = document.getElementById("showBlack");
+    const resetNormal = document.getElementById("resetNormal");
+    const motionLabel = document.getElementById("motionLabel");
+    const resultPill = document.getElementById("resultPill");
+    const effectButtons = [...document.querySelectorAll(".effect-tab")];
+    const chipPrimary = document.getElementById("chipPrimary");
+    const chipSecondary = document.getElementById("chipSecondary");
+    const chipTertiary = document.getElementById("chipTertiary");
 
-    function qs(selector, root = document) { return root.querySelector(selector); }
-    function qsa(selector, root = document) { return Array.from(root.querySelectorAll(selector)); }
-    function wait(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
+    const palette = {
+      field: { top: "#d97706", front: "#86440f", side: "#a35c16", c: "#fed7aa" },
+      cog: { top: "#3b82f6", front: "#1f4fa3", side: "#1d3f7f", c: "#bfdbfe" },
+      social: { top: "#10b981", front: "#087545", side: "#0b5f3c", c: "#bbf7d0" },
+      blank: { top: "#7c8798", front: "#3d4654", side: "#566172", c: "#e2e8f0" },
+      black: { top: "#b91c1c", front: "#5f1015", side: "#3f0b10", c: "#fecaca" },
+    };
 
-    function restartAnimation(el, cls) {
-      el.classList.remove(cls);
-      void el.offsetWidth;
-      el.classList.add(cls);
+    let dice = [];
+    let startedAt = performance.now();
+    let loopOn = false;
+    let mode = "normal";
+    let effectMode = "axis";
+    let dpr = 1;
+
+    const effectProfiles = {
+      axis: {
+        label: "方案 A · 原版纵轴",
+        chips: ["原地不位移", "纵轴单向", "方案一节奏"],
+        duration: 1.05,
+        turns: 4.8,
+      },
+      tumble: {
+        label: "方案 B · 横轴急旋",
+        chips: ["原地不位移", "横轴单向", "方案一节奏"],
+        duration: 1.05,
+        turns: 4.8,
+      },
+      snap: {
+        label: "方案 C · 斜轴单向",
+        chips: ["原地不位移", "斜轴单向", "方案一节奏"],
+        duration: 1.05,
+        turns: 4.8,
+      },
+      sequence: {
+        label: "方案 D · 先纵后横",
+        chips: ["原地不位移", "先纵后横", "方案一节奏"],
+        duration: 1.05,
+        turns: 4.8,
+      },
+    };
+
+    function makeDie(label, type, from, to, delay, locked = false, settle = null) {
+      return {
+        label,
+        type,
+        from,
+        to,
+        delay,
+        locked,
+        phase: Math.random() * Math.PI * 2,
+        spinBoost: 0.88 + Math.random() * 0.24,
+        settle: settle || [
+          0.26 + Math.random() * 0.16,
+          -0.48 + Math.random() * 0.18,
+          -0.14 + Math.random() * 0.28,
+        ],
+      };
     }
 
-    function dieIn(card) { return qs(".die", card); }
-
-    async function runRoll() {
-      const cards = qsa("#rollDice .dice-card");
-      cards.forEach((card) => {
-        const die = dieIn(card);
-        die.className = `die ${card.dataset.kind || ""} motion-roll`;
-        die.querySelector("b").textContent = faces[Math.floor(Math.random() * faces.length)];
+    function updateEffectUI() {
+      const profile = effectProfiles[effectMode];
+      motionLabel.textContent = mode === "black" ? `${profile.label} · 黑骰同位混入` : profile.label;
+      [chipPrimary, chipSecondary, chipTertiary].forEach((chip, index) => {
+        chip.textContent = profile.chips[index];
       });
-      for (let tick = 0; tick < 6; tick++) {
-        cards.forEach((card, idx) => {
-          const die = dieIn(card);
-          die.querySelector("b").textContent = faces[(idx + tick) % faces.length];
-        });
-        await wait(120);
-      }
-      for (const card of cards) {
-        const die = dieIn(card);
-        die.className = `die ${card.dataset.kind || ""}`;
-        die.querySelector("b").textContent = card.dataset.face;
-        restartAnimation(die, "motion-land");
-        await wait(160);
-      }
+      effectButtons.forEach((button) => {
+        button.classList.toggle("is-active", button.dataset.effect === effectMode);
+      });
     }
 
-    async function runSettle() {
-      for (const card of qsa("#rollDice .dice-card")) {
-        restartAnimation(dieIn(card), "motion-land");
-        await wait(120);
-      }
-    }
-
-    function updateTrayCount() {
-      const chips = qsa("#trayList .chip");
-      qs("#trayCount").textContent = chips.length ? `${chips.length} 颗已选` : "未选择";
-    }
-
-    function addChip(face, tag, tone) {
-      const chip = document.createElement("span");
-      chip.className = `chip ${tone || ""}`;
-      chip.innerHTML = `<b>${face}</b><small>${tag}</small>`;
-      qs("#trayList").appendChild(chip);
-      updateTrayCount();
-    }
-
-    function flyFromCard(card, face, tag, tone) {
-      const die = dieIn(card);
-      const start = die.getBoundingClientRect();
-      const target = qs("#trayList").getBoundingClientRect();
-      const ghost = die.cloneNode(true);
-      ghost.classList.add("fly-ghost");
-      ghost.style.left = `${start.left}px`;
-      ghost.style.top = `${start.top}px`;
-      ghost.style.width = `${start.width}px`;
-      ghost.style.height = `${start.height}px`;
-      ghost.style.setProperty("--dx", `${target.left + 18 - start.left}px`);
-      ghost.style.setProperty("--dy", `${target.top + 10 - start.top}px`);
-      document.body.appendChild(ghost);
-      restartAnimation(die, "motion-select");
-      setTimeout(() => {
-        ghost.remove();
-        addChip(face, tag, tone);
-      }, 420);
-    }
-
-    function clearTray() {
-      qs("#trayList").innerHTML = "";
-      updateTrayCount();
-    }
-
-    async function runFly() {
-      clearTray();
-      const picks = qsa("#selectDice .dice-card");
-      for (const card of picks) {
-        flyFromCard(card, card.dataset.pick, card.dataset.tag, card.dataset.tone);
-        await wait(280);
-      }
-    }
-
-    async function runBlack() {
-      const panel = qs("#blackPanel");
-      restartAnimation(panel, "active");
-      const cards = qsa("#blackTrack .dice-card");
-      for (const card of cards) {
-        if (card.classList.contains("black")) restartAnimation(dieIn(card), "motion-black-drop");
-        else restartAnimation(dieIn(card), "motion-corrupt");
-        await wait(110);
-      }
-    }
-
-    function runCorrupt() {
-      qsa("#blackTrack .dice-card:not(.black) .die").forEach((die) => restartAnimation(die, "motion-corrupt"));
-    }
-
-    async function runState() {
-      const dice = qsa("#stateDice .die");
-      restartAnimation(dice[0], "motion-lock");
-      await wait(140);
-      restartAnimation(dice[1], "motion-corrupt");
-      await wait(140);
-      restartAnimation(dice[2], "motion-reroll");
-      await wait(140);
-      restartAnimation(dice[3], "motion-black-drop");
-    }
-
-    async function runResult() {
-      const tiles = qsa("#resultGrid .result-tile");
-      tiles.forEach((tile) => tile.classList.remove("active"));
-      for (const tile of tiles) {
-        void tile.offsetWidth;
-        tile.classList.add("active");
-        await wait(130);
-      }
-    }
-
-    function setImpact(type) {
-      const box = qs("#impactBox");
-      if (type === "black") {
-        box.style.borderColor = "rgba(248,113,113,0.58)";
-        box.style.background = "rgba(69,21,28,0.3)";
-        box.innerHTML = "<strong>替座 · 艾灵?</strong><span>已进入计入槽；不会补任务需求，但会把异常压力带入本次判定。</span>";
-        restartAnimation(box, "motion-corrupt");
-      } else if (type === "bad") {
-        box.style.borderColor = "rgba(148,163,184,0.28)";
-        box.style.background = "rgba(2,6,23,0.42)";
-        box.innerHTML = "<strong>理性2 · 末日时钟</strong><span>当前任务不读取这个属性，通常不需要计入。</span>";
-        restartAnimation(box, "motion-lock");
+    function resetDice(nextMode = mode) {
+      mode = nextMode;
+      startedAt = performance.now();
+      const w = canvas.clientWidth || 720;
+      const h = canvas.clientHeight || 300;
+      dice = [
+        makeDie("探索2", "field", [w * 0.26, h * 0.52, 0], [w * 0.26, h * 0.52, 0], 0, true, [0.3, -0.38, -0.08]),
+        makeDie("理性1", "cog", [w * 0.45, h * 0.5, 0], [w * 0.45, h * 0.5, 0], 0.03, false, [0.3, -0.42, 0.1]),
+        makeDie("人脉1", "social", [w * 0.62, h * 0.42, 0], [w * 0.62, h * 0.42, 0], 0.06, false, [0.28, -0.5, -0.08]),
+        makeDie("空", "blank", [w * 0.76, h * 0.55, 0], [w * 0.76, h * 0.55, 0], 0.09, false, [0.34, -0.4, 0.12]),
+      ];
+      if (mode === "black") {
+        dice.push(makeDie("鬼乘客", "black", [w * 0.72, h * 0.34, 0], [w * 0.72, h * 0.34, 0], 0.14, false, [0.32, -0.46, 0.02]));
+        resultPill.textContent = "有异动";
+        resultPill.style.borderColor = "rgba(248, 113, 113, 0.72)";
       } else {
-        box.style.borderColor = "rgba(212,168,83,0.58)";
-        box.style.background = "rgba(74,55,22,0.18)";
-        box.innerHTML = "<strong>洞察2 · 薛定谔</strong><span>已计入洞察+2。这个槽位用于承接 hover / click 的即时解释。</span>";
-        restartAnimation(box, "motion-select");
+        resultPill.textContent = "未达标";
+        resultPill.style.borderColor = "rgba(248, 113, 113, 0.45)";
       }
+      updateEffectUI();
     }
 
-    async function replayAll() {
-      await runRoll();
-      await runFly();
-      await runBlack();
-      await runState();
-      setImpact("black");
-      await wait(180);
-      await runResult();
+    function resize() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.max(320, Math.floor(rect.width * dpr));
+      canvas.height = Math.max(240, Math.floor(rect.height * dpr));
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      resetDice(mode);
     }
 
-    function startLoop() {
-      if (loopTimer) clearInterval(loopTimer);
-      loopTimer = setInterval(() => {
-        if (loopOn) replayAll();
-      }, 7200);
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
     }
 
-    qsa("[data-run]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const run = btn.dataset.run;
-        if (run === "roll") runRoll();
-        if (run === "settle") runSettle();
-        if (run === "fly") runFly();
-        if (run === "black") runBlack();
-        if (run === "corrupt") runCorrupt();
-        if (run === "state") runState();
-        if (run === "result") runResult();
+    function easeInOutCubic(t) {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
+    }
+
+    function project(p, origin, scale) {
+      const camera = 4.7;
+      const depth = camera - p[2] * 0.38;
+      const perspective = camera / depth;
+      return [
+        origin[0] + p[0] * scale * perspective,
+        origin[1] - p[1] * scale * perspective + p[2] * scale * 0.18,
+        p[2],
+        perspective,
+      ];
+    }
+
+    function rotatePoint(p, rx, ry, rz) {
+      let [x, y, z] = p;
+      let cy = Math.cos(rx), sy = Math.sin(rx);
+      let y1 = y * cy - z * sy;
+      let z1 = y * sy + z * cy;
+      y = y1; z = z1;
+      cy = Math.cos(ry); sy = Math.sin(ry);
+      let x1 = x * cy + z * sy;
+      z1 = -x * sy + z * cy;
+      x = x1; z = z1;
+      cy = Math.cos(rz); sy = Math.sin(rz);
+      x1 = x * cy - y * sy;
+      y1 = x * sy + y * cy;
+      return [x1, y1, z];
+    }
+
+    function faceBrightness(normal) {
+      const light = normalize([0.42, 0.88, 0.54]);
+      const dot = Math.max(0, normal[0] * light[0] + normal[1] * light[1] + normal[2] * light[2]);
+      return 0.34 + dot * 0.66;
+    }
+
+    function normalize(v) {
+      const len = Math.hypot(v[0], v[1], v[2]) || 1;
+      return [v[0] / len, v[1] / len, v[2] / len];
+    }
+
+    function sub3(a, b) {
+      return [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+    }
+
+    function cross(a, b) {
+      return [
+        a[1] * b[2] - a[2] * b[1],
+        a[2] * b[0] - a[0] * b[2],
+        a[0] * b[1] - a[1] * b[0],
+      ];
+    }
+
+    function faceNormal(points) {
+      return normalize(cross(sub3(points[1], points[0]), sub3(points[2], points[1])));
+    }
+
+    function colorMix(hex, amount) {
+      const n = parseInt(hex.slice(1), 16);
+      let r = (n >> 16) & 255;
+      let g = (n >> 8) & 255;
+      let b = n & 255;
+      r = Math.min(255, Math.floor(r * amount));
+      g = Math.min(255, Math.floor(g * amount));
+      b = Math.min(255, Math.floor(b * amount));
+      return `rgb(${r},${g},${b})`;
+    }
+
+    function solidFaceColor(hex, normal) {
+      const bright = faceBrightness(normal);
+      return colorMix(hex, 0.86 + bright * 0.18);
+    }
+
+    function drawFace(points, fill) {
+      ctx.beginPath();
+      ctx.moveTo(points[0][0], points[0][1]);
+      for (let i = 1; i < points.length; i += 1) ctx.lineTo(points[i][0], points[i][1]);
+      ctx.closePath();
+      ctx.fillStyle = fill;
+      ctx.fill();
+    }
+
+    function polygonSignedArea(points) {
+      let area = 0;
+      for (let i = 0; i < points.length; i += 1) {
+        const next = points[(i + 1) % points.length];
+        area += points[i][0] * next[1] - next[0] * points[i][1];
+      }
+      return area / 2;
+    }
+
+    function polygonArea(points) {
+      return Math.abs(polygonSignedArea(points));
+    }
+
+    function makeFaceTexture(fill, color, content) {
+      const size = 192;
+      const tex = document.createElement("canvas");
+      tex.width = size;
+      tex.height = size;
+      const t = tex.getContext("2d");
+      t.fillStyle = fill;
+      t.fillRect(0, 0, size, size);
+      const glow = t.createLinearGradient(0, 0, size, size);
+      glow.addColorStop(0, "rgba(255,255,255,0.16)");
+      glow.addColorStop(0.45, "rgba(255,255,255,0.03)");
+      glow.addColorStop(1, "rgba(0,0,0,0.18)");
+      t.fillStyle = glow;
+      t.fillRect(0, 0, size, size);
+
+      if (content?.type === "pips") {
+        const dots = [[0.31, 0.28], [0.69, 0.28], [0.5, 0.5], [0.31, 0.72], [0.69, 0.72]];
+        t.fillStyle = color;
+        t.shadowColor = color;
+        t.shadowBlur = 10;
+        dots.forEach(([x, y]) => {
+          t.beginPath();
+          t.arc(x * size, y * size, 12, 0, Math.PI * 2);
+          t.fill();
+        });
+        t.shadowBlur = 0;
+      }
+
+      if (content?.type === "label") {
+        const text = content.text;
+        const lines = text.length > 3 ? [text.slice(0, 2), text.slice(2)] : [text];
+        const fontSize = text.length <= 1 ? 74 : text.length <= 3 ? 56 : 42;
+        const lineHeight = fontSize * 1.06;
+        t.textAlign = "center";
+        t.textBaseline = "middle";
+        t.font = `900 ${fontSize}px Microsoft YaHei, sans-serif`;
+        t.lineJoin = "round";
+        t.lineWidth = Math.max(8, fontSize * 0.18);
+        t.strokeStyle = "rgba(2, 6, 23, 0.92)";
+        t.fillStyle = color;
+        t.shadowColor = "rgba(0,0,0,0.48)";
+        t.shadowBlur = 5;
+        lines.forEach((line, index) => {
+          const y = size * 0.52 + (index - (lines.length - 1) / 2) * lineHeight;
+          t.strokeText(line, size * 0.5, y);
+          t.fillText(line, size * 0.5, y);
+        });
+      }
+
+      return tex;
+    }
+
+    function mapTriangle(image, src, dst) {
+      const den = src[0][0] * (src[1][1] - src[2][1]) +
+        src[1][0] * (src[2][1] - src[0][1]) +
+        src[2][0] * (src[0][1] - src[1][1]);
+      if (Math.abs(den) < 0.001) return;
+      const a = (dst[0][0] * (src[1][1] - src[2][1]) +
+        dst[1][0] * (src[2][1] - src[0][1]) +
+        dst[2][0] * (src[0][1] - src[1][1])) / den;
+      const b = (dst[0][1] * (src[1][1] - src[2][1]) +
+        dst[1][1] * (src[2][1] - src[0][1]) +
+        dst[2][1] * (src[0][1] - src[1][1])) / den;
+      const c = (dst[0][0] * (src[2][0] - src[1][0]) +
+        dst[1][0] * (src[0][0] - src[2][0]) +
+        dst[2][0] * (src[1][0] - src[0][0])) / den;
+      const d = (dst[0][1] * (src[2][0] - src[1][0]) +
+        dst[1][1] * (src[0][0] - src[2][0]) +
+        dst[2][1] * (src[1][0] - src[0][0])) / den;
+      const e = (dst[0][0] * (src[1][0] * src[2][1] - src[2][0] * src[1][1]) +
+        dst[1][0] * (src[2][0] * src[0][1] - src[0][0] * src[2][1]) +
+        dst[2][0] * (src[0][0] * src[1][1] - src[1][0] * src[0][1])) / den;
+      const f = (dst[0][1] * (src[1][0] * src[2][1] - src[2][0] * src[1][1]) +
+        dst[1][1] * (src[2][0] * src[0][1] - src[0][0] * src[2][1]) +
+        dst[2][1] * (src[0][0] * src[1][1] - src[1][0] * src[0][1])) / den;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(dst[0][0], dst[0][1]);
+      ctx.lineTo(dst[1][0], dst[1][1]);
+      ctx.lineTo(dst[2][0], dst[2][1]);
+      ctx.closePath();
+      ctx.clip();
+      ctx.transform(a, b, c, d, e, f);
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
+      ctx.drawImage(image, 0, 0);
+      ctx.restore();
+    }
+
+    function drawTexturedQuad(points, texture) {
+      const size = texture.width;
+      const src = [[0, size], [size, size], [size, 0], [0, 0]];
+      mapTriangle(texture, [src[0], src[1], src[2]], [points[0], points[1], points[2]]);
+      mapTriangle(texture, [src[0], src[2], src[3]], [points[0], points[2], points[3]]);
+    }
+
+    function motionForDie(die, rawLocal) {
+      const profile = effectProfiles[effectMode];
+      const local = Math.max(0, rawLocal);
+      const t = Math.min(local / profile.duration, 1);
+      const spinLeft = rawLocal < 0 || die.locked ? 0 : Math.pow(1 - t, 2.15);
+      const phase = spinLeft * profile.turns * Math.PI * 2 * die.spinBoost;
+      const settle = die.settle;
+      let rot = settle;
+      let lift = 0;
+      let nudgeX = 0;
+      let nudgeZ = 0;
+
+      if (effectMode === "axis") {
+        rot = [
+          settle[0] + Math.sin(phase + die.phase) * 0.1 * spinLeft,
+          settle[1] + phase,
+          settle[2] + Math.cos(phase * 0.8 + die.phase) * 0.09 * spinLeft,
+        ];
+        lift = Math.sin(t * Math.PI) * 0.1 * spinLeft;
+      }
+
+      if (effectMode === "tumble") {
+        rot = [
+          settle[0] + phase,
+          settle[1] + Math.sin(phase + die.phase) * 0.1 * spinLeft,
+          settle[2] + Math.cos(phase * 0.8 + die.phase) * 0.09 * spinLeft,
+        ];
+        lift = Math.sin(t * Math.PI) * 0.1 * spinLeft;
+      }
+
+      if (effectMode === "snap") {
+        rot = [
+          settle[0] + phase * 0.56,
+          settle[1] + phase * 0.58,
+          settle[2] + phase * 0.18,
+        ];
+        lift = Math.sin(t * Math.PI) * 0.1 * spinLeft;
+      }
+
+      if (effectMode === "sequence") {
+        const switchT = 0.38;
+        if (t < switchT) {
+          rot = [
+            settle[0] + Math.sin(phase + die.phase) * 0.1 * spinLeft,
+            settle[1] + phase,
+            settle[2] + Math.cos(phase * 0.8 + die.phase) * 0.09 * spinLeft,
+          ];
+        } else {
+          rot = [
+            settle[0] + phase,
+            settle[1] + Math.sin(phase + die.phase) * 0.1 * spinLeft,
+            settle[2] + Math.cos(phase * 0.8 + die.phase) * 0.09 * spinLeft,
+          ];
+        }
+        lift = Math.sin(t * Math.PI) * 0.1 * spinLeft;
+      }
+
+      return {
+        t,
+        spinLeft,
+        x: die.to[0] + nudgeX,
+        z: die.to[1] + nudgeZ,
+        y: lift,
+        rot,
+      };
+    }
+
+    function drawSpinCue(x, z, size, motion, color) {
+      if (motion.spinLeft < 0.08) return;
+      ctx.save();
+      ctx.globalAlpha = Math.min(0.5, motion.spinLeft * 0.64);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2.2;
+      ctx.lineCap = "round";
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 9;
+
+      if (effectMode === "axis") {
+        for (let i = 0; i < 2; i += 1) {
+          const start = motion.t * 11 + i * Math.PI;
+          ctx.beginPath();
+          ctx.ellipse(x + 4, z + 12, 42 * size, 14 * size, -0.14, start, start + Math.PI * 0.9);
+          ctx.stroke();
+        }
+      }
+
+      if (effectMode === "tumble") {
+        for (let i = 0; i < 2; i += 1) {
+          const start = motion.t * 11 + i * Math.PI;
+          ctx.beginPath();
+          ctx.ellipse(x + 2, z + 4, 18 * size, 42 * size, -0.08, start, start + Math.PI * 0.9);
+          ctx.stroke();
+        }
+      }
+
+      if (effectMode === "snap") {
+        for (let i = 0; i < 2; i += 1) {
+          const start = motion.t * 11 + i * Math.PI;
+          ctx.beginPath();
+          ctx.ellipse(x + 3, z + 8, 38 * size, 16 * size, -0.68, start, start + Math.PI * 0.9);
+          ctx.stroke();
+        }
+      }
+
+      if (effectMode === "sequence") {
+        const isHorizontalPhase = motion.t >= 0.5;
+        for (let i = 0; i < 2; i += 1) {
+          const start = motion.t * 11 + i * Math.PI;
+          ctx.beginPath();
+          if (isHorizontalPhase) {
+            ctx.ellipse(x + 2, z + 4, 18 * size, 42 * size, -0.08, start, start + Math.PI * 0.9);
+          } else {
+            ctx.ellipse(x + 4, z + 12, 42 * size, 14 * size, -0.14, start, start + Math.PI * 0.9);
+          }
+          ctx.stroke();
+        }
+      }
+
+      ctx.restore();
+    }
+
+    function drawDie(die, time) {
+      const local = time - die.delay;
+      const motion = motionForDie(die, local);
+      const x = motion.x;
+      const z = motion.z;
+      const y = motion.y;
+      const rot = motion.rot;
+      const size = Math.min(1.12, Math.max(0.8, (canvas.clientWidth || 720) / 720));
+      const half = 0.58 * size;
+      const origin = [x, z + y * -9];
+      const base = palette[die.type];
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.ellipse(x + 8, z + 31, 37 * size * (1 - y * 0.2), 15 * size * (1 - y * 0.16), -0.16, 0, Math.PI * 2);
+      ctx.fillStyle = die.type === "black" ? "rgba(248, 113, 113, 0.22)" : "rgba(0,0,0,0.38)";
+      ctx.filter = "blur(2px)";
+      ctx.fill();
+      ctx.filter = "none";
+      drawSpinCue(x, z, size, motion, base.c);
+
+      const modelVerts = [
+        [-half, -half, -half], [half, -half, -half], [half, -half, half], [-half, -half, half],
+        [-half, half, -half], [half, half, -half], [half, half, half], [-half, half, half],
+      ].map((p) => rotatePoint(p, rot[0], rot[1], rot[2]));
+
+      const pixelScale = 47;
+      const verts = modelVerts.map((p) => project(p, origin, pixelScale));
+
+      const faces = [
+        { name: "bottom", ids: [0, 1, 2, 3], tone: base.side },
+        { name: "top", ids: [4, 7, 6, 5], tone: base.top },
+        { name: "front", ids: [3, 2, 6, 7], tone: base.front },
+        { name: "back", ids: [0, 4, 5, 1], tone: base.side },
+        { name: "right", ids: [1, 5, 6, 2], tone: base.side },
+        { name: "left", ids: [0, 3, 7, 4], tone: base.side },
+      ].map((face) => {
+        const world = face.ids.map((id) => modelVerts[id]);
+        const normal = faceNormal(world);
+        return {
+          ...face,
+          world,
+          normal,
+          avgDepth: world.reduce((sum, p) => sum + p[2], 0) / world.length,
+          facing: normal[2],
+        };
+      });
+
+      const visibleFaces = faces
+        .map((face) => {
+          const pts = face.ids.map((id) => verts[id]);
+          return { ...face, pts, screenSignedArea: polygonSignedArea(pts), screenArea: polygonArea(pts) };
+        })
+        .filter((face) => face.screenSignedArea < -80)
+        .sort((a, b) => a.avgDepth - b.avgDepth);
+
+      const labelFace = [...visibleFaces]
+        .filter((face) => !["top", "bottom"].includes(face.name) && face.screenArea > 260)
+        .sort((a, b) => b.screenArea - a.screenArea)[0];
+
+      visibleFaces.forEach((face) => {
+        face.fillColor = solidFaceColor(face.tone, face.normal);
+        drawFace(face.pts, face.fillColor);
+        const content = face.name === "top"
+          ? { type: "pips" }
+          : labelFace && face.name === labelFace.name
+            ? { type: "label", text: die.label.replace(/[?？]/g, "") }
+            : null;
+        const texture = makeFaceTexture(face.fillColor, base.c, content);
+        drawTexturedQuad(face.pts, texture);
+      });
+
+      const edgeSet = new Set();
+      visibleFaces.forEach((face) => {
+        for (let i = 0; i < face.ids.length; i += 1) {
+          const a = face.ids[i];
+          const b = face.ids[(i + 1) % face.ids.length];
+          edgeSet.add(a < b ? `${a}-${b}` : `${b}-${a}`);
+        }
+      });
+      ctx.strokeStyle = base.c;
+      ctx.lineWidth = 1.7;
+      ctx.lineJoin = "round";
+      ctx.globalAlpha = 0.68;
+      edgeSet.forEach((key) => {
+        const [a, b] = key.split("-").map(Number);
+        ctx.beginPath();
+        ctx.moveTo(verts[a][0], verts[a][1]);
+        ctx.lineTo(verts[b][0], verts[b][1]);
+        ctx.stroke();
+      });
+      ctx.globalAlpha = 1;
+
+      if (die.locked) {
+        ctx.beginPath();
+        ctx.arc(x + 28, z - 26, 12, 0, Math.PI * 2);
+        ctx.fillStyle = "#2563eb";
+        ctx.fill();
+        ctx.strokeStyle = "#bfdbfe";
+        ctx.lineWidth = 1.4;
+        ctx.stroke();
+        ctx.fillStyle = "#dbeafe";
+        ctx.font = "900 11px Microsoft YaHei, sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("锁", x + 28, z - 25);
+      }
+
+      if (die.type === "black") {
+        ctx.beginPath();
+        ctx.arc(x, z, 52 * size, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(248,113,113,${0.18 + Math.sin(time * 7) * 0.08})`;
+        ctx.lineWidth = 3;
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function drawBoard(time) {
+      const w = canvas.clientWidth || 720;
+      const h = canvas.clientHeight || 300;
+      ctx.clearRect(0, 0, w, h);
+      ctx.save();
+      ctx.globalAlpha = 0.16;
+      ctx.strokeStyle = "#60a5fa";
+      ctx.lineWidth = 1;
+      for (let x = 22; x < w; x += 52) {
+        ctx.beginPath();
+        ctx.moveTo(x, 14);
+        ctx.lineTo(x, h - 18);
+        ctx.stroke();
+      }
+      for (let y = 22; y < h; y += 52) {
+        ctx.beginPath();
+        ctx.moveTo(16, y);
+        ctx.lineTo(w - 16, y);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 0.28;
+      ctx.strokeStyle = "#d4a853";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.ellipse(w * 0.51, h * 0.52, w * 0.31, h * 0.24, -0.1, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+
+      dice
+        .slice()
+        .sort((a, b) => a.to[1] - b.to[1])
+        .forEach((die) => drawDie(die, time));
+    }
+
+    function frame(now) {
+      const elapsed = (now - startedAt) / 1000;
+      if (loopOn && elapsed > 3.0) resetDice(mode);
+      drawBoard(elapsed);
+      window.diceLabAudit = {
+        renderer: "canvas-model-topdown",
+        layout: "judge-modal-preserved",
+        diceCount: dice.length,
+        directFileSafe: true,
+        mode,
+        effectMode,
+        canvasWidth: canvas.width,
+        canvasHeight: canvas.height,
+      };
+      requestAnimationFrame(frame);
+    }
+
+    replayThrow.addEventListener("click", () => resetDice(mode));
+    rerollUnlocked.addEventListener("click", () => resetDice("normal"));
+    resetNormal.addEventListener("click", () => resetDice("normal"));
+    showBlack.addEventListener("click", () => resetDice("black"));
+    effectButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        effectMode = button.dataset.effect;
+        resetDice(mode);
       });
     });
-
-    qsa("#selectDice .dice-card").forEach((card) => {
-      card.addEventListener("click", () => flyFromCard(card, card.dataset.pick, card.dataset.tag, card.dataset.tone));
-    });
-    qsa("[data-impact]").forEach((btn) => btn.addEventListener("click", () => setImpact(btn.dataset.impact)));
-    qs("#clearTray").addEventListener("click", clearTray);
-    qs("#replayAll").addEventListener("click", replayAll);
-    qs("#pauseLoop").addEventListener("click", () => {
+    toggleLoop.addEventListener("click", () => {
       loopOn = !loopOn;
-      qs("#pauseLoop").textContent = loopOn ? "暂停循环" : "继续循环";
+      toggleLoop.textContent = loopOn ? "暂停循环" : "继续循环";
     });
 
-    replayAll();
-    startLoop();
+    window.addEventListener("resize", resize);
+    resize();
+    resetDice("normal");
+    requestAnimationFrame(frame);
   </script>
 </body>
 </html>

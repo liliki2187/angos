@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2026-05-22 骰子原地急旋方案</title>
+  <style>
+    body {
+      margin: 0;
+      color: #e5e7eb;
+      background: #07101d;
+      font-family: "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+      line-height: 1.6;
+    }
+    main {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 42px;
+    }
+    h1 { color: #fde68a; margin: 0 0 8px; }
+    p { color: #cbd5e1; }
+    article {
+      margin-top: 22px;
+      padding: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.26);
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.72);
+    }
+    h2 { color: #f5d58b; margin: 0 0 8px; font-size: 20px; }
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: 6px;
+      background: #020617;
+    }
+    .note {
+      border-left: 3px solid #d4a853;
+      padding-left: 12px;
+      color: #dbeafe;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>骰子原地急旋方案</h1>
+    <p class="note">本次只修改独立视觉实验页 `dice-animation-lab.html`。目标是比较骰子留在原地快速旋转后停稳的三个方向，不改变判定弹窗布局，也不回退骰面贴图与不透明实体表现。</p>
+
+    <article>
+      <h2>01 · 整页入口</h2>
+      <p>页面提供三个方案按钮，并保留重播、循环、黑骰状态入口。</p>
+      <img src="01-dice-spin-variants-page.png" alt="骰子原地急旋实验整页截图" />
+    </article>
+
+    <article>
+      <h2>02 · 方案 A：轴心急旋</h2>
+      <p>骰子原地不位移，偏陀螺式快转，停稳较平滑。</p>
+      <img src="02-axis-spin-mid-panel.png" alt="方案 A 轴心急旋中段截图" />
+    </article>
+
+    <article>
+      <h2>03 · 方案 B：斜轴翻滚</h2>
+      <p>骰子原地多轴翻面，动作更像手里快速拨动骰子，带轻微压影。</p>
+      <img src="03-tumble-spin-mid-panel.png" alt="方案 B 斜轴翻滚中段截图" />
+    </article>
+
+    <article>
+      <h2>04 · 方案 C：顿挫停面</h2>
+      <p>骰子分段急转，停面更明确，节奏比 A / B 更有机械感。</p>
+      <img src="04-snap-spin-mid-panel.png" alt="方案 C 顿挫停面中段截图" />
+    </article>
+
+    <article>
+      <h2>05 · 停稳检查</h2>
+      <p>停稳后骰面贴图、实体面和文字可读性保持正常。</p>
+      <img src="05-axis-spin-settled-panel.png" alt="方案 A 停稳后截图" />
+    </article>
+
+    <article>
+      <h2>06 · 斜轴翻滚快速停稳版</h2>
+      <p>按用户偏好保留方案 B 的斜轴翻滚方向，但把节奏改成更接近方案 A：更快、更短、更快停稳。</p>
+      <img src="06-tumble-fast-stop-mid-panel.png" alt="斜轴翻滚快速停稳版中段截图" />
+    </article>
+
+    <article>
+      <h2>07 · 快速停稳后检查</h2>
+      <p>停稳后仍保留不透明实体骰和面贴图可读性。</p>
+      <img src="07-tumble-fast-stop-settled-panel.png" alt="斜轴翻滚快速停稳版停稳截图" />
+    </article>
+
+    <article>
+      <h2>08 · 方案 A 无序急旋</h2>
+      <p>按最新方向保留方案 A 的速率、加减速度、短摇动和快速停止，只把单轴 / 横轴旋转改成无序多轴原地旋转。</p>
+      <img src="09-axis-chaos-spin-mid-panel.png" alt="方案 A 无序急旋中段截图" />
+    </article>
+
+    <article>
+      <h2>09 · 无序急旋停稳检查</h2>
+      <p>停稳后检查骰面仍是不透明实体面，文字和点数继续作为面贴图随面投影。</p>
+      <img src="10-axis-chaos-spin-settled-panel.png" alt="方案 A 无序急旋停稳截图" />
+    </article>
+
+    <article>
+      <h2>10 · A 原方案一纵轴</h2>
+      <p>回到原来的方案一：沿纵轴单向快转，保留原速率、加减速度、短摇动和停稳曲线。</p>
+      <img src="12-axis-original-mid-panel.png" alt="原方案一纵轴中段截图" />
+    </article>
+
+    <article>
+      <h2>11 · B 横轴急旋</h2>
+      <p>只把方案一的纵轴旋转换成横轴旋转，其余节奏参数保持一致。</p>
+      <img src="13-axis-horizontal-mid-panel.png" alt="横轴急旋中段截图" />
+    </article>
+
+    <article>
+      <h2>12 · C 斜轴单向</h2>
+      <p>斜轴持续同向快转，不做来回晃或分段顿挫。</p>
+      <img src="14-axis-diagonal-mid-panel.png" alt="斜轴单向中段截图" />
+    </article>
+
+    <article>
+      <h2>13 · 新三案停稳检查</h2>
+      <p>停稳后检查骰面仍是不透明实体面，文字和点数继续作为面贴图随面投影。</p>
+      <img src="15-axis-three-directions-settled-panel.png" alt="新三案停稳截图" />
+    </article>
+
+    <article>
+      <h2>14 · D 先纵后横前段</h2>
+      <p>新增 D 方案的前段仍按原方案一纵轴单向快转。</p>
+      <img src="17-axis-sequence-vertical-phase.png" alt="D 先纵后横前段截图" />
+    </article>
+
+    <article>
+      <h2>15 · D 先纵后横后段</h2>
+      <p>同一轮旋转后段切到横轴单向快转，节奏仍沿用方案一。</p>
+      <img src="18-axis-sequence-horizontal-phase.png" alt="D 先纵后横后段截图" />
+    </article>
+
+    <article>
+      <h2>16 · D 停稳检查</h2>
+      <p>停稳后检查骰面仍是不透明实体面，文字和点数继续作为面贴图随面投影。</p>
+      <img src="19-axis-sequence-settled-panel.png" alt="D 先纵后横停稳截图" />
+    </article>
+  </main>
+</body>
+</html>

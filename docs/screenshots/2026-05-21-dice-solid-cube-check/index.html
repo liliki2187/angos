@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2026-05-21 骰子闭合实体检查</title>
+  <style>
+    body {
+      margin: 0;
+      color: #e5e7eb;
+      background: #08111f;
+      font-family: "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+      line-height: 1.6;
+    }
+    main {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 40px;
+    }
+    h1 { color: #fde68a; margin: 0 0 8px; }
+    p { color: #cbd5e1; }
+    article {
+      margin-top: 22px;
+      padding: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.26);
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.72);
+    }
+    h2 { color: #f5d58b; margin: 0 0 8px; font-size: 20px; }
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: 6px;
+      background: #020617;
+    }
+    .note {
+      border-left: 3px solid #d4a853;
+      padding-left: 12px;
+      color: #dbeafe;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>骰子面贴图实体检查</h1>
+    <p class="note">本次只修改独立视觉实验页 `dice-animation-lab.html`，不套用到完整全链试玩。验收重点是：原判定弹窗布局保持，骰子盘内部从面片 / 透明线框 / 屏幕标签感改为不透明实体骰；文字和骰点先生成到骰面贴图，再随面一起投影。</p>
+
+    <article>
+      <h2>01 · 整页布局</h2>
+      <p>保留判定摘要、计入槽、骰子判定区、右侧状态和底部按钮的相对关系，只替换盘内骰子绘制。</p>
+      <img src="07-dice-face-texture-page.png" alt="骰子面贴图实体实验整页截图" />
+    </article>
+
+    <article>
+      <h2>02 · 骰子局部裁切</h2>
+      <p>局部检查骰子是否仍像薄片、透明线框或后贴屏幕标签。当前版本使用不透明面底，并把文字和骰点作为贴图映射到骰面。</p>
+      <img src="08-dice-face-texture-board-crop.png" alt="骰子面贴图实体实验局部裁切截图" />
+    </article>
+
+    <article>
+      <h2>03 · 骰子放大检查</h2>
+      <p>放大检查四颗骰子的面块、文字、骰点与边线。文字和骰点随各自骰面一起透视变形，不再独立浮在屏幕坐标上。</p>
+      <img src="09-dice-face-texture-dice-zoom.png" alt="骰子面贴图实体实验放大截图" />
+    </article>
+
+    <article>
+      <h2>04 · 黑骰状态</h2>
+      <p>黑骰混入状态同样检查不透明面、文字贴图化、可读性和实体遮挡关系。</p>
+      <img src="10-dice-face-texture-black-crop.png" alt="黑骰状态局部裁切截图" />
+    </article>
+  </main>
+</body>
+</html>

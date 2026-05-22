@@ -1,0 +1,18 @@
+{
+  "title": "角色骰实体动效实验台",
+  "cardCount": 6,
+  "cubeCount": 21,
+  "faceCount": 126,
+  "replayButtons": 6,
+  "hasLoopButton": true,
+  "linkToFullChain": "../../html/full-chain-demo/world-mysteries-full-chain.html",
+  "sections": [
+    "基础摇骰",
+    "逐颗落位",
+    "锁定 / 重投",
+    "计入飞入",
+    "黑骰介入",
+    "结果收束"
+  ],
+  "hasPrototypeNotice": true
+}

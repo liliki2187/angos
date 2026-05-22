@@ -1,0 +1,25 @@
+{
+  "auditBefore": {
+    "motionLabel": "方案 A · 无序急旋",
+    "activeEffect": "axis",
+    "activeEffectText": "A 无序急旋 沿方案一节奏多轴乱转",
+    "chips": [
+      "原地不位移",
+      "无序多轴",
+      "快速停稳"
+    ]
+  },
+  "auditAfter": {
+    "motionLabel": "方案 A · 无序急旋",
+    "activeEffect": "axis",
+    "chips": [
+      "原地不位移",
+      "无序多轴",
+      "快速停稳"
+    ],
+    "canvas": {
+      "width": 858,
+      "height": 310
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "resultSummary": "判定目标 1/3 未达标 已计入相关骰面 1 点，目标 3 点。",
+  "attributeHead": "属性贡献来源胆识3 / 诡思3 / 洞察2",
+  "rerollPanel": "锁定 / 重投 剩余 1 次 · 固定 2 颗 已锁定 1 颗；重投会掷出其余 3 颗。 锁定所选骰面 解除锁定 重投未锁定 3 颗",
+  "rollGrid": {
+    "x": 215,
+    "y": 530,
+    "width": 696,
+    "height": 270
+  },
+  "modal": {
+    "x": 200,
+    "y": 55,
+    "width": 1040,
+    "height": 870
+  },
+  "hasOldPeerNeedRows": 0,
+  "lockedDice": 1,
+  "recentRerolls": 3
+}

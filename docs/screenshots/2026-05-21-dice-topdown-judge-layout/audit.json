@@ -1,0 +1,20 @@
+{
+  "title": "角色骰顶视角投入实验",
+  "renderer": "canvas-model-topdown",
+  "layout": "judge-modal-preserved",
+  "diceCount": 5,
+  "directFileSafe": true,
+  "hasOriginalLayoutNote": true,
+  "hasPrototypeNotice": true,
+  "linkToFullChain": "../../html/full-chain-demo/world-mysteries-full-chain.html",
+  "pixelAudit": {
+    "desktop": {
+      "samplePixels": 125184,
+      "nonDarkPixels": 22859
+    },
+    "mobile": {
+      "samplePixels": 182175,
+      "nonDarkPixels": 11646
+    }
+  }
+}

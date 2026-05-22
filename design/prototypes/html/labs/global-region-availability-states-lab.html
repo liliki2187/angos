@@ -1,0 +1,538 @@
+<!--
+PROTOTYPE - NOT FOR PRODUCTION
+Question: 全球地区组件如何明显区分“已解锁可点击”和“未解锁不可进入”？
+Date: 2026-05-18
+-->
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Angus 全球地区可用状态组件实验</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080d14;
+      --panel: rgba(10, 16, 26, 0.94);
+      --panel-2: rgba(15, 23, 36, 0.9);
+      --ink: #eef4fb;
+      --muted: #92a2b7;
+      --soft: #c7d2e2;
+      --line: rgba(148, 163, 184, 0.28);
+      --line-soft: rgba(148, 163, 184, 0.16);
+      --gold: #d7aa55;
+      --gold-2: #f3cf81;
+      --blue: #60a5fa;
+      --green: #38d782;
+      --red: #ef4444;
+      --locked: #59677b;
+      font-family: "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 18% 14%, rgba(96, 165, 250, 0.09), transparent 25%),
+        radial-gradient(circle at 84% 18%, rgba(215, 170, 85, 0.10), transparent 24%),
+        linear-gradient(180deg, #111a27 0%, var(--bg) 70%);
+    }
+    button {
+      font: inherit;
+      color: inherit;
+      border: 0;
+    }
+    .shell {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 22px 0 28px;
+      display: grid;
+      gap: 14px;
+    }
+    .intro {
+      border: 1px solid rgba(215, 170, 85, 0.28);
+      border-radius: 8px;
+      background: rgba(9, 14, 22, 0.74);
+      padding: 14px 16px;
+    }
+    h1 {
+      margin: 0 0 6px;
+      color: var(--gold);
+      font-size: 22px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+    .intro p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 13px;
+    }
+    .lab-grid {
+      display: grid;
+      grid-template-columns: minmax(420px, 0.9fr) minmax(430px, 1.1fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(13, 20, 32, 0.96), rgba(8, 13, 22, 0.96));
+      overflow: hidden;
+    }
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      min-height: 52px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+    .panel-head h2 {
+      margin: 0;
+      color: var(--gold-2);
+      font-size: 15px;
+    }
+    .panel-head span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .component-pad {
+      padding: 14px;
+      display: grid;
+      gap: 14px;
+    }
+    .selector-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .region-choice {
+      position: relative;
+      min-height: 78px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-rows: auto auto;
+      align-content: center;
+      gap: 5px 8px;
+      text-align: left;
+      border-radius: 8px;
+      padding: 11px 10px;
+      transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+    }
+    .region-choice strong {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 13px;
+      line-height: 1.2;
+    }
+    .region-choice small {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.25;
+    }
+    .region-choice .icon {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      align-self: center;
+      justify-self: end;
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      line-height: 1;
+    }
+    .region-choice.available {
+      cursor: pointer;
+      border: 1px solid rgba(96, 165, 250, 0.48);
+      background: linear-gradient(180deg, rgba(28, 41, 61, 0.98), rgba(13, 22, 36, 0.98));
+      box-shadow: 0 1px 0 rgba(148, 163, 184, 0.14) inset, 0 9px 22px rgba(0, 0, 0, 0.22);
+    }
+    .region-choice.available .icon {
+      border: 1px solid rgba(96, 165, 250, 0.48);
+      color: #bfdbfe;
+      background: rgba(15, 23, 42, 0.7);
+    }
+    .region-choice.available:hover,
+    .region-choice.available:focus-visible {
+      transform: translateY(-1px);
+      border-color: rgba(147, 197, 253, 0.9);
+      box-shadow: 0 0 0 1px rgba(147, 197, 253, 0.18), 0 14px 28px rgba(0, 0, 0, 0.28);
+      outline: none;
+    }
+    .region-choice.available.is-selected {
+      border-color: rgba(215, 170, 85, 0.98);
+      background: linear-gradient(180deg, rgba(94, 67, 25, 0.78), rgba(47, 35, 17, 0.96));
+      box-shadow: 0 0 0 1px rgba(215, 170, 85, 0.28), 0 0 20px rgba(215, 170, 85, 0.18), 0 14px 30px rgba(0, 0, 0, 0.32);
+    }
+    .region-choice.available.is-selected:after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -10px;
+      transform: translateX(-50%);
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 8px solid rgba(215, 170, 85, 0.92);
+    }
+    .region-choice.available.is-selected .icon {
+      border-color: rgba(243, 207, 129, 0.68);
+      color: #facc15;
+      background: rgba(120, 53, 15, 0.34);
+    }
+    .region-choice.locked {
+      cursor: not-allowed;
+      border: 1px dashed rgba(99, 112, 132, 0.42);
+      background: rgba(15, 23, 42, 0.34);
+      color: #93a1b5;
+      opacity: 0.68;
+      box-shadow: none;
+      filter: saturate(0.45);
+    }
+    .region-choice.locked strong { color: #a7b1c1; }
+    .region-choice.locked small { color: #748197; }
+    .region-choice.locked .icon {
+      border: 1px solid rgba(99, 112, 132, 0.36);
+      color: #7b8798;
+      background: rgba(2, 6, 23, 0.42);
+      font-size: 14px;
+      font-family: inherit;
+    }
+    .detail-strip {
+      margin-top: 4px;
+      padding: 11px 0 0 14px;
+      border-left: 1px solid rgba(215, 170, 85, 0.36);
+      display: grid;
+      gap: 7px;
+    }
+    .detail-strip .eyebrow {
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .detail-strip strong {
+      color: #fff4cf;
+      font-size: 20px;
+      line-height: 1.1;
+    }
+    .detail-strip p {
+      margin: 0;
+      color: #cbd5e1;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .detail-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .detail-meta b {
+      color: #f8fafc;
+      font-size: 16px;
+      margin-right: 4px;
+    }
+    .detail-meta b.warn { color: #fca5a5; }
+    .detail-meta b.ok { color: #86efac; }
+    .map-stage {
+      position: relative;
+      min-height: 330px;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(6, 11, 18, 0.35), rgba(6, 11, 18, 0.64)),
+        url("../full-chain-demo/Assets/world-map-background.svg") center/cover no-repeat,
+        #07101b;
+    }
+    .map-stage:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(103, 232, 249, 0.09) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(103, 232, 249, 0.09) 1px, transparent 1px);
+      background-size: 86px 86px;
+      opacity: 0.62;
+    }
+    .route-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.72;
+    }
+    .route-layer path {
+      fill: none;
+      stroke: rgba(215, 170, 85, 0.34);
+      stroke-width: 1.6;
+      stroke-dasharray: 9 8;
+    }
+    .map-pin {
+      position: absolute;
+      left: var(--x);
+      top: var(--y);
+      transform: translate(-50%, -50%);
+      min-width: 120px;
+      min-height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      z-index: 3;
+      transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+    }
+    .map-pin .badge {
+      display: inline-grid;
+      place-items: center;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border-radius: 999px;
+      font-size: 10px;
+      line-height: 1;
+      font-weight: 800;
+    }
+    .map-pin.available {
+      cursor: pointer;
+      border: 1px solid rgba(215, 170, 85, 0.82);
+      color: #fff4cf;
+      background: rgba(74, 55, 22, 0.96);
+      box-shadow: 0 0 0 1px rgba(215, 170, 85, 0.18), 0 0 22px rgba(215, 170, 85, 0.22), 0 12px 26px rgba(0, 0, 0, 0.34);
+    }
+    .map-pin.available:hover,
+    .map-pin.available:focus-visible {
+      transform: translate(-50%, calc(-50% - 1px));
+      border-color: rgba(243, 207, 129, 0.98);
+      outline: none;
+    }
+    .map-pin.available .badge {
+      color: #fff;
+      border: 1px solid rgba(248, 113, 113, 0.88);
+      background: var(--red);
+      box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.88);
+    }
+    .map-pin.locked {
+      cursor: not-allowed;
+      border: 1px dashed rgba(99, 112, 132, 0.52);
+      color: #8794a8;
+      background: rgba(15, 23, 42, 0.52);
+      box-shadow: none;
+      opacity: 0.56;
+      filter: saturate(0.35);
+    }
+    .map-pin.locked .badge {
+      color: #9ca7b8;
+      border: 1px solid rgba(99, 112, 132, 0.44);
+      background: rgba(2, 6, 23, 0.48);
+    }
+    .map-pin.locked:before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 7px;
+      height: 7px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: rgba(99, 112, 132, 0.42);
+      z-index: -1;
+    }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px 14px;
+      border-top: 1px solid var(--line-soft);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 26px;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(2, 6, 23, 0.24);
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--locked);
+    }
+    .dot.available { background: var(--gold); box-shadow: 0 0 12px rgba(215, 170, 85, 0.52); }
+    .feedback {
+      min-height: 42px;
+      padding: 10px 12px;
+      border: 1px solid rgba(215, 170, 85, 0.28);
+      border-radius: 8px;
+      background: rgba(74, 55, 22, 0.13);
+      color: #fde68a;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .feedback.locked-note {
+      border-color: rgba(99, 112, 132, 0.42);
+      background: rgba(15, 23, 42, 0.46);
+      color: #a8b3c4;
+    }
+    .micro-spec {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .spec-card {
+      border: 1px solid var(--line-soft);
+      border-radius: 8px;
+      background: rgba(2, 6, 23, 0.24);
+      padding: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .spec-card b {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--soft);
+      font-size: 13px;
+    }
+    @media (max-width: 920px) {
+      .lab-grid { grid-template-columns: 1fr; }
+      .selector-row { grid-template-columns: 1fr; }
+      .micro-spec { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="intro">
+      <h1>全球地区可用状态组件实验</h1>
+      <p>局部实验页，只比较按钮和地图点。目标是让“已解锁可进入”有明确行动邀请，让“未解锁不可进入”像锁定态，而不是弱版按钮。</p>
+    </section>
+
+    <section class="lab-grid">
+      <section class="panel">
+        <div class="panel-head">
+          <h2>地区选择按钮组</h2>
+          <span>点击可用项切换选中，锁定项不进入</span>
+        </div>
+        <div class="component-pad">
+          <div class="selector-row" aria-label="地区选择按钮组件">
+            <button type="button" class="region-choice available is-selected" data-region="北美禁区带" data-open="true">
+              <strong>北美禁区带</strong>
+              <small>可进入 · 6 项情报</small>
+              <span class="icon" aria-hidden="true">›</span>
+            </button>
+            <button type="button" class="region-choice locked" data-region="东亚神秘地带" aria-disabled="true" data-open="false">
+              <strong>东亚神秘地带</strong>
+              <small>未解锁 · 缺口 18%</small>
+              <span class="icon" aria-hidden="true">锁</span>
+            </button>
+            <button type="button" class="region-choice locked" data-region="太平洋岛屿群" aria-disabled="true" data-open="false">
+              <strong>太平洋岛屿群</strong>
+              <small>未解锁 · 缺口 20%</small>
+              <span class="icon" aria-hidden="true">锁</span>
+            </button>
+          </div>
+
+          <div class="detail-strip" id="componentDetail">
+            <span class="eyebrow">当前可进入地区</span>
+            <strong>北美禁区带</strong>
+            <p>初始解锁。都市传说、禁区档案与异常目击在此交汇。</p>
+            <div class="detail-meta">
+              <span><b>5</b>可见目标</span>
+              <span><b class="warn">1</b>限时机会</span>
+              <span><b class="ok">1</b>线索</span>
+              <span><b>3</b>深度链</span>
+            </div>
+          </div>
+
+          <div class="feedback" id="feedback">已选中：北美禁区带。可用项应看起来像下一步，锁定项应看起来像阻断。</div>
+
+          <div class="micro-spec">
+            <div class="spec-card">
+              <b>可用项</b>
+              主色更饱和，保留箭头、hover 抬升、选中三角、发光和可聚焦边框。
+            </div>
+            <div class="spec-card">
+              <b>锁定项</b>
+              去掉进入箭头，使用锁图标、虚线边框、低透明度、低饱和度和明确缺口文案。
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>地图点组件</h2>
+          <span>同一语法映射到地图标签</span>
+        </div>
+        <div class="map-stage" aria-label="地图点组件">
+          <svg class="route-layer" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M18 40 C 31 23, 55 30, 70 45"></path>
+            <path d="M18 40 C 33 58, 47 63, 58 56"></path>
+            <path d="M58 56 C 66 49, 72 48, 82 43"></path>
+          </svg>
+          <button type="button" class="map-pin available" style="--x:22%;--y:42%;" data-region="北美禁区带" data-open="true">
+            <span>北美禁区带</span>
+            <span class="badge">6</span>
+          </button>
+          <button type="button" class="map-pin locked" style="--x:68%;--y:48%;" data-region="东亚神秘地带" data-open="false" aria-disabled="true">
+            <span>东亚神秘地带</span>
+            <span class="badge">82%</span>
+          </button>
+          <button type="button" class="map-pin locked" style="--x:52%;--y:66%;" data-region="太平洋岛屿群" data-open="false" aria-disabled="true">
+            <span>太平洋岛屿群</span>
+            <span class="badge">80%</span>
+          </button>
+        </div>
+        <div class="legend">
+          <span class="legend-item"><span class="dot available"></span>已解锁：实体标签 + 可点击光晕</span>
+          <span class="legend-item"><span class="dot"></span>未解锁：幽影标签 + 进度徽标</span>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const feedback = document.getElementById("feedback");
+    const detail = document.getElementById("componentDetail");
+    const choices = Array.from(document.querySelectorAll(".region-choice"));
+    const availableChoices = choices.filter((item) => item.dataset.open === "true");
+    const allInteractive = Array.from(document.querySelectorAll("[data-region]"));
+
+    function setSelected(region) {
+      availableChoices.forEach((item) => {
+        item.classList.toggle("is-selected", item.dataset.region === region);
+      });
+      detail.querySelector("strong").textContent = region;
+      feedback.classList.remove("locked-note");
+      feedback.textContent = `已选中：${region}。可进入地区会切换选中态，并准备承接进入动作。`;
+    }
+
+    allInteractive.forEach((item) => {
+      item.addEventListener("click", () => {
+        const open = item.dataset.open === "true";
+        const region = item.dataset.region;
+        if (open) {
+          setSelected(region);
+          return;
+        }
+        feedback.classList.add("locked-note");
+        feedback.textContent = `${region}尚未解锁：这里只能表达进度与阻断原因，不给进入箭头和主按钮手感。`;
+      });
+    });
+  </script>
+</body>
+</html>

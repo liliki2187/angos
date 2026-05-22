@@ -1,0 +1,9 @@
+{
+  "renderer": "canvas-model-topdown",
+  "layout": "judge-modal-preserved",
+  "diceCount": 4,
+  "directFileSafe": true,
+  "mode": "normal",
+  "canvasWidth": 858,
+  "canvasHeight": 310
+}

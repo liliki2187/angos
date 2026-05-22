@@ -1,0 +1,32 @@
+{
+  "title": "角色骰 3D 建模动效实验台",
+  "renderer": "three-webgl",
+  "modeCount": 6,
+  "modelDiceCount": 4,
+  "totalModeDice": 21,
+  "canvasWidth": 1240,
+  "canvasHeight": 610,
+  "shadowEnabled": true,
+  "modeButtons": 6,
+  "hasLoopButton": true,
+  "linkToFullChain": "../../html/full-chain-demo/world-mysteries-full-chain.html",
+  "sections": [
+    "基础摇骰",
+    "逐颗落位",
+    "锁定 / 重投",
+    "计入飞入",
+    "黑骰介入",
+    "结果收束"
+  ],
+  "hasPrototypeNotice": true,
+  "pixelAudit": {
+    "desktop": {
+      "samplePixels": 328104,
+      "nonDarkPixels": 192425
+    },
+    "mobile": {
+      "samplePixels": 334390,
+      "nonDarkPixels": 34388
+    }
+  }
+}

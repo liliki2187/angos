@@ -1,0 +1,1037 @@
+<!--
+PROTOTYPE - NOT FOR PRODUCTION
+Question: 330 公交黑骰只用锁定、批量重投、提示三件事，能否形成“我能赢但不确定是否干净”的策略博弈？
+Date: 2026-05-19
+-->
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>330 公交黑骰策略实验台</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #070b12;
+      --panel: #101722;
+      --panel-2: #0b111b;
+      --panel-3: #141d2a;
+      --line: rgba(148, 163, 184, 0.26);
+      --line-strong: rgba(212, 168, 83, 0.5);
+      --gold: #d4a853;
+      --gold-soft: #f7df9c;
+      --text: #e5edf6;
+      --muted: #94a3b8;
+      --blue: #60a5fa;
+      --green: #34d399;
+      --red: #f87171;
+      --red-bg: #431820;
+      --shadow: rgba(0, 0, 0, 0.42);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        linear-gradient(rgba(7, 11, 18, 0.9), rgba(7, 11, 18, 0.96)),
+        radial-gradient(circle at 14% 16%, rgba(96, 165, 250, 0.12), transparent 30%),
+        radial-gradient(circle at 84% 18%, rgba(248, 113, 113, 0.12), transparent 26%),
+        #05070d;
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    button, a { font: inherit; }
+    button,
+    .link-button {
+      border: 1px solid rgba(148, 163, 184, 0.36);
+      border-radius: 8px;
+      background: #172033;
+      color: #dbeafe;
+      min-height: 38px;
+      padding: 8px 12px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 700;
+    }
+    button:hover,
+    .link-button:hover {
+      border-color: rgba(212, 168, 83, 0.76);
+      color: #fff7d6;
+    }
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.48;
+      border-color: rgba(148, 163, 184, 0.18);
+      color: #7c889a;
+    }
+    button.primary {
+      min-height: 46px;
+      border-color: rgba(212, 168, 83, 0.72);
+      background: linear-gradient(180deg, rgba(111, 78, 17, 0.98), rgba(58, 42, 15, 0.98));
+      color: #fff4cf;
+      font-weight: 900;
+    }
+    button.danger {
+      border-color: rgba(248, 113, 113, 0.48);
+      background: rgba(69, 24, 32, 0.72);
+      color: #fecaca;
+    }
+
+    .app {
+      width: min(1280px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 18px 0 26px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      border-bottom: 1px solid rgba(212, 168, 83, 0.28);
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+    }
+    h1 {
+      margin: 0;
+      color: var(--gold-soft);
+      font-size: 25px;
+      line-height: 1.2;
+    }
+    .sub {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .top-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .lab-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(15, 23, 35, 0.74);
+      box-shadow: 0 16px 36px var(--shadow);
+      overflow: hidden;
+    }
+    .panel + .panel { margin-top: 12px; }
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 13px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+      background: rgba(11, 17, 27, 0.84);
+    }
+    .panel-title {
+      margin: 0;
+      color: var(--gold);
+      font-size: 16px;
+      line-height: 1.25;
+    }
+    .panel-note {
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .panel-body { padding: 12px; }
+
+    .mission-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 9px;
+      margin-bottom: 12px;
+    }
+    .requirement-row {
+      min-height: 44px;
+      margin: -2px 0 12px;
+      padding: 8px 10px;
+      border: 1px solid rgba(212, 168, 83, 0.28);
+      border-radius: 8px;
+      background: rgba(74, 55, 22, 0.12);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .requirement-label {
+      color: var(--gold-soft);
+      font-weight: 900;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .requirement-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-width: 0;
+    }
+    .requirement-chip {
+      min-height: 26px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(212, 168, 83, 0.42);
+      background: rgba(2, 6, 23, 0.32);
+      color: #fff7d6;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .requirement-chip small {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .requirement-hint {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .metric {
+      min-height: 70px;
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: 8px;
+      background: rgba(2, 6, 23, 0.36);
+      padding: 9px;
+      display: grid;
+      gap: 5px;
+      align-content: center;
+    }
+    .metric span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .metric strong {
+      color: #f8fafc;
+      font-size: 20px;
+      line-height: 1;
+    }
+    .metric.warn { border-color: rgba(248, 113, 113, 0.46); background: rgba(69, 24, 32, 0.28); }
+    .metric.good { border-color: rgba(52, 211, 153, 0.4); background: rgba(20, 83, 45, 0.18); }
+
+    .dice-board {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .role-card {
+      min-height: 236px;
+      position: relative;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(17, 24, 39, 0.92), rgba(2, 6, 23, 0.62));
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+      align-content: start;
+      overflow: hidden;
+    }
+    .role-card.locked {
+      border-color: rgba(96, 165, 250, 0.7);
+      box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.18), 0 0 18px rgba(96, 165, 250, 0.1);
+    }
+    .role-card.polluted {
+      border-color: rgba(248, 113, 113, 0.76);
+      background: linear-gradient(180deg, rgba(69, 24, 32, 0.68), rgba(2, 6, 23, 0.64));
+    }
+    .role-name {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: start;
+      min-height: 38px;
+    }
+    .role-name b {
+      color: #f8fafc;
+      font-size: 14px;
+      line-height: 1.2;
+    }
+    .role-name small {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.3;
+    }
+    .seat {
+      border: 1px solid rgba(212, 168, 83, 0.38);
+      border-radius: 999px;
+      color: #f8d98a;
+      padding: 3px 6px;
+      font-size: 11px;
+      line-height: 1;
+      white-space: nowrap;
+      background: rgba(74, 55, 22, 0.18);
+    }
+
+    .die-wrap {
+      display: grid;
+      place-items: center;
+      padding: 6px 0 3px;
+      min-height: 80px;
+    }
+    .die {
+      width: 68px;
+      height: 68px;
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.58);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background:
+        radial-gradient(circle at 30% 21%, rgba(255, 255, 255, 0.14), transparent 28%),
+        linear-gradient(145deg, #111827, #020617);
+      color: #dbeafe;
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+        0 12px 22px rgba(0, 0, 0, 0.34);
+      transform-origin: 50% 60%;
+    }
+    .die b {
+      display: block;
+      max-width: 60px;
+      padding: 0 5px;
+      overflow-wrap: anywhere;
+      font-size: 14px;
+      line-height: 1.08;
+    }
+    .die.field { border-color: rgba(251, 146, 60, 0.74); color: #fed7aa; }
+    .die.cog { border-color: rgba(96, 165, 250, 0.78); color: #bfdbfe; }
+    .die.weird { border-color: rgba(196, 181, 253, 0.74); color: #ddd6fe; }
+    .die.social { border-color: rgba(52, 211, 153, 0.72); color: #bbf7d0; }
+    .die.content { border-color: rgba(250, 204, 21, 0.72); color: #fde68a; }
+    .die.blank { border-style: dashed; color: #64748b; }
+    .role-card.polluted .die {
+      border-color: rgba(248, 113, 113, 0.8);
+      color: #fecaca;
+      background:
+        radial-gradient(circle at 30% 21%, rgba(255, 255, 255, 0.12), transparent 28%),
+        linear-gradient(145deg, #431820, #08070a);
+    }
+
+    .face-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      min-height: 28px;
+      color: #cbd5e1;
+      font-size: 12px;
+      border-top: 1px solid rgba(148, 163, 184, 0.14);
+      padding-top: 8px;
+    }
+    .face-line strong {
+      color: #f8fafc;
+      font-size: 18px;
+    }
+    .face-line.effective span { color: #bbf7d0; }
+    .face-line.effective strong { color: #d1fae5; }
+    .face-line.off-task span { color: #94a3b8; }
+    .face-line.off-task strong { color: #94a3b8; }
+    .lock-button {
+      width: 100%;
+      margin-top: 2px;
+      min-height: 34px;
+      padding: 6px 8px;
+    }
+    .role-card.locked .lock-button {
+      border-color: rgba(96, 165, 250, 0.72);
+      color: #bfdbfe;
+      background: rgba(30, 64, 175, 0.24);
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+      gap: 9px;
+      align-items: center;
+      margin-top: 12px;
+    }
+    .hint-box {
+      min-height: 70px;
+      border: 1px solid rgba(212, 168, 83, 0.36);
+      border-radius: 10px;
+      background: rgba(74, 55, 22, 0.14);
+      padding: 10px 12px;
+      display: grid;
+      align-content: center;
+      gap: 4px;
+    }
+    .hint-box.danger {
+      border-color: rgba(248, 113, 113, 0.62);
+      background: rgba(69, 24, 32, 0.38);
+    }
+    .hint-box.safe {
+      border-color: rgba(52, 211, 153, 0.45);
+      background: rgba(20, 83, 45, 0.18);
+    }
+    .hint-box b {
+      color: #f8fafc;
+      font-size: 14px;
+    }
+    .hint-box span {
+      color: #cbd5e1;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .side-stack { display: grid; gap: 12px; }
+    .scenario-list { display: grid; gap: 8px; }
+    .scenario-button {
+      width: 100%;
+      justify-content: flex-start;
+      text-align: left;
+      min-height: 46px;
+      background: rgba(11, 17, 27, 0.78);
+    }
+    .scenario-button.active {
+      border-color: rgba(212, 168, 83, 0.72);
+      color: #fff4cf;
+      background: rgba(74, 55, 22, 0.24);
+    }
+    .side-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .side-metric {
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 8px;
+      background: rgba(2, 6, 23, 0.3);
+      padding: 8px;
+      display: grid;
+      gap: 4px;
+    }
+    .side-metric span { color: var(--muted); font-size: 11px; }
+    .side-metric strong { color: #f8fafc; font-size: 17px; }
+    .rule-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .rule-list li {
+      border-left: 2px solid rgba(212, 168, 83, 0.52);
+      padding-left: 8px;
+      color: #cbd5e1;
+      font-size: 12px;
+      line-height: 1.48;
+    }
+    .result-card {
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 10px;
+      background: rgba(2, 6, 23, 0.36);
+      padding: 10px;
+      display: grid;
+      gap: 7px;
+      min-height: 122px;
+    }
+    .result-card.clean { border-color: rgba(52, 211, 153, 0.5); background: rgba(20, 83, 45, 0.18); }
+    .result-card.dirty { border-color: rgba(248, 113, 113, 0.58); background: rgba(69, 24, 32, 0.35); }
+    .result-card b { color: #f8fafc; font-size: 15px; }
+    .result-card span { color: #cbd5e1; font-size: 12px; line-height: 1.5; }
+    .pollution {
+      border: 1px solid rgba(248, 113, 113, 0.42);
+      border-radius: 8px;
+      background: rgba(69, 24, 32, 0.24);
+      padding: 7px;
+      color: #fecaca;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .roll-motion { animation: diceTumble 0.26s linear infinite, diceBlur 0.42s ease-in-out infinite; }
+    .land-motion { animation: diceLand 0.34s cubic-bezier(0.2, 1.28, 0.2, 1); }
+    .lock-motion { animation: lockClick 0.22s ease-out; }
+    .hint-motion { animation: hintPulse 0.42s ease-out; }
+    .dirty-motion { animation: corruptFlicker 0.72s steps(2, end); }
+
+    @keyframes diceTumble {
+      0% { transform: translateY(0) rotate(0deg) scale(1); }
+      24% { transform: translateY(-5px) rotate(9deg) scale(1.08); }
+      50% { transform: translateY(2px) rotate(-8deg) scale(0.98); }
+      78% { transform: translateY(-2px) rotate(5deg) scale(1.05); }
+      100% { transform: translateY(0) rotate(0deg) scale(1); }
+    }
+    @keyframes diceBlur {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.28) blur(0.2px); }
+    }
+    @keyframes diceLand {
+      0% { transform: translateY(-12px) rotate(15deg) scale(1.14); filter: brightness(1.35); }
+      58% { transform: translateY(2px) rotate(-4deg) scale(0.96); }
+      100% { transform: translateY(0) rotate(0deg) scale(1); filter: brightness(1); }
+    }
+    @keyframes lockClick {
+      0% { transform: scale(1); }
+      45% { transform: scale(0.94); }
+      100% { transform: scale(1); }
+    }
+    @keyframes hintPulse {
+      0% { transform: translateY(-4px); filter: brightness(1.36); }
+      100% { transform: translateY(0); filter: brightness(1); }
+    }
+    @keyframes corruptFlicker {
+      0% { transform: translateX(0); filter: hue-rotate(0deg); }
+      18% { transform: translateX(-2px); filter: hue-rotate(-18deg); }
+      34% { transform: translateX(2px); filter: hue-rotate(14deg); }
+      52% { transform: translateX(-1px); filter: brightness(1.3); }
+      100% { transform: translateX(0); filter: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+    }
+
+    @media (max-width: 1040px) {
+      .lab-layout { grid-template-columns: 1fr; }
+      .side-stack { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+    }
+    @media (max-width: 820px) {
+      .dice-board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .mission-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .controls { grid-template-columns: 1fr; }
+      .side-stack { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .app { width: min(100vw - 20px, 1280px); padding-top: 10px; }
+      .topbar { grid-template-columns: 1fr; }
+      .top-actions { justify-content: stretch; }
+      .top-actions a, .top-actions button { flex: 1 1 130px; }
+      h1 { font-size: 21px; }
+      .panel-head { align-items: flex-start; flex-direction: column; gap: 4px; }
+      .panel-note { white-space: normal; }
+      .requirement-row { align-items: flex-start; flex-direction: column; }
+      .requirement-hint { margin-left: 0; }
+      .dice-board { grid-template-columns: 1fr; }
+      .mission-strip { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <h1>330 公交黑骰策略实验台</h1>
+        <div class="sub">独立玩法实验页：只验证 5 人满编下的锁定、批量重投、重投组提示与干净/脏结果，尚未套用到完整全链试玩。</div>
+      </div>
+      <div class="top-actions">
+        <button type="button" class="primary" id="newRoundBtn">重开当前局</button>
+        <a class="link-button" href="../full-chain-demo/world-mysteries-full-chain.html?v=20260513-dice-roll-v7">返回全链</a>
+      </div>
+    </header>
+
+    <div class="lab-layout">
+      <div>
+        <section class="panel">
+          <div class="panel-head">
+            <h2 class="panel-title">末班判定</h2>
+            <span class="panel-note">需求 5 点 · 5 个角色骰 · 无限重投</span>
+          </div>
+          <div class="panel-body">
+            <div class="mission-strip">
+              <div class="metric" id="scoreMetric">
+                <span>已选有效点</span>
+                <strong id="scoreText">0/7</strong>
+              </div>
+              <div class="metric" id="rerollMetric">
+                <span>已重投</span>
+                <strong id="rerollText">0</strong>
+              </div>
+              <div class="metric">
+                <span>锁定骰</span>
+                <strong id="lockedText">0/5</strong>
+              </div>
+              <div class="metric" id="statusMetric">
+                <span>当前状态</span>
+                <strong id="statusText">未达标</strong>
+              </div>
+            </div>
+            <div class="requirement-row" aria-label="本关需求">
+              <span class="requirement-label">本关需求</span>
+              <div class="requirement-chips" id="requirementChips"></div>
+              <span class="requirement-hint">只有命中需求属性的骰面计入有效点</span>
+            </div>
+
+            <div class="dice-board" id="diceBoard" aria-label="330 公交五名角色骰"></div>
+
+            <div class="controls">
+              <button type="button" class="primary" id="rerollBtn">重投所有未锁定骰</button>
+              <button type="button" class="danger" id="submitBtn">提交当前结果</button>
+              <div class="hint-box" id="hintBox">
+                <b>尚未重投</b>
+                <span>提示只会覆盖刚刚被重投的未锁定骰组；锁定骰不会被提示检查。</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <aside class="side-stack">
+        <section class="panel">
+          <div class="panel-head">
+            <h2 class="panel-title">预设局面</h2>
+            <span class="panel-note">用于看不同策略</span>
+          </div>
+          <div class="panel-body">
+            <div class="scenario-list" id="scenarioList"></div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2 class="panel-title">局面压力</h2>
+            <span class="panel-note">只给重投提示</span>
+          </div>
+          <div class="panel-body">
+            <div class="side-metrics">
+              <div class="side-metric">
+                <span>锁定有效点</span>
+                <strong id="lockedScoreText">0</strong>
+              </div>
+              <div class="side-metric">
+                <span>候选有效点</span>
+                <strong id="freeScoreText">0</strong>
+              </div>
+              <div class="side-metric">
+                <span>候选骰</span>
+                <strong id="freeCountText">5</strong>
+              </div>
+              <div class="side-metric">
+                <span>达标余量</span>
+                <strong id="marginText">-7</strong>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2 class="panel-title">规则口径</h2>
+            <span class="panel-note">三机制版</span>
+          </div>
+          <div class="panel-body">
+            <ul class="rule-list">
+              <li>只有命中本关需求属性的骰面计入有效点。</li>
+              <li>只有锁定骰会进入提交结算，未锁定骰只是候选。</li>
+              <li>锁定保住点数，但锁定骰不被下一次提示覆盖。</li>
+              <li>重投会刷新所有未锁定骰，不存在逐颗重投按钮。</li>
+              <li>提示只说刚刚重投的骰组有无鬼迹，不点名单颗骰。</li>
+              <li>提交后才结算干净成功、脏成功、安全失败或脏失败。</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2 class="panel-title">提交结果</h2>
+            <span class="panel-note">脏结果会污染角色</span>
+          </div>
+          <div class="panel-body">
+            <div class="result-card" id="resultCard">
+              <b>尚未提交</b>
+              <span>先锁定你愿意相信并计入的骰子，再提交当前结果。</span>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    // PROTOTYPE - NOT FOR PRODUCTION
+    // Question: 330 公交黑骰只用锁定、批量重投、提示三件事，能否形成“我能赢但不确定是否干净”的策略博弈？
+    // Date: 2026-05-19
+    const requirements = [
+      { attr: "生存", points: 2 },
+      { attr: "洞察", points: 1 },
+      { attr: "胆识", points: 1 },
+      { attr: "诡思", points: 1 }
+    ];
+    const targetScore = requirements.reduce((sum, item) => sum + item.points, 0);
+    const requiredAttrs = new Set(requirements.map((item) => item.attr));
+    const roles = [
+      {
+        name: "老吴",
+        title: "夜线司机",
+        seat: "前门",
+        tone: "field",
+        faces: [
+          { label: "生存2", value: 2 },
+          { label: "胆识2", value: 2 },
+          { label: "探索1", value: 1 },
+          { label: "人脉1", value: 1 },
+          { label: "空", value: 0 },
+          { label: "生存1", value: 1 }
+        ]
+      },
+      {
+        name: "林潮",
+        title: "随车摄影",
+        seat: "车窗",
+        tone: "cog",
+        faces: [
+          { label: "洞察2", value: 2 },
+          { label: "探索1", value: 1 },
+          { label: "胆识1", value: 1 },
+          { label: "造势1", value: 1 },
+          { label: "空", value: 0 },
+          { label: "洞察1", value: 1 }
+        ]
+      },
+      {
+        name: "许棠",
+        title: "民俗顾问",
+        seat: "中排",
+        tone: "weird",
+        faces: [
+          { label: "诡思2", value: 2 },
+          { label: "洞察1", value: 1 },
+          { label: "胆识1", value: 1 },
+          { label: "生存1", value: 1 },
+          { label: "空", value: 0 },
+          { label: "诡思1", value: 1 }
+        ]
+      },
+      {
+        name: "孟岚",
+        title: "采访编辑",
+        seat: "后门",
+        tone: "social",
+        faces: [
+          { label: "人脉2", value: 2 },
+          { label: "洞察1", value: 1 },
+          { label: "笔力1", value: 1 },
+          { label: "造势2", value: 2 },
+          { label: "空", value: 0 },
+          { label: "人脉1", value: 1 }
+        ]
+      },
+      {
+        name: "纪衡",
+        title: "资料主笔",
+        seat: "末排",
+        tone: "content",
+        faces: [
+          { label: "笔力2", value: 2 },
+          { label: "理性2", value: 2 },
+          { label: "洞察1", value: 1 },
+          { label: "诡思1", value: 1 },
+          { label: "空", value: 0 },
+          { label: "笔力1", value: 1 }
+        ]
+      }
+    ];
+
+    const scenarios = [
+      {
+        id: "balanced",
+        name: "刚好达标",
+        note: "分数够，但低点里可能有问题",
+        faces: [0, 1, 1, 1, 2],
+        ghostRole: 2
+      },
+      {
+        id: "buffer",
+        name: "多 1 点余量",
+        note: "可以拿一点余量去买提示",
+        faces: [0, 0, 2, 4, 2],
+        ghostRole: 3
+      },
+      {
+        id: "tempt",
+        name: "高分可疑",
+        note: "看着高，真正有效刚好够",
+        faces: [0, 0, 1, 3, 1],
+        ghostRole: 2
+      }
+    ];
+
+    const state = {
+      scenarioId: "balanced",
+      currentFaces: [],
+      locked: [],
+      polluted: [],
+      rerollCount: 0,
+      submitted: false,
+      lastHint: null
+    };
+
+    function qs(selector, root = document) { return root.querySelector(selector); }
+    function qsa(selector, root = document) { return Array.from(root.querySelectorAll(selector)); }
+    function wait(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
+
+    function restartAnimation(el, cls) {
+      el.classList.remove(cls);
+      void el.offsetWidth;
+      el.classList.add(cls);
+    }
+
+    function faceFor(index) {
+      return roles[index].faces[state.currentFaces[index]];
+    }
+
+    function faceAttr(face) {
+      const match = face.label.match(/^(.+?)(\d+)$/);
+      return match ? match[1] : null;
+    }
+
+    function faceContribution(index) {
+      const face = faceFor(index);
+      return requiredAttrs.has(faceAttr(face)) ? face.value : 0;
+    }
+
+    function currentScenario() {
+      return scenarios.find((item) => item.id === state.scenarioId) || scenarios[0];
+    }
+
+    function isGhostCarrier(index) {
+      return currentScenario().ghostRole === index;
+    }
+
+    function isGhostUsed(index) {
+      return state.locked[index] && isGhostCarrier(index) && faceContribution(index) > 0;
+    }
+
+    function score() {
+      return lockedScore();
+    }
+
+    function lockedScore() {
+      return state.currentFaces.reduce((sum, _, index) => sum + (state.locked[index] ? faceContribution(index) : 0), 0);
+    }
+
+    function unlockedScore() {
+      return state.currentFaces.reduce((sum, _, index) => sum + (!state.locked[index] ? faceContribution(index) : 0), 0);
+    }
+
+    function unlockedIndexes() {
+      return roles.map((_, index) => index).filter((index) => !state.locked[index]);
+    }
+
+    function randomFace(index) {
+      return Math.floor(Math.random() * roles[index].faces.length);
+    }
+
+    function setupScenario(id) {
+      const scenario = scenarios.find((item) => item.id === id) || scenarios[0];
+      state.scenarioId = scenario.id;
+      state.currentFaces = scenario.faces.slice();
+      state.locked = roles.map(() => false);
+      state.polluted = roles.map(() => false);
+      state.rerollCount = 0;
+      state.submitted = false;
+      state.lastHint = null;
+      render();
+    }
+
+    function renderScenarios() {
+      const list = qs("#scenarioList");
+      list.innerHTML = scenarios.map((scenario) => `
+        <button type="button" class="scenario-button ${state.scenarioId === scenario.id ? "active" : ""}" data-scenario="${scenario.id}">
+          <span>
+            <b>${scenario.name}</b><br>
+            <small>${scenario.note}</small>
+          </span>
+        </button>
+      `).join("");
+      qsa("[data-scenario]", list).forEach((button) => {
+        button.addEventListener("click", () => setupScenario(button.dataset.scenario));
+      });
+    }
+
+    function renderRequirements() {
+      qs("#requirementChips").innerHTML = requirements.map((item) => `
+        <span class="requirement-chip">${item.attr}<small>${item.points}</small></span>
+      `).join("");
+    }
+
+    function renderDice() {
+      const board = qs("#diceBoard");
+      board.innerHTML = roles.map((role, index) => {
+        const face = faceFor(index);
+        const contribution = faceContribution(index);
+        const faceIsEffective = contribution > 0;
+        const faceStateLabel = faceIsEffective ? "本关有效" : (face.value > 0 ? "任务外" : "空面");
+        const locked = state.locked[index];
+        const polluted = state.polluted[index];
+        const dieTone = face.value === 0 ? "blank" : role.tone;
+        return `
+          <article class="role-card ${locked ? "locked" : ""} ${polluted ? "polluted" : ""}" data-role="${index}">
+            <div class="role-name">
+              <div>
+                <b>${role.name}</b>
+                <small>${role.title}</small>
+              </div>
+              <span class="seat">${role.seat}</span>
+            </div>
+            <div class="die-wrap">
+              <div class="die ${dieTone}">
+                <b>${face.label}</b>
+              </div>
+            </div>
+            <div class="face-line ${faceIsEffective ? "effective" : "off-task"}">
+              <span>${faceStateLabel}</span>
+              <strong>${contribution > 0 ? `+${contribution}` : "0"}</strong>
+            </div>
+            <button type="button" class="lock-button" data-lock="${index}" ${state.submitted ? "disabled" : ""}>${locked ? "解锁" : "锁定"}</button>
+          </article>
+        `;
+      }).join("");
+      qsa("[data-lock]", board).forEach((button) => {
+        button.addEventListener("click", () => toggleLock(Number(button.dataset.lock)));
+      });
+    }
+
+    function renderMetrics() {
+      const currentScore = score();
+      const free = unlockedIndexes();
+      qs("#scoreText").textContent = `${currentScore}/${targetScore}`;
+      qs("#rerollText").textContent = String(state.rerollCount);
+      qs("#lockedText").textContent = `${state.locked.filter(Boolean).length}/5`;
+      qs("#lockedScoreText").textContent = String(currentScore);
+      qs("#freeScoreText").textContent = String(unlockedScore());
+      qs("#freeCountText").textContent = String(free.length);
+      qs("#marginText").textContent = currentScore >= targetScore ? `+${currentScore - targetScore}` : String(currentScore - targetScore);
+      qs("#statusText").textContent = currentScore >= targetScore ? "已达标" : "未达标";
+      qs("#scoreMetric").classList.toggle("good", currentScore >= targetScore);
+      qs("#statusMetric").classList.toggle("good", currentScore >= targetScore);
+      qs("#statusMetric").classList.toggle("warn", currentScore < targetScore);
+      qs("#rerollMetric").classList.toggle("warn", false);
+      qs("#rerollBtn").disabled = state.submitted || free.length === 0;
+      qs("#submitBtn").disabled = state.submitted;
+    }
+
+    function renderHint() {
+      const box = qs("#hintBox");
+      box.classList.remove("safe", "danger");
+      if (!state.lastHint) {
+        box.innerHTML = "<b>尚未重投</b><span>提示只会覆盖刚刚被重投的未锁定骰组；锁定骰不会被提示检查。</span>";
+        return;
+      }
+      if (state.lastHint.hasGhost) {
+        box.classList.add("danger");
+        box.innerHTML = `<b>刚刚重投的 ${state.lastHint.count} 颗骰里，有东西跟了上来。</b><span>提示不点名单颗骰。要缩小范围，只能继续决定锁哪些、重投哪些。</span>`;
+      } else {
+        box.classList.add("safe");
+        box.innerHTML = `<b>刚刚重投的 ${state.lastHint.count} 颗骰里，没有多出来的呼吸。</b><span>这不是全场安全判断；锁定骰没有被这次提示覆盖。</span>`;
+      }
+      restartAnimation(box, "hint-motion");
+    }
+
+    function renderResult() {
+      const card = qs("#resultCard");
+      if (!state.submitted) {
+        card.className = "result-card";
+        card.innerHTML = "<b>尚未提交</b><span>先锁定你愿意相信并计入的骰子，再提交当前结果。</span>";
+        return;
+      }
+      const currentScore = score();
+      const dirtyIndex = roles.findIndex((_, index) => isGhostUsed(index));
+      const hasGhost = dirtyIndex >= 0;
+      const passed = currentScore >= targetScore;
+      const dirtyRole = hasGhost ? roles[dirtyIndex] : null;
+      if (passed && !hasGhost) {
+        card.className = "result-card clean";
+        card.innerHTML = "<b>干净成功</b><span>已锁定有效点达标，且没有把鬼带入本次结果。这个结果可以进入正常成功或优秀结果口径。</span>";
+      } else if (passed && hasGhost) {
+        card.className = "result-card dirty";
+        card.innerHTML = `<b>脏成功</b><span>已锁定有效点达标，但 ${dirtyRole.name} 把鬼带进了结果。优秀结果取消。</span><div class="pollution">${dirtyRole.name} 获得临时污染：下一次派遣有效点 -1。</div>`;
+      } else if (!passed && !hasGhost) {
+        card.className = "result-card";
+        card.innerHTML = "<b>安全失败</b><span>没有达标，但也没有把鬼带回来。可以视为无污染撤出，后续是否保留少量线索仍待设计确认。</span>";
+      } else {
+        card.className = "result-card dirty";
+        card.innerHTML = `<b>脏失败</b><span>未达标，且 ${dirtyRole.name} 把鬼带进了结果。</span><div class="pollution">${dirtyRole.name} 获得临时污染：下一次派遣有效点 -1。</div>`;
+      }
+    }
+
+    function render() {
+      renderScenarios();
+      renderRequirements();
+      renderDice();
+      renderMetrics();
+      renderHint();
+      renderResult();
+    }
+
+    function toggleLock(index) {
+      if (state.submitted) return;
+      state.locked[index] = !state.locked[index];
+      render();
+      const card = qs(`[data-role="${index}"]`);
+      if (card) restartAnimation(card, "lock-motion");
+    }
+
+    async function rerollUnlocked() {
+      if (state.submitted) return;
+      const group = unlockedIndexes();
+      if (!group.length) return;
+      state.rerollCount += 1;
+      state.lastHint = null;
+      render();
+
+      group.forEach((index) => {
+        const die = qs(`[data-role="${index}"] .die`);
+        if (die) restartAnimation(die, "roll-motion");
+      });
+      await wait(520);
+      group.forEach((index) => {
+        state.currentFaces[index] = randomFace(index);
+      });
+      state.lastHint = {
+        count: group.length,
+        hasGhost: group.some((index) => isGhostCarrier(index))
+      };
+      render();
+      group.forEach((index) => {
+        const die = qs(`[data-role="${index}"] .die`);
+        if (die) restartAnimation(die, "land-motion");
+      });
+    }
+
+    function submitResult() {
+      if (state.submitted) return;
+      state.submitted = true;
+      const dirtyIndex = roles.findIndex((_, index) => isGhostUsed(index));
+      if (dirtyIndex >= 0) {
+        state.polluted[dirtyIndex] = true;
+      }
+      render();
+      if (dirtyIndex >= 0) {
+        const card = qs(`[data-role="${dirtyIndex}"]`);
+        if (card) restartAnimation(card, "dirty-motion");
+      }
+    }
+
+    qs("#newRoundBtn").addEventListener("click", () => setupScenario(state.scenarioId));
+    qs("#rerollBtn").addEventListener("click", rerollUnlocked);
+    qs("#submitBtn").addEventListener("click", submitResult);
+    setupScenario("balanced");
+  </script>
+</body>
+</html>

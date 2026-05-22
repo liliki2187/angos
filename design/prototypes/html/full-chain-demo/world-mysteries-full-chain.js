@@ -700,6 +700,7 @@
   const TOOL_NAME_POOL = ["DNA测序工具组", "光谱分析仪", "口述档案检索器", "夜视相机组"];
   const ROLL_FACES = ["✓", "×", "?", "", "", ""];
   const STAFF_BY_ID = new Map([...STAFF, ...TEMP_STAFF_POOL].map((s) => [s.id, s]));
+  const STAFF_BASE_ORDER = new Map([...STAFF, ...TEMP_STAFF_POOL].map((s, index) => [s.id, index]));
 
   const el = {
     synInventory: null,
@@ -1145,6 +1146,12 @@
   function formatChance(chance) {
     if (!Number.isFinite(chance)) return "未知";
     return `${Math.round(Math.max(0, Math.min(1, chance)) * 100)}%`;
+  }
+
+  function formatDisplayedChanceLift(chance, baseline) {
+    if (!Number.isFinite(chance) || !Number.isFinite(baseline)) return "";
+    const delta = Math.round(chance * 100) - Math.round(baseline * 100);
+    return delta > 0 ? `+${delta}%` : "";
   }
 
   function autoSelectRollsForNeed(rolls, need) {
@@ -2556,6 +2563,13 @@
     return `${best}%`;
   }
 
+  function globalProgressGapText(region) {
+    const progress = globalProgressText(region);
+    const value = Number.parseInt(progress, 10);
+    if (!Number.isFinite(value)) return "解锁进度未知";
+    return `缺口 ${Math.max(0, 100 - value)}%`;
+  }
+
   function globalRegionStats(data) {
     const nodes = data.visibleNodes || [];
     const leads = data.leads || [];
@@ -2584,14 +2598,46 @@
       .join(" / ");
   }
 
-  function globalIntelRowHtml({ tone = "", mark = "目", title, chips = [], read = "概览" }) {
+  function globalNeedChips(need) {
+    return Object.entries(need || {}).map(([key, value]) => globalIntelChip(`条件：${key}${value | 0}`, "condition"));
+  }
+
+  function globalRegionDecisionLabel(data) {
+    if (!data || !data.r.unlocked) return "进度缺口";
+    if (data.r.id === "us") return "难度：中等 | 推荐 ★★★";
+    const hard = (data.visibleNodes || []).some((node) => node.difficulty === "hard" || node.riskTier === "high" || node.isBlackDiceTask);
+    const timed = (data.visibleNodes || []).some((node) => (node.checkType || "white") === "red" || node.deadlineDay != null || /突发/.test(node.name));
+    if (hard) return "难度：较高 | 推荐 ★★★★";
+    if (timed) return "难度：中等 | 推荐 ★★★";
+    return "难度：入门 | 推荐 ★★";
+  }
+
+  function globalRegionLogItems(data) {
+    if (!data || !data.r.unlocked) return [];
+    const items = [];
+    const redNodes = (data.visibleNodes || [])
+      .filter((node) => regionTaskTone(node) === "red")
+      .map((node) => {
+        const left = deadlineRemainingDays(node);
+        return left != null ? `${node.name} 剩余 ${left} 天。` : `${node.name} 正在倒计时。`;
+      });
+    items.push(...redNodes);
+    const running = state.activeMissions.filter((m) => m.status === "running" && m.regionId === data.r.id);
+    if (running.length) items.push(`${running.length} 项任务正在执行，进入地区页查看队列。`);
+    const deepCount = (data.visibleNodes || []).filter((node) => node.chainType === "deep").length;
+    if (deepCount) items.push(`${deepCount} 条深度调查链有当前可推进环。`);
+    const leadCount = (data.leads || []).length;
+    if (leadCount) items.push(`${leadCount} 条线索可在地区页追查。`);
+    return items.slice(0, 4);
+  }
+
+  function globalIntelRowHtml({ tone = "", mark = "目", title, chips = [] }) {
     return `<div class="global-intel-row ${escapeHtml(tone)}" aria-disabled="true">
       <span class="global-intel-mark">${escapeHtml(mark)}</span>
       <div class="global-intel-copy">
         <strong>${escapeHtml(title)}</strong>
         <div class="global-intel-meta">${chips.join("")}</div>
       </div>
-      <span class="global-intel-read">${escapeHtml(read)}</span>
     </div>`;
   }
 
@@ -2599,33 +2645,31 @@
     const queued = findActiveMissionByNode(regionId, node.id);
     const tone = regionTaskTone(node);
     const deadlineLeft = tone === "red" ? deadlineRemainingDays(node) : null;
-    const needText = globalNeedText(node.need);
     const chips = [
-      globalIntelChip(`耗时 ${node.days || 1}天`, "time"),
-      node.chainType === "deep" ? globalIntelChip(node.chainStage ? `深度链 ${node.chainStage}` : "深度链") : "",
-      tone === "red" && deadlineLeft != null ? globalIntelChip(`剩余 ${deadlineLeft}天`, "time") : "",
-      node.enemyAttr ? globalIntelChip(`对手骰 ${node.enemyAttr}`) : "",
-      needText ? globalIntelChip(needText, "need") : "",
-      previousChainResult(node) ? globalIntelChip("承接上一页") : "",
-      queued ? globalIntelChip("已派遣") : "",
+      globalIntelChip(`成本 ${node.days || 1}天`, "cost"),
+      ...globalNeedChips(node.need),
+      node.enemyAttr ? globalIntelChip(`挑战：对手骰${node.enemyAttr}`, "challenge") : "",
+      tone === "red" && deadlineLeft != null ? globalIntelChip(`成本 剩余${deadlineLeft}天`, "cost") : "",
+      node.chainType === "deep" ? globalIntelChip(node.chainStage ? `信息 深度调查 · 当前任务${node.chainStage}` : "信息 深度调查", "info") : "",
+      tone === "red" ? globalIntelChip("收益 截稿素材", "reward") : node.chainType === "deep" ? globalIntelChip("收益 阶段素材", "reward") : globalIntelChip("收益 常驻线索", "reward"),
+      previousChainResult(node) ? globalIntelChip("信息 承接前序", "info") : "",
+      queued ? globalIntelChip("状态 已派遣", "status") : "",
     ].filter(Boolean);
     return globalIntelRowHtml({
       tone: locked ? "locked" : tone,
-      mark: locked ? "影" : tone === "red" ? "截" : node.chainType === "deep" ? "页" : "目",
+      mark: locked ? "影" : tone === "red" ? "截" : node.chainType === "deep" ? "续" : "目",
       title: locked ? `${node.name}（轮廓）` : node.name,
-      chips,
-      read: locked ? "待解锁" : "概览",
+      chips: locked ? [...chips, globalIntelChip("条件：待解锁", "condition")] : chips,
     });
   }
 
   function globalLeadPreviewHtml(regionId, lead) {
     const queued = findActiveMissionByLead(regionId, lead.id);
-    const needText = globalNeedText(regionLeadNeed(lead));
     const chips = [
-      globalIntelChip(`耗时 ${regionLeadDays(lead)}天`, "time"),
-      globalIntelChip("调查后生成任务"),
-      needText ? globalIntelChip(needText, "need") : "",
-      queued ? globalIntelChip("已派遣") : "",
+      globalIntelChip(`成本 ${regionLeadDays(lead)}天`, "cost"),
+      ...globalNeedChips(regionLeadNeed(lead)),
+      globalIntelChip("信息 调查后生成任务", "info"),
+      queued ? globalIntelChip("状态 已派遣", "status") : "",
     ].filter(Boolean);
     return globalIntelRowHtml({
       tone: "clue",
@@ -2640,15 +2684,20 @@
       ...data.leads.map((lead) => globalLeadPreviewHtml(data.r.id, lead)),
       ...data.visibleNodes.map((node) => globalNodePreviewHtml(data.r.id, node)),
     ];
-    const shown = rows.slice(0, 3).join("");
-    const more = Math.max(0, rows.length - 3);
+    const shown = rows.slice(0, 4).join("");
+    const more = Math.max(0, rows.length - 4);
+    const logItems = globalRegionLogItems(data);
     return `<section class="global-preview-section">
       <div class="global-preview-head">
-        <h4>地区情报概况</h4>
-        <span>进入地区后选择具体任务</span>
+        <h4>区域情报预览</h4>
+        <span>${rows.length} 条 · 进入后选择任务</span>
       </div>
       <div class="global-intel-list">${shown || `<div class="tip-inline">暂无可见情报。</div>`}</div>
       ${more ? `<div class="tip-inline">另有 ${more} 项情报将在地区页展开。</div>` : ""}
+      <details class="global-action-log">
+        <summary><span>本周行动日志</span><span>展开</span></summary>
+        <ul>${(logItems.length ? logItems : ["本区暂无新日志，进入地区后开始派遣。"]).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+      </details>
     </section>`;
   }
 
@@ -2675,7 +2724,7 @@
         <span>达成条件后进入地区</span>
       </div>
       <div class="global-unlock-list">${unlocks}</div>
-      ${previewNodes ? `<div class="global-intel-list">${previewNodes}</div>` : `<div class="tip-inline">暂无可预览目标。</div>`}
+      ${previewNodes ? `<div class="global-preview-head"><h4>锁定情报轮廓</h4><span>只读</span></div><div class="global-intel-list">${previewNodes}</div>` : `<div class="tip-inline">暂无可预览目标。</div>`}
     </section>`;
   }
 
@@ -2698,12 +2747,14 @@
     const body = unlocked ? globalUnlockedPreviewHtml(data) : globalLockedPreviewHtml(data);
     return `<div class="global-detail">
       <div class="global-detail-head">
-        <div>
-          <div class="global-detail-eyebrow">${mode === "preview" ? "悬停预览" : unlocked ? "已选 · 可进入" : "已选 · 未解锁"}</div>
+        <div class="global-detail-eyebrow">${mode === "preview" ? "悬停预览地区" : "当前选中地区"}</div>
+        <div class="global-detail-titleline">
+          <div>
           <h3>${escapeHtml(data.r.name)}</h3>
           <p>${escapeHtml(data.r.hint)}</p>
+          </div>
+          <span class="global-detail-status ${unlocked ? "open" : ""}">${escapeHtml(unlocked ? globalRegionDecisionLabel(data) : "进度缺口")}</span>
         </div>
-        <span class="global-detail-status ${unlocked ? "open" : ""}">${unlocked ? "可进入" : "进度缺口"}</span>
       </div>
       <div class="global-summary-grid">${summary}</div>
       ${body}
@@ -2713,26 +2764,26 @@
   function renderGlobal() {
     unlockRegions();
     const elG = document.getElementById("view-global");
-    const filterHtml = ["sci", "occult", "pop"]
-      .map((k) => `<button type="button" class="tag ${state.filters[k] ? "on" : ""}" data-filter="${k}">${TAG_LABEL[k]}</button>`)
-      .join(" ");
+    const staffCount = dispatchStaffCounts();
     elG.innerHTML = `
-      <div class="view-title-row">
-        <h2>全球地图</h2>
-        ${dispatchCountSpanHtml()}
+      <div class="global-workflow-top">
+        <button type="button" id="backFromGlobal" class="global-back-link">← 回合简报</button>
+        <nav class="global-phase-rail" aria-label="本周流程">
+          <span class="global-phase-step active"><b>1</b>探索</span>
+          <span class="global-phase-divider" aria-hidden="true"></span>
+          <span class="global-phase-step"><b>2</b>线索成稿</span>
+          <span class="global-phase-divider" aria-hidden="true"></span>
+          <span class="global-phase-step"><b>3</b>拖拽组版</span>
+          <span class="global-phase-divider" aria-hidden="true"></span>
+          <span class="global-phase-step"><b>4</b>结算</span>
+        </nav>
+        <div class="global-status-pills" aria-label="探索周状态">
+          <span class="tag on">第 ${state.week} 周</span>
+          <span class="tag">剩余 ${state.day} 日</span>
+          <span class="tag">可派遣 ${staffCount.available}/${staffCount.total}</span>
+        </div>
       </div>
-      <div class="tags" id="filterTags" style="margin-bottom:0.75rem;">${filterHtml}</div>
-      <div class="world-region-host" id="regionGrid"></div>
-      <p style="margin-top:0.75rem;"><button type="button" id="backFromGlobal">返回回合简报</button></p>`;
-    document.querySelectorAll("#filterTags .tag").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const k = btn.getAttribute("data-filter");
-        if (k === "sci") state.filters.sci = !state.filters.sci;
-        if (k === "occult") state.filters.occult = !state.filters.occult;
-        if (k === "pop") state.filters.pop = !state.filters.pop;
-        renderGlobal();
-      });
-    });
+      <div class="world-region-host" id="regionGrid"></div>`;
     const grid = document.getElementById("regionGrid");
     const regionData = REGIONS.map((r) => {
       const visibleNodes = getRegionNodes(r).filter(nodeVisible).filter(filterNodeTags);
@@ -2741,26 +2792,38 @@
       const has = visibleNodes.length > 0;
       return { r, visibleNodes, leads, eventCount, has };
     });
-    if (!REGIONS.some((r) => r.id === state.globalSelectedRegionId)) state.globalSelectedRegionId = "us";
     const dataById = Object.fromEntries(regionData.map((d) => [d.r.id, d]));
+    if (!dataById[state.globalSelectedRegionId] || !dataById[state.globalSelectedRegionId].r.unlocked) {
+      const firstUnlocked = regionData.find((d) => d.r.unlocked) || regionData[0];
+      state.globalSelectedRegionId = firstUnlocked.r.id;
+    }
     const selectedData = dataById[state.globalSelectedRegionId] || regionData[0];
     const pointsHtml = regionData.map(({ r, visibleNodes, eventCount, has }) => {
       const pos = REGION_MAP_POS[r.id] || { x: 50, y: 50, label: r.name };
       const selected = r.id === selectedData.r.id;
       const progress = !r.unlocked ? globalProgressText(r) : "";
       const countText = r.unlocked ? (eventCount > 0 ? (eventCount > 9 ? "9+" : eventCount) : "") : progress;
-      const cls = `map-point ${r.unlocked ? "" : "locked"} ${r.pulse && has ? "pulse" : ""} ${eventCount > 0 ? "has-event" : ""} ${countText ? "has-badge" : ""}`;
+      const cls = `map-point ${r.unlocked ? "available" : "locked"} ${r.pulse && has ? "pulse" : ""} ${eventCount > 0 ? "has-event" : ""} ${countText ? "has-badge" : ""}`;
       const selectedStyle = selected ? "border-color:rgba(212,168,83,0.9);background:rgba(74,55,22,0.95);color:#fff4cf;box-shadow:0 0 0 1px rgba(212,168,83,0.22),0 14px 26px rgba(0,0,0,0.42);" : "";
-      const lockedStyle = r.unlocked ? "" : "cursor:pointer;opacity:0.72;";
-      const hint = `${r.unlocked ? "可进入" : "未解锁"}${r.unlocked && has ? ` · 目标${visibleNodes.length}` : ""}${eventCount > 0 ? ` · 事件${eventCount}` : ""}${progress ? ` · 进度${progress}` : ""}`;
-      const badgeStyle = r.unlocked ? "" : "background:#1f2937;border-color:#64748b;color:#cbd5e1;";
-      const badgeHtml = countText ? `<span class="event-dot" style="${badgeStyle}">${escapeHtml(countText)}</span>` : "";
-      return `<button type="button" class="${cls}" data-region="${r.id}" style="left:${pos.x}%;top:${pos.y}%;${lockedStyle}${selectedStyle}" title="${escapeHtml(hint)}"><span class="map-point-title">${escapeHtml(pos.label)}</span>${badgeHtml}</button>`;
+      const hint = `${r.unlocked ? "可进入" : "未解锁"}${r.unlocked && has ? ` · 目标${visibleNodes.length}` : ""}${eventCount > 0 ? ` · 事件${eventCount}` : ""}${progress ? ` · ${globalProgressGapText(r)}` : ""}`;
+      const badgeClass = r.unlocked ? "event-dot" : "event-dot lock-badge";
+      const badgeHtml = countText ? `<span class="${badgeClass}">${escapeHtml(countText)}</span>` : "";
+      const pointStyle = `left:${pos.x}%;top:${pos.y}%;${r.unlocked ? selectedStyle : ""}`;
+      if (!r.unlocked) {
+        return `<div class="${cls}" data-region="${r.id}" aria-disabled="true" style="${pointStyle}" title="${escapeHtml(hint)}"><span class="map-point-title">${escapeHtml(pos.label)}</span>${badgeHtml}</div>`;
+      }
+      return `<button type="button" class="${cls}" data-region="${r.id}" style="${pointStyle}" title="${escapeHtml(hint)}"><span class="map-point-title">${escapeHtml(pos.label)}</span>${badgeHtml}</button>`;
     }).join("");
     const choiceHtml = regionData.map((d) => {
       const selected = d.r.id === selectedData.r.id;
-      const sub = d.r.unlocked ? `可进入 · ${d.eventCount} 项情报` : `未解锁 · ${globalProgressText(d.r)}`;
-      return `<button type="button" class="global-region-choice ${selected ? "is-selected" : ""} ${d.r.unlocked ? "" : "is-locked"}" data-region="${d.r.id}">
+      const sub = d.r.unlocked ? globalRegionDecisionLabel(d) : `未解锁 · ${globalProgressGapText(d.r)}`;
+      if (!d.r.unlocked) {
+        return `<div class="global-region-choice is-locked" data-region="${d.r.id}" aria-disabled="true" title="${escapeHtml(sub)}">
+        <strong>${escapeHtml(d.r.name)}</strong>
+        <span>${escapeHtml(sub)}</span>
+      </div>`;
+      }
+      return `<button type="button" class="global-region-choice ${selected ? "is-selected" : ""}" data-region="${d.r.id}">
         <strong>${escapeHtml(d.r.name)}</strong>
         <span>${escapeHtml(sub)}</span>
       </button>`;
@@ -2774,23 +2837,25 @@
             <path d="M56 54 C 64 48, 72 47, 78 44" fill="none" stroke="rgba(212,168,83,0.24)" stroke-width="0.8" stroke-dasharray="3 3"></path>
           </svg>
           ${pointsHtml}
-          <div class="tags" style="position:absolute;left:10px;bottom:10px;max-width:calc(100% - 20px);">
-            <span class="tag on">当前选中</span>
+          <div class="global-map-legend" aria-label="地图图例">
+            <span class="tag on">选中区域可进入</span>
+            <span class="tag global-tag-cost">限时机会</span>
+            <span class="tag global-tag-info">深度链</span>
           </div>
         </div>
         <div class="map-side global-side">
           <div class="global-side-head">
             <div class="global-side-title">
-              <h3>选择取材地区</h3>
-              <p>查看地区情报概况，进入地区后再选择具体任务。</p>
+              <h3><span class="global-step-badge">1</span><span>选择取材地区</span></h3>
+              <p>查看地区情报预览，进入地区后再选择具体任务。</p>
             </div>
             <div class="global-region-selector" id="globalRegionChoices">${choiceHtml}</div>
+            <div id="globalRegionDetail">${globalRegionDetailHtml(selectedData, "selected")}</div>
           </div>
-          <div id="globalRegionDetail">${globalRegionDetailHtml(selectedData, "selected")}</div>
           <div class="region-actions global-bottom-actions">
             <button type="button" id="btnEnterSelectedRegion" class="primary global-enter-action" ${selectedData.r.unlocked ? "" : "disabled"}>
               <span class="global-enter-icon" aria-hidden="true">${selectedData.r.unlocked ? "→" : "×"}</span>
-              <span class="global-enter-label">${selectedData.r.unlocked ? `进入 · ${escapeHtml(selectedData.r.name)}` : `未解锁 · ${escapeHtml(selectedData.r.name)}`}</span>
+              <span class="global-enter-label">${selectedData.r.unlocked ? `进入探索 · ${escapeHtml(selectedData.r.name)}` : `未解锁 · ${escapeHtml(selectedData.r.name)}`}</span>
             </button>
           </div>
         </div>
@@ -2800,11 +2865,19 @@
       grid.querySelectorAll("[data-region]").forEach((node) => {
         const nodeId = node.getAttribute("data-region");
         const isChoice = node.classList.contains("global-region-choice");
+        const locked = node.classList.contains("locked") || node.classList.contains("is-locked");
         const isFocused = nodeId === focusId;
         const isSelected = nodeId === selectedId;
         if (isChoice) {
-          node.classList.toggle("is-selected", isSelected);
-          node.classList.toggle("is-preview", isFocused && !isSelected && mode === "preview");
+          node.classList.toggle("is-selected", !locked && isSelected);
+          node.classList.toggle("is-preview", !locked && isFocused && !isSelected && mode === "preview");
+          return;
+        }
+        if (locked) {
+          node.style.borderColor = "";
+          node.style.background = "";
+          node.style.color = "";
+          node.style.boxShadow = "";
           return;
         }
         node.style.borderColor = isFocused || isSelected ? "rgba(212,168,83,0.9)" : "";
@@ -2820,7 +2893,7 @@
       const icon = enterBtn.querySelector(".global-enter-icon");
       const label = enterBtn.querySelector(".global-enter-label");
       if (icon) icon.textContent = data.r.unlocked ? "→" : "×";
-      if (label) label.textContent = data.r.unlocked ? `进入 · ${data.r.name}` : `未解锁 · ${data.r.name}`;
+      if (label) label.textContent = data.r.unlocked ? `进入探索 · ${data.r.name}` : `未解锁 · ${data.r.name}`;
     };
     const renderSelectedRegion = (id) => {
       const data = dataById[id] || selectedData;
@@ -2831,13 +2904,15 @@
     };
     const selectGlobalRegion = (id) => {
       const data = dataById[id];
-      if (!data) return;
+      if (!data || !data.r.unlocked) return;
       state.globalSelectedRegionId = id;
       renderSelectedRegion(id);
     };
     const restoreSelected = () => paintLinkedState(state.globalSelectedRegionId, "selected");
     paintLinkedState(state.globalSelectedRegionId, "selected");
     grid.querySelectorAll(".map-point, .global-region-choice").forEach((div) => {
+      const data = dataById[div.getAttribute("data-region")];
+      if (!data || !data.r.unlocked) return;
       div.addEventListener("mouseenter", () => paintLinkedState(div.getAttribute("data-region"), "preview"));
       div.addEventListener("mouseleave", restoreSelected);
       div.addEventListener("click", () => {
@@ -2885,7 +2960,7 @@
         `<div class="tutorial-soft-sheet">
           <h4 class="tutorial-soft-h4">推进时间</h4>
           <ul class="tutorial-soft-ul">
-            <li><strong>下一天</strong>：本页右下角次级按钮，或进入区域后使用区域内同款按钮。</li>
+            <li><strong>日程推进</strong>：进入当前地区后，在区域面板底部独立推进到下一天。</li>
             <li>时间推进后，到期的外派会<strong>依次结算</strong>。</li>
           </ul>
           <p class="tutorial-soft-note">本周内本提示只出现一次。</p>
@@ -2932,15 +3007,26 @@
       .join("、");
   }
 
-  function regionAssignedStatusHtml(queued) {
+  function regionAssignedStatusHtml(queued, label = "已派遣") {
     if (!queued) return "";
     const names = assignedStaffNames(queued.staffIds);
-    const title = names ? `已派遣：${names}` : "已派遣";
-    return `<span class="region-assigned-status" title="${escapeHtml(title)}">已派遣</span>`;
+    const title = names ? `${label}：${names}` : label;
+    return `<span class="region-assigned-status" title="${escapeHtml(title)}">${escapeHtml(label)}</span>`;
   }
 
   function regionTaskTitleHtml(title, queued) {
     return `<h4 class="region-task-title"><span class="title-text">${escapeHtml(title)}</span>${regionAssignedStatusHtml(queued)}</h4>`;
+  }
+
+  function regionAssignedQueueInfoHtml(queued) {
+    if (!queued) return "";
+    const names = assignedStaffNames(queued.staffIds);
+    const wait = Math.max(0, queued.remainingDays | 0);
+    return `<div class="region-assigned-line">
+      ${staffAvatarsHtml(queued.staffIds, "queue-assigned-avatars", 4)}
+      <span class="region-assigned-copy">${names ? `执行中：${escapeHtml(names)}` : "执行中"}</span>
+      <span class="region-assigned-wait">${wait}天后结算</span>
+    </div>`;
   }
 
   function missionHeaderHtml(m, staffIds) {
@@ -3045,6 +3131,42 @@
     return `<span class="dispatch-count" title="当前可派遣人数 / 队员总人数">（${available}/${total}）</span>`;
   }
 
+  function runningMissionCount() {
+    return state.activeMissions.filter((x) => x && x.status === "running").length;
+  }
+
+  function dueMissionCountAfterAdvance() {
+    return state.activeMissions.filter((x) => x && x.status === "running" && (x.remainingDays | 0) <= 1).length;
+  }
+
+  function regionNextDayButtonText() {
+    if (state.processingDayTick) return "结算中...";
+    if ((state.day | 0) <= 0) return "进入结算";
+    if ((state.day | 0) <= 1) return "结束探索周";
+    return `推进到第 ${Math.min(7, dayIndexInWeek() + 1)} 天`;
+  }
+
+  function regionDayAdvanceSummaryText() {
+    const running = runningMissionCount();
+    const due = dueMissionCountAfterAdvance();
+    if (running <= 0) return "尚未派遣任务；推进会消耗 1 天，并减少突发任务倒计时。";
+    if (due > 0) return `已派遣 ${running} 项；推进后结算 ${due} 项到期任务，并减少突发任务倒计时。`;
+    return `已派遣 ${running} 项；推进后减少任务剩余天数和突发任务倒计时。`;
+  }
+
+  function regionDayAdvanceHtml() {
+    return `<div class="region-day-advance" role="group" aria-label="日程推进">
+      <div class="region-day-copy">
+        <strong>日程推进</strong>
+        <span>${escapeHtml(regionDayAdvanceSummaryText())}</span>
+      </div>
+      <button type="button" id="btnNextDayRegion" class="region-day-button">
+        <span class="arrow" aria-hidden="true"></span>
+        <span class="region-day-button-label">${escapeHtml(regionNextDayButtonText())}</span>
+      </button>
+    </div>`;
+  }
+
   function openQueuedMission(rec) {
     if (!rec || !rec.mission) return;
     state.mission = { ...rec.mission, missionQueueId: rec.id, toolDiceIds: (rec.toolDiceIds || []).slice() };
@@ -3145,6 +3267,29 @@
     return unionRects(chainRects) || el.getBoundingClientRect();
   }
 
+  function showRegionMapHint(root, anchor, title, detail) {
+    const map = root && root.querySelector ? root.querySelector(".region-map") : null;
+    if (!map || !anchor || !anchor.getBoundingClientRect) {
+      showToastMessage([title, detail].filter(Boolean).join("。"), "warn");
+      return;
+    }
+    map.querySelectorAll(".region-map-hint").forEach((node) => node.remove());
+    const mapRect = map.getBoundingClientRect();
+    const anchorRect = anchor.getBoundingClientRect();
+    const hint = document.createElement("div");
+    const placeAbove = anchorRect.top - mapRect.top > 74;
+    const x = Math.max(130, Math.min(mapRect.width - 130, anchorRect.left + anchorRect.width / 2 - mapRect.left));
+    const y = placeAbove ? anchorRect.top - mapRect.top - 10 : anchorRect.bottom - mapRect.top + 10;
+    hint.className = `region-map-hint${placeAbove ? "" : " is-below"}`;
+    hint.style.left = `${Math.round(x)}px`;
+    hint.style.top = `${Math.round(y)}px`;
+    hint.innerHTML = `<strong>${escapeHtml(title)}</strong>${detail ? `<span>${escapeHtml(detail)}</span>` : ""}`;
+    map.appendChild(hint);
+    window.setTimeout(() => {
+      if (hint.parentNode) hint.remove();
+    }, 2600);
+  }
+
   function inflateRect(rect, pad) {
     return {
       left: rect.left - pad,
@@ -3236,12 +3381,12 @@
     const futureTitle = n.nextNode ? "?" : "";
     return `<button type="button" class="region-chain-entry ${expand}${open ? " is-open" : ""}${meta.match ? "" : " is-filtered"}${finalKind}" data-point-type="node" data-point-id="${n.id}" data-node="${n.id}" data-chain-entry="true" style="left:${pos.x}%;top:${pos.y}%;" ${disabled} title="${escapeHtml(n.name)} · ${meta.diffZh} · 深度链入口">
       <span class="chain-link" aria-hidden="true"></span>
-      <span class="chain-card chain-future" aria-hidden="true">
+      <span class="chain-card chain-future" aria-hidden="true" title="该任务未解锁">
         <span class="chain-stage">?</span>
         <span class="chain-copy"><span class="chain-kicker">未揭示</span><span class="chain-title">${escapeHtml(futureTitle || "?")}</span></span>
         <span class="chain-mark">?</span>
       </span>
-      <span class="chain-card chain-next">
+      <span class="chain-card chain-next" title="该任务未解锁">
         <span class="chain-stage">${escapeHtml(nextStage)}</span>
         <span class="chain-copy"><span class="chain-kicker">${escapeHtml(nextKicker)}</span><span class="chain-title">${escapeHtml(nextTitle)}</span></span>
         <span class="chain-mark">?</span>
@@ -3325,7 +3470,7 @@
     if (fallback === "clue") return "文";
     if (m && m.isBlackDiceTask) return "骰";
     if (m && (m.checkType || "white") === "red") return "截";
-    if (m && m.chainType === "deep") return "页";
+    if (m && m.chainType === "deep") return "续";
     if (m && (m.riskTier === "high" || m.isHighRisk)) return "!";
     return "↻";
   }
@@ -3348,22 +3493,18 @@
     return lead.days || 2;
   }
 
-  function regionNodeActionLabel(n, queued, completed) {
-    if (completed) return "已完成";
-    if (queued) return "查看派遣";
-    if (n.isBlackDiceTask) return "进入任务";
-    if ((n.checkType || "white") === "red") return "抢派";
-    if (n.chainType === "deep") return "继续调查";
-    return "派遣";
-  }
-
   function regionNodeMetaHtml(n, queued) {
     const chips = [regionChip(`耗时 ${n.days}天`, "time")];
-    if (n.chainType === "deep" && n.nextNode) chips.push(`<span class="region-next-chip">下一页：?</span>`);
     if (!n.isBlackDiceTask && (n.riskTier === "high" || n.isHighRisk)) chips.push(regionChip("△ 危险", "danger"));
     if (n.isBlackDiceTask) chips.push(regionChip("骰 黑骰", "black"));
     if ((n.enemyAttr | 0) > 0) chips.push(regionChip(`▣ 对手骰 ${n.enemyAttr | 0}`, "enemy"));
     return chips.join("");
+  }
+
+  function regionDeepStageBadgeHtml(n) {
+    if (!n || n.chainType !== "deep") return "";
+    const stage = n.chainStage ? `当前任务 ${n.chainStage}` : "当前任务";
+    return `<div class="region-task-chain-badge"><small>深度调查</small><strong>${escapeHtml(stage)}</strong></div>`;
   }
 
   function renderRegion() {
@@ -3374,7 +3515,8 @@
     const leads = visibleRegionLeads(r.id);
     const nodePos = NODE_MAP_POS[r.id] || {};
     const visibleNodeList = regionNodes.filter(nodeVisible);
-    const mapNodeList = visibleNodeList.filter((n) => !(n.chainType === "deep" && state.completedMissionIds[n.id]));
+    const activeNodeList = visibleNodeList.filter((n) => !(n.chainType === "deep" && state.completedMissionIds[n.id]));
+    const mapNodeList = activeNodeList;
     const chainOverlay = "";
     const pointHtmlNodes = mapNodeList
       .map((n) => {
@@ -3411,10 +3553,12 @@
       })
       .join("");
     const pointHtml = chainOverlay + pointHtmlNodes + pointHtmlLeads;
-    const leadHtml = leads
+    const leadCards = leads
       .map((lead) => {
         const queued = findActiveMissionByLead(r.id, lead.id);
-        return `<div class="lead-item region-task-card clue interactive" data-side-type="lead" data-side-id="${lead.id}">
+        return {
+          queued,
+          html: `<div class="lead-item region-task-card clue${queued ? " is-assigned" : " interactive"}" data-side-type="lead" data-side-id="${lead.id}">
         <div class="region-task-icon">${regionTaskIcon(null, "clue")}</div>
         <div class="region-task-main">
           ${regionTaskTitleHtml(lead.title, queued)}
@@ -3422,36 +3566,49 @@
             ${regionChip(`耗时 ${regionLeadDays(lead)}天`, "time")}
             <span class="region-flow-chip">调查 -> 新任务</span>
           </div>
-          <div class="region-task-action">
-            <div class="region-task-needs">${regionNeedChipsHtml(regionLeadNeed(lead))}</div>
-            <button type="button" class="region-task-button" data-lead-investigate="${lead.id}" ${lead.investigated ? "disabled" : ""}>${queued ? "查看派遣" : "派人调查"}</button>
-          </div>
+          <div class="region-task-needs">${regionNeedChipsHtml(regionLeadNeed(lead))}</div>
           ${lead.result ? `<div class="region-task-result">${escapeHtml(lead.result)}</div>` : ""}
+          ${queued ? regionAssignedQueueInfoHtml(queued) : ""}
         </div>
-      </div>`;
+      </div>`,
+        };
       })
-      .join("");
+    const leadHtml = leadCards.filter((x) => !x.queued).map((x) => x.html).join("");
     const nodeCardHtml = (n) => {
         const match = filterNodeTags(n);
         const completed = !!state.completedMissionIds[n.id];
         const queued = findActiveMissionByNode(r.id, n.id);
+        const interactive = match && !completed && !queued;
         const tone = regionTaskTone(n);
         const deadlineLeft = tone === "red" ? deadlineRemainingDays(n) : null;
-        return `<div class="region-node-item region-task-card ${tone} interactive${match ? "" : " is-filtered"}${completed ? " is-completed" : ""}" data-side-type="node" data-side-id="${n.id}">
+        return {
+          queued,
+          html: `<div class="region-node-item region-task-card ${tone}${interactive ? " interactive" : ""}${match ? "" : " is-filtered"}${completed ? " is-completed" : ""}${queued ? " is-assigned" : ""}" data-side-type="node" data-side-id="${n.id}">
           <div class="region-task-icon">${completed ? "✓" : regionTaskIcon(n)}</div>
           <div class="region-task-main">
             ${regionTaskTitleHtml(n.name, queued)}
             <div class="region-task-meta">${regionNodeMetaHtml(n, queued)}</div>
-            <div class="region-task-action">
-              <div class="region-task-needs">${regionNeedChipsHtml(n.need)}</div>
-              <button type="button" class="region-task-button" data-node-open="${n.id}" ${n.chain === "locked" || completed ? "disabled" : ""}>${regionNodeActionLabel(n, queued, completed)}</button>
-            </div>
-            ${previousChainResult(n) ? `<div class="region-task-prev">上一页：${escapeHtml(previousChainResult(n))}</div>` : ""}
+            <div class="region-task-needs">${regionNeedChipsHtml(n.need)}</div>
+            ${previousChainResult(n) ? `<div class="region-task-prev">前序线索：${escapeHtml(previousChainResult(n))}</div>` : ""}
+            ${queued ? regionAssignedQueueInfoHtml(queued) : ""}
           </div>
-          ${deadlineLeft == null ? "" : `<div class="region-task-countdown"><small>剩余</small><strong>${deadlineLeft}天</strong></div>`}
-        </div>`;
+          ${queued || deadlineLeft == null ? "" : `<div class="region-task-countdown"><small>剩余</small><strong>${deadlineLeft}天</strong></div>`}
+          ${queued ? "" : regionDeepStageBadgeHtml(n)}
+        </div>`,
+        };
     };
-    const sideHtml = visibleNodeList.map(nodeCardHtml).join("");
+    const nodeCards = activeNodeList.map(nodeCardHtml);
+    const sideHtml = nodeCards.filter((x) => !x.queued).map((x) => x.html).join("");
+    const assignedHtml = [...leadCards, ...nodeCards].filter((x) => x.queued).map((x) => x.html).join("");
+    const assignedQueueHtml = assignedHtml
+      ? `<section class="region-assigned-queue" aria-label="已派遣任务队列">
+          <div class="region-assigned-queue-head">
+            <span>已派遣 · 执行中</span>
+            <small>${state.activeMissions.filter((x) => x.status === "running" && x.regionId === r.id).length} 项执行中</small>
+          </div>
+          <div class="region-assigned-list">${assignedHtml}</div>
+        </section>`
+      : "";
     elR.innerHTML = `<div class="view-title-row">
         <h2>${escapeHtml(r.name)}</h2>
         ${dispatchCountSpanHtml()}
@@ -3460,12 +3617,22 @@
         <div class="region-map">${pointHtml}</div>
         <div class="region-node-side">
           <h3>区域节点情报</h3>
-          <div class="region-task-list">${leadHtml}${sideHtml}</div>
-          <div class="region-actions">
-            <button type="button" id="btnNextDayRegion" class="next-day-big"><span class="arrow" aria-hidden="true"></span><span>下一天</span></button>
-          </div>
+          <div class="region-task-list">${leadHtml}${sideHtml}${assignedQueueHtml}</div>
         </div>
-      </div>`;
+      </div>
+      ${regionDayAdvanceHtml()}`;
+    const regionMap = elR.querySelector(".region-map");
+    if (regionMap) {
+      regionMap.addEventListener("click", (ev) => {
+        if (!state.openDeepChainId) return;
+        const target = ev.target && ev.target.closest ? ev.target : null;
+        if (target && target.closest(".region-chain-entry, .region-point")) return;
+        const closingChainId = state.openDeepChainId;
+        state.openDeepChainId = null;
+        if (state.regionLinkedTarget === `node:${closingChainId}`) state.regionLinkedTarget = null;
+        renderRegion();
+      });
+    }
     elR.querySelectorAll(".region-point").forEach((btn) => {
       btn.addEventListener("click", () => {
         const pointType = btn.getAttribute("data-point-type");
@@ -3483,32 +3650,39 @@
       });
     });
     elR.querySelectorAll(".region-chain-entry").forEach((btn) => {
-      btn.addEventListener("click", () => {
+      btn.addEventListener("click", (ev) => {
         const pointId = btn.getAttribute("data-point-id");
         const n = regionNodes.find((x) => x.id === pointId);
         if (!n) return;
+        const isOpen = state.openDeepChainId === pointId;
+        const clickedCurrentRing = ev.target && ev.target.closest && ev.target.closest(".chain-current");
+        const clickedLockedRing = ev.target && ev.target.closest && ev.target.closest(".chain-next, .chain-future");
         state.regionLinkedTarget = `node:${pointId}`;
-        state.openDeepChainId = state.openDeepChainId === pointId ? null : pointId;
-        renderRegion();
+        if (isOpen && clickedCurrentRing) {
+          openNodeMission(r.id, n);
+          return;
+        }
+        if (isOpen && clickedLockedRing) {
+          showRegionMapHint(elR, clickedLockedRing, "该任务未解锁", "完成当前环后将解锁下一条线索。");
+          syncRegionLinkedState(elR, state.regionLinkedTarget);
+          return;
+        }
+        if (!isOpen) {
+          state.openDeepChainId = pointId;
+          renderRegion();
+          return;
+        }
+        syncRegionLinkedState(elR, state.regionLinkedTarget);
       });
     });
-    elR.querySelectorAll("[data-lead-investigate]").forEach((btn) => {
-      btn.onclick = () => investigateRegionLead(r.id, btn.getAttribute("data-lead-investigate"));
-    });
-    elR.querySelectorAll("[data-node-open]").forEach((btn) => {
-      btn.onclick = () => {
-        const n = regionNodes.find((x) => x.id === btn.getAttribute("data-node-open"));
-        openNodeMission(r.id, n);
-      };
-    });
-    elR.querySelectorAll(".region-node-item[data-side-type='node']").forEach((row) => {
+    elR.querySelectorAll(".region-node-item.interactive[data-side-type='node']").forEach((row) => {
       row.addEventListener("click", (ev) => {
         if (ev.target && ev.target.closest && ev.target.closest("button")) return;
         const n = regionNodes.find((x) => x.id === row.getAttribute("data-side-id"));
         openNodeMission(r.id, n);
       });
     });
-    elR.querySelectorAll(".lead-item[data-side-type='lead']").forEach((row) => {
+    elR.querySelectorAll(".lead-item.interactive[data-side-type='lead']").forEach((row) => {
       row.addEventListener("click", (ev) => {
         if (ev.target && ev.target.closest && ev.target.closest("button")) return;
         investigateRegionLead(r.id, row.getAttribute("data-side-id"));
@@ -3574,7 +3748,6 @@
       el.addEventListener("mouseenter", () => setLinked(key));
       el.addEventListener("mouseleave", () => setLinked(null));
       el.addEventListener("click", (ev) => {
-        if (ev.target && ev.target.closest && ev.target.closest("button[data-lead-investigate]")) return;
         state.regionLinkedTarget = key;
         syncRegionLinkedState(root, key);
       });
@@ -3599,7 +3772,7 @@
       if (!ok || state.view !== "setup" || !state.mission) return;
       if (!state.selectedStaffIds.includes(staff.id)) {
         const maxStaff = missionMaxStaff(state.mission);
-        if (state.selectedStaffIds.length >= maxStaff) state.selectedStaffIds.shift();
+        if (!canAddStaffToDispatch(staff, maxStaff)) return;
         state.selectedStaffIds.push(staff.id);
       }
       renderSetup();
@@ -3610,6 +3783,63 @@
       if (ok) ok.textContent = state.view === "setup" ? (state.selectedStaffIds.includes(staff.id) ? "已在本次骰池" : "加入本次骰池") : "确认";
       if (cancel) cancel.textContent = "返回";
     }, 0);
+  }
+
+  function dispatchCapacityMessage(staff, maxStaff) {
+    const name = staff && staff.name ? staff.name : "该角色";
+    return `本任务最多派遣 ${maxStaff} 人。请先手动撤下一名已选角色，再选择 ${name}。`;
+  }
+
+  function showToastMessage(message, tone = "") {
+    if (!el.toast) el.toast = document.getElementById("toast");
+    if (!el.toast) return;
+    if (state.undoTimer) {
+      clearTimeout(state.undoTimer);
+      state.undoTimer = null;
+    }
+    state.lastReplaceAction = null;
+    el.toast.innerHTML = `<span>${escapeHtml(message)}</span>`;
+    el.toast.className = `nm-toast show ${tone}`.trim();
+    state.undoTimer = setTimeout(() => {
+      el.toast.classList.remove("show");
+      el.toast.classList.remove(tone);
+    }, 2200);
+  }
+
+  function canAddStaffToDispatch(staff, maxStaff) {
+    if (state.selectedStaffIds.length < maxStaff) return true;
+    showToastMessage(dispatchCapacityMessage(staff, maxStaff), "warn");
+    return false;
+  }
+
+  function tempStringerStaff() {
+    return TEMP_STAFF_POOL.find((s) => s.id === "temp_stringer");
+  }
+
+  function isTempStringerHired() {
+    return state.tempStaffIds.includes("temp_stringer");
+  }
+
+  function isTempStringerSelected() {
+    return state.selectedStaffIds.includes("temp_stringer");
+  }
+
+  function ensureTempStringerHired() {
+    if (isTempStringerHired()) return;
+    state.tempHireUsed = true;
+    state.tempStaffIds.push("temp_stringer");
+    addMacro({ 声望: -1 });
+    log("本周雇佣临时线人：花费不菲，但获得一颗完整临时角色骰；之后可在候选角色中加入或撤回。");
+  }
+
+  function toggleTempStringerForDispatch(maxStaff) {
+    const staff = tempStringerStaff();
+    if (!staff) return false;
+    if (!canAddStaffToDispatch(staff, maxStaff)) return false;
+    ensureTempStringerHired();
+    state.selectedStaffIds.push(staff.id);
+    showToastMessage("已雇佣临时线人，并加入本次骰池。后续可在候选角色卡中撤回。");
+    return true;
   }
 
   function capacitySlotsHtml(selected, max) {
@@ -3724,7 +3954,10 @@
     const targetValue = needTargetValue(need);
     const potentialValue = needKeys.reduce((sum, k) => sum + (values[k] || 0), 0);
     const successChance = successChanceForNeed(need, faceLists);
-    return { need, needKeys, values, totalFaces, relevantFaces, blankFaces, gaps, needValue, coveredValue, nonContributingStaff, targetValue, potentialValue, successChance };
+    const bestSingleStaffChance = selectedStaff.reduce((best, staff) => {
+      return Math.max(best, successChanceForNeed(need, [diceFacesForStaff(staff)]));
+    }, 0);
+    return { need, needKeys, values, totalFaces, relevantFaces, blankFaces, gaps, needValue, coveredValue, nonContributingStaff, targetValue, potentialValue, successChance, bestSingleStaffChance };
   }
 
   function dispatchLabRisk(m, stats, selectedCount) {
@@ -3732,17 +3965,19 @@
     if (!stats.relevantFaces) return { label: "高", reason: "当前骰池没有命中任务需求的相关面。" };
     const chanceText = `实际达标率约 ${formatChance(stats.successChance)}`;
     const targetText = `有效点目标 ${stats.targetValue || 0}，潜在相关点 ${stats.potentialValue || 0}`;
+    const lift = selectedCount > 1 ? formatDisplayedChanceLift(stats.successChance || 0, stats.bestSingleStaffChance || 0) : "";
+    const liftText = lift ? `；较单人最佳 ${lift}` : "";
     const idleText = stats.nonContributingStaff ? `；${stats.nonContributingStaff} 名角色无相关面` : "";
     if (stats.successChance <= 0) {
       return { label: "高", reason: `当前骰池按实际掷骰无法达标；${targetText}；相关面 ${stats.relevantFaces}，空面 ${stats.blankFaces}${idleText}。` };
     }
     if (stats.successChance >= 0.55) {
-      return { label: "低", reason: `${chanceText}；${targetText}；相关面 ${stats.relevantFaces}，空面 ${stats.blankFaces}${idleText}。` };
+      return { label: "低", reason: `${chanceText}${liftText}；${targetText}；相关面 ${stats.relevantFaces}，空面 ${stats.blankFaces}${idleText}。` };
     }
     if (stats.successChance >= 0.3) {
-      return { label: "中", reason: `${chanceText}；${targetText}；相关面 ${stats.relevantFaces}，空面 ${stats.blankFaces}${idleText}。` };
+      return { label: "中", reason: `${chanceText}${liftText}；${targetText}；相关面 ${stats.relevantFaces}，空面 ${stats.blankFaces}${idleText}。` };
     }
-    return { label: "高", reason: `${chanceText} 偏低；${targetText}；相关面 ${stats.relevantFaces}，空面 ${stats.blankFaces}${idleText}。` };
+    return { label: "高", reason: `${chanceText} 偏低${liftText}；${targetText}；相关面 ${stats.relevantFaces}，空面 ${stats.blankFaces}${idleText}。` };
   }
 
   function dispatchLabNeedRowsHtml(m, stats) {
@@ -3795,7 +4030,7 @@
     const consequence = [
       red ? "成功或失败后都会结束" : "",
       danger ? "失败可能造成队员状态损伤" : "",
-      m.chainType === "deep" ? "完成后推进下一页" : "",
+      m.chainType === "deep" ? "完成后推进线索" : "",
       m.isBlackDiceTask ? "进入黑骰特殊判定" : "",
     ].filter(Boolean).join("；");
     return `<section class="dispatch-lab-task">
@@ -3824,7 +4059,7 @@
     </div>`;
   }
 
-  function dispatchLabPoolHtml(m, maxStaff, tempHireAvailable) {
+  function dispatchLabPoolHtml(m, maxStaff) {
     const selectedStaff = (state.selectedStaffIds || []).map(findStaff).filter(Boolean);
     const tools = dispatchLabSelectedTools();
     const emptyCount = Math.max(0, maxStaff - selectedStaff.length);
@@ -3840,12 +4075,13 @@
       <div class="dispatch-lab-panel-title"><span>本次骰池</span><span>已选 ${selectedStaff.length}/${maxStaff} 人 ${capacitySlotsHtml(selectedStaff.length, maxStaff)}</span></div>
       <div class="dispatch-slot-grid">${slots}</div>
       <div class="dispatch-lab-tools">${toolCards || `<div class="pool-card empty" style="min-height:54px;">道具骰空槽 · 可在下方选择一次性道具</div>`}</div>
-      ${dispatchLabResourcesHtml(tempHireAvailable)}
+      ${dispatchLabResourcesHtml(maxStaff)}
     </div>`;
   }
 
   function dispatchLabRunBlockHtml(m, stats, risk, maxStaff) {
     const selectedCount = state.selectedStaffIds.length;
+    const riskChance = selectedCount ? ` · ${formatChance(stats.successChance)}` : "";
     const disabledReason = !selectedCount
       ? "先选择至少 1 名角色"
       : m.days > state.day
@@ -3854,7 +4090,7 @@
           ? "当前正在结算"
           : "";
     return `<aside class="dispatch-lab-panel">
-      <div class="dispatch-lab-panel-title"><span>需求覆盖</span><span class="task-type-chip task-${risk.label === "高" ? "danger" : risk.label === "中" ? "high" : "white"}">风险：${escapeHtml(risk.label)}</span></div>
+      <div class="dispatch-lab-panel-title"><span>需求覆盖</span><span class="task-type-chip task-${risk.label === "高" ? "danger" : risk.label === "中" ? "high" : "white"}">风险：${escapeHtml(risk.label)}${escapeHtml(riskChance)}</span></div>
       ${dispatchLabNeedRowsHtml(m, stats)}
       <div class="dispatch-risk-box">${escapeHtml(risk.reason)}</div>
       <div id="dispatchHoverPreview" class="dispatch-hover-preview">悬停角色卡，预览加入后会补哪些需求。</div>
@@ -3865,7 +4101,13 @@
     </aside>`;
   }
 
-  function dispatchLabResourcesHtml(tempHireAvailable) {
+  function dispatchLabResourcesHtml(maxStaff) {
+    const tempHired = isTempStringerHired();
+    const tempCapacityHint = state.selectedStaffIds.length >= maxStaff ? " · 人数已满需先撤下一人" : "";
+    const tempCardHtml = tempHired ? "" : `<button type="button" id="btnHireTemp" class="dispatch-resource-card">
+          <strong>雇佣本周临时线人</strong>
+          <small>$1200 · 点击加入本次骰池 · 占角色槽${tempCapacityHint}</small>
+        </button>`;
     const toolCards = (state.toolDiceInventory || []).map((tool) => {
       const used = !!tool.used;
       const selected = state.selectedToolDiceIds.includes(tool.id);
@@ -3879,10 +4121,7 @@
       <div class="dispatch-support-head"><span>追加骰</span><span class="risk-reason">一次性道具不占人数；临时线人占角色槽</span></div>
       <div class="dispatch-resource-grid">
         ${toolCards || `<span class="tip-inline">暂无道具骰</span>`}
-        <button type="button" id="btnHireTemp" class="dispatch-resource-card" ${tempHireAvailable ? "" : "disabled"}>
-          <strong>雇佣本周临时线人</strong>
-          <small>${tempHireAvailable ? "$1200 · 占人数限制 · 完整角色骰" : "本周已雇佣或不可用"}</small>
-        </button>
+        ${tempCardHtml}
       </div>
     </div>`;
   }
@@ -3891,7 +4130,7 @@
     const ids = state.selectedStaffIds.slice();
     const exists = ids.includes(staff.id);
     if (!exists) {
-      if (ids.length >= maxStaff) ids.shift();
+      if (ids.length >= maxStaff) return dispatchCapacityMessage(staff, maxStaff);
       ids.push(staff.id);
     }
     const stats = dispatchLabNeedStats(m, ids, dispatchLabSelectedTools());
@@ -3924,13 +4163,12 @@
   function dispatchLabSortedStaff(staffList, need) {
     const rank = { 高: 3, 中: 2, 低: 1 };
     return staffList.slice().sort((a, b) => {
-      const aSel = state.selectedStaffIds.includes(a.id) ? 1 : 0;
-      const bSel = state.selectedStaffIds.includes(b.id) ? 1 : 0;
-      if (aSel !== bSel) return bSel - aSel;
       const af = staffFitSummary(a, need || {});
       const bf = staffFitSummary(b, need || {});
       if (rank[af.fit] !== rank[bf.fit]) return rank[bf.fit] - rank[af.fit];
-      return (bf.stats.relevantValues || 0) - (af.stats.relevantValues || 0);
+      const valueDelta = (bf.stats.relevantValues || 0) - (af.stats.relevantValues || 0);
+      if (valueDelta !== 0) return valueDelta;
+      return (STAFF_BASE_ORDER.get(a.id) ?? 999) - (STAFF_BASE_ORDER.get(b.id) ?? 999);
     });
   }
 
@@ -3943,7 +4181,6 @@
     const selectedTools = dispatchLabSelectedTools();
     const stats = dispatchLabNeedStats(m, state.selectedStaffIds, selectedTools);
     const risk = dispatchLabRisk(m, stats, state.selectedStaffIds.length);
-    const tempHireAvailable = !state.tempHireUsed && !state.tempStaffIds.includes("temp_stringer");
     const allowQueueId = m && m.missionQueueId ? m.missionQueueId : null;
     const staffList = dispatchLabSortedStaff(
       getAllStaff().filter((p) => !isStaffAssigned(p.id, allowQueueId) || state.selectedStaffIds.includes(p.id)),
@@ -3958,12 +4195,12 @@
       </div>
       ${dispatchLabTaskSummaryHtml(m)}
       <div class="dispatch-lab-builder">
-        ${dispatchLabPoolHtml(m, maxStaff, tempHireAvailable)}
+        ${dispatchLabPoolHtml(m, maxStaff)}
         ${dispatchLabRunBlockHtml(m, stats, risk, maxStaff)}
       </div>
       <section class="dispatch-lab-panel">
         <div class="dispatch-candidate-head">
-          <div class="dispatch-lab-panel-title" style="margin:0;"><span>候选角色</span><span class="risk-reason">默认按本任务贡献排序</span></div>
+          <div class="dispatch-lab-panel-title" style="margin:0;"><span>候选角色</span><span class="risk-reason">初始按任务贡献排序，选中不改位置</span></div>
           <span class="mode-toggle" id="modeToggle">
             <button type="button" data-mode="dice" class="${state.displayMode === "dice" ? "on" : ""}">骰子</button>
             <button type="button" data-mode="numeric" class="${state.displayMode === "numeric" ? "on" : ""}">纯数值</button>
@@ -3973,9 +4210,9 @@
       </section>
       <p class="row" style="margin-top:0;">
         ${m.missionQueueId ? `<button type="button" id="btnUndoDispatch">撤销派遣</button>` : ""}
-        <button type="button" id="btnCancelSetup">返回区域</button>
+        <button type="button" id="btnCancelSetup" class="nm-sec nav-return-button">返回区域</button>
       </p>
-      <p class="tip-inline">已派遣待判定任务：${state.activeMissions.length}。返回区域后点击「下一天」推进并触发到期判定。</p>
+      <p class="tip-inline">已派遣待判定任务：${state.activeMissions.length}。返回区域后在底部「日程推进」条继续推进，并触发到期判定。</p>
     </div>`;
 
     document.querySelectorAll("#modeToggle button").forEach((b) => {
@@ -3995,11 +4232,7 @@
     const hireBtn = document.getElementById("btnHireTemp");
     if (hireBtn) {
       hireBtn.onclick = () => {
-        state.tempHireUsed = true;
-        state.tempStaffIds.push("temp_stringer");
-        addMacro({ 声望: -1 });
-        log("本周雇佣临时线人：花费不菲，但获得一颗完整临时角色骰。");
-        renderSetup();
+        if (toggleTempStringerForDispatch(maxStaff)) renderSetup();
       };
     }
     const hover = document.getElementById("dispatchHoverPreview");
@@ -4016,7 +4249,7 @@
         const i = state.selectedStaffIds.indexOf(id);
         if (i >= 0) state.selectedStaffIds.splice(i, 1);
         else {
-          if (state.selectedStaffIds.length >= maxStaff) state.selectedStaffIds.shift();
+          if (!canAddStaffToDispatch(findStaff(id), maxStaff)) return;
           state.selectedStaffIds.push(id);
         }
         renderSetup();
@@ -4095,7 +4328,10 @@
         <span>${used ? "已消耗" : "一次性道具骰"}</span>
       </button>`;
     }).join("");
-    const tempHireAvailable = !state.tempHireUsed && !state.tempStaffIds.includes("temp_stringer");
+    const tempHired = isTempStringerHired();
+    const tempButtonHtml = tempHired
+      ? ""
+      : `<p style="margin:0.45rem 0 0;"><button type="button" id="btnHireTemp">雇佣本周临时线人（$1200，纳入人数限制）</button></p>`;
     elS.innerHTML = `
       <h2>${m.missionType === "leadInvestigation" ? "线索调查配置" : "探索配置"} · ${escapeHtml(m.name)}</h2>
       ${missionTypePanelHtml(m, false)}
@@ -4103,7 +4339,7 @@
       <div class="prob-box">
         <div><strong>一次性道具骰</strong> <span class="tip-inline">不占人数；使用后消耗；计入总骰数。</span></div>
         <div class="tool-dice-row">${toolDiceHtml || `<span class="tip-inline">暂无道具骰</span>`}</div>
-        <p style="margin:0.45rem 0 0;"><button type="button" id="btnHireTemp" ${tempHireAvailable ? "" : "disabled"}>雇佣本周临时线人（$1200，纳入人数限制）</button></p>
+        ${tempButtonHtml}
         <div style="margin-top:0.35rem;font-size:0.72rem;color:#64748b;">旧 split 预览：调查池 ${prob.nA} / 现场池 ${prob.nB}${ok ? "" : " · 原属性未达门槛"}</div>
       </div>
       <p style="font-size:0.85rem;margin-top:0.5rem;">展示：
@@ -4115,10 +4351,10 @@
       <p class="row" style="margin-top:0.75rem;">
         <button type="button" id="btnRun" class="primary" ${state.selectedStaffIds.length === 0 || m.days > state.day || state.missionResolving || state.processingDayTick ? "disabled" : ""}>${state.missionResolving ? "执行中..." : `${m.missionType === "leadInvestigation" ? "派遣线索调查" : "派遣探索任务"}（预计 ${m.days} 天后判定）`}</button>
         ${m.missionQueueId ? `<button type="button" id="btnUndoDispatch">撤销派遣</button>` : ""}
-        <button type="button" id="btnCancelSetup">返回区域</button>
+        <button type="button" id="btnCancelSetup" class="nm-sec nav-return-button">返回区域</button>
       </p>
       ${m.days > state.day ? `<p style="color:var(--danger);font-size:0.85rem;">剩余天数不足，无法在本周内完成。</p>` : ""}
-      <p class="tip-inline" style="margin-top:0.5rem;">已派遣待判定任务：${state.activeMissions.length}。返回区域后点击「下一天」推进并触发到期判定。</p>`;
+      <p class="tip-inline" style="margin-top:0.5rem;">已派遣待判定任务：${state.activeMissions.length}。返回区域后在底部「日程推进」条继续推进，并触发到期判定。</p>`;
     document.querySelectorAll("#modeToggle button").forEach((b) => {
       b.onclick = () => {
         state.displayMode = b.getAttribute("data-mode");
@@ -4136,11 +4372,7 @@
     const hireBtn = document.getElementById("btnHireTemp");
     if (hireBtn) {
       hireBtn.onclick = () => {
-        state.tempHireUsed = true;
-        state.tempStaffIds.push("temp_stringer");
-        addMacro({ 声望: -1 });
-        log("本周雇佣临时线人：花费不菲，但获得一颗完整临时角色骰。");
-        renderSetup();
+        if (toggleTempStringerForDispatch(maxStaff)) renderSetup();
       };
     }
     const pick = document.getElementById("staffPick");
@@ -4168,7 +4400,7 @@
         const i = state.selectedStaffIds.indexOf(id);
         if (i >= 0) state.selectedStaffIds.splice(i, 1);
         else {
-          if (state.selectedStaffIds.length >= maxStaff) state.selectedStaffIds.shift();
+          if (!canAddStaffToDispatch(findStaff(id), maxStaff)) return;
           state.selectedStaffIds.push(id);
         }
         renderSetup();
@@ -4251,7 +4483,7 @@
           <h4 class="tutorial-soft-h4">派遣之后</h4>
           <ul class="tutorial-soft-ul">
             <li>点<strong>派遣</strong>后，任务占用本周若干天。</li>
-            <li>到点用<strong>下一天</strong>推进，系统会依次播报结果。</li>
+            <li>到点用底部<strong>日程推进</strong>条推进，系统会依次播报结果。</li>
           </ul>
           <p class="tutorial-soft-note">按自己的节奏即可，不必为引导多点无关按钮。本周内本提示只出现一次。</p>
         </div>`,
@@ -5223,17 +5455,32 @@
   function updateNextDayButton() {
     const floatingNextDay = document.getElementById("btnNextDay");
     if (floatingNextDay) floatingNextDay.classList.toggle("hidden", state.view === "global" || state.view === "setup" || state.view === "region");
-    const endWeek = document.getElementById("btnEndWeek");
-    if (endWeek) endWeek.classList.toggle("hidden", state.view === "setup");
+    const backToGlobal = document.getElementById("btnBackToGlobal");
+    if (backToGlobal) {
+      const canBack = state.phase === "explore" && state.view === "region" && !state.processingDayTick && !state.missionResolving;
+      backToGlobal.classList.toggle("hidden", !canBack);
+      backToGlobal.disabled = !canBack;
+    }
     const btns = [document.getElementById("btnNextDay"), document.getElementById("btnNextDayRegion")].filter(Boolean);
     if (!btns.length) return;
     const disabled = state.phase !== "explore" || state.processingDayTick || state.missionResolving || state.view === "result";
     btns.forEach((btn) => {
       btn.disabled = disabled;
       const label = btn.querySelector("span:last-child");
-      if (label) label.textContent = state.processingDayTick ? "结算中..." : "下一天";
-      else btn.textContent = state.processingDayTick ? "结算中..." : "下一天";
+      const text = btn.id === "btnNextDayRegion" ? regionNextDayButtonText() : (state.processingDayTick ? "结算中..." : "下一天");
+      if (label) label.textContent = text;
+      else btn.textContent = text;
     });
+  }
+
+  function returnToGlobalMap() {
+    if (state.phase !== "explore") return;
+    if (state.regionId) state.globalSelectedRegionId = state.regionId;
+    state.openDeepChainId = null;
+    state.regionLinkedTarget = null;
+    renderGlobal();
+    setView("global");
+    updateNextDayButton();
   }
 
   function newCardId() {
@@ -6338,7 +6585,7 @@
     }
     el.toast.innerHTML = `<span>已替换：${escapeHtml(prevStory.title)} → ${escapeHtml(newStory.title)}</span>
       <button class="nm-sec" id="undoBtn">撤销</button>`;
-    el.toast.classList.add("show");
+    el.toast.className = "nm-toast show";
     document.getElementById("undoBtn").onclick = () => {
       if (!state.lastReplaceAction) return;
       state.placed[state.lastReplaceAction.slotId] = state.lastReplaceAction.prevStory;
@@ -6350,6 +6597,7 @@
     state.undoTimer = setTimeout(() => {
       state.lastReplaceAction = null;
       el.toast.classList.remove("show");
+      el.toast.classList.remove("warn");
     }, 2000);
   }
 
@@ -6706,12 +6954,7 @@
     };
   }
 
-  document.getElementById("btnEndWeek").onclick = () => {
-    if (state.phase !== "explore") return;
-    log("结束探索周，进入故事合成台。");
-    state.day = 0;
-    enterSynthesisPhase();
-  };
+  document.getElementById("btnBackToGlobal").onclick = () => returnToGlobalMap();
   document.getElementById("btnNextDay").onclick = () => advanceOneDay();
 
   function createPaperLabReports() {

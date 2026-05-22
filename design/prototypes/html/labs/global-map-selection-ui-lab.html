@@ -1,14 +1,14 @@
 <!--
 PROTOTYPE - NOT FOR PRODUCTION
-Question: 全球地图选择页能否把主操作从“下一天”转移到“进入选中区域”，并用选中区域详情替代平铺列表？
-Date: 2026-05-13
+Question: 世界探索页能否用阶段导航、地图主语、唯一主操作和语义标签改善首屏决策？
+Date: 2026-05-21
 -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Angus 全球地图选择 UI 实验</title>
+  <title>Angus 世界探索 P0/P1 UI 实验</title>
   <style>
     :root {
       color-scheme: dark;
@@ -29,6 +29,10 @@ Date: 2026-05-13
       --violet: #a78bfa;
       --cyan: #67e8f9;
       --shadow: rgba(0, 0, 0, 0.46);
+      --cost: #fb7185;
+      --reward: #34d399;
+      --condition: #60a5fa;
+      --info: #a78bfa;
       --r: 8px;
       font-family: "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
     }
@@ -55,23 +59,74 @@ Date: 2026-05-13
     }
     .topbar {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-columns: auto minmax(0, 1fr) auto;
       gap: 14px;
-      align-items: end;
+      align-items: center;
       padding: 0 0 12px;
       border-bottom: 1px solid rgba(215, 170, 85, 0.28);
       margin-bottom: 14px;
     }
-    h1 {
-      margin: 0 0 6px;
-      font-size: 24px;
-      line-height: 1.1;
-      letter-spacing: 0;
-      color: var(--gold);
+    .back-link {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 12px;
+      border: 1px solid rgba(148, 163, 184, 0.26);
+      border-radius: 7px;
+      background: rgba(7, 12, 20, 0.62);
+      color: #cbd5e1;
+      font-weight: 800;
+    }
+    .back-link:hover { border-color: rgba(215, 170, 85, 0.48); color: #ffe7aa; }
+    .phase-rail {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      overflow: hidden;
+    }
+    .phase-step {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 34px;
+      padding: 0 11px;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: 999px;
+      background: rgba(7, 12, 20, 0.44);
+      color: #7f8ca3;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .phase-step b {
+      display: grid;
+      place-items: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.26);
+      color: #cbd5e1;
+      font-size: 10px;
+      line-height: 1;
+    }
+    .phase-step.active {
+      border-color: rgba(96, 165, 250, 0.52);
+      background: rgba(37, 99, 235, 0.22);
+      color: #dbeafe;
+      box-shadow: 0 0 18px rgba(96, 165, 250, 0.13);
+    }
+    .phase-step.active b { background: var(--blue); color: white; }
+    .phase-divider {
+      flex: 0 0 36px;
+      height: 1px;
+      background: rgba(148, 163, 184, 0.22);
     }
     .week-line {
       display: flex;
       flex-wrap: wrap;
+      justify-content: flex-end;
       gap: 8px;
       color: var(--muted);
       font-size: 13px;
@@ -189,7 +244,7 @@ Date: 2026-05-13
       color: #dbe7f3;
       transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease, opacity 160ms ease;
     }
-    .region-pin:hover,
+    .region-pin:not(.locked):hover,
     .region-pin.is-previewed,
     .region-pin.is-selected {
       border-color: var(--line-strong);
@@ -204,6 +259,7 @@ Date: 2026-05-13
       opacity: 0.75;
       border-style: dashed;
       color: #b8c2d0;
+      cursor: default;
     }
     .pin-dot {
       width: 18px;
@@ -271,13 +327,20 @@ Date: 2026-05-13
       display: grid;
       gap: 4px;
     }
-    .choice:hover,
+    .choice:not(.locked):hover,
     .choice.is-previewed,
     .choice.is-selected {
       border-color: rgba(215, 170, 85, 0.62);
     }
     .choice.is-selected {
       background: rgba(74, 55, 22, 0.48);
+    }
+    .choice.locked {
+      cursor: default;
+      border-style: dashed;
+      background: rgba(10, 16, 25, 0.42);
+      opacity: 0.62;
+      filter: saturate(0.48);
     }
     .choice strong {
       font-size: 12px;
@@ -343,6 +406,23 @@ Date: 2026-05-13
       font-size: 18px;
       color: #f8fafc;
     }
+    .intel-section {
+      display: grid;
+      gap: 8px;
+    }
+    .intel-section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .intel-section-head h4 {
+      margin: 0;
+      color: var(--gold-2);
+      font-size: 14px;
+    }
     .slot-list {
       display: grid;
       gap: 8px;
@@ -357,7 +437,7 @@ Date: 2026-05-13
       padding: 9px;
       border: 1px solid rgba(148, 163, 184, 0.22);
       border-radius: var(--r);
-      background: rgba(12, 18, 27, 0.78);
+      background: rgba(12, 18, 27, 0.58);
       overflow: hidden;
     }
     .slot:before {
@@ -418,10 +498,12 @@ Date: 2026-05-13
       font-size: 11px;
       white-space: nowrap;
     }
-    .mini-chip.time { border-color: rgba(215, 170, 85, 0.46); color: #ffe5a8; }
-    .mini-chip.enemy { border-color: rgba(99, 179, 255, 0.45); color: #bfdbfe; }
-    .mini-chip.danger { border-color: rgba(245, 166, 61, 0.58); color: #fde68a; }
-    .mini-chip.next { border-style: dashed; border-color: rgba(167, 139, 250, 0.56); color: #ddd6fe; }
+    .mini-chip.cost { border-color: rgba(251, 113, 133, 0.54); color: #fecdd3; background: rgba(127, 29, 29, 0.18); }
+    .mini-chip.reward { border-color: rgba(52, 211, 153, 0.48); color: #bbf7d0; background: rgba(6, 95, 70, 0.16); }
+    .mini-chip.condition { border-color: rgba(96, 165, 250, 0.48); color: #bfdbfe; background: rgba(30, 64, 175, 0.15); }
+    .mini-chip.challenge { border-color: rgba(245, 158, 11, 0.56); color: #fde68a; background: rgba(120, 53, 15, 0.18); }
+    .mini-chip.info { border-color: rgba(167, 139, 250, 0.52); color: #ddd6fe; background: rgba(76, 29, 149, 0.16); }
+    .mini-chip.status { border-color: rgba(215, 170, 85, 0.46); color: #ffe5a8; background: rgba(120, 53, 15, 0.16); }
     .countdown {
       display: grid;
       place-items: center;
@@ -480,7 +562,7 @@ Date: 2026-05-13
     }
     .detail-actions {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       gap: 10px;
       padding: 12px 14px;
       border-top: 1px solid var(--line);
@@ -505,7 +587,7 @@ Date: 2026-05-13
       color: #ffe7aa;
     }
     .btn.primary {
-      min-width: 212px;
+      min-width: 260px;
       border-color: rgba(215, 170, 85, 0.68);
       background: linear-gradient(180deg, rgba(155, 107, 24, 0.98), rgba(88, 58, 15, 0.98));
       color: #fff7dd;
@@ -519,6 +601,30 @@ Date: 2026-05-13
       opacity: 0.46;
       cursor: not-allowed;
     }
+    .action-log {
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      border-radius: var(--r);
+      background: rgba(5, 10, 17, 0.35);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .action-log summary {
+      min-height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 0 10px;
+      cursor: pointer;
+      color: #cbd5e1;
+      font-weight: 800;
+    }
+    .action-log summary::-webkit-details-marker { display: none; }
+    .action-log ul {
+      margin: 0;
+      padding: 0 10px 10px 28px;
+      line-height: 1.6;
+    }
     svg.icon {
       width: 18px;
       height: 18px;
@@ -531,6 +637,8 @@ Date: 2026-05-13
     .slot-icon svg.icon,
     .pin-dot svg.icon { width: 17px; height: 17px; }
     @media (max-width: 1080px) {
+      .topbar { grid-template-columns: 1fr; }
+      .week-line { justify-content: flex-start; }
       .layout { grid-template-columns: 1fr; }
       .map-wrap { min-height: 560px; }
       .detail { min-height: 0; }
@@ -538,6 +646,8 @@ Date: 2026-05-13
     @media (max-width: 720px) {
       .shell { width: min(100vw - 18px, 720px); padding-top: 12px; }
       .topbar { grid-template-columns: 1fr; }
+      .phase-rail { overflow-x: auto; padding-bottom: 3px; }
+      .phase-divider { flex-basis: 22px; }
       .map-wrap { min-height: 520px; }
       .region-pin {
         min-width: 142px;
@@ -593,16 +703,21 @@ Date: 2026-05-13
 
   <main class="shell">
     <header class="topbar">
-      <div>
-        <h1>全球地图</h1>
-        <div class="week-line">
-          <span class="pill gold">第 1 周</span>
-          <span class="pill">剩余 7 日</span>
-          <span class="pill green">可派遣 8/8</span>
-          <span class="pill">公信 42 · 声望 45 · 守序 48</span>
-        </div>
+      <button type="button" class="back-link">← 回合简报</button>
+      <nav class="phase-rail" aria-label="本周流程">
+        <span class="phase-step active"><b>1</b>探索</span>
+        <span class="phase-divider" aria-hidden="true"></span>
+        <span class="phase-step"><b>2</b>线索成稿</span>
+        <span class="phase-divider" aria-hidden="true"></span>
+        <span class="phase-step"><b>3</b>拖拽组版</span>
+        <span class="phase-divider" aria-hidden="true"></span>
+        <span class="phase-step"><b>4</b>结算</span>
+      </nav>
+      <div class="week-line" aria-label="探索周状态">
+        <span class="pill gold">第 1 周</span>
+        <span class="pill">剩余 7 日</span>
+        <span class="pill green">可派遣 8/8</span>
       </div>
-      <span class="pill">取材阶段</span>
     </header>
 
     <section class="layout">
@@ -617,21 +732,21 @@ Date: 2026-05-13
             <path d="M20 35 C 34 56, 45 62, 56 54"></path>
             <path d="M56 54 C 64 48, 72 47, 78 44"></path>
           </svg>
-          <button class="region-pin" data-region="us" style="--x:20%;--y:35%;">
+          <button type="button" class="region-pin" data-region="us" style="--x:20%;--y:35%;">
             <span class="pin-dot"><svg class="icon"><use href="#i-target"></use></svg></span>
             <span class="label">北美禁区带</span>
             <span class="pin-count">4</span>
           </button>
-          <button class="region-pin locked" data-region="east_asia" style="--x:78%;--y:44%;">
+          <div class="region-pin locked" data-region="east_asia" style="--x:78%;--y:44%;" aria-disabled="true">
             <span class="pin-dot"><svg class="icon"><use href="#i-lock"></use></svg></span>
             <span class="label">东亚神秘地带</span>
             <span class="pin-count locked">82%</span>
-          </button>
-          <button class="region-pin locked" data-region="pacific" style="--x:56%;--y:54%;">
+          </div>
+          <div class="region-pin locked" data-region="pacific" style="--x:56%;--y:54%;" aria-disabled="true">
             <span class="pin-dot"><svg class="icon"><use href="#i-lock"></use></svg></span>
             <span class="label">太平洋岛屿群</span>
             <span class="pin-count locked">80%</span>
-          </button>
+          </div>
           <div class="map-legend">
             <span class="pill gold"><svg class="icon"><use href="#i-enter"></use></svg>选中区域可进入</span>
             <span class="pill red"><svg class="icon"><use href="#i-clock"></use></svg>限时机会</span>
@@ -648,8 +763,7 @@ Date: 2026-05-13
         <div class="region-switcher" id="regionSwitcher" aria-label="区域切换"></div>
         <div class="detail-body" id="detailBody" aria-live="polite"></div>
         <div class="detail-actions">
-          <button class="btn secondary" id="nextDayBtn"><svg class="icon"><use href="#i-clock"></use></svg>下一天</button>
-          <button class="btn primary" id="enterBtn"><svg class="icon"><use href="#i-enter"></use></svg><span>进入选中区域 · 北美禁区带</span></button>
+          <button type="button" class="btn primary" id="enterBtn"><svg class="icon"><use href="#i-enter"></use></svg><span>进入探索 · 北美禁区带</span></button>
         </div>
       </aside>
     </section>
@@ -660,9 +774,11 @@ Date: 2026-05-13
       const regions = {
         us: {
           name: "北美禁区带",
-          status: "已开放",
+          status: "当前取材地区",
           unlocked: true,
-          flavor: "初始取材区，都市传说、禁区和临时情报都已可见。",
+          difficulty: "难度：中等",
+          recommend: "推荐 ★★★",
+          flavor: "初始取材区，都市传说、禁区和临时情报都已可见。先确认地区，再进入区域内选择具体任务。",
           summary: [
             ["可见目标", "4", "target"],
             ["限时机会", "1", "timer"],
@@ -674,27 +790,32 @@ Date: 2026-05-13
               tone: "target",
               icon: "i-target",
               title: "51 区外围公路",
-              meta: ["耗时 2天", "探索 4", "生存 2", "对手骰 2"],
+              meta: ["成本 2天", "条件：探索2", "条件：生存1", "挑战：对手骰2", "收益 常驻线索"],
             },
             {
               tone: "timer",
               icon: "i-clock",
               title: "突发：雷达异常光点",
-              meta: ["耗时 2天", "探索 5", "生存 3", "危险", "对手骰 3"],
+              meta: ["成本 2天", "条件：探索2", "条件：生存1", "挑战：危险", "收益 截稿素材"],
               countdown: "2天",
             },
             {
               tone: "clue",
               icon: "i-clue",
               title: "北美禁区带 非正式研究记录",
-              meta: ["耗时 2天", "人脉", "洞察", "调查 -> 新任务"],
+              meta: ["成本 2天", "条件：人脉1", "条件：洞察1", "信息 调查后生成任务"],
             },
             {
               tone: "deep",
               icon: "i-stack",
               title: "球状闪电 · 厨房火球",
-              meta: ["耗时 1天", "理性 2", "洞察 2", "下一页：?", "对手骰 1"],
+              meta: ["成本 1天", "条件：理性2", "条件：洞察2", "信息 深度调查 · 当前任务2"],
             },
+          ],
+          log: [
+            "雷达异常光点剩余 2 天。",
+            "球状闪电链条已解锁当前环。",
+            "51 区外围公路仍可反复调查。",
           ],
         },
         east_asia: {
@@ -713,8 +834,8 @@ Date: 2026-05-13
             { label: "罗斯威尔残页", value: 0, max: 1, gap: "完成北美深度链第一环" },
           ],
           previewSlots: [
-            { tone: "locked", icon: "i-lock", title: "神农架毛发样本采集", meta: ["目标轮廓已记录", "进入后显示需求"] },
-            { tone: "locked", icon: "i-stack", title: "未解锁的链式线索", meta: ["需要前置证据", "下一页：?"] },
+            { tone: "locked", icon: "i-lock", title: "神农架毛发样本采集", meta: ["信息 目标轮廓已记录", "条件：区域解锁后显示需求"] },
+            { tone: "locked", icon: "i-stack", title: "未解锁的链式线索", meta: ["条件：需要前置证据", "信息 深度调查待开启"] },
           ],
         },
         pacific: {
@@ -733,7 +854,7 @@ Date: 2026-05-13
             { label: "守序", value: 48, max: 60, gap: "还差 12" },
           ],
           previewSlots: [
-            { tone: "locked", icon: "i-lock", title: "复活节岛石像热异常", meta: ["观测许可未到位", "进入后显示需求"] },
+            { tone: "locked", icon: "i-lock", title: "复活节岛石像热异常", meta: ["条件：观测许可未到位", "信息 区域解锁后显示需求"] },
           ],
         },
       };
@@ -755,10 +876,11 @@ Date: 2026-05-13
       }
 
       function chipClass(text) {
-        if (/耗时/.test(text)) return "time";
-        if (/对手骰/.test(text)) return "enemy";
-        if (/危险/.test(text)) return "danger";
-        if (/下一页/.test(text)) return "next";
+        if (/挑战：|对手骰/.test(text)) return "challenge";
+        if (/成本|耗时/.test(text)) return "cost";
+        if (/收益|素材|线索/.test(text)) return "reward";
+        if (/条件：/.test(text)) return "condition";
+        if (/信息|深度|调查后|当前任务/.test(text)) return "info";
         return "";
       }
 
@@ -810,33 +932,44 @@ Date: 2026-05-13
         $("#selectionBadge").textContent = `${isPreview ? "预览" : "已选"} ${region.name}`;
         $("#detailMode").textContent = isPreview ? "预览" : "已选";
         $("#detailMode").className = `pill ${region.unlocked ? "gold" : ""}`;
+        const statusPill = region.unlocked ? `${region.difficulty} | ${region.recommend}` : "进度缺口";
         $("#detailBody").innerHTML = `
           <div class="region-title-row">
             <div>
               <div class="region-kicker">${escapeHtml(region.status)}</div>
               <h3 class="region-name">${escapeHtml(region.name)}</h3>
             </div>
-            <span class="pill ${region.unlocked ? "green" : ""}">${region.unlocked ? "可进入" : "进度缺口"}</span>
+            <span class="pill ${region.unlocked ? "green" : ""}">${escapeHtml(statusPill)}</span>
           </div>
           <div class="gap-text">${escapeHtml(region.flavor)}</div>
           ${renderSummary(region)}
-          ${region.unlocked ? `<div class="slot-list">${region.slots.map(renderSlot).join("")}</div>` : `${renderUnlocks(region)}<div class="slot-list">${region.previewSlots.map(renderSlot).join("")}</div>`}
+          ${region.unlocked ? `
+            <section class="intel-section" aria-label="区域情报预览">
+              <div class="intel-section-head"><h4>区域情报预览</h4><span>${region.slots.length} 条 · 进入后选择任务</span></div>
+              <div class="slot-list">${region.slots.map(renderSlot).join("")}</div>
+            </section>
+            <details class="action-log">
+              <summary><span>本周行动日志</span><span>展开</span></summary>
+              <ul>${region.log.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+            </details>
+          ` : `${renderUnlocks(region)}<section class="intel-section" aria-label="锁定区域预览"><div class="intel-section-head"><h4>锁定情报轮廓</h4><span>只读</span></div><div class="slot-list">${region.previewSlots.map(renderSlot).join("")}</div></section>`}
         `;
         const enterBtn = $("#enterBtn");
         enterBtn.disabled = !regions[selectedId].unlocked;
-        $("span", enterBtn).textContent = regions[selectedId].unlocked ? `进入选中区域 · ${regions[selectedId].name}` : "缺口未补齐";
+        $("span", enterBtn).textContent = regions[selectedId].unlocked ? `进入探索 · ${regions[selectedId].name}` : "缺口未补齐";
         updateLinkedState();
       }
 
       function renderSwitcher() {
         $("#regionSwitcher").innerHTML = Object.entries(regions).map(([id, r]) => `
-          <button class="choice" data-region="${id}" aria-pressed="${id === selectedId ? "true" : "false"}">
+          <button type="button" class="choice ${r.unlocked ? "" : "locked"}" data-region="${id}" aria-pressed="${id === selectedId ? "true" : "false"}" ${r.unlocked ? "" : "disabled aria-disabled=\"true\""}>
             <strong>${escapeHtml(r.name)}</strong>
-            <span>${r.unlocked ? "可进入 · 4 项情报" : "未解锁 · 显示缺口"}</span>
+            <span>${r.unlocked ? `${escapeHtml(r.difficulty)} · ${escapeHtml(r.recommend)}` : "未解锁 · 显示缺口"}</span>
           </button>
         `).join("");
         $$(".choice").forEach((btn) => {
           const id = btn.dataset.region;
+          if (!regions[id].unlocked) return;
           btn.addEventListener("mouseenter", () => {
             previewId = id;
             renderDetail();
@@ -867,6 +1000,7 @@ Date: 2026-05-13
       function bindMap() {
         $$(".region-pin").forEach((btn) => {
           const id = btn.dataset.region;
+          if (!regions[id].unlocked) return;
           btn.addEventListener("mouseenter", () => {
             previewId = id;
             renderDetail();
@@ -884,9 +1018,6 @@ Date: 2026-05-13
         });
       }
 
-      $("#nextDayBtn").addEventListener("click", () => {
-        $("#selectionBadge").textContent = "下一天待确认";
-      });
       $("#enterBtn").addEventListener("click", () => {
         if (!regions[selectedId].unlocked) return;
         $("#selectionBadge").textContent = `准备进入 ${regions[selectedId].name}`;
