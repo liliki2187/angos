@@ -1,0 +1,12 @@
+{
+  "id": "",
+  "name": "ux-kb-risks",
+  "display_name": "UX 业务风险库",
+  "description": "10 类业务风险 + 8 问扫描清单（商城/付费类必加载）",
+  "version": "1.0.0",
+  "category": "planning",
+  "url": null,
+  "status": null,
+  "installed_at": null,
+  "updated_at": 1779763238000
+}

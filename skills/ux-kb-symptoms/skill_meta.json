@@ -1,0 +1,12 @@
+{
+  "id": "",
+  "name": "ux-kb-symptoms",
+  "display_name": "UX 症状词库（30 个）",
+  "description": "30 个症状词完整库（主 spec 15 个不够时加载）",
+  "version": "1.0.0",
+  "category": "planning",
+  "url": null,
+  "status": null,
+  "installed_at": null,
+  "updated_at": 1779763238000
+}

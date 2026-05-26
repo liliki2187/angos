@@ -13,8 +13,16 @@
 Angus 的项目本地技能位于 `./skills`。
 优先使用这些工作区内副本，而不是 `$CODEX_HOME/skills` 下的重复安装版本。
 
+## Codex Subagents
+
+- `ux_laoge`：项目级 Codex custom subagent，配置位于 `./.codex/agents/ux-laoge.toml`。当用户输入 `@UX老哥`、`@ux老哥`、`@UX诊断`、`@ux诊断`、`@cowork-ux-diagnosis`，或明确说“让 UX 老哥 / UX 子 agent 单独分析”时，视为用户显式要求调用该 subagent。父级 Codex 应 spawn `ux_laoge`，把截图、问题描述、相关文件路径和必要上下文传入；该 subagent 默认只做只读 UX 诊断，不直接改代码。完整 UX 诊断主 spec 使用 `./skills/ux-diagnosis/system-prompt-v2.2.md`，这是从 portable 包 `core/system-prompt.md` 同步的上游核心；不要用 portable 包的 `adapters/codex/AGENTS.md` 覆盖本项目根 `AGENTS.md`。
+- 如果当前 Codex 运行环境暂未暴露 `ux_laoge` 这个 agent 类型，则父级 Codex 必须按 `./skills/ux-diagnosis/SKILL.md` 在当前线程执行同等诊断，不要把 `@UX老哥` 当普通文本忽略。
+- Codemaker / brainmaker 的 `C:/Users/gzfangyue/AppData/Roaming/com.brainmaker.client/codemaker/.opencode-config/agents/` 配置不作为 Codex 调用依据；Codex 使用本仓库 `.codex/agents/` 与 `./skills/`。
+
 ### Available skills
 
+- `ux-diagnosis`：Codex 版 UX 老哥诊断技能。别名/触发词包括 `@UX老哥`、`@ux老哥`、`@UX诊断`、`@ux诊断`、`@cowork-ux-diagnosis`、`界面硬伤`、`交互硬伤`、`P0/P1/P2`。用于结合 Angus 系统功能分析 UI 截图/原型界面，输出决策链、冲突扫描、P0/P1/P2 和改进建议；除非用户明确要求摘要，否则最终交付不得把完整 subagent 报告压缩成几条建议。（文件：`./skills/ux-diagnosis/SKILL.md`）
+- `ux-kb-risks`、`ux-kb-cross-page`、`ux-kb-symptoms`、`ux-kb-principles`、`ux-kb-templates`：`ux-diagnosis` 的长尾辅助知识库。仅在对应触发条件下读取，不要默认全量加载。
 - `art-reference-picker`：审阅 Angus 项目的本地美术参考图，与项目文档对照后挑出最相关的图片，并给出具体适配原因。适用于分析已下载截图、为当前 UI 或美术需求挑选最佳参考、解释项目关联性、归档入选图片，或把选中的图片及理由发送到飞书群。（文件：`./skills/art-reference-picker/SKILL.md`）
 - `claude-to-im`：把当前 Codex 或 Claude Code 会话桥接到 Telegram、Discord、飞书/Lark 或 QQ，让用户能从手机继续聊天，并可复用内置飞书发送脚本做一次性文本或图片发送。别名/触发词包括：`claude to im`、`claude_to_im`、`bridge`、`start bridge`、`restart bridge`、`bridge status`、`bridge logs`、`send to feishu`、`post to feishu`。用于桥接服务的配置、启动、停止、重启、状态检查、日志排障，以及从仓库文件做一次性飞书发送；不用于单独开发 IM Bot 或直接操作 IM 平台 SDK。（文件：`./skills/claude-to-im/SKILL.md`）
 - `openrouter-image-gen`：通过 OpenRouter 图像模型生成、编辑或规划可直接用于游戏的图片资产，包括 GPT-5 Image 透明 PNG/WebP 工作流，以及 Nano Banana / Nano Banana 2 的不透明图工作流。别名/触发词包括：`openrouter image gen`、`openrouter 生图`、`nano banana`、`nano banana 2`、`gpt-5 image transparent`、`参考图生图`、`openrouter image`、`or image gen`。适用于基于 OpenRouter 的图像生成、透明背景素材切图、参考图编辑、图标、道具、贴图、精灵、海报、主视觉、UI 横幅、角色立绘、环境图等需求。（文件：`./skills/openrouter-image-gen/SKILL.md`）
@@ -29,6 +37,7 @@ Angus 的项目本地技能位于 `./skills`。
 ### How to use skills
 
 - 如果用户明确提到某个技能，打开对应 `SKILL.md` 并按其说明执行。
+- 识别明显别名为直接点名技能。对 `ux-diagnosis`，包括 `@UX老哥`、`@ux老哥`、`@UX诊断`、`@ux诊断`、`@cowork-ux-diagnosis`、`界面硬伤`、`交互硬伤`、`P0/P1/P2` 等 UX 诊断请求。若用户使用 `@UX老哥` 等形式，优先按上方 `Codex Subagents` 规则调用 `ux_laoge`；调用不了时在当前线程按该技能执行。
 - 识别明显别名为直接点名技能。对 `claude-to-im`，包括 `claude to im`、`claude_to_im`、`bridge`、`start bridge`、`restart bridge`、`bridge status`、`bridge logs` 等桥接管理请求。
 - 识别明显别名为直接点名技能。对 `openrouter-image-gen`，包括 `openrouter image gen`、`openrouter 生图`、`openrouter image`、`or image gen`、`nano banana`、`nano banana 2`、`gpt-5 image transparent`、`透明背景生图`、`参考图生图` 等相关图像生成请求。
 - 识别明显别名为直接点名技能。对 `psd-to-godot-ui`，包括 `psd to godot ui`、`import psd`、`psd ui`、`photoshop ui import` 等 PSD 转 Godot UI 请求。
