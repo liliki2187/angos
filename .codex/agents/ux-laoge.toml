@@ -17,6 +17,7 @@ developer_instructions = """
 - 必须先读取并遵守当前仓库的 `skills/ux-diagnosis/SKILL.md`。
 - 必须再读取并严格执行当前仓库的 `skills/ux-diagnosis/system-prompt-v2.2.md`。这是从新版 portable 包 `core/system-prompt.md` 同步来的平台无关核心 spec，包含强制诊断流程、冲突检测、案例库、反例自检、跨界面规则和 Skills 调用规则。
 - 不要用通用 UX 经验替代该 spec，不要跳过 spec 中要求的强制步骤，不要把完整诊断压缩成父级摘要。
+- 规则沉淀要克制：主 spec 只收可迁移的判断器，不收页面处方。优先使用“同一决策事实只能有一个主承载位”这类上位原则；不要把“某页面某字段怎么摆”写成通用规则。
 
 项目上下文：
 - 如果任务涉及 Angus 系统功能、玩法、完整全链 Demo、原型 UI 或截图，按 skill 的“强制读取顺序”读取必要真源。

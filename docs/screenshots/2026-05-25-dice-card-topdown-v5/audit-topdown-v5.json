@@ -1,0 +1,52 @@
+{
+  "stage": "停骰完成 · 选择计入判定的骰面",
+  "renderer": "canvas-model-card",
+  "effectMode": "tumble-horizontal",
+  "resultPose": "top-face-up",
+  "cardGrid": {
+    "x": 335,
+    "y": 620,
+    "width": 766,
+    "height": 273
+  },
+  "modal": {
+    "x": 320,
+    "y": 16,
+    "width": 800,
+    "height": 948
+  },
+  "boardCount": 0,
+  "canvasCount": 6,
+  "canvasRects": [
+    {
+      "width": 82,
+      "height": 74,
+      "label": "替座"
+    },
+    {
+      "width": 82,
+      "height": 74,
+      "label": "探索1"
+    },
+    {
+      "width": 82,
+      "height": 74,
+      "label": "空"
+    },
+    {
+      "width": 82,
+      "height": 74,
+      "label": "空"
+    },
+    {
+      "width": 82,
+      "height": 74,
+      "label": "造势1"
+    },
+    {
+      "width": 82,
+      "height": 74,
+      "label": "鬼乘客"
+    }
+  ]
+}

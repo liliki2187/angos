@@ -1,0 +1,37 @@
+{
+  "clipAudit": {
+    "boardCount": 0,
+    "canvasCount": 5,
+    "canvasRects": [
+      {
+        "height": 74,
+        "width": 82
+      },
+      {
+        "height": 74,
+        "width": 82
+      },
+      {
+        "height": 74,
+        "width": 82
+      },
+      {
+        "height": 74,
+        "width": 82
+      },
+      {
+        "height": 74,
+        "width": 82
+      }
+    ],
+    "gridRect": {
+      "height": 136,
+      "width": 766
+    },
+    "stage": "基础骰横轴急转 · 0/5"
+  },
+  "files": [
+    "D:\\angos\\docs\\screenshots\\2026-05-25-dice-card-model-v4\\08-clip-fix-rolling-original-layout.png",
+    "D:\\angos\\docs\\screenshots\\2026-05-25-dice-card-model-v4\\09-clip-fix-rolling-card-grid.png"
+  ]
+}

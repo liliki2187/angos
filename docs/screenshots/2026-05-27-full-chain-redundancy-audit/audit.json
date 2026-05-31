@@ -1,0 +1,122 @@
+{
+  "outDir": "D:\\angos\\docs\\screenshots\\2026-05-27-full-chain-redundancy-audit",
+  "baseUrl": "http://127.0.0.1:2425",
+  "version": "20260527-redundancy-audit",
+  "shots": [
+    {
+      "file": "01-index-entry.png",
+      "title": "Index entry",
+      "note": "Root entry page and prototype selection context.",
+      "url": "http://127.0.0.1:2425/index.html?v=20260527-redundancy-audit",
+      "view": "",
+      "phase": [],
+      "textSample": "Angus 任务探索 UI 入口 当前入口优先进入完整全链试玩；已同步美国取材地图、纽约市任务卡、派遣配置、地图符号、耗时与倒计时、深度链叠层等当前版本表达。 完整全链试玩当前版本 这里体验刚确认过的探索 UI：美国取材地图先选区域，再进入选中区域；纽约市内继续验证任务符号、派遣配置、本次骰池、耗时与倒计时、深度链叠层、危险与黑骰表达。 进入完整全链试玩 派遣配置排序实验页 取材地图 P0/P1 实验页 M330 黑骰策略实验页 骰子动效实验页 骰面判定卡片实验页 任务探索 UI 实验页 派遣配置排序实验 独立 UI 实验页，仅验证候选区 `任务贡献 / 达标提升 / 未派遣优先` 排序标签；其它布局保持现有派遣页语法，尚未套用到完整全链。 打开派遣实验 完整全链试玩 用于跑通探索、任务配置、角色骰、合成、报刊组版与结算；美国取材地图与纽约市任务卡已同步当前探索 UI。 打开全链试玩 报刊组版实验 组版与结算相关实验入口，和任务探索 UI 当前版不是同一个验证页面。 打开组版实验 旧派遣配置回退 新版派遣配置已进入完整全链默认路径；这里仅用于对照旧版配置页。 打开旧派遣页 探索骰子旧页 早期探索骰子 HTML 参考页，主要用于比对旧玩法表达。 打开旧探索页 M330 黑骰策略实验 独立玩法实验页，用 5 名角色满编验证锁定、批量重投、重投组提示、干净/脏结果与污染后果；尚未套用到完整全链。 打开黑骰实验 骰子动效实验 独立视觉实验页，保留原判定弹窗布局，只替换骰子判定区；当前各方案全部沿用原方案一的速率、加减速度、短摇动和停稳曲线，比较纵轴、横轴、斜轴，以及先纵轴再横轴，不套用到完整全链。 打开动效实验 骰面判定卡片实验 独立交互实验页，只验证骰面卡片选择、3/5 名参判角色固定槽位、需求实时联动和提交前结果预览；尚未套用到完整全链。 打开判定实验 设计真源 当前玩法文档入口，处理规则分歧时优先看这里。 打开系统索引 协作说明 AI 协作偏好、截图规则、设计采纳沉淀等工作流约定。 打开协作指南 推荐入口：完整全链试玩当前版 离线可用 相对路径 带版本参数防缓存 本地文件入口，不依赖服务器。正式 Godot 运行时请用根目录的 launch_angus_demo.cmd；若浏览器限制 Markdown 预览，文档链接可在编辑器或文件管理器中打开。"
+    },
+    {
+      "file": "02-week-start.png",
+      "title": "Week start",
+      "note": "First playable screen before entering the map.",
+      "url": "http://127.0.0.1:2425/design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?v=20260527-redundancy-audit",
+      "view": "weekStart",
+      "phase": [
+        "phase-explore"
+      ],
+      "textSample": "《世界未解之谜周刊》· 全链条 Demo 探索（地图/骰子）→ 线索成稿 → 拖拽组版 → 结算本期（与 design/gdd/editorial-layout-and-publishing-strategy.md / design/gdd/issue-settlement-and-audience-feedback.md 规则对齐） 公信 42 诡名 38 声望 45 守序 48 狂性 22 第 1 周 剩余 7 / 7 日 回合起始 新任主编上任 你通过面试，直接成为《世界未解之谜周刊》的主编。杂志社快垮了，债主每天催债；本周再找不出有吸引力的故事报道，编辑部就要散伙。 线人爆料 匿名线人送来一份禁区坐标碎片，你的编辑部获得了额外线索。 调试：显示全部选项后果 默认事件：点击确认后生效。 确认事件 进入美国取材地图 行动日志 [第1周 余7日] 全链条开始：探索 → 故事合成 → 编辑部组版 → 结算。 下一天 本地单机 · 双击打开 · 无外部依赖"
+    },
+    {
+      "file": "03-global-map.png",
+      "title": "Global map",
+      "note": "Region selection, map body, selected-region details, and global status area.",
+      "url": "http://127.0.0.1:2425/design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?v=20260527-redundancy-audit",
+      "view": "global",
+      "phase": [
+        "phase-explore"
+      ],
+      "textSample": "《世界未解之谜周刊》· 全链条 Demo 探索（地图/骰子）→ 线索成稿 → 拖拽组版 → 结算本期（与 design/gdd/editorial-layout-and-publishing-strategy.md / design/gdd/issue-settlement-and-audience-feedback.md 规则对齐） 公信 42 诡名 38 声望 45 守序 48 狂性 22 第 1 周 剩余 7 / 7 日 ← 回合简报 1 探索 2 线索成稿 3 拖拽组版 4 结算 第 1 周 剩余 7 日 可派遣 8/8 纽约市 6 新英格兰走廊 82% 西部禁区档案 80% 选中区域可进入 限时机会 深度链 1 选择取材地区 查看地区情报预览，进入地区后再选择具体任务。 纽约市 难度：中等 | 推荐 ★★★ 新英格兰走廊 未解锁 · 缺口 18% 西部禁区档案 未解锁 · 缺口 20% 当前选中地区 纽约市 初始解锁。债主逼近，本周必须从五区里挖出能救周刊的题材。 难度：中等 | 推荐 ★★★ 可见目标 5 限时机会 1 线索 1 深度链 3 区域情报预览 6 条 · 进入后选择任务 线 纽约市 民间传言：异常目击 成本 2天 条件：人脉2 条件：洞察2 信息 调查后生成任务 续 布鲁克林厨房火球 成本 1天 条件：理性2 条件：洞察1 挑战：对手骰1 信息 深度调查 · 当前任务1 收益 阶段素材 目 皇后区旧机库围栏 成本 2天 条件：探索2 条件：生存1 挑战：对手骰2 收益 常驻线索 续 纽约飞碟剪报残页 成本 1天 条件：探索2 条件：洞察1 挑战：对手骰1 信息 深度调查 · 当前任务1 收益 阶段素材 另有 2 项情报将在地区页展开。 本周行动日志 展开 → 进入探索 · 纽约市 行动日志 [第1周 余7日] 全链条开始：探索 → 故事合成 → 编辑部组版 → 结算。 本地单机 · 双击打开 · 无外部依赖"
+    },
+    {
+      "file": "04-region-tasks.png",
+      "title": "Region tasks",
+      "note": "Regional task list, map entries, active queues, and day-advance strip.",
+      "url": "http://127.0.0.1:2425/design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?v=20260527-redundancy-audit",
+      "view": "region",
+      "phase": [
+        "phase-explore"
+      ],
+      "textSample": "《世界未解之谜周刊》· 全链条 Demo 探索（地图/骰子）→ 线索成稿 → 拖拽组版 → 结算本期（与 design/gdd/editorial-layout-and-publishing-strategy.md / design/gdd/issue-settlement-and-audience-feedback.md 规则对齐） 公信 42 诡名 38 声望 45 守序 48 狂性 22 第 1 周 剩余 7 / 7 日 ← 返回美国取材地图 纽约市 （8/8） ? 未揭示 ? ? 2 下一条线索 ? ? 1 深度调查 布鲁克林厨房火球 ? 常 皇后区旧机库围栏 ? 未揭示 ? ? 2 下一条线索 ? ? 1 深度调查 纽约飞碟剪报残页 ? 剩3天 突发：哈德逊河上空异常光点 ? 未揭示 ? ? 2 下一条线索 ? ? 1 深度调查 M330 末班车 · 乘客口述 ? ? 纽约市 民间传言：异常目击 区域节点情报 文 纽约市 民间传言：异常目击 耗时 2天 调查 -> 新任务 人脉2 洞察2 续 布鲁克林厨房火球 耗时 1天 ▣ 对手骰 1 理性2 洞察1 深度调查 当前任务 1 ↻ 皇后区旧机库围栏 耗时 2天 ▣ 对手骰 2 探索2 生存1 续 纽约飞碟剪报残页 耗时 1天 ▣ 对手骰 1 探索2 洞察1 深度调查 当前任务 1 截 突发：哈德逊河上空异常光点 耗时 2天 △ 危险 ▣ 对手骰 3 探索2 生存1 胆识1 剩余 3天 续 M330 末班车 · 乘客口述 耗时 1天 ▣ 对手骰 1 人脉2 洞察1 深度调查 当前任务 1 日程推进 尚未派遣任务；推进会消耗 1 天，并减少突发任务倒计时。 推进到第 2 天 行动日志 [第1周 余7日] 全链条开始：探索 → 故事合成 → 编辑部组版 → 结算。 本地单机 · 双击打开 · 无外部依赖"
+    },
+    {
+      "file": "05-dispatch-empty.png",
+      "title": "Dispatch empty",
+      "note": "Dispatch configuration before choosing any character.",
+      "url": "http://127.0.0.1:2425/design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?debugDispatch=1&dispatchlab=1&v=20260527-redundancy-audit",
+      "view": "setup",
+      "phase": [
+        "phase-explore"
+      ],
+      "textSample": "《世界未解之谜周刊》· 全链条 Demo 探索（地图/骰子）→ 线索成稿 → 拖拽组版 → 结算本期（与 design/gdd/editorial-layout-and-publishing-strategy.md / design/gdd/issue-settlement-and-audience-feedback.md 规则对齐） 第 1 周 剩余 7 / 7 日 线索调查配置 组本次骰池，覆盖任务需求后开始调查。 线索调查：纽约市 非正式研究记录 危险 线索调查 · 耗时 2天 截稿关闭 剩余 3天 成功或失败后都会结束；失败可能造成队员状态损伤 本次骰池 已选 0/3 人 角色槽 1/3 点击下方角色加入骰池 角色槽 2/3 点击下方角色加入骰池 角色槽 3/3 点击下方角色加入骰池 道具骰空槽 · 可在下方选择一次性道具 辅助骰位 道具不占人数；雇佣会进入候选角色 夜视相机组 一次性道具 · 不占人数 洞察1 洞察2 探索1 探索1 空 空 匿名热线录音 一次性道具 · 不占人数 人脉2 人脉1 洞察1 造势1 空 空 雇佣本周临时线人 $1200 · 雇佣后出现在候选角色，加入时占角色槽。 需求覆盖 风险：未评估 判定目标：有效点 0 / 2 实掷达标率 0% 人脉 还差 2 · 已备 0/2 洞察 还差 2 · 已备 0/2 先选至少 1 名角色，系统会显示本次是否能达标。 先选择角色后开始 先选择至少 1 名角色 候选角色 选入本次骰池 骰面 汇总 末日时钟 高适配 · 3/6 相关 1 洞察2 2 理性2 3 洞察1 4 人脉1 5 生存1 6 空 详情 娜娜 中适配 · 2/6 相关 1 人脉2 2 洞察2 3 理性1 4 笔力1 5 造势1 6 空 详情 主角 中适配 · 2/6 相关 1 洞察2 2 笔力2 3 造势2 4 理性1 5 人脉1 6 空 详情 伪人 中适配 · 2/6 相关 1 人脉2 2 探索2 3 洞察1 4 诡思1 5 生存1 6 空 详情 艾灵 低适配 · 1/6 相关 1 理性2 2 诡思2 3 洞察2 4 生存1 5 笔力1 6 空 详情 印第安纳穷死 低适配 · 1/6 相关 1 探索2 2 探索1 3 胆识2 4 生存1 5 洞察1 6 空 详情 火鸡科学家 低适配 · 1/6 相关 1 理性3 2 理性2 3 诡思2 4 洞察1 5 造势1 6 空 详情 薛定谔 低适配 · 1/6 相关 1 想象2 2 诡思2 3 笔力1 4 洞察1 5 造势1 6 空 详情 返回区域 已派遣待判定任务：0。返回区域后在底部「日程推进」条继续推进，并触发到期判定。 行动日志 [第1周 余7日] 全链条开始：探索 → 故事合成 → 编辑部组版 → 结算。 本地单机 · 双击打开 · 无外部依赖"
+    },
+    {
+      "file": "06-dispatch-selected.png",
+      "title": "Dispatch selected",
+      "note": "Dispatch configuration after two characters and one tool are selected.",
+      "url": "http://127.0.0.1:2425/design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?debugDispatch=1&dispatchlab=1&dispatchState=selected&tool=hotline&v=20260527-redundancy-audit",
+      "view": "setup",
+      "phase": [
+        "phase-explore"
+      ],
+      "textSample": "《世界未解之谜周刊》· 全链条 Demo 探索（地图/骰子）→ 线索成稿 → 拖拽组版 → 结算本期（与 design/gdd/editorial-layout-and-publishing-strategy.md / design/gdd/issue-settlement-and-audience-feedback.md 规则对齐） 第 1 周 剩余 7 / 7 日 线索调查配置 组本次骰池，覆盖任务需求后开始调查。 线索调查：纽约市 非正式研究记录 危险 线索调查 · 耗时 2天 截稿关闭 剩余 3天 成功或失败后都会结束；失败可能造成队员状态损伤 本次骰池 已选 2/3 人 主角 移出 1 洞察2 2 笔力2 3 造势2 4 理性1 5 人脉1 6 空 娜娜 移出 1 人脉2 2 洞察2 3 理性1 4 笔力1 5 造势1 6 空 角色槽 3/3 点击下方角色加入骰池 道 匿名热线录音 不占人数 · 一次性 人脉2 人脉1 洞察1 造势1 空 空 辅助骰位 道具不占人数；雇佣会进入候选角色 夜视相机组 一次性道具 · 不占人数 洞察1 洞察2 探索1 探索1 空 空 匿名热线录音 一次性道具 · 不占人数 人脉2 人脉1 洞察1 造势1 空 空 雇佣本周临时线人 $1200 · 雇佣后出现在候选角色，加入时占角色槽。 需求覆盖 风险：可搏 · 57% 判定目标：有效点 11 / 2 实掷达标率 57% 人脉 已备 6/2 洞察 已备 5/2 实际达标率约 57%；较单人最佳 +24%；当前骰池已覆盖任务需求。 开始线索调查（2天后判定） 可出发；最多 3 人，当前 2 人。 候选角色 选入本次骰池 骰面 汇总 末日时钟 高适配 · 3/6 相关 1 洞察2 2 理性2 3 洞察1 4 人脉1 5 生存1 6 空 详情 娜娜 中适配 · 2/6 相关 1 人脉2 2 洞察2 3 理性1 4 笔力1 5 造势1 6 空 详情 主角 中适配 · 2/6 相关 1 洞察2 2 笔力2 3 造势2 4 理性1 5 人脉1 6 空 详情 伪人 中适配 · 2/6 相关 1 人脉2 2 探索2 3 洞察1 4 诡思1 5 生存1 6 空 详情 艾灵 低适配 · 1/6 相关 1 理性2 2 诡思2 3 洞察2 4 生存1 5 笔力1 6 空 详情 印第安纳穷死 低适配 · 1/6 相关 1 探索2 2 探索1 3 胆识2 4 生存1 5 洞察1 6 空 详情 火鸡科学家 低适配 · 1/6 相关 1 理性3 2 理性2 3 诡思2 4 洞察1 5 造势1 6 空 详情 薛定谔 低适配 · 1/6 相关 1 想象2 2 诡思2 3 笔力1 4 洞察1 5 造势1 6 空 详情 返回区域 已派遣待判定任务：0。返回区域后在底部「日程推进」条继续推进，并触发到期判定。 行动日志 [第1周 余7日] 全链条开始：探索 → 故事合成 → 编辑部组版 → 结算。 本地单机 · 双击打开 · 无外部依赖"
+    },
+    {
+      "file": "06a-dispatch-selected-crop.png",
+      "title": "Dispatch selected crop",
+      "note": "Focused dispatch state for redundancy inspection.",
+      "url": "http://127.0.0.1:2425/design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?debugDispatch=1&dispatchlab=1&dispatchState=selected&tool=hotline&v=20260527-redundancy-audit",
+      "selector": "#view-setup"
+    },
+    {
+      "file": "07-result-black-dice.png",
+      "title": "Judgement result",
+      "note": "Black-dice judgement result with dice cards, result copy, and post-result action.",
+      "url": "http://127.0.0.1:2425/design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?debugBlackDice=roll&v=20260527-redundancy-audit",
+      "view": "result",
+      "phase": [
+        "phase-explore"
+      ],
+      "textSample": "《世界未解之谜周刊》· 全链条 Demo 探索（地图/骰子）→ 线索成稿 → 拖拽组版 → 结算本期（与 design/gdd/editorial-layout-and-publishing-strategy.md / design/gdd/issue-settlement-and-audience-feedback.md 规则对齐） 公信 42 诡名 38 声望 44 守序 48 狂性 24 第 1 周 剩余 7 / 7 日 探索结算 探索任务 白色调查 深度调查·第4阶段 黑骰任务 M330 末班车 · 车载录像最后三秒（调试） 当日结算 1/1 区域：纽约市 耗时：1天 难度：困难 对手骰：4 需求：胆识3 / 诡思3 / 洞察2 派遣队员 艾灵 印第安纳穷死 末日时钟 火鸡科学家 薛定谔 失败 角色骰收束 M330 末班车 · 车载录像最后三秒（调试） 失败 已计入 / 有效点目标 有效点 1/3 相关属性贡献 胆识 0/3 诡思 0/3 洞察 1/2 黑骰介入 已掷出 2 颗黑骰 混入 替座 黑骰·混入：可疑乘客骰混进了你的骰池。 黑骰·替座：艾灵 的骰子被替换成了可疑乘客。 计入槽 1 颗已选 · 1 颗补需求 洞察1 印第安纳穷死 · 补需求 替座 艾灵？ 黑骰压力 洞察1 印第安纳穷死 计入判定 空 末日时钟 空面 造势1 火鸡科学家 本任务不计入 造势1 薛定谔 本任务不计入 鬼乘客 道 可疑乘客 黑骰压力 黑骰·混入：可疑乘客骰混进了你的骰池。 黑骰·替座：艾灵 的骰子被替换成了可疑乘客。 黑骰任务失败：没有拿稳真相，但留下了弱线索和压力。 深度调查：连续任务已完结，真相风险暂时收束。 剩余 7 日 继续 行动日志 [第1周 余7日] M330 末班车 · 车载录像最后三秒（调试） → 「失败但有线索」 [第1周 余7日] 全链条开始：探索 → 故事合成 → 编辑部组版 → 结算。 结算中... 本地单机 · 双击打开 · 无外部依赖"
+    },
+    {
+      "file": "08-synthesis-empty-week.png",
+      "title": "Synthesis",
+      "note": "Synthesis phase reached through the real flow by advancing an empty week.",
+      "url": "http://127.0.0.1:2425/design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?v=20260527-redundancy-audit",
+      "view": "region",
+      "phase": [
+        "phase-synthesis"
+      ],
+      "textSample": "编辑部 · 故事合成台 第 1 周 · 已带入探索线索 0 条。请将素材拖入卡槽合成报道，再进入组版。 合成拖拽演示 1) 素材仓 拖拽卡牌到右侧卡槽。公开报道用红/金槽；爆料卡仅用于「爆炸性新闻」，不可合成获得。 现象牌 情报牌 认知牌 工具牌 爆料卡 主笔 干预 当前分类暂无卡牌。 清空卡槽 2) 报道类型与卡槽 抢先快讯 深度报道 个人专栏 爆炸性新闻 内审定调 现象（必要） 拖入现象 情报（必要） 拖入情报 工具（可选） 拖入工具 尚未放入素材。请将左侧卡牌拖入右侧红色必要槽；虚线槽为可选工具位。爆炸性新闻需另拖入「爆料卡」（仅特殊途径获得，不可合成）。 执行合成 进入组版 配方说明：抢先快讯（现象+情报 + 可选工具）。现象与认知可反复用于公开报道；情报为材料每次合成会消耗。爆料与工具按原规则。同题材本周多篇公开稿上版时报纸结算基础值递减。 3) 本周已合成报道 尚未合成报道。至少制作 1 篇后可进入组版。 本地单机 · 双击打开 · 无外部依赖"
+    },
+    {
+      "file": "09-paper-editorial.png",
+      "title": "Editorial layout",
+      "note": "Newspaper layout and publication preparation screen via paper lab mode.",
+      "url": "http://127.0.0.1:2425/design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?paperlab=1&v=20260527-redundancy-audit",
+      "view": "",
+      "phase": [
+        "phase-editorial"
+      ],
+      "textSample": "编辑部 · 报刊组版 第 1 周 · 已导入合成报道 10 条，请组版后结算。 1) 本期故事库 重新生成故事库 数量 8 10 12 探索稿带「探索稿」标签；不足条数用随机都市报道补足（与原型一致）。 塔夫脱辞去大法官职务：历史性领导层更迭 探索稿 标签:时政 / 经济 质量:Gold 上版有效基础:450 题材#paperlab_0 本周稿序1 公开取向:科学纪实 负面:无 拖到中间版位 港务局夜间封锁：三号码头出现异常回波 探索稿 标签:军事 / 花边新闻 质量:Silver 上版有效基础:300 题材#paperlab_1 本周稿序1 负面:thin_source 拖到中间版位 东区剧院失踪档案重现：署名来自未来日期 探索稿 标签:花边新闻 / 幽默 质量:Silver 上版有效基础:300 题材#paperlab_2 本周稿序1 公开取向:神秘玄学 负面:无 拖到中间版位 市政预算暗线曝光：采购名单出现重复身份 探索稿 标签:时政 / 购物 质量:Gold 上版有效基础:450 题材#paperlab_3 本周稿序1 公开取向:科学纪实 负面:bias_overreach 拖到中间版位 复活节岛热异常追踪：石像群温差超出历史记录 探索稿 标签:经济 / 体育 质量:Silver 上版有效基础:300 题材#paperlab_4 本周稿序1 负面:无 拖到中间版位 夜班电台误播神秘频段：听众报告同频耳鸣 探索稿 标签:花边新闻 / 猫狗 质量:Bronze 上版有效基础:150 题材#paperlab_5 本周稿序1 公开取向:神秘玄学 负面:sloppy_writing 拖到中间版位 法庭速记员匿名口供：判词在宣读前已泄露 探索稿 标签:时政 / 军事 质量:Gold 上版有效基础:450 题材#paperlab_6 本周稿序1 公开取向:科学纪实 负面:无 拖到中间版位 雨夜轨道尽头的白灯：巡检员口供互相矛盾 探索稿 标签:体育 / 幽默 质量:Bronze 上版有效基础:150 题材#paperlab_7 本周稿序1 公开取向:神秘玄学 负面:fabrication 拖到中间版位 联邦仓库短时断电：监控画面出现空白帧 探索稿 标签:经济 / 花边新闻 质量:Silver 上版有效基础:300 题材#paperlab_8 本周稿序1 负面:无 拖到中间版位 午夜来信附带金属碎片：材质与军标不匹配 探索稿 标签:军事 / 购物 质量:Silver 上版有效基础:300 题材#paperlab_9 本周稿序1 公开取向:神秘玄学 负面:thin_source 拖到中间版位 2) 当期版面 DOG NEWS 1930年3月 第1周 第1页 头版 头版奖励系数 x3.0 拖拽报道到此处 子版 A 系数 x2.4 拖拽报道到此处 子版 B 系数 x1.9 拖拽报道到此处 DOG NEWS 1930年3月 第1周 第2页 次头版 系数 x1.8 拖拽报道到此处 子版 C 系数 x1.4 拖拽报道到此处 子版 D 系数 x1.4 拖拽报道到此处 报刊填入演示 清空版面 切换为流式版面 拟物增强：开 结算本期 3) 结算面板 已填版位 0/6 编辑定位 平衡型 (0) 独特标签数 0 重复成组分 0.00 连携题材 无 三轴 P/M/L 0/0/0% 预计需求 2,240 订阅基数 1,200 有效基础（版内） 0 公开取向（预览） 与既往刊登无冲突 尚未结算 拖拽报道到版位，再点「结算本期」。 本地单机 · 双击打开 · 无外部依赖"
+    },
+    {
+      "file": "10-paper-summary.png",
+      "title": "Issue settlement",
+      "note": "Issue settlement summary after publishing.",
+      "url": "http://127.0.0.1:2425/design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?paperlab=1&v=20260527-redundancy-audit",
+      "view": "",
+      "phase": [
+        "phase-summary"
+      ],
+      "textSample": "本周流程完成 第 1 周报刊已结算：净利润 $-599， 下期订阅 1,207。 本周合成稿件 10 条（已计入故事库）。 进入下一周 · 继续探索 本地单机 · 双击打开 · 无外部依赖"
+    }
+  ]
+}

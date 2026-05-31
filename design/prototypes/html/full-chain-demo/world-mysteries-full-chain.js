@@ -157,7 +157,7 @@
       <h4 class="tutorial-soft-h4">和正式周刊的关系</h4>
       <ul class="tutorial-soft-ul">
         <li><strong>回合札记</strong>：每周开场事件。</li>
-        <li><strong>世界地图</strong>：选区域、跑探索。</li>
+        <li><strong>取材地图</strong>：选区域、跑探索。</li>
         <li><strong>合成台</strong>：把线索收成报道。</li>
         <li><strong>编辑部组版</strong>：把报道摆进版面（您现在练的就是这步）。</li>
       </ul>
@@ -166,7 +166,7 @@
       <h4 class="tutorial-soft-h4">关窗后会发生什么？</h4>
       <ul class="tutorial-soft-ul">
         <li>会自动播放一则<strong>填入动画示例</strong>（稿件飞入头版，可循环）。</li>
-        <li>需要重温时，在工具栏打开「<strong>报刊填入演示</strong>」。</li>
+        <li>演示弹窗内可点<strong>重播</strong>立即重看；关闭后继续手动摆版。</li>
       </ul>
       <p class="tutorial-soft-note">本提示在刷新页面前只出现一次。</p>
     </div>`,
@@ -236,15 +236,15 @@
   const REGIONS = [
     {
       id: "us",
-      name: "北美禁区带",
+      name: "纽约市",
       unlocked: true,
       pulse: false,
-      hint: "初始解锁。都市传说与禁区并存。",
+      hint: "初始解锁。债主逼近，本周必须从五区里挖出能救周刊的题材。",
       nodes: [
         {
           id: "ball_light_kitchen",
           kind: "permanent",
-          name: "球状闪电 · 厨房火球",
+          name: "布鲁克林厨房火球",
           days: 1,
           need: { 理性: 2, 洞察: 1 },
           tags: ["sci", "occult"],
@@ -255,12 +255,12 @@
           chainStage: 1,
           chainStageTotal: 4,
           chainId: "ball_lightning",
-          taskTypeTitle: "深度调查 · 球状闪电第一环",
-          taskTypeDesc: "调查厨房火球、磁化餐具与环形焦痕。成功后推进到气象站记录。",
+          taskTypeTitle: "深度调查 · 厨房火球第一环",
+          taskTypeDesc: "调查布鲁克林公寓里的火球、磁化餐具与环形焦痕。成功后推进到市立气象站删改记录。",
           nextNode: {
             id: "ball_light_weather",
             kind: "temp",
-            name: "球状闪电 · 气象站记录",
+            name: "市立气象站删改记录",
             days: 1,
             need: { 理性: 3, 人脉: 1 },
             tags: ["sci"],
@@ -272,12 +272,12 @@
             chainStageTotal: 4,
             chainId: "ball_lightning",
             previousStageId: "ball_light_kitchen",
-            taskTypeTitle: "深度调查 · 球状闪电第二环",
-            taskTypeDesc: "核对电场曲线与被改写的气象记录，开始接触机构口径。",
+            taskTypeTitle: "深度调查 · 厨房火球第二环",
+            taskTypeDesc: "核对电场曲线、热线记录与被删改的夜间观测表，开始接触机构口径。",
             nextNode: {
               id: "ball_light_substation",
               kind: "temp",
-              name: "球状闪电 · 废弃变电所",
+              name: "康爱迪生地下变电室",
               days: 2,
               need: { 理性: 3, 生存: 2, 洞察: 2 },
               tags: ["sci", "occult"],
@@ -290,12 +290,12 @@
               chainStageTotal: 4,
               chainId: "ball_lightning",
               previousStageId: "ball_light_weather",
-              taskTypeTitle: "高危深度调查 · 球状闪电第三环",
-              taskTypeDesc: "废弃变电所残留非民用设备编号。高危任务，失败可能造成队员状态损伤。",
+              taskTypeTitle: "高危深度调查 · 厨房火球第三环",
+              taskTypeDesc: "地下变电室里留着不在市政采购清单上的设备编号。危险任务，失败可能造成队员状态损伤。",
               nextNode: {
                 id: "ball_light_experiment",
                 kind: "temp",
-                name: "球状闪电 · 复现实验",
+                name: "复现实验前夜",
                 days: 2,
                 need: { 理性: 4, 胆识: 2, 诡思: 2 },
                 tags: ["sci", "occult"],
@@ -311,8 +311,8 @@
                 chainId: "ball_lightning",
                 previousStageId: "ball_light_substation",
                 chainFinal: true,
-                taskTypeTitle: "黑骰任务 · 球状闪电终局",
-                taskTypeDesc: "火球像地球神经元一样回应观测。黑骰会感应、接地或同步你的骰子。",
+                taskTypeTitle: "黑骰任务 · 厨房火球终局",
+                taskTypeDesc: "火球像在回应观测者。黑骰会感应、接地或同步你的骰子，把实验推向失控边缘。",
                 chain: null,
               },
               chain: null,
@@ -324,7 +324,7 @@
         {
           id: "n51",
           kind: "permanent",
-          name: "51 区外围公路",
+          name: "皇后区旧机库围栏",
           days: 2,
           need: { 探索: 2, 生存: 1 },
           tags: ["sci", "pop"],
@@ -332,13 +332,13 @@
           enemyAttr: 2,
           checkType: "white",
           taskTypeTitle: "白色调查",
-          taskTypeDesc: "可反复追踪的常驻题材。即使失败，也会留下低价值疑点，后续派遣会继续累积同一条调查线。",
+          taskTypeDesc: "常驻白色调查。跟拍无牌货车、夜间保安换岗与围栏内短时断电；即使失败，也会继续累积同一条调查线。",
           chain: null,
         },
         {
           id: "skin",
           kind: "permanent",
-          name: "罗斯威尔档案残页",
+          name: "纽约飞碟剪报残页",
           days: 1,
           need: { 探索: 2, 洞察: 1 },
           tags: ["sci", "occult"],
@@ -349,12 +349,12 @@
           chainStage: 1,
           chainStageTotal: 4,
           chainId: "roswell_demo",
-          taskTypeTitle: "深度调查 · 第一阶段",
-          taskTypeDesc: "连续任务起点。完成后不会简单结束，而会在地图上变成下一阶段，让玩家逐步接近真相风险。",
+          taskTypeTitle: "深度调查 · 飞碟剪报第一环",
+          taskTypeDesc: "从旧报社剪报、读者来信和港务局流言里拼出一条连续线。完成后会推进到下一阶段。",
           nextNode: {
             id: "roswell_weather_copy",
             kind: "temp",
-            name: "气象站抄本互证",
+            name: "港务局夜间雷达抄本",
             days: 1,
             need: { 洞察: 3, 理性: 2 },
             tags: ["sci", "occult"],
@@ -366,12 +366,12 @@
             chainStageTotal: 4,
             chainId: "roswell_demo",
             previousStageId: "skin",
-            taskTypeTitle: "深度调查 · 第二阶段",
-            taskTypeDesc: "开始接触普通解释风险。继续推进可能提高公信，也可能削弱怪谈报道的煞有介事。",
+            taskTypeTitle: "深度调查 · 飞碟剪报第二环",
+            taskTypeDesc: "比对港务局夜班抄本与哈德逊航道记录。继续推进可能提高公信，也可能引来机构口径。",
             nextNode: {
               id: "roswell_radar_night",
               kind: "temp",
-              name: "废弃雷达站夜访",
+              name: "废弃屋顶观测点",
               days: 2,
               need: { 探索: 3, 洞察: 3, 生存: 2 },
               tags: ["sci", "occult"],
@@ -384,12 +384,12 @@
               chainStageTotal: 4,
               chainId: "roswell_demo",
               previousStageId: "roswell_weather_copy",
-              taskTypeTitle: "高危深度调查 · 第三阶段",
-              taskTypeDesc: "高危任务。需求更高，失败可能带来 debuff，但本环没有黑骰。",
+              taskTypeTitle: "高危深度调查 · 飞碟剪报第三环",
+              taskTypeDesc: "夜访曼哈顿废弃屋顶观测点。需求更高，失败可能带来 debuff，但本环没有黑骰。",
               nextNode: {
                 id: "roswell_tape_blank",
                 kind: "temp",
-                name: "封存录音的三秒空白",
+                name: "三秒空白录音",
                 days: 2,
                 need: { 洞察: 5, 诡思: 3, 理性: 3 },
                 tags: ["sci", "occult"],
@@ -405,8 +405,8 @@
                 previousStageId: "roswell_radar_night",
                 chainFinal: true,
                 allowPushBonus: true,
-                taskTypeTitle: "黑骰深度调查 · 最终阶段",
-                taskTypeDesc: "连续任务终局。进入后使用关卡专属黑骰机制与四档结果。",
+                taskTypeTitle: "黑骰深度调查 · 飞碟剪报终局",
+                taskTypeDesc: "连续任务终局。录音里最关键的三秒被某种东西擦掉，进入后使用关卡专属黑骰机制与四档结果。",
                 chain: null,
               },
               chain: null,
@@ -418,7 +418,7 @@
         {
           id: "temp_ufo",
           kind: "temp",
-          name: "突发：雷达异常光点",
+          name: "突发：哈德逊河上空异常光点",
           days: 2,
           need: { 探索: 2, 生存: 1, 胆识: 1 },
           tags: ["sci", "pop"],
@@ -428,13 +428,13 @@
           checkType: "red",
           riskTier: "high",
           taskTypeTitle: "红色截稿 · 临时情报",
-          taskTypeDesc: "一次性情报窗口。成功、失败或超过截止日期后都会关闭；这是高危任务，但没有黑骰。",
+          taskTypeDesc: "一次性情报窗口。市民电台和港务局都在删帖；成功、失败或超过截止日期后都会关闭。这是危险任务，但没有黑骰。",
           chain: null,
         },
         {
           id: "bus330_witness",
           kind: "permanent",
-          name: "330 末班车 · 乘客口述",
+          name: "M330 末班车 · 乘客口述",
           days: 1,
           need: { 人脉: 2, 洞察: 1 },
           tags: ["occult", "pop"],
@@ -445,12 +445,12 @@
           chainStage: 1,
           chainStageTotal: 4,
           chainId: "bus330",
-          taskTypeTitle: "深度调查 · 330 末班车第一环",
-          taskTypeDesc: "从乘客、旧报和读者来信里核实末班车传闻。成功后会推进到废弃总站。",
+          taskTypeTitle: "深度调查 · M330 末班车第一环",
+          taskTypeDesc: "从乘客、旧报和读者来信里核实末班车传闻。成功后会推进到布朗克斯废弃调度室。",
           nextNode: {
             id: "bus330_depot",
             kind: "temp",
-            name: "330 末班车 · 废弃总站",
+            name: "M330 末班车 · 布朗克斯废弃调度室",
             days: 1,
             need: { 探索: 1, 洞察: 2 },
             tags: ["occult", "pop"],
@@ -462,12 +462,12 @@
             chainStageTotal: 4,
             chainId: "bus330",
             previousStageId: "bus330_witness",
-            taskTypeTitle: "深度调查 · 330 末班车第二环",
-            taskTypeDesc: "调查旧总站调度记录与泥迹座椅，关系线索开始转入现场。",
+            taskTypeTitle: "深度调查 · M330 末班车第二环",
+            taskTypeDesc: "调查废弃调度室里的车次表、泥迹座椅和被涂黑的线路图，关系线索开始转入现场。",
             nextNode: {
               id: "bus330_station",
               kind: "temp",
-              name: "330 末班车 · 无名站牌",
+              name: "M330 末班车 · 无名站牌",
               days: 2,
               need: { 探索: 3, 胆识: 2, 诡思: 1 },
               tags: ["occult"],
@@ -480,12 +480,12 @@
               chainStageTotal: 4,
               chainId: "bus330",
               previousStageId: "bus330_depot",
-              taskTypeTitle: "高危深度调查 · 330 末班车第三环",
-              taskTypeDesc: "地图上不存在的站牌。高危任务，失败后果较重，但本环没有黑骰。",
+              taskTypeTitle: "高危深度调查 · M330 末班车第三环",
+              taskTypeDesc: "地图上不存在的站牌出现在凌晨路线图里。危险任务，失败后果较重，但本环没有黑骰。",
               nextNode: {
                 id: "bus330_tape",
                 kind: "temp",
-                name: "330 末班车 · 最后三秒录像",
+                name: "M330 末班车 · 车载录像最后三秒",
                 days: 2,
                 need: { 胆识: 3, 诡思: 3, 洞察: 2 },
                 tags: ["occult"],
@@ -501,8 +501,8 @@
                 chainId: "bus330",
                 previousStageId: "bus330_station",
                 chainFinal: true,
-                taskTypeTitle: "黑骰任务 · 330 末班车终局",
-                taskTypeDesc: "鬼混入乘客之中。黑骰会混入或替换你的骰子，具体机制在黑骰任务中展示。",
+                taskTypeTitle: "黑骰任务 · M330 末班车终局",
+                taskTypeDesc: "多出来的乘客坐在监控死角里。黑骰会混入或替换你的骰子，具体机制在黑骰任务中展示。",
                 chain: null,
               },
               chain: null,
@@ -514,48 +514,52 @@
         {
           id: "hidden_gate",
           kind: "hidden",
-          name: "灵视：黑色方尖碑的回声",
+          name: "华尔街废站的黑色方尖碑",
           days: 3,
           need: { 探索: 4, 诡思: 4, 生存: 2 },
           tags: ["occult"],
           difficulty: "normal",
           enemyAttr: 4,
+          checkType: "white",
+          riskTier: "high",
+          taskTypeTitle: "隐藏调查",
+          taskTypeDesc: "只有当周刊已经足够危险，废站里的方尖碑回声才会浮出地图。它能带来高价值素材，也会推高现实失控感。",
           unlock: (m) => m.狂性 >= 35 && m.诡名 >= 40,
           chain: null,
         },
       ],
     },
     {
-      id: "east_asia",
-      name: "东亚神秘地带",
+      id: "new_england",
+      name: "新英格兰走廊",
       unlocked: false,
       pulse: false,
-      hint: "需要：声望≥55 或 完成「罗斯威尔档案残页」。",
+      hint: "需要：声望≥55 或 完成「纽约飞碟剪报残页」。",
       nodes: [
-        { id: "shen", kind: "permanent", name: "神农架毛发样本采集", days: 3, need: { 探索: 2, 生存: 1 }, tags: ["sci", "pop"], difficulty: "normal", enemyAttr: 2, chain: null },
-        { id: "chainA", kind: "permanent", name: "模糊：未解锁的链式线索", days: 2, need: { 探索: 3, 洞察: 2 }, tags: ["sci"], difficulty: "normal", enemyAttr: 2, chain: "locked", chainTitle: "链式调查 · 第二阶段" },
+        { id: "shen", kind: "permanent", name: "缅因州海岸灯塔回声", days: 3, need: { 探索: 2, 生存: 1 }, tags: ["sci", "pop"], difficulty: "normal", enemyAttr: 2, chain: null },
+        { id: "chainA", kind: "permanent", name: "模糊：新英格兰未解锁线索", days: 2, need: { 探索: 3, 洞察: 2 }, tags: ["sci"], difficulty: "normal", enemyAttr: 2, chain: "locked", chainTitle: "链式调查 · 第二阶段" },
       ],
     },
     {
-      id: "pacific",
-      name: "太平洋岛屿群",
+      id: "western_archives",
+      name: "西部禁区档案",
       unlocked: false,
       pulse: false,
-      hint: "需要：公信≥60（观测合作）或 守序≥60（许可）。",
-      nodes: [{ id: "easter", kind: "permanent", name: "复活节岛石像热异常", days: 3, need: { 探索: 2, 理性: 1 }, tags: ["sci"], difficulty: "normal", enemyAttr: 2, chain: null }],
+      hint: "需要：公信≥60（档案合作）或 守序≥60（调查许可）。",
+      nodes: [{ id: "easter", kind: "permanent", name: "内华达干湖热异常", days: 3, need: { 探索: 2, 理性: 1 }, tags: ["sci"], difficulty: "normal", enemyAttr: 2, chain: null }],
     },
   ];
   const REGION_MAP_POS = {
-    us: { x: 20, y: 35, label: "北美禁区带" },
-    east_asia: { x: 78, y: 44, label: "东亚神秘地带" },
-    pacific: { x: 56, y: 54, label: "太平洋岛屿群" },
+    us: { x: 30, y: 38, label: "纽约市" },
+    new_england: { x: 39, y: 30, label: "新英格兰走廊" },
+    western_archives: { x: 18, y: 50, label: "西部禁区档案" },
   };
   const NODE_MAP_POS = {
     us: {
-      n51: { x: 22, y: 28 },
-      skin: { x: 54, y: 46 },
-      temp_ufo: { x: 73, y: 25 },
-      hidden_gate: { x: 67, y: 70 },
+      n51: { x: 62, y: 35 },
+      skin: { x: 49, y: 43 },
+      temp_ufo: { x: 35, y: 28 },
+      hidden_gate: { x: 48, y: 68 },
       roswell_weather_copy: { x: 48, y: 58 },
       roswell_radar_night: { x: 60, y: 64 },
       roswell_tape_blank: { x: 69, y: 56 },
@@ -568,8 +572,232 @@
       ball_light_substation: { x: 52, y: 22 },
       ball_light_experiment: { x: 64, y: 20 },
     },
-    east_asia: { shen: { x: 32, y: 40 }, chainA: { x: 68, y: 58 } },
-    pacific: { easter: { x: 48, y: 46 } },
+    new_england: { shen: { x: 42, y: 38 }, chainA: { x: 62, y: 56 } },
+    western_archives: { easter: { x: 48, y: 46 } },
+  };
+
+  const MISSION_STORIES = {
+    n51: {
+      brief: "匿名读者把一张货车照片塞进编辑部信箱，照片背面只写着：皇后区旧机库还在运作。",
+      objective: "跟拍无牌货车，摸清围栏内断电与保安换岗时间。",
+      stakes: "常驻白色调查。失败不会封死题材，但每次外勤都会消耗周刊最后的现金和耐心。",
+      fieldIntro: "凌晨两点，铁丝网被风吹得发响。线人把相机藏进外套，示意你们别再开手电。",
+      dice: {
+        rolling: "线人低声说：要是我十分钟没回电话，就把照片直接送去排版。",
+        select: "主编：先挑能证明货车进出的骰面，别被围栏外的噪声带走。",
+      },
+      outcomes: {
+        大成功: { line: "大成功：保安换岗、断电日志和货车路线三件事对上了。", clueTitle: "货车路线与断电表", clueDesc: "你拿到一组可互相印证的照片、车牌残号和断电时间。" },
+        小成功: { line: "成功：照片能用，车牌还差两位，但足够撑起一篇追踪稿。", clueTitle: "旧机库外拍素材", clueDesc: "素材有噪点，但能证明围栏内确实有夜间运输。" },
+        成功: { line: "成功：照片能用，车牌还差两位，但足够撑起一篇追踪稿。", clueTitle: "旧机库外拍素材", clueDesc: "素材有噪点，但能证明围栏内确实有夜间运输。" },
+        失败: { line: "失败：线人被保安赶走，但他记下了车门上的维修编号。", clueTitle: "车门维修编号", clueDesc: "弱线索。它不能单独成稿，但能指向下一次跟拍对象。" },
+        大失败: { line: "大失败：相机卡被没收，债主的电话在编辑部响了一整夜。" },
+      },
+    },
+    temp_ufo: {
+      brief: "深夜电台播出哈德逊河上空的光点录音，十五分钟后节目回放被整段替换。",
+      objective: "抢在删帖前找到目击者、港务局记录和可上版的现场照片。",
+      stakes: "红色截稿。这个窗口只开一次，错过后故事会被别家或沉默吃掉。",
+      fieldIntro: "码头风很冷。对岸灯光一闪一灭，电台主持人的录音机一直发出倒带声。",
+      dice: {
+        rolling: "摄影记者：这东西不是飞机。至少，飞机不会在水面上留下第二个影子。",
+        select: "主编：先保住能上封面的证据，剩下的恐惧以后再写。",
+      },
+      outcomes: {
+        crit_success: { line: "大成功：录音、目击者和港务局雷达抄本同时指向同一段夜空。", clueTitle: "哈德逊三重证词", clueDesc: "红色截稿强素材。照片、录音和抄本能互相支撑。" },
+        success_cost: { line: "成功但反噬：独家到手，港务局发言人也记住了周刊的名字。", clueTitle: "被盯上的独家", clueDesc: "素材很强，但会带来机构口径压力。" },
+        partial: { line: "部分成功：照片能用，最关键的三秒却像被水汽擦掉。", clueTitle: "模糊光点底片", clueDesc: "可成稿素材，但需要后续报道补强。" },
+        fail_clue: { line: "失败但有线索：现场散了，只剩一名船员反复提到河面上的第二个倒影。", clueTitle: "第二倒影证词", clueDesc: "弱线索。它更像下一篇报道的钩子。" },
+        crit_fail: { line: "大失败：录音带被消磁，目击者改口，编辑部收到一封律师函草稿。" },
+      },
+    },
+    ball_light_kitchen: {
+      brief: "布鲁克林一间公寓厨房被火球穿过，冰箱门上留下了整齐的环形焦痕。",
+      objective: "确认火球目击、磁化餐具和室内电路记录是否能互相印证。",
+      stakes: "深度调查第一环。成功后会把故事推进到市立气象站记录。",
+      fieldIntro: "房东不让你们拍墙面，只准站在门口。灶台上的金属勺仍然吸着一枚纽扣。",
+      dice: {
+        rolling: "科学顾问：如果这是假新闻，它也假得太懂电磁学了。",
+        select: "主编：别急着写奇迹，先选能解释焦痕和磁化的骰面。",
+      },
+      outcomes: {
+        大成功: { line: "大成功：目击时间、电路跳闸和磁化餐具形成一条清楚时间线。", clueTitle: "厨房火球时间线", clueDesc: "第一环强素材，足以追问气象站记录。" },
+        小成功: { line: "成功：焦痕照片拍到了，电路记录还要找市政渠道补证。", clueTitle: "环形焦痕照片", clueDesc: "可用素材。它把厨房异常从传闻推向调查。" },
+        成功: { line: "成功：焦痕照片拍到了，电路记录还要找市政渠道补证。", clueTitle: "环形焦痕照片", clueDesc: "可用素材。它把厨房异常从传闻推向调查。" },
+        失败: { line: "失败：房东提前赶人，但你们带走了一支被异常磁化的叉子。", clueTitle: "磁化叉子", clueDesc: "弱线索。它无法解释火球，却证明现场不正常。" },
+        大失败: { line: "大失败：房东报警，整层住户都开始拒绝采访。" },
+      },
+    },
+    ball_light_weather: {
+      brief: "市立气象站的夜间观测表出现涂改，涂改时间正好卡在厨房火球之后。",
+      objective: "比对热线记录、气象站原表和电场曲线。",
+      stakes: "深度调查第二环。证据开始碰到机构口径。",
+      fieldIntro: "档案室的荧光灯忽明忽暗，值班员说那晚的表格早就被上级收走。",
+      outcomes: {
+        大成功: { line: "大成功：原始表、热线录音和电场曲线都指向同一次异常峰值。", clueTitle: "被删改的电场峰值", clueDesc: "第二环强素材，能把故事推向地下设备。" },
+        小成功: { line: "成功：你们拍到涂改痕迹，也拿到一段不完整热线录音。", clueTitle: "涂改观测表", clueDesc: "可用素材。它证明有人动过记录。" },
+        失败: { line: "失败：气象站拒绝配合，但值班员留下了一个康爱迪生设备编号。", clueTitle: "设备编号便签", clueDesc: "弱线索。编号指向地下变电室。" },
+      },
+    },
+    ball_light_substation: {
+      brief: "设备编号指向康爱迪生地下变电室，那里有一台不在采购清单上的旧仪器。",
+      objective: "进入变电室，确认仪器编号、接地痕迹和火球事件的关系。",
+      stakes: "危险深度调查。失败可能损伤队伍状态，但能靠近核心证据。",
+      fieldIntro: "地下室的空气像被烧过。墙上电箱没有编号，只有一圈被擦掉的粉笔线。",
+      outcomes: {
+        crit_success: { line: "大成功：仪器编号、接地痕迹和火球时间线完整闭合。", clueTitle: "地下仪器完整记录", clueDesc: "高价值证据。它能支撑终局复现实验。" },
+        success_cost: { line: "成功但反噬：你们拍到了仪器，也触发了电流回涌和安保追查。", clueTitle: "带反噬的仪器照片", clueDesc: "强素材，但队伍带着明显压力撤出。" },
+        partial: { line: "部分成功：仪器照片只有一半清晰，编号却足够刺眼。", clueTitle: "半张仪器编号", clueDesc: "不完整素材。足以推进，难以直接定论。" },
+        fail_clue: { line: "失败但有线索：电闸跳了，你们只带走一段接地线烧焦样本。", clueTitle: "烧焦接地线", clueDesc: "弱线索。样本说明异常和接地装置有关。" },
+        crit_fail: { line: "大失败：变电室短路，市政巡查把周刊列入拒访名单。" },
+      },
+    },
+    ball_light_experiment: {
+      brief: "复现实验前夜，火球像在回应观测者。越像科学实验，越像有人在另一侧配合。",
+      objective: "决定哪些观测数据可信，哪些异常必须隔离。",
+      stakes: "黑骰终局。骰池会被异常感应、接地或同步。",
+      fieldIntro: "实验室里所有金属物都朝同一个方向轻轻颤动。灯灭之前，你看见火球在玻璃上倒退。",
+      dice: {
+        rolling: "科学顾问：如果它真的在看我们，记录员就不要同时眨眼。",
+        black: "主编：黑骰不是坏运气，是现场有东西开始回看骰子。",
+        select: "主编：只计入你愿意写进封面标题的证据。",
+      },
+      outcomes: {
+        大成功: { line: "黑骰任务大成功：实验复现成功，异常没有抓住主要记录员。", clueTitle: "可复现火球记录", clueDesc: "终局强素材。足以写成封面主稿。" },
+        成功: { line: "黑骰任务成功：关键数据到手，但实验室墙面留下了新的环形焦痕。", clueTitle: "带回声的复现实验", clueDesc: "强素材，伴随轻微反噬。" },
+        失败: { line: "黑骰任务失败：实验中断，录音里却多出一句不在场的人声。", clueTitle: "不在场人声", clueDesc: "弱线索。失败现场仍留下异常证据。" },
+        大失败: { line: "黑骰任务大失败：火球没有出现，所有照片却拍到了同一张陌生脸。" },
+      },
+    },
+    skin: {
+      brief: "一叠纽约飞碟剪报残页被寄到编辑部，页边夹着港务局和读者来信的旧编号。",
+      objective: "把剪报、读者来信和港务局流言拼成一条可追踪线。",
+      stakes: "深度调查第一环。成功后转入港务局夜间雷达抄本。",
+      fieldIntro: "剪报边缘被烟熏过，几张纸的日期彼此冲突，但同一个夜班编号反复出现。",
+      dice: {
+        rolling: "档案员：这些剪报像被人故意撕散，只留下足够让我们上钩的部分。",
+        select: "主编：先把能互相指认的编号挑出来。",
+      },
+      outcomes: {
+        大成功: { line: "大成功：剪报、来信和港务局编号拼出同一晚的完整轮廓。", clueTitle: "飞碟剪报编号链", clueDesc: "第一环强素材，指向港务局雷达抄本。" },
+        小成功: { line: "成功：你们拼出关键编号，但缺一份夜班抄本。", clueTitle: "残缺编号链", clueDesc: "可用素材。它能推动下一阶段核对。" },
+        成功: { line: "成功：你们拼出关键编号，但缺一份夜班抄本。", clueTitle: "残缺编号链", clueDesc: "可用素材。它能推动下一阶段核对。" },
+        失败: { line: "失败：剪报年份对不上，只剩一封读者来信像在指路。", clueTitle: "读者来信编号", clueDesc: "弱线索。它保留了继续调查的入口。" },
+      },
+    },
+    roswell_weather_copy: {
+      brief: "港务局夜班抄本被人复印过多次，最关键的雷达回波只剩浅浅一圈。",
+      objective: "核对雷达抄本与哈德逊航道记录。",
+      stakes: "深度调查第二环。越接近机构记录，口径越容易被改写。",
+      fieldIntro: "复印纸薄得透光。你们把它压在窗前，浅灰色回波终于浮出来。",
+      outcomes: {
+        大成功: { line: "大成功：雷达回波和航道记录在同一分钟重合。", clueTitle: "夜间雷达重合点", clueDesc: "第二环强素材，足以锁定屋顶观测点。" },
+        小成功: { line: "成功：回波时间能对上，方位角还需要现场观测补证。", clueTitle: "雷达回波抄本", clueDesc: "可用素材。它把剪报变成可追踪路线。" },
+        失败: { line: "失败：复印件被质疑造假，但页角留下了屋顶维护章。", clueTitle: "屋顶维护章", clueDesc: "弱线索。维护章指向曼哈顿废弃屋顶。" },
+      },
+    },
+    roswell_radar_night: {
+      brief: "废弃屋顶观测点面对哈德逊河，栏杆上还有旧相机架留下的划痕。",
+      objective: "夜访屋顶，复核方位角、照片残影和目击口供。",
+      stakes: "危险深度调查。失败会留下压力，但这里可能拍到独家画面。",
+      fieldIntro: "屋顶门锁被新近撬过。风把城市噪声压低，像有人把纽约调成静音。",
+      outcomes: {
+        crit_success: { line: "大成功：方位角、残影和目击口供全部对准同一片夜空。", clueTitle: "屋顶观测三证", clueDesc: "危险强素材，直接指向三秒空白录音。" },
+        success_cost: { line: "成功但反噬：照片拍到了，楼下巡逻也拍到了你们。", clueTitle: "被追查的屋顶照片", clueDesc: "强素材，但会带来现实压力。" },
+        partial: { line: "部分成功：残影出现了，底片边缘却像被烧穿。", clueTitle: "烧穿底片残影", clueDesc: "不完整素材。能推进，但不够干净。" },
+        fail_clue: { line: "失败但有线索：屋顶什么也没拍到，只录到一段整齐消失的三秒空白。", clueTitle: "三秒空白前奏", clueDesc: "弱线索。空白本身成了调查对象。" },
+      },
+    },
+    roswell_tape_blank: {
+      brief: "所有证据都指向一段录音：三秒钟里，城市背景声被挖走了。",
+      objective: "分析空白录音，判断它是剪辑、干扰，还是某种主动擦除。",
+      stakes: "黑骰深度调查。成功能拿到封面级素材，失败会污染队伍判断。",
+      fieldIntro: "录音机开始播放。前三秒是纽约，后三秒还是纽约，中间却像整座城市停止呼吸。",
+      dice: {
+        rolling: "录音师：不是静音。静音不会把人的记忆也削掉一块。",
+        black: "主编：黑骰出现时，先别急着解释，先确认哪些证据还属于我们。",
+        select: "主编：只计入你敢署名的那几颗。",
+      },
+      outcomes: {
+        大成功: { line: "黑骰任务大成功：空白被还原成一串可公开的低频脉冲。", clueTitle: "三秒低频脉冲", clueDesc: "终局强素材，可直接进入封面故事。" },
+        成功: { line: "黑骰任务成功：你们听见了空白里的脉冲，也带回了轻微耳鸣。", clueTitle: "带耳鸣的空白录音", clueDesc: "强素材，伴随轻微反噬。" },
+        失败: { line: "黑骰任务失败：录音没有还原，但所有人都记住了同一个不存在的标题。", clueTitle: "不存在的标题", clueDesc: "弱线索。它会影响后续写稿口径。" },
+        大失败: { line: "黑骰任务大失败：录音机倒放出编辑部当天还没说出口的话。" },
+      },
+    },
+    bus330_witness: {
+      brief: "M330 末班车的乘客口述彼此矛盾，唯一相同的是：车上多了一站。",
+      objective: "核实乘客名单、旧报线索和读者来信。",
+      stakes: "深度调查第一环。成功后转入布朗克斯废弃调度室。",
+      fieldIntro: "受访者把车票夹在圣经里。她说自己下车后，车厢里还坐着一个没人看清的人。",
+      dice: {
+        rolling: "线人：她不怕我们不信，她怕我们把那站名念出来。",
+        select: "主编：先挑能证明乘客真的上过车的骰面。",
+      },
+      outcomes: {
+        大成功: { line: "大成功：乘客名单、旧报和来信共同指向同一班末班车。", clueTitle: "M330 乘客交叉证词", clueDesc: "第一环强素材，指向废弃调度室。" },
+        小成功: { line: "成功：口述能互相支撑，只差一张完整车次表。", clueTitle: "末班车口述稿", clueDesc: "可用素材。它把传闻变成可追踪路线。" },
+        成功: { line: "成功：口述能互相支撑，只差一张完整车次表。", clueTitle: "末班车口述稿", clueDesc: "可用素材。它把传闻变成可追踪路线。" },
+        失败: { line: "失败：受访者中途反悔，却留下半张旧车票。", clueTitle: "半张旧车票", clueDesc: "弱线索。票根上的线路号还看得清。" },
+      },
+    },
+    bus330_depot: {
+      brief: "废弃调度室墙上贴着旧线路图，M330 的终点站被黑色胶带盖住。",
+      objective: "调查车次表、泥迹座椅和被涂黑的线路图。",
+      stakes: "深度调查第二环。关系线索开始转入现场证据。",
+      fieldIntro: "门一推开，调度室里的电话响了一声。听筒里只有远处刹车的尖叫。",
+      outcomes: {
+        大成功: { line: "大成功：车次表、泥迹和线路图缺口全部指向布朗克斯一处无名站牌。", clueTitle: "被涂黑的终点站", clueDesc: "第二环强素材，解锁无名站牌。" },
+        小成功: { line: "成功：你们拍到线路图缺口，但车次表少了一页。", clueTitle: "线路图缺口照片", clueDesc: "可用素材。它足够把调查推向现场。" },
+        失败: { line: "失败：调度室被提前清过场，只剩座椅下的一块湿泥。", clueTitle: "座椅下湿泥", clueDesc: "弱线索。泥里有不属于调度室的站台灰。" },
+      },
+    },
+    bus330_station: {
+      brief: "地图上不存在的站牌出现在凌晨路线图里，站名被油漆刷成一条黑线。",
+      objective: "确认无名站牌、路面痕迹和凌晨车灯记录。",
+      stakes: "危险深度调查。这里能接近终局录像，也最容易把人带偏。",
+      fieldIntro: "站牌旁没有候车亭，只有一排新鲜脚印。它们都朝马路中央走去。",
+      outcomes: {
+        crit_success: { line: "大成功：站牌、脚印和车灯记录共同证明 M330 真的停过。", clueTitle: "无名站停靠证据", clueDesc: "危险强素材，指向车载录像最后三秒。" },
+        success_cost: { line: "成功但反噬：证据拍到了，一名队员却坚称自己刚从车上下来。", clueTitle: "反噬停靠照片", clueDesc: "强素材，但队伍状态受到异常牵引。" },
+        partial: { line: "部分成功：车灯记录能用，站牌照片却每次冲洗都多出一道黑线。", clueTitle: "多黑线的站牌照", clueDesc: "不完整素材。它能推进，但会污染叙事。" },
+        fail_clue: { line: "失败但有线索：站牌消失前，你们在地上捡到一枚还温热的换乘币。", clueTitle: "温热换乘币", clueDesc: "弱线索。它把调查推向车载录像。" },
+      },
+    },
+    bus330_tape: {
+      brief: "车载录像最后三秒里，车厢灯光全灭。黑暗里多出了一排不该存在的座位。",
+      objective: "判断哪些画面能计入报道，哪些画面会把读者也拖进车厢。",
+      stakes: "黑骰终局。黑骰会混入、替座，或让成功变脏。",
+      fieldIntro: "录像每播放一次，屏幕反光里就多一个站着的人。剪辑台旁没人愿意坐下。",
+      dice: {
+        rolling: "剪辑师：我数过座位，播放前和播放后不一样。",
+        black: "主编：黑骰出现时，别问谁上了车，先问谁还在编辑部。",
+        select: "主编：锁住能证明事实的证据，别把车上的东西一起交稿。",
+      },
+      outcomes: {
+        大成功: { line: "黑骰任务大成功：最后三秒被定格，异常乘客没有进入成片。", clueTitle: "干净的车载定格", clueDesc: "终局强素材，可作为主封面核心证据。" },
+        成功: { line: "黑骰任务成功：录像能用了，但成片里有一帧座位数对不上。", clueTitle: "有瑕疵的末班车录像", clueDesc: "强素材，伴随异常回声。" },
+        失败: { line: "黑骰任务失败：录像糊成黑块，只留下车门刷卡声。", clueTitle: "车门刷卡声", clueDesc: "弱线索。失败仍能形成诡异旁证。" },
+        大失败: { line: "黑骰任务大失败：剪辑台回放出你们明天才会录下的采访。" },
+      },
+    },
+    hidden_gate: {
+      brief: "华尔街废站深处有一座黑色方尖碑，只有在周刊足够接近失控时才会出现在地图上。",
+      objective: "确认方尖碑材质、站台回声和它对现实秩序的影响。",
+      stakes: "隐藏危险调查。素材价值极高，但会明显推高现实失控感。",
+      fieldIntro: "废站里没有风，报纸边角却一直朝方尖碑方向翻动。",
+      dice: {
+        rolling: "主角：这不是新闻点，这是新闻点背后的门。",
+        select: "主编：能写的才带走。不能写的，先别让它进编辑部。",
+      },
+      outcomes: {
+        crit_success: { line: "大成功：方尖碑材质、回声频率和站台旧档案形成完整闭环。", clueTitle: "方尖碑完整档案", clueDesc: "隐藏强素材。它足够改写本期杂志的核心立场。" },
+        success_cost: { line: "成功但反噬：你们带回样本，也带回每个人都听得见的站台广播。", clueTitle: "带广播的黑石样本", clueDesc: "强素材，但现实压力显著上升。" },
+        partial: { line: "部分成功：样本拍到了，照片边缘却出现陌生站名。", clueTitle: "陌生站名照片", clueDesc: "不完整素材。它危险，却很有吸引力。" },
+        fail_clue: { line: "失败但有线索：你们没有靠近方尖碑，只抄下了广播里重复的三个数字。", clueTitle: "废站三位数字", clueDesc: "弱线索。数字可能是站台、日期，也可能是债务编号。" },
+        crit_fail: { line: "大失败：废站出口变成编辑部门口，没人知道你们离开了多久。" },
+      },
+    },
   };
   function makeAvatar(label, c1, c2) {
     const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 180'>
@@ -1479,14 +1707,12 @@
           <h4 class="tutorial-soft-h4">收尾</h4>
           <ul class="tutorial-soft-ul">
             <li>版式满意后点<strong>结算本期</strong>，查看销量与利润。</li>
-            <li>关窗后会播<strong>填入演示</strong>（可循环）；也可点「报刊填入演示」重温。</li>
+            <li>确认后直接开始摆版；需要重来时可用<strong>清空版面</strong>。</li>
           </ul>
           <p class="tutorial-soft-note">本周内本提示只出现一次。</p>
         </div>`,
       ],
     );
-    if (!week1TutorialActive() || state.phase !== "editorial" || state.paperLabMode) return;
-    openPaperDemoLab();
   }
 
   async function runWeek1SynthesisOnboarding() {
@@ -1837,6 +2063,7 @@
 
   function setView(name) {
     state.view = name;
+    if (document.body) document.body.dataset.view = name;
     ["weekStart", "global", "region", "setup", "result"].forEach((v) => {
       const node = document.getElementById("view-" + v);
       if (node) node.classList.toggle("hidden", v !== name);
@@ -2068,13 +2295,13 @@
         options: [
           {
             text: "签署官方协作",
-            desc: "公信 +3，声望 +2，新增太平洋临时科学节点",
+            desc: "公信 +3，声望 +2，新增西部档案临时科学节点",
             apply: () => {
               addMacro({ 公信: 3, 声望: 2 });
-              addDynamicNode("pacific", {
-                id: `dyn_ocean_${state.week}`,
+              addDynamicNode("western_archives", {
+                id: `dyn_west_${state.week}`,
                 kind: "temp",
-                name: "临时：深海浮标异常",
+                name: "临时：内华达监听站异常",
                 days: 2,
                 need: { 探索: 4, 理性: 4 },
                 tags: ["sci"],
@@ -2171,13 +2398,13 @@
         r.unlocked = true;
         return;
       }
-      if (r.id === "east_asia") {
-        const done = state.clues.some((c) => c.title.includes("罗斯威尔")) || macro.声望 >= 55;
+      if (r.id === "new_england") {
+        const done = state.clues.some((c) => c.title.includes("飞碟剪报")) || macro.声望 >= 55 || !!state.completedMissionIds.skin;
         r.unlocked = done;
         r.pulse = done && state.week <= 2;
         return;
       }
-      if (r.id === "pacific") {
+      if (r.id === "western_archives") {
         r.unlocked = macro.公信 >= 60 || macro.守序 >= 60;
         r.pulse = r.unlocked;
       }
@@ -2252,6 +2479,62 @@
     return "可反复追踪的调查任务。失败不会封死题材，后续可继续累积信息。";
   }
 
+  function missionStory(m) {
+    if (!m || !m.id) return null;
+    return MISSION_STORIES[m.id] || null;
+  }
+
+  function missionStoryBriefHtml(m) {
+    const story = missionStory(m);
+    if (!story) return "";
+    const objective = story.objective ? `<div class="dispatch-story-row"><span>目标</span><strong>${escapeHtml(story.objective)}</strong></div>` : "";
+    const stakes = story.stakes ? `<div class="dispatch-story-row"><span>压力</span><strong>${escapeHtml(story.stakes)}</strong></div>` : "";
+    return `<div class="dispatch-story-brief">
+      <div class="dispatch-story-kicker">调查简报</div>
+      <p>${escapeHtml(story.brief || "这条线索需要外勤确认，才能进入本期选题。")}</p>
+      ${objective || stakes ? `<div class="dispatch-story-grid">${objective}${stakes}</div>` : ""}
+    </div>`;
+  }
+
+  function missionFieldIntroHtml(m) {
+    const story = missionStory(m);
+    if (!story || !story.fieldIntro) return "";
+    return `<div class="result-field-note"><strong>现场记录</strong><span>${escapeHtml(story.fieldIntro)}</span></div>`;
+  }
+
+  function missionDiceDialogue(m, stage) {
+    const story = missionStory(m);
+    const dice = story && story.dice ? story.dice : {};
+    if (stage === "black") return dice.black || "现场信号突然变冷，骰池里有东西开始改变本轮判断。";
+    if (stage === "select") return dice.select || "主编：先挑能支撑报道的证据，别把噪声也写进稿子。";
+    return dice.rolling || "外勤组抵达现场，所有人都在等第一颗骰子停下来。";
+  }
+
+  function missionDiceDialogueHtml(m, stage) {
+    const text = missionDiceDialogue(m, stage);
+    return text ? `<div class="dice-story-line">${escapeHtml(text)}</div>` : "";
+  }
+
+  function missionOutcomeCopy(m, key) {
+    const story = missionStory(m);
+    if (!story || !story.outcomes) return null;
+    return story.outcomes[key] || null;
+  }
+
+  function missionOutcomeLine(m, key, fallback, prefix) {
+    const copy = missionOutcomeCopy(m, key);
+    const text = copy && copy.line ? copy.line : fallback;
+    return `${prefix || ""}${text}`;
+  }
+
+  function missionClueRewardCopy(m, titleSuffix, tier, fallbackDesc, outcomeKey) {
+    const copy = missionOutcomeCopy(m, outcomeKey) || missionOutcomeCopy(m, titleSuffix);
+    return {
+      title: copy && copy.clueTitle ? copy.clueTitle : titleSuffix,
+      desc: copy && copy.clueDesc ? copy.clueDesc : (fallbackDesc || `线索品质：Tier ${tier}`),
+    };
+  }
+
   function missionTypePanelHtml(m, compact) {
     const progress = m.checkType === "white" && state.whiteInvestigationLog[m.id]
       ? `<div style="margin-top:0.25rem;">已追踪 ${state.whiteInvestigationLog[m.id]} 次，本题材会继续累积信息。</div>`
@@ -2323,11 +2606,12 @@
     return (m.tags || [])[0] || "pop";
   }
 
-  function addMissionClue(m, titleSuffix, tier, rewards, desc) {
+  function addMissionClue(m, titleSuffix, tier, rewards, desc, outcomeKey) {
     if (tier <= 0) return null;
-    const clue = { title: `${m.name} · ${titleSuffix}`, type: clueTypeFromMission(m), tier, topicKey: newTopicKey() };
+    const copy = missionClueRewardCopy(m, titleSuffix, tier, desc, outcomeKey);
+    const clue = { title: `${m.name} · ${copy.title}`, type: clueTypeFromMission(m), tier, topicKey: newTopicKey() };
     state.clues.push(clue);
-    rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: desc || `线索品质：Tier ${tier}` });
+    rewards.push({ icon: rewardIconByType(clue.type), title: clue.title, desc: copy.desc });
     return clue;
   }
 
@@ -2335,23 +2619,23 @@
     const p = prefix || "";
     if (high.id === "crit_success") {
       addMacro({ 声望: 6, 公信: (m.tags || []).includes("sci") ? 3 : 0, 诡名: (m.tags || []).includes("occult") ? 4 : 1 });
-      lines.push(`${p}大成功：录音、目击者与雷达记录三方对上。`);
-      addMissionClue(m, "高危强线索", 3, rewards, "高危五档：大成功（Tier 3）");
+      lines.push(missionOutcomeLine(m, "crit_success", "大成功：录音、目击者与雷达记录三方对上。", p));
+      addMissionClue(m, "高危强线索", 3, rewards, "高危五档：大成功（Tier 3）", "crit_success");
     } else if (high.id === "success_cost") {
       addMacro({ 声望: 4, 公信: -2, 狂性: 2, 诡名: 2 });
-      lines.push(`${p}成功但反噬：拿到独家，但基地新闻官也记住了你的名字。`);
-      addMissionClue(m, "反噬独家素材", 3, rewards, "高危五档：成功但反噬（Tier 3，附带宏观代价）");
+      lines.push(missionOutcomeLine(m, "success_cost", "成功但反噬：拿到独家，但市政发言人也记住了你的名字。", p));
+      addMissionClue(m, "反噬独家素材", 3, rewards, "高危五档：成功但反噬（Tier 3，附带宏观代价）", "success_cost");
     } else if (high.id === "partial") {
       addMacro({ 声望: 2, 诡名: 1 });
-      lines.push(`${p}部分成功：照片能用，只有最关键的三秒糊成了灰。`);
-      addMissionClue(m, "不完整素材", 2, rewards, "高危五档：部分成功（Tier 2）");
+      lines.push(missionOutcomeLine(m, "partial", "部分成功：照片能用，只有最关键的三秒糊成了灰。", p));
+      addMissionClue(m, "不完整素材", 2, rewards, "高危五档：部分成功（Tier 2）", "partial");
     } else if (high.id === "fail_clue") {
       addMacro({ 声望: -1, 狂性: 1 });
-      lines.push(`${p}失败但有线索：任务失败，但对方反复提到一个旧地名。`);
-      addMissionClue(m, "失败残留线索", 1, rewards, "高危五档：失败但有线索（Tier 1）");
+      lines.push(missionOutcomeLine(m, "fail_clue", "失败但有线索：任务失败，但对方反复提到一个旧地名。", p));
+      addMissionClue(m, "失败残留线索", 1, rewards, "高危五档：失败但有线索（Tier 1）", "fail_clue");
     } else {
       addMacro({ 守序: -3, 狂性: 4, 公信: -2 });
-      lines.push(`${p}大失败：设备烧毁，受访者失联，只剩一段空白磁带。`);
+      lines.push(missionOutcomeLine(m, "crit_fail", "大失败：设备烧毁，受访者失联，只剩一段空白磁带。", p));
     }
   }
 
@@ -2361,28 +2645,28 @@
       macro.公信 += (m.tags || []).includes("sci") ? 4 : 0;
       macro.诡名 += (m.tags || []).includes("occult") ? 5 : 2;
       if (m.kind === "hidden") macro.狂性 = Math.min(100, macro.狂性 + 4);
-      lines.push("大成功：高质量线索。");
-      addMissionClue(m, "深度特稿素材", 3, rewards, "线索品质：高（Tier 3）");
+      lines.push(missionOutcomeLine(m, "大成功", "大成功：高质量线索。"));
+      addMissionClue(m, "深度特稿素材", 3, rewards, "线索品质：高（Tier 3）", "大成功");
     } else if (tier === "小成功" || tier === "成功") {
       macro.声望 = Math.min(100, macro.声望 + 4);
       macro.诡名 += 1;
-      lines.push(`${m.riskTier === "high" ? "危险任务成功" : "成功"}：获得可用素材。`);
-      addMissionClue(m, m.riskTier === "high" ? "危险任务素材" : "常规稿件素材", m.riskTier === "high" ? 3 : 2, rewards, m.riskTier === "high" ? "危险标识：成功（Tier 3）" : "线索品质：中（Tier 2）");
+      lines.push(missionOutcomeLine(m, tier, `${m.riskTier === "high" ? "危险任务成功" : "成功"}：获得可用素材。`));
+      addMissionClue(m, m.riskTier === "high" ? "危险任务素材" : "常规稿件素材", m.riskTier === "high" ? 3 : 2, rewards, m.riskTier === "high" ? "危险标识：成功（Tier 3）" : "线索品质：中（Tier 2）", tier);
     } else if (tier === "失败") {
       macro.声望 = Math.max(0, macro.声望 - 2);
       if (m.riskTier === "high") {
         addMacro({ 狂性: 2, 守序: -1 });
-        lines.push("危险任务失败：获得弱线索，但队伍状态受损。");
-        addMissionClue(m, "危险弱线索", 1, rewards, "危险标识：失败仍保留弱线索（Tier 1）");
+        lines.push(missionOutcomeLine(m, "失败", "危险任务失败：获得弱线索，但队伍状态受损。"));
+        addMissionClue(m, "危险弱线索", 1, rewards, "危险标识：失败仍保留弱线索（Tier 1）", "失败");
         rewards.push({ icon: "!", title: "危险后果", desc: "狂性 +2，守序 -1。本任务没有黑骰，但失败代价更重。" });
       } else {
-        lines.push("失败：碎片线索。");
-        addMissionClue(m, "碎片线索", 1, rewards, "线索品质：低（Tier 1）");
+        lines.push(missionOutcomeLine(m, "失败", "失败：碎片线索。"));
+        addMissionClue(m, "碎片线索", 1, rewards, "线索品质：低（Tier 1）", "失败");
       }
     } else {
       macro.守序 = Math.max(0, macro.守序 - 3);
       macro.狂性 = Math.min(100, macro.狂性 + 3);
-      lines.push("大失败。");
+      lines.push(missionOutcomeLine(m, "大失败", "大失败。"));
     }
   }
 
@@ -2391,7 +2675,7 @@
     state.whiteInvestigationLog[m.id] = (state.whiteInvestigationLog[m.id] || 0) + 1;
     if (m.id === "n51") {
       const count = state.whiteInvestigationLog[m.id];
-      lines.push(`白色调查：本题材已追踪 ${count} 次，后续派遣会继续累积禁区周边证词。`);
+      lines.push(`白色调查：本题材已追踪 ${count} 次，后续派遣会继续累积旧机库围栏证词。`);
     }
   }
 
@@ -2413,7 +2697,7 @@
     const alreadyVisible = getRegionNodes({ id: m.regionId, nodes: [] }).some((node) => node.id === m.nextNode.id);
     if (!alreadyVisible) addDynamicNode(m.regionId, m.nextNode, 6);
     lines.push(`深度调查：当前阶段完成，地图上出现下一阶段「${m.nextNode.name}」。`);
-    rewards.push({ icon: "→", title: `连续任务推进：${m.nextNode.name}`, desc: missionTypeDesc(m.nextNode) });
+    rewards.push({ icon: "→", title: `连续任务推进：${m.nextNode.name}`, desc: (missionStory(m.nextNode) || {}).brief || missionTypeDesc(m.nextNode) });
   }
 
   function shouldOfferPushBonus(m, high) {
@@ -2466,6 +2750,12 @@
   function renderWeekStart() {
     if (!state.weekEvent) state.weekEvent = pickWeekEvent();
     const elW = document.getElementById("view-weekStart");
+    const introBrief = state.week === 1
+      ? `<div class="prob-box" style="border-color:#d4a853;">
+          <strong>新任主编上任</strong><br/>
+          你通过面试，直接成为《世界未解之谜周刊》的主编。杂志社快垮了，债主每天催债；本周再找不出有吸引力的故事报道，编辑部就要散伙。
+        </div>`
+      : "";
     const eventBlock = state.weekEvent.type === "choice"
       ? `<div class="prob-box">
           <div style="margin-bottom:0.35rem;"><strong>请选择处理方案：</strong></div>
@@ -2481,13 +2771,14 @@
       : "";
     elW.innerHTML = `
       <h2>回合起始</h2>
+      ${introBrief}
       <p><strong>${escapeHtml(state.weekEvent.title)}</strong></p>
       <p style="color:var(--muted);font-size:0.9rem;">${escapeHtml(state.weekEvent.body)}</p>
       <label class="evt-debug"><input type="checkbox" id="evtDebugToggle" ${state.debugShowEventEffects ? "checked" : ""}/> 调试：显示全部选项后果</label>
       ${eventBlock}
       ${resultBlock}
       ${state.weekEvent.type === "passive" ? `<button type="button" id="btnResolveEvent" ${state.weekEventResolved ? "disabled" : ""}>确认事件</button>` : ""}
-      <button type="button" class="primary" id="btnEnterGlobal">进入全球地图</button>`;
+      <button type="button" class="primary" id="btnEnterGlobal">进入美国取材地图</button>`;
     const dbg = document.getElementById("evtDebugToggle");
     if (dbg) {
       dbg.onchange = () => {
@@ -2529,7 +2820,7 @@
         `<div class="tutorial-soft-sheet">
           <h4 class="tutorial-soft-h4">接下来去哪？</h4>
           <ul class="tutorial-soft-ul">
-            <li>处理完札记后，点<strong>进入全球地图</strong>，去各地取材。</li>
+            <li>处理完札记后，点<strong>进入美国取材地图</strong>，去各地取材。</li>
           </ul>
           <p class="tutorial-soft-note">点「知道了」或空白处可关窗；本周内同类提示不再弹出，新周目第一周会再出现。</p>
         </div>`,
@@ -2539,14 +2830,14 @@
 
   function globalRegionUnlockItems(region) {
     if (!region || region.unlocked) return [];
-    if (region.id === "east_asia") {
-      const roswellDone = state.clues.some((c) => (c.title || "").includes("罗斯威尔")) || !!state.completedMissionIds.skin;
+    if (region.id === "new_england") {
+      const clippingDone = state.clues.some((c) => (c.title || "").includes("飞碟剪报")) || !!state.completedMissionIds.skin;
       return [
         { label: "声望", value: macro.声望, max: 55, gap: macro.声望 >= 55 ? "已满足" : `还差 ${55 - macro.声望}` },
-        { label: "罗斯威尔残页", value: roswellDone ? 1 : 0, max: 1, gap: roswellDone ? "已完成" : "完成北美深度链第一环" },
+        { label: "飞碟剪报", value: clippingDone ? 1 : 0, max: 1, gap: clippingDone ? "已完成" : "完成纽约深度链第一环" },
       ];
     }
-    if (region.id === "pacific") {
+    if (region.id === "western_archives") {
       return [
         { label: "公信", value: macro.公信, max: 60, gap: macro.公信 >= 60 ? "已满足" : `还差 ${60 - macro.公信}` },
         { label: "守序", value: macro.守序, max: 60, gap: macro.守序 >= 60 ? "已满足" : `还差 ${60 - macro.守序}` },
@@ -2832,9 +3123,9 @@
       <div class="world-map-wrap" style="grid-template-columns:repeat(auto-fit,minmax(min(360px,100%),1fr));align-items:stretch;">
         <div class="world-map" style="min-height:520px;height:min(720px,calc(100vh - 260px));background:linear-gradient(rgba(6,11,18,0.30),rgba(6,11,18,0.62)),url('Assets/world-map-background.svg') center/cover no-repeat,#07101e;">
           <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0.72;">
-            <path d="M20 35 C 36 18, 62 24, 78 44" fill="none" stroke="rgba(212,168,83,0.32)" stroke-width="0.8" stroke-dasharray="3 3"></path>
-            <path d="M20 35 C 34 56, 45 62, 56 54" fill="none" stroke="rgba(212,168,83,0.28)" stroke-width="0.8" stroke-dasharray="3 3"></path>
-            <path d="M56 54 C 64 48, 72 47, 78 44" fill="none" stroke="rgba(212,168,83,0.24)" stroke-width="0.8" stroke-dasharray="3 3"></path>
+            <path d="M30 38 C 32 33, 35 31, 39 30" fill="none" stroke="rgba(212,168,83,0.32)" stroke-width="0.8" stroke-dasharray="3 3"></path>
+            <path d="M30 38 C 25 44, 21 48, 18 50" fill="none" stroke="rgba(212,168,83,0.28)" stroke-width="0.8" stroke-dasharray="3 3"></path>
+            <path d="M18 50 C 25 44, 33 36, 39 30" fill="none" stroke="rgba(212,168,83,0.24)" stroke-width="0.8" stroke-dasharray="3 3"></path>
           </svg>
           ${pointsHtml}
           <div class="global-map-legend" aria-label="地图图例">
@@ -2931,7 +3222,7 @@
     updateNextDayButton();
     scheduleWeek1SoftTutorial(
       "w1_global",
-      "第一周 · 世界取材地图",
+      "第一周 · 美国取材地图",
       [
         `${tutorialSoftFigure(
           "Assets/tutorial-map-guide.svg",
@@ -2947,14 +3238,14 @@
         </div>`,
         `${tutorialSoftFigure(
           "Assets/tutorial-global-tags-guide.svg",
-          "全球地图顶部题材筛选标签示意：科学、秘闻、大众",
+          "取材地图顶部题材筛选标签示意：科学、秘闻、大众",
           "与地图页顶栏一致：点标签可开关对应题材，地图点与右侧列表会随之隐藏或显示。",
         )}<div class="tutorial-soft-sheet">
           <h4 class="tutorial-soft-h4">筛选标签</h4>
           <p class="tutorial-soft-lead">顶部 <strong>科学 / 秘闻 / 大众</strong> 用来按题材口味筛目标，减少无关干扰。</p>
           <ul class="tutorial-soft-ul">
             <li>可<strong>多选</strong>：关掉的题材不会在地图与列表里碍眼。</li>
-            <li>与正式全球地图页<strong>同一排按钮</strong>，进区域后仍可按需回想。</li>
+            <li>与正式取材地图页<strong>同一排按钮</strong>，进区域后仍可按需回想。</li>
           </ul>
         </div>`,
         `<div class="tutorial-soft-sheet">
@@ -3835,10 +4126,9 @@
   function toggleTempStringerForDispatch(maxStaff) {
     const staff = tempStringerStaff();
     if (!staff) return false;
-    if (!canAddStaffToDispatch(staff, maxStaff)) return false;
+    if (isTempStringerHired()) return false;
     ensureTempStringerHired();
-    state.selectedStaffIds.push(staff.id);
-    showToastMessage("已雇佣临时线人，并加入本次骰池。后续可在候选角色卡中撤回。");
+    showToastMessage("临时线人已加入候选角色；选择它会占用 1 个角色槽。");
     return true;
   }
 
@@ -3961,23 +4251,49 @@
   }
 
   function dispatchLabRisk(m, stats, selectedCount) {
-    if (!selectedCount) return { label: "高", reason: "尚未选择角色，无法构成骰池。" };
-    if (!stats.relevantFaces) return { label: "高", reason: "当前骰池没有命中任务需求的相关面。" };
+    if (!selectedCount) return { label: "未评估", reason: "先选至少 1 名角色，系统会显示本次是否能达标。" };
+    if (!stats.relevantFaces) return { label: "高", reason: "当前骰池没有可用需求面，建议换人或补道具骰。" };
     const chanceText = `实际达标率约 ${formatChance(stats.successChance)}`;
-    const targetText = `有效点目标 ${stats.targetValue || 0}，潜在相关点 ${stats.potentialValue || 0}`;
+    const targetText = `有效点 ${stats.potentialValue || 0}/${stats.targetValue || 0}`;
     const lift = selectedCount > 1 ? formatDisplayedChanceLift(stats.successChance || 0, stats.bestSingleStaffChance || 0) : "";
     const liftText = lift ? `；较单人最佳 ${lift}` : "";
-    const idleText = stats.nonContributingStaff ? `；${stats.nonContributingStaff} 名角色无相关面` : "";
+    const idleText = stats.nonContributingStaff ? `；${stats.nonContributingStaff} 名角色没有补到缺口` : "";
     if (stats.successChance <= 0) {
-      return { label: "高", reason: `当前骰池按实际掷骰无法达标；${targetText}；相关面 ${stats.relevantFaces}，空面 ${stats.blankFaces}${idleText}。` };
+      return { label: "高", reason: `当前骰池还无法达标；${targetText}${idleText}。` };
     }
     if (stats.successChance >= 0.55) {
-      return { label: "低", reason: `${chanceText}${liftText}；${targetText}；相关面 ${stats.relevantFaces}，空面 ${stats.blankFaces}${idleText}。` };
+      return { label: "可搏", reason: `${chanceText}${liftText}；当前骰池已覆盖任务需求。` };
     }
     if (stats.successChance >= 0.3) {
-      return { label: "中", reason: `${chanceText}${liftText}；${targetText}；相关面 ${stats.relevantFaces}，空面 ${stats.blankFaces}${idleText}。` };
+      return { label: "偏险", reason: `${chanceText}${liftText}；${targetText}，可以尝试，也可继续补关键骰面。` };
     }
-    return { label: "高", reason: `${chanceText} 偏低${liftText}；${targetText}；相关面 ${stats.relevantFaces}，空面 ${stats.blankFaces}${idleText}。` };
+    return { label: "高", reason: `${chanceText} 偏低${liftText}；${targetText}，建议补关键骰面。` };
+  }
+
+  function dispatchRiskChipClass(label) {
+    if (label === "高") return "danger";
+    if (label === "偏险") return "high";
+    return "white";
+  }
+
+  function dispatchLabActionDisabledReason(m) {
+    if (!state.selectedStaffIds.length) return "先选择至少 1 名角色";
+    if (m.days > state.day) return "剩余天数不足";
+    if (state.missionResolving || state.processingDayTick) return "当前正在结算";
+    return "";
+  }
+
+  function dispatchLabStaffSummaryHtml(staff, m) {
+    const need = (m && m.need) || {};
+    const fit = staffFitSummary(staff, need);
+    return `<div class="dispatch-staff-summary">
+      <div class="dispatch-staff-summary-row"><span>任务贡献</span><strong>${escapeHtml(fit.stats.relevantValues || 0)}</strong></div>
+      <div class="dispatch-staff-summary-row"><span>相关面</span><strong>${escapeHtml(fit.stats.relevant || 0)}/6</strong></div>
+      ${Object.keys(need).map((key) => {
+        const value = diceFacesForStaff(staff).reduce((sum, face) => sum + (face && face.attr === key ? face.value || 0 : 0), 0);
+        return `<div class="dispatch-staff-summary-row"><span>${escapeHtml(key)}来源</span><strong>${escapeHtml(value)}</strong></div>`;
+      }).join("")}
+    </div>`;
   }
 
   function dispatchLabNeedRowsHtml(m, stats) {
@@ -3987,29 +4303,25 @@
     const target = stats.targetValue || needTargetValue(need);
     const potential = stats.potentialValue || keys.reduce((sum, k) => sum + (stats.values[k] || 0), 0);
     const targetPct = target ? Math.max(0, Math.min(100, Math.round((potential / target) * 100))) : 100;
-    const targetRow = `<div class="dispatch-need-row ${potential >= target ? "is-met" : ""}">
-      <div class="dispatch-need-line"><strong>有效点</strong><span>潜在 ${escapeHtml(potential)} / 目标 ${escapeHtml(target)} · 实掷约 ${escapeHtml(formatChance(stats.successChance))}</span></div>
-      <div class="dispatch-meter"><span style="width:${targetPct}%"></span></div>
+    const targetRow = `<div class="dispatch-need-summary">
+      <div class="dispatch-need-row ${potential >= target ? "is-met" : ""}" style="margin-bottom:0;">
+        <div class="dispatch-need-line"><strong>判定目标：有效点 ${escapeHtml(potential)} / ${escapeHtml(target)}</strong><span>实掷达标率 ${escapeHtml(formatChance(stats.successChance))}</span></div>
+        <div class="dispatch-meter"><span style="width:${targetPct}%"></span></div>
+      </div>
     </div>`;
-    return targetRow + keys.map((k) => {
+    const sourceRows = keys.map((k) => {
       const value = stats.values[k] || 0;
       const req = need[k] || 0;
       const pct = req ? Math.max(0, Math.min(100, Math.round((value / req) * 100))) : 100;
       const met = value >= req;
+      const gap = Math.max(0, req - value);
+      const stateText = met ? `已备 ${value}/${req}` : `还差 ${gap} · 已备 ${value}/${req}`;
       return `<div class="dispatch-need-row ${met ? "is-met" : ""}">
-        <div class="dispatch-need-line"><strong>${escapeHtml(k)}</strong><span>${escapeHtml(value)} / ${escapeHtml(req)}${met ? " · 已覆盖" : ` · 缺 ${req - value}`}</span></div>
+        <div class="dispatch-need-line"><strong>${escapeHtml(k)}</strong><span>${escapeHtml(stateText)}</span></div>
         <div class="dispatch-meter"><span style="width:${pct}%;"></span></div>
       </div>`;
     }).join("");
-  }
-
-  function dispatchLabSummaryValue(m, key) {
-    if (key === "deadline") {
-      const left = deadlineRemainingDays(m);
-      return left == null ? "无" : `${left}天`;
-    }
-    if (key === "need") return Object.keys(m.need || {}).map((k) => `${k}${m.need[k]}`).join(" / ") || "无";
-    return "";
+    return `${targetRow}<div class="dispatch-source-list">${sourceRows}</div>`;
   }
 
   function dispatchLabTaskSummaryHtml(m) {
@@ -4017,11 +4329,9 @@
     const danger = m.riskTier === "high" || m.isHighRisk;
     const deadlineLeft = red ? deadlineRemainingDays(m) : null;
     const kindText = m.missionType === "leadInvestigation" ? "线索调查" : "探索任务";
-    const needText = dispatchLabSummaryValue(m, "need");
     const meta = [
       kindText,
       `耗时 ${m.days}天`,
-      needText && needText !== "无" ? `需求 ${needText}` : "",
     ].filter(Boolean).join(" · ");
     const deadlineHtml = red ? `<div class="dispatch-deadline-block">
       <span>截稿关闭</span>
@@ -4042,18 +4352,18 @@
         ${deadlineHtml}
       </div>
       ${consequence ? `<div class="dispatch-consequence">${escapeHtml(consequence)}</div>` : ""}
+      ${missionStoryBriefHtml(m)}
     </section>`;
   }
 
   function dispatchLabStaffSlotHtml(staff, m) {
-    const fit = staffFitSummary(staff, m.need || {});
     return `<div class="dispatch-slot-card">
       <div class="dispatch-slot-head">
         <img src="${staff.avatar}" alt="${escapeHtml(staff.name)}"/>
         <div>
           <div class="dispatch-slot-name">${escapeHtml(staff.name)}${staff.temporary ? " · 临时" : ""}</div>
-          <div class="dispatch-staff-fit">${escapeHtml(fit.contribution)}</div>
         </div>
+        <button type="button" class="dispatch-slot-remove" data-remove-selected-staff="${escapeHtml(staff.id)}">移出</button>
       </div>
       ${diceNetHtml(diceFacesForStaff(staff), m.need || {}, "dispatch-dice-net dispatch-slot-net")}
     </div>`;
@@ -4082,20 +4392,18 @@
   function dispatchLabRunBlockHtml(m, stats, risk, maxStaff) {
     const selectedCount = state.selectedStaffIds.length;
     const riskChance = selectedCount ? ` · ${formatChance(stats.successChance)}` : "";
-    const disabledReason = !selectedCount
-      ? "先选择至少 1 名角色"
-      : m.days > state.day
-        ? "剩余天数不足"
-        : state.missionResolving || state.processingDayTick
-          ? "当前正在结算"
-          : "";
+    const disabledReason = dispatchLabActionDisabledReason(m);
+    const buttonText = state.missionResolving
+      ? "执行中..."
+      : disabledReason
+        ? (disabledReason === "先选择至少 1 名角色" ? "先选择角色后开始" : disabledReason)
+        : `${m.missionType === "leadInvestigation" ? "开始线索调查" : "开始调查"}（${m.days}天后判定）`;
     return `<aside class="dispatch-lab-panel">
-      <div class="dispatch-lab-panel-title"><span>需求覆盖</span><span class="task-type-chip task-${risk.label === "高" ? "danger" : risk.label === "中" ? "high" : "white"}">风险：${escapeHtml(risk.label)}${escapeHtml(riskChance)}</span></div>
+      <div class="dispatch-lab-panel-title"><span>需求覆盖</span><span class="task-type-chip task-${dispatchRiskChipClass(risk.label)}">风险：${escapeHtml(risk.label)}${escapeHtml(riskChance)}</span></div>
       ${dispatchLabNeedRowsHtml(m, stats)}
       <div class="dispatch-risk-box">${escapeHtml(risk.reason)}</div>
-      <div id="dispatchHoverPreview" class="dispatch-hover-preview">悬停角色卡，预览加入后会补哪些需求。</div>
       <div class="dispatch-lab-actions">
-        <button type="button" id="btnRun" class="primary" ${disabledReason ? "disabled" : ""}>${state.missionResolving ? "执行中..." : `${m.missionType === "leadInvestigation" ? "开始线索调查" : "开始调查"}（${m.days}天后判定）`}</button>
+        <button type="button" id="btnRun" class="primary" ${disabledReason ? "disabled" : ""}>${escapeHtml(buttonText)}</button>
         <div class="risk-reason">${disabledReason ? escapeHtml(disabledReason) : `可出发；最多 ${maxStaff} 人，当前 ${selectedCount} 人。`}</div>
       </div>
     </aside>`;
@@ -4103,10 +4411,14 @@
 
   function dispatchLabResourcesHtml(maxStaff) {
     const tempHired = isTempStringerHired();
-    const tempCapacityHint = state.selectedStaffIds.length >= maxStaff ? " · 人数已满需先撤下一人" : "";
-    const tempCardHtml = tempHired ? "" : `<button type="button" id="btnHireTemp" class="dispatch-resource-card">
+    const tempCardHtml = tempHired
+      ? `<div class="dispatch-resource-card is-spent">
+          <strong>线人已进入候选池</strong>
+          <small>作为临时角色加入时，占用 1 个角色槽。</small>
+        </div>`
+      : `<button type="button" id="btnHireTemp" class="dispatch-resource-card">
           <strong>雇佣本周临时线人</strong>
-          <small>$1200 · 点击加入本次骰池 · 占角色槽${tempCapacityHint}</small>
+          <small>$1200 · 雇佣后出现在候选角色，加入时占角色槽。</small>
         </button>`;
     const toolCards = (state.toolDiceInventory || []).map((tool) => {
       const used = !!tool.used;
@@ -4118,7 +4430,7 @@
       </button>`;
     }).join("");
     return `<div class="dispatch-support-strip">
-      <div class="dispatch-support-head"><span>追加骰</span><span class="risk-reason">一次性道具不占人数；临时线人占角色槽</span></div>
+      <div class="dispatch-support-head"><span>辅助骰位</span><span class="risk-reason">道具不占人数；雇佣会进入候选角色</span></div>
       <div class="dispatch-resource-grid">
         ${toolCards || `<span class="tip-inline">暂无道具骰</span>`}
         ${tempCardHtml}
@@ -4126,36 +4438,25 @@
     </div>`;
   }
 
-  function dispatchLabStaffHoverText(staff, m, maxStaff) {
-    const ids = state.selectedStaffIds.slice();
-    const exists = ids.includes(staff.id);
-    if (!exists) {
-      if (ids.length >= maxStaff) return dispatchCapacityMessage(staff, maxStaff);
-      ids.push(staff.id);
-    }
-    const stats = dispatchLabNeedStats(m, ids, dispatchLabSelectedTools());
-    const risk = dispatchLabRisk(m, stats, ids.length);
-    const fit = staffFitSummary(staff, m.need || {});
-    const gapText = stats.gaps.length ? `加入后仍缺 ${stats.gaps.map((x) => `${x.k}${x.gap}`).join(" / ")}` : "加入后需求面值已覆盖";
-    return `${exists ? "移出" : "加入"} ${staff.name}：${fit.contribution}；${gapText}；风险 ${risk.label}`;
-  }
-
   function dispatchLabStaffCardHtml(staff, m, maxStaff) {
     const selected = state.selectedStaffIds.includes(staff.id);
+    const unavailable = !selected && state.selectedStaffIds.length >= maxStaff;
     const fit = staffFitSummary(staff, m.need || {});
-    const hover = dispatchLabStaffHoverText(staff, m, maxStaff);
-    return `<div class="dispatch-staff-card ${selected ? "selected" : ""}" data-staff="${staff.id}" data-hover="${escapeHtml(hover)}">
+    const fitClass = fit.fit === "高" ? "high" : fit.fit === "中" ? "mid" : "low";
+    const body = state.displayMode === "numeric"
+      ? dispatchLabStaffSummaryHtml(staff, m)
+      : diceNetHtml(diceFacesForStaff(staff), m.need || {}, "dispatch-dice-net");
+    return `<div class="dispatch-staff-card ${selected ? "selected" : ""} ${unavailable ? "unavailable" : ""}" data-staff="${staff.id}">
       <div class="dispatch-staff-head">
         <img src="${staff.avatar}" alt="${escapeHtml(staff.name)}"/>
         <div>
           <div class="dispatch-staff-name">${escapeHtml(staff.name)}${staff.temporary ? " · 临时" : ""}</div>
-          <div class="staff-spec">${specialtyHtml(staff)}</div>
+          <div class="dispatch-card-verdict ${fitClass}">${escapeHtml(fit.fit)}适配 · ${escapeHtml(fit.stats.relevant)}/6 相关</div>
         </div>
       </div>
-      <div class="dispatch-staff-fit">${escapeHtml(fit.line)}<br/>${escapeHtml(fit.contribution)}</div>
-      ${diceNetHtml(diceFacesForStaff(staff), m.need || {}, "dispatch-dice-net")}
+      ${body}
       <div class="dispatch-staff-actions">
-        <button type="button" class="staff-detail-btn" data-staff-detail="${staff.id}">详情 / 骰面</button>
+        <button type="button" class="staff-detail-btn" data-staff-detail="${staff.id}">详情</button>
       </div>
     </div>`;
   }
@@ -4200,10 +4501,10 @@
       </div>
       <section class="dispatch-lab-panel">
         <div class="dispatch-candidate-head">
-          <div class="dispatch-lab-panel-title" style="margin:0;"><span>候选角色</span><span class="risk-reason">初始按任务贡献排序，选中不改位置</span></div>
+          <div class="dispatch-lab-panel-title" style="margin:0;"><span>候选角色</span><span class="risk-reason">选入本次骰池</span></div>
           <span class="mode-toggle" id="modeToggle">
-            <button type="button" data-mode="dice" class="${state.displayMode === "dice" ? "on" : ""}">骰子</button>
-            <button type="button" data-mode="numeric" class="${state.displayMode === "numeric" ? "on" : ""}">纯数值</button>
+            <button type="button" data-mode="dice" class="${state.displayMode === "dice" ? "on" : ""}">骰面</button>
+            <button type="button" data-mode="numeric" class="${state.displayMode === "numeric" ? "on" : ""}">汇总</button>
           </span>
         </div>
         <div class="dispatch-staff-grid" id="staffPick">${staffList.map((p) => dispatchLabStaffCardHtml(p, m, maxStaff)).join("")}</div>
@@ -4235,14 +4536,15 @@
         if (toggleTempStringerForDispatch(maxStaff)) renderSetup();
       };
     }
-    const hover = document.getElementById("dispatchHoverPreview");
+    document.querySelectorAll("[data-remove-selected-staff]").forEach((btn) => {
+      btn.onclick = (ev) => {
+        ev.stopPropagation();
+        const id = btn.getAttribute("data-remove-selected-staff");
+        state.selectedStaffIds = state.selectedStaffIds.filter((staffId) => staffId !== id);
+        renderSetup();
+      };
+    });
     document.querySelectorAll("#staffPick .dispatch-staff-card").forEach((c) => {
-      c.addEventListener("mouseenter", () => {
-        if (hover) hover.textContent = c.getAttribute("data-hover") || "";
-      });
-      c.addEventListener("mouseleave", () => {
-        if (hover) hover.textContent = "悬停角色卡，预览加入后会补哪些需求。";
-      });
       c.addEventListener("click", (ev) => {
         if (ev && ev.target && ev.target.closest && ev.target.closest("button")) return;
         const id = c.getAttribute("data-staff");
@@ -4331,10 +4633,11 @@
     const tempHired = isTempStringerHired();
     const tempButtonHtml = tempHired
       ? ""
-      : `<p style="margin:0.45rem 0 0;"><button type="button" id="btnHireTemp">雇佣本周临时线人（$1200，纳入人数限制）</button></p>`;
+      : `<p style="margin:0.45rem 0 0;"><button type="button" id="btnHireTemp">雇佣本周临时线人（$1200，加入候选角色）</button></p>`;
     elS.innerHTML = `
       <h2>${m.missionType === "leadInvestigation" ? "线索调查配置" : "探索配置"} · ${escapeHtml(m.name)}</h2>
       ${missionTypePanelHtml(m, false)}
+      ${missionStoryBriefHtml(m)}
       ${dicePoolPreviewHtml(m, dicePreview, maxStaff)}
       <div class="prob-box">
         <div><strong>一次性道具骰</strong> <span class="tip-inline">不占人数；使用后消耗；计入总骰数。</span></div>
@@ -4345,7 +4648,7 @@
       <p style="font-size:0.85rem;margin-top:0.5rem;">展示：
         <span class="mode-toggle" id="modeToggle">
           <button type="button" data-mode="dice" class="${state.displayMode === "dice" ? "on" : ""}">骰子</button>
-          <button type="button" data-mode="numeric" class="${state.displayMode === "numeric" ? "on" : ""}">纯数值</button>
+          <button type="button" data-mode="numeric" class="${state.displayMode === "numeric" ? "on" : ""}">汇总</button>
         </span></p>
       <div class="cards" id="staffPick"></div>
       <p class="row" style="margin-top:0.75rem;">
@@ -4388,7 +4691,7 @@
         <div class="risk-reason">${escapeHtml(fit.line)} · ${escapeHtml(fit.contribution)}</div>
         <div class="staff-dice-mini">${diceFacesHtml(diceFacesForStaff(p), relevantNeed, "staff-pick-faces")}</div>
         <p class="row" style="margin:0.35rem 0 0;">
-          <button type="button" class="staff-detail-btn" data-staff-detail="${p.id}">详情 / 骰面</button>
+          <button type="button" class="staff-detail-btn" data-staff-detail="${p.id}">详情</button>
           ${p.temporary ? "" : `<button type="button" class="staff-detail-btn" data-staff-upgrade="${p.id}">升级预览</button>`}
         </p>
       </div>`;
@@ -4474,7 +4777,7 @@
           <h4 class="tutorial-soft-h4">组小队</h4>
           <ul class="tutorial-soft-ul">
             <li>点选队员卡片：非黑骰任务最多 <strong>3</strong> 人；黑骰任务最多 <strong>5</strong> 人。</li>
-            <li>卡片上展示专精；点「详情 / 骰面」可查看完整 6 面角色骰。</li>
+            <li>卡片上展示专精；点「详情」可查看完整 6 面角色骰。</li>
             <li>上方风险预览是本次外拍的参考。</li>
             <li>可在<strong>骰子</strong>与<strong>纯数字</strong>两种展示间切换。</li>
           </ul>
@@ -4536,6 +4839,59 @@
       <div class="dice-need-title">相关属性贡献</div>
       ${rows}
     </div>`;
+  }
+
+  function diceSelectCountText(rolls, selectedIds, ready, revealCount) {
+    if (!ready) return `停骰 ${Math.min(revealCount || 0, (rolls || []).length)}/${(rolls || []).length}`;
+    return `计入 ${(selectedIds || []).length}/${(rolls || []).length}`;
+  }
+
+  function diceSelectSummaryHtml(sum, need, ready) {
+    const target = needTargetValue(need || {});
+    const total = ready ? contributionTotalForNeed(need || {}, sum || {}) : 0;
+    const met = target ? total >= target : true;
+    const missing = Math.max(0, target - total);
+    const angle = target ? Math.round(Math.min(1, total / target) * 360) : 360;
+    const title = !ready
+      ? "等待停骰"
+      : met
+        ? "已达标"
+        : `未达标 · 还差 ${missing} 点`;
+    const copy = !ready
+      ? "停骰后选择要计入的骰面。"
+      : met
+        ? "现在确认会按达标结果推进。"
+        : "可继续调整计入骰面后再确认。";
+    const rows = Object.keys(need || {}).map((key) => {
+      const current = ready ? Math.max(0, (sum && sum[key]) || 0) : 0;
+      const goal = Math.max(0, need[key] || 0);
+      const pct = goal ? Math.max(0, Math.min(100, Math.round((current / goal) * 100))) : 100;
+      return `<div class="dice-need-compact-row">
+        <span>${escapeHtml(key)}</span>
+        <em><i style="--fill:${pct}%"></i></em>
+        <b>${current}/${goal}</b>
+      </div>`;
+    }).join("");
+    return `<section class="dice-summary-card" aria-label="判定摘要">
+      <div class="dice-section-head"><strong>判定摘要</strong><span>${ready ? "结果口径" : "等待"}</span></div>
+      <div class="dice-summary-top">
+        <div class="dice-score-ring" style="--score-angle:${angle}deg">
+          <div><strong>${total}/${target}</strong><small>有效点</small></div>
+        </div>
+        <div class="dice-summary-copy"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(copy)}</span></div>
+      </div>
+      <div class="dice-need-stack">${rows}</div>
+    </section>`;
+  }
+
+  function diceSubmitPreviewHtml(success, ready) {
+    if (!ready) return "";
+    return `<section class="dice-submit-preview" aria-label="提交后果">
+      <strong>提交后果</strong>
+      ${success
+        ? "<div>满足任务需求，按达标结果结算。</div>"
+        : "<div>未满足任务需求，按低结果收束。</div>"}
+    </section>`;
   }
 
   function blackDiceInterventionHtml(context) {
@@ -4650,6 +5006,439 @@
     </div>`;
   }
 
+  const DICE_MODEL_PALETTE = {
+    field: { top: "#d97706", front: "#86440f", side: "#a35c16", c: "#fed7aa" },
+    cog: { top: "#3b82f6", front: "#1f4fa3", side: "#1d3f7f", c: "#bfdbfe" },
+    content: { top: "#ca8a04", front: "#7c4a03", side: "#94600a", c: "#fde68a" },
+    social: { top: "#10b981", front: "#087545", side: "#0b5f3c", c: "#bbf7d0" },
+    blank: { top: "#7c8798", front: "#3d4654", side: "#566172", c: "#e2e8f0" },
+    black: { top: "#b91c1c", front: "#5f1015", side: "#3f0b10", c: "#fecaca" },
+  };
+  const DICE_MODEL_PROFILE = { duration: 1.05, turns: 4.8 };
+  const diceModelRegistry = new Map();
+  let diceModelRaf = 0;
+
+  function diceModelHash(text) {
+    return String(text || "").split("").reduce((acc, ch) => ((acc << 5) - acc + ch.charCodeAt(0)) | 0, 0);
+  }
+
+  function diceModelType(roll) {
+    const f = roll && roll.face;
+    if (roll && roll.black) return "black";
+    if (f && f.black) return "black";
+    if (!f || f.blank) return "blank";
+    return DOMAIN_CLASS[ATTR_DOMAIN[f.attr]] || "blank";
+  }
+
+  function diceModelMakeDie(roll, index) {
+    const seed = diceModelHash(`${roll && roll.id ? roll.id : index}-${faceText(roll && roll.face)}`);
+    const rand = (offset) => {
+      const x = Math.sin(seed * 0.001 + offset) * 10000;
+      return x - Math.floor(x);
+    };
+    const finalYaw = Math.PI * 0.5 + (rand(17) - 0.5) * 0.08;
+    return {
+      id: roll && roll.id ? roll.id : `roll_${index}`,
+      label: faceText(roll && roll.face).replace(/[?？]/g, ""),
+      type: diceModelType(roll),
+      delay: index * 0.045,
+      phase: rand(2) * Math.PI * 2,
+      spinBoost: 0.88 + rand(5) * 0.24,
+      settle: [Math.PI * 0.5, (rand(11) - 0.5) * 0.04, finalYaw],
+      stopAt: null,
+      stopBase: 0,
+    };
+  }
+
+  function diceModelNormalize(v) {
+    const len = Math.hypot(v[0], v[1], v[2]) || 1;
+    return [v[0] / len, v[1] / len, v[2] / len];
+  }
+
+  function diceModelSub(a, b) {
+    return [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+  }
+
+  function diceModelCross(a, b) {
+    return [
+      a[1] * b[2] - a[2] * b[1],
+      a[2] * b[0] - a[0] * b[2],
+      a[0] * b[1] - a[1] * b[0],
+    ];
+  }
+
+  function diceModelFaceNormal(points) {
+    return diceModelNormalize(diceModelCross(diceModelSub(points[1], points[0]), diceModelSub(points[2], points[1])));
+  }
+
+  function diceModelColorMix(hex, amount) {
+    const n = parseInt(hex.slice(1), 16);
+    const r = Math.min(255, Math.floor(((n >> 16) & 255) * amount));
+    const g = Math.min(255, Math.floor(((n >> 8) & 255) * amount));
+    const b = Math.min(255, Math.floor((n & 255) * amount));
+    return `rgb(${r},${g},${b})`;
+  }
+
+  function diceModelFaceBrightness(normal) {
+    const light = diceModelNormalize([0.42, 0.88, 0.54]);
+    const dot = Math.max(0, normal[0] * light[0] + normal[1] * light[1] + normal[2] * light[2]);
+    return 0.34 + dot * 0.66;
+  }
+
+  function diceModelSolidFaceColor(hex, normal) {
+    return diceModelColorMix(hex, 0.86 + diceModelFaceBrightness(normal) * 0.18);
+  }
+
+  function diceModelSignedArea(points) {
+    let area = 0;
+    for (let i = 0; i < points.length; i += 1) {
+      const next = points[(i + 1) % points.length];
+      area += points[i][0] * next[1] - next[0] * points[i][1];
+    }
+    return area / 2;
+  }
+
+  function diceModelArea(points) {
+    return Math.abs(diceModelSignedArea(points));
+  }
+
+  function diceModelProject(p, origin, scale) {
+    const camera = 4.7;
+    const depth = camera - p[2] * 0.38;
+    const perspective = camera / depth;
+    return [
+      origin[0] + p[0] * scale * perspective,
+      origin[1] - p[1] * scale * perspective + p[2] * scale * 0.18,
+      p[2],
+    ];
+  }
+
+  function diceModelRotate(p, rx, ry, rz) {
+    let [x, y, z] = p;
+    let c = Math.cos(rx), s = Math.sin(rx);
+    let y1 = y * c - z * s;
+    let z1 = y * s + z * c;
+    y = y1; z = z1;
+    c = Math.cos(ry); s = Math.sin(ry);
+    let x1 = x * c + z * s;
+    z1 = -x * s + z * c;
+    x = x1; z = z1;
+    c = Math.cos(rz); s = Math.sin(rz);
+    x1 = x * c - y * s;
+    y1 = x * s + y * c;
+    return [x1, y1, z];
+  }
+
+  function diceModelDrawFace(ctx, points, fill) {
+    ctx.beginPath();
+    ctx.moveTo(points[0][0], points[0][1]);
+    for (let i = 1; i < points.length; i += 1) ctx.lineTo(points[i][0], points[i][1]);
+    ctx.closePath();
+    ctx.fillStyle = fill;
+    ctx.fill();
+  }
+
+  function diceModelMakeFaceTexture(fill, color, content) {
+    const size = 192;
+    const tex = document.createElement("canvas");
+    tex.width = size;
+    tex.height = size;
+    const t = tex.getContext("2d");
+    t.fillStyle = fill;
+    t.fillRect(0, 0, size, size);
+    const glow = t.createLinearGradient(0, 0, size, size);
+    glow.addColorStop(0, "rgba(255,255,255,0.2)");
+    glow.addColorStop(0.38, "rgba(255,255,255,0.04)");
+    glow.addColorStop(1, "rgba(0,0,0,0.2)");
+    t.fillStyle = glow;
+    t.fillRect(0, 0, size, size);
+    const topGloss = t.createRadialGradient(size * 0.28, size * 0.18, 0, size * 0.3, size * 0.2, size * 0.72);
+    topGloss.addColorStop(0, "rgba(255,255,255,0.18)");
+    topGloss.addColorStop(0.42, "rgba(255,255,255,0.05)");
+    topGloss.addColorStop(1, "rgba(255,255,255,0)");
+    t.fillStyle = topGloss;
+    t.fillRect(0, 0, size, size);
+    const lowerShade = t.createLinearGradient(0, size * 0.52, 0, size);
+    lowerShade.addColorStop(0, "rgba(0,0,0,0)");
+    lowerShade.addColorStop(1, "rgba(0,0,0,0.24)");
+    t.fillStyle = lowerShade;
+    t.fillRect(0, 0, size, size);
+    t.lineJoin = "round";
+    t.strokeStyle = "rgba(255,255,255,0.08)";
+    t.lineWidth = 8;
+    t.strokeRect(8, 8, size - 16, size - 16);
+    t.strokeStyle = "rgba(2,6,23,0.22)";
+    t.lineWidth = 10;
+    t.strokeRect(5, 5, size - 10, size - 10);
+    if (content && content.type === "label") {
+      const text = content.text || "";
+      const lines = text.length > 3 ? [text.slice(0, 2), text.slice(2)] : [text];
+      const fontSize = text.length <= 1 ? 74 : text.length <= 3 ? 56 : 42;
+      const lineHeight = fontSize * 1.06;
+      t.textAlign = "center";
+      t.textBaseline = "middle";
+      t.font = `900 ${fontSize}px Microsoft YaHei, sans-serif`;
+      t.lineJoin = "round";
+      t.lineWidth = Math.max(8, fontSize * 0.18);
+      t.strokeStyle = "rgba(2, 6, 23, 0.92)";
+      t.fillStyle = color;
+      t.shadowColor = "rgba(0,0,0,0.48)";
+      t.shadowBlur = 5;
+      lines.forEach((line, lineIndex) => {
+        const y = size * 0.52 + (lineIndex - (lines.length - 1) / 2) * lineHeight;
+        t.strokeText(line, size * 0.5, y);
+        t.fillText(line, size * 0.5, y);
+      });
+    }
+    return tex;
+  }
+
+  function diceModelMapTriangle(ctx, image, src, dst) {
+    const den = src[0][0] * (src[1][1] - src[2][1]) +
+      src[1][0] * (src[2][1] - src[0][1]) +
+      src[2][0] * (src[0][1] - src[1][1]);
+    if (Math.abs(den) < 0.001) return;
+    const a = (dst[0][0] * (src[1][1] - src[2][1]) +
+      dst[1][0] * (src[2][1] - src[0][1]) +
+      dst[2][0] * (src[0][1] - src[1][1])) / den;
+    const b = (dst[0][1] * (src[1][1] - src[2][1]) +
+      dst[1][1] * (src[2][1] - src[0][1]) +
+      dst[2][1] * (src[0][1] - src[1][1])) / den;
+    const c = (dst[0][0] * (src[2][0] - src[1][0]) +
+      dst[1][0] * (src[0][0] - src[2][0]) +
+      dst[2][0] * (src[1][0] - src[0][0])) / den;
+    const d = (dst[0][1] * (src[2][0] - src[1][0]) +
+      dst[1][1] * (src[0][0] - src[2][0]) +
+      dst[2][1] * (src[1][0] - src[0][0])) / den;
+    const e = (dst[0][0] * (src[1][0] * src[2][1] - src[2][0] * src[1][1]) +
+      dst[1][0] * (src[2][0] * src[0][1] - src[0][0] * src[2][1]) +
+      dst[2][0] * (src[0][0] * src[1][1] - src[1][0] * src[0][1])) / den;
+    const f = (dst[0][1] * (src[1][0] * src[2][1] - src[2][0] * src[1][1]) +
+      dst[1][1] * (src[2][0] * src[0][1] - src[0][0] * src[2][1]) +
+      dst[2][1] * (src[0][0] * src[1][1] - src[1][0] * src[0][1])) / den;
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(dst[0][0], dst[0][1]);
+    ctx.lineTo(dst[1][0], dst[1][1]);
+    ctx.lineTo(dst[2][0], dst[2][1]);
+    ctx.closePath();
+    ctx.clip();
+    ctx.transform(a, b, c, d, e, f);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
+    ctx.drawImage(image, 0, 0);
+    ctx.restore();
+  }
+
+  function diceModelDrawTexturedQuad(ctx, points, texture) {
+    const size = texture.width;
+    const src = [[0, size], [size, size], [size, 0], [0, 0]];
+    diceModelMapTriangle(ctx, texture, [src[0], src[1], src[2]], [points[0], points[1], points[2]]);
+    diceModelMapTriangle(ctx, texture, [src[0], src[2], src[3]], [points[0], points[2], points[3]]);
+  }
+
+  function diceModelMotion(die, elapsed, now) {
+    const local = Math.max(0, elapsed - die.delay);
+    let spinLeft = 1;
+    let phase = (local / DICE_MODEL_PROFILE.duration) * DICE_MODEL_PROFILE.turns * Math.PI * 2 * die.spinBoost;
+    if (die.stopAt) {
+      const stopLocal = Math.max(0, (now - die.stopAt) / 1000);
+      const t = Math.min(stopLocal / 0.36, 1);
+      spinLeft = Math.pow(1 - t, 2.15);
+      phase = die.stopBase + (1 - spinLeft) * Math.PI * 0.8;
+    }
+    const rot = [
+      die.settle[0] + phase * spinLeft,
+      die.settle[1] + Math.sin(phase + die.phase) * 0.1 * spinLeft,
+      die.settle[2] + Math.cos(phase * 0.8 + die.phase) * 0.09 * spinLeft,
+    ];
+    const lift = Math.sin(Math.min(local / DICE_MODEL_PROFILE.duration, 1) * Math.PI) * 0.08 * spinLeft;
+    return { spinLeft, rot, lift, t: Math.min(local / DICE_MODEL_PROFILE.duration, 1) };
+  }
+
+  function diceModelDrawSpinCue(ctx, x, z, size, motion, color) {
+    if (motion.spinLeft < 0.08) return;
+    ctx.save();
+    ctx.globalAlpha = Math.min(0.5, motion.spinLeft * 0.64);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2.2;
+    ctx.lineCap = "round";
+    ctx.shadowColor = color;
+    ctx.shadowBlur = 9;
+    for (let i = 0; i < 2; i += 1) {
+      const start = motion.t * 11 + i * Math.PI;
+      ctx.beginPath();
+      ctx.ellipse(x + 2, z + 4, 18 * size, 42 * size, -0.08, start, start + Math.PI * 0.9);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function diceModelDrawDie(ctx, die, elapsed, now, compact) {
+    const [x, z] = die.target;
+    const motion = diceModelMotion(die, elapsed, now);
+    const size = compact ? 0.9 : 1;
+    const half = 0.58 * size;
+    const origin = [x, z + motion.lift * -9];
+    const base = DICE_MODEL_PALETTE[die.type] || DICE_MODEL_PALETTE.blank;
+    ctx.save();
+    ctx.beginPath();
+    ctx.ellipse(x + 7, z + 25, 34 * size * (1 - motion.lift * 0.2), 12 * size * (1 - motion.lift * 0.16), -0.16, 0, Math.PI * 2);
+    ctx.fillStyle = die.type === "black" ? "rgba(248, 113, 113, 0.2)" : "rgba(0,0,0,0.46)";
+    ctx.filter = "blur(2.4px)";
+    ctx.fill();
+    ctx.filter = "none";
+    const rawVerts = [
+      [-half, -half, -half], [half, -half, -half], [half, -half, half], [-half, -half, half],
+      [-half, half, -half], [half, half, -half], [half, half, half], [-half, half, half],
+    ];
+    const modelVerts = rawVerts.map((p) => diceModelRotate(p, motion.rot[0], motion.rot[1], motion.rot[2]));
+    const verts = modelVerts.map((p) => diceModelProject(p, origin, compact ? 46 : 42));
+    const faces = [
+      { name: "bottom", ids: [0, 1, 2, 3], tone: base.side },
+      { name: "top", ids: [4, 7, 6, 5], tone: base.top },
+      { name: "front", ids: [3, 2, 6, 7], tone: base.front },
+      { name: "back", ids: [0, 4, 5, 1], tone: base.side },
+      { name: "right", ids: [1, 5, 6, 2], tone: base.side },
+      { name: "left", ids: [0, 3, 7, 4], tone: base.side },
+    ].map((face) => {
+      const world = face.ids.map((id) => modelVerts[id]);
+      return {
+        ...face,
+        world,
+        normal: diceModelFaceNormal(world),
+        avgDepth: world.reduce((sum, p) => sum + p[2], 0) / world.length,
+      };
+    });
+    const visibleFaces = faces
+      .map((face) => {
+        const pts = face.ids.map((id) => verts[id]);
+        return { ...face, pts, screenSignedArea: diceModelSignedArea(pts), screenArea: diceModelArea(pts) };
+      })
+      .filter((face) => face.screenSignedArea < -80)
+      .sort((a, b) => a.avgDepth - b.avgDepth);
+    visibleFaces.forEach((face) => {
+      const fillColor = diceModelSolidFaceColor(face.tone, face.normal);
+      diceModelDrawFace(ctx, face.pts, fillColor);
+      const content = face.name === "top" ? { type: "label", text: die.label } : null;
+      diceModelDrawTexturedQuad(ctx, face.pts, diceModelMakeFaceTexture(fillColor, base.c, content));
+    });
+    const edgeSet = new Set();
+    visibleFaces.forEach((face) => {
+      for (let i = 0; i < face.ids.length; i += 1) {
+        const a = face.ids[i];
+        const b = face.ids[(i + 1) % face.ids.length];
+        edgeSet.add(a < b ? `${a}-${b}` : `${b}-${a}`);
+      }
+    });
+    ctx.strokeStyle = diceModelColorMix(base.c, 0.58);
+    ctx.lineWidth = 1.35;
+    ctx.lineJoin = "round";
+    ctx.globalAlpha = 0.58;
+    edgeSet.forEach((key) => {
+      const [a, b] = key.split("-").map(Number);
+      ctx.beginPath();
+      ctx.moveTo(verts[a][0], verts[a][1]);
+      ctx.lineTo(verts[b][0], verts[b][1]);
+      ctx.stroke();
+    });
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  }
+
+  function diceModelDrawCard(state, now) {
+    const canvas = state.canvas;
+    if (!canvas || !document.body.contains(canvas)) return false;
+    const rect = canvas.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const width = Math.max(52, Math.floor(rect.width || 82));
+    const height = Math.max(52, Math.floor(rect.height || 74));
+    if (canvas.width !== Math.floor(width * dpr) || canvas.height !== Math.floor(height * dpr)) {
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+    }
+    const ctx = canvas.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, width, height);
+    state.die.target = [width * 0.5, height * 0.42, 0];
+    const elapsed = (now - state.start) / 1000;
+    diceModelDrawDie(ctx, state.die, elapsed, now, true);
+    return state.rolling || (state.die.stopAt && now - state.die.stopAt < 520);
+  }
+
+  function diceModelCardsFrame(now) {
+    let keepAnimating = false;
+    diceModelRegistry.forEach((state, key) => {
+      if (!state.canvas || !document.body.contains(state.canvas)) {
+        diceModelRegistry.delete(key);
+        return;
+      }
+      keepAnimating = diceModelDrawCard(state, now) || keepAnimating;
+    });
+    window.diceModelAudit = {
+      renderer: "canvas-model-card",
+      effectMode: "tumble-horizontal",
+      resultPose: "top-face-up",
+      diceCount: diceModelRegistry.size,
+      active: keepAnimating,
+    };
+    if (diceModelRegistry.size && keepAnimating) {
+      diceModelRaf = requestAnimationFrame(diceModelCardsFrame);
+    } else {
+      diceModelRaf = 0;
+    }
+  }
+
+  function ensureDiceModelLoop() {
+    if (!diceModelRaf) diceModelRaf = requestAnimationFrame(diceModelCardsFrame);
+  }
+
+  function mountCharacterDiceModels(rolls) {
+    const byId = new Map((rolls || []).map((roll, index) => [String(roll.id || `roll_${index}`), { roll, index }]));
+    document.querySelectorAll("#confirmPopup .roll-die-canvas").forEach((canvas) => {
+      const id = canvas.getAttribute("data-dice-model-id") || "";
+      const item = byId.get(id);
+      if (!item) return;
+      const rolling = canvas.getAttribute("data-dice-model-rolling") === "1";
+      const roll = item.roll;
+      let state = diceModelRegistry.get(id);
+      if (!state) {
+        state = {
+          canvas,
+          start: performance.now(),
+          rolling,
+          die: diceModelMakeDie(roll, item.index),
+        };
+        if (!rolling) {
+          state.die.stopAt = performance.now() - 600;
+          state.die.stopBase = 0;
+        }
+        diceModelRegistry.set(id, state);
+      }
+      state.canvas = canvas;
+      state.die.label = faceText(roll.face).replace(/[?？]/g, "");
+      state.die.type = diceModelType(roll);
+      if (rolling && !state.rolling) {
+        state.start = performance.now();
+        state.die.stopAt = null;
+        state.die.stopBase = 0;
+      }
+      if (!rolling && state.rolling && !state.die.stopAt) {
+        const now = performance.now();
+        const local = Math.max(0, (now - state.start) / 1000 - state.die.delay);
+        state.die.stopAt = now;
+        state.die.stopBase = (local / DICE_MODEL_PROFILE.duration) * DICE_MODEL_PROFILE.turns * Math.PI * 2 * state.die.spinBoost;
+      }
+      if (!rolling && !state.rolling && !state.die.stopAt) {
+        state.die.stopAt = performance.now() - 600;
+        state.die.stopBase = 0;
+      }
+      state.rolling = rolling;
+      diceModelDrawCard(state, performance.now());
+    });
+    ensureDiceModelLoop();
+  }
+
   function renderCharacterRollsHtml(rolls, selectedIds, need, options) {
     const opts = options || {};
     const selected = new Set(selectedIds || []);
@@ -4684,7 +5473,8 @@
                   ? "可计入"
                   : "本任务不计入";
       return `<button type="button" class="character-roll${selectedCls}${relevant}${locked}${black}${grounded}${isRolling ? " is-rolling" : ""}${isLanding ? " is-landing" : ""}${opts.blackActive && r.black ? " is-black-entering" : ""}${readOnly ? " is-readonly" : ""}" data-roll-id="${r.id}" aria-pressed="${selectedNow ? "true" : "false"}" title="${escapeHtml(diceImpactMeta(r, need, selectedNow).copy)}" ${disabled}>
-        <span class="roll-die ${faceCls}">
+        <span class="roll-die model-die ${faceCls}">
+          <canvas class="roll-die-canvas" data-dice-model-id="${escapeHtml(r.id)}" data-dice-model-rolling="${isRolling ? "1" : "0"}" aria-label="${escapeHtml(faceLabel)}"></canvas>
           <span class="roll-die-face">${escapeHtml(faceLabel)}</span>
         </span>
         <span class="roll-owner">${avatar}<span>${escapeHtml(r.staffName)}</span></span>
@@ -4790,24 +5580,37 @@
             ? "黑骰介入 · 骰池被改写"
             : "停骰完成 · 选择计入判定的骰面";
         const helperText = stage === "rolling"
-          ? "先看每名角色掷出的基础骰。若本任务存在黑骰，异常会在基础骰停住后介入。"
+          ? "每名参判角色正在生成本轮骰面。"
           : stage === "black"
-            ? "黑骰正在改写骰池：混入、替座或标记会直接改变你接下来能选择的骰面。"
-            : "发亮骰面更适合当前任务；你可以改选最终计入的骰面。";
+            ? "异常正在改写本轮骰池。"
+            : "点击骰子计入或移出。";
+        const stageBadge = stage === "rolling"
+          ? "摇骰中"
+          : stage === "black"
+            ? "黑骰介入"
+            : "选择阶段";
         body.innerHTML = `<div class="dice-select-shell">
           <div class="dice-select-head">
             <div>
               <div class="dice-select-stage">${escapeHtml(stageText)}</div>
               <p>${escapeHtml(helperText)}</p>
             </div>
-            <div class="dice-select-result ${selectReady && okNow ? "is-met" : ""}">${selectReady ? (okNow ? "达标" : "未达标") : stage === "black" ? "黑骰介入" : "等待停骰"}</div>
+            <div class="dice-select-result">${escapeHtml(stageBadge)}</div>
           </div>
-          ${contributionProgressHtml(sum, mission.need || {}, selectReady)}
-          ${stage === "black" || selectReady ? blackDiceInterventionHtml({ ...ctx, active: stage === "black" }) : ""}
-          ${selectedDiceTrayHtml(rolls, selectedIds, mission.need || {}, selectReady)}
-          ${diceImpactPanelHtml(rolls, selectedIds, mission.need || {}, focusRollId, selectReady)}
-          ${renderCharacterRollsHtml(currentRolls, selectedIds, mission.need || {}, { stage: stage === "rolling" ? "rolling" : "select", revealCount, readOnly: stage === "black", blackActive: stage === "black" })}
+          ${missionDiceDialogueHtml(mission, stage)}
+          <div class="dice-select-layout">
+            <section class="dice-workbench-panel" aria-label="本轮骰面">
+              <div class="dice-section-head"><strong>本轮骰面</strong><span>${escapeHtml(diceSelectCountText(currentRolls, selectedIds, selectReady, revealCount))}</span></div>
+              ${renderCharacterRollsHtml(currentRolls, selectedIds, mission.need || {}, { stage: stage === "rolling" ? "rolling" : "select", revealCount, readOnly: stage === "black", blackActive: stage === "black" })}
+            </section>
+            <aside class="dice-side-stack" aria-label="判定摘要与提交后果">
+              ${diceSelectSummaryHtml(sum, mission.need || {}, selectReady)}
+              ${stage === "black" || selectReady ? blackDiceInterventionHtml({ ...ctx, active: stage === "black" }) : ""}
+              ${diceSubmitPreviewHtml(okNow, selectReady)}
+            </aside>
+          </div>
         </div>`;
+        mountCharacterDiceModels(currentRolls);
         body.querySelectorAll("[data-roll-id]").forEach((btn) => {
           const id = btn.getAttribute("data-roll-id");
           btn.onfocus = () => {
@@ -4829,7 +5632,7 @@
         });
         ok.disabled = !selectReady;
         cancel.disabled = !selectReady;
-        ok.textContent = selectReady ? `确认计入（${okNow ? "达标" : "未达标"}）` : "确认计入";
+        ok.textContent = "确认计入";
         cancel.textContent = selectReady ? "采用推荐" : "等待停骰";
       };
       const cleanup = (result) => {
@@ -5137,19 +5940,19 @@
       (check.blackNotes || []).forEach((x) => lines.push(x));
       if (tier === "大成功") {
         addMacro({ 声望: 6, 诡名: 3 });
-        lines.push("黑骰任务大成功：你拿到了危险素材，并暂时避开主要反噬。");
-        addMissionClue(m, "黑骰强素材", 3, rewards, "黑骰任务：大成功（Tier 3）");
+        lines.push(missionOutcomeLine(m, "大成功", "黑骰任务大成功：你拿到了危险素材，并暂时避开主要反噬。"));
+        addMissionClue(m, "黑骰强素材", 3, rewards, "黑骰任务：大成功（Tier 3）", "大成功");
       } else if (tier === "成功") {
         addMacro({ 声望: 4, 诡名: 2, 狂性: 1 });
-        lines.push("黑骰任务成功：关键素材到手，但异常留下了轻微回声。");
-        addMissionClue(m, "黑骰关键素材", 3, rewards, "黑骰任务：成功（Tier 3，轻微反噬）");
+        lines.push(missionOutcomeLine(m, "成功", "黑骰任务成功：关键素材到手，但异常留下了轻微回声。"));
+        addMissionClue(m, "黑骰关键素材", 3, rewards, "黑骰任务：成功（Tier 3，轻微反噬）", "成功");
       } else if (tier === "失败") {
         addMacro({ 声望: -1, 狂性: 2 });
-        lines.push("黑骰任务失败：没有拿稳真相，但留下了弱线索和压力。");
-        addMissionClue(m, "黑骰弱线索", 1, rewards, "黑骰任务：失败（Tier 1）");
+        lines.push(missionOutcomeLine(m, "失败", "黑骰任务失败：没有拿稳真相，但留下了弱线索和压力。"));
+        addMissionClue(m, "黑骰弱线索", 1, rewards, "黑骰任务：失败（Tier 1）", "失败");
       } else {
         addMacro({ 公信: -2, 守序: -3, 狂性: 5 });
-        lines.push("黑骰任务大失败：异常反过来污染了队伍，本局后续风险上升。");
+        lines.push(missionOutcomeLine(m, "大失败", "黑骰任务大失败：异常反过来污染了队伍，本局后续风险上升。"));
         state.staffDebuffs[state.selectedStaffIds[0] || "global"] = { riskFace: true, source: m.name };
         rewards.push({ icon: "!", title: "黑骰大失败 debuff", desc: "一名队员获得风险面标记；本局后续同类任务会更危险。" });
       }
@@ -5171,10 +5974,11 @@
     elRes.innerHTML = `
       <h2>${m.missionType === "leadInvestigation" ? "线索调查结算" : "探索结算"}</h2>
       ${missionHead}
+      ${missionFieldIntroHtml(m)}
       <div class="result-banner" id="tierBanner">判定中...</div>
       ${showDice ? `<div id="diceAnim"><div class="dice-rolling-hint"><span class="dice-spinner"></span><span>摇骰中...</span></div></div>`
         : `<div class="prob-box" id="diceAnim">计算中...</div>`}
-      <p style="font-size:0.9rem;color:var(--muted);">${lines.map(escapeHtml).join("<br/>")}</p>
+      <p class="result-story-lines">${lines.map(escapeHtml).join("<br/>")}</p>
       <div id="bonusOutcome"></div>
       <p>剩余 <strong>${state.day}</strong> 日</p>
       <button type="button" class="primary" id="btnAfterResult" disabled>继续</button>`;
@@ -5184,6 +5988,7 @@
     if (check.characterDice) {
       const h = document.getElementById("diceAnim");
       if (h) h.innerHTML = renderCharacterDiceResolutionHtml(m, check, tier);
+      mountCharacterDiceModels(check.rolls || []);
       await sleep(450);
     } else if (showDice) {
       await animateDiceReveal(elRes, check);
@@ -5338,8 +6143,43 @@
     return `第 ${state.week} 周 · 第 ${dayIndexInWeek()} 天（余 ${state.day} / 7 日）`;
   }
 
+  function explorationDayFlavorPool() {
+    const pool = [];
+    const running = (state.activeMissions || []).filter((x) => x.status === "running" && x.mission);
+    if (running.length) {
+      const rec = running[0];
+      const story = missionStory(rec.mission);
+      pool.push([
+        `外勤组从「${rec.mission.name}」发回一条断续语音。`,
+        story && story.objective ? `你在便签上重写本次目标：${story.objective}` : "你只听清最后一句：别急着定标题。",
+      ]);
+      pool.push([
+        `编辑部白板上，「${rec.mission.name}」下面多了一个红圈。`,
+        rec.remainingDays > 1 ? `还要 ${rec.remainingDays} 天才会有结果，但债主不会等那么久。` : "明天就要见分晓，没人愿意先把版面留空。",
+      ]);
+    }
+    if ((state.clues || []).length) {
+      const clue = state.clues[state.clues.length - 1];
+      pool.push([
+        `昨晚拿到的「${clue.title}」被压在咖啡杯下面。`,
+        "杯底水痕刚好圈住最值得追的那一行。",
+      ]);
+    }
+    if (state.regionId === "us") {
+      pool.push([
+        "纽约市警用电台短暂串进编辑部收音机。",
+        "你听到一个巡警说：别把那辆末班车写进报告。",
+      ]);
+      pool.push([
+        "哈德逊河方向传来一阵低频杂音。",
+        "窗玻璃轻轻发抖，像有人在水面下调试麦克风。",
+      ]);
+    }
+    return pool;
+  }
+
   function randomDayFlavor() {
-    const pool = [
+    const basePool = [
       ["咖啡渍在版面上扩散。", "你把杯子挪开，假装什么都没发生。"],
       ["深夜电话响了三次才接通。", "对方只说：\"别去港口区。\""],
       ["打印机吐出一张空白纸。", "纸上却有淡淡的指纹，像刚从雨里捞出来。"],
@@ -5347,10 +6187,15 @@
       ["电台播报的声音忽远忽近。", "你听到其中夹着一句不属于任何语言的低语。"],
       ["编辑部的灯闪了两下。", "每个人都下意识看向地图。"],
       ["邮筒里多了一封没有寄件人的信。", "你拆开，里面只有一小片金属。"],
-      ["街角的猫盯着你看。", "它眨了眨眼，像是在确认某个答案。"],
+      ["街角橱窗里的电视忽然无声闪烁。", "画面停在一张你还没派人拍过的街口。"],
     ];
+    const explorationPool = explorationDayFlavorPool();
+    const useExploration = explorationPool.length && Math.random() < 0.38;
+    const pool = useExploration ? explorationPool : basePool;
     const pick = pool[Math.floor(Math.random() * pool.length)];
-    return `<p style="margin:0 0 0.35rem;">${escapeHtml(pick[0])}</p><p style="margin:0;color:#94a3b8;">${escapeHtml(pick[1])}</p>`;
+    return `${useExploration ? `<div class="day-flavor-tag">探索余波</div>` : ""}
+      <p style="margin:0 0 0.35rem;">${escapeHtml(pick[0])}</p>
+      <p style="margin:0;color:#94a3b8;">${escapeHtml(pick[1])}</p>`;
   }
 
   function showDayPopup() {
@@ -6283,7 +7128,7 @@
 
   function buildEditorialPool() {
     const craftedBase = (state.pendingReports && state.pendingReports.length) ? state.pendingReports : [];
-    const target = Math.max(Number(document.getElementById("storyCount").value), craftedBase.length || state.pendingClues.length);
+    const target = Math.max(10, craftedBase.length || state.pendingClues.length);
     let cur = state.nextStoryId;
     const exploreStories = craftedBase.length
       ? craftedBase.map((r) => ({ ...r, id: cur++ }))
@@ -6310,15 +7155,9 @@
     el.toast = document.getElementById("toast");
     renderStories();
     renderSlots();
-    updatePaperModeButton();
     renderLiveStats();
     el.resultBox.innerHTML = `<div class="k">尚未结算</div><div class="nm-tip">拖拽报道到版位，再点「结算本期」。</div>`;
     log("进入编辑部：拖拽组版，与 design/gdd/editorial-layout-and-publishing-strategy.md 和 design/gdd/issue-settlement-and-audience-feedback.md 对齐。");
-    const btnDemo = document.getElementById("btnPaperDemoLab");
-    if (btnDemo) {
-      btnDemo.style.display = state.paperLabMode || state.week === 1 ? "inline-block" : "none";
-      btnDemo.onclick = () => openPaperDemoLab();
-    }
     if (week1TutorialActive() && !state.paperLabMode) {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
@@ -6725,27 +7564,6 @@
     });
   }
 
-  function updatePaperModeButton() {
-    const btn = document.getElementById("paperModeToggle");
-    const visualBtn = document.getElementById("paperVisualToggle");
-    if (!btn) return;
-    if (!state.paperLabMode) {
-      btn.style.display = "none";
-      if (visualBtn) visualBtn.style.display = "none";
-      return;
-    }
-    btn.style.display = "";
-    if (visualBtn) visualBtn.style.display = "";
-    btn.textContent = state.paperLayoutMode === "fixed" ? "切换为流式版面" : "切换为定高版面";
-    btn.title = state.paperLayoutMode === "fixed"
-      ? "当前：定高（保持报纸形状）"
-      : "当前：流式（随内容拉伸）";
-    if (visualBtn) {
-      visualBtn.textContent = state.paperVisualMode === "enhanced" ? "拟物增强：开" : "拟物增强：关";
-      visualBtn.title = state.paperVisualMode === "enhanced" ? "当前：拟物增强模式" : "当前：正常模式";
-    }
-  }
-
   function renderLiveStats() {
     const r = calculate(false);
     const placed = getAllPlaced();
@@ -6840,40 +7658,13 @@
   }
 
   function bindEditorialUi() {
-    document.getElementById("regenBtn").onclick = () => {
-      buildEditorialPool();
-      renderStories();
-      renderSlots();
-      renderLiveStats();
-    };
-    document.getElementById("storyCount").onchange = () => {
-      buildEditorialPool();
-      renderStories();
-      renderSlots();
-      renderLiveStats();
-    };
-    document.getElementById("clearBtn").onclick = () => {
+    const clearBtn = document.getElementById("clearBtn");
+    if (clearBtn) clearBtn.onclick = () => {
       for (const s of slots) state.placed[s.id] = null;
       renderSlots();
       renderLiveStats();
       el.resultBox.innerHTML = `<div class="k">尚未结算</div><div class="nm-tip">版面已清空。</div>`;
     };
-    const modeBtn = document.getElementById("paperModeToggle");
-    if (modeBtn) {
-      modeBtn.onclick = () => {
-        state.paperLayoutMode = state.paperLayoutMode === "fixed" ? "fluid" : "fixed";
-        renderSlots();
-        updatePaperModeButton();
-      };
-    }
-    const visualBtn = document.getElementById("paperVisualToggle");
-    if (visualBtn) {
-      visualBtn.onclick = () => {
-        state.paperVisualMode = state.paperVisualMode === "enhanced" ? "normal" : "enhanced";
-        renderSlots();
-        updatePaperModeButton();
-      };
-    }
     document.getElementById("settleBtn").onclick = settlePaper;
     document.getElementById("btnNextWeek").onclick = nextWeek;
   }
@@ -7016,7 +7807,7 @@
     addDynamicNode("us", {
       id: "debug_bus330_tape",
       kind: "temp",
-      name: "330 末班车 · 最后三秒录像（调试）",
+      name: "M330 末班车 · 车载录像最后三秒（调试）",
       days: 1,
       need: { 胆识: 3, 诡思: 3, 洞察: 2 },
       tags: ["occult"],
@@ -7031,7 +7822,7 @@
       chainStageTotal: 4,
       chainId: "bus330",
       chainFinal: true,
-      taskTypeTitle: "黑骰任务 · 330 末班车终局",
+      taskTypeTitle: "黑骰任务 · M330 末班车终局",
       taskTypeDesc: "调试入口：鬼混入乘客之中。黑骰会混入或替换你的骰子。",
     }, 1);
   }
@@ -7040,7 +7831,7 @@
     return {
       id: "debug_bus330_tape",
       kind: "temp",
-      name: "330 末班车 · 最后三秒录像（调试）",
+      name: "M330 末班车 · 车载录像最后三秒（调试）",
       days: 1,
       need: { 胆识: 3, 诡思: 3, 洞察: 2 },
       tags: ["occult"],
@@ -7055,7 +7846,7 @@
       chainStageTotal: 4,
       chainId: "bus330",
       chainFinal: true,
-      taskTypeTitle: "黑骰任务 · 330 末班车终局",
+      taskTypeTitle: "黑骰任务 · M330 末班车终局",
       taskTypeDesc: "调试入口：鬼混入乘客之中。黑骰会混入或替换你的骰子。",
     };
   }
@@ -7097,6 +7888,42 @@
     return true;
   }
 
+  function createDirectDebugDispatchMission() {
+    return {
+      id: "debug_dispatch_ux",
+      kind: "temp",
+      name: "线索调查：纽约市 非正式研究记录",
+      days: 2,
+      need: { 人脉: 2, 洞察: 2 },
+      tags: ["sci", "occult"],
+      difficulty: "hard",
+      enemyAttr: 3,
+      checkType: "red",
+      deadlineDay: 4,
+      riskTier: "high",
+      missionType: "leadInvestigation",
+      useCharacterDice: true,
+      regionId: "us",
+      leadId: "debug_dispatch_ux",
+    };
+  }
+
+  function maybeEnterDebugDispatchSetupMode() {
+    const p = new URLSearchParams(window.location.search || "");
+    if (p.get("debugDispatch") !== "1") return false;
+    state.phase = "explore";
+    state.debugSkipTutorials = true;
+    state.regionId = "us";
+    state.mission = createDirectDebugDispatchMission();
+    state.selectedStaffIds = p.get("dispatchState") === "selected" ? ["s5", "s7"] : [];
+    state.selectedToolDiceIds = p.get("tool") === "hotline" ? ["tool_tip_1"] : [];
+    state.displayMode = p.get("displayMode") === "numeric" ? "numeric" : "dice";
+    renderSetup();
+    setView("setup");
+    updateNextDayButton();
+    return true;
+  }
+
   function maybeConfigureDispatchSetupMode() {
     const p = new URLSearchParams(window.location.search || "");
     const hash = (window.location.hash || "").toLowerCase();
@@ -7118,6 +7945,7 @@
     log("全链条开始：探索 → 故事合成 → 编辑部组版 → 结算。");
     if (!maybeEnterPaperLabMode()) {
       if (maybeEnterDebugBlackDiceMode()) return;
+      if (maybeEnterDebugDispatchSetupMode()) return;
       renderWeekStart();
       updateNextDayButton();
     }

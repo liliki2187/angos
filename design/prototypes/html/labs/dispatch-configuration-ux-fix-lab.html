@@ -1,0 +1,1421 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>派遣配置 UX 修正实验页</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #090e17;
+      --panel: #101827;
+      --panel-2: #142033;
+      --panel-3: #0c1320;
+      --line: #26354c;
+      --line-soft: rgba(148, 163, 184, 0.22);
+      --text: #e6edf7;
+      --muted: #9aa8bb;
+      --weak: #64748b;
+      --gold: #d6a84f;
+      --gold-2: #f5d98d;
+      --red: #ef6464;
+      --green: #3ad37e;
+      --blue: #60a5fa;
+      --cyan: #39c8e6;
+      --violet: #a78bfa;
+      --orange: #f59e0b;
+      font-family: "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        linear-gradient(90deg, rgba(96, 165, 250, 0.045) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(96, 165, 250, 0.035) 1px, transparent 1px),
+        radial-gradient(circle at 18% 10%, rgba(214, 168, 79, 0.08), transparent 28%),
+        linear-gradient(180deg, #0c1420 0%, var(--bg) 72%);
+      background-size: 44px 44px, 44px 44px, auto, auto;
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+    }
+
+    .page {
+      width: min(1380px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 16px 0 28px;
+    }
+
+    .shell {
+      display: grid;
+      gap: 10px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      min-height: 40px;
+    }
+
+    .nav-return {
+      min-width: 98px;
+      min-height: 36px;
+      border: 1px solid rgba(148, 163, 184, 0.32);
+      border-radius: 7px;
+      background: rgba(15, 23, 42, 0.74);
+      color: #dbeafe;
+      font-weight: 850;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 18px;
+      line-height: 1.25;
+      color: #f8fafc;
+      text-align: center;
+    }
+
+    .top-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 7px;
+    }
+
+    .pill {
+      min-height: 23px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.55);
+      color: #cbd5e1;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .pill.gold {
+      border-color: rgba(214, 168, 79, 0.48);
+      background: rgba(97, 65, 18, 0.18);
+      color: #f5d98d;
+    }
+
+    .pill.red {
+      border-color: rgba(239, 100, 100, 0.52);
+      background: rgba(127, 29, 29, 0.18);
+      color: #fecaca;
+    }
+
+    .pill.green {
+      border-color: rgba(52, 211, 153, 0.44);
+      background: rgba(6, 95, 70, 0.15);
+      color: #bbf7d0;
+    }
+
+    .panel,
+    .task-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(20, 32, 51, 0.95), rgba(10, 16, 27, 0.97));
+      box-shadow: inset 0 1px 0 rgba(148, 163, 184, 0.06);
+    }
+
+    .panel {
+      padding: 10px;
+    }
+
+    .task-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 11px;
+      border-color: rgba(239, 100, 100, 0.43);
+      border-top-color: rgba(245, 158, 11, 0.72);
+    }
+
+    .task-title-line {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 0;
+      margin-bottom: 7px;
+    }
+
+    .danger-tag {
+      min-width: 42px;
+      min-height: 22px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid rgba(239, 100, 100, 0.55);
+      border-radius: 6px;
+      background: rgba(127, 29, 29, 0.32);
+      color: #fecaca;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .task-title {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #fff7ed;
+      font-size: 20px;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+
+    .task-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .deadline {
+      min-width: 116px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(239, 100, 100, 0.72);
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(127, 29, 29, 0.62), rgba(45, 12, 16, 0.86));
+      text-align: center;
+    }
+
+    .deadline small {
+      display: block;
+      color: #fca5a5;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .deadline strong {
+      color: #fee2e2;
+      font-size: 19px;
+      line-height: 1.1;
+    }
+
+    .builder {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .panel-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      color: var(--gold);
+      font-weight: 900;
+    }
+
+    .subtle {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 500;
+    }
+
+    .slot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .slot-card {
+      min-height: 188px;
+      border: 1px solid rgba(71, 85, 105, 0.78);
+      border-radius: 8px;
+      background: rgba(8, 13, 23, 0.6);
+      padding: 8px;
+      display: grid;
+      gap: 7px;
+      align-content: start;
+    }
+
+    .slot-card.empty {
+      place-items: center;
+      text-align: center;
+      border-style: dashed;
+      color: #77869e;
+    }
+
+    .slot-head {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(148, 163, 184, 0.36);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background:
+        linear-gradient(140deg, rgba(96, 165, 250, 0.2), rgba(214, 168, 79, 0.14)),
+        #0b1220;
+      color: #f8fafc;
+      font-size: 18px;
+      font-weight: 950;
+    }
+
+    .avatar.green {
+      background:
+        linear-gradient(140deg, rgba(52, 211, 153, 0.26), rgba(96, 165, 250, 0.14)),
+        #0b1220;
+    }
+
+    .avatar.red {
+      background:
+        linear-gradient(140deg, rgba(239, 100, 100, 0.27), rgba(245, 158, 11, 0.12)),
+        #0b1220;
+    }
+
+    .avatar.violet {
+      background:
+        linear-gradient(140deg, rgba(167, 139, 250, 0.27), rgba(57, 200, 230, 0.11)),
+        #0b1220;
+    }
+
+    .entity-name {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #f8fafc;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .entity-fit {
+      color: #9aa8bb;
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .mini-btn {
+      min-width: 34px;
+      min-height: 30px;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      border-radius: 7px;
+      background: rgba(15, 23, 42, 0.75);
+      color: #cbd5e1;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .mini-btn:hover {
+      border-color: rgba(239, 100, 100, 0.55);
+      color: #fecaca;
+    }
+
+    .dice-net {
+      --face-size: 34px;
+      width: calc(var(--face-size) * 4 + 6px * 3);
+      max-width: 100%;
+      display: grid;
+      grid-template-columns: repeat(4, var(--face-size));
+      grid-template-rows: repeat(3, var(--face-size));
+      gap: 6px;
+      justify-content: center;
+      margin: 2px auto 0;
+    }
+
+    .face {
+      min-width: 0;
+      border: 1px solid rgba(71, 85, 105, 0.76);
+      border-radius: 7px;
+      background: rgba(15, 23, 42, 0.78);
+      display: grid;
+      place-items: center;
+      color: #8390a5;
+      font-size: 11px;
+      line-height: 1.05;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .face.relevant {
+      border-color: rgba(214, 168, 79, 0.74);
+      background: rgba(97, 65, 18, 0.34);
+      color: #fde68a;
+      box-shadow: 0 0 0 1px rgba(214, 168, 79, 0.16), 0 0 18px rgba(214, 168, 79, 0.12);
+    }
+
+    .face strong {
+      color: #f8fafc;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .face[data-pos="1"] { grid-column: 2; grid-row: 1; }
+    .face[data-pos="2"] { grid-column: 1; grid-row: 2; }
+    .face[data-pos="3"] { grid-column: 2; grid-row: 2; }
+    .face[data-pos="4"] { grid-column: 3; grid-row: 2; }
+    .face[data-pos="5"] { grid-column: 4; grid-row: 2; }
+    .face[data-pos="6"] { grid-column: 2; grid-row: 3; }
+
+    .support {
+      margin-top: 10px;
+      padding-top: 9px;
+      border-top: 1px solid rgba(148, 163, 184, 0.16);
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .resource-card {
+      min-height: 78px;
+      text-align: left;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.66);
+      padding: 8px;
+      color: #cbd5e1;
+      cursor: pointer;
+    }
+
+    .resource-card:hover {
+      border-color: rgba(214, 168, 79, 0.6);
+    }
+
+    .resource-card.selected {
+      border-color: rgba(214, 168, 79, 0.86);
+      background: rgba(97, 65, 18, 0.22);
+      box-shadow: 0 0 0 1px rgba(214, 168, 79, 0.18);
+    }
+
+    .resource-card:disabled {
+      cursor: default;
+      opacity: 0.58;
+    }
+
+    .resource-card strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #f8fafc;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .resource-card small {
+      color: #94a3b8;
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .coverage-summary {
+      border: 1px solid rgba(96, 165, 250, 0.26);
+      border-radius: 8px;
+      background: rgba(30, 64, 175, 0.11);
+      padding: 9px;
+      margin-bottom: 9px;
+    }
+
+    .coverage-headline {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+
+    .coverage-headline strong {
+      color: #f8fafc;
+      font-size: 15px;
+      font-weight: 950;
+    }
+
+    .coverage-headline span {
+      color: #bfdbfe;
+      font-size: 12px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .meter {
+      height: 8px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(30, 41, 59, 0.9);
+    }
+
+    .meter span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--blue), var(--gold));
+    }
+
+    .meter.green span {
+      background: linear-gradient(90deg, var(--green), #bef264);
+    }
+
+    .need-source {
+      display: grid;
+      gap: 7px;
+      margin: 10px 0;
+    }
+
+    .source-row {
+      display: grid;
+      gap: 4px;
+    }
+
+    .source-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      color: #cbd5e1;
+      font-size: 12px;
+    }
+
+    .source-line strong {
+      color: #e2e8f0;
+    }
+
+    .source-line span {
+      color: #94a3b8;
+      text-align: right;
+    }
+
+    .status-box {
+      border: 1px solid rgba(214, 168, 79, 0.38);
+      border-radius: 8px;
+      background: rgba(97, 65, 18, 0.17);
+      color: #e2e8f0;
+      padding: 8px;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .status-box.green {
+      border-color: rgba(52, 211, 153, 0.42);
+      background: rgba(6, 95, 70, 0.16);
+      color: #bbf7d0;
+    }
+
+    .preview-card {
+      min-height: 92px;
+      margin-top: 8px;
+      border: 1px dashed rgba(148, 163, 184, 0.34);
+      border-radius: 8px;
+      padding: 8px;
+      color: #94a3b8;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .preview-card.active {
+      border-style: solid;
+      border-color: rgba(96, 165, 250, 0.48);
+      background: rgba(30, 64, 175, 0.12);
+      color: #dbeafe;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px;
+      margin-top: 7px;
+    }
+
+    .preview-metric {
+      min-height: 44px;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 7px;
+      background: rgba(15, 23, 42, 0.62);
+      padding: 7px;
+    }
+
+    .preview-metric span {
+      display: block;
+      color: #94a3b8;
+      font-size: 11px;
+    }
+
+    .preview-metric strong {
+      display: block;
+      color: #f8fafc;
+      font-size: 14px;
+      margin-top: 2px;
+    }
+
+    .actions {
+      display: grid;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .primary {
+      min-height: 44px;
+      border: 1px solid rgba(214, 168, 79, 0.62);
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(130, 88, 25, 0.92), rgba(78, 52, 16, 0.92));
+      color: #fff7ed;
+      font-weight: 950;
+      cursor: pointer;
+    }
+
+    .primary:disabled {
+      border-color: rgba(148, 163, 184, 0.18);
+      background: rgba(30, 41, 59, 0.62);
+      color: #77869e;
+      cursor: not-allowed;
+    }
+
+    .candidate-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .segmented {
+      display: inline-flex;
+      min-height: 34px;
+      padding: 3px;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.72);
+    }
+
+    .segmented button {
+      min-width: 58px;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: #94a3b8;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .segmented button.active {
+      background: rgba(214, 168, 79, 0.22);
+      color: #f5d98d;
+    }
+
+    .staff-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
+      gap: 8px;
+    }
+
+    .candidate-card {
+      min-height: 260px;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.72);
+      padding: 8px;
+      display: grid;
+      gap: 7px;
+      align-content: start;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .candidate-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(214, 168, 79, 0.72);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.24), 0 0 0 1px rgba(214, 168, 79, 0.18);
+    }
+
+    .candidate-card.demo-hover {
+      transform: translateY(-2px);
+      border-color: rgba(214, 168, 79, 0.72);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.24), 0 0 0 1px rgba(214, 168, 79, 0.18);
+    }
+
+    .candidate-card.selected {
+      border-color: rgba(214, 168, 79, 0.82);
+      background: rgba(97, 65, 18, 0.18);
+    }
+
+    .candidate-card.unavailable {
+      cursor: not-allowed;
+      opacity: 0.62;
+    }
+
+    .candidate-top {
+      display: grid;
+      grid-template-columns: 50px minmax(0, 1fr);
+      gap: 8px;
+      align-items: start;
+    }
+
+    .candidate-top .avatar {
+      width: 50px;
+      height: 58px;
+      font-size: 19px;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 5px;
+    }
+
+    .small-badge {
+      min-height: 20px;
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 6px;
+      border: 1px solid rgba(96, 165, 250, 0.38);
+      border-radius: 999px;
+      color: #bfdbfe;
+      background: rgba(30, 64, 175, 0.14);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .small-badge.green {
+      border-color: rgba(52, 211, 153, 0.42);
+      color: #bbf7d0;
+      background: rgba(6, 95, 70, 0.14);
+    }
+
+    .small-badge.gold {
+      border-color: rgba(214, 168, 79, 0.52);
+      color: #fde68a;
+      background: rgba(97, 65, 18, 0.18);
+    }
+
+    .small-badge.red {
+      border-color: rgba(239, 100, 100, 0.48);
+      color: #fecaca;
+      background: rgba(127, 29, 29, 0.15);
+    }
+
+    .summary-list {
+      display: grid;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      min-height: 24px;
+      align-items: center;
+      padding: 4px 6px;
+      border: 1px solid rgba(148, 163, 184, 0.17);
+      border-radius: 6px;
+      background: rgba(8, 13, 23, 0.42);
+      color: #cbd5e1;
+      font-size: 12px;
+    }
+
+    .summary-line strong {
+      color: #f5d98d;
+      white-space: nowrap;
+    }
+
+    .hover-delta {
+      min-height: 42px;
+      border: 1px solid rgba(96, 165, 250, 0.28);
+      border-radius: 7px;
+      background: rgba(30, 64, 175, 0.1);
+      color: #bfdbfe;
+      padding: 6px 7px;
+      font-size: 11px;
+      line-height: 1.35;
+      opacity: 0;
+    }
+
+    .candidate-card:hover .hover-delta {
+      opacity: 1;
+    }
+
+    .candidate-card.demo-hover .hover-delta {
+      opacity: 1;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      min-width: 260px;
+      max-width: min(520px, calc(100vw - 24px));
+      padding: 9px 12px;
+      border: 1px solid rgba(214, 168, 79, 0.48);
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.96);
+      color: #f5d98d;
+      font-size: 13px;
+      line-height: 1.4;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.38);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.16s ease;
+      z-index: 20;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+
+    @media (max-width: 980px) {
+      .topbar,
+      .candidate-head,
+      .task-card {
+        grid-template-columns: 1fr;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      h1 {
+        text-align: left;
+      }
+
+      .top-meta {
+        justify-content: flex-start;
+      }
+
+      .builder {
+        grid-template-columns: 1fr;
+      }
+
+      .slot-grid,
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .deadline {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="shell">
+      <header class="topbar">
+        <button class="nav-return" type="button">返回区域</button>
+        <h1>线索调查配置 · UX 修正实验</h1>
+        <div class="top-meta">
+          <span class="pill gold">第 1 周</span>
+          <span class="pill">剩余 7/7 日</span>
+          <span class="pill red">高风险</span>
+        </div>
+      </header>
+
+      <section class="task-card" aria-label="当前任务">
+        <div>
+          <div class="task-title-line">
+            <span class="danger-tag">突发</span>
+            <div class="task-title">线索调查：北美禁区带 非正式研究记录</div>
+          </div>
+          <div class="task-tags">
+            <span class="pill">耗时 2 天</span>
+            <span class="pill">人数 1-3</span>
+            <span class="pill">目标：2 有效点</span>
+            <span class="pill gold">需求面：人脉 / 洞察</span>
+            <span class="pill red">失败：队员状态损伤</span>
+          </div>
+        </div>
+        <div class="deadline">
+          <div>
+            <small>截止</small>
+            <strong>剩余 3 天</strong>
+          </div>
+        </div>
+      </section>
+
+      <div class="builder">
+        <section class="panel" aria-labelledby="poolTitle">
+          <div class="panel-title">
+            <span id="poolTitle">本次骰池</span>
+            <span id="slotCounter" class="subtle"></span>
+          </div>
+          <div id="slotGrid" class="slot-grid"></div>
+
+          <div class="support">
+            <div class="panel-title">
+              <span>辅助骰位</span>
+              <span class="subtle">道具不占人数；雇佣会进入候选角色</span>
+            </div>
+            <div id="resourceGrid" class="support-grid"></div>
+          </div>
+        </section>
+
+        <aside id="coveragePanel" class="panel" aria-label="需求覆盖"></aside>
+      </div>
+
+      <section class="panel" aria-labelledby="candidateTitle">
+        <div class="candidate-head">
+          <div>
+            <div class="panel-title" style="margin:0;">
+              <span id="candidateTitle">候选角色</span>
+              <span class="subtle">按当前任务贡献排序；选中后不改位置</span>
+            </div>
+          </div>
+          <div class="segmented" aria-label="候选卡显示模式">
+            <button id="modeDice" type="button" data-mode="dice">骰面</button>
+            <button id="modeSummary" type="button" data-mode="summary">汇总</button>
+          </div>
+        </div>
+        <div id="staffGrid" class="staff-grid"></div>
+      </section>
+    </div>
+  </main>
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const task = {
+      target: 2,
+      maxStaff: 3,
+      need: { "人脉": 2, "洞察": 2 },
+      days: 2
+    };
+
+    const staffBase = [
+      {
+        id: "chief",
+        name: "主编",
+        initial: "主",
+        tone: "gold",
+        tags: ["洞察", "笔力"],
+        faces: [
+          ["洞察", 2], ["笔力", 2], ["洞察", 1], ["人脉", 1], ["空", 0], ["人脉", 1]
+        ]
+      },
+      {
+        id: "fake",
+        name: "伪人",
+        initial: "伪",
+        tone: "red",
+        tags: ["人脉", "探索"],
+        faces: [
+          ["人脉", 2], ["探索", 2], ["洞察", 1], ["诡思", 1], ["生存", 1], ["空", 0]
+        ]
+      },
+      {
+        id: "nana",
+        name: "娜娜",
+        initial: "娜",
+        tone: "green",
+        tags: ["人脉", "洞察"],
+        faces: [
+          ["人脉", 2], ["洞察", 2], ["人脉", 1], ["理性", 1], ["趋势", 1], ["空", 0]
+        ]
+      },
+      {
+        id: "clock",
+        name: "末日时钟",
+        initial: "钟",
+        tone: "violet",
+        tags: ["洞察", "理性"],
+        faces: [
+          ["洞察", 2], ["理性", 2], ["洞察", 1], ["人脉", 1], ["生存", 1], ["空", 0]
+        ]
+      },
+      {
+        id: "spirit",
+        name: "艾灵",
+        initial: "艾",
+        tone: "green",
+        tags: ["理性", "诡思"],
+        faces: [
+          ["理性", 2], ["诡思", 2], ["洞察", 2], ["生存", 1], ["洞察", 1], ["空", 0]
+        ]
+      },
+      {
+        id: "indiana",
+        name: "印第安纳穷死",
+        initial: "印",
+        tone: "gold",
+        tags: ["探索", "胆识"],
+        faces: [
+          ["探索", 2], ["胆识", 2], ["洞察", 1], ["人脉", 1], ["胆识", 1], ["空", 0]
+        ]
+      }
+    ];
+
+    const tempStaff = {
+      id: "temp-stringer",
+      name: "雇佣线人",
+      initial: "线",
+      tone: "red",
+      temporary: true,
+      tags: ["人脉", "洞察"],
+      faces: [
+        ["人脉", 2], ["人脉", 1], ["洞察", 1], ["洞察", 1], ["空", 0], ["空", 0]
+      ]
+    };
+
+    const tools = [
+      {
+        id: "camera",
+        name: "夜视相机组",
+        desc: "一次性道具骰：洞察面更稳定",
+        faces: [["洞察", 1], ["洞察", 2], ["探索", 1], ["探索", 1], ["空", 0], ["空", 0]]
+      },
+      {
+        id: "hotline",
+        name: "匿名热线录音",
+        desc: "一次性道具骰：补人脉与洞察",
+        faces: [["人脉", 2], ["人脉", 1], ["洞察", 1], ["趋势", 1], ["空", 0], ["空", 0]]
+      }
+    ];
+
+    const state = {
+      selected: [],
+      selectedTools: [],
+      hiredTemp: false,
+      mode: "dice",
+      hoverId: null
+    };
+
+    const demoParams = new URLSearchParams(window.location.search);
+    if (demoParams.get("demo") === "hover") {
+      state.hoverId = demoParams.get("staff") || "chief";
+    }
+    if (demoParams.get("demo") === "selected") {
+      state.selected = ["chief", "nana"];
+      state.selectedTools = ["hotline"];
+      state.mode = demoParams.get("mode") || "summary";
+    }
+
+    const $ = (selector) => document.querySelector(selector);
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function allStaff() {
+      return state.hiredTemp ? [...staffBase, tempStaff] : staffBase;
+    }
+
+    function byId(id) {
+      return allStaff().find((staff) => staff.id === id);
+    }
+
+    function selectedStaff(ids = state.selected) {
+      return ids.map(byId).filter(Boolean);
+    }
+
+    function selectedToolDice(toolIds = state.selectedTools) {
+      return toolIds.map((id) => tools.find((tool) => tool.id === id)).filter(Boolean);
+    }
+
+    function relevantFace(face) {
+      return Object.prototype.hasOwnProperty.call(task.need, face[0]);
+    }
+
+    function relevantValue(face) {
+      return relevantFace(face) ? face[1] : 0;
+    }
+
+    function maxRelevantForDie(faces) {
+      return Math.max(0, ...faces.map(relevantValue));
+    }
+
+    function sourceValues(dice) {
+      const values = {};
+      Object.keys(task.need).forEach((key) => {
+        values[key] = dice.reduce((sum, die) => {
+          const best = Math.max(0, ...die.faces.filter((face) => face[0] === key).map((face) => face[1]));
+          return sum + best;
+        }, 0);
+      });
+      return values;
+    }
+
+    function enumerateSuccess(dice) {
+      if (!dice.length) return 0;
+      let total = 0;
+      let pass = 0;
+
+      function walk(index, score) {
+        if (index >= dice.length) {
+          total += 1;
+          if (score >= task.target) pass += 1;
+          return;
+        }
+        dice[index].faces.forEach((face) => walk(index + 1, score + relevantValue(face)));
+      }
+
+      walk(0, 0);
+      return total ? pass / total : 0;
+    }
+
+    function stats(ids = state.selected, toolIds = state.selectedTools) {
+      const staffDice = selectedStaff(ids).map((staff) => ({ type: "staff", name: staff.name, faces: staff.faces }));
+      const toolDice = selectedToolDice(toolIds).map((tool) => ({ type: "tool", name: tool.name, faces: tool.faces }));
+      const dice = [...staffDice, ...toolDice];
+      const potential = dice.reduce((sum, die) => sum + maxRelevantForDie(die.faces), 0);
+      const chance = enumerateSuccess(dice);
+      return {
+        dice,
+        potential,
+        chance,
+        sources: sourceValues(dice)
+      };
+    }
+
+    function formatPercent(value) {
+      return `${Math.round(value * 100)}%`;
+    }
+
+    function clampPercent(value, max = 1) {
+      return Math.max(0, Math.min(100, Math.round((value / max) * 100)));
+    }
+
+    function contribution(staff, ids = state.selected, toolIds = state.selectedTools) {
+      const before = stats(ids, toolIds);
+      const exists = ids.includes(staff.id);
+      const afterIds = exists ? ids.filter((id) => id !== staff.id) : [...ids, staff.id];
+      const after = stats(afterIds, toolIds);
+      const deltaChance = after.chance - before.chance;
+      const deltaPotential = after.potential - before.potential;
+      const relevantFaces = staff.faces.filter(relevantFace);
+      const best = maxRelevantForDie(staff.faces);
+      return {
+        before,
+        after,
+        exists,
+        deltaChance,
+        deltaPotential,
+        relevantCount: relevantFaces.length,
+        best,
+        line: `${relevantFaces.length}/6 相关面 · 单面最高 ${best}`,
+        deltaText: `${exists ? "移出后" : "加入后"} 达标率 ${formatPercent(before.chance)} -> ${formatPercent(after.chance)}，有效点 ${before.potential} -> ${after.potential}`
+      };
+    }
+
+    function riskLabel(current) {
+      if (current.dice.length === 0) return { label: "未评估", tone: "", reason: "本次骰池为空。至少选择 1 名角色后，才显示风险判断。" };
+      if (current.chance >= 0.62) return { label: "可搏", tone: "green", reason: "有效点已经过线，达标率进入可接受区间。" };
+      if (current.chance >= 0.32) return { label: "偏险", tone: "", reason: "有效点能触发判定，但结果仍看骰面，需要继续补相关面。" };
+      return { label: "高", tone: "red", reason: "达标率仍低；若直接派遣，失败更可能触发队员状态损伤。" };
+    }
+
+    function avatarClass(staff) {
+      if (staff.tone === "green") return "avatar green";
+      if (staff.tone === "red") return "avatar red";
+      if (staff.tone === "violet") return "avatar violet";
+      return "avatar";
+    }
+
+    function diceNetHtml(faces) {
+      return `<div class="dice-net">${faces.map((face, index) => {
+        const label = face[0];
+        const value = face[1];
+        const relevant = relevantFace(face) && value > 0;
+        const content = value > 0
+          ? `<span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong>`
+          : `<span>空</span>`;
+        return `<div class="face ${relevant ? "relevant" : ""}" data-pos="${index + 1}">${content}</div>`;
+      }).join("")}</div>`;
+    }
+
+    function summaryHtml(staff) {
+      const current = contribution(staff);
+      const values = sourceValues([{ faces: staff.faces }]);
+      return `<div class="summary-list">
+        <div class="summary-line"><span>任务贡献</span><strong>${escapeHtml(current.best)}</strong></div>
+        <div class="summary-line"><span>相关面</span><strong>${escapeHtml(current.relevantCount)}/6</strong></div>
+        ${Object.keys(task.need).map((key) => `<div class="summary-line"><span>${escapeHtml(key)}来源</span><strong>${escapeHtml(values[key] || 0)}</strong></div>`).join("")}
+      </div>`;
+    }
+
+    function slotsHtml() {
+      const selected = selectedStaff();
+      const cards = selected.map((staff) => {
+        const fit = contribution(staff);
+        return `<article class="slot-card">
+          <div class="slot-head">
+            <div class="${avatarClass(staff)}">${escapeHtml(staff.initial)}</div>
+            <div>
+              <div class="entity-name">${escapeHtml(staff.name)}${staff.temporary ? " · 临时" : ""}</div>
+              <div class="entity-fit">${escapeHtml(fit.line)}</div>
+            </div>
+            <button class="mini-btn" type="button" data-remove="${escapeHtml(staff.id)}" aria-label="移出 ${escapeHtml(staff.name)}">移出</button>
+          </div>
+          ${diceNetHtml(staff.faces)}
+        </article>`;
+      });
+
+      const emptyCount = task.maxStaff - selected.length;
+      for (let i = 0; i < emptyCount; i += 1) {
+        cards.push(`<article class="slot-card empty">
+          <div>
+            <strong>角色槽 ${selected.length + i + 1}/${task.maxStaff}</strong><br />
+            <span>从下方候选卡加入骰池</span>
+          </div>
+        </article>`);
+      }
+      return cards.join("");
+    }
+
+    function resourceHtml() {
+      const toolCards = tools.map((tool) => {
+        const selected = state.selectedTools.includes(tool.id);
+        return `<button class="resource-card ${selected ? "selected" : ""}" type="button" data-tool="${escapeHtml(tool.id)}">
+          <strong>${escapeHtml(tool.name)}</strong>
+          <small>${escapeHtml(tool.desc)}</small>
+        </button>`;
+      });
+
+      const hire = state.hiredTemp
+        ? `<button class="resource-card selected" type="button" disabled>
+            <strong>线人已进入候选池</strong>
+            <small>作为临时角色加入时，占用 1 个角色槽。</small>
+          </button>`
+        : `<button class="resource-card" type="button" data-hire-temp="1">
+            <strong>雇佣本周临时线人</strong>
+            <small>$1200 · 雇佣后出现在候选角色，加入时占角色槽。</small>
+          </button>`;
+
+      return [...toolCards, hire].join("");
+    }
+
+    function coverageHtml(previewStaffId = state.hoverId) {
+      const current = stats();
+      const risk = riskLabel(current);
+      const pct = clampPercent(current.potential, task.target);
+      const chancePct = clampPercent(current.chance);
+      const stillNeed = Math.max(0, task.target - current.potential);
+      const cause = state.selected.length === 0
+        ? "先选择至少 1 名角色"
+        : current.potential < task.target
+          ? `还需任意相关有效点 +${stillNeed}`
+          : "可以派遣，结果将在 2 天后判定";
+      const canStart = state.selected.length > 0 && current.potential >= task.target;
+      const preview = previewStaffId ? previewHtml(previewStaffId) : `<div class="preview-card">
+        悬停候选角色，右侧直接显示加入后达标率、有效点与仍缺项。
+      </div>`;
+
+      return `<div class="panel-title">
+        <span>需求覆盖</span>
+        <span class="pill ${risk.tone === "green" ? "green" : risk.tone === "red" ? "red" : "gold"}">风险：${escapeHtml(risk.label)} · ${formatPercent(current.chance)}</span>
+      </div>
+
+      <div class="coverage-summary">
+        <div class="coverage-headline">
+          <strong>判定目标：有效点 ${escapeHtml(current.potential)} / ${escapeHtml(task.target)}</strong>
+          <span>实掷达标率 ${formatPercent(current.chance)}</span>
+        </div>
+        <div class="meter ${current.potential >= task.target ? "green" : ""}"><span style="width:${pct}%"></span></div>
+      </div>
+
+      <div class="need-source">
+        ${Object.keys(task.need).map((key) => {
+          const value = current.sources[key] || 0;
+          const req = task.need[key];
+          const rowPct = clampPercent(value, Math.max(req, 1));
+          return `<div class="source-row">
+            <div class="source-line">
+              <strong>${escapeHtml(key)}来源</strong>
+              <span>相关面潜力 ${escapeHtml(value)} / 参考 ${escapeHtml(req)}</span>
+            </div>
+            <div class="meter ${value >= req ? "green" : ""}"><span style="width:${rowPct}%"></span></div>
+          </div>`;
+        }).join("")}
+      </div>
+
+      <div class="status-box ${canStart ? "green" : ""}">${escapeHtml(risk.reason)}<br />${escapeHtml(cause)}</div>
+      ${preview}
+      <div class="actions">
+        <button id="startBtn" class="primary" type="button" ${canStart ? "" : "disabled"}>${canStart ? "开始线索调查（2天后判定）" : "先选择角色后开始"}</button>
+      </div>`;
+    }
+
+    function previewHtml(staffId) {
+      const staff = byId(staffId);
+      if (!staff) return "";
+      if (!state.selected.includes(staff.id) && state.selected.length >= task.maxStaff) {
+        return `<div class="preview-card active">
+          <strong>${escapeHtml(staff.name)}</strong><br />
+          当前 3 个角色槽已满。先从本次骰池移出一名角色，再加入新角色。
+        </div>`;
+      }
+      const fit = contribution(staff);
+      const beforeMissing = Math.max(0, task.target - fit.before.potential);
+      const afterMissing = Math.max(0, task.target - fit.after.potential);
+      const changedSources = Object.keys(task.need).map((key) => {
+        const before = fit.before.sources[key] || 0;
+        const after = fit.after.sources[key] || 0;
+        return `${key} ${before}->${after}`;
+      }).join(" / ");
+
+      return `<div class="preview-card active">
+        <strong>${escapeHtml(fit.exists ? `移出 ${staff.name}` : `加入 ${staff.name}`)}</strong><br />
+        ${escapeHtml(fit.deltaText)}
+        <div class="preview-grid">
+          <div class="preview-metric"><span>达标率变化</span><strong>${formatPercent(fit.before.chance)} -> ${formatPercent(fit.after.chance)}</strong></div>
+          <div class="preview-metric"><span>仍缺有效点</span><strong>${beforeMissing} -> ${afterMissing}</strong></div>
+          <div class="preview-metric"><span>来源变化</span><strong>${escapeHtml(changedSources)}</strong></div>
+          <div class="preview-metric"><span>相关面</span><strong>${escapeHtml(fit.relevantCount)}/6</strong></div>
+        </div>
+      </div>`;
+    }
+
+    function candidateCardHtml(staff) {
+      const selected = state.selected.includes(staff.id);
+      const full = !selected && state.selected.length >= task.maxStaff;
+      const fit = contribution(staff);
+      const cardClass = ["candidate-card", selected ? "selected" : "", full ? "unavailable" : "", state.hoverId === staff.id ? "demo-hover" : ""].filter(Boolean).join(" ");
+      return `<article class="${cardClass}" data-staff="${escapeHtml(staff.id)}">
+        <div class="candidate-top">
+          <div class="${avatarClass(staff)}">${escapeHtml(staff.initial)}</div>
+          <div>
+            <div class="entity-name">${escapeHtml(staff.name)}${staff.temporary ? " · 临时" : ""}</div>
+            <div class="badge-row">
+              ${staff.tags.map((tag, index) => `<span class="small-badge ${index === 0 ? "gold" : "green"}">${escapeHtml(tag)}</span>`).join("")}
+              ${selected ? `<span class="small-badge gold">已在骰池</span>` : ""}
+              ${full ? `<span class="small-badge red">角色槽已满</span>` : ""}
+            </div>
+            <div class="entity-fit" style="margin-top:6px;">${escapeHtml(fit.line)}</div>
+          </div>
+        </div>
+        ${state.mode === "dice" ? diceNetHtml(staff.faces) : summaryHtml(staff)}
+        <div class="hover-delta">${escapeHtml(full ? "槽位已满：先移出一名已选角色。" : fit.deltaText)}</div>
+      </article>`;
+    }
+
+    function sortedStaff() {
+      return allStaff()
+        .map((staff, index) => ({ staff, index, fit: contribution(staff) }))
+        .sort((a, b) => {
+          if (b.fit.best !== a.fit.best) return b.fit.best - a.fit.best;
+          if (b.fit.relevantCount !== a.fit.relevantCount) return b.fit.relevantCount - a.fit.relevantCount;
+          return a.index - b.index;
+        })
+        .map((entry) => entry.staff);
+    }
+
+    function render() {
+      $("#slotCounter").textContent = `已选 ${state.selected.length}/${task.maxStaff} 人`;
+      $("#slotGrid").innerHTML = slotsHtml();
+      $("#resourceGrid").innerHTML = resourceHtml();
+      $("#coveragePanel").innerHTML = coverageHtml();
+      $("#staffGrid").innerHTML = sortedStaff().map(candidateCardHtml).join("");
+      $("#modeDice").classList.toggle("active", state.mode === "dice");
+      $("#modeSummary").classList.toggle("active", state.mode === "summary");
+      bindEvents();
+    }
+
+    function bindStartButton() {
+      const startBtn = $("#startBtn");
+      if (startBtn) {
+        startBtn.addEventListener("click", () => {
+          const current = stats();
+          showToast(`已提交派遣：${state.selected.length} 名角色，实掷达标率 ${formatPercent(current.chance)}。`);
+        });
+      }
+    }
+
+    function showToast(text) {
+      const toast = $("#toast");
+      toast.textContent = text;
+      toast.classList.add("show");
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => toast.classList.remove("show"), 1700);
+    }
+
+    function bindEvents() {
+      document.querySelectorAll("[data-remove]").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          event.stopPropagation();
+          const id = button.getAttribute("data-remove");
+          state.selected = state.selected.filter((staffId) => staffId !== id);
+          state.hoverId = null;
+          render();
+        });
+      });
+
+      document.querySelectorAll("[data-tool]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const id = button.getAttribute("data-tool");
+          state.selectedTools = state.selectedTools.includes(id)
+            ? state.selectedTools.filter((toolId) => toolId !== id)
+            : [...state.selectedTools, id];
+          render();
+        });
+      });
+
+      const hire = document.querySelector("[data-hire-temp]");
+      if (hire) {
+        hire.addEventListener("click", () => {
+          state.hiredTemp = true;
+          showToast("临时线人已加入候选角色；选择它会占用 1 个角色槽。");
+          render();
+        });
+      }
+
+      document.querySelectorAll("[data-staff]").forEach((card) => {
+        const id = card.getAttribute("data-staff");
+        card.addEventListener("mouseenter", () => {
+          state.hoverId = id;
+          $("#coveragePanel").innerHTML = coverageHtml(id);
+          bindStartButton();
+        });
+        card.addEventListener("mouseleave", () => {
+          state.hoverId = null;
+          $("#coveragePanel").innerHTML = coverageHtml();
+          bindStartButton();
+        });
+        card.addEventListener("click", () => {
+          const selected = state.selected.includes(id);
+          if (!selected && state.selected.length >= task.maxStaff) {
+            showToast(`本任务最多派遣 ${task.maxStaff} 人，请先移出一名已选角色。`);
+            return;
+          }
+          state.selected = selected
+            ? state.selected.filter((staffId) => staffId !== id)
+            : [...state.selected, id];
+          state.hoverId = null;
+          render();
+        });
+      });
+
+      document.querySelectorAll("[data-mode]").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.mode = button.getAttribute("data-mode");
+          render();
+        });
+      });
+
+      bindStartButton();
+    }
+
+    render();
+  </script>
+</body>
+</html>

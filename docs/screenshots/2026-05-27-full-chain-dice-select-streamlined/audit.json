@@ -1,0 +1,36 @@
+{
+  "stage": "选择阶段",
+  "renderer": "canvas-model-card",
+  "layoutCount": 1,
+  "summaryCount": 1,
+  "submitPreviewCount": 1,
+  "canvasCount": 6,
+  "canvasPixels": [
+    3545,
+    3673,
+    3677,
+    3648,
+    3631,
+    3545
+  ],
+  "modelDieShadows": [
+    "none",
+    "none",
+    "none",
+    "none",
+    "none",
+    "none"
+  ],
+  "modelDieBorders": [
+    "rgba(0, 0, 0, 0)",
+    "rgba(0, 0, 0, 0)",
+    "rgba(0, 0, 0, 0)",
+    "rgba(0, 0, 0, 0)",
+    "rgba(0, 0, 0, 0)",
+    "rgba(0, 0, 0, 0)"
+  ],
+  "hasOldTray": false,
+  "hasOldImpact": false,
+  "hasNegativeConfirm": false,
+  "hasOldGoalCopy": false
+}

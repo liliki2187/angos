@@ -1,0 +1,87 @@
+{
+  "before": {
+    "preview": {
+      "x": 921,
+      "y": 620,
+      "width": 409,
+      "height": 188
+    },
+    "staffGrid": {
+      "x": 110,
+      "y": 961,
+      "width": 1221,
+      "height": 606
+    },
+    "firstCard": {
+      "x": 110,
+      "y": 961,
+      "width": 238,
+      "height": 299
+    },
+    "secondCard": {
+      "x": 355,
+      "y": 961,
+      "width": 238,
+      "height": 299
+    },
+    "previewText": "候选预览 当前未指向角色。 达标率变化- 仍缺有效点- 来源变化- 相关面-"
+  },
+  "firstHover": {
+    "preview": {
+      "x": 921,
+      "y": 620,
+      "width": 409,
+      "height": 188
+    },
+    "staffGrid": {
+      "x": 110,
+      "y": 961,
+      "width": 1221,
+      "height": 606
+    },
+    "firstCard": {
+      "x": 110,
+      "y": 961,
+      "width": 238,
+      "height": 299
+    },
+    "secondCard": {
+      "x": 355,
+      "y": 961,
+      "width": 238,
+      "height": 299
+    },
+    "previewText": "加入 末日时钟 加入后 达标率 0% -> 17%，有效点 0 -> 4 达标率变化0% -> 17% 仍缺有效点2 -> 0 来源变化人脉 0->1 / 洞察 0->3 相关面3/6"
+  },
+  "secondHover": {
+    "preview": {
+      "x": 921,
+      "y": 620,
+      "width": 409,
+      "height": 188
+    },
+    "staffGrid": {
+      "x": 110,
+      "y": 961,
+      "width": 1221,
+      "height": 606
+    },
+    "firstCard": {
+      "x": 110,
+      "y": 961,
+      "width": 238,
+      "height": 299
+    },
+    "secondCard": {
+      "x": 355,
+      "y": 961,
+      "width": 238,
+      "height": 299
+    },
+    "previewText": "加入 娜娜 加入后 达标率 0% -> 33%，有效点 0 -> 4 达标率变化0% -> 33% 仍缺有效点2 -> 0 来源变化人脉 0->2 / 洞察 0->2 相关面2/6"
+  },
+  "staffGridTopShiftOnFirstHover": 0,
+  "staffGridTopShiftOnSecondHover": 0,
+  "previewHeightShiftOnFirstHover": 0,
+  "previewHeightShiftOnSecondHover": 0
+}

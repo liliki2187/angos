@@ -1,0 +1,90 @@
+{
+  "before": {
+    "url": "http://127.0.0.1:1029/design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?debugDispatch=1&dispatchlab=1&v=20260527-dispatch-declutter-v10",
+    "bodyView": "setup",
+    "scriptSrc": "http://127.0.0.1:1029/design/prototypes/html/full-chain-demo/world-mysteries-full-chain.js?v=20260527-dispatch-declutter-v10",
+    "macroDisplay": "none",
+    "macroRect": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0
+    },
+    "isMacroVisible": false,
+    "staffCardCount": 8,
+    "staffFitCountInCards": 0,
+    "staffSpecCountInCards": 0,
+    "hoverDeltaCountInCards": 0,
+    "taskHeaderText": "线索调查：纽约市 非正式研究记录 危险线索调查 · 耗时 2天 截稿关闭 剩余 3天 成功或失败后都会结束；失败可能造成队员状态损伤",
+    "taskHeaderContainsNeedField": false,
+    "verdictTexts": [
+      "高适配 · 3/6 相关",
+      "中适配 · 2/6 相关",
+      "中适配 · 2/6 相关",
+      "中适配 · 2/6 相关",
+      "低适配 · 1/6 相关",
+      "低适配 · 1/6 相关",
+      "低适配 · 1/6 相关",
+      "低适配 · 1/6 相关"
+    ],
+    "cardTextsWithContributionPattern": [],
+    "candidateGridRect": {
+      "x": 110,
+      "y": 808,
+      "width": 1221,
+      "height": 472
+    },
+    "firstCardRect": {
+      "x": 110,
+      "y": 808,
+      "width": 238,
+      "height": 232
+    },
+    "hoverPreviewCount": 0
+  },
+  "afterHover": {
+    "url": "http://127.0.0.1:1029/design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html?debugDispatch=1&dispatchlab=1&v=20260527-dispatch-declutter-v10",
+    "bodyView": "setup",
+    "scriptSrc": "http://127.0.0.1:1029/design/prototypes/html/full-chain-demo/world-mysteries-full-chain.js?v=20260527-dispatch-declutter-v10",
+    "macroDisplay": "none",
+    "macroRect": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0
+    },
+    "isMacroVisible": false,
+    "staffCardCount": 8,
+    "staffFitCountInCards": 0,
+    "staffSpecCountInCards": 0,
+    "hoverDeltaCountInCards": 0,
+    "taskHeaderText": "线索调查：纽约市 非正式研究记录 危险线索调查 · 耗时 2天 截稿关闭 剩余 3天 成功或失败后都会结束；失败可能造成队员状态损伤",
+    "taskHeaderContainsNeedField": false,
+    "verdictTexts": [
+      "高适配 · 3/6 相关",
+      "中适配 · 2/6 相关",
+      "中适配 · 2/6 相关",
+      "中适配 · 2/6 相关",
+      "低适配 · 1/6 相关",
+      "低适配 · 1/6 相关",
+      "低适配 · 1/6 相关",
+      "低适配 · 1/6 相关"
+    ],
+    "cardTextsWithContributionPattern": [],
+    "candidateGridRect": {
+      "x": 110,
+      "y": 808,
+      "width": 1221,
+      "height": 472
+    },
+    "firstCardRect": {
+      "x": 110,
+      "y": 808,
+      "width": 238,
+      "height": 232
+    },
+    "hoverPreviewCount": 0
+  },
+  "hoverPreviewCount": 0,
+  "candidateGridTopShift": 0
+}

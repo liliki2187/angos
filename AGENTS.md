@@ -16,6 +16,7 @@ Angus 的项目本地技能位于 `./skills`。
 ## Codex Subagents
 
 - `ux_laoge`：项目级 Codex custom subagent，配置位于 `./.codex/agents/ux-laoge.toml`。当用户输入 `@UX老哥`、`@ux老哥`、`@UX诊断`、`@ux诊断`、`@cowork-ux-diagnosis`，或明确说“让 UX 老哥 / UX 子 agent 单独分析”时，视为用户显式要求调用该 subagent。父级 Codex 应 spawn `ux_laoge`，把截图、问题描述、相关文件路径和必要上下文传入；该 subagent 默认只做只读 UX 诊断，不直接改代码。完整 UX 诊断主 spec 使用 `./skills/ux-diagnosis/system-prompt-v2.2.md`，这是从 portable 包 `core/system-prompt.md` 同步的上游核心；不要用 portable 包的 `adapters/codex/AGENTS.md` 覆盖本项目根 `AGENTS.md`。
+- 父级 Codex 最终回复中必须保留 UX 老哥意见正文，不得只给结果或改写摘要。若篇幅较长，应使用 Markdown `<details><summary>UX 老哥诊断原文</summary>…</details>` 做成可折叠内容；折叠块外再单独写“我如何执行 / 已落地 / 未采纳或待确认”。用户明确要求极简摘要时，才可只给摘要，但仍应说明完整诊断可展开或可补发。
 - 如果当前 Codex 运行环境暂未暴露 `ux_laoge` 这个 agent 类型，则父级 Codex 必须按 `./skills/ux-diagnosis/SKILL.md` 在当前线程执行同等诊断，不要把 `@UX老哥` 当普通文本忽略。
 - Codemaker / brainmaker 的 `C:/Users/gzfangyue/AppData/Roaming/com.brainmaker.client/codemaker/.opencode-config/agents/` 配置不作为 Codex 调用依据；Codex 使用本仓库 `.codex/agents/` 与 `./skills/`。
 

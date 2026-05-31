@@ -98,7 +98,7 @@
       opacity: 0.55;
     }
     .world-map::after {
-      content: "WORLD INVESTIGATION MAP";
+      content: "U.S. INVESTIGATION MAP";
       position: absolute; right: 10px; bottom: 8px; z-index: 1; font-size: 11px; color: #6b7280; letter-spacing: 0.08em;
     }
     .map-point {
@@ -1396,6 +1396,7 @@
     .pool-card-head img { width:28px; height:28px; border-radius:8px; object-fit:cover; border:1px solid var(--line); }
     .pool-card-name { font-weight:800; color:#e2e8f0; font-size:12px; }
     .pool-tools-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+    body[data-view="setup"] #macro { display:none; }
     .dispatch-lab-shell { display:grid; gap:10px; }
     .dispatch-lab-top { display:flex; justify-content:space-between; align-items:start; gap:12px; }
     .dispatch-lab-top h2 { margin:0 0 3px; font-size:17px; }
@@ -1429,6 +1430,21 @@
     .dispatch-warning { margin-top:8px; color:#fde68a; font-size:12px; border:1px solid rgba(212,168,83,0.35); background:rgba(74,55,22,0.16); border-radius:8px; padding:7px 8px; }
     .dispatch-warning.is-deadline { border-color:rgba(248,113,113,0.42); background:rgba(127,29,29,0.18); color:#fecaca; }
     .dispatch-consequence { margin-top:6px; color:#fca5a5; font-size:12px; line-height:1.35; }
+    .dispatch-story-brief {
+      margin-top:8px;
+      border:1px solid rgba(96,165,250,0.28);
+      border-radius:8px;
+      background:rgba(30,64,175,0.12);
+      padding:8px;
+      display:grid;
+      gap:7px;
+    }
+    .dispatch-story-kicker { color:#bfdbfe; font-size:11px; font-weight:900; letter-spacing:0.06em; }
+    .dispatch-story-brief p { margin:0; color:#e2e8f0; font-size:13px; line-height:1.45; }
+    .dispatch-story-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+    .dispatch-story-row { border:1px solid rgba(148,163,184,0.18); border-radius:7px; background:rgba(2,6,23,0.28); padding:7px; }
+    .dispatch-story-row span { display:block; color:#94a3b8; font-size:11px; margin-bottom:3px; }
+    .dispatch-story-row strong { display:block; color:#f8fafc; font-size:12px; line-height:1.4; font-weight:700; }
     .dispatch-lab-builder { display:grid; grid-template-columns:minmax(0,1.3fr) minmax(300px,0.7fr); gap:10px; align-items:stretch; }
     .dispatch-lab-panel-title { color:var(--gold); font-weight:900; margin-bottom:8px; display:flex; justify-content:space-between; gap:10px; align-items:center; }
     .dispatch-slot-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
@@ -1437,14 +1453,19 @@
     .dispatch-slot-head { display:flex; align-items:center; gap:8px; margin-bottom:7px; }
     .dispatch-slot-head img { width:34px; height:34px; border-radius:8px; object-fit:cover; border:1px solid var(--line); }
     .dispatch-slot-name { color:#e2e8f0; font-weight:800; font-size:12px; }
+    .dispatch-slot-remove { margin-left:auto; border:1px solid rgba(148,163,184,0.28); border-radius:7px; background:rgba(15,23,42,0.72); color:#cbd5e1; font-size:11px; font-weight:800; padding:3px 7px; }
+    .dispatch-slot-remove:hover { border-color:rgba(248,113,113,0.55); color:#fecaca; }
     .dispatch-lab-tools { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
     .dispatch-need-row { margin-bottom:9px; }
     .dispatch-need-line { display:flex; justify-content:space-between; gap:8px; color:#cbd5e1; font-size:12px; margin-bottom:4px; }
     .dispatch-meter { height:8px; border-radius:999px; background:#1e293b; overflow:hidden; }
     .dispatch-meter span { display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,#60a5fa,#d4a853); }
     .dispatch-need-row.is-met .dispatch-meter span { background:linear-gradient(90deg,#22c55e,#86efac); }
+    .dispatch-need-summary { border:1px solid rgba(96,165,250,0.26); border-radius:8px; background:rgba(30,64,175,0.12); padding:8px; margin-bottom:9px; }
+    .dispatch-need-summary .dispatch-need-line strong { color:#f8fafc; font-size:13px; }
+    .dispatch-need-summary .dispatch-need-line span { color:#bfdbfe; font-weight:800; white-space:nowrap; }
+    .dispatch-source-list { display:grid; gap:7px; margin:9px 0; }
     .dispatch-risk-box { border:1px solid rgba(212,168,83,0.38); border-radius:8px; padding:8px; background:rgba(74,55,22,0.18); color:#e2e8f0; font-size:12px; margin-top:8px; }
-    .dispatch-hover-preview { min-height:38px; border:1px dashed rgba(148,163,184,0.32); border-radius:8px; color:#94a3b8; padding:7px; font-size:12px; margin-top:8px; }
     .dispatch-lab-actions { display:grid; grid-template-columns:1fr; gap:7px; margin-top:10px; }
     .dispatch-lab-actions button.primary { min-height:42px; font-weight:900; }
     .dispatch-support-strip { margin-top:10px; border-top:1px solid rgba(148,163,184,0.16); padding-top:8px; }
@@ -1452,27 +1473,36 @@
     .dispatch-resource-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:7px; }
     .dispatch-resource-card { text-align:left; border:1px solid rgba(148,163,184,0.32); border-radius:8px; background:rgba(15,23,42,0.62); padding:7px; color:#cbd5e1; }
     .dispatch-resource-card.selected { border-color:var(--gold); box-shadow:0 0 0 1px rgba(212,168,83,0.28); }
+    .dispatch-resource-card.is-spent { border-style:dashed; color:#94a3b8; background:rgba(15,23,42,0.32); }
     .dispatch-resource-card strong { display:block; color:#f8fafc; margin-bottom:2px; font-size:12px; }
     .dispatch-resource-card small { color:#94a3b8; font-size:11px; }
     .dispatch-candidate-head { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px; margin-bottom:8px; }
     .dispatch-staff-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(214px,1fr)); gap:8px; }
-    .dispatch-staff-card { border:1px solid rgba(148,163,184,0.28); border-radius:10px; background:rgba(15,23,42,0.72); padding:7px; cursor:pointer; min-height:258px; display:grid; gap:5px; align-content:start; }
+    .dispatch-staff-card { border:1px solid rgba(148,163,184,0.28); border-radius:10px; background:rgba(15,23,42,0.72); padding:7px; cursor:pointer; min-height:232px; display:grid; gap:6px; align-content:start; }
     .dispatch-staff-card.selected { border-color:rgba(212,168,83,0.78); box-shadow:0 0 0 1px rgba(212,168,83,0.24); background:rgba(74,55,22,0.16); }
     .dispatch-staff-card:hover { border-color:rgba(212,168,83,0.62); }
+    .dispatch-staff-card.unavailable { cursor:not-allowed; opacity:0.68; }
     .dispatch-staff-head { display:grid; grid-template-columns:50px minmax(0,1fr); gap:7px; align-items:start; }
     .dispatch-staff-head img { width:50px; height:58px; object-fit:cover; border-radius:8px; border:1px solid var(--line); background:#0b1220; }
     .dispatch-staff-name { color:#f8fafc; font-weight:900; line-height:1.15; font-size:14px; }
+    .dispatch-card-verdict { margin-top:5px; color:#94a3b8; font-size:11px; line-height:1.2; }
+    .dispatch-card-verdict.high { color:#bbf7d0; }
+    .dispatch-card-verdict.mid { color:#fde68a; }
     .dispatch-staff-fit { color:#94a3b8; font-size:11px; line-height:1.32; }
+    .dispatch-staff-summary { display:grid; gap:6px; margin-top:4px; }
+    .dispatch-staff-summary-row { min-height:24px; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:4px 6px; border:1px solid rgba(148,163,184,0.17); border-radius:6px; background:rgba(2,6,23,0.36); color:#cbd5e1; font-size:12px; }
+    .dispatch-staff-summary-row strong { color:#fde68a; white-space:nowrap; }
     .dispatch-staff-actions { display:flex; gap:6px; margin-top:auto; }
     .dispatch-staff-actions button { font-size:11px; padding:3px 7px; }
     .dice-face-row.staff-pick-faces .dice-face { min-width:32px; font-size:9px; padding:2px 3px; min-height:22px; }
     @media (max-width: 980px) {
       .dispatch-lab-builder { grid-template-columns:1fr; }
       .dispatch-summary-grid,
+      .dispatch-story-grid,
       .dispatch-slot-grid { grid-template-columns:1fr; }
     }
     .modal-mask.dice-select-modal .modal-card {
-      width:min(800px,94vw);
+      width:min(960px,94vw);
       max-height:calc(100vh - 32px);
       display:flex;
       flex-direction:column;
@@ -1491,6 +1521,15 @@
     .dice-select-head { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:start; }
     .dice-select-head p { margin:4px 0 0; color:#cbd5e1; font-size:13px; line-height:1.5; }
     .dice-select-stage { color:var(--gold); font-weight:900; letter-spacing:0.02em; }
+    .dice-story-line {
+      border:1px solid rgba(212,168,83,0.32);
+      border-radius:8px;
+      background:rgba(74,55,22,0.16);
+      color:#f8fafc;
+      padding:8px 10px;
+      font-size:13px;
+      line-height:1.45;
+    }
     .dice-select-result {
       min-width:84px;
       border:1px solid rgba(148,163,184,0.38);
@@ -1504,6 +1543,81 @@
       white-space:nowrap;
     }
     .dice-select-result.is-met { border-color:rgba(34,197,94,0.72); color:#bbf7d0; background:rgba(20,83,45,0.2); }
+    .dice-select-layout {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 306px;
+      gap:12px;
+      align-items:start;
+    }
+    .dice-workbench-panel,
+    .dice-side-stack > section {
+      border:1px solid rgba(148,163,184,0.28);
+      border-radius:10px;
+      background:rgba(15,23,42,0.68);
+      padding:10px;
+    }
+    .dice-workbench-panel { display:grid; gap:9px; }
+    .dice-side-stack { display:grid; gap:10px; }
+    .dice-section-head {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      color:#fde68a;
+      font-size:12px;
+    }
+    .dice-section-head span { color:#94a3b8; }
+    .dice-summary-card { display:grid; gap:10px; }
+    .dice-summary-top {
+      display:grid;
+      grid-template-columns:76px minmax(0,1fr);
+      align-items:center;
+      gap:12px;
+    }
+    .dice-score-ring {
+      width:74px;
+      height:74px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      background:
+        radial-gradient(circle at center, rgba(2,6,23,0.96), rgba(15,23,42,0.78)),
+        conic-gradient(rgba(52,211,153,0.82) var(--score-angle, 0deg), rgba(51,65,85,0.95) 0);
+      box-shadow:inset 0 0 0 8px rgba(15,23,42,0.92);
+    }
+    .dice-score-ring strong { color:#fff7d6; font-size:20px; line-height:1; }
+    .dice-score-ring small { display:block; margin-top:3px; color:#94a3b8; font-size:10px; text-align:center; }
+    .dice-summary-copy strong { display:block; color:#fff7d6; font-size:14px; }
+    .dice-summary-copy span { display:block; margin-top:4px; color:#94a3b8; font-size:12px; line-height:1.45; }
+    .dice-need-stack { display:grid; gap:7px; }
+    .dice-need-compact-row {
+      display:grid;
+      grid-template-columns:52px minmax(0,1fr) 44px;
+      align-items:center;
+      gap:8px;
+      color:#cbd5e1;
+      font-size:12px;
+    }
+    .dice-need-compact-row em {
+      height:7px;
+      border-radius:999px;
+      background:rgba(51,65,85,0.82);
+      overflow:hidden;
+      display:block;
+    }
+    .dice-need-compact-row em i {
+      display:block;
+      height:100%;
+      width:var(--fill,0%);
+      border-radius:inherit;
+      background:linear-gradient(90deg,#22d3ee,#34d399);
+    }
+    .dice-need-compact-row b { color:#e2e8f0; text-align:right; font-size:12px; }
+    .dice-submit-preview { display:grid; gap:6px; }
+    .dice-submit-preview strong { color:#fde68a; font-size:12px; }
+    .dice-submit-preview div { color:#cbd5e1; font-size:12px; line-height:1.45; }
+    .dice-workbench-panel .character-roll-grid { grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:8px; }
+    .dice-workbench-panel .character-roll { min-height:134px; }
     .dice-need-panel {
       border:1px solid rgba(51,65,85,0.9);
       border-radius:10px;
@@ -1666,9 +1780,9 @@
       background:linear-gradient(180deg, rgba(74,55,22,0.46), rgba(15,23,42,0.86));
       box-shadow:0 0 0 1px rgba(212,168,83,0.38), 0 0 18px rgba(212,168,83,0.16);
     }
-    .character-roll.is-select-pulse .roll-die,
-    .character-roll.selected .roll-die { animation:diceSelectPulse 0.34s ease-out; }
-    .character-roll.relevant .roll-die { box-shadow:0 0 0 1px rgba(212,168,83,0.36), 0 0 14px rgba(212,168,83,0.18); }
+    .character-roll.is-select-pulse .roll-die:not(.model-die),
+    .character-roll.selected .roll-die:not(.model-die) { animation:diceSelectPulse 0.34s ease-out; }
+    .character-roll.relevant .roll-die:not(.model-die) { box-shadow:0 0 0 1px rgba(212,168,83,0.36), 0 0 14px rgba(212,168,83,0.18); }
     .character-roll.black-roll { border-color:rgba(248,113,113,0.78); background:rgba(127,29,29,0.22); }
     .character-roll.is-black-entering .roll-die { animation:blackDiceDrop 0.54s cubic-bezier(0.18,1.28,0.32,1); }
     .character-roll.grounded-roll { border-color:rgba(96,165,250,0.82); box-shadow:0 0 12px rgba(96,165,250,0.2); }
@@ -1698,6 +1812,34 @@
     }
     .character-roll.is-landing .roll-die { animation:diceLand 0.32s cubic-bezier(0.2,1.3,0.2,1); }
     .roll-die-face { font-weight:900; font-size:14px; line-height:1.1; padding:0 4px; overflow-wrap:anywhere; }
+    .roll-die.model-die {
+      width:88px;
+      height:76px;
+      border-color:transparent;
+      background:transparent;
+      box-shadow:none;
+      overflow:visible;
+      position:relative;
+    }
+    .roll-die.model-die.face-rolling,
+    .character-roll.is-landing .roll-die.model-die {
+      animation:none;
+      background:transparent;
+      box-shadow:none;
+    }
+    .roll-die-canvas {
+      display:block;
+      width:104px;
+      height:88px;
+    }
+    .roll-die.model-die .roll-die-face {
+      position:absolute;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+      clip:rect(0 0 0 0);
+      white-space:nowrap;
+    }
     .roll-owner { display:flex; align-items:center; justify-content:center; gap:6px; width:100%; font-size:12px; color:#cbd5e1; min-width:0; }
     .roll-owner span:last-child { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     .roll-owner img { width:24px; height:24px; border-radius:999px; object-fit:cover; border:1px solid var(--line); flex:0 0 auto; }
@@ -1761,6 +1903,7 @@
       .modal-mask.dice-select-modal .modal-actions { gap:6px; }
       .dice-select-head { grid-template-columns:1fr; }
       .dice-select-result { justify-self:start; }
+      .dice-select-layout { grid-template-columns:1fr; }
       .character-roll-grid { grid-template-columns:repeat(auto-fit,minmax(112px,1fr)); }
     }
     .tool-avatar { width:24px; height:24px; display:inline-grid; place-items:center; border-radius:999px; border:1px solid var(--line); color:#fde68a; }
@@ -2417,6 +2560,30 @@
       box-shadow: 0 0 0 1px rgba(0,0,0,0.18) inset;
     }
     .result-banner { font-size: 1.1rem; font-weight: 700; color: var(--gold); margin: 0.75rem 0 0.35rem; }
+    .result-field-note {
+      margin:8px 0;
+      border:1px solid rgba(96,165,250,0.28);
+      border-radius:8px;
+      background:rgba(30,64,175,0.12);
+      padding:8px 10px;
+      display:grid;
+      gap:4px;
+    }
+    .result-field-note strong { color:#bfdbfe; font-size:12px; }
+    .result-field-note span { color:#e2e8f0; font-size:13px; line-height:1.45; }
+    .result-story-lines { font-size:0.9rem; color:#cbd5e1; line-height:1.55; }
+    .day-flavor-tag {
+      display:inline-flex;
+      margin-bottom:8px;
+      border:1px solid rgba(96,165,250,0.34);
+      border-radius:999px;
+      background:rgba(30,64,175,0.16);
+      color:#bfdbfe;
+      padding:2px 8px;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:0.04em;
+    }
     .hidden { display: none !important; }
     .tip-inline { font-size: 0.78rem; color: var(--muted); }
     .next-day-fab {
@@ -3012,7 +3179,7 @@
           <strong id="weekLabel"></strong>
           <span id="dayLabel" style="color: var(--muted); font-size: 0.85rem;"></span>
         </div>
-        <button type="button" id="btnBackToGlobal" class="nm-sec nav-return-button hidden" title="返回世界取材地图">← 返回世界探索层</button>
+        <button type="button" id="btnBackToGlobal" class="nm-sec nav-return-button hidden" title="返回美国取材地图">← 返回美国取材地图</button>
       </div>
       <div id="view-weekStart" class="panel hidden"></div>
       <div id="view-global" class="panel hidden"></div>
@@ -3091,7 +3258,7 @@
         </div>
         <div class="modal-body">
           <p style="margin:0 0 0.55rem;font-size:0.88rem;color:var(--muted);line-height:1.55;">
-            与正式全链条<strong>第一周组版</strong>所用演示相同：<strong>左侧故事库卡片</strong> + <strong>拟物增强报纸头版槽位</strong>；<strong>效果 B</strong>（来源高亮 + 插值飞入）；<strong>每次播完间隔 1 秒自动重播</strong>。也可点「重播」立即重来；正式流程中可在组版工具栏点「报刊填入演示」再次打开。
+            与正式全链条<strong>第一周组版</strong>所用演示相同：<strong>左侧故事库卡片</strong> + <strong>拟物增强报纸头版槽位</strong>；<strong>效果 B</strong>（来源高亮 + 插值飞入）；<strong>每次播完间隔 1 秒自动重播</strong>。也可点「重播」立即重来。
           </p>
           <div class="paper-demo-stage paper-demo-stage-real" id="paperDemoStage">
             <div class="paper-demo-real-row">
@@ -3251,17 +3418,7 @@
       <div class="nm-grid">
         <section class="nm-card">
           <h2>1) 本期故事库</h2>
-          <div class="row">
-            <button type="button" class="nm-btn" id="regenBtn">重新生成故事库</button>
-            <label>数量
-              <select id="storyCount">
-                <option value="8">8</option>
-                <option value="10" selected>10</option>
-                <option value="12">12</option>
-              </select>
-            </label>
-          </div>
-          <p class="tip-inline">探索稿带「探索稿」标签；不足条数用随机都市报道补足（与原型一致）。</p>
+          <p class="tip-inline">本周探索稿自动汇入；不足版面内容由城市报道补足。</p>
           <div class="nm-stories" id="storyList"></div>
         </section>
         <section class="nm-card">
@@ -3269,10 +3426,7 @@
           <div class="nm-slot-grid" id="slotList"></div>
           <div class="nm-divider"></div>
           <div class="row">
-            <button type="button" class="nm-sec" id="btnPaperDemoLab" style="display:none">报刊填入演示</button>
             <button type="button" class="nm-sec" id="clearBtn">清空版面</button>
-            <button type="button" class="nm-sec" id="paperModeToggle">切换版面模式</button>
-            <button type="button" class="nm-sec" id="paperVisualToggle">拟物增强：关</button>
             <button type="button" class="nm-btn" id="settleBtn">结算本期</button>
           </div>
         </section>
@@ -3505,7 +3659,7 @@
       <h4 class="tutorial-soft-h4">关窗后会发生什么？</h4>
       <ul class="tutorial-soft-ul">
         <li>会自动播放一则<strong>填入动画示例</strong>（稿件飞入头版，可循环）。</li>
-        <li>需要重温时，在工具栏打开「<strong>报刊填入演示</strong>」。</li>
+        <li>演示弹窗内可点<strong>重播</strong>立即重看；关闭后继续手动摆版。</li>
       </ul>
       <p class="tutorial-soft-note">本提示在刷新页面前只出现一次。</p>
     </div>`,
@@ -3952,14 +4106,12 @@
           <h4 class="tutorial-soft-h4">收尾</h4>
           <ul class="tutorial-soft-ul">
             <li>版式满意后点<strong>结算本期</strong>，查看销量与利润。</li>
-            <li>关窗后会播<strong>填入演示</strong>（可循环）；也可点「报刊填入演示」重温。</li>
+            <li>确认后直接开始摆版；需要重来时可用<strong>清空版面</strong>。</li>
           </ul>
           <p class="tutorial-soft-note">本周内本提示只出现一次。</p>
         </div>`,
       ],
     );
-    if (!week1TutorialActive() || state.phase !== "editorial" || state.paperLabMode) return;
-    openPaperDemoLab();
   }
 
   async function runWeek1SynthesisOnboarding() {
@@ -6388,7 +6540,7 @@
       ["电台播报的声音忽远忽近。", "你听到其中夹着一句不属于任何语言的低语。"],
       ["编辑部的灯闪了两下。", "每个人都下意识看向地图。"],
       ["邮筒里多了一封没有寄件人的信。", "你拆开，里面只有一小片金属。"],
-      ["街角的猫盯着你看。", "它眨了眨眼，像是在确认某个答案。"],
+      ["街角橱窗里的电视忽然无声闪烁。", "画面停在一张你还没派人拍过的街口。"],
     ];
     const pick = pool[Math.floor(Math.random() * pool.length)];
     return `<p style="margin:0 0 0.35rem;">${escapeHtml(pick[0])}</p><p style="margin:0;color:#94a3b8;">${escapeHtml(pick[1])}</p>`;
@@ -7320,7 +7472,7 @@
 
   function buildEditorialPool() {
     const craftedBase = (state.pendingReports && state.pendingReports.length) ? state.pendingReports : [];
-    const target = Math.max(Number(document.getElementById("storyCount").value), craftedBase.length || state.pendingClues.length);
+    const target = Math.max(10, craftedBase.length || state.pendingClues.length);
     let cur = state.nextStoryId;
     const exploreStories = craftedBase.length
       ? craftedBase.map((r) => ({ ...r, id: cur++ }))
@@ -7347,15 +7499,9 @@
     el.toast = document.getElementById("toast");
     renderStories();
     renderSlots();
-    updatePaperModeButton();
     renderLiveStats();
     el.resultBox.innerHTML = `<div class="k">尚未结算</div><div class="nm-tip">拖拽报道到版位，再点「结算本期」。</div>`;
     log("进入编辑部：拖拽组版，与 design/gdd/editorial-layout-and-publishing-strategy.md 和 design/gdd/issue-settlement-and-audience-feedback.md 对齐。");
-    const btnDemo = document.getElementById("btnPaperDemoLab");
-    if (btnDemo) {
-      btnDemo.style.display = state.paperLabMode || state.week === 1 ? "inline-block" : "none";
-      btnDemo.onclick = () => openPaperDemoLab();
-    }
     if (week1TutorialActive() && !state.paperLabMode) {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
@@ -7761,27 +7907,6 @@
     });
   }
 
-  function updatePaperModeButton() {
-    const btn = document.getElementById("paperModeToggle");
-    const visualBtn = document.getElementById("paperVisualToggle");
-    if (!btn) return;
-    if (!state.paperLabMode) {
-      btn.style.display = "none";
-      if (visualBtn) visualBtn.style.display = "none";
-      return;
-    }
-    btn.style.display = "";
-    if (visualBtn) visualBtn.style.display = "";
-    btn.textContent = state.paperLayoutMode === "fixed" ? "切换为流式版面" : "切换为定高版面";
-    btn.title = state.paperLayoutMode === "fixed"
-      ? "当前：定高（保持报纸形状）"
-      : "当前：流式（随内容拉伸）";
-    if (visualBtn) {
-      visualBtn.textContent = state.paperVisualMode === "enhanced" ? "拟物增强：开" : "拟物增强：关";
-      visualBtn.title = state.paperVisualMode === "enhanced" ? "当前：拟物增强模式" : "当前：正常模式";
-    }
-  }
-
   function renderLiveStats() {
     const r = calculate(false);
     const placed = getAllPlaced();
@@ -7871,40 +7996,13 @@
   }
 
   function bindEditorialUi() {
-    document.getElementById("regenBtn").onclick = () => {
-      buildEditorialPool();
-      renderStories();
-      renderSlots();
-      renderLiveStats();
-    };
-    document.getElementById("storyCount").onchange = () => {
-      buildEditorialPool();
-      renderStories();
-      renderSlots();
-      renderLiveStats();
-    };
-    document.getElementById("clearBtn").onclick = () => {
+    const clearBtn = document.getElementById("clearBtn");
+    if (clearBtn) clearBtn.onclick = () => {
       for (const s of slots) state.placed[s.id] = null;
       renderSlots();
       renderLiveStats();
       el.resultBox.innerHTML = `<div class="k">尚未结算</div><div class="nm-tip">版面已清空。</div>`;
     };
-    const modeBtn = document.getElementById("paperModeToggle");
-    if (modeBtn) {
-      modeBtn.onclick = () => {
-        state.paperLayoutMode = state.paperLayoutMode === "fixed" ? "fluid" : "fixed";
-        renderSlots();
-        updatePaperModeButton();
-      };
-    }
-    const visualBtn = document.getElementById("paperVisualToggle");
-    if (visualBtn) {
-      visualBtn.onclick = () => {
-        state.paperVisualMode = state.paperVisualMode === "enhanced" ? "normal" : "enhanced";
-        renderSlots();
-        updatePaperModeButton();
-      };
-    }
     document.getElementById("settleBtn").onclick = settlePaper;
     document.getElementById("btnNextWeek").onclick = nextWeek;
   }
@@ -8061,6 +8159,6 @@
 })();
 
   </script>
-  <script src="world-mysteries-full-chain.js?v=20260521-world-explore-p0p1"></script>
+  <script src="world-mysteries-full-chain.js?v=20260527-dice-polish-v2"></script>
 </body>
 </html>
