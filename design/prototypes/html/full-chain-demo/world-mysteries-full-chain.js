@@ -19,7 +19,7 @@
     weekEvent: null,
     displayMode: "dice",
     lastCheck: null,
-    phase: "explore",
+    phase: "briefing",
     stories: [],
     placed: {},
     subscribers: 1200,
@@ -83,6 +83,8 @@
     staffDebuffs: {},
     debugShowEventEffects: false,
     weekEventResult: "",
+    weekEventResultLines: [],
+    weekEventChoiceIndex: null,
     regionLeadEvents: {},
     globalSelectedRegionId: "us",
     missionResolving: false,
@@ -95,6 +97,9 @@
     paperLayoutMode: "fixed",
     paperLabMode: false,
     paperVisualMode: "normal",
+    publicationArchive: [],
+    lastPublicationEcho: null,
+    dispatchDecisionExperimentMode: false,
     dispatchOldSetupMode: false,
     /** 第 1 周软引导：已关闭过的 key，本局内不再弹出；新周目从第 1 周开始时随页面或 nextWeek 清空 */
     tutorialSoftW1: {},
@@ -1177,6 +1182,7 @@
   }
 
   function missionMaxStaff(m) {
+    if (m && Number.isFinite(m.maxStaffOverride)) return m.maxStaffOverride;
     return m && m.isBlackDiceTask ? 5 : 3;
   }
 
@@ -2224,11 +2230,17 @@
         type: "passive",
         title: "线人爆料",
         body: "匿名线人送来一份禁区坐标碎片，你的编辑部获得了额外线索。",
+        sourceType: "匿名爆料",
+        sourceLabel: "线人热线",
+        sourceMark: "线",
+        preview: ["地图/素材：获得一条临时线索", "周刊气质：诡名小幅上升"],
+        resultLines: ["获得临时线索「匿名坐标碎片」", "诡名 +1"],
+        confirmText: "收下坐标碎片",
         condition: () => true,
         apply: () => {
           state.clues.push({ title: "匿名坐标碎片 · 临时线索", type: "occult", tier: 1, topicKey: newTopicKey() });
           addMacro({ 诡名: 1 });
-          log("随机事件：获得临时线索「匿名坐标碎片」。");
+          log("本周来件：收下临时线索「匿名坐标碎片」。");
         },
       },
       {
@@ -2236,11 +2248,17 @@
         type: "passive",
         title: "学术资助",
         body: "公信较高引来研究基金，本周调查组状态提升。",
+        sourceType: "财务压力",
+        sourceLabel: "研究基金会",
+        sourceMark: "资",
+        preview: ["宏观：公信与声望趋稳", "员工：老魏本周洞察提升"],
+        resultLines: ["公信 +2，声望 +1", "老魏本周 洞察 +1（临时）"],
+        confirmText: "确认资助安排",
         condition: () => macro.公信 >= 55,
         apply: () => {
           addMacro({ 公信: 2, 声望: 1 });
           addStaffEffect("s2", "洞察", 1, "week", false);
-          log("随机事件：老魏本周 洞察 +1（临时）。");
+          log("本周来件：研究基金通过，老魏本周洞察提升。");
         },
       },
       {
@@ -2248,11 +2266,17 @@
         type: "choice",
         title: "深夜电台异响",
         body: "诡名与狂性持续走高，深夜频道出现疑似“呼唤信号”。你要怎么处理？",
+        sourceType: "异常回响",
+        sourceLabel: "深夜电台",
+        sourceMark: "频",
+        preview: ["编辑方向：是否公开追踪异常信号", "可能影响：宏观倾向、员工状态或临时事件点"],
         condition: () => macro.诡名 >= 45 && macro.狂性 >= 25,
         options: [
           {
             text: "公开追踪信号（激进）",
+            preview: "倾向：话题度与诡名显著升温；风险：公信承压，并追加临时事件点。",
             desc: "诡名 +4，公信 -2，追加一条临时 occult 事件点",
+            resultLines: ["诡名 +4，公信 -2", "美国取材地图追加「深夜电台信号源」临时事件点"],
             apply: () => {
               addMacro({ 诡名: 4, 公信: -2 });
               addDynamicNode("us", {
@@ -2271,7 +2295,9 @@
           },
           {
             text: "秘密监听（稳妥）",
+            preview: "倾向：保留神秘度，同时稳住公信；老魏本周更适合做理性研判。",
             desc: "公信 +1，诡名 +1，调查·老魏本周 理性 +1",
+            resultLines: ["公信 +1，诡名 +1", "老魏本周 理性 +1（临时）"],
             apply: () => {
               addMacro({ 公信: 1, 诡名: 1 });
               addStaffEffect("s2", "理性", 1, "week", false);
@@ -2279,7 +2305,9 @@
           },
           {
             text: "切断频道（保守）",
+            preview: "倾向：守序回升、狂性下降；代价：放弃一次潜在线索机会。",
             desc: "守序 +2，狂性 -1，失去一次潜在线索机会",
+            resultLines: ["守序 +2，狂性 -1", "放弃本次潜在线索机会"],
             apply: () => {
               addMacro({ 守序: 2, 狂性: -1 });
             },
@@ -2291,11 +2319,17 @@
         type: "choice",
         title: "市政协作提案",
         body: "你收到一份跨部门调查提案，可借此扩展行动能力。",
+        sourceType: "势力函件",
+        sourceLabel: "市政厅函件",
+        sourceMark: "函",
+        preview: ["编辑方向：是否与官方机构绑定", "可能影响：公信、声望、临时科学线索或地图节点"],
         condition: () => macro.守序 >= 55 || macro.公信 >= 60,
         options: [
           {
             text: "签署官方协作",
+            preview: "倾向：公信与声望明显上升；地图会出现官方协作带来的科学节点。",
             desc: "公信 +3，声望 +2，新增西部档案临时科学节点",
+            resultLines: ["公信 +3，声望 +2", "西部档案追加「内华达监听站异常」临时科学节点"],
             apply: () => {
               addMacro({ 公信: 3, 声望: 2 });
               addDynamicNode("western_archives", {
@@ -2314,7 +2348,9 @@
           },
           {
             text: "只拿设备不公开站队",
+            preview: "倾向：获得科技线临时线索，不公开站队；诡名略有上升。",
             desc: "获得临时科技线索，诡名 +1",
+            resultLines: ["获得临时线索「协作设备清单」", "诡名 +1"],
             apply: () => {
               state.clues.push({ title: "协作设备清单 · 临时线索", type: "sci", tier: 1, topicKey: newTopicKey() });
               addMacro({ 诡名: 1 });
@@ -2322,7 +2358,9 @@
           },
           {
             text: "拒绝提案",
+            preview: "倾向：维持编辑部独立性与守序；风险：声望小幅下降。",
             desc: "守序 +1，声望 -1",
+            resultLines: ["守序 +1", "声望 -1"],
             apply: () => addMacro({ 守序: 1, 声望: -1 }),
           },
         ],
@@ -2332,11 +2370,17 @@
         type: "choice",
         title: "读者来信潮",
         body: "一批读者要求“更刺激”或“更严谨”的内容，你需要选择编辑方向。",
+        sourceType: "读者来信",
+        sourceLabel: "读者邮袋",
+        sourceMark: "信",
+        preview: ["编辑方向：在猎奇热度与纪实可信之间取舍", "可能影响：五维属性、员工成长或临时投稿线索"],
         condition: () => true,
         options: [
           {
             text: "迎合热点",
+            preview: "倾向：诡名与声望更容易出圈；实习生会获得长期探索成长。",
             desc: "诡名 +2，声望 +1，实习生·小赵 探索 +1（永久）",
+            resultLines: ["诡名 +2，声望 +1", "小赵 探索 +1（永久）"],
             apply: () => {
               addMacro({ 诡名: 2, 声望: 1 });
               addStaffEffect("s4", "探索", 1, "permanent", true);
@@ -2344,7 +2388,9 @@
           },
           {
             text: "坚持纪实",
+            preview: "倾向：公信和守序更稳；神秘线编辑本周会受到一点压制。",
             desc: "公信 +2，守序 +1，神秘版·伊芙 诡思 -1（本周）",
+            resultLines: ["公信 +2，守序 +1", "伊芙本周 诡思 -1（临时）"],
             apply: () => {
               addMacro({ 公信: 2, 守序: 1 });
               addStaffEffect("s3", "诡思", -1, "week", false);
@@ -2352,7 +2398,9 @@
           },
           {
             text: "平衡两端",
+            preview: "倾向：公信与诡名同步小幅上升，并获得一条可转化的投稿线索。",
             desc: "公信 +1，诡名 +1，获得临时情报线索",
+            resultLines: ["公信 +1，诡名 +1", "获得临时线索「读者投稿拼图」"],
             apply: () => {
               addMacro({ 公信: 1, 诡名: 1 });
               state.clues.push({ title: "读者投稿拼图 · 临时线索", type: "pop", tier: 1, topicKey: newTopicKey() });
@@ -2371,11 +2419,65 @@
     return rand(available.length ? available : pool);
   }
 
+  function isWeekEventDebugMode() {
+    try {
+      const p = new URLSearchParams(window.location.search || "");
+      return p.get("debug") === "1" || p.get("debugWeekEvent") === "1";
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function weekEventLines(lines, fallback) {
+    const list = Array.isArray(lines) ? lines.filter(Boolean) : [];
+    if (list.length) return list;
+    return fallback ? [fallback] : [];
+  }
+
+  function renderWeekEventImpact(event) {
+    const resolved = state.weekEventResolved;
+    const title = resolved ? "已生效" : "可能影响";
+    const lines = resolved
+      ? weekEventLines(state.weekEventResultLines, state.weekEventResult || "本周来件已处理。")
+      : weekEventLines(event.preview, "处理后会显示精确变化。");
+    return `
+      <aside class="briefing-impact ${resolved ? "is-resolved" : ""}">
+        <div class="briefing-impact-title">${title}</div>
+        <ul class="briefing-impact-list">
+          ${lines.map((line) => `<li>${escapeHtml(line)}</li>`).join("")}
+        </ul>
+      </aside>`;
+  }
+
+  function renderWeekEventChoices(event, showExactEffects) {
+    const options = event.options || [];
+    return `
+      <div class="briefing-choice-list" aria-label="本周来件处理方案">
+        ${options.map((op, idx) => {
+          const selected = state.weekEventChoiceIndex === idx;
+          const exactText = weekEventLines(op.resultLines, op.desc || "该选择已生效。").join("；");
+          const previewText = showExactEffects ? exactText : (op.preview || "会改变本周资源与编辑倾向。");
+          const detailText = state.weekEventResolved && selected ? exactText : previewText;
+          const stateText = state.weekEventResolved ? (selected ? "已选择" : "未采用") : `方案 ${idx + 1}`;
+          return `
+            <div class="briefing-choice ${selected ? "is-selected" : ""} ${state.weekEventResolved && !selected ? "is-muted" : ""}">
+              <button type="button" data-evt-op="${idx}" ${state.weekEventResolved ? "disabled" : ""}>${escapeHtml(op.text)}</button>
+              <div class="briefing-choice-copy">
+                <strong>${escapeHtml(stateText)}</strong>
+                <span>${escapeHtml(detailText)}</span>
+              </div>
+            </div>`;
+        }).join("")}
+      </div>`;
+  }
+
   function applyWeekEventDefault() {
     if (!state.weekEvent || state.weekEventResolved) return;
     if (state.weekEvent.type === "passive" && typeof state.weekEvent.apply === "function") {
       state.weekEvent.apply();
-      state.weekEventResult = "默认事件已生效。";
+      state.weekEventResultLines = weekEventLines(state.weekEvent.resultLines, "本周来件已生效。");
+      state.weekEventResult = state.weekEventResultLines.join("；");
+      state.weekEventChoiceIndex = null;
       state.weekEventResolved = true;
       renderMacro();
     }
@@ -2386,9 +2488,11 @@
     const op = state.weekEvent.options?.[index];
     if (!op) return;
     if (typeof op.apply === "function") op.apply();
-    state.weekEventResult = op.desc || "该选择已生效。";
+    state.weekEventResultLines = weekEventLines(op.resultLines, op.desc || "该选择已生效。");
+    state.weekEventResult = state.weekEventResultLines.join("；");
+    state.weekEventChoiceIndex = index;
     state.weekEventResolved = true;
-    log(`随机事件选择：${state.weekEvent.title} -> ${op.text}`);
+    log(`编辑部决定：${state.weekEvent.title} -> ${op.text}`);
     renderMacro();
   }
 
@@ -2481,7 +2585,7 @@
 
   function missionStory(m) {
     if (!m || !m.id) return null;
-    return MISSION_STORIES[m.id] || null;
+    return MISSION_STORIES[m.id] || m.story || null;
   }
 
   function missionStoryBriefHtml(m) {
@@ -2749,36 +2853,49 @@
 
   function renderWeekStart() {
     if (!state.weekEvent) state.weekEvent = pickWeekEvent();
+    state.phase = "briefing";
     const elW = document.getElementById("view-weekStart");
+    const debugMode = isWeekEventDebugMode();
+    const showExactEffects = debugMode && state.debugShowEventEffects;
     const introBrief = state.week === 1
-      ? `<div class="prob-box" style="border-color:#d4a853;">
+      ? `<div class="briefing-intro">
           <strong>新任主编上任</strong><br/>
           你通过面试，直接成为《世界未解之谜周刊》的主编。杂志社快垮了，债主每天催债；本周再找不出有吸引力的故事报道，编辑部就要散伙。
         </div>`
       : "";
     const eventBlock = state.weekEvent.type === "choice"
-      ? `<div class="prob-box">
-          <div style="margin-bottom:0.35rem;"><strong>请选择处理方案：</strong></div>
-          ${(state.weekEvent.options || []).map((op, idx) => `
-            <div style="margin:0.35rem 0;display:flex;gap:8px;align-items:flex-start;">
-              <button type="button" data-evt-op="${idx}" ${state.weekEventResolved ? "disabled" : ""}>${escapeHtml(op.text)}</button>
-              <span class="tip-inline">${state.debugShowEventEffects ? escapeHtml(op.desc || "") : "后果未知"}</span>
-            </div>`).join("")}
-         </div>`
-      : `<div class="prob-box">${state.weekEventResolved ? "事件已处理。" : "默认事件：点击确认后生效。"} </div>`;
-    const resultBlock = state.weekEventResolved && state.weekEventResult
-      ? `<div class="prob-box" style="margin-top:0.45rem;border-color:#1d4ed8;">结果：${escapeHtml(state.weekEventResult)}</div>`
+      ? renderWeekEventChoices(state.weekEvent, showExactEffects)
+      : `<div class="briefing-passive-note">${state.weekEventResolved ? "本周来件已经处理，结果已写入右侧影响栏。" : "这是一条自动生效类来件，确认后会写入本周状态。"}</div>`;
+    const debugBlock = debugMode
+      ? `<label class="evt-debug briefing-debug"><input type="checkbox" id="evtDebugToggle" ${state.debugShowEventEffects ? "checked" : ""}/> 调试：显示精确选项后果</label>`
       : "";
+    const actionBlock = state.weekEventResolved
+      ? `<button type="button" class="primary briefing-primary" id="btnEnterGlobal">进入本周取材地图</button>`
+      : state.weekEvent.type === "passive"
+        ? `<button type="button" class="briefing-primary" id="btnResolveEvent">${escapeHtml(state.weekEvent.confirmText || "确认本周来件")}</button>`
+        : `<div class="briefing-action-note">先选择一个编辑方向，处理后进入取材地图。</div>`;
     elW.innerHTML = `
-      <h2>回合起始</h2>
-      ${introBrief}
-      <p><strong>${escapeHtml(state.weekEvent.title)}</strong></p>
-      <p style="color:var(--muted);font-size:0.9rem;">${escapeHtml(state.weekEvent.body)}</p>
-      <label class="evt-debug"><input type="checkbox" id="evtDebugToggle" ${state.debugShowEventEffects ? "checked" : ""}/> 调试：显示全部选项后果</label>
-      ${eventBlock}
-      ${resultBlock}
-      ${state.weekEvent.type === "passive" ? `<button type="button" id="btnResolveEvent" ${state.weekEventResolved ? "disabled" : ""}>确认事件</button>` : ""}
-      <button type="button" class="primary" id="btnEnterGlobal">进入美国取材地图</button>`;
+      <div class="briefing-head">
+        <span>WEEK BRIEFING</span>
+        <h2>第 ${state.week} 周 · 本周编辑部简报</h2>
+        <p>先处理本周来件，再进入取材地图安排调查。</p>
+      </div>
+      <div class="briefing-grid">
+        <aside class="briefing-source">
+          <div class="briefing-source-mark" aria-hidden="true">${escapeHtml(state.weekEvent.sourceMark || "件")}</div>
+          <div class="briefing-source-type">${escapeHtml(state.weekEvent.sourceType || "本周来件")}</div>
+          <div class="briefing-source-label">${escapeHtml(state.weekEvent.sourceLabel || "编辑部")}</div>
+        </aside>
+        <section class="briefing-main">
+          ${introBrief}
+          <div class="briefing-event-title">${escapeHtml(state.weekEvent.title)}</div>
+          <p class="briefing-event-body">${escapeHtml(state.weekEvent.body)}</p>
+          ${eventBlock}
+          <div class="briefing-actions">${actionBlock}</div>
+        </section>
+        ${renderWeekEventImpact(state.weekEvent)}
+      </div>
+      ${debugBlock}`;
     const dbg = document.getElementById("evtDebugToggle");
     if (dbg) {
       dbg.onchange = () => {
@@ -2800,27 +2917,29 @@
         };
       });
     }
-    document.getElementById("btnEnterGlobal").onclick = () => {
+    const enterGlobal = document.getElementById("btnEnterGlobal");
+    if (enterGlobal) enterGlobal.onclick = () => {
+      state.phase = "explore";
       setView("global");
       renderGlobal();
     };
     setView("weekStart");
     scheduleWeek1SoftTutorial(
       "w1_weekStart",
-      "第一周 · 编辑部札记",
+      "第一周 · 本周编辑部简报",
       [
         `<div class="tutorial-soft-sheet">
           <h4 class="tutorial-soft-h4">本周从哪开始？</h4>
-          <p class="tutorial-soft-lead">新一周从<strong>编辑部札记</strong>开场：这里会出现本周小插曲或突发消息。</p>
+          <p class="tutorial-soft-lead">新一周从<strong>编辑部简报</strong>开场：这里会出现读者来信、线人爆料或势力函件。</p>
           <ul class="tutorial-soft-ul">
             <li>读完标题与正文，按界面提示处理即可。</li>
-            <li>有时只需确认；有时要在几个走向里<strong>选一条</strong>——<strong>选择可能带来不同后果</strong>。</li>
+            <li>有选项时先看方向预告，再决定本周编辑部的处理口径。</li>
           </ul>
         </div>`,
         `<div class="tutorial-soft-sheet">
           <h4 class="tutorial-soft-h4">接下来去哪？</h4>
           <ul class="tutorial-soft-ul">
-            <li>处理完札记后，点<strong>进入美国取材地图</strong>，去各地取材。</li>
+            <li>处理完简报后，点<strong>进入本周取材地图</strong>，去各地取材。</li>
           </ul>
           <p class="tutorial-soft-note">点「知道了」或空白处可关窗；本周内同类提示不再弹出，新周目第一周会再出现。</p>
         </div>`,
@@ -2986,7 +3105,7 @@
       <div class="global-intel-list">${shown || `<div class="tip-inline">暂无可见情报。</div>`}</div>
       ${more ? `<div class="tip-inline">另有 ${more} 项情报将在地区页展开。</div>` : ""}
       <details class="global-action-log">
-        <summary><span>本周行动日志</span><span>展开</span></summary>
+        <summary><span>本周记录</span><span>展开</span></summary>
         <ul>${(logItems.length ? logItems : ["本区暂无新日志，进入地区后开始派遣。"]).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
       </details>
     </section>`;
@@ -3813,7 +3932,7 @@
       .map((n) => {
         const match = filterNodeTags(n);
         const hiddenCls = n.kind === "hidden" ? "hidden-node" : "";
-        const pos = nodePos[n.id] || { x: 20 + Math.random() * 60, y: 20 + Math.random() * 60 };
+        const pos = n.mapPos || nodePos[n.id] || { x: 20 + Math.random() * 60, y: 20 + Math.random() * 60 };
         const diff = n.difficulty || "normal";
         const diffZh = diff === "easy" ? "简单" : diff === "hard" ? "困难" : "普通";
         const urgent = n.kind === "temp" || /突发/.test(n.name) || n.checkType === "red";
@@ -4300,12 +4419,12 @@
     const need = (m && m.need) || {};
     const keys = Object.keys(need);
     if (!keys.length) return `<div class="tip-inline">本任务没有明确需求。</div>`;
-    const target = stats.targetValue || needTargetValue(need);
-    const potential = stats.potentialValue || keys.reduce((sum, k) => sum + (stats.values[k] || 0), 0);
-    const targetPct = target ? Math.max(0, Math.min(100, Math.round((potential / target) * 100))) : 100;
+    const target = stats.needValue || keys.reduce((sum, k) => sum + (need[k] || 0), 0);
+    const covered = stats.coveredValue || keys.reduce((sum, k) => sum + Math.min(stats.values[k] || 0, need[k] || 0), 0);
+    const targetPct = target ? Math.max(0, Math.min(100, Math.round((covered / target) * 100))) : 100;
     const targetRow = `<div class="dispatch-need-summary">
-      <div class="dispatch-need-row ${potential >= target ? "is-met" : ""}" style="margin-bottom:0;">
-        <div class="dispatch-need-line"><strong>判定目标：有效点 ${escapeHtml(potential)} / ${escapeHtml(target)}</strong><span>实掷达标率 ${escapeHtml(formatChance(stats.successChance))}</span></div>
+      <div class="dispatch-need-row ${covered >= target ? "is-met" : ""}" style="margin-bottom:0;">
+        <div class="dispatch-need-line"><strong>需求覆盖：${escapeHtml(covered)} / ${escapeHtml(target)}</strong><span>实掷达标率 ${escapeHtml(formatChance(stats.successChance))}</span></div>
         <div class="dispatch-meter"><span style="width:${targetPct}%"></span></div>
       </div>
     </div>`;
@@ -4409,6 +4528,215 @@
     </aside>`;
   }
 
+  function dispatchDecisionGapText(stats) {
+    if (!stats || !stats.needKeys || !stats.needKeys.length) return "本任务没有明确需求。";
+    if (!stats.gaps || !stats.gaps.length) {
+      return `需求面值已覆盖；覆盖 ${stats.coveredValue || 0}/${stats.needValue || 0}。`;
+    }
+    return `还差 ${stats.gaps.map((x) => `${x.k}${x.gap}`).join(" / ")}；覆盖 ${stats.coveredValue || 0}/${stats.needValue || 0}。`;
+  }
+
+  function dispatchDecisionReason(stats, selectedCount) {
+    if (!selectedCount) return "先选至少 1 名角色，系统会显示本次是否能达标。";
+    if (!stats || !stats.relevantFaces) return "当前骰池没有可用需求面，建议换人或补道具骰。";
+    const chanceText = `实掷达标率约 ${formatChance(stats.successChance)}`;
+    const gapText = dispatchDecisionGapText(stats);
+    const lift = selectedCount > 1 ? formatDisplayedChanceLift(stats.successChance || 0, stats.bestSingleStaffChance || 0) : "";
+    const liftText = lift ? `；较单人最佳 ${lift}` : "";
+    const idleText = stats.nonContributingStaff ? `；${stats.nonContributingStaff} 名角色没有补到缺口` : "";
+    return `${chanceText}；${gapText}${liftText}${idleText}`;
+  }
+
+  function dispatchDecisionSuccessText(m) {
+    const story = missionStory(m);
+    const copy = missionOutcomeCopy(m, "大成功") || missionOutcomeCopy(m, "小成功") || missionOutcomeCopy(m, "成功") || missionOutcomeCopy(m, "success_cost");
+    if (copy && copy.clueTitle) return `拿到「${copy.clueTitle}」，进入本周线索池。`;
+    if (story && story.objective) return `完成目标：${story.objective}`;
+    if (m && m.chainType === "deep") return "推进深度链下一阶段，并带回可成稿素材。";
+    return "带回可合成报道的现场素材。";
+  }
+
+  function dispatchDecisionFailureText(m) {
+    const copy = missionOutcomeCopy(m, "失败") || missionOutcomeCopy(m, "fail_clue") || missionOutcomeCopy(m, "crit_fail");
+    if (copy && copy.clueTitle) return `保留弱线索「${copy.clueTitle}」，但质量会下降。`;
+    if ((m && m.checkType) === "red") return "截稿窗口会关闭；失败也会留下可疑碎片。";
+    if (m && (m.riskTier === "high" || m.isHighRisk)) return "队伍可能受损，只留下不完整素材。";
+    return "失败不会封死题材，但会消耗本周时间。";
+  }
+
+  function dispatchDecisionVerdictLabel(risk, selectedCount) {
+    if (!selectedCount) return "先选人，再判断能不能搏";
+    if (risk.label === "可搏") return "可以出发";
+    if (risk.label === "偏险") return "能搏，但缺口仍刺眼";
+    if (risk.label === "高") return "暂不建议出发";
+    return "等待队伍配置";
+  }
+
+  function dispatchDecisionJudgementHtml(m, stats, risk, maxStaff) {
+    const selectedCount = state.selectedStaffIds.length;
+    const disabledReason = dispatchLabActionDisabledReason(m);
+    const chance = selectedCount ? formatChance(stats.successChance) : "未评估";
+    const chanceAngle = selectedCount ? Math.round((stats.successChance || 0) * 360) : 0;
+    const buttonText = state.missionResolving
+      ? "执行中..."
+      : disabledReason
+        ? (disabledReason === "先选择至少 1 名角色" ? "先选择角色后开始" : disabledReason)
+        : `${m.missionType === "leadInvestigation" ? "派遣线索调查" : "派遣探索任务"}（${m.days}天后判定）`;
+    const objective = (missionStory(m) && missionStory(m).objective) || missionTypeDesc(m);
+    return `<section class="dispatch-decision-judgement" aria-label="本次派遣判断">
+      <div class="dispatch-decision-head">
+        <div>本次派遣判断</div>
+        <span>已选 ${selectedCount}/${maxStaff} 人 · ${escapeHtml(chance)}</span>
+      </div>
+      <div class="dispatch-decision-verdict">
+        <div class="dispatch-decision-ring" style="--chance-angle:${chanceAngle}deg;">${escapeHtml(chance)}</div>
+        <div>
+          <strong>${escapeHtml(dispatchDecisionVerdictLabel(risk, selectedCount))}</strong>
+          <p>${escapeHtml(dispatchDecisionReason(stats, selectedCount))}</p>
+        </div>
+      </div>
+      <div class="dispatch-decision-facts">
+        <div class="dispatch-decision-fact">
+          <b>要核实什么</b>
+          <span>${escapeHtml(objective)}</span>
+        </div>
+        <div class="dispatch-decision-fact">
+          <b>当前缺口</b>
+          <span>${escapeHtml(dispatchDecisionGapText(stats))}</span>
+        </div>
+        <div class="dispatch-decision-fact is-reward">
+          <b>成功拿到</b>
+          <span>${escapeHtml(dispatchDecisionSuccessText(m))}</span>
+        </div>
+        <div class="dispatch-decision-fact is-risk">
+          <b>失败边界</b>
+          <span>${escapeHtml(dispatchDecisionFailureText(m))}</span>
+        </div>
+      </div>
+      <div class="dispatch-decision-actions">
+        <button type="button" id="btnRun" class="primary" ${disabledReason ? "disabled" : ""}>${escapeHtml(buttonText)}</button>
+        <div class="risk-reason">${disabledReason ? escapeHtml(disabledReason) : "确认后派遣，不自动推进时间。"}</div>
+      </div>
+    </section>`;
+  }
+
+  function dispatchDecisionStaffContributionText(staff, need) {
+    const keys = Object.keys(need || {});
+    if (!keys.length) return "无指定需求";
+    const sums = {};
+    diceFacesForStaff(staff).forEach((face) => {
+      if (!face || !keys.includes(face.attr)) return;
+      sums[face.attr] = (sums[face.attr] || 0) + (face.value || 0);
+    });
+    const parts = keys
+      .filter((key) => sums[key])
+      .map((key) => `${key}${sums[key]}`);
+    return parts.length ? parts.join(" / ") : "未补当前需求";
+  }
+
+  function dispatchDecisionGapFillValue(staff, gaps) {
+    if (!staff || !Array.isArray(gaps) || !gaps.length) return 0;
+    return diceFacesForStaff(staff).reduce((sum, face) => {
+      if (!face) return sum;
+      const gap = gaps.find((x) => x.k === face.attr);
+      if (!gap) return sum;
+      return sum + Math.min(face.value || 0, gap.gap || 0);
+    }, 0);
+  }
+
+  function dispatchDecisionSortedStaff(staffList, m, stats) {
+    const need = (m && m.need) || {};
+    const gaps = stats && stats.gaps && stats.gaps.length
+      ? stats.gaps
+      : Object.keys(need).map((k) => ({ k, gap: need[k] || 0 }));
+    return staffList.slice().sort((a, b) => {
+      const selectedDelta = Number(state.selectedStaffIds.includes(b.id)) - Number(state.selectedStaffIds.includes(a.id));
+      if (selectedDelta !== 0) return selectedDelta;
+      const gapDelta = dispatchDecisionGapFillValue(b, gaps) - dispatchDecisionGapFillValue(a, gaps);
+      if (gapDelta !== 0) return gapDelta;
+      const af = staffFitSummary(a, need);
+      const bf = staffFitSummary(b, need);
+      const valueDelta = (bf.stats.relevantValues || 0) - (af.stats.relevantValues || 0);
+      if (valueDelta !== 0) return valueDelta;
+      return (STAFF_BASE_ORDER.get(a.id) ?? 999) - (STAFF_BASE_ORDER.get(b.id) ?? 999);
+    });
+  }
+
+  function dispatchDecisionRosterHtml(m, stats, maxStaff) {
+    const selectedStaff = (state.selectedStaffIds || []).map(findStaff).filter(Boolean);
+    const selectedCount = selectedStaff.length;
+    const emptyCount = Math.max(0, maxStaff - selectedCount);
+    const visibleEmpty = maxStaff <= 6 ? emptyCount : Math.min(emptyCount, 2);
+    const emptyHtml = Array.from({ length: visibleEmpty }, (_, i) => `<div class="dispatch-roster-chip empty">空位 ${selectedCount + i + 1}/${maxStaff}</div>`).join("");
+    const moreEmpty = emptyCount > visibleEmpty ? `<div class="dispatch-roster-chip empty compact">还可加入 ${emptyCount - visibleEmpty} 人</div>` : "";
+    const staffHtml = selectedStaff.map((staff) => `<div class="dispatch-roster-chip">
+      <img src="${staff.avatar}" alt="${escapeHtml(staff.name)}"/>
+      <div>
+        <strong>${escapeHtml(staff.name)}${staff.temporary ? " · 临时" : ""}</strong>
+        <small>${escapeHtml(dispatchDecisionStaffContributionText(staff, m.need || {}))}</small>
+      </div>
+      <button type="button" class="dispatch-slot-remove" data-remove-selected-staff="${escapeHtml(staff.id)}" title="移出 ${escapeHtml(staff.name)}" aria-label="移出 ${escapeHtml(staff.name)}">×</button>
+    </div>`).join("");
+    const toolHtml = (state.toolDiceInventory || []).map((tool) => {
+      const used = !!tool.used;
+      const selected = state.selectedToolDiceIds.includes(tool.id);
+      return `<button type="button" class="dispatch-resource-card ${selected ? "selected" : ""}" data-tool-dice="${escapeHtml(tool.id)}" ${used ? "disabled" : ""}>
+        <strong>${escapeHtml(tool.name)}</strong>
+        <small>${used ? "已消耗" : "一次性道具 · 不占人数"}</small>
+        ${diceFacesHtml(tool.faces || [], m.need || {}, "pool-dice-faces")}
+      </button>`;
+    }).join("");
+    const gapText = dispatchDecisionGapText(stats);
+    return `<section class="dispatch-decision-roster">
+      <div class="dispatch-lab-panel-title">
+        <span>本次骰池（参判席）</span>
+        <span>已选 ${selectedCount}/${maxStaff} 人 ${capacitySlotsHtml(selectedCount, maxStaff)}</span>
+      </div>
+      <div class="dispatch-roster-summary">
+        <strong>${escapeHtml(selectedCount ? gapText : "先从候选池选择角色。")}</strong>
+        <span>${stats.gaps && stats.gaps.length ? "优先补缺口属性，候选池会同步排序。" : "已达标；继续换人只影响成功率与风险。"}</span>
+      </div>
+      <div class="dispatch-roster-list">${staffHtml || `<div class="dispatch-roster-chip empty">暂无参判角色</div>`}${emptyHtml}${moreEmpty}</div>
+      <div class="dispatch-roster-support">
+        <div class="dispatch-support-head"><span>辅助骰位</span><span class="risk-reason">道具不占人数；雇佣后进候选角色</span></div>
+        <div class="dispatch-roster-tools">
+          ${toolHtml || `<span class="tip-inline">暂无道具骰</span>`}
+          <button type="button" id="btnHireTemp" class="dispatch-resource-card">
+            <strong>${isTempStringerHired() ? "线人已进入候选池" : "雇佣本周临时线人"}</strong>
+            <small>${isTempStringerHired() ? "选择它会占用 1 个角色位" : "$1200 · 加入候选池"}</small>
+          </button>
+        </div>
+      </div>
+    </section>`;
+  }
+
+  function dispatchDecisionCoverageCompactHtml(m, stats, risk) {
+    const need = (m && m.need) || {};
+    const keys = Object.keys(need);
+    const hasGaps = !!(stats && stats.gaps && stats.gaps.length);
+    const status = hasGaps
+      ? `缺口：${stats.gaps.map((x) => `${x.k}${x.gap}`).join(" / ")}`
+      : `已达标：${stats.coveredValue || 0}/${stats.needValue || 0}`;
+    const chips = keys.map((key) => {
+      const value = stats && stats.values ? (stats.values[key] || 0) : 0;
+      const target = need[key] || 0;
+      const met = value >= target;
+      return `<span class="dispatch-coverage-chip ${met ? "is-met" : "is-gap"}">${escapeHtml(key)} ${escapeHtml(value)}/${escapeHtml(target)}</span>`;
+    }).join("");
+    return `<section class="dispatch-coverage-compact ${hasGaps ? "has-gap" : ""}">
+      <div class="dispatch-coverage-compact-head">
+        <span>达标摘要</span>
+        <span class="task-type-chip task-${dispatchRiskChipClass(risk.label)}">风险：${escapeHtml(risk.label)}</span>
+      </div>
+      <strong>${escapeHtml(status)} · ${escapeHtml(formatChance(stats.successChance))}</strong>
+      <div class="dispatch-coverage-chips">${chips}</div>
+      <details class="dispatch-coverage-details">
+        <summary>展开属性明细（${keys.length}项）</summary>
+        ${dispatchLabNeedRowsHtml(m, stats)}
+      </details>
+    </section>`;
+  }
+
   function dispatchLabResourcesHtml(maxStaff) {
     const tempHired = isTempStringerHired();
     const tempCardHtml = tempHired
@@ -4473,7 +4801,7 @@
     });
   }
 
-  function renderSetupLab() {
+  function renderDispatchDecisionSetup() {
     const m = state.mission;
     const elS = document.getElementById("view-setup");
     if (!m) return;
@@ -4487,21 +4815,25 @@
       getAllStaff().filter((p) => !isStaffAssigned(p.id, allowQueueId) || state.selectedStaffIds.includes(p.id)),
       relevantNeed,
     );
-    elS.innerHTML = `<div class="dispatch-lab-shell">
+    const heading = m.missionType === "leadInvestigation" ? "线索调查配置" : "探索配置";
+    elS.innerHTML = `<div class="dispatch-decision-shell">
       <div class="dispatch-lab-top">
         <div>
-          <h2>${m.missionType === "leadInvestigation" ? "线索调查配置" : "探索配置"}</h2>
-          <div class="risk-reason">组本次骰池，覆盖任务需求后开始调查。</div>
+          <h2>${escapeHtml(heading)}</h2>
+          <div class="risk-reason">选择本次骰池，确认达标、后果和时间成本后派遣。</div>
         </div>
       </div>
-      ${dispatchLabTaskSummaryHtml(m)}
-      <div class="dispatch-lab-builder">
-        ${dispatchLabPoolHtml(m, maxStaff)}
-        ${dispatchLabRunBlockHtml(m, stats, risk, maxStaff)}
+      <div class="dispatch-decision-main">
+        ${dispatchDecisionJudgementHtml(m, stats, risk, maxStaff)}
+        ${dispatchLabTaskSummaryHtml(m)}
+      </div>
+      <div class="dispatch-decision-secondary">
+        ${dispatchDecisionRosterHtml(m, stats, maxStaff)}
+        ${dispatchDecisionCoverageCompactHtml(m, stats, risk)}
       </div>
       <section class="dispatch-lab-panel">
         <div class="dispatch-candidate-head">
-          <div class="dispatch-lab-panel-title" style="margin:0;"><span>候选角色</span><span class="risk-reason">选入本次骰池</span></div>
+          <div class="dispatch-lab-panel-title" style="margin:0;"><span>候选角色</span><span class="risk-reason">按本任务适配排序；点击后主判定即时更新</span></div>
           <span class="mode-toggle" id="modeToggle">
             <button type="button" data-mode="dice" class="${state.displayMode === "dice" ? "on" : ""}">骰面</button>
             <button type="button" data-mode="numeric" class="${state.displayMode === "numeric" ? "on" : ""}">汇总</button>
@@ -4563,7 +4895,7 @@
         showStaffDetail(findStaff(btn.getAttribute("data-staff-detail")), relevantNeed);
       };
     });
-    document.getElementById("btnRun").onclick = async () => {
+    document.getElementById("btnRun").onclick = () => {
       if (!state.mission || state.selectedStaffIds.length === 0) return;
       if (state.mission.days > state.day) return;
       if (state.missionResolving) return;
@@ -4604,9 +4936,14 @@
       }
       state.mission = null;
       state.selectedStaffIds = [];
+      state.selectedToolDiceIds = [];
       renderRegion();
       setView("region");
     };
+  }
+
+  function renderSetupLab() {
+    renderDispatchDecisionSetup();
   }
 
   function renderSetup() {
@@ -6299,7 +6636,8 @@
 
   function updateNextDayButton() {
     const floatingNextDay = document.getElementById("btnNextDay");
-    if (floatingNextDay) floatingNextDay.classList.toggle("hidden", state.view === "global" || state.view === "setup" || state.view === "region");
+    const hideFloatingNext = state.view === "weekStart" || state.view === "global" || state.view === "setup" || state.view === "region" || state.view === "result" || state.phase !== "explore";
+    if (floatingNextDay) floatingNextDay.classList.toggle("hidden", hideFloatingNext);
     const backToGlobal = document.getElementById("btnBackToGlobal");
     if (backToGlobal) {
       const canBack = state.phase === "explore" && state.view === "region" && !state.processingDayTick && !state.missionResolving;
@@ -7157,7 +7495,7 @@
     renderSlots();
     renderLiveStats();
     el.resultBox.innerHTML = `<div class="k">尚未结算</div><div class="nm-tip">拖拽报道到版位，再点「结算本期」。</div>`;
-    log("进入编辑部：拖拽组版，与 design/gdd/editorial-layout-and-publishing-strategy.md 和 design/gdd/issue-settlement-and-audience-feedback.md 对齐。");
+    log("进入编辑部：把本周稿件拖入版位，准备结算本期。");
     if (week1TutorialActive() && !state.paperLabMode) {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
@@ -7583,9 +7921,274 @@
       <div class="k">公开取向（预览）</div><div class="v ${peekMult < 1 ? "nm-warn" : "nm-ok"}">${peekMult >= 1 ? "与既往刊登无冲突" : `若本期结算，需求约×${peekMult.toFixed(2)}（深度/专栏取向与既往同题不一致）`}</div>`;
   }
 
+  function compactEchoTitle(title, maxLen) {
+    const text = String(title || "本期头版未定稿");
+    const limit = maxLen || 34;
+    return text.length > limit ? `${text.slice(0, limit)}…` : text;
+  }
+
+  function primaryPublicationPair(placedPairs) {
+    return placedPairs.find((x) => x.slot && x.slot.id === "front-main") || placedPairs[0] || null;
+  }
+
+  function publicationStanceLabel(story, axis) {
+    if (story && story.publicStance === "sci") return "科学纪实 / 交叉证据 / 谨慎追踪";
+    if (story && story.publicStance === "occult") return "神秘玄学 / 异常目击 / 连载追踪";
+    if (story && story.publicStance === "pop") return "世俗流量 / 读者投稿 / 保留质疑";
+    if (axis && axis.dominantType === "公共事务") return "公共事务 / 证据整理 / 谨慎追踪";
+    if (axis && axis.dominantType === "大众关注") return "大众关注 / 城市传闻 / 继续征集";
+    return "异常目击 / 读者投稿 / 谨慎追踪";
+  }
+
+  function publicationEchoProfile(story, axis) {
+    const title = story ? story.title : "本期空版";
+    const haystack = `${title} ${(story && story.tags ? story.tags.join(" ") : "")}`;
+    if (/M330|末班车|调度|车次|站牌|公交/.test(haystack)) {
+      return {
+        key: "bus330",
+        themeTitle: "M330 末班车",
+        stance: "异常目击 / 读者投稿 / 谨慎追踪",
+        reactions: [
+          { label: "读者来信", text: "有人称 2:17 在皇后区也听见同一车铃。" },
+          { label: "公交公司公函", text: "要求撤下未上车乘客名单，并否认调度室仍在使用。", pressure: true },
+          { label: "匿名电话", text: "别再追调度室。电话断线前能听见刷卡声。", pressure: true },
+        ],
+        nodeRegionId: "us",
+        node: {
+          id: `echo_bus330_dispatch_${state.week}`,
+          kind: "temp",
+          name: "皇后区旧调度室 · 读者回响",
+          days: 2,
+          need: { 人脉: 2, 洞察: 2 },
+          tags: ["occult", "pop"],
+          difficulty: "normal",
+          enemyAttr: 2,
+          checkType: "white",
+          deadlineDay: 5,
+          mapPos: { x: 34, y: 54 },
+          story: {
+            brief: "发刊后，三封读者来信把同一个皇后区旧调度室圈了出来，公交公司的公函反而让地址更可疑。",
+            objective: "核实旧调度室是否仍保留 M330 的夜班调度页、乘客名单和刷卡记录。",
+            stakes: "发刊回响节点。它来自读者与机构反应，会在下周地图上保留一个追踪窗口。",
+            fieldIntro: "调度室门口的玻璃贴着停用告示，里面却有一台打卡机还在吐纸。",
+            dice: {
+              rolling: "线人：如果这里真的停用了，为什么昨晚还有人往里面送咖啡？",
+              select: "主编：先找能把来信、名单和调度页接上的证据。",
+            },
+            outcomes: {
+              大成功: { line: "大成功：调度页、刷卡声和读者来信的时间戳完整闭合。", clueTitle: "调度室回响证据", clueDesc: "发刊回响强素材，足以开启下一轮 M330 追踪。" },
+              小成功: { line: "成功：旧车次表拍到了，但名单最后一页被撕走。", clueTitle: "缺页车次表", clueDesc: "可用素材。它把读者来信转成现场证据。" },
+              成功: { line: "成功：旧车次表拍到了，但名单最后一页被撕走。", clueTitle: "缺页车次表", clueDesc: "可用素材。它把读者来信转成现场证据。" },
+              失败: { line: "失败：调度室被清过场，只留下重复打印的 2:17。", clueTitle: "重复打印时间戳", clueDesc: "弱线索。失败仍保留继续追查的口子。" },
+            },
+          },
+        },
+        writebacks: [
+          { label: "新增地图节点", text: "皇后区旧调度室会在下周纽约市地图出现。", writeback: true },
+          { label: "旧线索升温", text: "调度页改动时间被读者来信再次指向。", writeback: true },
+          { label: "档案回写", text: `M330 / 第 ${state.week} 周 / 异常交通。`, writeback: true },
+        ],
+      };
+    }
+    if (/火球|电场|磁化|气象|接地/.test(haystack)) {
+      return {
+        key: "ball_lightning",
+        themeTitle: "布鲁克林厨房火球",
+        stance: "科学纪实 / 异常现象 / 继续复核",
+        reactions: [
+          { label: "住户来信", text: "同一栋楼有三户报告餐具在凌晨自行贴向冰箱门。" },
+          { label: "电力公司回复", text: "否认峰值异常，并要求提供照片原片。", pressure: true },
+          { label: "实验室便签", text: "磁化叉子的残留读数在发刊后又升了一次。" },
+        ],
+        nodeRegionId: "us",
+        node: {
+          id: `echo_ball_lightning_${state.week}`,
+          kind: "temp",
+          name: "布鲁克林电力回访 · 读者回响",
+          days: 2,
+          need: { 理性: 2, 洞察: 2 },
+          tags: ["sci", "occult"],
+          difficulty: "normal",
+          enemyAttr: 2,
+          checkType: "white",
+          deadlineDay: 5,
+          mapPos: { x: 38, y: 29 },
+          story: {
+            brief: "火球报道发出后，读者把同一时间段的电表读数寄到编辑部。",
+            objective: "核对住户读数、电力公司口径和磁化样本。",
+            stakes: "发刊回响节点。读者证据可能把厨房火球推向城市电网。",
+            fieldIntro: "楼道里的灯每隔七秒暗一次，房东说这是老楼毛病。",
+          },
+        },
+        writebacks: [
+          { label: "新增地图节点", text: "布鲁克林电力回访会在下周纽约市地图出现。", writeback: true },
+          { label: "旧线索升温", text: "磁化叉子与电场峰值被重新关联。", writeback: true },
+          { label: "档案回写", text: `厨房火球 / 第 ${state.week} 周 / 城市电网。`, writeback: true },
+        ],
+      };
+    }
+    if (/飞碟|雷达|港务|回波|屋顶|空白/.test(haystack)) {
+      return {
+        key: "radar_echo",
+        themeTitle: "哈德逊异常回波",
+        stance: "公共质询 / 雷达抄本 / 谨慎追踪",
+        reactions: [
+          { label: "船员来信", text: "有人寄来一张航道手绘图，圈出第二个倒影。" },
+          { label: "港务局公函", text: "要求停止引用夜班雷达抄本。", pressure: true },
+          { label: "电台留言", text: "回放被剪掉的三秒里，听众听到同一段低频。" },
+        ],
+        nodeRegionId: "us",
+        node: {
+          id: `echo_radar_echo_${state.week}`,
+          kind: "temp",
+          name: "港务夜班抄本 · 读者回响",
+          days: 2,
+          need: { 人脉: 2, 理性: 2 },
+          tags: ["sci", "pop"],
+          difficulty: "normal",
+          enemyAttr: 2,
+          checkType: "white",
+          deadlineDay: 5,
+          mapPos: { x: 58, y: 50 },
+          story: {
+            brief: "报道发出后，港务局越是否认，越多夜班人员开始匿名递纸条。",
+            objective: "核对雷达抄本、航道图和电台剪辑记录。",
+            stakes: "发刊回响节点。机构压力会把新证人推向地下。",
+            fieldIntro: "值班室窗帘拉得很低，复印机旁边放着一张没有署名的航道图。",
+          },
+        },
+        writebacks: [
+          { label: "新增地图节点", text: "港务夜班抄本会在下周纽约市地图出现。", writeback: true },
+          { label: "旧线索升温", text: "第二倒影证词与低频空白重新连到一起。", writeback: true },
+          { label: "档案回写", text: `哈德逊回波 / 第 ${state.week} 周 / 港务记录。`, writeback: true },
+        ],
+      };
+    }
+    const dominant = axis && axis.dominantType ? axis.dominantType : "城市传闻";
+    return {
+      key: `generic_${story ? story.id : "empty"}`,
+      themeTitle: "城市回响",
+      stance: publicationStanceLabel(story, axis),
+      reactions: [
+        { label: "读者来信", text: `三位读者把「${compactEchoTitle(title, 18)}」里同一处地名圈出来，要求继续追踪。` },
+        { label: dominant === "公共事务" ? "市政厅回函" : "发行站反馈", text: dominant === "公共事务" ? "要求周刊补充证据来源，并暗示会约谈相关受访者。" : "报摊老板称这篇稿让旧线索重新被读者点名。", pressure: dominant === "公共事务" },
+        { label: "匿名便条", text: "别只看稿子里写出的部分，去找被删掉的那一行。" },
+      ],
+      nodeRegionId: "us",
+      node: {
+        id: `echo_reader_followup_${state.week}`,
+        kind: "temp",
+        name: "读者回响追踪 · 本期头版",
+        days: 2,
+        need: { 人脉: 2, 洞察: 2 },
+        tags: story && story.tags && story.tags.includes("Politics") ? ["sci", "pop"] : ["pop", "occult"],
+        difficulty: "normal",
+        enemyAttr: 2,
+        checkType: "white",
+        deadlineDay: 5,
+        mapPos: { x: 24, y: 48 },
+        story: {
+          brief: "本期发出后，读者、报摊和匿名便条把同一个未追完的问题推回编辑部。",
+          objective: "确认回响来自真实世界对象，还是被人借周刊版面投喂的新诱饵。",
+          stakes: "发刊回响节点。它把结算结果转成下周可追踪入口。",
+          fieldIntro: "编辑部门缝里塞着一只厚信封，里面只有一张被红笔圈过的报纸。",
+        },
+      },
+      writebacks: [
+        { label: "新增地图节点", text: "读者回响追踪会在下周纽约市地图出现。", writeback: true },
+        { label: "旧线索升温", text: `「${compactEchoTitle(title, 18)}」的未解释对象被重新标记。`, writeback: true },
+        { label: "档案回写", text: `本期头版 / 第 ${state.week} 周 / ${dominant}。`, writeback: true },
+      ],
+    };
+  }
+
+  function registerPublicationEcho(echo) {
+    if (!echo) return;
+    if (echo.node && echo.nodeRegionId) {
+      const exists = state.dynamicNodes.some((x) => x.node && x.node.id === echo.node.id);
+      if (!exists && !state.completedMissionIds[echo.node.id]) addDynamicNode(echo.nodeRegionId, echo.node, 2);
+    }
+    state.lastPublicationEcho = echo;
+    state.publicationArchive.push({
+      week: state.week,
+      title: echo.headline || "",
+      stance: echo.stance || "",
+      writebacks: (echo.writebacks || []).map((x) => x.text),
+    });
+  }
+
+  function renderPublicationEchoItem(item) {
+    const cls = item.writeback ? " is-writeback" : item.pressure ? " is-pressure" : "";
+    return `<div class="publication-echo-item${cls}">
+      <strong>${escapeHtml(item.label)}</strong>
+      <span>${escapeHtml(item.text)}</span>
+    </div>`;
+  }
+
+  function buildPublicationEcho(r, placedPairs, axis) {
+    const primaryPair = primaryPublicationPair(placedPairs);
+    const primaryStory = primaryPair && primaryPair.story;
+    const profile = publicationEchoProfile(primaryStory, axis);
+    const headline = primaryStory ? primaryStory.title : "本期头版空缺：读者只记住了空白";
+    const stance = profile.stance || publicationStanceLabel(primaryStory, axis);
+    const issueMeta = `第 ${state.week} 周 · 上版 ${placedPairs.length}/${slots.length} 篇`;
+    const tags = primaryStory && primaryStory.tags && primaryStory.tags.length
+      ? primaryStory.tags.map(toZhTag).join(" / ")
+      : "无主标签";
+    const echo = {
+      ...profile,
+      headline,
+      stance,
+      issueMeta,
+      slotLabel: primaryPair && primaryPair.slot ? primaryPair.slot.name : "头版",
+      tags,
+      stats: [
+        { label: "销量", value: `${r.sold.toLocaleString("zh-CN")} 份` },
+        { label: "订阅", value: r.nextSubs.toLocaleString("zh-CN") },
+        { label: "净利润", value: fmtMoney(r.profit), tone: r.profit >= 0 ? "good" : "bad" },
+      ],
+    };
+    registerPublicationEcho(echo);
+    return echo;
+  }
+
+  function renderPublicationEcho(echo) {
+    const titleEl = document.getElementById("summaryTitle");
+    if (titleEl) {
+      const baseTitle = echo.themeTitle || "本期头版";
+      titleEl.textContent = baseTitle.endsWith("回响") ? baseTitle : `${baseTitle}回响`;
+    }
+    const metaEl = document.getElementById("summaryIssueMeta");
+    if (metaEl) metaEl.textContent = echo.issueMeta;
+    const statHtml = (echo.stats || []).map((s) => `<div class="publication-echo-stat">
+      <span>${escapeHtml(s.label)}</span>
+      <strong class="${s.tone === "good" ? "nm-ok" : s.tone === "bad" ? "nm-bad" : ""}">${escapeHtml(s.value)}</strong>
+    </div>`).join("");
+    return `
+      <section class="publication-echo-col">
+        <h3>本期刊出了什么</h3>
+        <div class="publication-echo-headline">
+          <span>${escapeHtml(echo.slotLabel || "头版")}</span>
+          <strong>《${escapeHtml(echo.headline)}》</strong>
+        </div>
+        <div class="publication-echo-copy">公开口径：${escapeHtml(echo.stance)}</div>
+        <div class="publication-echo-copy">题材标签：${escapeHtml(echo.tags)}</div>
+        <div class="publication-echo-stats">${statHtml}</div>
+      </section>
+      <section class="publication-echo-col">
+        <h3>谁有反应</h3>
+        <div class="publication-echo-list">${(echo.reactions || []).map(renderPublicationEchoItem).join("")}</div>
+      </section>
+      <section class="publication-echo-col">
+        <h3>写入下周</h3>
+        <div class="publication-echo-list">${(echo.writebacks || []).map(renderPublicationEchoItem).join("")}</div>
+      </section>`;
+  }
+
   function settlePaper() {
     const r = calculate(true);
-    const placed = getAllPlaced().map((x) => x.story);
+    const placedPairs = getAllPlaced();
+    const placed = placedPairs.map((x) => x.story);
     const axis = analyzeTagEffects(placed);
     const profileDelta = (axis.lightRatio - axis.publicRatio) * 24 - axis.massRatio * 4;
     state.editorialProfile = clamp(state.editorialProfile + profileDelta, -100, 100);
@@ -7610,10 +8213,8 @@
           : ""
       }`;
     renderLiveStats();
-    document.getElementById("summaryText").innerHTML = `
-      第 <strong>${state.week}</strong> 周报刊已结算：净利润 <strong>${fmtMoney(r.profit)}</strong>，
-      下期订阅 <strong>${r.nextSubs.toLocaleString("zh-CN")}</strong>。
-      本周合成稿件 <strong>${(state.pendingReports && state.pendingReports.length) || state.pendingClues.length}</strong> 条（已计入故事库）。`;
+    const echo = buildPublicationEcho(r, placedPairs, axis);
+    document.getElementById("summaryText").innerHTML = renderPublicationEcho(echo);
     document.getElementById("phase-editorial").classList.add("hidden");
     document.getElementById("phase-summary").classList.remove("hidden");
     log(`报刊结算完成：利润 ${Math.round(r.profit)}`);
@@ -7626,6 +8227,8 @@
     state.weekEvent = null;
     state.weekEventResolved = false;
     state.weekEventResult = "";
+    state.weekEventResultLines = [];
+    state.weekEventChoiceIndex = null;
     state.activeMissions = [];
     state.todayResolutionQueue = [];
     state.processingDayTick = false;
@@ -7646,6 +8249,7 @@
     document.getElementById("phase-summary").classList.add("hidden");
     log("———— 新的一周 ————");
     renderMacro();
+    tickHeader();
     renderWeekStart();
   }
 
@@ -7892,9 +8496,9 @@
     return {
       id: "debug_dispatch_ux",
       kind: "temp",
-      name: "线索调查：纽约市 非正式研究记录",
+      name: "港务局夜间封锁：三号码头异常回波",
       days: 2,
-      need: { 人脉: 2, 洞察: 2 },
+      need: { 人脉: 2, 洞察: 2, 理性: 2 },
       tags: ["sci", "occult"],
       difficulty: "hard",
       enemyAttr: 3,
@@ -7903,20 +8507,34 @@
       riskTier: "high",
       missionType: "leadInvestigation",
       useCharacterDice: true,
+      maxStaffOverride: 6,
       regionId: "us",
       leadId: "debug_dispatch_ux",
+      story: {
+        brief: "夜班船员寄来一张航道手绘图，港务局随即封锁三号码头，并要求周刊停止引用雷达抄本。",
+        objective: "核对雷达抄本、航道图和电台剪辑记录，确认第二个倒影是否真实存在。",
+        stakes: "红色截稿。成功或失败后窗口都会关闭；拖到下周，港务局会先一步清场。",
+        fieldIntro: "值班室窗帘拉得很低，复印机旁边放着一张没有署名的航道图。",
+        outcomes: {
+          大成功: { line: "大成功：雷达抄本、航道图和电台空白三秒完整对上。", clueTitle: "港务三重回波证据", clueDesc: "红色截稿强素材，可直接进入本周头版候选。" },
+          小成功: { line: "成功：航道图和回波时间能对上，电台剪辑仍缺一段原带。", clueTitle: "夜班雷达回波抄本", clueDesc: "可用素材。它能支撑一篇谨慎追踪稿。" },
+          成功: { line: "成功：航道图和回波时间能对上，电台剪辑仍缺一段原带。", clueTitle: "夜班雷达回波抄本", clueDesc: "可用素材。它能支撑一篇谨慎追踪稿。" },
+          失败: { line: "失败：港务局先一步清场，但船员留下第二个倒影的手绘方位。", clueTitle: "第二倒影手绘方位", clueDesc: "弱线索。失败后仍可保留一个后续钩子。" },
+        },
+      },
     };
   }
 
   function maybeEnterDebugDispatchSetupMode() {
     const p = new URLSearchParams(window.location.search || "");
-    if (p.get("debugDispatch") !== "1") return false;
+    if (p.get("debugDispatch") !== "1" && p.get("dispatchjudge") !== "1") return false;
     state.phase = "explore";
     state.debugSkipTutorials = true;
     state.regionId = "us";
     state.mission = createDirectDebugDispatchMission();
-    state.selectedStaffIds = p.get("dispatchState") === "selected" ? ["s5", "s7"] : [];
-    state.selectedToolDiceIds = p.get("tool") === "hotline" ? ["tool_tip_1"] : [];
+    state.dispatchDecisionExperimentMode = p.get("dispatchjudge") === "1";
+    state.selectedStaffIds = state.dispatchDecisionExperimentMode || p.get("dispatchState") === "selected" ? ["s5", "s7", "s2", "s3", "s6"] : [];
+    state.selectedToolDiceIds = state.dispatchDecisionExperimentMode || p.get("tool") === "hotline" ? ["tool_tip_1"] : [];
     state.displayMode = p.get("displayMode") === "numeric" ? "numeric" : "dice";
     renderSetup();
     setView("setup");
@@ -7927,7 +8545,9 @@
   function maybeConfigureDispatchSetupMode() {
     const p = new URLSearchParams(window.location.search || "");
     const hash = (window.location.hash || "").toLowerCase();
+    state.dispatchDecisionExperimentMode = p.get("dispatchjudge") === "1" || hash === "#dispatchjudge";
     state.dispatchOldSetupMode = p.get("dispatchold") === "1" || p.get("oldsetup") === "1" || hash === "#dispatchold";
+    if (state.dispatchDecisionExperimentMode) state.dispatchOldSetupMode = false;
     if (p.get("dispatchlab") === "1" || hash === "#dispatchlab") state.dispatchOldSetupMode = false;
   }
 
@@ -7942,7 +8562,7 @@
     bindEditorialUi();
     bindPaperDemoLabUi();
     bindSynthDemoLabUi();
-    log("全链条开始：探索 → 故事合成 → 编辑部组版 → 结算。");
+    log("本周编辑部简报已送达。");
     if (!maybeEnterPaperLabMode()) {
       if (maybeEnterDebugBlackDiceMode()) return;
       if (maybeEnterDebugDispatchSetupMode()) return;
