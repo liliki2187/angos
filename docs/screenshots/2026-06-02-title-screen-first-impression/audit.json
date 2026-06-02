@@ -1,0 +1,119 @@
+{
+  "labPath": "D:\\angos\\design\\prototypes\\html\\labs\\title-screen-first-impression-lab.html",
+  "outDir": "D:\\angos\\docs\\screenshots\\2026-06-02-title-screen-first-impression",
+  "screenshots": [
+    "desktop-title-screen.png",
+    "mobile-title-screen.png",
+    "desktop-keyart-no-menu.png"
+  ],
+  "results": [
+    {
+      "name": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "title": {
+        "text": "世界未解之谜周刊",
+        "x": 24,
+        "y": 263,
+        "width": 680,
+        "height": 72,
+        "visibleInViewport": true,
+        "lineHeight": 72
+      },
+      "primary": {
+        "text": "开始组稿 →",
+        "x": 24,
+        "y": 463,
+        "width": 440,
+        "height": 64,
+        "visibleInViewport": true,
+        "lineHeight": null
+      },
+      "preview": {
+        "text": "本期桌面已经摊开 头版槽 异常照片等待定稿 解释权 科学、民俗或阴谋 现实回响 读者来信正在发酵",
+        "x": 948,
+        "y": 671,
+        "width": 468,
+        "height": 119,
+        "visibleInViewport": true,
+        "lineHeight": null
+      },
+      "primaryWraps": false,
+      "hasHeroImage": true
+    },
+    {
+      "name": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "title": {
+        "text": "世界未解之谜周刊",
+        "x": 14,
+        "y": 258,
+        "width": 362,
+        "height": 38,
+        "visibleInViewport": true,
+        "lineHeight": 38.16
+      },
+      "primary": {
+        "text": "开始组稿 →",
+        "x": 14,
+        "y": 412,
+        "width": 362,
+        "height": 58,
+        "visibleInViewport": true,
+        "lineHeight": null
+      },
+      "preview": {
+        "text": "本期桌面已经摊开 头版槽 异常照片等待定稿 解释权 科学、民俗或阴谋 现实回响 读者来信正在发酵",
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "visibleInViewport": false,
+        "lineHeight": null
+      },
+      "primaryWraps": false,
+      "hasHeroImage": true
+    },
+    {
+      "name": "keyart",
+      "viewport": {
+        "width": 1440,
+        "height": 810
+      },
+      "title": {
+        "text": "世界未解之谜周刊",
+        "x": 24,
+        "y": 395,
+        "width": 680,
+        "height": 72,
+        "visibleInViewport": true,
+        "lineHeight": 72
+      },
+      "primary": {
+        "text": "开始组稿 →",
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "visibleInViewport": false,
+        "lineHeight": null
+      },
+      "preview": {
+        "text": "本期桌面已经摊开 头版槽 异常照片等待定稿 解释权 科学、民俗或阴谋 现实回响 读者来信正在发酵",
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0,
+        "visibleInViewport": false,
+        "lineHeight": null
+      },
+      "primaryWraps": false,
+      "hasHeroImage": true
+    }
+  ]
+}

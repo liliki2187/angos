@@ -1,0 +1,41 @@
+{
+  "labPath": "D:\\angos\\design\\prototypes\\html\\labs\\title-screen-homepage-ab-lab.html",
+  "outDir": "D:\\angos\\docs\\screenshots\\2026-06-02-title-screen-homepage-ab",
+  "policy": "desktop-only 16:9; Angus does not use mobile UI screenshots unless explicitly requested",
+  "screenshots": [
+    "desktop-a-magazine-v2.png",
+    "desktop-b-action-v2.png"
+  ],
+  "results": [
+    {
+      "name": "desktop-a-magazine-v2",
+      "variant": "a",
+      "viewport": {
+        "width": 1600,
+        "height": 900
+      },
+      "visualCheck": {
+        "primaryActionOverlapsCharacter": false,
+        "disabledContinueButtonVisible": false,
+        "backgroundScale": "100% auto",
+        "scrim": "localized brand-area protection only; character area is clear and no longer covered by a large left-side dark veil",
+        "notes": "Left UI is reduced and moved upward; CTA ends above the character safe area, and the character face, body, and pressing action remain clearly readable."
+      }
+    },
+    {
+      "name": "desktop-b-action-v2",
+      "variant": "b",
+      "viewport": {
+        "width": 1600,
+        "height": 900
+      },
+      "visualCheck": {
+        "primaryActionOverlapsCharacter": false,
+        "disabledContinueButtonVisible": false,
+        "backgroundScale": "100% auto",
+        "scrim": "localized brand-area protection only; character area is clear and no longer covered by a large left-side dark veil",
+        "notes": "Left UI remains in the desktop brand start area; the character and magazine silhouette stay readable without a heavy legacy scrim."
+      }
+    }
+  ]
+}

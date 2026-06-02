@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>世界未解之谜周刊 · 首页 A/B 头图实验</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #03070b;
+      --ink: #f6f4e8;
+      --paper: #f1e5c9;
+      --muted: rgba(246, 244, 232, 0.68);
+      --weak: rgba(246, 244, 232, 0.44);
+      --cyan: #1fb8dc;
+      --cyan-soft: rgba(31, 184, 220, 0.28);
+      --red: #ed382d;
+      --orange: #f06c2a;
+      --line: rgba(246, 244, 232, 0.22);
+      --shadow: rgba(0, 0, 0, 0.7);
+      --radius: 8px;
+      --hero-image: url("assets/title-screen-keyart-a-magazine-action.png");
+      --hero-position: center center;
+      --hero-scale: 100% auto;
+      --scrim-left: rgba(3, 7, 11, 0.9);
+      --scrim-mid: rgba(3, 7, 11, 0.28);
+      --scrim-right: rgba(3, 7, 11, 0);
+      --mobile-top-scrim: rgba(3, 7, 11, 0.9);
+      --mobile-mid-scrim: rgba(3, 7, 11, 0.66);
+      --mobile-bottom-scrim: rgba(3, 7, 11, 0.94);
+      font-family: "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    a,
+    button {
+      font: inherit;
+      color: inherit;
+    }
+
+    a { text-decoration: none; }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    h1,
+    h2,
+    p {
+      margin: 0;
+    }
+
+    .title-screen {
+      position: relative;
+      min-height: 100svh;
+      overflow: hidden;
+      isolation: isolate;
+      --content-left: max(80px, calc((100vw - 1440px) / 2));
+      --brand-scrim-x: calc(var(--content-left) + 180px);
+      background:
+        radial-gradient(ellipse 520px 390px at var(--brand-scrim-x) 295px, rgba(3, 7, 11, 0.9) 0%, rgba(3, 7, 11, 0.72) 46%, rgba(3, 7, 11, 0.24) 68%, transparent 100%),
+        linear-gradient(90deg, rgba(3, 7, 11, 0.54) 0%, rgba(3, 7, 11, 0.2) 16%, transparent 34%),
+        linear-gradient(180deg, rgba(3, 7, 11, 0.04), rgba(3, 7, 11, 0.16)),
+        var(--hero-image) var(--hero-position) / var(--hero-scale) no-repeat;
+    }
+
+    .title-screen::before,
+    .title-screen::after {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      content: "";
+      pointer-events: none;
+    }
+
+    .title-screen::before {
+      background:
+        linear-gradient(90deg, rgba(31, 184, 220, 0.05) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(237, 56, 45, 0.04) 1px, transparent 1px);
+      background-size: 92px 92px;
+      opacity: 0.42;
+      mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.58), transparent 58%);
+    }
+
+    .title-screen::after {
+      background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.028) 0 1px, transparent 1px 4px);
+      opacity: 0.7;
+      mix-blend-mode: screen;
+    }
+
+    .variant-b {
+      --hero-image: url("assets/title-screen-keyart-b-original-action.png");
+      --hero-position: center center;
+      --scrim-left: rgba(3, 7, 11, 0.9);
+      --scrim-mid: rgba(3, 7, 11, 0.3);
+      --scrim-right: rgba(3, 7, 11, 0);
+      --mobile-top-scrim: rgba(3, 7, 11, 0.94);
+      --mobile-mid-scrim: rgba(3, 7, 11, 0.74);
+      --mobile-bottom-scrim: rgba(3, 7, 11, 0.96);
+    }
+
+    .top-tools {
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0.68;
+    }
+
+    .variant-switch {
+      display: inline-grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      padding: 3px;
+      border: 1px solid rgba(246, 244, 232, 0.18);
+      border-radius: 999px;
+      background: rgba(3, 7, 11, 0.54);
+      box-shadow: 0 10px 34px rgba(0, 0, 0, 0.25);
+    }
+
+    .variant-switch button {
+      min-width: 44px;
+      min-height: 32px;
+      border-radius: 999px;
+      background: transparent;
+      color: rgba(246, 244, 232, 0.64);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .variant-switch button[aria-pressed="true"] {
+      background: rgba(246, 244, 232, 0.14);
+      color: var(--ink);
+    }
+
+    .lab-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 0 10px;
+      border: 1px solid rgba(246, 244, 232, 0.18);
+      border-radius: var(--radius);
+      background: rgba(3, 7, 11, 0.4);
+      color: rgba(246, 244, 232, 0.58);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .brand-ui {
+      display: grid;
+      align-content: start;
+      min-height: 100svh;
+      width: min(1440px, calc(100vw - 160px));
+      margin: 0 auto;
+      padding: 132px 0 64px;
+    }
+
+    .brand-stack {
+      position: relative;
+      width: 360px;
+      min-width: 0;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      color: var(--cyan);
+      font-size: 11px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before,
+    .eyebrow::after {
+      display: block;
+      width: 24px;
+      height: 2px;
+      content: "";
+      background: var(--red);
+      box-shadow: 0 0 18px rgba(237, 56, 45, 0.26);
+    }
+
+    .logo {
+      position: relative;
+      display: block;
+      max-width: 360px;
+      color: var(--paper);
+      font-size: 50px;
+      font-weight: 950;
+      line-height: 1;
+      text-shadow:
+        3px -2px 0 rgba(31, 184, 220, 0.42),
+        -3px 3px 0 rgba(237, 56, 45, 0.48),
+        0 3px 0 rgba(0, 0, 0, 0.86),
+        0 18px 44px rgba(0, 0, 0, 0.5);
+    }
+
+    .logo span {
+      position: relative;
+      display: inline-block;
+    }
+
+    .logo .mark {
+      text-decoration: underline;
+      text-decoration-color: var(--red);
+      text-decoration-thickness: 4px;
+      text-underline-offset: 6px;
+    }
+
+    .tagline {
+      max-width: 360px;
+      margin-top: 16px;
+      color: rgba(246, 244, 232, 0.9);
+      font-size: 20px;
+      font-weight: 950;
+      line-height: 1.28;
+    }
+
+    .support {
+      display: none;
+      max-width: 500px;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .menu {
+      display: grid;
+      gap: 8px;
+      width: min(328px, 100%);
+      margin-top: 22px;
+    }
+
+    .primary-action {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 0 14px 0 16px;
+      border: 1px solid rgba(31, 184, 220, 0.75);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(90deg, rgba(14, 138, 173, 0.92), rgba(16, 107, 145, 0.86)),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent);
+      box-shadow:
+        0 20px 48px rgba(31, 184, 220, 0.15),
+        0 18px 44px rgba(0, 0, 0, 0.34);
+      color: #f8feff;
+      font-size: 18px;
+      font-weight: 950;
+      text-align: left;
+    }
+
+    .primary-action:hover,
+    .primary-action:focus-visible {
+      outline: 2px solid rgba(246, 244, 232, 0.78);
+      outline-offset: 3px;
+      transform: translateY(-1px);
+    }
+
+    .action-mark {
+      display: inline-grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(246, 244, 232, 0.16);
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .secondary-actions {
+      display: grid;
+      grid-template-columns: 160px;
+      gap: 0;
+    }
+
+    .secondary-actions button,
+    .secondary-actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 10px;
+      border: 1px solid rgba(246, 244, 232, 0.18);
+      border-radius: var(--radius);
+      background: rgba(3, 7, 11, 0.42);
+      color: rgba(246, 244, 232, 0.74);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .secondary-actions button:disabled {
+      display: none;
+      cursor: default;
+      border-color: rgba(246, 244, 232, 0.09);
+      background: rgba(3, 7, 11, 0.24);
+      color: rgba(246, 244, 232, 0.42);
+      opacity: 1;
+    }
+
+    .secondary-actions a:hover,
+    .secondary-actions button:not(:disabled):hover,
+    .secondary-actions a:focus-visible,
+    .secondary-actions button:not(:disabled):focus-visible {
+      border-color: rgba(31, 184, 220, 0.72);
+      outline: 0;
+      color: var(--ink);
+    }
+
+    .status {
+      min-height: 18px;
+      color: rgba(31, 184, 220, 0.82);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .issue-strip {
+      position: absolute;
+      left: max(80px, calc((100vw - 1440px) / 2));
+      bottom: 22px;
+      z-index: 3;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      color: rgba(246, 244, 232, 0.46);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: 0;
+    }
+
+    .issue-strip::before {
+      width: 9px;
+      height: 9px;
+      content: "";
+      background: var(--red);
+      box-shadow: 0 0 16px rgba(237, 56, 45, 0.38);
+    }
+
+    .sample-section {
+      min-height: 46vh;
+      padding: 54px 0 70px;
+      background:
+        linear-gradient(180deg, rgba(3, 7, 11, 0.96), #05080d),
+        linear-gradient(90deg, rgba(31, 184, 220, 0.08), transparent 46%);
+    }
+
+    .sample-inner {
+      width: min(1180px, calc(100vw - 48px));
+      margin: 0 auto;
+    }
+
+    .sample-label {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .sample-inner h2 {
+      margin-top: 10px;
+      color: var(--paper);
+      font-size: 32px;
+      line-height: 1.18;
+    }
+
+    .sample-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      margin-top: 26px;
+      border: 1px solid rgba(246, 244, 232, 0.14);
+      background: rgba(246, 244, 232, 0.14);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .sample-item {
+      min-height: 154px;
+      padding: 22px;
+      background: #081015;
+    }
+
+    .sample-item b {
+      color: var(--orange);
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    .sample-item h3 {
+      margin: 14px 0 0;
+      color: var(--ink);
+      font-size: 20px;
+      line-height: 1.25;
+    }
+
+    .sample-item p {
+      margin-top: 10px;
+      color: rgba(246, 244, 232, 0.62);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 980px) {
+      .title-screen,
+      .variant-b {
+        --hero-position: 60% center;
+        --scrim-left: rgba(3, 7, 11, 0.92);
+        --scrim-mid: rgba(3, 7, 11, 0.72);
+        --scrim-right: rgba(3, 7, 11, 0.24);
+      }
+
+      .brand-stack {
+        width: min(520px, 58vw);
+        min-width: 0;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .title-screen,
+      .variant-b {
+        --hero-position: 58% center;
+      }
+
+      .title-screen {
+        background:
+          linear-gradient(180deg, var(--mobile-top-scrim) 0%, var(--mobile-mid-scrim) 46%, var(--mobile-bottom-scrim) 100%),
+          linear-gradient(90deg, rgba(3, 7, 11, 0.74), rgba(3, 7, 11, 0.34)),
+          var(--hero-image) var(--hero-position) / auto 100% no-repeat;
+      }
+
+      .top-tools {
+        top: 14px;
+        right: 14px;
+        gap: 6px;
+      }
+
+      .variant-switch button {
+        min-width: 38px;
+        min-height: 30px;
+      }
+
+      .lab-link {
+        display: none;
+      }
+
+      .brand-ui {
+        width: min(100vw - 28px, 620px);
+        align-content: start;
+        padding: 84px 0 52px;
+      }
+
+      .brand-stack {
+        width: min(100%, 420px);
+      }
+
+      .brand-stack::before {
+        position: absolute;
+        inset: -18px -12px -22px;
+        z-index: -1;
+        content: "";
+        background: linear-gradient(180deg, rgba(3, 7, 11, 0.48), rgba(3, 7, 11, 0.34) 72%, transparent);
+        pointer-events: none;
+      }
+
+      .eyebrow {
+        margin-bottom: 11px;
+        font-size: 11px;
+      }
+
+      .eyebrow::before,
+      .eyebrow::after {
+        width: 18px;
+      }
+
+      .logo {
+        max-width: 390px;
+        font-size: 40px;
+      }
+
+      .logo .mark {
+        text-decoration-thickness: 3px;
+        text-underline-offset: 5px;
+      }
+
+      .tagline {
+        margin-top: 16px;
+        font-size: 18px;
+      }
+
+      .support {
+        max-width: 360px;
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      .menu {
+        width: min(100%, 380px);
+        margin-top: 22px;
+      }
+
+      .primary-action {
+        min-height: 58px;
+        font-size: 19px;
+      }
+
+      .secondary-actions button,
+      .secondary-actions a {
+        min-height: 44px;
+        font-size: 13px;
+      }
+
+      .issue-strip {
+        left: 14px;
+        right: 14px;
+        bottom: 14px;
+      }
+
+      .sample-section {
+        padding: 38px 0 48px;
+      }
+
+      .sample-inner {
+        width: min(100vw - 28px, 620px);
+      }
+
+      .sample-inner h2 {
+        font-size: 25px;
+      }
+
+      .sample-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .brand-ui {
+        padding-top: 76px;
+      }
+
+      .logo {
+        font-size: 35px;
+      }
+
+      .support {
+        display: none;
+      }
+
+      .secondary-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="title-screen variant-a" data-variant="a">
+    <div class="top-tools" aria-label="实验控制">
+      <div class="variant-switch" aria-label="切换头图版本">
+        <button type="button" data-set-variant="a" aria-pressed="true">A</button>
+        <button type="button" data-set-variant="b" aria-pressed="false">B</button>
+      </div>
+      <a class="lab-link" href="../prototype-hub.html">实验目录</a>
+    </div>
+
+    <section class="brand-ui" aria-label="世界未解之谜周刊标题页">
+      <div class="brand-stack">
+        <p class="eyebrow">World Mysteries Weekly</p>
+        <h1 class="logo" data-title="世界未解之谜周刊">
+          <span>世界</span><span class="mark">未解</span><span>之谜</span><span>周刊</span>
+        </h1>
+        <p class="tagline">办一份会改变现实的未解之谜周刊。</p>
+        <p class="support">调查线索，选择解释，组成本期头版，让读者与城市对你的刊发产生回响。</p>
+
+        <nav class="menu" aria-label="首页菜单">
+          <a class="primary-action" href="#start" id="startButton">
+            <span>开始组稿</span>
+            <span class="action-mark" aria-hidden="true">→</span>
+          </a>
+          <div class="secondary-actions">
+            <button type="button" disabled>继续本期（未接入）</button>
+            <a href="#sample">查看样张</a>
+          </div>
+          <p class="status" id="status" aria-live="polite"></p>
+        </nav>
+      </div>
+    </section>
+
+    <p class="issue-strip">标题页 A/B 视觉实验 · 非正式主入口</p>
+  </main>
+
+  <section class="sample-section" id="sample" aria-label="本期样张预览">
+    <div class="sample-inner">
+      <p class="sample-label">Issue Sample</p>
+      <h2>样张只展示这期周刊会如何被玩家做出来。</h2>
+      <div class="sample-grid">
+        <article class="sample-item">
+          <b>01 / 调查线索</b>
+          <h3>从来信和异常照片里挑出本期主线。</h3>
+          <p>第一屏只预告职业动作，细节留到组稿台承接。</p>
+        </article>
+        <article class="sample-item">
+          <b>02 / 选择解释</b>
+          <h3>同一份证据，可以被写成不同公开版本。</h3>
+          <p>解释权是核心玩法，不是案件百科。</p>
+        </article>
+        <article class="sample-item">
+          <b>03 / 发刊回响</b>
+          <h3>读者、城市和势力会按你的版面回头找你。</h3>
+          <p>发刊不是结算，它是下一轮现实变化的入口。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const root = document.querySelector(".title-screen");
+    const status = document.querySelector("#status");
+    const variantButtons = [...document.querySelectorAll("[data-set-variant]")];
+
+    function setVariant(name) {
+      root.dataset.variant = name;
+      root.classList.toggle("variant-a", name === "a");
+      root.classList.toggle("variant-b", name === "b");
+      variantButtons.forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.setVariant === name));
+      });
+      status.textContent = "";
+    }
+
+    variantButtons.forEach((button) => {
+      button.addEventListener("click", () => setVariant(button.dataset.setVariant));
+    });
+
+    document.querySelector("#startButton").addEventListener("click", (event) => {
+      event.preventDefault();
+      status.textContent = "本期组稿台稍后接入；当前实验只验证首页第一眼与入口层级。";
+    });
+
+    if (new URLSearchParams(window.location.search).get("variant") === "b") {
+      setVariant("b");
+    }
+  </script>
+</body>
+</html>
