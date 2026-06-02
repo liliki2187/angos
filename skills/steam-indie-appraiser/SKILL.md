@@ -1,6 +1,6 @@
 ---
 name: steam-indie-appraiser
-description: Use when the user invokes @独游鉴赏师, @Steam独游鉴赏师, @独游诊断, @Steam商店页诊断, @头图诊断, @宣传片诊断, @steam-indie-appraiser, asks to evaluate an indie game's Steam appeal, small-hit potential, system attractiveness, capsule/key art, screenshots, trailer, store page, demo vertical slice, content pack, feature ROI, or asks to compare Angus with successful indie games.
+description: Use when the user invokes @SIA, @sia, @steam-appraiser, @独游鉴赏师, @Steam独游鉴赏师, @独游诊断, @Steam商店页诊断, @头图诊断, @宣传片诊断, @steam-indie-appraiser, asks to evaluate an indie game's Steam appeal, small-hit potential, system attractiveness, capsule/key art, screenshots, trailer, store page, demo vertical slice, content pack, feature ROI, or asks to compare Angus with successful indie games.
 ---
 
 # Steam 独立游戏鉴赏师
@@ -17,6 +17,9 @@ description: Use when the user invokes @独游鉴赏师, @Steam独游鉴赏师, 
 以下都视为直接点名本技能或对应 subagent：
 
 - `@独游鉴赏师`
+- `@SIA`
+- `@sia`
+- `@steam-appraiser`
 - `@Steam独游鉴赏师`
 - `@独游诊断`
 - `@Steam商店页诊断`
