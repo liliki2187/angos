@@ -1,0 +1,1292 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>世界未解之谜周刊 · 编辑部入口实验</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #05080b;
+      --ink: #f6f2df;
+      --paper: #ead9ac;
+      --paper-bright: #fff1c9;
+      --muted: rgba(246, 242, 223, 0.68);
+      --weak: rgba(246, 242, 223, 0.42);
+      --line: rgba(246, 242, 223, 0.18);
+      --line-strong: rgba(246, 242, 223, 0.34);
+      --cyan: #20c3d7;
+      --cyan-dark: #0d5f75;
+      --red: #ed382d;
+      --red-dark: #8a1e1a;
+      --yellow: #f1b83a;
+      --green: #6fbf82;
+      --black: #030507;
+      --panel: rgba(8, 13, 16, 0.88);
+      --radius: 8px;
+      font-family: "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    body {
+      min-width: 1180px;
+      overflow: hidden;
+    }
+
+    a,
+    button {
+      font: inherit;
+      color: inherit;
+    }
+
+    a { text-decoration: none; }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    .office-shell {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+      isolation: isolate;
+      background:
+        radial-gradient(ellipse 760px 520px at 17% 32%, rgba(32, 195, 215, 0.12), transparent 62%),
+        radial-gradient(ellipse 640px 460px at 84% 16%, rgba(237, 56, 45, 0.16), transparent 58%),
+        linear-gradient(180deg, #080d11 0%, #05080b 56%, #030506 100%);
+    }
+
+    .office-shell::before,
+    .office-shell::after {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      content: "";
+      pointer-events: none;
+    }
+
+    .office-shell::before {
+      background:
+        linear-gradient(90deg, rgba(32, 195, 215, 0.06) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(237, 56, 45, 0.045) 1px, transparent 1px);
+      background-size: 88px 88px;
+      opacity: 0.56;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 82%);
+    }
+
+    .office-shell::after {
+      background:
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.028) 0 1px, transparent 1px 4px),
+        repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.18) 0 2px, transparent 2px 10px);
+      opacity: 0.55;
+      mix-blend-mode: screen;
+    }
+
+    .topbar {
+      position: absolute;
+      inset: 18px 24px auto;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .lab-note {
+      min-width: 0;
+      color: rgba(246, 242, 223, 0.5);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: 0;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .clean-capture .topbar {
+      display: none;
+    }
+
+    .clean-capture .office-stage {
+      height: calc(100vh - 48px);
+      padding-top: 0;
+    }
+
+    .ghost-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 0 11px;
+      border: 1px solid rgba(246, 242, 223, 0.18);
+      border-radius: var(--radius);
+      background: rgba(3, 5, 7, 0.5);
+      color: rgba(246, 242, 223, 0.72);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .ghost-link:hover,
+    .ghost-link:focus-visible {
+      border-color: rgba(32, 195, 215, 0.72);
+      color: var(--ink);
+      outline: 0;
+    }
+
+    .office-stage {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 382px;
+      gap: 24px;
+      width: min(1500px, calc(100vw - 64px));
+      height: calc(100vh - 48px);
+      margin: 24px auto;
+      padding-top: 52px;
+    }
+
+    .room {
+      position: relative;
+      min-height: 0;
+      overflow: hidden;
+      border: 1px solid rgba(246, 242, 223, 0.16);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(246, 242, 223, 0.04), transparent 38%),
+        linear-gradient(90deg, rgba(32, 195, 215, 0.08), transparent 36%),
+        #091014;
+      box-shadow:
+        0 28px 80px rgba(0, 0, 0, 0.42),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+    }
+
+    .back-wall {
+      position: absolute;
+      inset: 0 0 34%;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 42%),
+        linear-gradient(90deg, transparent 0 47%, rgba(237, 56, 45, 0.09) 47% 48%, transparent 48%),
+        repeating-linear-gradient(0deg, rgba(246, 242, 223, 0.045) 0 1px, transparent 1px 35px),
+        #0c1519;
+    }
+
+    .floor {
+      position: absolute;
+      inset: 64% 0 0;
+      background:
+        linear-gradient(180deg, rgba(3, 5, 7, 0.1), rgba(3, 5, 7, 0.82)),
+        repeating-linear-gradient(90deg, rgba(246, 242, 223, 0.07) 0 2px, transparent 2px 92px),
+        #081015;
+      transform: skewY(-2deg);
+      transform-origin: left top;
+    }
+
+    .scene-art {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(0 18px 34px rgba(0, 0, 0, 0.36));
+    }
+
+    .scene-art-cover {
+      object-fit: cover;
+    }
+
+    .masthead-sign {
+      position: absolute;
+      left: 30px;
+      top: 30px;
+      width: 410px;
+      height: 142px;
+    }
+
+    .masthead-sign b {
+      display: block;
+      color: var(--paper-bright);
+      font-size: 28px;
+      font-weight: 950;
+      line-height: 0.98;
+      text-shadow:
+        2px -1px 0 rgba(32, 195, 215, 0.45),
+        -2px 2px 0 rgba(237, 56, 45, 0.45);
+    }
+
+    .masthead-sign span {
+      display: block;
+      margin-top: 8px;
+      color: rgba(246, 242, 223, 0.68);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .topic-board {
+      position: absolute;
+      left: 34px;
+      top: 156px;
+      width: 414px;
+      height: 244px;
+      padding: 0;
+      transform: rotate(0.5deg);
+    }
+
+    .topic-board .scene-art {
+      position: absolute;
+      inset: 0;
+    }
+
+    .topic-board .scene-art-cover {
+      object-fit: fill;
+    }
+
+    .topic-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .board-thread {
+      position: absolute;
+      height: 2px;
+      background: rgba(237, 56, 45, 0.72);
+      box-shadow: 0 0 8px rgba(237, 56, 45, 0.3);
+      transform-origin: left center;
+    }
+
+    .board-thread.one { left: 138px; top: 112px; width: 100px; transform: rotate(12deg); }
+    .board-thread.two { left: 226px; top: 124px; width: 82px; transform: rotate(48deg); }
+
+    .board-sticker {
+      position: absolute;
+      margin: 0;
+      color: #14100b;
+      font-size: 10px;
+      font-weight: 900;
+      line-height: 1.22;
+      text-shadow: none;
+      filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.32));
+    }
+
+    .sticker-art {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .sticker-text {
+      position: relative;
+      z-index: 1;
+      display: block;
+      padding: 20px 14px 10px;
+    }
+
+    .sticker-text b {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 11px;
+      font-weight: 950;
+    }
+
+    .board-sticker.recap {
+      left: 56px;
+      top: 54px;
+      width: 112px;
+      height: 82px;
+      transform: rotate(-5deg);
+    }
+
+    .board-sticker.oldline {
+      left: 202px;
+      top: 54px;
+      width: 118px;
+      height: 78px;
+      transform: rotate(4deg);
+    }
+
+    .board-sticker.signal {
+      left: 132px;
+      top: 128px;
+      width: 132px;
+      height: 74px;
+      transform: rotate(-1deg);
+    }
+
+    .board-sticker.signal .sticker-text {
+      padding: 16px 16px 8px;
+    }
+
+    .board-sticker.pressure {
+      left: 268px;
+      top: 150px;
+      width: 128px;
+      height: 44px;
+      color: var(--paper-bright);
+      transform: rotate(3deg);
+    }
+
+    .board-sticker.pressure .sticker-text {
+      padding: 9px 12px;
+    }
+
+    .board-sticker.pressure .sticker-text b {
+      color: var(--paper-bright);
+    }
+
+    .topic-board h2,
+    .letter-wall h2,
+    .press-machine h2 {
+      color: var(--paper-bright);
+      font-size: 14px;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+
+    .string-map {
+      position: relative;
+      height: 220px;
+      margin-top: 14px;
+    }
+
+    .pin {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      width: 94px;
+      min-height: 58px;
+      padding: 8px;
+      border: 1px solid rgba(246, 242, 223, 0.36);
+      background: #e5d6ad;
+      color: #101010;
+      font-size: 12px;
+      font-weight: 950;
+      line-height: 1.2;
+      text-align: center;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.26);
+    }
+
+    .pin::before {
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      width: 10px;
+      height: 10px;
+      content: "";
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 12px rgba(237, 56, 45, 0.7);
+      transform: translateX(-50%);
+    }
+
+    .pin.one { left: 4px; top: 4px; transform: rotate(-4deg); }
+    .pin.two { right: 16px; top: 22px; transform: rotate(3deg); }
+    .pin.three { left: 110px; top: 126px; transform: rotate(-1deg); }
+
+    .string {
+      position: absolute;
+      height: 2px;
+      background: rgba(237, 56, 45, 0.76);
+      box-shadow: 0 0 10px rgba(237, 56, 45, 0.26);
+      transform-origin: left center;
+    }
+
+    .string.a { left: 84px; top: 62px; width: 156px; transform: rotate(8deg); }
+    .string.b { left: 180px; top: 82px; width: 94px; transform: rotate(102deg); }
+    .string.c { left: 88px; top: 92px; width: 142px; transform: rotate(44deg); }
+
+    .letter-wall {
+      position: absolute;
+      right: 38px;
+      top: 38px;
+      width: 304px;
+      height: 198px;
+      overflow: hidden;
+      padding: 12px;
+      border: 1px solid rgba(32, 195, 215, 0.42);
+      background:
+        linear-gradient(135deg, rgba(32, 195, 215, 0.1), rgba(237, 56, 45, 0.07)),
+        rgba(5, 8, 11, 0.78);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
+      transform: rotate(-0.9deg);
+    }
+
+    .paper-signal-art {
+      position: absolute;
+      inset: -38px -80px auto -72px;
+      width: 430px;
+      height: 226px;
+      object-fit: cover;
+      opacity: 0.58;
+      filter: saturate(0.92) contrast(1.08);
+    }
+
+    .notice-stack {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      align-content: end;
+      gap: 8px;
+      height: 100%;
+    }
+
+    .notice-card {
+      min-height: 52px;
+      padding: 8px 10px 8px 12px;
+      border-left: 5px solid var(--cyan);
+      background: rgba(3, 5, 7, 0.78);
+      color: rgba(246, 242, 223, 0.82);
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.34;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.26);
+    }
+
+    .notice-card strong {
+      display: block;
+      color: var(--paper-bright);
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    .notice-card.event { border-left-color: var(--red); }
+
+    .anomaly-monitor {
+      position: absolute;
+      right: 48px;
+      top: 288px;
+      width: 360px;
+      height: 236px;
+      z-index: 1;
+      display: block;
+    }
+
+    .monitor-frame {
+      position: relative;
+      overflow: visible;
+      height: 100%;
+      min-height: 0;
+      padding: 12px 12px 16px;
+      border: 0;
+      border-radius: 4px;
+      background:
+        linear-gradient(180deg, #25211d, #0b0d0d 72%),
+        #090c0d;
+      box-shadow:
+        0 18px 44px rgba(0, 0, 0, 0.34),
+        0 0 0 1px rgba(246, 242, 223, 0.16),
+        inset 0 0 0 2px rgba(237, 56, 45, 0.2),
+        inset 0 -12px 0 rgba(3, 5, 7, 0.74);
+    }
+
+    .monitor-frame::before,
+    .monitor-frame::after {
+      position: absolute;
+      content: "";
+      pointer-events: none;
+    }
+
+    .monitor-frame::before {
+      inset: 16px 18px 22px;
+      z-index: 2;
+      background:
+        linear-gradient(118deg, transparent 0 14%, rgba(246, 242, 223, 0.18) 15%, transparent 19%),
+        linear-gradient(68deg, transparent 0 74%, rgba(32, 195, 215, 0.16) 75%, transparent 80%);
+      mix-blend-mode: screen;
+    }
+
+    .monitor-frame::after {
+      inset: 0;
+      z-index: 3;
+      border-radius: inherit;
+      background:
+        linear-gradient(90deg, transparent 0 48%, rgba(5, 8, 8, 0.86) 48% 51%, transparent 51%),
+        linear-gradient(180deg, transparent 0 54%, rgba(5, 8, 8, 0.74) 54% 58%, transparent 58%);
+      box-shadow:
+        inset 0 0 0 12px rgba(4, 5, 5, 0.72),
+        inset 0 0 0 14px rgba(246, 242, 223, 0.12),
+        inset 0 -18px 0 rgba(4, 5, 5, 0.82);
+    }
+
+    .monitor-image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      object-fit: cover;
+      object-position: center;
+      border: 2px solid rgba(0, 0, 0, 0.76);
+      filter: saturate(0.9) contrast(1.05);
+    }
+
+    .monitor-readout {
+      position: absolute;
+      left: 20px;
+      right: auto;
+      bottom: -18px;
+      z-index: 4;
+      width: 248px;
+      padding: 8px 10px;
+      border: 1px solid rgba(3, 5, 7, 0.52);
+      background: #decc98;
+      color: #17120b;
+      font-size: 11px;
+      font-weight: 850;
+      line-height: 1.25;
+      box-shadow: 0 12px 22px rgba(0, 0, 0, 0.34);
+      transform: rotate(-1.2deg);
+    }
+
+    .monitor-readout b {
+      color: #0c0905;
+      font-weight: 950;
+    }
+
+    .monitor-states {
+      display: none;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+    }
+
+    .state-button {
+      min-height: 44px;
+      padding: 7px 8px;
+      border: 1px solid rgba(246, 242, 223, 0.16);
+      border-radius: 6px;
+      background: rgba(5, 8, 11, 0.78);
+      color: rgba(246, 242, 223, 0.72);
+      font-size: 11px;
+      font-weight: 950;
+      line-height: 1.15;
+      text-align: left;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+    }
+
+    .state-button[aria-pressed="true"] {
+      border-color: rgba(32, 195, 215, 0.72);
+      background: linear-gradient(90deg, rgba(14, 138, 173, 0.46), rgba(237, 56, 45, 0.13));
+      color: var(--paper-bright);
+    }
+
+    .press-machine {
+      position: absolute;
+      left: 410px;
+      bottom: 164px;
+      z-index: 2;
+      width: 352px;
+      height: 226px;
+      padding: 0;
+    }
+
+    .press-status {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 12px;
+      color: rgba(246, 242, 223, 0.64);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .press-belts {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 26px;
+      height: 108px;
+    }
+
+    .roller {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      height: 34px;
+      border: 2px solid rgba(246, 242, 223, 0.18);
+      border-radius: 999px;
+      background:
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.09) 0 5px, transparent 5px 13px),
+        linear-gradient(180deg, #303439, #0a0d10);
+      box-shadow: inset 0 -9px 18px rgba(0, 0, 0, 0.52);
+    }
+
+    .roller.top { top: 4px; }
+    .roller.bottom { bottom: 8px; }
+
+    .sheet-feed {
+      position: absolute;
+      left: 52px;
+      top: 28px;
+      width: 210px;
+      height: 52px;
+      border: 2px solid rgba(246, 242, 223, 0.64);
+      background:
+        linear-gradient(90deg, rgba(237, 56, 45, 0.92) 0 42px, transparent 42px),
+        repeating-linear-gradient(0deg, transparent 0 9px, rgba(3, 5, 7, 0.34) 9px 11px),
+        #e8d8ae;
+      transform: rotate(-3deg);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.34);
+    }
+
+    .editor-desk {
+      position: absolute;
+      left: 118px;
+      right: 88px;
+      bottom: -96px;
+      z-index: 2;
+      height: 420px;
+    }
+
+    .editor-desk .scene-art {
+      object-position: bottom center;
+      filter: drop-shadow(0 26px 48px rgba(0, 0, 0, 0.52));
+    }
+
+    .cover-sheet {
+      position: absolute;
+      left: 72px;
+      top: 24px;
+      width: 294px;
+      height: 202px;
+      padding: 15px;
+      border: 2px solid rgba(3, 5, 7, 0.86);
+      background:
+        linear-gradient(180deg, rgba(237, 56, 45, 0.92) 0 30px, transparent 30px),
+        linear-gradient(90deg, rgba(32, 195, 215, 0.88) 0 60px, transparent 60px),
+        #ead9ac;
+      color: #111;
+      box-shadow:
+        8px 8px 0 rgba(32, 195, 215, 0.38),
+        18px 18px 0 rgba(237, 56, 45, 0.24),
+        0 20px 38px rgba(0, 0, 0, 0.34);
+      transform: rotate(-5deg);
+    }
+
+    .cover-sheet .issue-no {
+      color: rgba(3, 5, 7, 0.72);
+      font-size: 11px;
+      font-weight: 950;
+      letter-spacing: 0;
+    }
+
+    .cover-sheet h1 {
+      margin-top: 22px;
+      max-width: 210px;
+      color: #080808;
+      font-size: 27px;
+      font-weight: 950;
+      line-height: 1.02;
+    }
+
+    .cover-shot {
+      position: absolute;
+      right: 15px;
+      bottom: 18px;
+      width: 106px;
+      height: 78px;
+      border: 3px solid #0c0c0c;
+      background:
+        radial-gradient(circle at 52% 42%, rgba(237, 56, 45, 0.92) 0 8px, transparent 9px),
+        linear-gradient(180deg, #111, #343434);
+      box-shadow: inset 0 0 0 7px rgba(255, 255, 255, 0.08);
+    }
+
+    .cover-lines {
+      position: absolute;
+      left: 16px;
+      right: 136px;
+      bottom: 20px;
+      height: 46px;
+      background:
+        repeating-linear-gradient(0deg, #111 0 4px, transparent 4px 10px);
+      opacity: 0.82;
+    }
+
+    .stamp-pad {
+      position: absolute;
+      left: 390px;
+      top: 104px;
+      display: grid;
+      place-items: center;
+      width: 126px;
+      height: 82px;
+      border: 2px solid rgba(237, 56, 45, 0.82);
+      border-radius: var(--radius);
+      background: rgba(237, 56, 45, 0.16);
+      color: #ffd7d3;
+      font-size: 17px;
+      font-weight: 950;
+      line-height: 1.1;
+      text-align: center;
+      transform: rotate(4deg);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.28);
+    }
+
+    .tools-tray {
+      position: absolute;
+      right: 76px;
+      top: 42px;
+      display: grid;
+      gap: 10px;
+      width: 170px;
+      transform: rotate(2deg);
+    }
+
+    .tool-slip {
+      min-height: 36px;
+      padding: 8px 10px;
+      border-left: 5px solid var(--yellow);
+      background: rgba(246, 242, 223, 0.11);
+      color: rgba(246, 242, 223, 0.78);
+      font-size: 12px;
+      font-weight: 850;
+      line-height: 1.2;
+    }
+
+    .tool-slip:nth-child(2) { border-left-color: var(--cyan); }
+    .tool-slip:nth-child(3) { border-left-color: var(--red); }
+
+    .office-command {
+      position: relative;
+      min-height: 0;
+      padding: 22px;
+      border: 1px solid rgba(246, 242, 223, 0.18);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(246, 242, 223, 0.055), transparent 34%),
+        rgba(5, 8, 11, 0.9);
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.38);
+    }
+
+    .office-command::before {
+      position: absolute;
+      inset: 0;
+      content: "";
+      border-radius: inherit;
+      background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.026) 0 1px, transparent 1px 5px);
+      pointer-events: none;
+    }
+
+    .command-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
+      gap: 18px;
+      height: 100%;
+    }
+
+    .command-kicker {
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .command-title h1 {
+      margin-top: 8px;
+      color: var(--paper-bright);
+      font-size: 34px;
+      font-weight: 950;
+      line-height: 1.1;
+      text-shadow:
+        2px -1px 0 rgba(32, 195, 215, 0.32),
+        -2px 2px 0 rgba(237, 56, 45, 0.32);
+    }
+
+    .command-title p {
+      margin-top: 12px;
+      color: rgba(246, 242, 223, 0.74);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .week-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      overflow: hidden;
+      border: 1px solid rgba(246, 242, 223, 0.14);
+      border-radius: var(--radius);
+      background: rgba(246, 242, 223, 0.14);
+    }
+
+    .week-stat {
+      min-height: 74px;
+      padding: 13px 12px;
+      background: rgba(246, 242, 223, 0.06);
+    }
+
+    .week-stat b {
+      display: block;
+      color: rgba(246, 242, 223, 0.52);
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    .week-stat strong {
+      display: block;
+      margin-top: 7px;
+      color: var(--paper-bright);
+      font-size: 18px;
+      font-weight: 950;
+      line-height: 1.1;
+    }
+
+    .brief-list {
+      display: grid;
+      align-content: start;
+      gap: 10px;
+      min-height: 0;
+    }
+
+    .brief-item {
+      position: relative;
+      min-height: 104px;
+      padding: 14px 14px 14px 18px;
+      border: 1px solid rgba(246, 242, 223, 0.16);
+      border-left: 6px solid var(--cyan);
+      border-radius: var(--radius);
+      background: rgba(246, 242, 223, 0.055);
+    }
+
+    .brief-item.hot { border-left-color: var(--red); }
+    .brief-item.safe { border-left-color: var(--green); }
+
+    .brief-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: rgba(246, 242, 223, 0.48);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .brief-item h2 {
+      margin-top: 9px;
+      color: var(--paper-bright);
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .brief-item p {
+      margin-top: 8px;
+      color: rgba(246, 242, 223, 0.64);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .reader-hook {
+      min-height: 82px;
+      padding: 14px;
+      border: 1px dashed rgba(246, 242, 223, 0.22);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(90deg, rgba(237, 56, 45, 0.1), transparent 42%),
+        rgba(246, 242, 223, 0.04);
+    }
+
+    .reader-hook b {
+      display: block;
+      color: var(--yellow);
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .reader-hook p {
+      margin-top: 8px;
+      color: rgba(246, 242, 223, 0.72);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .command-actions {
+      display: grid;
+      gap: 10px;
+    }
+
+    .primary-action,
+    .secondary-action {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      min-height: 54px;
+      border-radius: var(--radius);
+      font-weight: 950;
+      text-align: left;
+    }
+
+    .primary-action {
+      padding: 0 16px 0 18px;
+      border: 1px solid rgba(32, 195, 215, 0.76);
+      background:
+        linear-gradient(90deg, rgba(14, 138, 173, 0.92), rgba(16, 107, 145, 0.86)),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent);
+      color: #f8feff;
+      font-size: 17px;
+      box-shadow:
+        0 20px 48px rgba(32, 195, 215, 0.16),
+        0 18px 44px rgba(0, 0, 0, 0.34);
+    }
+
+    .secondary-action {
+      padding: 0 14px 0 16px;
+      border: 1px solid rgba(246, 242, 223, 0.16);
+      background: rgba(246, 242, 223, 0.045);
+      color: rgba(246, 242, 223, 0.74);
+      font-size: 13px;
+    }
+
+    .primary-action:hover,
+    .primary-action:focus-visible,
+    .secondary-action:hover,
+    .secondary-action:focus-visible {
+      outline: 2px solid rgba(246, 242, 223, 0.72);
+      outline-offset: 3px;
+    }
+
+    .action-mark {
+      display: inline-grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(246, 242, 223, 0.16);
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .toast {
+      min-height: 20px;
+      color: rgba(32, 195, 215, 0.82);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    @media (max-height: 820px) {
+      .office-command {
+        padding: 18px;
+      }
+
+      .command-content {
+        gap: 12px;
+      }
+
+      .command-title h1 {
+        margin-top: 6px;
+        font-size: 28px;
+        line-height: 1.08;
+      }
+
+      .command-title p {
+        margin-top: 8px;
+        font-size: 13px;
+        line-height: 1.42;
+      }
+
+      .week-stat {
+        min-height: 58px;
+        padding: 10px 11px;
+      }
+
+      .week-stat strong {
+        margin-top: 5px;
+        font-size: 17px;
+      }
+
+      .brief-list {
+        gap: 8px;
+      }
+
+      .brief-item {
+        min-height: 62px;
+        padding: 10px 12px 10px 16px;
+      }
+
+      .brief-item h2 {
+        margin-top: 6px;
+        font-size: 16px;
+      }
+
+      .brief-item p {
+        display: none;
+      }
+
+      .reader-hook {
+        min-height: 64px;
+        padding: 10px 12px;
+      }
+
+      .reader-hook p {
+        margin-top: 5px;
+        font-size: 12px;
+        line-height: 1.34;
+      }
+
+      .anomaly-monitor {
+        z-index: 5;
+      }
+
+      .editor-desk {
+        left: 82px;
+        right: 70px;
+        bottom: -78px;
+        z-index: 2;
+        height: 338px;
+      }
+
+      .primary-action,
+      .secondary-action {
+        min-height: 46px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="office-shell">
+    <nav class="topbar" aria-label="实验导航">
+      <p class="lab-note">编辑部入口包装实验 · 桌面 16:9 · 非正式主入口</p>
+      <div class="top-actions">
+        <a class="ghost-link" href="title-screen-homepage-ab-lab.html">返回标题页 A/B</a>
+        <a class="ghost-link" href="../prototype-hub.html">实验目录</a>
+      </div>
+    </nav>
+
+    <section class="office-stage" aria-label="世界未解之谜周刊编辑部入口">
+      <div class="room">
+        <div class="back-wall"></div>
+        <div class="floor"></div>
+
+        <div class="masthead-sign" aria-label="周刊招牌">
+          <img class="scene-art" src="assets/editorial-office/masthead-logo.svg" alt="" aria-hidden="true" draggable="false" />
+        </div>
+
+        <section class="topic-board" aria-label="本周议题线索墙">
+          <img class="scene-art scene-art-cover" id="topicBoardArt" src="assets/editorial-office/generated/agenda-blackboard-clean-v2.png" alt="" aria-hidden="true" draggable="false" />
+          <div class="topic-layer" aria-hidden="true">
+            <span class="board-thread one"></span>
+            <span class="board-thread two"></span>
+            <p class="board-sticker recap">
+              <img class="sticker-art" src="assets/editorial-office/generated/board-sticker-cream-note-1.png" alt="" aria-hidden="true" draggable="false" />
+              <span class="sticker-text">
+                <b>上期回响</b>
+                蓝光沿东海岸扩散
+              </span>
+            </p>
+            <p class="board-sticker oldline">
+              <img class="sticker-art" src="assets/editorial-office/generated/board-sticker-cream-note-2.png" alt="" aria-hidden="true" draggable="false" />
+              <span class="sticker-text">
+                <b>旧线继续</b>
+                M330 仍缺一段
+              </span>
+            </p>
+            <p class="board-sticker signal">
+              <img class="sticker-art" src="assets/editorial-office/generated/board-sticker-cyan-card.png" alt="" aria-hidden="true" draggable="false" />
+              <span class="sticker-text">
+                <b>区域预兆</b>
+                交通信号升温
+              </span>
+            </p>
+            <p class="board-sticker pressure">
+              <img class="sticker-art" src="assets/editorial-office/generated/board-sticker-red-strip.png" alt="" aria-hidden="true" draggable="false" />
+              <span class="sticker-text">
+                <b>科学会禁令</b>
+              </span>
+            </p>
+          </div>
+        </section>
+
+        <section class="letter-wall" aria-label="上期回响与本周特殊事件">
+          <img class="paper-signal-art" src="assets/editorial-office/generated/paper-signals.png" alt="" aria-hidden="true" draggable="false" />
+          <div class="notice-stack">
+            <p class="notice-card">
+              <strong>上期回响</strong>
+              “你们上期写的蓝光，我家窗外今晚也有。”
+            </p>
+            <p class="notice-card event">
+              <strong>本周特殊事件</strong>
+              科学会传真到桌：标题中禁用“活的天气”。
+            </p>
+          </div>
+        </section>
+
+        <section class="anomaly-monitor" aria-label="城市异常监测窗">
+          <div class="monitor-frame">
+            <img class="monitor-image" id="anomalyImage" src="assets/editorial-office/generated/window-city-astral-echo-pixel-v2.png" alt="" aria-hidden="true" draggable="false" />
+            <p class="monitor-readout" id="anomalyReadout">
+              <b>异常读数：天文类来信聚集。</b> 来源疑似上期头版回响；牵引东海岸夜间信号。
+            </p>
+          </div>
+          <div class="monitor-states" aria-label="异常状态切换">
+            <button class="state-button" type="button" data-state="astral" aria-pressed="true">天文<br />回响</button>
+            <button class="state-button" type="button" data-state="transit" aria-pressed="false">交通<br />错位</button>
+            <button class="state-button" type="button" data-state="signal" aria-pressed="false">信号<br />遮蔽</button>
+          </div>
+        </section>
+
+        <section class="editor-desk" aria-label="主编桌与印刷待命装置">
+          <img class="scene-art" src="assets/editorial-office/generated/editor-desk-press-compact.png" alt="" aria-hidden="true" draggable="false" />
+        </section>
+      </div>
+
+      <aside class="office-command" aria-label="本周编辑会操作台">
+        <div class="command-content">
+          <section class="command-title">
+            <p class="command-kicker">Weekly World Echo</p>
+            <h1>周开局回响，整理本周议程。</h1>
+            <p>上期刊发正在回到城市。先把读者回响、势力压力、旧线继续和区域预兆整理成议程，再进入本周编辑会。</p>
+          </section>
+
+          <div class="week-strip" aria-label="本周状态">
+            <div class="week-stat">
+              <b>截稿</b>
+              <strong>6 天</strong>
+            </div>
+            <div class="week-stat">
+              <b>头版目标</b>
+              <strong>1 篇</strong>
+            </div>
+            <div class="week-stat">
+              <b>压力</b>
+              <strong>科学会</strong>
+            </div>
+          </div>
+
+          <div class="brief-list" aria-label="本周议题信号">
+            <article class="brief-item hot">
+              <div class="brief-meta">
+                <span>上期回响</span>
+                <span>来源：读者来信</span>
+              </div>
+              <h2>蓝光目击在东海岸扩散。</h2>
+              <p>读者把上期解释带回家，窗外开始出现同类光点。本周需要判断它是公众误读，还是现实回声。</p>
+            </article>
+            <article class="brief-item">
+              <div class="brief-meta">
+                <span>旧线继续</span>
+                <span>来源：未结档案</span>
+              </div>
+              <h2>M330 末班车仍有一段空白。</h2>
+              <p>只显示当前已知环：乘客口述已归档，下一步可能回到交通线索。后续地点与真相暂不揭示。</p>
+            </article>
+            <article class="brief-item safe">
+              <div class="brief-meta">
+                <span>区域预兆</span>
+                <span>来源：异常监测窗</span>
+              </div>
+              <h2>交通类信号正在升温。</h2>
+              <p>窗外轨道灯带出现错位读数。它只提示题材倾向，具体事件仍等区域选择后展开。</p>
+            </article>
+          </div>
+
+          <section class="reader-hook" aria-label="本周特殊事件">
+            <b>本周特殊事件</b>
+            <p>科学会禁令传真已到：本周所有天气类解释会被额外盯防。它改变议程压力，不提前给出具体任务。</p>
+          </section>
+
+          <div class="command-actions">
+            <a class="primary-action" href="#briefing" id="briefingButton">
+              <span>进入本周议程</span>
+              <span class="action-mark" aria-hidden="true">→</span>
+            </a>
+            <a class="secondary-action" href="title-screen-homepage-ab-lab.html">
+              <span>回到标题页</span>
+              <span class="action-mark" aria-hidden="true">↩</span>
+            </a>
+            <p class="toast" id="toast" aria-live="polite"></p>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const toast = document.querySelector("#toast");
+    const topicBoardArt = document.querySelector("#topicBoardArt");
+    const anomalyImage = document.querySelector("#anomalyImage");
+    const anomalyReadout = document.querySelector("#anomalyReadout");
+    const artVariants = {
+      v2: {
+        board: "assets/editorial-office/generated/agenda-blackboard-clean-v2.png",
+        window: "assets/editorial-office/generated/window-city-astral-echo-pixel-v2.png"
+      },
+      v3: {
+        board: "assets/editorial-office/generated/agenda-blackboard-empty-pixel-v3.png",
+        window: "assets/editorial-office/generated/window-city-astral-echo-pixel-v3.png"
+      }
+    };
+    const artVariant = artVariants[params.get("art")] || artVariants.v2;
+    const anomalyStates = {
+      astral: {
+        image: artVariant.window,
+        readout: "<b>异常读数：天文类来信聚集。</b> 来源疑似上期头版回响；牵引东海岸夜间信号。"
+      },
+      transit: {
+        image: "assets/editorial-office/generated/city-anomaly-transit-rift.png",
+        readout: "<b>异常读数：交通类信号升温。</b> 轨道灯带出现错位；具体事件仍待区域选择后显形。"
+      },
+      signal: {
+        image: "assets/editorial-office/generated/city-anomaly-signal-blackout.png",
+        readout: "<b>异常读数：信号被外力遮蔽。</b> 来源疑似势力压制；本周公开措辞压力上升。"
+      }
+    };
+
+    if (params.get("capture") === "clean") {
+      document.body.classList.add("clean-capture");
+    }
+
+    topicBoardArt.src = artVariant.board;
+
+    function setAnomalyState(stateKey) {
+      const state = anomalyStates[stateKey];
+      if (!state) return;
+        anomalyImage.src = state.image;
+        anomalyReadout.innerHTML = state.readout;
+      document.querySelectorAll(".state-button").forEach((item) => {
+        item.setAttribute("aria-pressed", String(item.dataset.state === stateKey));
+      });
+    }
+
+    setAnomalyState(params.get("state") || "astral");
+
+    document.querySelectorAll(".state-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        setAnomalyState(button.dataset.state);
+      });
+    });
+
+    document.querySelector("#briefingButton").addEventListener("click", (event) => {
+      event.preventDefault();
+      toast.textContent = "本周议程稍后接入：当前入口先验证世界回响、特殊事件和区域预兆的开局组织方式。";
+    });
+  </script>
+</body>
+</html>

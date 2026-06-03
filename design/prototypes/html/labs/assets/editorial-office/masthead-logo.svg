@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 210" role="img" aria-labelledby="title desc">
+  <title id="title">世界未解之谜周刊刊头</title>
+  <desc id="desc">红蓝错印的周刊招牌，带主编室标记和印刷定位符。</desc>
+  <defs>
+    <pattern id="dots" width="10" height="10" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#20c3d7" opacity=".28"/>
+      <circle cx="7" cy="7" r="1.1" fill="#ed382d" opacity=".22"/>
+    </pattern>
+    <filter id="rough-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="10" dy="12" stdDeviation="0" flood-color="#ed382d" flood-opacity=".28"/>
+      <feDropShadow dx="18" dy="20" stdDeviation="0" flood-color="#20c3d7" flood-opacity=".2"/>
+    </filter>
+  </defs>
+  <style>
+    .paper { fill: #142022; stroke: #fff1c9; stroke-width: 5; }
+    .edge { fill: #ed382d; }
+    .cyan { fill: #20c3d7; }
+    .ink { fill: #fff1c9; font-family: "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif; font-weight: 900; }
+    .small { fill: #d7cfb7; font-family: "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif; font-weight: 800; letter-spacing: .6px; }
+    .black { fill: #05080b; }
+  </style>
+  <g transform="translate(26 22) rotate(-1.6 286 82)" filter="url(#rough-shadow)">
+    <path d="M0 22 545 0l20 122L18 142Z" fill="#071012"/>
+    <path d="M13 28 548 8l14 112L29 132Z" class="paper"/>
+    <path d="M13 28 59 26l9 105-39 1Z" class="edge"/>
+    <path d="M75 28 548 10l3 22L78 50Z" fill="#fff1c9" opacity=".08"/>
+    <path d="M515 14 552 13l3 29-35 1Z" class="cyan" opacity=".72"/>
+    <rect x="25" y="38" width="526" height="88" fill="url(#dots)" opacity=".55"/>
+    <text x="72" y="76" class="ink" font-size="44" paint-order="stroke" stroke="#071012" stroke-width="8">世界未解之谜周刊</text>
+    <text x="72" y="76" font-family="Microsoft YaHei, Noto Sans SC, system-ui, sans-serif" font-size="44" font-weight="900" fill="#20c3d7" opacity=".58" transform="translate(4 -3)">世界未解之谜周刊</text>
+    <text x="72" y="76" font-family="Microsoft YaHei, Noto Sans SC, system-ui, sans-serif" font-size="44" font-weight="900" fill="#ed382d" opacity=".58" transform="translate(-4 4)">世界未解之谜周刊</text>
+    <text x="76" y="111" class="small" font-size="18">主编室 · WORLD MYSTERIES WEEKLY</text>
+    <path d="M450 94h86v14h-86zm-410 0h34v14H40z" class="black" opacity=".72"/>
+    <path d="M478 42h18v18h-18zm25 0h18v18h-18zm25 0h18v18h-18z" class="black" opacity=".74"/>
+    <path d="M490 134h42m-21-21v42" stroke="#fff1c9" stroke-width="3" opacity=".68"/>
+  </g>
+</svg>

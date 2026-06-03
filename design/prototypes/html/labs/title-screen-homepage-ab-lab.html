@@ -356,6 +356,11 @@
       box-shadow: 0 0 16px rgba(237, 56, 45, 0.38);
     }
 
+    .clean-capture .top-tools,
+    .clean-capture .issue-strip {
+      display: none;
+    }
+
     .sample-section {
       min-height: 46vh;
       padding: 54px 0 70px;
@@ -587,12 +592,12 @@
         <h1 class="logo" data-title="世界未解之谜周刊">
           <span>世界</span><span class="mark">未解</span><span>之谜</span><span>周刊</span>
         </h1>
-        <p class="tagline">办一份会改变现实的未解之谜周刊。</p>
+        <p class="tagline">你接手一份会改变现实的未解之谜周刊。</p>
         <p class="support">调查线索，选择解释，组成本期头版，让读者与城市对你的刊发产生回响。</p>
 
         <nav class="menu" aria-label="首页菜单">
-          <a class="primary-action" href="#start" id="startButton">
-            <span>开始组稿</span>
+          <a class="primary-action" href="editorial-office-entry-lab.html" id="startButton">
+            <span>进入编辑部</span>
             <span class="action-mark" aria-hidden="true">→</span>
           </a>
           <div class="secondary-actions">
@@ -632,6 +637,7 @@
   </section>
 
   <script>
+    const params = new URLSearchParams(window.location.search);
     const root = document.querySelector(".title-screen");
     const status = document.querySelector("#status");
     const variantButtons = [...document.querySelectorAll("[data-set-variant]")];
@@ -650,12 +656,11 @@
       button.addEventListener("click", () => setVariant(button.dataset.setVariant));
     });
 
-    document.querySelector("#startButton").addEventListener("click", (event) => {
-      event.preventDefault();
-      status.textContent = "本期组稿台稍后接入；当前实验只验证首页第一眼与入口层级。";
-    });
+    if (params.get("capture") === "clean") {
+      document.body.classList.add("clean-capture");
+    }
 
-    if (new URLSearchParams(window.location.search).get("variant") === "b") {
+    if (params.get("variant") === "b") {
       setVariant("b");
     }
   </script>
