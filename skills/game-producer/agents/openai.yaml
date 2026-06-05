@@ -1,0 +1,4 @@
+interface:
+  display_name: "Game Producer"
+  short_description: "用制作人视角评估立项、范围、里程碑、熔断风险，不覆盖 SIA 或 UI/UX 链路。"
+  default_prompt: "使用 game-producer 评估这个方向或功能是否值得继续投入，输出制作人判断、关键风险、范围取舍和下一里程碑。"

@@ -23,6 +23,7 @@ tmp/*
 
 # Codex / bridge local state
 .codepilot-uploads/
+.codex-remote-attachments/
 .codex_tmp/
 .local/
 skills/.claude-to-im/config.env
@@ -42,6 +43,7 @@ tools/godot/*
 # Rendered previews / export artifacts
 artifacts/
 image_gen/
+docs/screenshots/**/*.wav
 
 # Optional: if you add Node later
 node_modules/

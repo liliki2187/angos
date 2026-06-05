@@ -32,6 +32,8 @@ var card := {
 # === 场景路径 ===
 var scene_paths := {
 	"main_menu": "res://scenes/ui/main_menu/MainMenu.tscn",
+	"title_screen": "res://scenes/ui/title_screen/TitleScreen.tscn",
+	"editorial_office_entry": "res://scenes/ui/editorial_office/EditorialOfficeEntry.tscn",
 	"card_collection": "res://scenes/gameplay/card_collection/CardCollection.tscn",
 	"event_check": "res://scenes/gameplay/event_check/EventCheck.tscn",
 	"weekly_run": "res://scenes/gameplay/weekly_run/WeeklyRunGame.tscn",

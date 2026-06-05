@@ -12,3 +12,4 @@
 当前案例：
 
 - `2026-06-02-title-screen-and-reader-echo.md`：界面包装方向、标题页吸引力、读者来信薄层。
+- `2026-06-05-in-game-sampling-and-taste-training.md`：游戏内小设计采样、SIA 品位训练、防臃肿模式卡。

@@ -8,11 +8,15 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Angus"
-run/main_scene="res://scenes/ui/main_menu/MainMenu.tscn"
-config/features=PackedStringArray("4.3")
+run/main_scene="res://scenes/ui/title_screen/TitleScreen.tscn"
+config/features=PackedStringArray("4.6")
 
 [autoload]
 
@@ -28,7 +32,3 @@ window/stretch/aspect="expand"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/nklbdev.importality/plugin.cfg")
-
-[rendering]
-
-renderer/rendering_method="mobile"

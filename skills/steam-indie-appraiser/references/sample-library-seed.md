@@ -4,6 +4,8 @@
 
 当前第一眼素材研究的主样本表位于 `docs/research/steam-first-eye-assets-sample-bank.md`。本文件保留为技能内的轻量种子清单；需要批量采集头图 / 宣传片时，优先读取 `first-eye-assets-research-workflow.md` 和该 research 样本表。
 
+游戏内小设计、互动彩蛋和系统细节研究按 `in-game-design-discovery-workflow.md` 执行；正式样本优先记录到 `docs/research/steam-in-game-design-sample-bank.md`。下列游戏名只作为候选池，不能替代实机证据。
+
 ## 直接相邻样本
 
 | 游戏 | 维度 | 初始观察 |
@@ -17,6 +19,23 @@
 | Papers, Please | 岗位判断、期限压力、政治后果 | 学职业动作和道德压力，不照搬边检题材 |
 | Lil' Guardsman | 岗位判断、幽默、轻量推理 | 学降低门槛和角色化包装 |
 | Not For Broadcast | 媒体编辑、舆论操控、实时压力 | 学“公开传播选择”如何产生后果 |
+
+## 游戏内小设计候选池
+
+| 游戏 | 候选观察方向 | 采样提醒 |
+| --- | --- | --- |
+| Papers, Please | 文件、印章、规则例外、失败反馈 | 优先看实机操作与错判后果，不只看道德选择概述 |
+| Not For Broadcast | 切台、审查、广告、直播事故 | 记录玩家输入、播出画面变化和后续反馈 |
+| Strange Horticulture | 植物鉴定、地图、顾客反馈、错误交付 | 验证每个小点是否有操作步骤和后续状态 |
+| Inscryption | 桌面物件、规则破界、重复行为回应 | 区分核心系统、解谜和纯叙事惊吓 |
+| The Stanley Parable | 偏离指令、旁白回应、路线反应 | 只采有玩家行为和系统响应的结构，不采纯段子 |
+| DREDGE | 日常职业动作被异常污染 | 看钓鱼、回港、夜间状态如何表现和影响决策 |
+| Return of the Obra Dinn | 工具使用、身份推断、错误与确认反馈 | 学“证据工作”怎样变成可操作仪式 |
+| The Case of the Golden Idol | 场景观察、词条填空、验证反馈 | 关注玩家怎样从散乱信息组装解释 |
+| TUNIC | 手册、符号、隐藏规则学习 | 需要视频或攻略步骤支撑，避免只说“有秘密” |
+| Animal Well | 道具复用、环境响应、隐藏路径 | 必须用实机视频或攻略复现步骤采样 |
+| Outer Wilds | 时间循环、知识解锁、环境谜题 | 只拆可迁移的小型知识反馈，不学大型结构 |
+| Rain World | 生物生态、行为观察、系统性意外 | 成本高，主要用于理解“系统涌现”而非直接迁移 |
 
 ## 神秘知识 / 异常日常样本
 

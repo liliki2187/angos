@@ -1,0 +1,4 @@
+interface:
+  display_name: "Game Logic Check"
+  short_description: "只读审查 Angus 规则、状态机、边界条件、跨系统矛盾和叙事一致性漏洞。"
+  default_prompt: "使用 game-logic-check 对已成形的规则、GDD、配表或剧情时间线做只读逻辑审查，输出 PASS/FAIL、问题清单、规则依赖图和覆盖度。"

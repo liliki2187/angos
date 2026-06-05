@@ -1,0 +1,4 @@
+interface:
+  display_name: "Game Numerical"
+  short_description: "为 Angus 主干数值校准达标率、概率、任务目标、黑骰、周压力、发刊和势力参数。"
+  default_prompt: "使用 game-numerical 为 Angus 数值问题输出体验目标、公式变量、参数区间、配表和验证方案。"

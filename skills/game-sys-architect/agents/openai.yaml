@@ -1,0 +1,4 @@
+interface:
+  display_name: "Game System Architect"
+  short_description: "只读梳理 Angus 核心循环、系统边界、依赖/耦合、资源流和系统注册。"
+  default_prompt: "使用 game-sys-architect 对 Angus 的系统结构、新系统注册、依赖耦合或资源流做只读架构审查，输出系统树、注册表、依赖图、资源流和交接建议。"

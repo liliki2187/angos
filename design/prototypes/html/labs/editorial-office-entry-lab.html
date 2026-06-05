@@ -276,8 +276,9 @@
       transform-origin: left center;
     }
 
-    .board-thread.one { left: 138px; top: 112px; width: 100px; transform: rotate(12deg); }
-    .board-thread.two { left: 226px; top: 124px; width: 82px; transform: rotate(48deg); }
+    .board-thread.one { left: 132px; top: 112px; width: 106px; transform: rotate(12deg); }
+    .board-thread.two { left: 222px; top: 126px; width: 86px; transform: rotate(48deg); }
+    .board-thread.three { left: 256px; top: 164px; width: 58px; transform: rotate(-6deg); }
 
     .board-sticker {
       position: absolute;
@@ -332,9 +333,9 @@
     }
 
     .board-sticker.signal {
-      left: 132px;
-      top: 128px;
-      width: 132px;
+      left: 128px;
+      top: 126px;
+      width: 138px;
       height: 74px;
       transform: rotate(-1deg);
     }
@@ -343,8 +344,8 @@
       padding: 16px 16px 8px;
     }
 
-    .board-sticker.pressure {
-      left: 268px;
+    .board-sticker.nextstep {
+      left: 270px;
       top: 150px;
       width: 128px;
       height: 44px;
@@ -352,16 +353,16 @@
       transform: rotate(3deg);
     }
 
-    .board-sticker.pressure .sticker-text {
+    .board-sticker.nextstep .sticker-text {
       padding: 9px 12px;
     }
 
-    .board-sticker.pressure .sticker-text b {
+    .board-sticker.nextstep .sticker-text b {
       color: var(--paper-bright);
     }
 
     .topic-board h2,
-    .letter-wall h2,
+    .broadcast-station h2,
     .press-machine h2 {
       color: var(--paper-bright);
       font-size: 14px;
@@ -421,70 +422,87 @@
     .string.b { left: 180px; top: 82px; width: 94px; transform: rotate(102deg); }
     .string.c { left: 88px; top: 92px; width: 142px; transform: rotate(44deg); }
 
-    .letter-wall {
+    .broadcast-station {
       position: absolute;
-      right: 38px;
-      top: 38px;
-      width: 304px;
-      height: 198px;
-      overflow: hidden;
-      padding: 12px;
-      border: 1px solid rgba(32, 195, 215, 0.42);
-      background:
-        linear-gradient(135deg, rgba(32, 195, 215, 0.1), rgba(237, 56, 45, 0.07)),
-        rgba(5, 8, 11, 0.78);
-      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
+      right: 42px;
+      top: 42px;
+      width: 344px;
+      height: 218px;
+      overflow: visible;
+      padding: 0;
+      border: 0;
+      border-radius: 4px;
+      background: transparent;
+      box-shadow: none;
       transform: rotate(-0.9deg);
     }
 
-    .paper-signal-art {
+    .broadcast-button {
       position: absolute;
-      inset: -38px -80px auto -72px;
-      width: 430px;
-      height: 226px;
-      object-fit: cover;
-      opacity: 0.58;
-      filter: saturate(0.92) contrast(1.08);
-    }
-
-    .notice-stack {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      align-content: end;
-      gap: 8px;
+      inset: 0;
+      display: block;
+      width: 100%;
       height: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      text-align: left;
     }
 
-    .notice-card {
-      min-height: 52px;
-      padding: 8px 10px 8px 12px;
+    .broadcast-button:hover,
+    .broadcast-button:focus-visible {
+      outline: 2px solid rgba(246, 242, 223, 0.74);
+      outline-offset: 3px;
+    }
+
+    .broadcast-art {
+      position: absolute;
+      left: -22px;
+      top: -10px;
+      width: calc(100% + 44px);
+      height: auto;
+      object-fit: contain;
+      opacity: 0.94;
+      filter: saturate(0.92) contrast(1.05);
+    }
+
+    .broadcast-caption {
+      position: absolute;
+      left: 30px;
+      right: 82px;
+      bottom: 18px;
+      z-index: 2;
+      padding: 8px 10px 9px 12px;
       border-left: 5px solid var(--cyan);
-      background: rgba(3, 5, 7, 0.78);
-      color: rgba(246, 242, 223, 0.82);
+      background: rgba(3, 5, 7, 0.82);
+      color: rgba(246, 242, 223, 0.78);
       font-size: 12px;
       font-weight: 800;
-      line-height: 1.34;
+      line-height: 1.32;
       box-shadow: 0 10px 24px rgba(0, 0, 0, 0.26);
     }
 
-    .notice-card strong {
+    .broadcast-caption strong {
       display: block;
       color: var(--paper-bright);
       font-size: 13px;
       font-weight: 950;
     }
 
-    .notice-card.event { border-left-color: var(--red); }
+    .broadcast-caption span {
+      display: block;
+      margin-top: 3px;
+    }
 
     .anomaly-monitor {
       position: absolute;
-      right: 48px;
-      top: 288px;
-      width: 360px;
-      height: 236px;
+      right: 56px;
+      top: 304px;
+      width: 342px;
+      height: 224px;
       z-index: 1;
       display: block;
+      opacity: 0.92;
     }
 
     .monitor-frame {
@@ -496,12 +514,12 @@
       border: 0;
       border-radius: 4px;
       background:
-        linear-gradient(180deg, #25211d, #0b0d0d 72%),
+        linear-gradient(180deg, #221f1b, #0b0d0d 72%),
         #090c0d;
       box-shadow:
         0 18px 44px rgba(0, 0, 0, 0.34),
         0 0 0 1px rgba(246, 242, 223, 0.16),
-        inset 0 0 0 2px rgba(237, 56, 45, 0.2),
+        inset 0 0 0 2px rgba(32, 195, 215, 0.12),
         inset 0 -12px 0 rgba(3, 5, 7, 0.74);
     }
 
@@ -551,12 +569,12 @@
       right: auto;
       bottom: -18px;
       z-index: 4;
-      width: 248px;
-      padding: 8px 10px;
+      width: 204px;
+      padding: 7px 9px;
       border: 1px solid rgba(3, 5, 7, 0.52);
       background: #decc98;
       color: #17120b;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 850;
       line-height: 1.25;
       box-shadow: 0 12px 22px rgba(0, 0, 0, 0.34);
@@ -858,27 +876,55 @@
       line-height: 1.1;
     }
 
-    .brief-list {
+    .todo-list {
       display: grid;
       align-content: start;
       gap: 10px;
       min-height: 0;
     }
 
-    .brief-item {
+    .todo-card {
       position: relative;
-      min-height: 104px;
-      padding: 14px 14px 14px 18px;
+      min-height: 102px;
+      padding: 13px 13px 13px 17px;
       border: 1px solid rgba(246, 242, 223, 0.16);
       border-left: 6px solid var(--cyan);
       border-radius: var(--radius);
       background: rgba(246, 242, 223, 0.055);
+      color: inherit;
+      text-align: left;
+      transition: border-color 140ms ease, background 140ms ease, transform 140ms ease;
     }
 
-    .brief-item.hot { border-left-color: var(--red); }
-    .brief-item.safe { border-left-color: var(--green); }
+    .todo-card.must { border-left-color: var(--red); }
+    .todo-card.hold { border-left-color: var(--green); }
 
-    .brief-meta {
+    .todo-card:hover,
+    .todo-card:focus-visible {
+      outline: 2px solid rgba(246, 242, 223, 0.72);
+      outline-offset: 2px;
+      background: rgba(246, 242, 223, 0.085);
+      transform: translateX(-2px);
+    }
+
+    .todo-card.is-done {
+      border-left-color: rgba(111, 191, 130, 0.74);
+      background:
+        linear-gradient(90deg, rgba(111, 191, 130, 0.1), transparent 42%),
+        rgba(246, 242, 223, 0.04);
+    }
+
+    .todo-card.is-done::after {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      content: "已处理";
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 950;
+    }
+
+    .todo-meta {
       display: flex;
       justify-content: space-between;
       gap: 12px;
@@ -888,21 +934,35 @@
       text-transform: uppercase;
     }
 
-    .brief-item h2 {
+    .todo-card h2 {
       margin-top: 9px;
       color: var(--paper-bright);
-      font-size: 18px;
+      font-size: 17px;
       line-height: 1.2;
     }
 
-    .brief-item p {
+    .todo-card p {
       margin-top: 8px;
       color: rgba(246, 242, 223, 0.64);
       font-size: 13px;
       line-height: 1.45;
     }
 
-    .reader-hook {
+    .todo-fate {
+      display: inline-flex;
+      align-items: center;
+      min-height: 20px;
+      margin-top: 9px;
+      padding: 2px 7px;
+      border: 1px solid rgba(246, 242, 223, 0.14);
+      border-radius: 999px;
+      background: rgba(3, 5, 7, 0.42);
+      color: rgba(246, 242, 223, 0.72);
+      font-size: 11px;
+      font-weight: 950;
+    }
+
+    .queue-footer {
       min-height: 82px;
       padding: 14px;
       border: 1px dashed rgba(246, 242, 223, 0.22);
@@ -912,18 +972,23 @@
         rgba(246, 242, 223, 0.04);
     }
 
-    .reader-hook b {
+    .queue-footer b {
       display: block;
       color: var(--yellow);
       font-size: 12px;
       font-weight: 950;
     }
 
-    .reader-hook p {
+    .queue-footer p {
       margin-top: 8px;
       color: rgba(246, 242, 223, 0.72);
       font-size: 13px;
       line-height: 1.5;
+    }
+
+    .queue-footer strong {
+      color: var(--paper-bright);
+      font-weight: 950;
     }
 
     .command-actions {
@@ -990,6 +1055,319 @@
       font-weight: 850;
     }
 
+    .event-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: none;
+      place-items: center;
+      padding: 56px;
+      background:
+        radial-gradient(ellipse 760px 420px at 48% 36%, rgba(32, 195, 215, 0.12), transparent 62%),
+        rgba(3, 5, 7, 0.78);
+      backdrop-filter: blur(5px);
+    }
+
+    .event-overlay.is-open {
+      display: grid;
+    }
+
+    .overlay-shell {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      width: min(980px, calc(100vw - 180px));
+      min-height: 540px;
+      overflow: hidden;
+      border: 1px solid rgba(246, 242, 223, 0.22);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(246, 242, 223, 0.055), transparent 38%),
+        #090d10;
+      box-shadow:
+        0 30px 100px rgba(0, 0, 0, 0.64),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.028);
+    }
+
+    .overlay-shell::before {
+      position: absolute;
+      inset: 0;
+      content: "";
+      background:
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.026) 0 1px, transparent 1px 5px),
+        repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.18) 0 2px, transparent 2px 11px);
+      opacity: 0.48;
+      pointer-events: none;
+    }
+
+    .overlay-head,
+    .overlay-body {
+      position: relative;
+      z-index: 1;
+    }
+
+    .overlay-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: start;
+      padding: 22px 24px 16px;
+      border-bottom: 1px solid rgba(246, 242, 223, 0.12);
+      background: rgba(246, 242, 223, 0.03);
+    }
+
+    .overlay-kicker {
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .overlay-title {
+      margin-top: 7px;
+      color: var(--paper-bright);
+      font-size: 28px;
+      font-weight: 950;
+      line-height: 1.12;
+    }
+
+    .overlay-close {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border: 1px solid rgba(246, 242, 223, 0.16);
+      border-radius: 50%;
+      background: rgba(246, 242, 223, 0.07);
+      color: rgba(246, 242, 223, 0.74);
+      font-size: 20px;
+      font-weight: 950;
+    }
+
+    .overlay-close:hover,
+    .overlay-close:focus-visible {
+      outline: 2px solid rgba(246, 242, 223, 0.72);
+      outline-offset: 2px;
+    }
+
+    .overlay-body {
+      min-height: 0;
+      padding: 24px;
+    }
+
+    .dialogue-layout {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: 26px;
+      align-items: end;
+      height: 100%;
+    }
+
+    .portrait-stage {
+      position: relative;
+      min-height: 390px;
+      overflow: hidden;
+      border: 1px solid rgba(246, 242, 223, 0.14);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(ellipse 240px 220px at 50% 62%, rgba(32, 195, 215, 0.12), transparent 68%),
+        linear-gradient(180deg, rgba(237, 56, 45, 0.08), transparent 42%),
+        rgba(3, 5, 7, 0.55);
+    }
+
+    .portrait-stage img {
+      position: absolute;
+      left: 50%;
+      bottom: -6px;
+      width: 118%;
+      max-width: none;
+      transform: translateX(-50%);
+      image-rendering: auto;
+      filter:
+        drop-shadow(0 24px 30px rgba(0, 0, 0, 0.42))
+        saturate(0.94)
+        contrast(1.06);
+    }
+
+    .dialogue-card {
+      display: grid;
+      gap: 16px;
+      padding: 20px;
+      border: 1px solid rgba(246, 242, 223, 0.17);
+      border-left: 6px solid var(--red);
+      border-radius: var(--radius);
+      background: rgba(246, 242, 223, 0.065);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
+    }
+
+    .dialogue-card blockquote {
+      margin: 0;
+      color: var(--paper-bright);
+      font-size: 22px;
+      font-weight: 950;
+      line-height: 1.34;
+    }
+
+    .dialogue-card p,
+    .letter-detail p,
+    .broadcast-detail p {
+      color: rgba(246, 242, 223, 0.72);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .choice-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .choice-button {
+      min-height: 46px;
+      padding: 9px 11px;
+      border: 1px solid rgba(32, 195, 215, 0.46);
+      border-radius: var(--radius);
+      background: rgba(32, 195, 215, 0.12);
+      color: var(--paper-bright);
+      font-size: 13px;
+      font-weight: 950;
+      text-align: left;
+    }
+
+    .choice-button:hover,
+    .choice-button:focus-visible {
+      outline: 2px solid rgba(246, 242, 223, 0.72);
+      outline-offset: 2px;
+    }
+
+    .choice-result {
+      min-height: 22px;
+      color: rgba(32, 195, 215, 0.9);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .letter-layout {
+      display: grid;
+      grid-template-columns: 390px minmax(0, 1fr);
+      gap: 26px;
+      align-items: center;
+      height: 100%;
+    }
+
+    .letter-paper {
+      position: relative;
+      min-height: 450px;
+      filter: drop-shadow(0 26px 38px rgba(0, 0, 0, 0.38));
+      transform: rotate(-1.4deg);
+    }
+
+    .letter-paper img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+    }
+
+    .letter-copy {
+      position: absolute;
+      inset: 88px 54px 56px 54px;
+      color: #16110a;
+      text-shadow: none;
+    }
+
+    .letter-copy b {
+      display: block;
+      color: #15100b;
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    .letter-copy strong {
+      display: block;
+      margin-top: 28px;
+      font-size: 24px;
+      font-weight: 950;
+      line-height: 1.25;
+    }
+
+    .letter-copy span {
+      display: block;
+      margin-top: 22px;
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.42;
+    }
+
+    .letter-detail,
+    .broadcast-detail {
+      display: grid;
+      align-content: center;
+      gap: 14px;
+    }
+
+    .fact-strip {
+      display: grid;
+      gap: 8px;
+    }
+
+    .fact-strip span {
+      display: block;
+      padding: 9px 11px;
+      border-left: 5px solid var(--cyan);
+      background: rgba(246, 242, 223, 0.07);
+      color: rgba(246, 242, 223, 0.78);
+      font-size: 13px;
+      font-weight: 850;
+      line-height: 1.36;
+    }
+
+    .fact-strip span:nth-child(2) { border-left-color: var(--yellow); }
+    .fact-strip span:nth-child(3) { border-left-color: var(--red); }
+
+    .broadcast-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: 26px;
+      align-items: center;
+      height: 100%;
+    }
+
+    .broadcast-screen {
+      position: relative;
+      min-height: 420px;
+      overflow: hidden;
+      border: 1px solid rgba(246, 242, 223, 0.16);
+      border-radius: var(--radius);
+      background: rgba(3, 5, 7, 0.76);
+      box-shadow: 0 24px 54px rgba(0, 0, 0, 0.42);
+    }
+
+    .broadcast-screen img {
+      position: absolute;
+      inset: -8px;
+      width: calc(100% + 16px);
+      height: calc(100% + 16px);
+      object-fit: cover;
+      filter: saturate(0.95) contrast(1.06);
+    }
+
+    .broadcast-lower {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: 22px;
+      padding: 12px 14px;
+      border-left: 6px solid var(--red);
+      background: rgba(3, 5, 7, 0.84);
+      color: var(--paper-bright);
+      font-size: 18px;
+      font-weight: 950;
+      line-height: 1.25;
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.34);
+    }
+
     @media (max-height: 820px) {
       .office-command {
         padding: 18px;
@@ -1021,30 +1399,34 @@
         font-size: 17px;
       }
 
-      .brief-list {
+      .todo-list {
         gap: 8px;
       }
 
-      .brief-item {
+      .todo-card {
         min-height: 62px;
         padding: 10px 12px 10px 16px;
       }
 
-      .brief-item h2 {
+      .todo-card h2 {
         margin-top: 6px;
         font-size: 16px;
       }
 
-      .brief-item p {
+      .todo-card p {
         display: none;
       }
 
-      .reader-hook {
+      .todo-fate {
+        margin-top: 7px;
+      }
+
+      .queue-footer {
         min-height: 64px;
         padding: 10px 12px;
       }
 
-      .reader-hook p {
+      .queue-footer p {
         margin-top: 5px;
         font-size: 12px;
         line-height: 1.34;
@@ -1065,6 +1447,39 @@
       .primary-action,
       .secondary-action {
         min-height: 46px;
+      }
+
+      .event-overlay {
+        padding: 34px;
+      }
+
+      .overlay-shell {
+        width: min(940px, calc(100vw - 120px));
+        min-height: 500px;
+      }
+
+      .overlay-head {
+        padding: 18px 20px 13px;
+      }
+
+      .overlay-title {
+        font-size: 24px;
+      }
+
+      .overlay-body {
+        padding: 18px;
+      }
+
+      .portrait-stage {
+        min-height: 340px;
+      }
+
+      .letter-paper {
+        min-height: 410px;
+      }
+
+      .broadcast-screen {
+        min-height: 370px;
       }
     }
   </style>
@@ -1093,55 +1508,52 @@
           <div class="topic-layer" aria-hidden="true">
             <span class="board-thread one"></span>
             <span class="board-thread two"></span>
+            <span class="board-thread three"></span>
             <p class="board-sticker recap">
               <img class="sticker-art" src="assets/editorial-office/generated/board-sticker-cream-note-1.png" alt="" aria-hidden="true" draggable="false" />
               <span class="sticker-text">
-                <b>上期回响</b>
-                蓝光沿东海岸扩散
+                <b>已刊发</b>
+                东海岸蓝光
               </span>
             </p>
             <p class="board-sticker oldline">
               <img class="sticker-art" src="assets/editorial-office/generated/board-sticker-cream-note-2.png" alt="" aria-hidden="true" draggable="false" />
               <span class="sticker-text">
-                <b>旧线继续</b>
-                M330 仍缺一段
+                <b>旧线缺口</b>
+                M330 空白段
               </span>
             </p>
             <p class="board-sticker signal">
               <img class="sticker-art" src="assets/editorial-office/generated/board-sticker-cyan-card.png" alt="" aria-hidden="true" draggable="false" />
               <span class="sticker-text">
-                <b>区域预兆</b>
-                交通信号升温
+                <b>当前课题</b>
+                第二个月亮还没找到源头
               </span>
             </p>
-            <p class="board-sticker pressure">
+            <p class="board-sticker nextstep">
               <img class="sticker-art" src="assets/editorial-office/generated/board-sticker-red-strip.png" alt="" aria-hidden="true" draggable="false" />
               <span class="sticker-text">
-                <b>科学会禁令</b>
+                <b>下一站：天文台</b>
               </span>
             </p>
           </div>
         </section>
 
-        <section class="letter-wall" aria-label="上期回响与本周特殊事件">
-          <img class="paper-signal-art" src="assets/editorial-office/generated/paper-signals.png" alt="" aria-hidden="true" draggable="false" />
-          <div class="notice-stack">
-            <p class="notice-card">
-              <strong>上期回响</strong>
-              “你们上期写的蓝光，我家窗外今晚也有。”
-            </p>
-            <p class="notice-card event">
-              <strong>本周特殊事件</strong>
-              科学会传真到桌：标题中禁用“活的天气”。
-            </p>
-          </div>
+        <section class="broadcast-station" aria-label="电视广播世界回响">
+          <button class="broadcast-button" type="button" data-event="broadcast" aria-label="查看深夜城市插播">
+            <img class="broadcast-art" src="assets/editorial-office/generated/tv-broadcast-crt-component-v1.png" alt="" aria-hidden="true" draggable="false" />
+            <span class="broadcast-caption">
+              <strong>深夜城市频道</strong>
+              <span>东海岸热线暴增；主播坚持称那只是“普通蓝光”。</span>
+            </span>
+          </button>
         </section>
 
         <section class="anomaly-monitor" aria-label="城市异常监测窗">
           <div class="monitor-frame">
-            <img class="monitor-image" id="anomalyImage" src="assets/editorial-office/generated/window-city-astral-echo-pixel-v2.png" alt="" aria-hidden="true" draggable="false" />
+            <img class="monitor-image" id="anomalyImage" src="assets/editorial-office/generated/window-city-rain-ambient-v1.png" alt="" aria-hidden="true" draggable="false" />
             <p class="monitor-readout" id="anomalyReadout">
-              <b>异常读数：天文类来信聚集。</b> 来源疑似上期头版回响；牵引东海岸夜间信号。
+              <b>窗外：雨夜。</b> 蓝光很远，暂时只像天气。
             </p>
           </div>
           <div class="monitor-states" aria-label="异常状态切换">
@@ -1159,9 +1571,9 @@
       <aside class="office-command" aria-label="本周编辑会操作台">
         <div class="command-content">
           <section class="command-title">
-            <p class="command-kicker">Weekly World Echo</p>
-            <h1>周开局回响，整理本周议程。</h1>
-            <p>上期刊发正在回到城市。先把读者回响、势力压力、旧线继续和区域预兆整理成议程，再进入本周编辑会。</p>
+            <p class="command-kicker">Weekly Desk Queue</p>
+            <h1>先处理待办，再开本周编辑会。</h1>
+            <p>来信、传真和来访会改变本周议程。部分事项今天必须拆，部分可以跨周留下。</p>
           </section>
 
           <div class="week-strip" aria-label="本周状态">
@@ -1179,41 +1591,44 @@
             </div>
           </div>
 
-          <div class="brief-list" aria-label="本周议题信号">
-            <article class="brief-item hot">
-              <div class="brief-meta">
-                <span>上期回响</span>
-                <span>来源：读者来信</span>
+          <div class="todo-list" aria-label="本周待办">
+            <button class="todo-card must" type="button" data-event="science">
+              <div class="todo-meta">
+                <span>势力传真</span>
+                <span>今日必须</span>
               </div>
-              <h2>蓝光目击在东海岸扩散。</h2>
-              <p>读者把上期解释带回家，窗外开始出现同类光点。本周需要判断它是公众误读，还是现实回声。</p>
-            </article>
-            <article class="brief-item">
-              <div class="brief-meta">
-                <span>旧线继续</span>
-                <span>来源：未结档案</span>
+              <h2>科学会要求改掉“活的天气”。</h2>
+              <p>接受限制、追问代价或先搁置；会影响本周天气类报道压力。</p>
+              <span class="todo-fate">不处理：本周压力上升</span>
+            </button>
+            <button class="todo-card" type="button" data-event="letter">
+              <div class="todo-meta">
+                <span>读者来信</span>
+                <span>本周消失</span>
               </div>
-              <h2>M330 末班车仍有一段空白。</h2>
-              <p>只显示当前已知环：乘客口述已归档，下一步可能回到交通线索。后续地点与真相暂不揭示。</p>
-            </article>
-            <article class="brief-item safe">
-              <div class="brief-meta">
-                <span>区域预兆</span>
-                <span>来源：异常监测窗</span>
+              <h2>蓝光目击来信堆到桌边。</h2>
+              <p>读者称上期蓝光解释正在窗外重演；处理后写入下周钩子。</p>
+              <span class="todo-fate">处理后：归档为线索</span>
+            </button>
+            <button class="todo-card hold" type="button" data-event="peddler">
+              <div class="todo-meta">
+                <span>来访者</span>
+                <span>可搁置</span>
               </div>
-              <h2>交通类信号正在升温。</h2>
-              <p>窗外轨道灯带出现错位读数。它只提示题材倾向，具体事件仍等区域选择后展开。</p>
-            </article>
+              <h2>广告小贩带来一盒彩色旧相机。</h2>
+              <p>可能换取版面资源，也可能夹带下期广告条件。</p>
+              <span class="todo-fate">跨周保留：价格会上涨</span>
+            </button>
           </div>
 
-          <section class="reader-hook" aria-label="本周特殊事件">
-            <b>本周特殊事件</b>
-            <p>科学会禁令传真已到：本周所有天气类解释会被额外盯防。它改变议程压力，不提前给出具体任务。</p>
+          <section class="queue-footer" aria-label="待办范围">
+            <b>待办范围</b>
+            <p id="queueStatus">还有 <strong>3</strong> 件未处理，其中 <strong>1</strong> 件今日必须。进入编辑会前会再次确认。</p>
           </section>
 
           <div class="command-actions">
             <a class="primary-action" href="#briefing" id="briefingButton">
-              <span>进入本周议程</span>
+              <span>进入本周编辑会</span>
               <span class="action-mark" aria-hidden="true">→</span>
             </a>
             <a class="secondary-action" href="title-screen-homepage-ab-lab.html">
@@ -1225,14 +1640,33 @@
         </div>
       </aside>
     </section>
+
+    <div class="event-overlay" id="eventOverlay" aria-hidden="true">
+      <section class="overlay-shell" role="dialog" aria-modal="true" aria-labelledby="overlayTitle">
+        <header class="overlay-head">
+          <div>
+            <p class="overlay-kicker" id="overlayKicker">Desk Queue</p>
+            <h2 class="overlay-title" id="overlayTitle">待办</h2>
+          </div>
+          <button class="overlay-close" type="button" id="overlayClose" aria-label="关闭">×</button>
+        </header>
+        <div class="overlay-body" id="overlayBody"></div>
+      </section>
+    </div>
   </main>
 
   <script>
     const params = new URLSearchParams(window.location.search);
     const toast = document.querySelector("#toast");
+    const queueStatus = document.querySelector("#queueStatus");
     const topicBoardArt = document.querySelector("#topicBoardArt");
     const anomalyImage = document.querySelector("#anomalyImage");
     const anomalyReadout = document.querySelector("#anomalyReadout");
+    const overlay = document.querySelector("#eventOverlay");
+    const overlayKicker = document.querySelector("#overlayKicker");
+    const overlayTitle = document.querySelector("#overlayTitle");
+    const overlayBody = document.querySelector("#overlayBody");
+    const overlayClose = document.querySelector("#overlayClose");
     const artVariants = {
       v2: {
         board: "assets/editorial-office/generated/agenda-blackboard-clean-v2.png",
@@ -1245,17 +1679,76 @@
     };
     const artVariant = artVariants[params.get("art")] || artVariants.v2;
     const anomalyStates = {
+      ambient: {
+        image: "assets/editorial-office/generated/window-city-rain-ambient-v1.png",
+        readout: "<b>窗外：雨夜。</b> 蓝光很远，暂时只像天气。"
+      },
       astral: {
         image: artVariant.window,
-        readout: "<b>异常读数：天文类来信聚集。</b> 来源疑似上期头版回响；牵引东海岸夜间信号。"
+        readout: "<b>特殊景象：第二个月亮。</b> 暂记为彩蛋触发，不占用本周待办位。"
       },
       transit: {
         image: "assets/editorial-office/generated/city-anomaly-transit-rift.png",
-        readout: "<b>异常读数：交通类信号升温。</b> 轨道灯带出现错位；具体事件仍待区域选择后显形。"
+        readout: "<b>特殊景象：轨道错位。</b> 只提示地区气味，事件仍等区域选择后显形。"
       },
       signal: {
         image: "assets/editorial-office/generated/city-anomaly-signal-blackout.png",
-        readout: "<b>异常读数：信号被外力遮蔽。</b> 来源疑似势力压制；本周公开措辞压力上升。"
+        readout: "<b>特殊景象：信号遮蔽。</b> 可能是势力压制，也可能只是坏天气。"
+      }
+    };
+    const eventPayloads = {
+      science: {
+        kicker: "势力传真",
+        title: "科学会联络员：标题必须降温",
+        mode: "dialogue",
+        portrait: "assets/editorial-office/generated/portrait-science-liaison-v1.png",
+        quote: "标题里不要再写“活的天气”。公众会把比喻当成预报。",
+        detail: "这不是独立剧情线，只是本周开局压力。你的处理方式会写进本周议程，影响天气类选题的公开措辞。",
+        choices: [
+          { label: "接受措辞限制", result: "已记入议程：天气类标题降低传播，但科学会压力下降。" },
+          { label: "追问限制代价", result: "已记入议程：新增一条势力压力线索，本周截稿压力不变。" },
+          { label: "先搁置传真", result: "已记入议程：本周压力上升，仍可照常发刊。" }
+        ]
+      },
+      letter: {
+        kicker: "读者来信",
+        title: "皇后区读者：蓝光回到窗外",
+        mode: "letter",
+        sender: "皇后区读者 / 匿名",
+        quote: "你们上期写的蓝光，我家窗外今晚也有。它不像灯，更像有人把天花板划开了。",
+        linked: "关联：上期头版《东海岸蓝光不是海港灯》",
+        effect: "后果：归档为下周线索；东海岸地区出现“现实回声”标记。",
+        choices: [
+          { label: "归档为线索", result: "已处理：来信进入黑板候选线索，下周简报可引用。" },
+          { label: "标为公众误读", result: "已处理：减少噪音，但可能错过一条东海岸钩子。" },
+          { label: "约读者回访", result: "已处理：生成一个低频来访机会，占用本周一格注意力。" }
+        ]
+      },
+      peddler: {
+        kicker: "来访者",
+        title: "广告小贩：一盒彩色旧相机",
+        mode: "dialogue",
+        portrait: "assets/editorial-office/generated/portrait-ad-peddler-v1.png",
+        quote: "三台相机，一台拍现在，一台拍昨天，一台专拍没付广告费的真相。",
+        detail: "来访和小贩不是办公室经营系统，只是开局事件皮肤。处理结果只影响本周资源、广告压力或一个素材钩子。",
+        choices: [
+          { label: "买下旧相机", result: "已处理：获得一格异常照片素材，小贩广告条件进入待审。" },
+          { label: "只收名片", result: "已处理：来访跨周保留，但下周报价上涨。" },
+          { label: "拒绝夹带广告", result: "已处理：版面保持干净，本周少一个便宜素材来源。" }
+        ]
+      },
+      broadcast: {
+        kicker: "世界回响",
+        title: "深夜城市频道：普通蓝光特别报道",
+        mode: "broadcast",
+        image: "assets/editorial-office/generated/tv-broadcast-crt-component-v1.png",
+        quote: "地方台连续三次把红月切成广告，主持人仍坚持：东海岸蓝光只是摄像机故障。",
+        detail: "电视只给一条强回响，不做频道系统。它把上期刊发造成的现实变化变成一张可截图的插页。",
+        choices: [
+          { label: "记录为世界回响", result: "已记录：本周简报可显示一条广播摘录。" },
+          { label: "剪下字幕条", result: "已记录：获得一个传播素材钩子。" },
+          { label: "关掉电视", result: "已关闭：不改变本周待办。" }
+        ]
       }
     };
 
@@ -1275,7 +1768,7 @@
       });
     }
 
-    setAnomalyState(params.get("state") || "astral");
+    setAnomalyState(params.get("state") || "ambient");
 
     document.querySelectorAll(".state-button").forEach((button) => {
       button.addEventListener("click", () => {
@@ -1283,10 +1776,155 @@
       });
     });
 
+    function renderChoices(payload, eventKey) {
+      return `
+        <div class="choice-row">
+          ${payload.choices.map((choice) => `
+            <button class="choice-button" type="button" data-choice-result="${choice.result}" data-event-key="${eventKey}">
+              ${choice.label}
+            </button>
+          `).join("")}
+        </div>
+        <p class="choice-result" id="choiceResult" aria-live="polite"></p>
+      `;
+    }
+
+    function renderDialogue(payload, eventKey) {
+      return `
+        <div class="dialogue-layout">
+          <div class="portrait-stage">
+            <img src="${payload.portrait}" alt="" aria-hidden="true" draggable="false" />
+          </div>
+          <div class="dialogue-card">
+            <blockquote>“${payload.quote}”</blockquote>
+            <p>${payload.detail}</p>
+            ${renderChoices(payload, eventKey)}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderLetter(payload, eventKey) {
+      return `
+        <div class="letter-layout">
+          <div class="letter-paper">
+            <img src="assets/editorial-office/generated/reader-letter-sheet-v1.png" alt="" aria-hidden="true" draggable="false" />
+            <div class="letter-copy">
+              <b>${payload.sender}</b>
+              <strong>“${payload.quote}”</strong>
+              <span>${payload.linked}<br />${payload.effect}</span>
+            </div>
+          </div>
+          <div class="letter-detail">
+            <p>来信是发刊回响的薄层反馈牌，不是独立收件箱。它只把读者误读、现实回声和下一周钩子接回本周议程。</p>
+            <div class="fact-strip">
+              <span>${payload.linked}</span>
+              <span>${payload.effect}</span>
+              <span>期限：本周不拆会消失。</span>
+            </div>
+            ${renderChoices(payload, eventKey)}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderBroadcast(payload, eventKey) {
+      return `
+        <div class="broadcast-layout">
+          <div class="broadcast-screen">
+            <img src="${payload.image}" alt="" aria-hidden="true" draggable="false" />
+            <div class="broadcast-lower">${payload.quote}</div>
+          </div>
+          <div class="broadcast-detail">
+            <p>${payload.detail}</p>
+            <div class="fact-strip">
+              <span>频道：深夜城市频道</span>
+              <span>关联：上期蓝光头版</span>
+              <span>结果：可进入本周简报，不新增电视系统。</span>
+            </div>
+            ${renderChoices(payload, eventKey)}
+          </div>
+        </div>
+      `;
+    }
+
+    function updateQueueStatus() {
+      const remaining = document.querySelectorAll(".todo-card:not(.is-done)").length;
+      const must = document.querySelectorAll(".todo-card.must:not(.is-done)").length;
+      queueStatus.innerHTML = `还有 <strong>${remaining}</strong> 件未处理，其中 <strong>${must}</strong> 件今日必须。进入编辑会前会再次确认。`;
+    }
+
+    function markDone(eventKey) {
+      const card = document.querySelector(`.todo-card[data-event="${eventKey}"]`);
+      if (!card || card.classList.contains("is-done")) return;
+      card.classList.add("is-done");
+      updateQueueStatus();
+    }
+
+    function openEvent(eventKey) {
+      const payload = eventPayloads[eventKey];
+      if (!payload) return;
+      overlayKicker.textContent = payload.kicker;
+      overlayTitle.textContent = payload.title;
+      if (payload.mode === "letter") {
+        overlayBody.innerHTML = renderLetter(payload, eventKey);
+      } else if (payload.mode === "broadcast") {
+        overlayBody.innerHTML = renderBroadcast(payload, eventKey);
+      } else {
+        overlayBody.innerHTML = renderDialogue(payload, eventKey);
+      }
+      overlay.classList.add("is-open");
+      overlay.setAttribute("aria-hidden", "false");
+      overlayClose.focus();
+    }
+
+    function closeEvent() {
+      overlay.classList.remove("is-open");
+      overlay.setAttribute("aria-hidden", "true");
+    }
+
+    document.querySelectorAll("[data-event]").forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        openEvent(trigger.dataset.event);
+      });
+    });
+
+    overlayBody.addEventListener("click", (event) => {
+      const button = event.target.closest(".choice-button");
+      if (!button) return;
+      const result = document.querySelector("#choiceResult");
+      result.textContent = button.dataset.choiceResult;
+      if (button.dataset.eventKey !== "broadcast") {
+        markDone(button.dataset.eventKey);
+      }
+      toast.textContent = result.textContent;
+    });
+
+    overlayClose.addEventListener("click", closeEvent);
+    overlay.addEventListener("click", (event) => {
+      if (event.target === overlay) closeEvent();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeEvent();
+    });
+
     document.querySelector("#briefingButton").addEventListener("click", (event) => {
       event.preventDefault();
-      toast.textContent = "本周议程稍后接入：当前入口先验证世界回响、特殊事件和区域预兆的开局组织方式。";
+      const must = document.querySelectorAll(".todo-card.must:not(.is-done)").length;
+      if (must > 0) {
+        toast.textContent = "还有今日必须事项未处理：科学会传真会在进入编辑会前再次弹出。";
+        openEvent("science");
+        return;
+      }
+      toast.textContent = "本周编辑会稍后接入：待办处理结果已整理进议程草稿。";
     });
+
+    updateQueueStatus();
+
+    if (params.get("event")) {
+      openEvent(params.get("event"));
+    }
   </script>
 </body>
 </html>
