@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>World Map V7 Filled Content Mock V1</title>
+  <style>
+    :root {
+      --bg: #061019;
+      --navy: #0b1b27;
+      --navy-2: #0f2835;
+      --paper: #f1e4c4;
+      --paper-bright: #f8ecd0;
+      --ink: #151c1b;
+      --muted: #53605b;
+      --red: #c8312c;
+      --red-dark: #90221f;
+      --cyan: #0f9499;
+      --cyan-dark: #0b6970;
+      --gold: #bd8b26;
+      --blue: #153b56;
+      --line: rgba(238, 230, 198, 0.78);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: #1b1d1e;
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "Microsoft YaHei UI", "Source Han Sans SC", Arial, sans-serif;
+    }
+
+    .canvas {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      padding: 28px 40px;
+      background:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+        radial-gradient(circle at 52% 45%, rgba(23, 100, 116, 0.18), transparent 44%),
+        var(--bg);
+      background-size: 32px 32px, 32px 32px, auto, auto;
+    }
+
+    .top-strip {
+      position: absolute;
+      left: 40px;
+      top: 32px;
+      width: 1840px;
+      height: 86px;
+      border: 2px solid rgba(40, 111, 120, 0.88);
+      background: linear-gradient(180deg, rgba(11, 31, 43, 0.96), rgba(6, 17, 27, 0.98));
+      display: grid;
+      grid-template-columns: 430px 1fr;
+      column-gap: 26px;
+      align-items: center;
+      padding: 12px 24px;
+      box-shadow: 0 10px 0 rgba(0, 0, 0, 0.28);
+    }
+
+    .clock-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .paper-ticket {
+      height: 48px;
+      background: var(--paper);
+      border: 2px solid #333a37;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.42), 4px 5px 0 rgba(0,0,0,0.28);
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .world-rail {
+      height: 52px;
+      display: grid;
+      grid-template-columns: 130px repeat(5, 1fr);
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border: 1px solid rgba(109, 181, 188, 0.64);
+      background: rgba(2, 16, 25, 0.72);
+    }
+
+    .rail-label {
+      color: #9bb9b8;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .metric {
+      display: grid;
+      grid-template-columns: auto auto;
+      column-gap: 8px;
+      row-gap: 4px;
+      align-items: center;
+      color: #f2ead7;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .metric b {
+      color: #f3aa42;
+      font-size: 18px;
+    }
+
+    .meter {
+      grid-column: 1 / 3;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 3px;
+      height: 8px;
+    }
+
+    .meter span {
+      background: rgba(241, 228, 196, 0.26);
+    }
+
+    .metric.red .meter span:nth-child(-n+5),
+    .metric.gold .meter span:nth-child(-n+6),
+    .metric.cyan .meter span:nth-child(-n+4),
+    .metric.green .meter span:nth-child(-n+7),
+    .metric.hot .meter span:nth-child(-n+3) {
+      background: currentColor;
+    }
+
+    .metric.red { color: #e35a4f; }
+    .metric.gold { color: #e0a536; }
+    .metric.cyan { color: #32c8cb; }
+    .metric.green { color: #5abf8f; }
+    .metric.hot { color: #df4d50; }
+
+    .main {
+      position: absolute;
+      left: 40px;
+      top: 146px;
+      width: 1840px;
+      height: 760px;
+      display: grid;
+      grid-template-columns: 420px 840px 560px;
+      gap: 20px;
+    }
+
+    .panel {
+      border: 2px solid rgba(225, 226, 198, 0.72);
+      box-shadow: 10px 12px 0 rgba(0,0,0,0.34);
+    }
+
+    .left-index {
+      background:
+        radial-gradient(circle at 88% 92%, rgba(207, 54, 44, 0.16) 0 2px, transparent 3px),
+        var(--paper);
+      background-size: auto, auto;
+      padding: 20px 18px;
+    }
+
+    .index-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }
+
+    .index-head h2 {
+      margin: 0;
+      font-size: 27px;
+      line-height: 1;
+      color: #0c1820;
+      font-weight: 900;
+    }
+
+    .index-head span {
+      color: var(--cyan-dark);
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .region-card {
+      position: relative;
+      height: 134px;
+      margin-bottom: 16px;
+      padding: 18px 16px 12px 66px;
+      border: 2px solid #26302d;
+      background:
+        linear-gradient(90deg, transparent 0 80%, rgba(30,30,30,0.04) 80%),
+        var(--paper-bright);
+      box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.18);
+    }
+
+    .region-card.selected {
+      border-color: var(--gold);
+      box-shadow: inset 0 0 0 4px rgba(189,139,38,0.2), 5px 5px 0 rgba(0,0,0,0.2);
+    }
+
+    .region-card.locked,
+    .region-card.sealed {
+      background: #d8ccb4;
+      opacity: 0.78;
+    }
+
+    .region-num {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 50px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff4dc;
+      background: var(--red);
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .region-card.locked .region-num { background: #263547; }
+    .region-card.safe .region-num { background: var(--cyan); }
+    .region-card.sealed .region-num { background: #9c4a3e; }
+
+    .region-card h3 {
+      margin: 0 0 8px;
+      font-size: 23px;
+      line-height: 1.1;
+      color: #101817;
+      font-weight: 900;
+    }
+
+    .region-card p {
+      margin: 4px 0;
+      color: #293331;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .region-card .red-text { color: #b52625; }
+    .region-card .cyan-text { color: #08787e; }
+    .index-foot {
+      position: absolute;
+      left: 82px;
+      bottom: 28px;
+      color: #1d4d47;
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .map-board {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 48%, rgba(57, 137, 157, 0.18), transparent 42%),
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+        #091b28;
+      background-size: auto, 32px 32px, 32px 32px, auto;
+    }
+
+    .map-inner {
+      position: absolute;
+      inset: 30px;
+      border: 2px solid rgba(234, 220, 188, 0.64);
+    }
+
+    .continent {
+      position: absolute;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.28), transparent 38%),
+        #dce8ed;
+      box-shadow: inset -8px -10px 0 rgba(85, 118, 147, 0.28), 0 4px 0 rgba(0,0,0,0.35);
+      opacity: 0.93;
+      clip-path: polygon(8% 24%, 32% 8%, 62% 15%, 82% 30%, 72% 58%, 90% 80%, 48% 88%, 20% 72%);
+    }
+
+    .na { left: 136px; top: 136px; width: 210px; height: 250px; }
+    .sa { left: 258px; top: 396px; width: 138px; height: 242px; transform: rotate(13deg); }
+    .eu { left: 444px; top: 156px; width: 145px; height: 114px; transform: rotate(-4deg); }
+    .as { left: 560px; top: 150px; width: 240px; height: 240px; transform: rotate(4deg); }
+    .af { left: 468px; top: 316px; width: 156px; height: 240px; transform: rotate(-8deg); }
+    .au { left: 672px; top: 498px; width: 110px; height: 100px; }
+
+    .route {
+      position: absolute;
+      height: 2px;
+      background: var(--red);
+      transform-origin: left center;
+      opacity: 0.88;
+    }
+
+    .r1 { left: 266px; top: 340px; width: 360px; transform: rotate(12deg); }
+    .r2 { left: 545px; top: 390px; width: 272px; transform: rotate(-18deg); background: #20b6bc; }
+    .r3 { left: 414px; top: 306px; width: 304px; transform: rotate(-7deg); background: rgba(200,49,44,0.7); }
+
+    .orbit {
+      position: absolute;
+      width: 430px;
+      height: 190px;
+      border: 2px dashed rgba(35, 188, 195, 0.7);
+      border-radius: 50%;
+      transform: rotate(-16deg);
+      left: 226px;
+      top: 260px;
+    }
+
+    .orbit.red {
+      border-color: rgba(200, 49, 44, 0.7);
+      transform: rotate(17deg);
+      left: 350px;
+      top: 250px;
+    }
+
+    .pin {
+      position: absolute;
+      width: 42px;
+      height: 56px;
+      transform: translate(-50%, -100%);
+    }
+
+    .pin::before {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      background: #bb2d29;
+      border: 4px solid #f0d28d;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.42);
+    }
+
+    .pin::after {
+      content: "";
+      position: absolute;
+      left: 15px;
+      top: 10px;
+      width: 12px;
+      height: 12px;
+      background: #f4ead4;
+      border-radius: 50%;
+    }
+
+    .pin.locked::before { background: #4c5250; border-color: #d7c6a2; }
+    .pin.safe::before { background: var(--cyan); border-color: #dbefd6; }
+    .pin.selected {
+      filter: drop-shadow(0 0 0 #f2d372) drop-shadow(0 0 10px rgba(242,211,114,0.92));
+    }
+
+    .right-dossier {
+      position: relative;
+      background: #ead9b8;
+      padding: 20px 30px 18px;
+      overflow: hidden;
+    }
+
+    .right-dossier::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 64px;
+      height: 100%;
+      background: linear-gradient(180deg, #d34a38 0 18%, #159aa1 18% 38%, #244b6c 38% 58%, #c79a42 58% 78%, #d9cab2 78%);
+      border-left: 2px solid rgba(0,0,0,0.34);
+      opacity: 0.9;
+    }
+
+    .right-content {
+      position: relative;
+      z-index: 1;
+      width: 470px;
+    }
+
+    .dossier-header {
+      height: 96px;
+      border: 2px solid rgba(65, 91, 82, 0.74);
+      background: var(--paper-bright);
+      padding: 12px 16px;
+      box-shadow: 5px 5px 0 rgba(0,0,0,0.16);
+    }
+
+    .dossier-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--red-dark);
+      font-size: 16px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .dossier-title-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dossier-title-row h2 {
+      margin: 0;
+      flex: 1;
+      color: #111818;
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .badge {
+      min-width: 58px;
+      height: 30px;
+      padding: 5px 10px;
+      border: 2px solid currentColor;
+      background: rgba(255,255,255,0.42);
+      font-size: 15px;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .badge.gold { color: #a97913; }
+    .badge.cyan { color: #087f84; }
+
+    .media {
+      position: relative;
+      height: 164px;
+      margin-top: 14px;
+      border: 3px solid #222b2a;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 78% 22%, rgba(237, 54, 42, 0.92) 0 8px, transparent 10px),
+        radial-gradient(circle at 78% 22%, rgba(237, 54, 42, 0.22) 0 64px, transparent 66px),
+        linear-gradient(180deg, #071119, #132a38 62%, #061016);
+    }
+
+    .skyline {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 76px;
+      background:
+        linear-gradient(90deg, transparent 0 8%, #091015 8% 12%, transparent 12% 16%, #101820 16% 19%, transparent 19% 23%, #070d12 23% 34%, transparent 34% 38%, #121a20 38% 52%, transparent 52% 57%, #0b1218 57% 68%, transparent 68% 74%, #121a20 74% 86%, transparent 86%),
+        linear-gradient(180deg, transparent 0 22%, #061015 22%);
+      opacity: 0.94;
+    }
+
+    .status-strip {
+      height: 44px;
+      margin-top: 12px;
+      background: var(--red);
+      border: 2px solid #88211e;
+      color: #fff2d9;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      font-size: 19px;
+      font-weight: 900;
+      box-shadow: 5px 5px 0 rgba(0,0,0,0.18);
+    }
+
+    .task-ticket {
+      width: 386px;
+      height: 52px;
+      margin: 14px auto 16px;
+      background: var(--cyan);
+      border: 2px solid #07383c;
+      color: #f4ead4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 22px;
+      font-size: 21px;
+      font-weight: 900;
+      box-shadow: 5px 5px 0 rgba(0,0,0,0.26);
+    }
+
+    .prose {
+      min-height: 150px;
+      border: 2px solid rgba(65, 91, 82, 0.74);
+      background: var(--paper-bright);
+      padding: 16px 16px 14px;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.36);
+    }
+
+    .prose h3 {
+      margin: 0 0 10px;
+      color: var(--cyan-dark);
+      font-size: 19px;
+      font-weight: 900;
+    }
+
+    .prose p {
+      margin: 0;
+      color: #141c1a;
+      font-size: 18px;
+      line-height: 1.55;
+      font-weight: 650;
+    }
+
+    .footer-note {
+      height: 42px;
+      margin-top: 10px;
+      border: 2px solid rgba(65, 91, 82, 0.66);
+      background: var(--paper);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      color: #8b5812;
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .cta {
+      width: 100%;
+      height: 62px;
+      margin-top: 12px;
+      border: 3px solid #781d1b;
+      background: linear-gradient(180deg, #d0473d, #a72523);
+      color: #fff2d9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      font-weight: 900;
+      box-shadow: 5px 6px 0 rgba(0,0,0,0.28);
+    }
+
+    .bottom-ticker {
+      position: absolute;
+      left: 40px;
+      bottom: 40px;
+      width: 1840px;
+      height: 110px;
+      border: 2px solid rgba(225, 226, 198, 0.72);
+      background: rgba(9, 25, 37, 0.95);
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      box-shadow: 10px 12px 0 rgba(0,0,0,0.34);
+    }
+
+    .ticker-item {
+      position: relative;
+      border: 2px solid #25302e;
+      background: var(--paper-bright);
+      display: grid;
+      grid-template-columns: 98px 1fr 32px;
+      align-items: center;
+      padding: 0 14px;
+      gap: 14px;
+      cursor: pointer;
+      box-shadow: 5px 5px 0 rgba(0,0,0,0.24);
+    }
+
+    .ticker-item.open,
+    .ticker-item:hover {
+      outline: 3px solid rgba(239, 201, 94, 0.8);
+    }
+
+    .ticker-type {
+      height: 38px;
+      border: 2px solid currentColor;
+      color: var(--red-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .ticker-item:nth-child(2) .ticker-type { color: var(--cyan-dark); }
+    .ticker-item:nth-child(3) .ticker-type { color: var(--blue); }
+
+    .ticker-title {
+      font-size: 19px;
+      font-weight: 900;
+      color: #121a19;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ticker-arrow {
+      color: var(--cyan-dark);
+      font-size: 28px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .detail-popover {
+      position: absolute;
+      left: 690px;
+      bottom: 158px;
+      width: 560px;
+      min-height: 158px;
+      padding: 18px 20px;
+      border: 3px solid #21302f;
+      background: var(--paper-bright);
+      color: var(--ink);
+      box-shadow: 10px 12px 0 rgba(0,0,0,0.36);
+      display: none;
+      z-index: 5;
+    }
+
+    .detail-popover.show {
+      display: block;
+    }
+
+    .detail-popover h3 {
+      margin: 0 0 12px;
+      color: var(--blue);
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .detail-popover p {
+      margin: 0 0 8px;
+      color: #1c2422;
+      font-size: 18px;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <main class="canvas" aria-label="世界地图 V7 真实内容填充稿">
+    <section class="top-strip" aria-label="顶部世界状态">
+      <div class="clock-group">
+        <div class="paper-ticket">探索周 01</div>
+        <div class="paper-ticket">剩余 7 天</div>
+      </div>
+      <div class="world-rail" aria-label="世界状态五维">
+        <div class="rail-label">世界状态</div>
+        <div class="metric gold">公信 <b>42</b><div class="meter"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+        <div class="metric cyan">诡名 <b>18</b><div class="meter"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+        <div class="metric red">声望 <b>31</b><div class="meter"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+        <div class="metric green">守序 <b>26</b><div class="meter"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+        <div class="metric hot">狂性 <b>11</b><div class="meter"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+      </div>
+    </section>
+
+    <section class="main">
+      <aside class="left-index panel" aria-label="地区索引">
+        <div class="index-head">
+          <h2>INDEX / 地区索引</h2>
+          <span>已开放 1 / 4</span>
+        </div>
+        <article class="region-card selected">
+          <div class="region-num">01</div>
+          <h3>北美禁区带</h3>
+          <p><span class="red-text">可进入 · 红线升温</span></p>
+          <p>难度 中等 / 推荐 ★★★★</p>
+          <p>异常信号增强</p>
+        </article>
+        <article class="region-card locked">
+          <div class="region-num">02</div>
+          <h3>东亚神秘地带</h3>
+          <p><span class="red-text">锁定 · 声望 31/40</span></p>
+          <p>难度 高 / 推荐 ★★</p>
+          <p>缺青线 1 条</p>
+        </article>
+        <article class="region-card safe">
+          <div class="region-num">03</div>
+          <h3>太平洋失航带</h3>
+          <p><span class="cyan-text">可进入 · 普通线报</span></p>
+          <p>难度 低 / 推荐 ★★★</p>
+          <p>适合补充素材</p>
+        </article>
+        <article class="region-card sealed">
+          <div class="region-num">04</div>
+          <h3>南美红线档</h3>
+          <p><span class="red-text">封存 · 许可不足</span></p>
+          <p>难度 异常 / 推荐 ★</p>
+          <p>需要完成复核</p>
+        </article>
+        <div class="index-foot">本区 红 1 / 青 0 / 锁定 2</div>
+      </aside>
+
+      <section class="map-board panel" aria-label="世界地图">
+        <div class="map-inner"></div>
+        <div class="continent na"></div>
+        <div class="continent sa"></div>
+        <div class="continent eu"></div>
+        <div class="continent as"></div>
+        <div class="continent af"></div>
+        <div class="continent au"></div>
+        <div class="orbit"></div>
+        <div class="orbit red"></div>
+        <div class="route r1"></div>
+        <div class="route r2"></div>
+        <div class="route r3"></div>
+        <div class="pin selected" style="left: 260px; top: 365px;"></div>
+        <div class="pin locked" style="left: 692px; top: 330px;"></div>
+        <div class="pin safe" style="left: 356px; top: 548px;"></div>
+        <div class="pin locked" style="left: 720px; top: 594px;"></div>
+      </section>
+
+      <aside class="right-dossier panel" aria-label="选定地区档案">
+        <div class="right-content">
+          <header class="dossier-header">
+            <div class="dossier-label"><span>区域档案 01</span><span>选定地区</span></div>
+            <div class="dossier-title-row">
+              <h2>北美禁区带</h2>
+              <span class="badge gold">中等</span>
+              <span class="badge cyan">推荐 ★★★★</span>
+            </div>
+          </header>
+          <div class="media" aria-label="地区图像">
+            <div class="skyline"></div>
+          </div>
+          <div class="status-strip"><span>红线升温</span><span>可进入 / 7天内提升狂性风险</span></div>
+          <button class="task-ticket" type="button"><span>查看任务情报 · 3</span><span>&gt;</span></button>
+          <section class="prose" aria-label="地区简介">
+            <h3>地区简介</h3>
+            <p>北美禁区带由城市传说、军事封锁和异常广播交叠而成。编辑部把这里视作本周最值得进入的取材区域：危险清楚、线索密集，但进入后的具体线报必须在地区任务台选择。</p>
+          </section>
+          <div class="footer-note">进入不消耗天数；具体线报在任务台选择。</div>
+          <button class="cta" type="button">进入选定地区</button>
+        </div>
+      </aside>
+    </section>
+
+    <section class="bottom-ticker" aria-label="底部详情入口">
+      <button class="ticker-item" type="button" data-detail="intel">
+        <span class="ticker-type">地区情报</span>
+        <span class="ticker-title">城市传说与军事封锁交叠</span>
+        <span class="ticker-arrow">&gt;</span>
+      </button>
+      <button class="ticker-item" type="button" data-detail="file">
+        <span class="ticker-type">档案更新</span>
+        <span class="ticker-title">新增日志证词 / 封锁传闻</span>
+        <span class="ticker-arrow">&gt;</span>
+      </button>
+      <button class="ticker-item" type="button" data-detail="warning">
+        <span class="ticker-type">地区预警</span>
+        <span class="ticker-title">进入后先到地区任务台</span>
+        <span class="ticker-arrow">&gt;</span>
+      </button>
+    </section>
+
+    <aside class="detail-popover" aria-label="底部详情层">
+      <h3>地区预警：红线升温</h3>
+      <p>进入该地区后会先抵达地区任务台，红线任务优先出现。</p>
+      <p>若 7 天内未处理升温线报，狂性风险提高；具体任务仍在地区内选择。</p>
+    </aside>
+  </main>
+
+  <script>
+    const popover = document.querySelector(".detail-popover");
+    const items = Array.from(document.querySelectorAll(".ticker-item"));
+
+    function openDetail(type) {
+      items.forEach((item) => item.classList.toggle("open", item.dataset.detail === type));
+      const title = popover.querySelector("h3");
+      const lines = popover.querySelectorAll("p");
+      if (type === "intel") {
+        title.textContent = "地区情报：封锁交叠";
+        lines[0].textContent = "城市传说与军事封锁在同一区域重叠，异常信号集中在夜间广播频段。";
+        lines[1].textContent = "该详情只提供情报背景，不在世界地图直接选择任务。";
+      } else if (type === "file") {
+        title.textContent = "档案更新：新增证词";
+        lines[0].textContent = "新增旧制芯片、封锁传闻和一段残缺日志，进入地区后可在任务台查看。";
+        lines[1].textContent = "这里不显示完整日志正文，避免世界地图承担长阅读。";
+      } else {
+        title.textContent = "地区预警：红线升温";
+        lines[0].textContent = "进入该地区后会先抵达地区任务台，红线任务优先出现。";
+        lines[1].textContent = "若 7 天内未处理升温线报，狂性风险提高；具体任务仍在地区内选择。";
+      }
+      popover.classList.add("show");
+    }
+
+    items.forEach((item) => {
+      item.addEventListener("click", () => openDetail(item.dataset.detail));
+    });
+
+    const query = new URLSearchParams(window.location.search);
+    const detail = query.get("detail");
+    if (detail) {
+      openDetail(detail);
+    }
+  </script>
+</body>
+</html>

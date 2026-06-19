@@ -1,0 +1,325 @@
+{
+  "id": "world_map_imagegen_v5_prompt_bundle",
+  "version": 1,
+  "status": "ready_for_codex_image2_manual_import",
+  "target_manifest": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v5/world_map_imagegen_manifest.json",
+  "output_root": "image_gen/YYYY-MM-DD/",
+  "generation_policy": {
+    "primary_provider": "codex_builtin_image2",
+    "primary_model": "gpt-image-2",
+    "primary_flow": "Use scripts/art/world_map_imagegen_pipeline.py codex-prompt to prepare the prompt package, generate in Codex built-in Image 2, then register the selected output with stage-source.",
+    "manual_source_root": "image_gen/codex_image2_sources/YYYY-MM-DD/",
+    "scripted_provider_optional": "openrouter-image-gen",
+    "scripted_provider_note": "OpenRouter remains an optional automation backend only when its configured account and region can access the requested image model.",
+    "postprocess_boundary": "After generation, local scripts may only copy, crop, resize, pad transparent space, validate manifest contracts, and draw review overlays."
+  },
+  "notes": [
+    "Run the artboard job first through Codex built-in Image 2. Do not generate production atlas assets until the artboard is approved.",
+    "Generated images must be saved or copied into the workspace with stage-source, reviewed, and then postprocessed into the exact final sizes in the manifest.",
+    "No Chinese text, numbers, region names, countdowns, task states, or button labels may be baked into PNG assets."
+  ],
+  "shared_negative": [
+    "old newspaper",
+    "yellowed archive",
+    "parchment",
+    "historical case file",
+    "warm wood desk",
+    "coffee office",
+    "lamp-lit nostalgia",
+    "8-bit sprite",
+    "Pico-8",
+    "low-resolution voxel character",
+    "photographic noise",
+    "dirty paper speckles",
+    "mold stains",
+    "muddy gray detail",
+    "cyberpunk hologram",
+    "glass SaaS panels",
+    "generic mobile game buttons",
+    "baked Chinese text",
+    "baked numbers",
+    "fake task state",
+    "fake map pins",
+    "fake clickable buttons",
+    "watermark",
+    "signature",
+    "presentation mockup"
+  ],
+  "jobs": [
+    {
+      "id": "01_fullscreen_artboard",
+      "stage": "artboard",
+      "enabled": true,
+      "asset_type": "ui-screen",
+      "background": "opaque",
+      "model": "nano-banana-2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "count": 2,
+      "slug": "angus-world-map-v5-artboard",
+      "reference_images": [
+        {
+          "path": "docs/screenshots/2026-06-07-global-channel-style-board/07-global-channel-full-interface-style-draft-flat-magazine-ui.png",
+          "role": "overall composition, global channel dashboard language, object hierarchy"
+        },
+        {
+          "path": "docs/screenshots/2026-06-07-global-channel-style-board/05-global-channel-style-board-reference-clean-modern-pixel.png",
+          "role": "clean modern micro-pixel style, palette, halftone and print texture"
+        },
+        {
+          "path": "docs/screenshots/2026-06-11-world-map-ui-style-sheet/04-world-map-ui-style-sheet-v4-micro-pixel-compare.png",
+          "role": "pixel grain size, UI element language, world-map resource benchmark"
+        },
+        {
+          "path": "角色设计风格规范-AI包/reference/01-原始基准图.png",
+          "role": "high-definition micro-pixel chibi character sticker style if character appears"
+        }
+      ],
+      "prompt": "Create a production artboard for the Angus world exploration screen, a 16:9 desktop game UI for choosing a global reporting region. The screen reads as a modern supernatural weekly magazine global channel / editorial world map wall, not a backend dashboard. Use deep navy #0F1A2E as the main base, vivid red-orange #E84B2C for anomaly/deadline energy, warm paper #F5EDD8 for physical documents, restrained cyan for tracking signals. Composition: large central world map board with recognizable world silhouette, red/cyan route traces and scan marks; left region index booklet; right selected-region dossier folder with a blank story preview slot and blank text areas; bottom channel ticker strip; optional small high-definition micro-pixel chibi editor reaction sticker at an edge, matching the four-character benchmark style. Materials: printed matter, magazine page, crop marks, halftone dots, subtle red-cyan misregistration, crisp graphic edges, intentional 2-4px pixel particle clusters. Leave clean low-noise blank safe areas where Godot will render dynamic text and labels. Do not include readable text, real numbers, real region names, task labels, fake buttons, fake pins, or UI labels. This is a style and composition mother artboard, not a final interactive UI screenshot."
+    },
+    {
+      "id": "02_bg_shell",
+      "stage": "runtime_component",
+      "enabled": true,
+      "asset_type": "background",
+      "background": "opaque",
+      "model": "nano-banana-2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "count": 1,
+      "slug": "angus-world-map-v5-bg-shell",
+      "requires_approved_artboard": true,
+      "reference_images": [
+        {
+          "path": "APPROVED_ARTBOARD",
+          "role": "approved global composition and material source"
+        },
+        {
+          "path": "docs/screenshots/2026-06-07-global-channel-style-board/05-global-channel-style-board-reference-clean-modern-pixel.png",
+          "role": "clean modern pixel texture and palette"
+        }
+      ],
+      "prompt": "Generate the full-screen static background shell for the approved Angus world exploration UI. It must be an opaque 16:9 deep navy editorial environment with subtle printed texture, crop marks, red-cyan misregistration accents, low-contrast geometric structure, and no interactive controls. It should support separate overlay components for map board, left index, right dossier, ticker, and CTA. Keep the center and panel areas visually quiet enough for separate assets. No readable text, no fake buttons, no fake numbers, no fake map pins."
+    },
+    {
+      "id": "03_world_board_base",
+      "stage": "runtime_component",
+      "enabled": true,
+      "asset_type": "ui-screen",
+      "background": "opaque",
+      "model": "nano-banana-2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "count": 1,
+      "slug": "angus-world-map-v5-board-base",
+      "requires_approved_artboard": true,
+      "reference_images": [
+        {
+          "path": "APPROVED_ARTBOARD",
+          "role": "approved map board look"
+        },
+        {
+          "path": "docs/screenshots/2026-06-11-world-map-ui-style-sheet/03-world-map-ui-style-sheet-v3-textless-modern-pixel.png",
+          "role": "world map panel benchmark and textless UI texture"
+        },
+        {
+          "path": "docs/screenshots/2026-06-11-world-map-ui-style-sheet/04-world-map-ui-style-sheet-v4-micro-pixel-compare.png",
+          "role": "micro-pixel density reference"
+        }
+      ],
+      "prompt": "Generate a standalone central world map board asset for Angus, with a recognizable world map silhouette, clean editorial magazine framing, dark navy board surface, warm paper/cyan/red print accents, route traces, scan marks, crop marks, halftone texture and intentional 2-4px pixel clusters. The board must contain no fixed pins, no country labels, no readable text, no fake task markers, and no numbers. Leave open visual space for runtime Godot pin TextureButtons."
+    },
+    {
+      "id": "04_left_index_panel",
+      "stage": "runtime_component",
+      "enabled": true,
+      "asset_type": "prop",
+      "background": "transparent",
+      "model": "gpt-5-image",
+      "resolution": "1024x1536",
+      "count": 1,
+      "slug": "angus-world-map-v5-left-index-panel",
+      "requires_approved_artboard": true,
+      "reference_images": [
+        {
+          "path": "APPROVED_ARTBOARD",
+          "role": "approved object language and material"
+        },
+        {
+          "path": "docs/screenshots/2026-06-07-global-channel-style-board/05-global-channel-style-board-reference-clean-modern-pixel.png",
+          "role": "clean micro-pixel material"
+        }
+      ],
+      "prompt": "Generate a transparent PNG component: left-side region index booklet shell for a modern supernatural weekly magazine UI. Tall vertical object, deep navy body, restrained cyan/red print accents, crop marks, layered paper/card edges, micro-pixel halftone, crisp 2-4px pixel clusters. It must have blank low-noise slots for a title, subtitle, a stack of runtime region buttons, and a footer note. Do not draw actual rows with text, checkboxes, numbers, labels, map pins, or task states. Clean alpha background."
+    },
+    {
+      "id": "05_right_story_folder",
+      "stage": "runtime_component",
+      "enabled": true,
+      "asset_type": "prop",
+      "background": "transparent",
+      "model": "gpt-5-image",
+      "resolution": "1024x1536",
+      "count": 1,
+      "slug": "angus-world-map-v5-right-story-folder",
+      "requires_approved_artboard": true,
+      "reference_images": [
+        {
+          "path": "APPROVED_ARTBOARD",
+          "role": "approved right dossier object language"
+        },
+        {
+          "path": "docs/screenshots/2026-06-11-world-map-ui-style-sheet/04-world-map-ui-style-sheet-v4-micro-pixel-compare.png",
+          "role": "micro-pixel grain and paper style"
+        }
+      ],
+      "prompt": "Generate a transparent PNG component: right selected-region dossier folder for Angus world map UI. It should feel like a modern editorial story folder / magazine proof object with warm paper, deep navy backing, red-orange anomaly tab, restrained cyan tracking tab, crop marks, print texture, halftone, subtle red-cyan misregistration and 2-4px pixel grain. Include a blank story preview image slot, blank title slot, blank body slot, and a reserved bottom CTA area. No readable text, no fake task list, no fake buttons, no fake numbers, no Chinese characters. Clean alpha background."
+    },
+    {
+      "id": "06_bottom_ticker",
+      "stage": "runtime_component",
+      "enabled": true,
+      "asset_type": "ui-banner",
+      "background": "transparent",
+      "model": "gpt-5-image",
+      "resolution": "1536x1024",
+      "count": 1,
+      "slug": "angus-world-map-v5-bottom-ticker",
+      "requires_approved_artboard": true,
+      "reference_images": [
+        {
+          "path": "APPROVED_ARTBOARD",
+          "role": "approved bottom strip language"
+        },
+        {
+          "path": "docs/screenshots/2026-06-07-global-channel-style-board/07-global-channel-full-interface-style-draft-flat-magazine-ui.png",
+          "role": "ticker and channel strip composition"
+        }
+      ],
+      "prompt": "Generate a transparent PNG bottom channel ticker strip for Angus world exploration UI. Wide horizontal editorial instrument strip, deep navy base, red/cyan/gold small status blocks, printed crop marks, micro-pixel halftone, low-noise text slots for four runtime chips and one next-action area. It must not contain readable text, numbers, fake labels, fake progress, or fake buttons. Clean alpha background."
+    },
+    {
+      "id": "07_region_strip_atlas",
+      "stage": "runtime_component_atlas",
+      "enabled": true,
+      "asset_type": "ui-banner",
+      "background": "transparent",
+      "model": "gpt-5-image",
+      "resolution": "1536x1024",
+      "count": 1,
+      "slug": "angus-world-map-v5-region-strip-atlas",
+      "requires_approved_artboard": true,
+      "reference_images": [
+        {
+          "path": "APPROVED_ARTBOARD",
+          "role": "approved index card material"
+        }
+      ],
+      "prompt": "Generate a transparent PNG atlas of five left index region strip button shells stacked vertically: available, hover, selected, locked, disabled. Each frame must be the same size and share the same silhouette and material. Deep navy printed card strip with warm paper edge, red/cyan/gold/gray state accent areas, crop marks and 2-4px pixel grain. Leave clean blank text-safe zones for region index, region name and one-line meta. Do not include any readable text, numbers, checkboxes, labels, fake icons that imply real state, or fake UI content."
+    },
+    {
+      "id": "08_pin_atlas",
+      "stage": "runtime_component_atlas",
+      "enabled": true,
+      "asset_type": "decal",
+      "background": "transparent",
+      "model": "gpt-5-image",
+      "resolution": "1024x1024",
+      "count": 1,
+      "slug": "angus-world-map-v5-pin-atlas",
+      "requires_approved_artboard": true,
+      "reference_images": [
+        {
+          "path": "APPROVED_ARTBOARD",
+          "role": "approved map pin color and pixel material"
+        },
+        {
+          "path": "docs/screenshots/2026-06-11-world-map-ui-style-sheet/04-world-map-ui-style-sheet-v4-micro-pixel-compare.png",
+          "role": "pin and icon pixel density"
+        }
+      ],
+      "prompt": "Generate a transparent PNG atlas of five symbolic map pins for Angus world map UI: normal, red-orange deadline, cyan tracking chain, gold selected, gray locked. Iconic diamond/map-marker silhouette, crisp graphic edges, printed-matter micro-pixel material, 2-4px pixel clusters, subtle cream edge highlight. Symbols only, no letters, no words, no numbers. All five frames must align to the same anchor and size."
+    },
+    {
+      "id": "09_ticket_atlas",
+      "stage": "runtime_component_atlas",
+      "enabled": true,
+      "asset_type": "prop",
+      "background": "transparent",
+      "model": "gpt-5-image",
+      "resolution": "1536x1024",
+      "count": 1,
+      "slug": "angus-world-map-v5-ticket-atlas",
+      "requires_approved_artboard": true,
+      "reference_images": [
+        {
+          "path": "APPROVED_ARTBOARD",
+          "role": "approved paper ticket language"
+        }
+      ],
+      "prompt": "Generate a transparent PNG atlas of four horizontal information ticket shells for Angus: red-orange deadline, cyan tracking, neutral info, gray locked. Warm paper ticket material with deep navy print edge, crop marks, subtle halftone and 2-4px pixel grain. Leave quiet blank slots for runtime title, count and one-line body. No readable text, no fake numbers, no labels, no fake progress bars. Same frame size and alignment."
+    },
+    {
+      "id": "10_cta_atlas",
+      "stage": "runtime_component_atlas",
+      "enabled": true,
+      "asset_type": "ui-banner",
+      "background": "transparent",
+      "model": "gpt-5-image",
+      "resolution": "1536x1024",
+      "count": 1,
+      "slug": "angus-world-map-v5-cta-atlas",
+      "requires_approved_artboard": true,
+      "reference_images": [
+        {
+          "path": "APPROVED_ARTBOARD",
+          "role": "approved CTA material and action language"
+        }
+      ],
+      "prompt": "Generate a transparent PNG atlas of five main CTA button shells stacked vertically: normal, hover, pressed, disabled, focus. It should feel like a modern editorial channel cut-in bar or printroom action plate, with deep navy, vivid red-orange, restrained cyan, warm paper inner label zone, bold right-side arrow icon area, crop marks, micro-pixel grain and crisp edges. Leave a clean center text-safe rectangle. Do not include readable text, Chinese characters, labels, numbers or fake UI content."
+    },
+    {
+      "id": "11_badge_atlas",
+      "stage": "runtime_component_atlas",
+      "enabled": true,
+      "asset_type": "decal",
+      "background": "transparent",
+      "model": "gpt-5-image",
+      "resolution": "1024x1024",
+      "count": 1,
+      "slug": "angus-world-map-v5-badge-atlas",
+      "requires_approved_artboard": true,
+      "reference_images": [
+        {
+          "path": "APPROVED_ARTBOARD",
+          "role": "approved badge icon material"
+        }
+      ],
+      "prompt": "Generate a transparent PNG atlas of small symbolic status badges for Angus UI: lock, available, deadline, chain tracking, selected stamp, recommended star. Printed sticker / stamp material, deep navy, red-orange, cyan, gold, warm paper edge, 2-4px pixel clusters. Symbols only. No letters, no words, no numbers."
+    },
+    {
+      "id": "12_story_preview_north_america",
+      "stage": "runtime_component",
+      "enabled": true,
+      "asset_type": "background",
+      "background": "opaque",
+      "model": "nano-banana-2",
+      "aspect_ratio": "16:9",
+      "image_size": "1K",
+      "count": 1,
+      "slug": "angus-world-map-v5-story-preview-north-america",
+      "requires_approved_artboard": true,
+      "reference_images": [
+        {
+          "path": "APPROVED_ARTBOARD",
+          "role": "approved right-side preview slot style"
+        },
+        {
+          "path": "角色设计风格规范-AI包/reference/01-原始基准图.png",
+          "role": "character energy and high-definition micro-pixel texture if a tiny reaction appears"
+        }
+      ],
+      "prompt": "Generate an opaque story preview image for the selected North America restricted zone in Angus. Modern supernatural weekly report image, low-detail pixel city silhouette, red-orange anomaly signal, deep navy night, warm paper/print treatment, halftone dots, red-cyan misregistration, 2-4px pixel clusters, black humor editorial mood. This is a small dossier preview image, not a real photo and not a horror painting. No readable text, no UI controls, no labels, no numbers."
+    }
+  ]
+}

@@ -1,0 +1,1880 @@
+{
+  "ok": true,
+  "failures": [],
+  "results": [
+    {
+      "label": "1600-empty",
+      "consoleErrors": [
+        "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+      ],
+      "audit": {
+        "label": "1600-empty",
+        "body": {
+          "scrollW": 1600,
+          "clientW": 1600,
+          "innerW": 1600
+        },
+        "issues": [],
+        "candidate": [
+          {
+            "i": 0,
+            "text": "时政 / 经济 FIELD FILE 01 塔夫脱辞去大法官职务：历史性领导层更迭 口径 科学纪实 基础 450 探索稿 题材:时政 / 经济 质量:Gold 抽出稿件条，拖到中央周刊校样",
+            "rect": {
+              "x": 77,
+              "y": 259,
+              "w": 273,
+              "h": 140,
+              "right": 350,
+              "bottom": 399
+            },
+            "scroll": {
+              "sw": 269,
+              "cw": 269,
+              "sh": 136,
+              "ch": 136,
+              "overflowX": 0,
+              "overflowY": 0
+            },
+            "children": [
+              {
+                "sel": "report-card-head",
+                "text": "时政 / 经济 FIELD FILE 01 塔夫脱辞去大法官职务：历史性领导层更迭",
+                "rect": {
+                  "x": 103,
+                  "y": 269,
+                  "w": 235,
+                  "h": 50,
+                  "right": 338,
+                  "bottom": 319
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-signal-row",
+                "text": "口径 科学纪实 基础 450",
+                "rect": {
+                  "x": 103,
+                  "y": 323,
+                  "w": 235,
+                  "h": 19,
+                  "right": 338,
+                  "bottom": 342
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-chips",
+                "text": "探索稿 题材:时政 / 经济 质量:Gold",
+                "rect": {
+                  "x": 103,
+                  "y": 346,
+                  "w": 167,
+                  "h": 19,
+                  "right": 270,
+                  "bottom": 365
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-tip",
+                "text": "抽出稿件条，拖到中央周刊校样",
+                "rect": {
+                  "x": 103,
+                  "y": 372,
+                  "w": 235,
+                  "h": 17,
+                  "right": 338,
+                  "bottom": 389
+                },
+                "outside": false
+              }
+            ]
+          },
+          {
+            "i": 1,
+            "text": "军事 / 花边新闻 FIELD FILE 02 港务局夜间封锁：三号码头出现异常回波 口径 待定口径 基础 300 探索稿 题材:军事 / 花边新闻 质量:Silver 抽出稿件条，拖到中央周刊校样",
+            "rect": {
+              "x": 77,
+              "y": 407,
+              "w": 273,
+              "h": 140,
+              "right": 350,
+              "bottom": 547
+            },
+            "scroll": {
+              "sw": 269,
+              "cw": 269,
+              "sh": 136,
+              "ch": 136,
+              "overflowX": 0,
+              "overflowY": 0
+            },
+            "children": [
+              {
+                "sel": "report-card-head",
+                "text": "军事 / 花边新闻 FIELD FILE 02 港务局夜间封锁：三号码头出现异常回波",
+                "rect": {
+                  "x": 103,
+                  "y": 417,
+                  "w": 235,
+                  "h": 50,
+                  "right": 338,
+                  "bottom": 467
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-signal-row",
+                "text": "口径 待定口径 基础 300",
+                "rect": {
+                  "x": 103,
+                  "y": 471,
+                  "w": 235,
+                  "h": 19,
+                  "right": 338,
+                  "bottom": 490
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-chips",
+                "text": "探索稿 题材:军事 / 花边新闻 质量:Silver",
+                "rect": {
+                  "x": 103,
+                  "y": 494,
+                  "w": 167,
+                  "h": 19,
+                  "right": 270,
+                  "bottom": 513
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-tip",
+                "text": "抽出稿件条，拖到中央周刊校样",
+                "rect": {
+                  "x": 103,
+                  "y": 520,
+                  "w": 235,
+                  "h": 17,
+                  "right": 338,
+                  "bottom": 537
+                },
+                "outside": false
+              }
+            ]
+          },
+          {
+            "i": 2,
+            "text": "花边新闻 / 幽默 FIELD FILE 03 东区剧院失踪档案重现：署名来自未来日期 口径 神秘玄学 基础 300 探索稿 题材:花边新闻 / 幽默 质量:Silver 抽出稿件条，拖到中央周刊校样",
+            "rect": {
+              "x": 77,
+              "y": 555,
+              "w": 273,
+              "h": 140,
+              "right": 350,
+              "bottom": 695
+            },
+            "scroll": {
+              "sw": 269,
+              "cw": 269,
+              "sh": 136,
+              "ch": 136,
+              "overflowX": 0,
+              "overflowY": 0
+            },
+            "children": [
+              {
+                "sel": "report-card-head",
+                "text": "花边新闻 / 幽默 FIELD FILE 03 东区剧院失踪档案重现：署名来自未来日期",
+                "rect": {
+                  "x": 103,
+                  "y": 565,
+                  "w": 235,
+                  "h": 50,
+                  "right": 338,
+                  "bottom": 615
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-signal-row",
+                "text": "口径 神秘玄学 基础 300",
+                "rect": {
+                  "x": 103,
+                  "y": 619,
+                  "w": 235,
+                  "h": 19,
+                  "right": 338,
+                  "bottom": 638
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-chips",
+                "text": "探索稿 题材:花边新闻 / 幽默 质量:Silver",
+                "rect": {
+                  "x": 103,
+                  "y": 642,
+                  "w": 167,
+                  "h": 19,
+                  "right": 270,
+                  "bottom": 661
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-tip",
+                "text": "抽出稿件条，拖到中央周刊校样",
+                "rect": {
+                  "x": 103,
+                  "y": 668,
+                  "w": 235,
+                  "h": 17,
+                  "right": 338,
+                  "bottom": 685
+                },
+                "outside": false
+              }
+            ]
+          }
+        ],
+        "approval": {
+          "clip": {
+            "x": 1219,
+            "y": 220,
+            "w": 320,
+            "h": 348,
+            "right": 1539,
+            "bottom": 567
+          },
+          "safe": {
+            "left": 1229,
+            "right": 1529,
+            "top": 254,
+            "bottom": 557
+          },
+          "nodes": [
+            {
+              "i": 0,
+              "cls": "approval-sign-line is-blocked",
+              "text": "主编签批 不可签 空版 3",
+              "rect": {
+                "x": 1247,
+                "y": 268,
+                "w": 264,
+                "h": 36,
+                "right": 1511,
+                "bottom": 304
+              },
+              "scroll": {
+                "sw": 260,
+                "cw": 260,
+                "sh": 32,
+                "ch": 32,
+                "sox": 0,
+                "soy": 0
+              },
+              "outside": false
+            },
+            {
+              "i": 1,
+              "cls": "approval-front-summary",
+              "text": "本期头版定稿 尚未定稿",
+              "rect": {
+                "x": 1247,
+                "y": 313,
+                "w": 264,
+                "h": 64,
+                "right": 1511,
+                "bottom": 377
+              },
+              "scroll": {
+                "sw": 261,
+                "cw": 261,
+                "sh": 63,
+                "ch": 63,
+                "sox": 0,
+                "soy": 0
+              },
+              "outside": false
+            },
+            {
+              "i": 2,
+              "cls": "approval-decision-grid",
+              "text": "预计扩散待排满 公开冲突待判断",
+              "rect": {
+                "x": 1247,
+                "y": 386,
+                "w": 264,
+                "h": 45,
+                "right": 1511,
+                "bottom": 431
+              },
+              "scroll": {
+                "sw": 264,
+                "cw": 264,
+                "sh": 45,
+                "ch": 45,
+                "sox": 0,
+                "soy": 0
+              },
+              "outside": false
+            },
+            {
+              "i": 3,
+              "cls": "approval-note",
+              "text": "批注：仍有 3 个空版，暂不可送印。",
+              "rect": {
+                "x": 1247,
+                "y": 440,
+                "w": 264,
+                "h": 28,
+                "right": 1511,
+                "bottom": 468
+              },
+              "scroll": {
+                "sw": 262,
+                "cw": 262,
+                "sh": 26,
+                "ch": 26,
+                "sox": 0,
+                "soy": 0
+              },
+              "outside": false
+            }
+          ]
+        },
+        "slots": [
+          {
+            "i": 0,
+            "cls": "paper-slot paper-slot-main is-empty",
+            "text": "头版主口径 · 公开解释 头版主口径待定 拖入一篇稿件，决定本期头版主口径",
+            "rect": {
+              "x": 435,
+              "y": 356,
+              "w": 322,
+              "h": 133,
+              "right": 756,
+              "bottom": 489
+            },
+            "scroll": {
+              "sw": 317,
+              "cw": 317,
+              "sh": 128,
+              "ch": 128,
+              "sox": 0,
+              "soy": 0
+            }
+          },
+          {
+            "i": 1,
+            "cls": "paper-slot paper-slot-sub is-empty",
+            "text": "副版证据链 · 来源连携 副版证据链待定 拖入副版稿件，补足证据与钩子",
+            "rect": {
+              "x": 820,
+              "y": 264,
+              "w": 322,
+              "h": 211,
+              "right": 1142,
+              "bottom": 475
+            },
+            "scroll": {
+              "sw": 317,
+              "cw": 317,
+              "sh": 206,
+              "ch": 206,
+              "sox": 0,
+              "soy": 0
+            }
+          },
+          {
+            "i": 2,
+            "cls": "paper-slot paper-slot-sub is-empty",
+            "text": "副版异常钩子 · 下周追踪 副版异常钩子待定 拖入副版稿件，补足证据与钩子",
+            "rect": {
+              "x": 820,
+              "y": 484,
+              "w": 322,
+              "h": 182,
+              "right": 1142,
+              "bottom": 666
+            },
+            "scroll": {
+              "sw": 317,
+              "cw": 317,
+              "sh": 177,
+              "ch": 177,
+              "sox": 0,
+              "soy": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "label": "1600-filled",
+      "consoleErrors": [
+        "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+      ],
+      "audit": {
+        "label": "1600-filled",
+        "body": {
+          "scrollW": 1600,
+          "clientW": 1600,
+          "innerW": 1600
+        },
+        "issues": [],
+        "candidate": [
+          {
+            "i": 0,
+            "text": "时政 / 经济 FIELD FILE 01 塔夫脱辞去大法官职务：历史性领导层更迭 已上版头版主口径 口径 科学纪实 基础 450 探索稿 题材:时政 / 经济 质量:Gold 已连到 头版主口径",
+            "rect": {
+              "x": 77,
+              "y": 259,
+              "w": 273,
+              "h": 140,
+              "right": 350,
+              "bottom": 399
+            },
+            "scroll": {
+              "sw": 269,
+              "cw": 269,
+              "sh": 136,
+              "ch": 136,
+              "overflowX": 0,
+              "overflowY": 0
+            },
+            "children": [
+              {
+                "sel": "report-card-head",
+                "text": "时政 / 经济 FIELD FILE 01 塔夫脱辞去大法官职务：历史性领导层更迭",
+                "rect": {
+                  "x": 103,
+                  "y": 269,
+                  "w": 235,
+                  "h": 50,
+                  "right": 338,
+                  "bottom": 319
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-card-stamp",
+                "text": "已上版",
+                "rect": {
+                  "x": 296,
+                  "y": 347,
+                  "w": 42,
+                  "h": 19,
+                  "right": 338,
+                  "bottom": 365
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-link-tag",
+                "text": "头版主口径",
+                "rect": {
+                  "x": 286,
+                  "y": 371,
+                  "w": 52,
+                  "h": 16,
+                  "right": 338,
+                  "bottom": 388
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-signal-row",
+                "text": "口径 科学纪实 基础 450",
+                "rect": {
+                  "x": 103,
+                  "y": 323,
+                  "w": 235,
+                  "h": 19,
+                  "right": 338,
+                  "bottom": 342
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-chips",
+                "text": "探索稿 题材:时政 / 经济 质量:Gold",
+                "rect": {
+                  "x": 103,
+                  "y": 346,
+                  "w": 167,
+                  "h": 19,
+                  "right": 270,
+                  "bottom": 365
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-tip",
+                "text": "已连到 头版主口径",
+                "rect": {
+                  "x": 103,
+                  "y": 372,
+                  "w": 167,
+                  "h": 17,
+                  "right": 270,
+                  "bottom": 389
+                },
+                "outside": false
+              }
+            ]
+          },
+          {
+            "i": 1,
+            "text": "军事 / 花边新闻 FIELD FILE 02 港务局夜间封锁：三号码头出现异常回波 已上版副版证据链 口径 待定口径 基础 300 探索稿 题材:军事 / 花边新闻 质量:Silver 已连到 副版",
+            "rect": {
+              "x": 77,
+              "y": 407,
+              "w": 273,
+              "h": 140,
+              "right": 350,
+              "bottom": 547
+            },
+            "scroll": {
+              "sw": 269,
+              "cw": 269,
+              "sh": 136,
+              "ch": 136,
+              "overflowX": 0,
+              "overflowY": 0
+            },
+            "children": [
+              {
+                "sel": "report-card-head",
+                "text": "军事 / 花边新闻 FIELD FILE 02 港务局夜间封锁：三号码头出现异常回波",
+                "rect": {
+                  "x": 103,
+                  "y": 417,
+                  "w": 235,
+                  "h": 50,
+                  "right": 338,
+                  "bottom": 467
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-card-stamp",
+                "text": "已上版",
+                "rect": {
+                  "x": 296,
+                  "y": 495,
+                  "w": 42,
+                  "h": 19,
+                  "right": 338,
+                  "bottom": 513
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-link-tag",
+                "text": "副版证据链",
+                "rect": {
+                  "x": 286,
+                  "y": 519,
+                  "w": 52,
+                  "h": 16,
+                  "right": 338,
+                  "bottom": 536
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-signal-row",
+                "text": "口径 待定口径 基础 300",
+                "rect": {
+                  "x": 103,
+                  "y": 471,
+                  "w": 235,
+                  "h": 19,
+                  "right": 338,
+                  "bottom": 490
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-chips",
+                "text": "探索稿 题材:军事 / 花边新闻 质量:Silver",
+                "rect": {
+                  "x": 103,
+                  "y": 494,
+                  "w": 167,
+                  "h": 19,
+                  "right": 270,
+                  "bottom": 513
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-tip",
+                "text": "已连到 副版证据链",
+                "rect": {
+                  "x": 103,
+                  "y": 520,
+                  "w": 167,
+                  "h": 17,
+                  "right": 270,
+                  "bottom": 537
+                },
+                "outside": false
+              }
+            ]
+          },
+          {
+            "i": 2,
+            "text": "花边新闻 / 幽默 FIELD FILE 03 东区剧院失踪档案重现：署名来自未来日期 已上版副版异常钩子 口径 神秘玄学 基础 300 探索稿 题材:花边新闻 / 幽默 质量:Silver 已连到 ",
+            "rect": {
+              "x": 77,
+              "y": 555,
+              "w": 273,
+              "h": 140,
+              "right": 350,
+              "bottom": 695
+            },
+            "scroll": {
+              "sw": 269,
+              "cw": 269,
+              "sh": 136,
+              "ch": 136,
+              "overflowX": 0,
+              "overflowY": 0
+            },
+            "children": [
+              {
+                "sel": "report-card-head",
+                "text": "花边新闻 / 幽默 FIELD FILE 03 东区剧院失踪档案重现：署名来自未来日期",
+                "rect": {
+                  "x": 103,
+                  "y": 565,
+                  "w": 235,
+                  "h": 50,
+                  "right": 338,
+                  "bottom": 615
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-card-stamp",
+                "text": "已上版",
+                "rect": {
+                  "x": 296,
+                  "y": 643,
+                  "w": 42,
+                  "h": 19,
+                  "right": 338,
+                  "bottom": 661
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-link-tag",
+                "text": "副版异常钩子",
+                "rect": {
+                  "x": 278,
+                  "y": 667,
+                  "w": 60,
+                  "h": 16,
+                  "right": 338,
+                  "bottom": 684
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-signal-row",
+                "text": "口径 神秘玄学 基础 300",
+                "rect": {
+                  "x": 103,
+                  "y": 619,
+                  "w": 235,
+                  "h": 19,
+                  "right": 338,
+                  "bottom": 638
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-chips",
+                "text": "探索稿 题材:花边新闻 / 幽默 质量:Silver",
+                "rect": {
+                  "x": 103,
+                  "y": 642,
+                  "w": 167,
+                  "h": 19,
+                  "right": 270,
+                  "bottom": 661
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-tip",
+                "text": "已连到 副版异常钩子",
+                "rect": {
+                  "x": 103,
+                  "y": 668,
+                  "w": 167,
+                  "h": 17,
+                  "right": 270,
+                  "bottom": 685
+                },
+                "outside": false
+              }
+            ]
+          }
+        ],
+        "approval": {
+          "clip": {
+            "x": 1219,
+            "y": 220,
+            "w": 320,
+            "h": 364,
+            "right": 1539,
+            "bottom": 584
+          },
+          "safe": {
+            "left": 1229,
+            "right": 1529,
+            "top": 254,
+            "bottom": 574
+          },
+          "nodes": [
+            {
+              "i": 0,
+              "cls": "approval-sign-line is-ready",
+              "text": "主编签批 可签 空版 0",
+              "rect": {
+                "x": 1247,
+                "y": 268,
+                "w": 264,
+                "h": 36,
+                "right": 1511,
+                "bottom": 304
+              },
+              "scroll": {
+                "sw": 260,
+                "cw": 260,
+                "sh": 32,
+                "ch": 32,
+                "sox": 0,
+                "soy": 0
+              },
+              "outside": false
+            },
+            {
+              "i": 1,
+              "cls": "approval-front-summary",
+              "text": "本期头版定稿 塔夫脱辞去大法官职务：历史性领导层更迭",
+              "rect": {
+                "x": 1247,
+                "y": 313,
+                "w": 264,
+                "h": 64,
+                "right": 1511,
+                "bottom": 377
+              },
+              "scroll": {
+                "sw": 261,
+                "cw": 261,
+                "sh": 63,
+                "ch": 63,
+                "sox": 0,
+                "soy": 0
+              },
+              "outside": false
+            },
+            {
+              "i": 2,
+              "cls": "approval-decision-grid",
+              "text": "预计扩散15,953 份 公开冲突无公开冲突",
+              "rect": {
+                "x": 1247,
+                "y": 386,
+                "w": 264,
+                "h": 45,
+                "right": 1511,
+                "bottom": 431
+              },
+              "scroll": {
+                "sw": 264,
+                "cw": 264,
+                "sh": 45,
+                "ch": 45,
+                "sox": 0,
+                "soy": 0
+              },
+              "outside": false
+            },
+            {
+              "i": 3,
+              "cls": "approval-note",
+              "text": "批注：三栏已齐，送印前核对头版。",
+              "rect": {
+                "x": 1247,
+                "y": 440,
+                "w": 264,
+                "h": 28,
+                "right": 1511,
+                "bottom": 468
+              },
+              "scroll": {
+                "sw": 262,
+                "cw": 262,
+                "sh": 26,
+                "ch": 26,
+                "sox": 0,
+                "soy": 0
+              },
+              "outside": false
+            }
+          ]
+        },
+        "slots": [
+          {
+            "i": 0,
+            "cls": "paper-slot paper-slot-main is-filled",
+            "text": "头版主口径 · 公开解释 主编红笔：这篇决定本期读者先相信什么。 头版导语 · 定义本期公开口径 塔夫脱辞去大法官职务：历史性领导层更迭 像素线报图 本期主口径：证据可交叉，结论暂保留。 **** *",
+            "rect": {
+              "x": 435,
+              "y": 356,
+              "w": 323,
+              "h": 382,
+              "right": 757,
+              "bottom": 737
+            },
+            "scroll": {
+              "sw": 317,
+              "cw": 317,
+              "sh": 377,
+              "ch": 377,
+              "sox": 0,
+              "soy": 0
+            }
+          },
+          {
+            "i": 1,
+            "cls": "paper-slot paper-slot-sub is-filled",
+            "text": "副版证据链 · 来源连携 校样批注：把线索来源钉在右页上方。 证据来源 · 补强证据链 港务局夜间封锁：三号码头出现异常回波 证据剪影 补齐证据缺口，保留下周追踪线。 **** **** **** *",
+            "rect": {
+              "x": 820,
+              "y": 264,
+              "w": 322,
+              "h": 222,
+              "right": 1142,
+              "bottom": 486
+            },
+            "scroll": {
+              "sw": 317,
+              "cw": 317,
+              "sh": 217,
+              "ch": 217,
+              "sox": 0,
+              "soy": 0
+            }
+          },
+          {
+            "i": 2,
+            "cls": "paper-slot paper-slot-sub is-filled",
+            "text": "副版异常钩子 · 下周追踪 校样批注：保留疑点，不在本期说死。 异常钩子 · 制造下周追踪钩子 东区剧院失踪档案重现：署名来自未来日期 异常符号 补齐证据缺口，保留下周追踪线。 **** **** *",
+            "rect": {
+              "x": 820,
+              "y": 495,
+              "w": 322,
+              "h": 201,
+              "right": 1142,
+              "bottom": 696
+            },
+            "scroll": {
+              "sw": 317,
+              "cw": 317,
+              "sh": 196,
+              "ch": 196,
+              "sox": 0,
+              "soy": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "label": "1366-filled",
+      "consoleErrors": [
+        "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+      ],
+      "audit": {
+        "label": "1366-filled",
+        "body": {
+          "scrollW": 1366,
+          "clientW": 1366,
+          "innerW": 1366
+        },
+        "issues": [],
+        "candidate": [
+          {
+            "i": 0,
+            "text": "时政 / 经济 FIELD FILE 01 塔夫脱辞去大法官职务：历史性领导层更迭 已上版头版主口径 口径 科学纪实 基础 450 探索稿 题材:时政 / 经济 质量:Gold 已连到 头版主口径",
+            "rect": {
+              "x": 77,
+              "y": 259,
+              "w": 228,
+              "h": 140,
+              "right": 305,
+              "bottom": 399
+            },
+            "scroll": {
+              "sw": 224,
+              "cw": 224,
+              "sh": 136,
+              "ch": 136,
+              "overflowX": 0,
+              "overflowY": 0
+            },
+            "children": [
+              {
+                "sel": "report-card-head",
+                "text": "时政 / 经济 FIELD FILE 01 塔夫脱辞去大法官职务：历史性领导层更迭",
+                "rect": {
+                  "x": 103,
+                  "y": 269,
+                  "w": 190,
+                  "h": 50,
+                  "right": 293,
+                  "bottom": 319
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-card-stamp",
+                "text": "已上版",
+                "rect": {
+                  "x": 251,
+                  "y": 347,
+                  "w": 42,
+                  "h": 19,
+                  "right": 293,
+                  "bottom": 365
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-link-tag",
+                "text": "头版主口径",
+                "rect": {
+                  "x": 241,
+                  "y": 371,
+                  "w": 52,
+                  "h": 16,
+                  "right": 293,
+                  "bottom": 388
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-signal-row",
+                "text": "口径 科学纪实 基础 450",
+                "rect": {
+                  "x": 103,
+                  "y": 323,
+                  "w": 190,
+                  "h": 19,
+                  "right": 293,
+                  "bottom": 342
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-chips",
+                "text": "探索稿 题材:时政 / 经济 质量:Gold",
+                "rect": {
+                  "x": 103,
+                  "y": 346,
+                  "w": 122,
+                  "h": 19,
+                  "right": 225,
+                  "bottom": 365
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-tip",
+                "text": "已连到 头版主口径",
+                "rect": {
+                  "x": 103,
+                  "y": 372,
+                  "w": 122,
+                  "h": 17,
+                  "right": 225,
+                  "bottom": 389
+                },
+                "outside": false
+              }
+            ]
+          },
+          {
+            "i": 1,
+            "text": "军事 / 花边新闻 FIELD FILE 02 港务局夜间封锁：三号码头出现异常回波 已上版副版证据链 口径 待定口径 基础 300 探索稿 题材:军事 / 花边新闻 质量:Silver 已连到 副版",
+            "rect": {
+              "x": 77,
+              "y": 407,
+              "w": 228,
+              "h": 140,
+              "right": 305,
+              "bottom": 547
+            },
+            "scroll": {
+              "sw": 224,
+              "cw": 224,
+              "sh": 136,
+              "ch": 136,
+              "overflowX": 0,
+              "overflowY": 0
+            },
+            "children": [
+              {
+                "sel": "report-card-head",
+                "text": "军事 / 花边新闻 FIELD FILE 02 港务局夜间封锁：三号码头出现异常回波",
+                "rect": {
+                  "x": 103,
+                  "y": 417,
+                  "w": 190,
+                  "h": 50,
+                  "right": 293,
+                  "bottom": 467
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-card-stamp",
+                "text": "已上版",
+                "rect": {
+                  "x": 251,
+                  "y": 495,
+                  "w": 42,
+                  "h": 19,
+                  "right": 293,
+                  "bottom": 513
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-link-tag",
+                "text": "副版证据链",
+                "rect": {
+                  "x": 241,
+                  "y": 519,
+                  "w": 52,
+                  "h": 16,
+                  "right": 293,
+                  "bottom": 536
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-signal-row",
+                "text": "口径 待定口径 基础 300",
+                "rect": {
+                  "x": 103,
+                  "y": 471,
+                  "w": 190,
+                  "h": 19,
+                  "right": 293,
+                  "bottom": 490
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-chips",
+                "text": "探索稿 题材:军事 / 花边新闻 质量:Silver",
+                "rect": {
+                  "x": 103,
+                  "y": 494,
+                  "w": 122,
+                  "h": 19,
+                  "right": 225,
+                  "bottom": 513
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-tip",
+                "text": "已连到 副版证据链",
+                "rect": {
+                  "x": 103,
+                  "y": 520,
+                  "w": 122,
+                  "h": 17,
+                  "right": 225,
+                  "bottom": 537
+                },
+                "outside": false
+              }
+            ]
+          },
+          {
+            "i": 2,
+            "text": "花边新闻 / 幽默 FIELD FILE 03 东区剧院失踪档案重现：署名来自未来日期 已上版副版异常钩子 口径 神秘玄学 基础 300 探索稿 题材:花边新闻 / 幽默 质量:Silver 已连到 ",
+            "rect": {
+              "x": 77,
+              "y": 555,
+              "w": 228,
+              "h": 140,
+              "right": 305,
+              "bottom": 695
+            },
+            "scroll": {
+              "sw": 224,
+              "cw": 224,
+              "sh": 136,
+              "ch": 136,
+              "overflowX": 0,
+              "overflowY": 0
+            },
+            "children": [
+              {
+                "sel": "report-card-head",
+                "text": "花边新闻 / 幽默 FIELD FILE 03 东区剧院失踪档案重现：署名来自未来日期",
+                "rect": {
+                  "x": 103,
+                  "y": 565,
+                  "w": 190,
+                  "h": 50,
+                  "right": 293,
+                  "bottom": 615
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-card-stamp",
+                "text": "已上版",
+                "rect": {
+                  "x": 251,
+                  "y": 643,
+                  "w": 42,
+                  "h": 19,
+                  "right": 293,
+                  "bottom": 661
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-link-tag",
+                "text": "副版异常钩子",
+                "rect": {
+                  "x": 233,
+                  "y": 667,
+                  "w": 60,
+                  "h": 16,
+                  "right": 293,
+                  "bottom": 684
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-signal-row",
+                "text": "口径 神秘玄学 基础 300",
+                "rect": {
+                  "x": 103,
+                  "y": 619,
+                  "w": 190,
+                  "h": 19,
+                  "right": 293,
+                  "bottom": 638
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-chips",
+                "text": "探索稿 题材:花边新闻 / 幽默 质量:Silver",
+                "rect": {
+                  "x": 103,
+                  "y": 642,
+                  "w": 122,
+                  "h": 19,
+                  "right": 225,
+                  "bottom": 661
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-tip",
+                "text": "已连到 副版异常钩子",
+                "rect": {
+                  "x": 103,
+                  "y": 668,
+                  "w": 122,
+                  "h": 17,
+                  "right": 225,
+                  "bottom": 685
+                },
+                "outside": false
+              }
+            ]
+          }
+        ],
+        "approval": {
+          "clip": {
+            "x": 1041,
+            "y": 220,
+            "w": 264,
+            "h": 232,
+            "right": 1305,
+            "bottom": 452
+          },
+          "safe": {
+            "left": 1051,
+            "right": 1295,
+            "top": 254,
+            "bottom": 442
+          },
+          "nodes": [
+            {
+              "i": 0,
+              "cls": "approval-sign-line is-ready",
+              "text": "主编签批 可签 空版 0",
+              "rect": {
+                "x": 1069,
+                "y": 262,
+                "w": 208,
+                "h": 29,
+                "right": 1277,
+                "bottom": 290
+              },
+              "scroll": {
+                "sw": 204,
+                "cw": 204,
+                "sh": 25,
+                "ch": 25,
+                "sox": 0,
+                "soy": 0
+              },
+              "outside": false
+            },
+            {
+              "i": 1,
+              "cls": "approval-front-summary",
+              "text": "本期头版定稿 塔夫脱辞去大法官职务：历史性领导层更迭",
+              "rect": {
+                "x": 1069,
+                "y": 295,
+                "w": 208,
+                "h": 54,
+                "right": 1277,
+                "bottom": 349
+              },
+              "scroll": {
+                "sw": 205,
+                "cw": 205,
+                "sh": 53,
+                "ch": 53,
+                "sox": 0,
+                "soy": 0
+              },
+              "outside": false
+            },
+            {
+              "i": 2,
+              "cls": "approval-decision-grid",
+              "text": "预计扩散15,953 份 公开冲突无公开冲突",
+              "rect": {
+                "x": 1069,
+                "y": 354,
+                "w": 208,
+                "h": 40,
+                "right": 1277,
+                "bottom": 395
+              },
+              "scroll": {
+                "sw": 208,
+                "cw": 208,
+                "sh": 40,
+                "ch": 40,
+                "sox": 0,
+                "soy": 0
+              },
+              "outside": false
+            },
+            {
+              "i": 3,
+              "cls": "approval-note",
+              "text": "批注：三栏已齐，送印前核对头版。",
+              "rect": {
+                "x": 1069,
+                "y": 400,
+                "w": 208,
+                "h": 18,
+                "right": 1277,
+                "bottom": 418
+              },
+              "scroll": {
+                "sw": 206,
+                "cw": 206,
+                "sh": 16,
+                "ch": 16,
+                "sox": 0,
+                "soy": 0
+              },
+              "outside": false
+            }
+          ]
+        },
+        "slots": [
+          {
+            "i": 0,
+            "cls": "paper-slot paper-slot-main is-filled",
+            "text": "头版主口径 · 公开解释 主编红笔：这篇决定本期读者先相信什么。 头版导语 · 定义本期公开口径 塔夫脱辞去大法官职务：历史性领导层更迭 像素线报图 本期主口径：证据可交叉，结论暂保留。 **** *",
+            "rect": {
+              "x": 390,
+              "y": 356,
+              "w": 256,
+              "h": 303,
+              "right": 646,
+              "bottom": 658
+            },
+            "scroll": {
+              "sw": 251,
+              "cw": 251,
+              "sh": 298,
+              "ch": 298,
+              "sox": 0,
+              "soy": 0
+            }
+          },
+          {
+            "i": 1,
+            "cls": "paper-slot paper-slot-sub is-filled",
+            "text": "副版证据链 · 来源连携 校样批注：把线索来源钉在右页上方。 证据来源 · 补强证据链 港务局夜间封锁：三号码头出现异常回波 证据剪影 补齐证据缺口，保留下周追踪线。 **** **** **** *",
+            "rect": {
+              "x": 708,
+              "y": 265,
+              "w": 256,
+              "h": 211,
+              "right": 964,
+              "bottom": 475
+            },
+            "scroll": {
+              "sw": 251,
+              "cw": 251,
+              "sh": 206,
+              "ch": 206,
+              "sox": 0,
+              "soy": 0
+            }
+          },
+          {
+            "i": 2,
+            "cls": "paper-slot paper-slot-sub is-filled",
+            "text": "副版异常钩子 · 下周追踪 校样批注：保留疑点，不在本期说死。 异常钩子 · 制造下周追踪钩子 东区剧院失踪档案重现：署名来自未来日期 异常符号 补齐证据缺口，保留下周追踪线。 **** **** *",
+            "rect": {
+              "x": 709,
+              "y": 485,
+              "w": 256,
+              "h": 171,
+              "right": 965,
+              "bottom": 655
+            },
+            "scroll": {
+              "sw": 251,
+              "cw": 251,
+              "sh": 166,
+              "ch": 166,
+              "sox": 0,
+              "soy": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "label": "1920-filled",
+      "consoleErrors": [
+        "Failed to load resource: net::ERR_NETWORK_ACCESS_DENIED"
+      ],
+      "audit": {
+        "label": "1920-filled",
+        "body": {
+          "scrollW": 1920,
+          "clientW": 1920,
+          "innerW": 1920
+        },
+        "issues": [],
+        "candidate": [
+          {
+            "i": 0,
+            "text": "时政 / 经济 FIELD FILE 01 塔夫脱辞去大法官职务：历史性领导层更迭 已上版头版主口径 口径 科学纪实 基础 450 探索稿 题材:时政 / 经济 质量:Gold 已连到 头版主口径",
+            "rect": {
+              "x": 237,
+              "y": 259,
+              "w": 273,
+              "h": 140,
+              "right": 510,
+              "bottom": 399
+            },
+            "scroll": {
+              "sw": 269,
+              "cw": 269,
+              "sh": 136,
+              "ch": 136,
+              "overflowX": 0,
+              "overflowY": 0
+            },
+            "children": [
+              {
+                "sel": "report-card-head",
+                "text": "时政 / 经济 FIELD FILE 01 塔夫脱辞去大法官职务：历史性领导层更迭",
+                "rect": {
+                  "x": 263,
+                  "y": 269,
+                  "w": 235,
+                  "h": 50,
+                  "right": 498,
+                  "bottom": 319
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-card-stamp",
+                "text": "已上版",
+                "rect": {
+                  "x": 456,
+                  "y": 347,
+                  "w": 42,
+                  "h": 19,
+                  "right": 498,
+                  "bottom": 365
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-link-tag",
+                "text": "头版主口径",
+                "rect": {
+                  "x": 446,
+                  "y": 371,
+                  "w": 52,
+                  "h": 16,
+                  "right": 498,
+                  "bottom": 388
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-signal-row",
+                "text": "口径 科学纪实 基础 450",
+                "rect": {
+                  "x": 263,
+                  "y": 323,
+                  "w": 235,
+                  "h": 19,
+                  "right": 498,
+                  "bottom": 342
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-chips",
+                "text": "探索稿 题材:时政 / 经济 质量:Gold",
+                "rect": {
+                  "x": 263,
+                  "y": 346,
+                  "w": 167,
+                  "h": 19,
+                  "right": 430,
+                  "bottom": 365
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-tip",
+                "text": "已连到 头版主口径",
+                "rect": {
+                  "x": 263,
+                  "y": 372,
+                  "w": 167,
+                  "h": 17,
+                  "right": 430,
+                  "bottom": 389
+                },
+                "outside": false
+              }
+            ]
+          },
+          {
+            "i": 1,
+            "text": "军事 / 花边新闻 FIELD FILE 02 港务局夜间封锁：三号码头出现异常回波 已上版副版证据链 口径 待定口径 基础 300 探索稿 题材:军事 / 花边新闻 质量:Silver 已连到 副版",
+            "rect": {
+              "x": 237,
+              "y": 407,
+              "w": 273,
+              "h": 140,
+              "right": 510,
+              "bottom": 547
+            },
+            "scroll": {
+              "sw": 269,
+              "cw": 269,
+              "sh": 136,
+              "ch": 136,
+              "overflowX": 0,
+              "overflowY": 0
+            },
+            "children": [
+              {
+                "sel": "report-card-head",
+                "text": "军事 / 花边新闻 FIELD FILE 02 港务局夜间封锁：三号码头出现异常回波",
+                "rect": {
+                  "x": 263,
+                  "y": 417,
+                  "w": 235,
+                  "h": 50,
+                  "right": 498,
+                  "bottom": 467
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-card-stamp",
+                "text": "已上版",
+                "rect": {
+                  "x": 456,
+                  "y": 495,
+                  "w": 42,
+                  "h": 19,
+                  "right": 498,
+                  "bottom": 513
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-link-tag",
+                "text": "副版证据链",
+                "rect": {
+                  "x": 446,
+                  "y": 519,
+                  "w": 52,
+                  "h": 16,
+                  "right": 498,
+                  "bottom": 536
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-signal-row",
+                "text": "口径 待定口径 基础 300",
+                "rect": {
+                  "x": 263,
+                  "y": 471,
+                  "w": 235,
+                  "h": 19,
+                  "right": 498,
+                  "bottom": 490
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-chips",
+                "text": "探索稿 题材:军事 / 花边新闻 质量:Silver",
+                "rect": {
+                  "x": 263,
+                  "y": 494,
+                  "w": 167,
+                  "h": 19,
+                  "right": 430,
+                  "bottom": 513
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-tip",
+                "text": "已连到 副版证据链",
+                "rect": {
+                  "x": 263,
+                  "y": 520,
+                  "w": 167,
+                  "h": 17,
+                  "right": 430,
+                  "bottom": 537
+                },
+                "outside": false
+              }
+            ]
+          },
+          {
+            "i": 2,
+            "text": "花边新闻 / 幽默 FIELD FILE 03 东区剧院失踪档案重现：署名来自未来日期 已上版副版异常钩子 口径 神秘玄学 基础 300 探索稿 题材:花边新闻 / 幽默 质量:Silver 已连到 ",
+            "rect": {
+              "x": 237,
+              "y": 555,
+              "w": 273,
+              "h": 140,
+              "right": 510,
+              "bottom": 695
+            },
+            "scroll": {
+              "sw": 269,
+              "cw": 269,
+              "sh": 136,
+              "ch": 136,
+              "overflowX": 0,
+              "overflowY": 0
+            },
+            "children": [
+              {
+                "sel": "report-card-head",
+                "text": "花边新闻 / 幽默 FIELD FILE 03 东区剧院失踪档案重现：署名来自未来日期",
+                "rect": {
+                  "x": 263,
+                  "y": 565,
+                  "w": 235,
+                  "h": 50,
+                  "right": 498,
+                  "bottom": 615
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-card-stamp",
+                "text": "已上版",
+                "rect": {
+                  "x": 456,
+                  "y": 643,
+                  "w": 42,
+                  "h": 19,
+                  "right": 498,
+                  "bottom": 661
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-link-tag",
+                "text": "副版异常钩子",
+                "rect": {
+                  "x": 438,
+                  "y": 667,
+                  "w": 60,
+                  "h": 16,
+                  "right": 498,
+                  "bottom": 684
+                },
+                "outside": false
+              },
+              {
+                "sel": "report-signal-row",
+                "text": "口径 神秘玄学 基础 300",
+                "rect": {
+                  "x": 263,
+                  "y": 619,
+                  "w": 235,
+                  "h": 19,
+                  "right": 498,
+                  "bottom": 638
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-chips",
+                "text": "探索稿 题材:花边新闻 / 幽默 质量:Silver",
+                "rect": {
+                  "x": 263,
+                  "y": 642,
+                  "w": 167,
+                  "h": 19,
+                  "right": 430,
+                  "bottom": 661
+                },
+                "outside": false
+              },
+              {
+                "sel": "nm-tip",
+                "text": "已连到 副版异常钩子",
+                "rect": {
+                  "x": 263,
+                  "y": 668,
+                  "w": 167,
+                  "h": 17,
+                  "right": 430,
+                  "bottom": 685
+                },
+                "outside": false
+              }
+            ]
+          }
+        ],
+        "approval": {
+          "clip": {
+            "x": 1379,
+            "y": 220,
+            "w": 320,
+            "h": 364,
+            "right": 1699,
+            "bottom": 584
+          },
+          "safe": {
+            "left": 1389,
+            "right": 1689,
+            "top": 254,
+            "bottom": 574
+          },
+          "nodes": [
+            {
+              "i": 0,
+              "cls": "approval-sign-line is-ready",
+              "text": "主编签批 可签 空版 0",
+              "rect": {
+                "x": 1407,
+                "y": 268,
+                "w": 264,
+                "h": 36,
+                "right": 1671,
+                "bottom": 304
+              },
+              "scroll": {
+                "sw": 260,
+                "cw": 260,
+                "sh": 32,
+                "ch": 32,
+                "sox": 0,
+                "soy": 0
+              },
+              "outside": false
+            },
+            {
+              "i": 1,
+              "cls": "approval-front-summary",
+              "text": "本期头版定稿 塔夫脱辞去大法官职务：历史性领导层更迭",
+              "rect": {
+                "x": 1407,
+                "y": 313,
+                "w": 264,
+                "h": 64,
+                "right": 1671,
+                "bottom": 377
+              },
+              "scroll": {
+                "sw": 261,
+                "cw": 261,
+                "sh": 63,
+                "ch": 63,
+                "sox": 0,
+                "soy": 0
+              },
+              "outside": false
+            },
+            {
+              "i": 2,
+              "cls": "approval-decision-grid",
+              "text": "预计扩散15,953 份 公开冲突无公开冲突",
+              "rect": {
+                "x": 1407,
+                "y": 386,
+                "w": 264,
+                "h": 45,
+                "right": 1671,
+                "bottom": 431
+              },
+              "scroll": {
+                "sw": 264,
+                "cw": 264,
+                "sh": 45,
+                "ch": 45,
+                "sox": 0,
+                "soy": 0
+              },
+              "outside": false
+            },
+            {
+              "i": 3,
+              "cls": "approval-note",
+              "text": "批注：三栏已齐，送印前核对头版。",
+              "rect": {
+                "x": 1407,
+                "y": 440,
+                "w": 264,
+                "h": 28,
+                "right": 1671,
+                "bottom": 468
+              },
+              "scroll": {
+                "sw": 262,
+                "cw": 262,
+                "sh": 26,
+                "ch": 26,
+                "sox": 0,
+                "soy": 0
+              },
+              "outside": false
+            }
+          ]
+        },
+        "slots": [
+          {
+            "i": 0,
+            "cls": "paper-slot paper-slot-main is-filled",
+            "text": "头版主口径 · 公开解释 主编红笔：这篇决定本期读者先相信什么。 头版导语 · 定义本期公开口径 塔夫脱辞去大法官职务：历史性领导层更迭 像素线报图 本期主口径：证据可交叉，结论暂保留。 **** *",
+            "rect": {
+              "x": 595,
+              "y": 356,
+              "w": 323,
+              "h": 408,
+              "right": 917,
+              "bottom": 764
+            },
+            "scroll": {
+              "sw": 317,
+              "cw": 317,
+              "sh": 403,
+              "ch": 403,
+              "sox": 0,
+              "soy": 0
+            }
+          },
+          {
+            "i": 1,
+            "cls": "paper-slot paper-slot-sub is-filled",
+            "text": "副版证据链 · 来源连携 校样批注：把线索来源钉在右页上方。 证据来源 · 补强证据链 港务局夜间封锁：三号码头出现异常回波 证据剪影 补齐证据缺口，保留下周追踪线。 **** **** **** *",
+            "rect": {
+              "x": 980,
+              "y": 264,
+              "w": 322,
+              "h": 257,
+              "right": 1302,
+              "bottom": 521
+            },
+            "scroll": {
+              "sw": 317,
+              "cw": 317,
+              "sh": 252,
+              "ch": 252,
+              "sox": 0,
+              "soy": 0
+            }
+          },
+          {
+            "i": 2,
+            "cls": "paper-slot paper-slot-sub is-filled",
+            "text": "副版异常钩子 · 下周追踪 校样批注：保留疑点，不在本期说死。 异常钩子 · 制造下周追踪钩子 东区剧院失踪档案重现：署名来自未来日期 异常符号 补齐证据缺口，保留下周追踪线。 **** **** *",
+            "rect": {
+              "x": 980,
+              "y": 530,
+              "w": 322,
+              "h": 232,
+              "right": 1303,
+              "bottom": 762
+            },
+            "scroll": {
+              "sw": 317,
+              "cw": 317,
+              "sh": 227,
+              "ch": 227,
+              "sox": 0,
+              "soy": 0
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

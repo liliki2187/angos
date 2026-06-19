@@ -33,7 +33,30 @@ func _run() -> void:
 	scene._on_advance_phase_pressed()
 	await process_frame
 	await process_frame
-	_assert_scroll_text_width(scene.get_node("RootMargin/RootVBox/PhaseHost/ExplorePhase/RootHBox/RightVBox/MissionPanel/MissionVBox/MissionScroll") as Control, scene.get_node("RootMargin/RootVBox/PhaseHost/ExplorePhase/RootHBox/RightVBox/MissionPanel/MissionVBox/MissionScroll/Body") as Control, "mission")
+	var explore_phase := scene.get_node("RootMargin/RootVBox/PhaseHost/ExplorePhase") as Control
+	_assert_true(explore_phase.get_node("RootVBox/WorldView").visible, "进入探索后默认应显示世界取材地图。")
+	_assert_visible_inside(explore_phase.get_node("RootVBox/WorldView/WorldMapPanel") as Control, explore_phase, "world_map")
+	_assert_world_map_safe_zones(explore_phase, "world_map_default")
+	scene._on_region_pressed("east_asia")
+	await process_frame
+	await process_frame
+	_assert_world_map_safe_zones(explore_phase, "world_map_locked_region")
+	scene._on_region_pressed("us")
+	await process_frame
+	await process_frame
+	scene._on_enter_region_requested()
+	await process_frame
+	await process_frame
+	_assert_true(explore_phase.get_node("RootVBox/RegionView").visible, "进入区域后应显示区域节点地图。")
+	scene._on_node_pressed("n51")
+	await process_frame
+	await process_frame
+	_assert_visible_inside(explore_phase.get_node("RootVBox/RegionView/RegionHBox/RegionTaskPanel") as Control, explore_phase, "region_task_panel")
+	scene._on_open_dispatch_requested()
+	await process_frame
+	await process_frame
+	_assert_true(explore_phase.get_node("RootVBox/DispatchView").visible, "进入签批后应显示独立派遣签批台。")
+	_assert_visible_inside(explore_phase.get_node("RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchReviewPanel") as Control, explore_phase, "dispatch_review_panel")
 	var state = scene.run_state
 	var inventory = scene.material_inventory
 	var material := {
@@ -80,6 +103,69 @@ func _assert_layout(scene: Control, viewport: SubViewport, stage_label: String) 
 
 func _assert_scroll_text_width(scroll: Control, body: Control, stage_label: String) -> void:
 	_assert_true(body.size.x >= scroll.size.x - 4.0, "%s 阶段下滚动文本内容宽度不应退化到左侧窄列。" % stage_label)
+
+func _assert_visible_inside(control: Control, parent: Control, stage_label: String) -> void:
+	_assert_true(control.visible, "%s 必须可见。" % stage_label)
+	_assert_true(control.size.x > 80.0 and control.size.y > 80.0, "%s 必须有稳定尺寸。" % stage_label)
+	_assert_true(control.global_position.x >= parent.global_position.x - 0.5, "%s 左边界必须落在父容器内。" % stage_label)
+	_assert_true(control.global_position.y >= parent.global_position.y - 0.5, "%s 上边界必须落在父容器内。" % stage_label)
+
+func _assert_world_map_safe_zones(explore_phase: Control, stage_label: String) -> void:
+	var detail_panel := explore_phase.get_node("RootVBox/WorldView/WorldDetailPanel") as Control
+	var right_safe_limit := detail_panel.global_position.x + detail_panel.size.x - 64.0
+	for path in [
+		"RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox/WorldTicketVBox/WorldDeadlineTicket",
+		"RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox/WorldTicketVBox/WorldChainTicket",
+		"RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox/WorldCtaHint",
+		"RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox/EnterRegionBtn",
+	]:
+		var control := explore_phase.get_node(path) as Control
+		_assert_true(control.global_position.x + control.size.x <= right_safe_limit + 0.5, "%s %s 不应进入右侧装饰禁区。" % [stage_label, control.name])
+
+	var index_panel := explore_phase.get_node("RootVBox/WorldView/WorldIndexPanel") as Control
+	var index_title := explore_phase.get_node("RootVBox/WorldView/WorldIndexPanel/WorldIndexVBox/WorldIndexTitle") as Control
+	var index_subtitle := explore_phase.get_node("RootVBox/WorldView/WorldIndexPanel/WorldIndexVBox/WorldIndexSubtitle") as Control
+	var index_footer := explore_phase.get_node("RootVBox/WorldView/WorldIndexPanel/WorldIndexVBox/WorldIndexFooter") as Control
+	_assert_true(index_title.global_position.y >= index_panel.global_position.y + 52.0, "%s INDEX 标题必须避开顶部夹子和纸边。" % stage_label)
+	_assert_true(index_subtitle.global_position.y >= index_panel.global_position.y + 78.0, "%s INDEX 副标题必须避开顶部夹子和标题。" % stage_label)
+	_assert_true(index_footer.global_position.y <= index_panel.global_position.y + index_panel.size.y - 150.0, "%s INDEX 底部摘要必须避开纸张底边装饰。" % stage_label)
+
+	var deadline_ticket := explore_phase.get_node("RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox/WorldTicketVBox/WorldDeadlineTicket") as Control
+	var chain_ticket := explore_phase.get_node("RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox/WorldTicketVBox/WorldChainTicket") as Control
+	var region_detail_text := explore_phase.get_node("RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox/RegionDetailText") as Control
+	var world_cta_hint := explore_phase.get_node("RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox/WorldCtaHint") as Control
+	var enter_button := explore_phase.get_node("RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox/EnterRegionBtn") as Control
+	var log_chip_1 := explore_phase.get_node("RootVBox/WorldProofStrip/WorldProofHBox/WorldLogChip1") as Control
+	var log_chip_2 := explore_phase.get_node("RootVBox/WorldProofStrip/WorldProofHBox/WorldLogChip2") as Control
+	var log_chip_3 := explore_phase.get_node("RootVBox/WorldProofStrip/WorldProofHBox/WorldLogChip3") as Control
+	_assert_style_margin(region_detail_text, "normal", SIDE_LEFT, 42.0, "%s Region detail text must avoid the left bookmark/tab art." % stage_label)
+	_assert_style_margin(region_detail_text, "normal", SIDE_TOP, 112.0, "%s Region detail text must avoid the top bookmark and paper edge." % stage_label)
+	_assert_style_margin(region_detail_text, "normal", SIDE_BOTTOM, 16.0, "%s Region detail text must avoid the lower paper trim." % stage_label)
+	_assert_style_margin(world_cta_hint, "normal", SIDE_LEFT, 16.0, "%s CTA hint text must avoid the left label edge." % stage_label)
+	_assert_style_margin(world_cta_hint, "normal", SIDE_TOP, 9.0, "%s CTA hint text must avoid the top label edge." % stage_label)
+	_assert_style_margin(deadline_ticket, "normal", SIDE_LEFT, 100.0, "%s 红票文字必须避开左侧色块。" % stage_label)
+	_assert_style_margin(deadline_ticket, "normal", SIDE_RIGHT, 60.0, "%s 红票文字必须避开右侧装饰。" % stage_label)
+	_assert_style_margin(chain_ticket, "normal", SIDE_LEFT, 100.0, "%s 青票文字必须避开左侧色块。" % stage_label)
+	_assert_style_margin(chain_ticket, "normal", SIDE_RIGHT, 60.0, "%s 青票文字必须避开右侧装饰。" % stage_label)
+	_assert_style_margin(enter_button, "normal", SIDE_RIGHT, 80.0, "%s CTA 文字必须避开箭头和右侧装饰。" % stage_label)
+	_assert_style_margin(enter_button, "normal", SIDE_BOTTOM, 16.0, "%s CTA text must stay above the lower trim and rivets." % stage_label)
+	_assert_style_margin(enter_button, "disabled", SIDE_BOTTOM, 20.0, "%s disabled CTA text must stay above the lower trim and rivets." % stage_label)
+	_assert_font_luma(enter_button, "font_disabled_color", 0.84, "%s disabled CTA text must keep enough contrast." % stage_label)
+	for chip in [log_chip_1, log_chip_2, log_chip_3]:
+		_assert_style_margin(chip, "normal", SIDE_LEFT, 120.0, "%s %s 文字必须避开左侧色块。" % [stage_label, chip.name])
+		_assert_style_margin(chip, "normal", SIDE_RIGHT, 40.0, "%s %s 文字必须避开右侧装饰。" % [stage_label, chip.name])
+
+func _assert_style_margin(control: Control, style_name: String, side: Side, minimum: float, message: String) -> void:
+	var style := control.get_theme_stylebox(style_name)
+	_assert_true(style != null, "%s 必须存在 stylebox。" % control.name)
+	if style == null:
+		return
+	_assert_true(style.get_content_margin(side) >= minimum, message)
+
+func _assert_font_luma(control: Control, color_name: String, minimum: float, message: String) -> void:
+	var color := control.get_theme_color(color_name)
+	var luma := color.r * 0.2126 + color.g * 0.7152 + color.b * 0.0722
+	_assert_true(luma >= minimum, message)
 
 func _assert_true(condition: bool, message: String) -> void:
 	if condition:

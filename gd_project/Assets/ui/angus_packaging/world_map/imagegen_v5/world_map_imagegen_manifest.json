@@ -1,0 +1,380 @@
+{
+  "id": "world_map_imagegen_v5",
+  "version": 1,
+  "status": "production_pipeline_spec",
+  "target_view": "weekly_run.explore.world",
+  "canvas_size": [1920, 1080],
+  "safe_viewports": [[1920, 1080], [1600, 900], [1366, 768]],
+  "art_direction": {
+    "source_of_truth": "design/art-direction/angus-visual-style-guide.md",
+    "primary_style_refs": [
+      "docs/screenshots/2026-06-07-global-channel-style-board/05-global-channel-style-board-reference-clean-modern-pixel.png",
+      "docs/screenshots/2026-06-07-global-channel-style-board/07-global-channel-full-interface-style-draft-flat-magazine-ui.png",
+      "docs/screenshots/2026-06-11-world-map-ui-style-sheet/03-world-map-ui-style-sheet-v3-textless-modern-pixel.png",
+      "docs/screenshots/2026-06-11-world-map-ui-style-sheet/04-world-map-ui-style-sheet-v4-micro-pixel-compare.png"
+    ],
+    "character_style_ref": "角色设计风格规范-AI包/reference/01-原始基准图.png",
+    "must_keep": [
+      "modern editorial supernatural weekly magazine",
+      "deep navy base, vivid red-orange anomaly, warm paper, restrained cyan",
+      "printed matter materiality, crop marks, halftone, red-cyan misregistration",
+      "intentional 2-4px pixel particle clusters and crisp graphic edges",
+      "blank low-noise safe areas for Godot-rendered text"
+    ],
+    "must_avoid": [
+      "old newspaper, yellowed archive, parchment, historical case file",
+      "warm wood desk, coffee office, lamp-lit nostalgia",
+      "8-bit, FC, Pico-8, low-resolution voxel characters",
+      "photographic noise, dirty paper speckles, mold, muddy gray detail",
+      "cyberpunk hologram, glass SaaS panels, generic mobile game buttons",
+      "baked Chinese text, baked numbers, baked real task states, fake pins"
+    ]
+  },
+  "integration_rules": {
+    "no_baked_dynamic_text": true,
+    "no_fake_numbers": true,
+    "no_fake_pins": true,
+    "no_fake_buttons": true,
+    "no_programmatic_style_simulation": true,
+    "godot_dynamic_layer_owns": [
+      "region names",
+      "task counts",
+      "remaining days",
+      "lock reasons",
+      "button labels",
+      "hover, selected, disabled semantics",
+      "hotspots and feedback"
+    ],
+    "fallback_policy": "StyleBoxFlat and procedural drawing are debug fallback only and must not appear in acceptance screenshots."
+  },
+  "layout_slots": [
+    {
+      "id": "top_status",
+      "rect": [28, 22, 1370, 76],
+      "role": "global status ticket",
+      "text_safe_rects": [
+        {"id": "issue_status", "rect": [96, 14, 380, 24], "max_lines": 1, "noise": "low"},
+        {"id": "macro_summary", "rect": [500, 14, 700, 24], "max_lines": 1, "noise": "low"}
+      ]
+    },
+    {
+      "id": "left_index",
+      "rect": [24, 120, 320, 800],
+      "role": "region index booklet"
+    },
+    {
+      "id": "world_board",
+      "rect": [368, 112, 1010, 660],
+      "role": "primary world map board"
+    },
+    {
+      "id": "right_folder",
+      "rect": [1410, 104, 460, 650],
+      "role": "selected region dossier"
+    },
+    {
+      "id": "bottom_ticker",
+      "rect": [356, 800, 1060, 112],
+      "role": "channel ticker and next action strip"
+    },
+    {
+      "id": "cta_anchor",
+      "rect": [1460, 676, 360, 70],
+      "role": "enter selected region action"
+    }
+  ],
+  "assets": [
+    {
+      "id": "wm_fullscreen_artboard_v5",
+      "kind": "reference_artboard",
+      "asset_type": "ui-screen",
+      "background": "opaque",
+      "model": "codex-image2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "final_size": [1920, 1080],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v5/final/wm-fullscreen-artboard-v5.png",
+      "godot_node": "reference_only",
+      "acceptance_use": "Style and composition approval only; do not wire as interactive UI."
+    },
+    {
+      "id": "wm_bg_shell",
+      "kind": "runtime_asset",
+      "asset_type": "background",
+      "background": "opaque",
+      "model": "codex-image2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "final_size": [1920, 1080],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v5/final/wm-bg-shell-v5.png",
+      "godot_node": "TextureRect",
+      "runtime_rect": [0, 0, 1920, 1080],
+      "dynamic_text_rects": [],
+      "forbidden_zones": [
+        {"id": "whole_image", "rect": [0, 0, 1920, 1080], "rules": ["no readable text", "no fake UI controls"]}
+      ]
+    },
+    {
+      "id": "wm_world_board_base",
+      "kind": "runtime_asset",
+      "asset_type": "ui-screen",
+      "background": "opaque",
+      "model": "codex-image2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "final_size": [1120, 720],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v5/final/wm-world-board-base-v5.png",
+      "godot_node": "TextureRect",
+      "runtime_rect": [368, 112, 1010, 660],
+      "dynamic_text_rects": [],
+      "forbidden_zones": [
+        {"id": "map_body", "rect": [70, 64, 980, 612], "rules": ["no baked pins", "no country labels", "no fake routes with labels"]}
+      ],
+      "hotspots": [
+        {"id": "north_america", "visual_anchor": [236, 240], "hot_rect": [182, 174, 112, 136], "feedback_anchor": [300, 200]},
+        {"id": "europe", "visual_anchor": [520, 220], "hot_rect": [466, 154, 112, 136], "feedback_anchor": [594, 180]},
+        {"id": "east_asia", "visual_anchor": [840, 250], "hot_rect": [786, 184, 112, 136], "feedback_anchor": [920, 210]},
+        {"id": "south_america", "visual_anchor": [360, 498], "hot_rect": [306, 432, 112, 136], "feedback_anchor": [430, 462]},
+        {"id": "oceania", "visual_anchor": [898, 510], "hot_rect": [844, 444, 112, 136], "feedback_anchor": [976, 474]}
+      ]
+    },
+    {
+      "id": "wm_left_index_panel",
+      "kind": "runtime_asset",
+      "asset_type": "prop",
+      "background": "transparent",
+      "model": "codex-image2-chroma-key",
+      "resolution": "1024x1536",
+      "final_size": [320, 860],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v5/final/wm-left-index-panel-v5.png",
+      "godot_node": "NinePatchRect",
+      "runtime_rect": [24, 120, 320, 800],
+      "nine_patch_margins": [28, 32, 28, 32],
+      "dynamic_text_rects": [
+        {"id": "index_title", "rect": [28, 26, 220, 34], "max_lines": 1, "noise": "low"},
+        {"id": "index_subtitle", "rect": [28, 62, 230, 22], "max_lines": 1, "noise": "low"},
+        {"id": "index_footer", "rect": [28, 704, 250, 116], "max_lines": 4, "noise": "low"}
+      ],
+      "forbidden_zones": [
+        {"id": "region_list_area", "rect": [18, 108, 284, 560], "rules": ["no fake rows", "no fake numbers", "no fake checkboxes"]}
+      ]
+    },
+    {
+      "id": "wm_right_story_folder",
+      "kind": "runtime_asset",
+      "asset_type": "prop",
+      "background": "transparent",
+      "model": "codex-image2-chroma-key",
+      "resolution": "1024x1536",
+      "final_size": [460, 720],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v5/final/wm-right-story-folder-v5.png",
+      "godot_node": "NinePatchRect",
+      "runtime_rect": [1410, 104, 460, 650],
+      "nine_patch_margins": [36, 38, 36, 38],
+      "dynamic_text_rects": [
+        {"id": "detail_kicker", "rect": [46, 30, 188, 24], "max_lines": 1, "noise": "low"},
+        {"id": "region_title", "rect": [46, 62, 340, 60], "max_lines": 2, "noise": "low"},
+        {"id": "detail_body", "rect": [46, 412, 340, 138], "max_lines": 5, "noise": "low"}
+      ],
+      "image_slots": [
+        {"id": "story_preview", "rect": [44, 132, 370, 206], "required_asset": "wm_story_preview_north_america"}
+      ],
+      "forbidden_zones": [
+        {"id": "body_zone", "rect": [40, 404, 356, 156], "rules": ["no high-contrast halftone", "no folds crossing text"]}
+      ]
+    },
+    {
+      "id": "wm_bottom_ticker",
+      "kind": "runtime_asset",
+      "asset_type": "ui-banner",
+      "background": "transparent",
+      "model": "codex-image2-chroma-key",
+      "resolution": "1536x1024",
+      "final_size": [1120, 112],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v5/final/wm-bottom-ticker-v5.png",
+      "godot_node": "NinePatchRect",
+      "runtime_rect": [356, 800, 1060, 112],
+      "nine_patch_margins": [32, 20, 32, 20],
+      "dynamic_text_rects": [
+        {"id": "ticker_title", "rect": [26, 20, 110, 52], "max_lines": 2, "noise": "low"},
+        {"id": "ticker_chip_1", "rect": [168, 20, 230, 52], "max_lines": 2, "noise": "low"},
+        {"id": "ticker_chip_2", "rect": [420, 20, 230, 52], "max_lines": 2, "noise": "low"},
+        {"id": "ticker_chip_3", "rect": [672, 20, 230, 52], "max_lines": 2, "noise": "low"},
+        {"id": "ticker_next", "rect": [918, 20, 170, 52], "max_lines": 2, "noise": "low"}
+      ]
+    },
+    {
+      "id": "wm_region_strip_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "ui-banner",
+      "background": "transparent",
+      "model": "codex-image2-chroma-key",
+      "resolution": "1536x1024",
+      "final_size": [320, 410],
+      "frame_size": [320, 82],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v5/final/wm-region-strip-atlas-v5.png",
+      "godot_node": "TextureButton",
+      "frames": [
+        {"id": "available", "rect": [0, 0, 320, 82]},
+        {"id": "hover", "rect": [0, 82, 320, 82]},
+        {"id": "selected", "rect": [0, 164, 320, 82]},
+        {"id": "locked", "rect": [0, 246, 320, 82]},
+        {"id": "disabled", "rect": [0, 328, 320, 82]}
+      ],
+      "dynamic_text_rects": [
+        {"id": "region_index", "rect": [12, 18, 36, 32], "max_lines": 1, "noise": "low"},
+        {"id": "region_name", "rect": [60, 12, 188, 30], "max_lines": 1, "noise": "low"},
+        {"id": "region_meta", "rect": [60, 44, 206, 22], "max_lines": 1, "noise": "low"}
+      ],
+      "forbidden_zones": [
+        {"id": "whole_frame", "rect": [0, 0, 320, 82], "rules": ["no fake text", "no fake numbers", "no real checkboxes"]}
+      ]
+    },
+    {
+      "id": "wm_pin_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "decal",
+      "background": "transparent",
+      "model": "codex-image2-chroma-key",
+      "resolution": "1024x1024",
+      "final_size": [560, 136],
+      "frame_size": [112, 136],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v5/final/wm-pin-atlas-v5.png",
+      "godot_node": "TextureButton",
+      "frames": [
+        {"id": "normal", "rect": [0, 0, 112, 136]},
+        {"id": "deadline", "rect": [112, 0, 112, 136]},
+        {"id": "chain", "rect": [224, 0, 112, 136]},
+        {"id": "selected", "rect": [336, 0, 112, 136]},
+        {"id": "locked", "rect": [448, 0, 112, 136]}
+      ],
+      "hot_rect": [10, 4, 92, 120],
+      "visual_anchor": [56, 100],
+      "dynamic_text_rects": [],
+      "forbidden_zones": [
+        {"id": "pin_inside", "rect": [0, 0, 112, 136], "rules": ["symbol only", "no letters", "no numbers"]}
+      ]
+    },
+    {
+      "id": "wm_ticket_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "prop",
+      "background": "transparent",
+      "model": "codex-image2-chroma-key",
+      "resolution": "1536x1024",
+      "final_size": [420, 256],
+      "frame_size": [420, 64],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v5/final/wm-ticket-atlas-v5.png",
+      "godot_node": "NinePatchRect",
+      "frames": [
+        {"id": "deadline_red", "rect": [0, 0, 420, 64]},
+        {"id": "chain_cyan", "rect": [0, 64, 420, 64]},
+        {"id": "info_neutral", "rect": [0, 128, 420, 64]},
+        {"id": "locked_gray", "rect": [0, 192, 420, 64]}
+      ],
+      "nine_patch_margins": [22, 14, 22, 14],
+      "dynamic_text_rects": [
+        {"id": "ticket_title", "rect": [42, 10, 128, 20], "max_lines": 1, "noise": "low"},
+        {"id": "ticket_count", "rect": [178, 10, 62, 20], "max_lines": 1, "noise": "low"},
+        {"id": "ticket_body", "rect": [42, 34, 300, 18], "max_lines": 1, "noise": "low"}
+      ]
+    },
+    {
+      "id": "wm_cta_enter_region_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "ui-banner",
+      "background": "transparent",
+      "model": "codex-image2-chroma-key",
+      "resolution": "1536x1024",
+      "final_size": [420, 320],
+      "frame_size": [420, 64],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v5/final/wm-cta-enter-region-atlas-v5.png",
+      "godot_node": "TextureButton",
+      "frames": [
+        {"id": "normal", "rect": [0, 0, 420, 64]},
+        {"id": "hover", "rect": [0, 64, 420, 64]},
+        {"id": "pressed", "rect": [0, 128, 420, 64]},
+        {"id": "disabled", "rect": [0, 192, 420, 64]},
+        {"id": "focus", "rect": [0, 256, 420, 64]}
+      ],
+      "dynamic_text_rects": [
+        {"id": "cta_label", "rect": [78, 14, 250, 36], "max_lines": 1, "noise": "low"}
+      ],
+      "forbidden_zones": [
+        {"id": "arrow_icon", "rect": [340, 0, 70, 64], "rules": ["icon only", "no text"]}
+      ]
+    },
+    {
+      "id": "wm_badge_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "decal",
+      "background": "transparent",
+      "model": "codex-image2-chroma-key",
+      "resolution": "1024x1024",
+      "final_size": [512, 512],
+      "frame_size": [64, 64],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v5/final/wm-badge-atlas-v5.png",
+      "godot_node": "TextureRect",
+      "frames": [
+        {"id": "lock", "rect": [0, 0, 64, 64]},
+        {"id": "available", "rect": [64, 0, 64, 64]},
+        {"id": "deadline", "rect": [128, 0, 64, 64]},
+        {"id": "chain", "rect": [192, 0, 64, 64]},
+        {"id": "selected", "rect": [256, 0, 64, 64]},
+        {"id": "recommended", "rect": [320, 0, 64, 64]}
+      ],
+      "dynamic_text_rects": [],
+      "forbidden_zones": [
+        {"id": "whole_atlas", "rect": [0, 0, 512, 512], "rules": ["symbol only", "no text", "no numbers"]}
+      ]
+    },
+    {
+      "id": "wm_story_preview_north_america",
+      "kind": "runtime_asset",
+      "asset_type": "background",
+      "background": "opaque",
+      "model": "codex-image2",
+      "aspect_ratio": "16:9",
+      "image_size": "1K",
+      "final_size": [760, 290],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v5/final/wm-story-preview-north-america-v5.png",
+      "godot_node": "TextureRect",
+      "runtime_rect": [1454, 236, 370, 206],
+      "dynamic_text_rects": [],
+      "forbidden_zones": [
+        {"id": "whole_image", "rect": [0, 0, 760, 290], "rules": ["no readable text", "no UI chrome", "no real photo detail"]}
+      ]
+    }
+  ],
+  "review_gates": [
+    {
+      "id": "art_gate",
+      "owner": "angus_art_director",
+      "checks": [
+        "Matches Angus modern supernatural weekly style, not old archive.",
+        "Pixel texture is intentional 2-4px block clusters, halftone, and red-cyan misregistration.",
+        "Character stickers match the four-character benchmark if present.",
+        "No baked dynamic text, fake numbers, fake pins, or generic UI chrome."
+      ]
+    },
+    {
+      "id": "ui_gate",
+      "owner": "ui_designer",
+      "checks": [
+        "Every bitmap component has final size, Godot node type, state mapping, and safe zones.",
+        "Resizable assets have nine-patch margins and quiet centers.",
+        "TextureButton assets include normal, hover, pressed, disabled, and selected/focus variants where needed."
+      ]
+    },
+    {
+      "id": "ux_gate",
+      "owner": "ux_laoge",
+      "checks": [
+        "Player can tell selected, available, locked, deadline, and chain states at 1920x1080, 1600x900, and 1366x768.",
+        "Visual anchors, hot rectangles, and feedback anchors align.",
+        "The right folder is selected-region detail, not a clickable task list.",
+        "The main CTA remains the visual endpoint."
+      ]
+    }
+  ]
+}

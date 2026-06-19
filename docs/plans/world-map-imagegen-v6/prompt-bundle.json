@@ -1,0 +1,321 @@
+{
+  "id": "world_map_imagegen_v6_prompt_bundle",
+  "version": 1,
+  "status": "v6g_component_expansion_ready_for_codex_image2",
+  "target_manifest": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/world_map_imagegen_manifest.json",
+  "output_root": "image_gen/YYYY-MM-DD/",
+  "generation_policy": {
+    "primary_provider": "codex_builtin_image2",
+    "primary_model": "gpt-image-2",
+    "primary_flow": "Use Codex built-in Image 2 for the v6 artboard, save the selected output into the workspace, then register it with stage-source against the v6 manifest.",
+    "manual_source_root": "image_gen/codex_image2_sources/YYYY-MM-DD/",
+    "scripted_provider_optional": "openrouter-image-gen",
+    "postprocess_boundary": "Local scripts may only copy, crop, resize, pad transparent space, validate manifest contracts, and draw review overlays."
+  },
+  "shared_negative": [
+    "old newspaper",
+    "yellowed archive",
+    "parchment",
+    "historical case file",
+    "warm wood desk",
+    "coffee office",
+    "lamp-lit nostalgia",
+    "8-bit sprite",
+    "Pico-8",
+    "low-resolution voxel character",
+    "photographic noise",
+    "dirty paper speckles",
+    "mold stains",
+    "muddy gray detail",
+    "cyberpunk hologram",
+    "glass SaaS panels",
+    "generic mobile game buttons",
+    "baked Chinese text",
+    "baked numbers",
+    "fake task state",
+    "fake map pins",
+    "fake clickable buttons",
+    "watermark",
+    "signature",
+    "presentation mockup"
+  ],
+  "jobs": [
+    {
+      "id": "01_fullscreen_artboard",
+      "stage": "artboard",
+      "enabled": true,
+      "asset_type": "ui-screen",
+      "background": "opaque",
+      "model": "codex-image2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "count": 1,
+      "slug": "angus-world-map-v6-bright-paper-lowpoly-artboard",
+      "reference_images": [
+        {
+          "path": "docs/plans/world-map-imagegen-v6/reference/user-bright-paper-lowpoly-world-map-ref.png",
+          "role": "user-approved reference for brighter paper, low-poly paper map texture, clean premium editorial layout, and overall material balance"
+        },
+        {
+          "path": "docs/screenshots/2026-06-15-world-map-imagegen-v5-godot/01-world-map-imagegen-v5.png",
+          "role": "current Godot world-map layout and runtime UI responsibility reference"
+        },
+        {
+          "path": "docs/screenshots/2026-06-07-global-channel-style-board/05-global-channel-style-board-reference-clean-modern-pixel.png",
+          "role": "Angus clean modern micro-pixel and print material reference"
+        }
+      ],
+      "prompt": "Create a production mother artboard for the Angus world exploration screen, a 16:9 desktop game UI for choosing global reporting regions. Use the user-approved reference image as the main style reference for brighter ivory paper, premium editorial paper objects, and a faceted low-poly paper world map. Keep Angus identity: deep navy #0F1A2E editorial engineering board, vivid red-orange #E84B2C anomaly/deadline marks, restrained cyan tracking/signal marks, warm paper #F5EDD8, modern supernatural weekly magazine mood, cool confident urgent black humor. Composition: large central world map board as the main object, recognizable world silhouette built from abstract faceted polygon paper shapes with subtle paper grain and clean printed edges; left stacked region index paper folder with blank card slots; right selected-region dossier folder with blank story preview slot, blank title/body paper zones, and a bottom CTA area; bottom channel ticker strip. Materials: clean printed matter, crisp paper edges, crop marks, binder clips, paper tabs, subtle halftone dots, restrained red-cyan misregistration, deliberate 2-4px pixel block clusters. Leave large low-noise blank safe areas for Godot-rendered dynamic text, numbers, region names, lock reasons, and button labels. Do not include readable text, Chinese characters, real numbers, real region names, countdowns, fake task states, fake pins, fake clickable buttons, labels, watermark, or signature. This is a style and component-derivation mother artboard, not a final interactive screenshot."
+    },
+    {
+      "id": "01b_runtime_artboard_orthogonal_text_slots",
+      "stage": "artboard",
+      "enabled": true,
+      "asset_type": "ui-screen",
+      "background": "opaque",
+      "model": "codex-image2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "count": 1,
+      "slug": "angus-world-map-v6b-runtime-orthogonal-text-slots",
+      "reference_images": [
+        {
+          "path": "docs/plans/world-map-imagegen-v6/reference/user-bright-paper-lowpoly-world-map-ref.png",
+          "role": "user-approved reference for brighter paper, low-poly paper map texture, clean premium editorial layout, and overall material balance"
+        },
+        {
+          "path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6.png",
+          "role": "v6 artboard candidate whose style should be preserved while correcting text-safe slot orientation"
+        },
+        {
+          "path": "docs/screenshots/2026-06-15-world-map-imagegen-v5-godot/01-world-map-imagegen-v5.png",
+          "role": "current Godot world-map layout and dynamic UI responsibility reference"
+        }
+      ],
+      "prompt": "Create a revised production mother artboard for the Angus world exploration screen. Preserve the successful v6 look: brighter ivory paper, premium editorial paper objects, deep navy #0F1A2E engineering board, vivid red-orange #E84B2C anomaly/deadline accents, restrained cyan tracking/signal accents, warm paper #F5EDD8, and a faceted low-poly paper world map. Important runtime UX correction: outer paper stacks may be slightly angled and layered for physical depth, but every blank area intended for dynamic Godot text must be perfectly horizontal, front-facing, axis-aligned, and free of perspective distortion. Composition: large central world map board as the main object, recognizable world silhouette made of abstract faceted polygon paper shapes; left region index folder with layered paper stack and tabs, but each visible card's interior writing rectangle is level and rectangular; right selected-region dossier folder with clip and tabs, but the story preview slot, title/body paper zones, and bottom CTA label area are all level horizontal rectangles; bottom channel ticker strip with level horizontal content slots. Keep the layout practical for Godot overlays. Do not include readable text, Chinese characters, real numbers, real region names, countdowns, fake task states, fake pins, fake clickable buttons, labels, watermark, or signature."
+    },
+    {
+      "id": "01c_runtime_artboard_orthographic_dossier_clear_index",
+      "stage": "artboard",
+      "enabled": true,
+      "asset_type": "ui-screen",
+      "background": "opaque",
+      "model": "codex-image2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "count": 1,
+      "slug": "angus-world-map-v6c-orthographic-dossier-clear-index",
+      "reference_images": [
+        {
+          "path": "docs/plans/world-map-imagegen-v6/reference/user-bright-paper-lowpoly-world-map-ref.png",
+          "role": "user-approved reference for brighter paper, blue-gray low-poly paper map texture, clean premium editorial layout, and overall material balance"
+        },
+        {
+          "path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6b-runtime-orthogonal.png",
+          "role": "v6b artboard candidate whose structure should be corrected: right dossier still slightly tilted, and the lower-left index card is partially covered"
+        },
+        {
+          "path": "docs/screenshots/2026-06-15-world-map-imagegen-v5-godot/01-world-map-imagegen-v5.png",
+          "role": "current Godot world-map layout and dynamic UI responsibility reference"
+        }
+      ],
+      "prompt": "Create a revised production mother artboard for the Angus world exploration screen, a 16:9 desktop game UI. Preserve the successful bright-paper Angus v6 direction, but correct the layout for real Godot text overlays. Critical correction 1: make the entire right selected-region dossier/front sheet orthographic and axis-aligned. Its visible main paper face must be perfectly vertical/horizontal relative to the canvas, with parallel screen edges, no tilt, no trapezoid perspective, and no slanted writing area. Backing papers and side tabs may create depth behind it, but every visible text-bearing slot on the front sheet must be a clean level rectangle. Critical correction 2: fix the left region index stack. The bottom visible card must have its lower-left corner and full writing rectangle unobstructed. Remove or lower the dark navy triangular pocket so it never covers the bottom card's content safe area. If a pocket/flap remains, it must sit behind or below the card stack as decoration only, not over any blank card interior. Leave a clear visible paper margin around every card interior. Central map correction: make the world map cool blue-gray low-poly paper, closer to the user's favored reference: faceted polygon continents with paper texture, premium abstract cartographic feel, not white carved paper. Composition: central world map board as the main visual object; left stacked region index folder with 4 horizontal blank card slots; right selected-region dossier folder with a top preview slot, a large body note area, and a bottom CTA label area; bottom channel ticker strip with horizontal content slots. All dynamic text-safe zones must be horizontal, front-facing, axis-aligned, low-noise, and free of decorative intrusions. Do not include readable text, Chinese characters, real numbers, real region names, countdowns, fake task states, fake map pins, fake clickable labels, watermark, or signature."
+    },
+    {
+      "id": "01d_runtime_artboard_clear_safe_rects",
+      "stage": "artboard",
+      "enabled": true,
+      "asset_type": "ui-screen",
+      "background": "opaque",
+      "model": "codex-image2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "count": 1,
+      "slug": "angus-world-map-v6d-clear-safe-rects",
+      "reference_images": [
+        {
+          "path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6c-orthographic-dossier-clear-index.png",
+          "role": "v6c style direction: blue-gray low-poly paper map and orthographic right dossier, but the lower-left index area still has a risky diagonal flap"
+        },
+        {
+          "path": "docs/plans/world-map-imagegen-v6/reference/user-bright-paper-lowpoly-world-map-ref.png",
+          "role": "user-approved reference for brighter paper, cool low-poly paper map texture, and clean premium editorial material balance"
+        },
+        {
+          "path": "docs/screenshots/2026-06-15-world-map-imagegen-v5-godot/01-world-map-imagegen-v5.png",
+          "role": "current Godot world-map layout and dynamic UI responsibility reference"
+        }
+      ],
+      "prompt": "Create a stricter revised production mother artboard for the Angus world exploration screen, a 16:9 desktop game UI. Preserve the v6c strengths: clean bright ivory paper UI objects, cool blue-gray low-poly paper world map, deep navy editorial engineering board, vivid red-orange anomaly/deadline accents, restrained cyan signal accents, premium modern supernatural weekly magazine mood, crisp print edges, binder clips, folder tabs, halftone dots, subtle red-cyan print misregistration, and deliberate 2-4px pixel block clusters. Hard correction A: the right selected-region dossier/front sheet must be fully orthographic and axis-aligned. The front sheet outer border and every inner content rectangle must be parallel to the canvas edges, with no tilt, trapezoid, or perspective skew. Backing papers and side tabs may sit behind it for depth, but they must not make the front sheet look slanted. Hard correction B: remove the dark navy triangular pocket/flap from the left index stack content area. The bottom index card must be completely visible, including its lower-left corner, outer border, red side tab, and full blank writing rectangle. No diagonal pocket, flap, clip, binder, tab, stripe, or decorative element may cover any part of any card's blank interior or readable margin. If a left-side binder cover exists, keep it clearly behind the cards and below their content safe areas. Hard correction C: every text-safe zone must be a clean horizontal rectangle with at least 32 px visual margin away from tabs, ribbons, corner marks, dots, borders, clips, screws, arrow plates, colored blocks, and halftone clusters. Composition: central world map board as main visual object; left stacked region index folder with exactly 4 fully visible horizontal blank card slots; right selected-region dossier folder with top preview slot, large body note area, and bottom CTA label area; bottom channel ticker strip with horizontal content slots. The UI must look like layered editorial paper objects, but dynamic-text-bearing surfaces must behave like stable Godot layout rectangles. Do not include readable text, Chinese characters, real numbers, real region names, countdowns, fake task states, fake map pins, fake clickable labels, watermark, or signature."
+    },
+    {
+      "id": "01e_pixel_subtle_micro_material",
+      "stage": "artboard",
+      "enabled": true,
+      "asset_type": "ui-screen",
+      "background": "opaque",
+      "model": "codex-image2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "count": 1,
+      "slug": "angus-world-map-v6e-pixel-subtle",
+      "reference_images": [
+        {
+          "path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6d-clear-safe-rects.png",
+          "role": "approved v6d runtime-safe layout and material baseline"
+        }
+      ],
+      "prompt": "Create Style Draft A for the Angus world-map artboard: subtle micro-pixel material. Preserve the v6d layout exactly: central blue-gray low-poly paper world map, left stack of 4 fully visible horizontal index cards, right orthographic selected-region dossier, and bottom horizontal ticker strips. All text-safe zones must remain clean blank orthographic rectangles with at least 32px visual margins. Pixel level A: add restrained high-end 2-4px micro-pixel clusters in shadows, navy board grain, red/cyan signal marks, coast edge speckles, printed halftone corners, and tiny stepped highlights. Paper surfaces stay mostly smooth and premium; do not turn into retro low-res UI. No readable text, Chinese, numbers, fake states, fake pins, labels, watermark, or signature."
+    },
+    {
+      "id": "01f_pixel_balanced_print_style",
+      "stage": "artboard",
+      "enabled": true,
+      "asset_type": "ui-screen",
+      "background": "opaque",
+      "model": "codex-image2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "count": 1,
+      "slug": "angus-world-map-v6f-pixel-balanced",
+      "reference_images": [
+        {
+          "path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6d-clear-safe-rects.png",
+          "role": "approved v6d runtime-safe layout and material baseline"
+        }
+      ],
+      "prompt": "Create Style Draft B for the Angus world-map artboard: balanced visible pixel-print style. Preserve the v6d layout and hard safe-area rules exactly: 4 fully visible left index cards, no diagonal pocket over the lower-left card area, fully orthographic right dossier, and all text-safe zones as clean horizontal rectangles with 32px margins. Pixel level B: use clear 3-5px stepped pixel edges on paper shadows, folder borders, map coastlines, route endpoints, and red/cyan signal marks. Add blocky halftone clusters, ordered dithering patches, crisp pixel-grid highlights, and small square print artifacts while keeping blank writing areas low-noise. No readable text, Chinese, numbers, fake states, fake pins, labels, watermark, or signature."
+    },
+    {
+      "id": "01g_pixel_strong_posterized_material",
+      "stage": "artboard",
+      "enabled": true,
+      "asset_type": "ui-screen",
+      "background": "opaque",
+      "model": "codex-image2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "count": 1,
+      "slug": "angus-world-map-v6g-pixel-strong",
+      "reference_images": [
+        {
+          "path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6d-clear-safe-rects.png",
+          "role": "approved v6d runtime-safe layout and material baseline"
+        }
+      ],
+      "prompt": "Create Style Draft C for the Angus world-map artboard: strong stylized pixel-print and posterized material, while keeping all paper faces bright clean ivory. Preserve the v6d layout and hard safe-area rules exactly: 4 fully visible left index cards, no diagonal shape near the left card stack, fully orthographic right dossier, and all blank text-safe zones as clean horizontal rectangles with 32px margins. Pixel level C: use bold 5-8px pixel block clusters on navy board texture, map coastlines, outer frame, red/cyan signal marks, and paper shadow edges. Add posterized shadow bands, blocky halftone fields, ordered dithering, pixel-stepped coastlines, square anomaly noise, and crisp pixel-grid accents. Keep blank writing areas calm for Godot text. Paper color requirement: match the bright fresh ivory / warm white feeling of the v6d baseline; do not shift paper toward yellow, ochre, sepia, old archive, tea stain, parchment, or old newspaper. Strong pixelization should affect edges, shadows, map outlines, signal marks, and print artifacts, not darken or yellow the blank paper surfaces. This should feel like high-end micro-pixel editorial UI, not retro arcade or low-resolution console UI. No readable text, Chinese, numbers, fake states, fake pins, labels, watermark, or signature."
+    },
+    {
+      "id": "01h_pixel_strong_bright_paper_c2",
+      "stage": "artboard",
+      "enabled": true,
+      "asset_type": "ui-screen",
+      "background": "opaque",
+      "model": "codex-image2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "count": 1,
+      "slug": "angus-world-map-v6h-pixel-strong-bright-paper",
+      "reference_images": [
+        {
+          "path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6d-clear-safe-rects.png",
+          "role": "bright clean ivory paper and runtime-safe layout baseline"
+        },
+        {
+          "path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6g-pixel-strong.png",
+          "role": "strong pixel-print intensity reference whose paper color was too warm/yellow"
+        }
+      ],
+      "prompt": "Create Angus world-map artboard candidate v6h / C2: strong pixel-print style with bright clean ivory paper. Use v6d as the paper color and safe-layout baseline, and v6g as the pixel-intensity reference. Hard layout invariants: central map board, left stack of exactly 4 fully visible horizontal blank index cards, right selected-region dossier, bottom horizontal ticker strips; no diagonal shape near the left card stack; the fourth/bottom index card must be completely visible; the right dossier and every inner content rectangle must be orthographic and axis-aligned; all dynamic-text-safe zones must stay clean horizontal rectangles with at least 32px visual margin from tabs, ribbons, corner marks, dots, borders, clips, screws, arrows, colored blocks, and halftone clusters. Strong pixel requirements: match the strong pixel intensity of v6g with bold 5-8px pixel block clusters, posterized shadow bands, blocky halftone fields, ordered dithering, pixel-stepped coastlines, square anomaly noise, crisp pixel-grid accents, and red/cyan signal artifacts. Apply strongest pixel language to navy board texture, central map coastlines, outer frame, red/cyan signal marks, paper shadow edges, tabs, and metal/paper outlines. Critical paper correction: match the bright fresh ivory paper feeling of v6d, not the warmer/yellower v6g paper. Blank paper faces should read around warm white / light ivory, roughly RGB 242-246 red, 231-235 green, 219-223 blue, low saturation around 0.09-0.10, high value around 0.95-0.97. Do not reduce the blue channel or push paper into yellow, ochre, sepia, tea stain, parchment, old archive, old newspaper, beige/brown, or dirty paper. Strong pixelization must not darken, yellow, or dirty the blank writing surfaces. No readable text, Chinese, numbers, fake states, fake pins, labels, watermark, or signature."
+    },
+    {
+      "id": "02_v6g_map_board_component",
+      "stage": "component",
+      "enabled": true,
+      "requires_approved_artboard": true,
+      "target_asset_ids": ["wm_map_board_v6g_component_candidate"],
+      "asset_type": "map-board-base",
+      "background": "opaque",
+      "model": "codex-image2",
+      "target_size": [856, 812],
+      "count": 1,
+      "slug": "angus-world-map-v6g-map-board-component",
+      "reference_images": [
+        {
+          "path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6g-pixel-strong.png",
+          "role": "user-selected v6g strong pixel artboard and layout source"
+        }
+      ],
+      "prompt": "Create only the central Angus world-map board component from the approved v6g strong pixel artboard. Target size 856x812. Preserve the deep navy engineering board, crisp frame, grid, red/cyan signal arcs, strong 5-8px pixel-print blocks, posterized shadows, and cool blue-gray faceted low-poly paper world map. This is a non-interactive background component: do not include pins, route labels, tooltips, region names, readable text, numbers, fake selection rings, fake buttons, watermark, or signature. Keep the map board edges complete and usable as a standalone PNG component."
+    },
+    {
+      "id": "03_v6g_panel_components",
+      "stage": "component",
+      "enabled": true,
+      "requires_approved_artboard": true,
+      "target_asset_ids": [
+        "wm_left_index_stack_v6g_component_candidate",
+        "wm_right_dossier_body_v6g_component_candidate",
+        "wm_bottom_ticker_v6g_component_candidate",
+        "wm_side_tab_rail_v6g_component_candidate"
+      ],
+      "asset_type": "panel-component-set",
+      "background": "opaque",
+      "model": "codex-image2",
+      "target_size": [1920, 1080],
+      "count": 1,
+      "slug": "angus-world-map-v6g-panel-component-set",
+      "reference_images": [
+        {
+          "path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6g-pixel-strong.png",
+          "role": "user-selected v6g strong pixel artboard and material source"
+        }
+      ],
+      "prompt": "Create an Angus world-map UI component sheet based on the approved v6g strong pixel artboard. Include four clean component groups with empty readable zones: left region index stack with four horizontal blank card slots; right selected-region dossier body without the CTA button; bottom ticker strip with three horizontal blank channels; right-side icon tab rail. Preserve v6g materials: strong pixel-print blocks, posterized paper shadows, crisp ivory paper, deep navy board, red-orange and cyan accents. All text-bearing paper faces must be orthographic, axis-aligned, low-noise, and at least 32px away from ribbons, tabs, screws, dense halftone, borders, and decorative color blocks. Do not include readable text, Chinese, English UI labels, numbers, region names, fake task states, fake buttons, fake pins, watermark, or signature."
+    },
+    {
+      "id": "04_v6g_cta_state_atlas",
+      "stage": "component",
+      "enabled": true,
+      "requires_approved_artboard": true,
+      "target_asset_ids": ["wm_cta_plate_v6g_state_atlas_candidate"],
+      "asset_type": "primary-cta-state-atlas",
+      "background": "opaque",
+      "model": "codex-image2",
+      "target_size": [1852, 158],
+      "frame_size": [463, 158],
+      "frame_order": ["default", "hover", "pressed", "disabled"],
+      "count": 1,
+      "slug": "angus-world-map-v6g-cta-state-atlas",
+      "reference_images": [
+        {
+          "path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6g-pixel-strong.png",
+          "role": "approved v6g CTA material reference"
+        }
+      ],
+      "prompt": "Create a horizontal 4-frame atlas for the Angus world-map primary CTA plate. Frame size 463x158, atlas size 1852x158, frame order: default, hover, pressed, disabled. Preserve the approved v6g red-orange metal/paper plate, screws, warning stripe, ivory label inset, strong pixel-print edges, posterized shadows, and crisp editorial UI material. The center label area must remain blank and clean for Godot-rendered text. Hover should brighten rim/cyan signal subtly; pressed should look physically depressed by 2-3px with stronger shadow; disabled should be clearly unavailable but still readable as the same object. Do not include text, arrows as text, numbers, labels, fake task states, watermark, or signature."
+    },
+    {
+      "id": "05_v6g_pin_icon_atlas",
+      "stage": "component",
+      "enabled": true,
+      "requires_approved_artboard": true,
+      "target_asset_ids": ["wm_pin_icon_v6g_atlas_candidate"],
+      "asset_type": "pin-and-icon-atlas",
+      "background": "transparent-via-chroma-key",
+      "model": "codex-image2-chroma-key",
+      "target_size": [512, 64],
+      "frame_size": [64, 64],
+      "frame_order": ["pin_normal", "pin_hover", "pin_selected", "pin_locked", "pin_urgent", "pin_completed", "route_node_red", "route_node_cyan"],
+      "count": 1,
+      "slug": "angus-world-map-v6g-pin-icon-atlas",
+      "reference_images": [
+        {
+          "path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6g-pixel-strong.png",
+          "role": "approved v6g pixel-print material and red/cyan signal language"
+        }
+      ],
+      "prompt": "Create an Angus world-map pin and route-node icon sheet in the approved v6g strong pixel-print style. Show exactly 8 separate icons in one horizontal row on a perfectly flat solid #ff00ff chroma-key background. Do not draw boxes, frames, dividers, grid cells, white rectangles, separators, outlines around cells, or labels; only the icons themselves should appear on the magenta background. Frame order left to right: pin_normal, pin_hover, pin_selected, pin_locked, pin_urgent, pin_completed, route_node_red, route_node_cyan. Each icon must fit comfortably into a 64x64 frame after extraction. Use red-orange anomaly pins, cyan tracking pins, locked gray/navy pins, completed muted pins, and compact red/cyan route nodes that can sit over the central low-poly world map. Shapes must be readable at 100% scale, with 5-8px pixel-stepped highlights, posterized shadows, and crisp silhouettes. Do not include text, Chinese, English labels, numbers, region names, fake labels, background map, tooltip cards, watermark, or signature."
+    }
+  ]
+}

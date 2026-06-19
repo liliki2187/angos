@@ -1,0 +1,4 @@
+interface:
+  display_name: "Angus Art Director"
+  short_description: "审查 Angus 美术风格、像素/半调/印刷材质、视觉 prompt 和参考图转译。"
+  default_prompt: "使用 angus-art-director 审查或指导这个视觉方向是否符合 Angus 风格，输出风格判断、风险、可执行调整和交接对象。"

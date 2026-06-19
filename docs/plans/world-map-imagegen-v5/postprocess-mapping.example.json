@@ -1,0 +1,71 @@
+{
+  "description": "Copy this file, replace source paths with approved staged outputs from Codex Image 2, human art tools, or optional OpenRouter jobs, then run scripts/art/world_map_imagegen_pipeline.py postprocess --mapping <file>.",
+  "rules": [
+    "Primary source path is image_gen/codex_image2_sources/YYYY-MM-DD/<staged-file> when using Codex built-in Image 2.",
+    "Postprocess may crop, resize and pad only.",
+    "Postprocess must not paint new borders, halftone, noise, symbols, text or state marks.",
+    "If an asset needs art changes, regenerate or edit through an art tool instead of fixing it procedurally."
+  ],
+  "assets": {
+    "wm_fullscreen_artboard_v5": {
+      "source": "image_gen/codex_image2_sources/YYYY-MM-DD/APPROVED_angus-world-map-v5-artboard.png",
+      "mode": "cover",
+      "crop": null
+    },
+    "wm_bg_shell": {
+      "source": "image_gen/YYYY-MM-DD/APPROVED_angus-world-map-v5-bg-shell.png",
+      "mode": "cover",
+      "crop": null
+    },
+    "wm_world_board_base": {
+      "source": "image_gen/YYYY-MM-DD/APPROVED_angus-world-map-v5-board-base.png",
+      "mode": "cover",
+      "crop": null
+    },
+    "wm_left_index_panel": {
+      "source": "image_gen/YYYY-MM-DD/APPROVED_angus-world-map-v5-left-index-panel.png",
+      "mode": "contain",
+      "crop": null
+    },
+    "wm_right_story_folder": {
+      "source": "image_gen/YYYY-MM-DD/APPROVED_angus-world-map-v5-right-story-folder.png",
+      "mode": "contain",
+      "crop": null
+    },
+    "wm_bottom_ticker": {
+      "source": "image_gen/YYYY-MM-DD/APPROVED_angus-world-map-v5-bottom-ticker.png",
+      "mode": "contain",
+      "crop": null
+    },
+    "wm_region_strip_atlas": {
+      "source": "image_gen/YYYY-MM-DD/APPROVED_angus-world-map-v5-region-strip-atlas.png",
+      "mode": "contain",
+      "crop": null
+    },
+    "wm_pin_atlas": {
+      "source": "image_gen/YYYY-MM-DD/APPROVED_angus-world-map-v5-pin-atlas.png",
+      "mode": "contain",
+      "crop": null
+    },
+    "wm_ticket_atlas": {
+      "source": "image_gen/YYYY-MM-DD/APPROVED_angus-world-map-v5-ticket-atlas.png",
+      "mode": "contain",
+      "crop": null
+    },
+    "wm_cta_enter_region_atlas": {
+      "source": "image_gen/YYYY-MM-DD/APPROVED_angus-world-map-v5-cta-atlas.png",
+      "mode": "contain",
+      "crop": null
+    },
+    "wm_badge_atlas": {
+      "source": "image_gen/YYYY-MM-DD/APPROVED_angus-world-map-v5-badge-atlas.png",
+      "mode": "contain",
+      "crop": null
+    },
+    "wm_story_preview_north_america": {
+      "source": "image_gen/YYYY-MM-DD/APPROVED_angus-world-map-v5-story-preview-north-america.png",
+      "mode": "cover",
+      "crop": null
+    }
+  }
+}

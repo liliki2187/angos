@@ -1,0 +1,40 @@
+{
+  "status": "preview_only_filled_content",
+  "full_preview": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/19-dispatch-signoff-filled-content-preview-v1.png",
+  "right_crop": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/20-dispatch-signoff-filled-content-preview-v1-right-crop.png",
+  "sources": {
+    "artboard": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/01-dispatch-signoff-full-style-v3b-artboard-no-runtime-text.png",
+    "review_sheet": "gd_project/Assets/ui/angus_packaging/dispatch_signoff/assetized/ds-review-sheet-base-v2-art-pass.png",
+    "cta_atlas": "gd_project/Assets/ui/angus_packaging/dispatch_signoff/assetized/ds-cta-signoff-atlas.png",
+    "avatars": "design/prototypes/html/full-chain-demo/Assets/avatars"
+  },
+  "selected_staff": [
+    "s5",
+    "s7"
+  ],
+  "candidate_staff": [
+    "s2",
+    "s7",
+    "s5",
+    "s6",
+    "s8",
+    "s1"
+  ],
+  "canvas_size": [
+    1672,
+    941
+  ],
+  "review_sheet_pos": [
+    1210,
+    130
+  ],
+  "review_sheet_size": [
+    454,
+    860
+  ],
+  "notes": [
+    "Chinese text is program-rendered for accuracy; this is not a baked runtime asset.",
+    "Right review text rects are remapped for the v2 art-pass candidate.",
+    "Avatar use follows existing full-chain demo avatar assets."
+  ]
+}

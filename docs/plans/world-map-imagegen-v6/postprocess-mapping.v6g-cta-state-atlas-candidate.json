@@ -1,0 +1,9 @@
+{
+  "assets": {
+    "wm_cta_plate_v6g_state_atlas_candidate": {
+      "source": "image_gen/codex_image2_sources/2026-06-15/20260615-194428_angus-world-map-v6g-cta-state-atlas.png",
+      "mode": "stretch",
+      "crop": [30, 210, 2112, 260]
+    }
+  }
+}

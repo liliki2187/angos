@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://weekly-run-game"]
+[gd_scene load_steps=4 format=3 uid="uid://weekly-run-game"]
 
 [ext_resource type="Script" path="res://scenes/gameplay/weekly_run/WeeklyRunGame.gd" id="1_weekly_run"]
+[ext_resource type="Script" path="res://scenes/gameplay/weekly_run/components/WeeklyRunShellBackdrop.gd" id="2_shell_backdrop"]
+[ext_resource type="Texture2D" path="res://Assets/ui/angus_packaging/world_map/global-channel-world-ui-shell-v1.png" id="3_world_shell"]
 
 [node name="WeeklyRunGame" type="Control"]
 layout_mode = 3
@@ -18,6 +20,29 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color(0.05, 0.07, 0.1, 1)
 
+[node name="BackgroundInk" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_shell_backdrop")
+
+[node name="WorldShellArt" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_world_shell")
+expand_mode = 1
+stretch_mode = 6
+
 [node name="RootMargin" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -31,7 +56,7 @@ offset_bottom = -20.0
 [node name="RootVBox" type="VBoxContainer" parent="RootMargin"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 16
+theme_override_constants/separation = 10
 
 [node name="HeaderPanel" type="PanelContainer" parent="RootMargin/RootVBox"]
 layout_mode = 2
@@ -40,29 +65,93 @@ layout_mode = 2
 layout_mode = 2
 theme_override_constants/separation = 12
 
+[node name="ChannelMark" type="Label" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox"]
+visible = false
+layout_mode = 2
+custom_minimum_size = Vector2(86, 66)
+text = "◎"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="TitleBox" type="VBoxContainer" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Title" type="Label" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox/TitleBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 24
 text = "《世界未解之谜周刊》· 正式周循环切片"
 
 [node name="Subtitle" type="Label" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox/TitleBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.78, 0.76, 0.82, 1)
-text = "weekly_run 现在按 briefing / explore / editorial / summary 四阶段正式切片运转"
+text = "编辑部按简报、取材、排版、发刊回响四段推进本周"
 autowrap_mode = 3
+
+[node name="WorldHeaderMeta" type="PanelContainer" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox"]
+visible = false
+layout_mode = 2
+custom_minimum_size = Vector2(560, 72)
+
+[node name="WorldHeaderMetaVBox" type="VBoxContainer" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox/WorldHeaderMeta"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="WorldHeaderMetaTopRow" type="HBoxContainer" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox/WorldHeaderMeta/WorldHeaderMetaVBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="WorldHeaderCycle" type="Label" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox/WorldHeaderMeta/WorldHeaderMetaVBox/WorldHeaderMetaTopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ISSUE 001 / WEEK 01 / DAYS LEFT 07"
+
+[node name="WorldHeaderClips" type="Label" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox/WorldHeaderMeta/WorldHeaderMetaVBox/WorldHeaderMetaTopRow"]
+layout_mode = 2
+text = "CLIPS 00"
+
+[node name="WorldHeaderStateRow" type="HBoxContainer" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox/WorldHeaderMeta/WorldHeaderMetaVBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="WorldStateTitle" type="Label" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox/WorldHeaderMeta/WorldHeaderMetaVBox/WorldHeaderStateRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(82, 0)
+text = "WORLD STATE"
+
+[node name="WorldStateCredibility" type="Label" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox/WorldHeaderMeta/WorldHeaderMetaVBox/WorldHeaderStateRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(76, 0)
+text = "公信 42"
+
+[node name="WorldStateWeirdness" type="Label" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox/WorldHeaderMeta/WorldHeaderMetaVBox/WorldHeaderStateRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(76, 0)
+text = "诡名 38"
+
+[node name="WorldStateReputation" type="Label" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox/WorldHeaderMeta/WorldHeaderMetaVBox/WorldHeaderStateRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(76, 0)
+text = "声望 45"
+
+[node name="WorldStateOrder" type="Label" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox/WorldHeaderMeta/WorldHeaderMetaVBox/WorldHeaderStateRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(76, 0)
+text = "守序 48"
+
+[node name="WorldStateMania" type="Label" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox/WorldHeaderMeta/WorldHeaderMetaVBox/WorldHeaderStateRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(76, 0)
+text = "狂性 22"
 
 [node name="BackBtn" type="Button" parent="RootMargin/RootVBox/HeaderPanel/HeaderHBox"]
 layout_mode = 2
-custom_minimum_size = Vector2(120, 42)
+custom_minimum_size = Vector2(112, 36)
 text = "返回主菜单"
 
 [node name="MacroBar" type="HBoxContainer" parent="RootMargin/RootVBox"]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 6
 
 [node name="WeekBar" type="HBoxContainer" parent="RootMargin/RootVBox"]
 layout_mode = 2
@@ -74,7 +163,7 @@ size_flags_horizontal = 3
 
 [node name="WeekLabel" type="Label" parent="RootMargin/RootVBox/WeekBar/WeekInfo"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 20
 text = "第 1 周"
 
 [node name="DayLabel" type="Label" parent="RootMargin/RootVBox/WeekBar/WeekInfo"]
@@ -84,7 +173,7 @@ text = "剩余 7 天"
 
 [node name="EndWeekBtn" type="Button" parent="RootMargin/RootVBox/WeekBar"]
 layout_mode = 2
-custom_minimum_size = Vector2(220, 44)
+custom_minimum_size = Vector2(196, 38)
 text = "确认简报 · 进入探索"
 
 [node name="PhaseHost" type="Control" parent="RootMargin/RootVBox"]

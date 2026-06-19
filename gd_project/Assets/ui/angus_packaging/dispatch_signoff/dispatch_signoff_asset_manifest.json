@@ -1,0 +1,774 @@
+{
+  "id": "dispatch_signoff_assetized_p0",
+  "version": 2,
+  "status": "draft_contract_v3b_safe_zone",
+  "target_view": "weekly_run.explore.dispatch_signoff",
+  "coordinate_space": "screen_pixels",
+  "viewport_base": [1920, 1080],
+  "scale_policy": {
+    "mode": "uniform_scale_from_viewport_base",
+    "anchor": "center",
+    "safe_viewports": [[1920, 1080], [1600, 900], [1366, 768]],
+    "rounding": "round_to_integer_after_scale"
+  },
+  "canvas_size": [1920, 1080],
+  "safe_viewports": [[1920, 1080], [1600, 900], [1366, 768]],
+  "source_visual_anchors": [
+    {
+      "path": "docs/screenshots/2026-06-15-dispatch-signoff-style-draft/02-dispatch-signoff-style-draft-cleaner-production-mother-1920x1080.png",
+      "role": "asset mother direction, not a runtime background"
+    },
+    {
+      "path": "docs/screenshots/2026-06-15-dispatch-signoff-style-draft/05-dispatch-signoff-style-draft-filled-readable.png",
+      "role": "filled readability preview, not a slice source"
+    },
+    {
+      "path": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/01-dispatch-signoff-full-style-v3b-artboard-no-runtime-text.png",
+      "role": "v3b function-first clean ivory pixel-print artboard, current split-asset discussion candidate"
+    },
+    {
+      "path": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/02-dispatch-signoff-full-style-v3b-filled-preview.png",
+      "role": "v3b filled readability preview, not a slice source"
+    },
+    {
+      "path": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/03-dispatch-signoff-full-style-v3b-safe-zone-overlay.png",
+      "role": "v3b draft content/no-text/hit overlay for manifest refinement"
+    },
+    {
+      "path": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/04-dispatch-signoff-component-sheet-v3c.png",
+      "role": "v3c cohesive component sheet for preserving visual style during asset splitting; not a final atlas"
+    }
+  ],
+  "visual_lock": {
+    "must_keep": [
+      "chief editor dispatch sign-off desk",
+      "left task dossier, center dice pool tray, right review sheet",
+      "deep navy editorial workbench",
+      "fresh warm ivory printed paper",
+      "red-orange deadline and sign-off accents",
+      "restrained cyan tracking and support accents",
+      "halftone dots, crop marks, red-cyan print misregistration, high-end micro-pixel print grain",
+      "CTA as an in-world sign-off stamp action"
+    ],
+    "must_avoid": [
+      "flat SaaS dashboard",
+      "generic web buttons",
+      "old newspaper",
+      "yellowed archive paper",
+      "dirty stains",
+      "broken or torn paper",
+      "sepia parchment",
+      "tea stains",
+      "realistic office desk photo",
+      "photographic noise",
+      "low resolution 8-bit UI",
+      "baked dynamic text",
+      "baked fake task names",
+      "baked fake probability numbers",
+      "baked fake buttons",
+      "fake tooltip"
+    ]
+  },
+  "integration_rules": {
+    "no_baked_dynamic_text": true,
+    "no_fake_numbers": true,
+    "no_fake_buttons": true,
+    "no_fake_tooltips": true,
+    "visual_contract_first": true,
+    "godot_dynamic_layer_owns": [
+      "task titles",
+      "task brief text",
+      "staff names",
+      "staff roles",
+      "dice face labels",
+      "selected count",
+      "week and remaining day text",
+      "success or threshold rate",
+      "risk labels",
+      "blocking reasons",
+      "CTA labels",
+      "button states",
+      "hover, pressed, selected, disabled, focus and loading feedback"
+    ],
+    "overflow_policy": {
+      "single_line": "trim_ellipsis",
+      "multi_line": "wrap_then_trim",
+      "button_label": "trim_ellipsis",
+      "staff_name": "trim_ellipsis",
+      "dice_label": "fixed_short_token",
+      "blocking_reason": "review_sheet_or_tooltip_not_cta_label"
+    },
+    "fallback_policy": "Existing gd_project/Assets/ui/angus_packaging/dispatch assets and StyleBoxFlat dispatch controls are fallback only. Acceptance screenshots require assetized components."
+  },
+  "qa_cases": [
+    {"id": "no_staff", "checks": ["selected slots empty", "candidate cards visible", "CTA disabled", "review sheet shows no-staff blocking reason"]},
+    {"id": "one_staff_low_rate", "checks": ["one occupied slot", "candidate positions stable", "review sheet shows low rate and missing coverage"]},
+    {"id": "two_staff_changed_rate", "checks": ["two occupied slots", "rate changes in review sheet only", "candidate grid does not reorder after selection"]},
+    {"id": "three_staff_full", "checks": ["3/3 selected badge", "new candidate click enters blocked_full feedback", "no automatic replacement"]},
+    {"id": "days_insufficient", "checks": ["CTA disabled", "action_scope shows remaining days issue", "button does not look clickable"]},
+    {"id": "potential_points_insufficient", "checks": ["review gap explains missing relevant dice faces", "candidate card highlights low fit"]},
+    {"id": "support_item_selected", "checks": ["support slot is visually separate from staff slot", "review sheet summarizes support as counted"]},
+    {"id": "temporary_informant", "checks": ["temporary informant appears as staff candidate and occupies staff capacity"]},
+    {"id": "candidate_hover", "checks": ["hover does not resize grid", "full six-face dice net appears if inline mode is compact"]},
+    {"id": "cta_pressed_confirm_pending", "checks": ["stamp-down pressed frame visible", "review sheet still owns irreversible action scope"]},
+    {"id": "cta_loading_stamped", "checks": ["loading frame visible", "stamped feedback visible", "no full result screen appears early"]},
+    {"id": "return_region_preserves_selection", "checks": ["back tab returns to region board", "selected region and task remain selected"]},
+    {"id": "long_title", "checks": ["left task title wraps or trims inside title slot", "right summary stays short and does not repeat long title"]},
+    {"id": "long_failure_text", "checks": ["left failure_short trims before bottom fold", "right failure or blocking slot shows short version only"]},
+    {"id": "deadline_long_digits", "checks": ["current remaining days, deadline remaining days and post-dispatch remaining days remain distinct"]},
+    {"id": "top_pool_two_digit", "checks": ["top staff pool availability and pressure fit separate slots without entering right halftone no-text area"]},
+    {"id": "support_item_unavailable", "checks": ["support slot disabled frame is visible", "reason appears in review blocking slot, not inside support card title"]}
+  ],
+  "layout_slots": [
+    {"id": "top_channel", "rect": [24, 26, 1872, 104], "role": "low-weight week, region and resource strip"},
+    {"id": "left_task_dossier", "rect": [64, 150, 510, 865], "role": "current selected task dossier only"},
+    {"id": "center_dispatch_tray", "rect": [580, 135, 740, 860], "role": "selected staff, support, candidate cards and dice pool"},
+    {"id": "selected_pool_band", "rect": [625, 190, 670, 310], "role": "1-3 selected staff slots and support slot"},
+    {"id": "candidate_grid_band", "rect": [625, 560, 620, 370], "role": "stable candidate grid and sort tabs"},
+    {"id": "right_review_sheet", "rect": [1368, 145, 510, 850], "role": "sign-off facts, blocking reason and CTA mount"},
+    {"id": "primary_cta_mount", "rect": [1602, 812, 160, 104], "role": "primary sign-off stamp button mount"}
+  ],
+  "safe_zone_draft_v3b": {
+    "source_overlay": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/03-dispatch-signoff-full-style-v3b-safe-zone-overlay.png",
+    "coordinate_space": "screen_pixels",
+    "content_rects_screen": [
+      {"id": "top.title", "rect": [155, 48, 320, 44]},
+      {"id": "top.week_days", "rect": [505, 50, 205, 42]},
+      {"id": "top.region_task_type", "rect": [788, 50, 460, 42]},
+      {"id": "top.staff_pressure", "rect": [1355, 50, 210, 42]},
+      {"id": "task.title", "rect": [118, 238, 390, 48]},
+      {"id": "task.tags", "rect": [118, 308, 176, 30]},
+      {"id": "task.meta", "rect": [118, 356, 390, 40]},
+      {"id": "task.brief", "rect": [118, 446, 390, 106]},
+      {"id": "task.requirements", "rect": [118, 606, 390, 46]},
+      {"id": "task.target", "rect": [118, 668, 390, 46]},
+      {"id": "task.failure", "rect": [118, 768, 390, 72]},
+      {"id": "selected.slot_1", "rect": [670, 332, 118, 142]},
+      {"id": "selected.slot_2", "rect": [844, 332, 118, 142]},
+      {"id": "selected.slot_3", "rect": [1018, 332, 118, 142]},
+      {"id": "support.card", "rect": [1176, 324, 114, 78]},
+      {"id": "candidate.slot_1", "rect": [708, 600, 96, 126]},
+      {"id": "candidate.slot_2", "rect": [908, 600, 96, 126]},
+      {"id": "candidate.slot_3", "rect": [1108, 600, 96, 126]},
+      {"id": "candidate.slot_4", "rect": [708, 772, 96, 126]},
+      {"id": "candidate.slot_5", "rect": [908, 772, 96, 126]},
+      {"id": "candidate.slot_6", "rect": [1108, 772, 96, 126]},
+      {"id": "review.title", "rect": [1452, 200, 260, 48]},
+      {"id": "review.task_summary", "rect": [1452, 274, 318, 36]},
+      {"id": "review.success_rate", "rect": [1452, 345, 318, 92]},
+      {"id": "review.risk", "rect": [1452, 474, 318, 40]},
+      {"id": "review.time_cost", "rect": [1452, 556, 318, 40]},
+      {"id": "review.action_scope", "rect": [1452, 638, 318, 64]},
+      {"id": "review.failure_consequence", "rect": [1452, 730, 318, 54]}
+    ],
+    "no_text_rects_screen": [
+      {"id": "top.signal_meter", "rect": [1610, 38, 250, 72]},
+      {"id": "left.clip", "rect": [220, 130, 205, 70]},
+      {"id": "left.tabs_edge", "rect": [28, 270, 82, 650]},
+      {"id": "left.fold", "rect": [42, 900, 80, 105]},
+      {"id": "tray.frame", "rect": [582, 135, 735, 64]},
+      {"id": "cause_rails", "rect": [1290, 280, 150, 370]},
+      {"id": "right.clip_stack", "rect": [1368, 120, 70, 170]},
+      {"id": "right.red_corner", "rect": [1730, 152, 112, 120]},
+      {"id": "stamp.decoration", "rect": [1388, 820, 150, 90]}
+    ],
+    "hit_rects_screen": [
+      {"id": "selected_slots", "rect": [625, 190, 540, 310]},
+      {"id": "candidate_grid", "rect": [625, 560, 620, 370]},
+      {"id": "signoff_cta", "rect": [1602, 812, 160, 104]}
+    ],
+    "notes": [
+      "v3b safe zones are a screen-space draft; convert to component-local rects before generating final ds_* atlases.",
+      "cause_rails must remain no-text decoration; dynamic text and click targets must not overlap it.",
+      "CTA label belongs only to ds_cta_signoff_atlas; review sheet owns action_scope and blocking_reason."
+    ]
+  },
+  "decision_fact_matrix": [
+    {"fact": "current_task_identity", "primary_asset": "ds_task_brief_sheet.title", "secondary_asset": "ds_review_sheet_base.summary", "source_fields": ["task.id", "task.title", "task.type"], "qa_cases": ["long_title"]},
+    {"fact": "need_and_target", "primary_asset": "ds_review_sheet_base.probability", "secondary_asset": "ds_task_brief_sheet.requirement", "source_fields": ["task.need_tags", "task.need_target"], "qa_cases": ["potential_points_insufficient"]},
+    {"fact": "special_constraint", "primary_asset": "ds_review_sheet_base.special_constraint", "secondary_asset": "ds_status_stamp_atlas", "source_fields": ["task.deadline_days", "task.chain_id", "task.black_dice_risk"], "qa_cases": ["days_insufficient", "support_item_selected"]},
+    {"fact": "dispatch_eligibility", "primary_asset": "ds_review_sheet_base.blocking_reason", "secondary_asset": "ds_cta_signoff_atlas.state", "source_fields": ["dispatch_validation.can_signoff", "dispatch_validation.block_code", "dispatch_validation.block_reason_text", "cta_state"], "qa_cases": ["no_staff", "days_insufficient", "potential_points_insufficient", "three_staff_full"]},
+    {"fact": "time_anchors", "primary_asset": "ds_review_sheet_base.action_scope", "secondary_asset": "ds_top_channel_strip.week_region", "source_fields": ["week.current_remaining_days", "task.cost_days", "week.post_dispatch_remaining_days", "task.deadline_remaining_days"], "qa_cases": ["days_insufficient", "deadline_long_digits"]},
+    {"fact": "staff_pool_availability", "primary_asset": "ds_top_channel_strip.staff_pool_availability", "secondary_asset": "none", "source_fields": ["week.available_staff_count", "week.total_staff_count"], "qa_cases": ["top_pool_two_digit"]},
+    {"fact": "selected_staff_capacity", "primary_asset": "ds_selected_slot_atlas", "secondary_asset": "ds_dice_tray_base.selected_count", "source_fields": ["selected_staff_ids", "max_staff_per_dispatch"], "qa_cases": ["no_staff", "three_staff_full"]},
+    {"fact": "staff_contribution", "primary_asset": "ds_staff_card_atlas.dice_net", "secondary_asset": "ds_selected_slot_atlas.contribution", "source_fields": ["staff.dice_faces", "task.need_tags"], "qa_cases": ["candidate_hover", "potential_points_insufficient"]},
+    {"fact": "success_rate", "primary_asset": "ds_review_sheet_base.probability", "secondary_asset": "ds_coverage_strip_atlas", "source_fields": ["effective_points", "need_target", "success_rate"], "qa_cases": ["one_staff_low_rate", "two_staff_changed_rate"]},
+    {"fact": "blocking_reason", "primary_asset": "ds_review_sheet_base.blocking_reason", "secondary_asset": "candidate card local feedback", "source_fields": ["dispatch_validation.block_code"], "qa_cases": ["no_staff", "days_insufficient", "three_staff_full"]},
+    {"fact": "failure_consequence", "primary_asset": "ds_review_sheet_base.failure", "secondary_asset": "ds_task_brief_sheet.failure_short", "source_fields": ["task.failure_consequence"], "qa_cases": ["long_failure_text"]},
+    {"fact": "irreversible_scope", "primary_asset": "ds_review_sheet_base.action_scope", "secondary_asset": "ds_cta_signoff_atlas.pressed", "source_fields": ["dispatch_execution_pipeline"], "qa_cases": ["cta_pressed_confirm_pending", "cta_loading_stamped"]},
+    {"fact": "support_item_contract", "primary_asset": "ds_support_slot_atlas", "secondary_asset": "ds_review_sheet_base.coverage_checks", "source_fields": ["support_items.selected_id", "support_items.consumable", "support_items.occupies_staff_slot", "support_items.rollback_allowed"], "qa_cases": ["support_item_selected", "support_item_unavailable"]},
+    {"fact": "temporary_staff_contract", "primary_asset": "ds_staff_card_atlas", "secondary_asset": "ds_selected_slot_atlas", "source_fields": ["temporary_staff_ids", "temporary_staff.occupies_staff_slot", "temporary_staff.hire_state"], "qa_cases": ["temporary_informant"]},
+    {"fact": "return_state", "primary_asset": "ds_back_tab_atlas", "secondary_asset": "page_state_machine", "source_fields": ["selected_region_id", "selected_task_id"], "qa_cases": ["return_region_preserves_selection"]}
+  ],
+  "assets": [
+    {
+      "id": "ds_desk_base",
+      "kind": "runtime_asset",
+      "asset_type": "background",
+      "background": "opaque",
+      "final_size": [1920, 1080],
+      "final_path": "gd_project/Assets/ui/angus_packaging/dispatch_signoff/assetized/ds-desk-base.png",
+      "godot_node": "TextureRect",
+      "runtime_rect": [0, 0, 1920, 1080],
+      "content_rects": [],
+      "no_text_rects": [
+        {"id": "whole_background", "rect": [0, 0, 1920, 1080], "rules": ["no readable text", "no fake controls", "no fake task cards"]}
+      ]
+    },
+    {
+      "id": "ds_top_channel_strip",
+      "kind": "runtime_asset",
+      "asset_type": "hud_strip",
+      "background": "transparent",
+      "final_size": [1840, 102],
+      "visual_rect": [0, 0, 1840, 102],
+      "component_rect": [40, 26, 1840, 102],
+      "clip_rect": [0, 0, 1840, 102],
+      "final_path": "gd_project/Assets/ui/angus_packaging/dispatch_signoff/assetized/ds-top-channel-strip.png",
+      "godot_node": "NinePatchRect",
+      "runtime_rect": [40, 26, 1840, 102],
+      "nine_patch_margins": [36, 22, 36, 22],
+      "content_rects": [
+        {"id": "title", "rect": [44, 20, 560, 52], "max_lines": 1},
+        {"id": "week_region", "rect": [660, 20, 560, 52], "max_lines": 1},
+        {"id": "staff_pool_availability", "rect": [1400, 20, 170, 52], "max_lines": 1},
+        {"id": "pressure_summary", "rect": [1588, 20, 120, 52], "max_lines": 1}
+      ],
+      "no_text_rects": [
+        {"id": "left_halftone_corner", "rect": [0, 0, 44, 78]},
+        {"id": "right_halftone_corner", "rect": [1720, 0, 120, 90]}
+      ],
+      "text_slots": [
+        {"id": "title", "content_rect": "title", "font_token": "dispatch_hud_title", "color_token": "ink_dark", "max_chars": 18, "max_lines": 1, "align": "left", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 12},
+        {"id": "week_region", "content_rect": "week_region", "font_token": "dispatch_hud_meta", "color_token": "paper_light", "max_chars": 26, "max_lines": 1, "align": "center", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 12},
+        {"id": "staff_pool_availability", "content_rect": "staff_pool_availability", "font_token": "dispatch_hud_meta", "color_token": "paper_light", "max_chars": 12, "max_lines": 1, "align": "left", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 12},
+        {"id": "pressure_summary", "content_rect": "pressure_summary", "font_token": "dispatch_hud_meta", "color_token": "paper_light", "max_chars": 8, "max_lines": 1, "align": "left", "overflow_policy": "fixed_digits", "min_gap_to_no_text": 12}
+      ]
+    },
+    {
+      "id": "ds_task_brief_sheet",
+      "kind": "runtime_asset",
+      "asset_type": "task_dossier",
+      "background": "transparent",
+      "final_size": [448, 790],
+      "visual_rect": [0, 0, 448, 790],
+      "component_rect": [78, 166, 448, 790],
+      "clip_rect": [0, 0, 448, 790],
+      "final_path": "gd_project/Assets/ui/angus_packaging/dispatch_signoff/assetized/ds-task-brief-sheet.png",
+      "godot_node": "NinePatchRect",
+      "runtime_rect": [78, 166, 448, 790],
+      "nine_patch_margins": [44, 54, 44, 58],
+      "content_rects": [
+        {"id": "back_summary", "rect": [50, 84, 250, 30], "max_lines": 1},
+        {"id": "title", "rect": [50, 142, 340, 60], "max_lines": 2},
+        {"id": "status_tags", "rect": [50, 218, 248, 36], "max_lines": 1},
+        {"id": "meta", "rect": [50, 278, 340, 34], "max_lines": 1},
+        {"id": "brief", "rect": [50, 330, 338, 110], "max_lines": 3},
+        {"id": "requirement", "rect": [50, 470, 340, 66], "max_lines": 2},
+        {"id": "target", "rect": [50, 548, 340, 66], "max_lines": 1},
+        {"id": "capacity", "rect": [50, 626, 340, 66], "max_lines": 1},
+        {"id": "failure_short", "rect": [50, 704, 260, 74], "max_lines": 2}
+      ],
+      "no_text_rects": [
+        {"id": "top_clip", "rect": [140, -36, 156, 58]},
+        {"id": "paper_clip", "rect": [388, 46, 36, 94]},
+        {"id": "left_red_backing", "rect": [-22, 20, 44, 770]},
+        {"id": "bottom_fold", "rect": [330, 698, 92, 86]},
+        {"id": "halftone_corner", "rect": [0, 704, 90, 78]}
+      ],
+      "text_slots": [
+        {"id": "back_summary", "content_rect": "back_summary", "font_token": "dispatch_note", "color_token": "muted_ink", "max_chars": 12, "max_lines": 1, "align": "left", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 10},
+        {"id": "title", "content_rect": "title", "font_token": "dispatch_title", "color_token": "ink_dark", "max_chars": 18, "max_lines": 2, "align": "left", "overflow_policy": "wrap_then_trim", "min_gap_to_no_text": 14},
+        {"id": "status_tags", "content_rect": "status_tags", "font_token": "dispatch_tag", "color_token": "paper_light", "max_chars": 12, "max_lines": 1, "align": "left", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 8},
+        {"id": "meta", "content_rect": "meta", "font_token": "dispatch_body", "color_token": "muted_ink", "max_chars": 22, "max_lines": 1, "align": "left", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 10},
+        {"id": "brief", "content_rect": "brief", "font_token": "dispatch_body", "color_token": "ink_dark", "max_chars": 48, "max_lines": 3, "align": "left", "overflow_policy": "wrap_then_trim", "min_gap_to_no_text": 12},
+        {"id": "requirement", "content_rect": "requirement", "font_token": "dispatch_field", "color_token": "ink_dark", "max_chars": 20, "max_lines": 2, "align": "left", "overflow_policy": "wrap_then_trim", "min_gap_to_no_text": 10},
+        {"id": "target", "content_rect": "target", "font_token": "dispatch_field", "color_token": "ink_dark", "max_chars": 8, "max_lines": 1, "align": "left", "overflow_policy": "fixed_digits", "min_gap_to_no_text": 10},
+        {"id": "capacity", "content_rect": "capacity", "font_token": "dispatch_field", "color_token": "ink_dark", "max_chars": 8, "max_lines": 1, "align": "left", "overflow_policy": "fixed_digits", "min_gap_to_no_text": 10},
+        {"id": "failure_short", "content_rect": "failure_short", "font_token": "dispatch_warning", "color_token": "danger_red", "max_chars": 18, "max_lines": 2, "align": "left", "overflow_policy": "wrap_then_trim", "min_gap_to_no_text": 10}
+      ]
+    },
+    {
+      "id": "ds_back_tab_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "back_action",
+      "background": "transparent",
+      "final_size": [720, 48],
+      "frame_size": [180, 48],
+      "visual_rect": [0, 0, 180, 48],
+      "component_rect": [0, 0, 180, 48],
+      "clip_rect": [0, 0, 180, 48],
+      "final_path": "gd_project/Assets/ui/angus_packaging/dispatch_signoff/assetized/ds-back-tab-atlas.png",
+      "godot_node": "TextureButton",
+      "frames": [
+        {"id": "default", "rect": [0, 0, 180, 48]},
+        {"id": "hover", "rect": [180, 0, 180, 48]},
+        {"id": "pressed", "rect": [360, 0, 180, 48]},
+        {"id": "disabled", "rect": [540, 0, 180, 48]}
+      ],
+      "content_rects": [
+        {"id": "label", "rect": [14, 10, 150, 26], "max_lines": 1}
+      ],
+      "no_text_rects": [],
+      "hit_rect": [0, 0, 180, 48],
+      "hover_rect": [-4, -4, 188, 56],
+      "focus_rect": [-4, -4, 188, 56],
+      "state_invariant_rects": ["label"],
+      "feedback_spec": {"pressed_offset": [0, 1], "pressed_duration_ms": 80, "sound": "paper_tab"}
+    },
+    {
+      "id": "ds_dice_tray_base",
+      "kind": "runtime_asset",
+      "asset_type": "dispatch_tray",
+      "background": "transparent",
+      "final_size": [790, 842],
+      "visual_rect": [0, 0, 790, 842],
+      "component_rect": [560, 148, 790, 842],
+      "clip_rect": [0, 0, 790, 842],
+      "final_path": "gd_project/Assets/ui/angus_packaging/dispatch_signoff/assetized/ds-dice-tray-base.png",
+      "godot_node": "NinePatchRect",
+      "runtime_rect": [560, 148, 790, 842],
+      "nine_patch_margins": [36, 36, 36, 36],
+      "content_rects": [
+        {"id": "tray_title", "rect": [64, 34, 190, 46], "max_lines": 1},
+        {"id": "selected_count", "rect": [420, 44, 140, 34], "max_lines": 1},
+        {"id": "support_caption", "rect": [572, 42, 150, 40], "max_lines": 1},
+        {"id": "sort_tabs", "rect": [60, 376, 660, 32], "max_lines": 1},
+        {"id": "candidate_hint", "rect": [60, 774, 590, 34], "max_lines": 1}
+      ],
+      "no_text_rects": [
+        {"id": "outer_frame_top", "rect": [0, 0, 790, 28]},
+        {"id": "outer_frame_left", "rect": [0, 0, 24, 842]},
+        {"id": "outer_frame_right", "rect": [766, 0, 24, 842]},
+        {"id": "outer_frame_bottom", "rect": [0, 818, 790, 24]},
+        {"id": "red_latch_top", "rect": [284, 24, 60, 42]},
+        {"id": "right_cyan_edge", "rect": [766, 694, 24, 110]}
+      ],
+      "child_mounts": [
+        {"id": "selected_slot_1", "asset_id": "ds_selected_slot_atlas", "rect": [56, 82, 158, 260]},
+        {"id": "selected_slot_2", "asset_id": "ds_selected_slot_atlas", "rect": [226, 82, 158, 260]},
+        {"id": "selected_slot_3", "asset_id": "ds_selected_slot_atlas", "rect": [396, 82, 158, 260]},
+        {"id": "support_slot", "asset_id": "ds_support_slot_atlas", "rect": [580, 82, 154, 260]},
+        {"id": "candidate_slot_1", "asset_id": "ds_staff_card_atlas", "rect": [56, 444, 228, 160]},
+        {"id": "candidate_slot_2", "asset_id": "ds_staff_card_atlas", "rect": [280, 444, 228, 160]},
+        {"id": "candidate_slot_3", "asset_id": "ds_staff_card_atlas", "rect": [504, 444, 228, 160]},
+        {"id": "candidate_slot_4", "asset_id": "ds_staff_card_atlas", "rect": [56, 608, 228, 160]},
+        {"id": "candidate_slot_5", "asset_id": "ds_staff_card_atlas", "rect": [280, 608, 228, 160]},
+        {"id": "candidate_slot_6", "asset_id": "ds_staff_card_atlas", "rect": [504, 608, 228, 160]}
+      ],
+      "text_slots": [
+        {"id": "tray_title", "content_rect": "tray_title", "font_token": "dispatch_panel_title", "color_token": "paper_light", "max_chars": 8, "max_lines": 1, "align": "left", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 12},
+        {"id": "selected_count", "content_rect": "selected_count", "font_token": "dispatch_panel_meta", "color_token": "paper_light", "max_chars": 8, "max_lines": 1, "align": "center", "overflow_policy": "fixed_digits", "min_gap_to_no_text": 10},
+        {"id": "support_caption", "content_rect": "support_caption", "font_token": "dispatch_tag", "color_token": "paper_light", "max_chars": 10, "max_lines": 1, "align": "left", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 8},
+        {"id": "candidate_hint", "content_rect": "candidate_hint", "font_token": "dispatch_note", "color_token": "cyan_note", "max_chars": 42, "max_lines": 1, "align": "left", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 8}
+      ]
+    },
+    {
+      "id": "ds_selected_slot_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "selected_staff_slot",
+      "background": "transparent",
+      "final_size": [948, 260],
+      "frame_size": [158, 260],
+      "visual_rect": [0, 0, 158, 260],
+      "component_rect": [0, 0, 158, 260],
+      "clip_rect": [0, 0, 158, 260],
+      "final_path": "gd_project/Assets/ui/angus_packaging/dispatch_signoff/assetized/ds-selected-slot-atlas.png",
+      "godot_node": "TextureButton",
+      "frames": [
+        {"id": "empty", "rect": [0, 0, 158, 260]},
+        {"id": "hover", "rect": [158, 0, 158, 260]},
+        {"id": "occupied", "rect": [316, 0, 158, 260]},
+        {"id": "remove_hover", "rect": [474, 0, 158, 260]},
+        {"id": "remove_pressed", "rect": [632, 0, 158, 260]},
+        {"id": "invalid", "rect": [790, 0, 158, 260]}
+      ],
+      "content_rects": [
+        {"id": "avatar", "rect": [18, 20, 122, 68], "max_lines": 0},
+        {"id": "name", "rect": [18, 96, 122, 30], "max_lines": 1},
+        {"id": "role", "rect": [18, 126, 122, 24], "max_lines": 1},
+        {"id": "contribution", "rect": [18, 154, 122, 24], "max_lines": 1},
+        {"id": "dice_net_full", "rect": [18, 188, 120, 58], "max_lines": 2},
+        {"id": "remove_hint", "rect": [116, 92, 34, 34], "max_lines": 0}
+      ],
+      "no_text_rects": [
+        {"id": "bookmark", "rect": [126, 0, 32, 38]},
+        {"id": "bottom_shadow", "rect": [0, 254, 158, 6]}
+      ],
+      "hit_rect": [0, 0, 158, 260],
+      "hover_rect": [-4, -4, 166, 268],
+      "focus_rect": [-4, -4, 166, 268],
+      "state_invariant_rects": ["avatar", "name", "role", "contribution", "dice_net_full"],
+      "remove_hit_rect": [116, 92, 34, 34],
+      "text_slots": [
+        {"id": "name", "content_rect": "name", "font_token": "dispatch_staff_name", "color_token": "ink_dark", "max_chars": 6, "max_lines": 1, "align": "right", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 8},
+        {"id": "role", "content_rect": "role", "font_token": "dispatch_staff_role", "color_token": "muted_ink", "max_chars": 8, "max_lines": 1, "align": "right", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 8},
+        {"id": "contribution", "content_rect": "contribution", "font_token": "dispatch_contribution", "color_token": "danger_red", "max_chars": 8, "max_lines": 1, "align": "right", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 8}
+      ],
+      "display_policy": "Selected slots must show the full six-face dice net at 1920x1080."
+    },
+    {
+      "id": "ds_support_slot_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "support_slot",
+      "background": "transparent",
+      "final_size": [616, 260],
+      "frame_size": [154, 260],
+      "visual_rect": [0, 0, 154, 260],
+      "component_rect": [0, 0, 154, 260],
+      "clip_rect": [0, 0, 154, 260],
+      "final_path": "gd_project/Assets/ui/angus_packaging/dispatch_signoff/assetized/ds-support-slot-atlas.png",
+      "godot_node": "TextureButton",
+      "frames": [
+        {"id": "empty", "rect": [0, 0, 154, 260]},
+        {"id": "available", "rect": [154, 0, 154, 260]},
+        {"id": "selected", "rect": [308, 0, 154, 260]},
+        {"id": "disabled", "rect": [462, 0, 154, 260]}
+      ],
+      "content_rects": [
+        {"id": "icon", "rect": [20, 20, 112, 72], "max_lines": 0},
+        {"id": "title", "rect": [20, 110, 112, 30], "max_lines": 1},
+        {"id": "meta", "rect": [20, 142, 112, 48], "max_lines": 2},
+        {"id": "bonus", "rect": [20, 194, 112, 24], "max_lines": 1}
+      ],
+      "no_text_rects": [
+        {"id": "outer_glow_left", "rect": [0, 0, 12, 260]},
+        {"id": "outer_glow_right", "rect": [142, 0, 12, 260]},
+        {"id": "outer_glow_top", "rect": [0, 0, 154, 12]},
+        {"id": "bottom_socket", "rect": [20, 224, 112, 30]}
+      ],
+      "hit_rect": [0, 0, 154, 260],
+      "hover_rect": [-4, -4, 162, 268],
+      "focus_rect": [-4, -4, 162, 268],
+      "state_invariant_rects": ["icon", "title", "meta", "bonus"],
+      "text_slots": [
+        {"id": "title", "content_rect": "title", "font_token": "dispatch_support_title", "color_token": "paper_light", "max_chars": 6, "max_lines": 1, "align": "left", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 8},
+        {"id": "meta", "content_rect": "meta", "font_token": "dispatch_support_meta", "color_token": "paper_light", "max_chars": 14, "max_lines": 2, "align": "left", "overflow_policy": "wrap_then_trim", "min_gap_to_no_text": 8},
+        {"id": "bonus", "content_rect": "bonus", "font_token": "dispatch_support_bonus", "color_token": "cyan_note", "max_chars": 8, "max_lines": 1, "align": "left", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 8}
+      ],
+      "slot_policy": "Support items do not occupy staff capacity; temporary informants use ds_staff_card_atlas instead."
+    },
+    {
+      "id": "ds_staff_card_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "candidate_staff_card",
+      "background": "transparent",
+      "final_size": [1368, 160],
+      "frame_size": [228, 160],
+      "visual_rect": [0, 0, 228, 160],
+      "component_rect": [0, 0, 228, 160],
+      "clip_rect": [0, 0, 228, 160],
+      "final_path": "gd_project/Assets/ui/angus_packaging/dispatch_signoff/assetized/ds-staff-card-atlas.png",
+      "godot_node": "TextureButton",
+      "frames": [
+        {"id": "normal", "rect": [0, 0, 228, 160]},
+        {"id": "hover", "rect": [228, 0, 228, 160]},
+        {"id": "selected", "rect": [456, 0, 228, 160]},
+        {"id": "unavailable", "rect": [684, 0, 228, 160]},
+        {"id": "assigned", "rect": [912, 0, 228, 160]},
+        {"id": "blocked_full", "rect": [1140, 0, 228, 160]}
+      ],
+      "display_modes": ["prefer_full_inline", "compact_with_hover_full"],
+      "content_rects": [
+        {"id": "avatar", "rect": [14, 14, 76, 48], "max_lines": 0},
+        {"id": "name", "rect": [104, 15, 90, 24], "max_lines": 1},
+        {"id": "fit_badge", "rect": [104, 42, 92, 24], "max_lines": 1},
+        {"id": "dice_net_full", "rect": [18, 78, 186, 66], "max_lines": 2},
+        {"id": "dice_summary", "rect": [18, 84, 120, 36], "max_lines": 1},
+        {"id": "local_feedback", "rect": [140, 88, 72, 32], "max_lines": 1}
+      ],
+      "no_text_rects": [
+        {"id": "avatar_frame", "rect": [14, 14, 76, 48]},
+        {"id": "corner_halftone", "rect": [186, 0, 42, 42]}
+      ],
+      "hit_rect": [0, 0, 228, 160],
+      "hover_rect": [-4, -4, 236, 168],
+      "focus_rect": [-4, -4, 236, 168],
+      "state_invariant_rects": ["avatar", "name", "fit_badge", "dice_net_full", "dice_summary", "local_feedback"],
+      "text_slots": [
+        {"id": "name", "content_rect": "name", "font_token": "dispatch_staff_name", "color_token": "ink_dark", "max_chars": 6, "max_lines": 1, "align": "left", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 8},
+        {"id": "fit_badge", "content_rect": "fit_badge", "font_token": "dispatch_fit_badge", "color_token": "fit_state", "max_chars": 6, "max_lines": 1, "align": "left", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 8},
+        {"id": "local_feedback", "content_rect": "local_feedback", "font_token": "dispatch_note", "color_token": "muted_ink", "max_chars": 8, "max_lines": 1, "align": "left", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 6}
+      ],
+      "overflow_policy": {
+        "name": "trim_ellipsis",
+        "fit_badge": "fixed",
+        "dice_net": "prefer_full_inline_then_hover_full"
+      }
+    },
+    {
+      "id": "ds_dice_face_tile_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "dice_face_tile",
+      "background": "transparent",
+      "final_size": [240, 36],
+      "frame_size": [40, 36],
+      "visual_rect": [0, 0, 40, 36],
+      "component_rect": [0, 0, 40, 36],
+      "clip_rect": [0, 0, 40, 36],
+      "final_path": "gd_project/Assets/ui/angus_packaging/dispatch_signoff/assetized/ds-dice-face-tile-atlas.png",
+      "godot_node": "TextureRect",
+      "frames": [
+        {"id": "normal", "rect": [0, 0, 40, 36]},
+        {"id": "highlighted", "rect": [40, 0, 40, 36]},
+        {"id": "counted", "rect": [80, 0, 40, 36]},
+        {"id": "ignored", "rect": [120, 0, 40, 36]},
+        {"id": "risky", "rect": [160, 0, 40, 36]},
+        {"id": "blocked", "rect": [200, 0, 40, 36]}
+      ],
+      "content_rects": [
+        {"id": "label", "rect": [4, 5, 32, 24], "max_lines": 1}
+      ],
+      "no_text_rects": [],
+      "text_slots": [
+        {"id": "label", "content_rect": "label", "font_token": "dispatch_dice_token", "color_token": "dice_ink", "max_chars": 2, "max_lines": 1, "align": "center", "overflow_policy": "fixed_short_token", "min_gap_to_no_text": 0}
+      ],
+      "tile_policy": "Dice labels are short runtime tokens only; never bake glyphs into the tile art."
+    },
+    {
+      "id": "ds_sort_tab_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "sort_tab",
+      "background": "transparent",
+      "final_size": [576, 42],
+      "frame_size": [144, 42],
+      "visual_rect": [0, 0, 144, 42],
+      "component_rect": [0, 0, 144, 42],
+      "clip_rect": [0, 0, 144, 42],
+      "final_path": "gd_project/Assets/ui/angus_packaging/dispatch_signoff/assetized/ds-sort-tab-atlas.png",
+      "godot_node": "TextureButton",
+      "frames": [
+        {"id": "default", "rect": [0, 0, 144, 42]},
+        {"id": "hover", "rect": [144, 0, 144, 42]},
+        {"id": "selected", "rect": [288, 0, 144, 42]},
+        {"id": "disabled", "rect": [432, 0, 144, 42]}
+      ],
+      "content_rects": [
+        {"id": "label", "rect": [14, 8, 116, 24], "max_lines": 1}
+      ],
+      "no_text_rects": [],
+      "hit_rect": [0, 0, 144, 42],
+      "hover_rect": [-4, -4, 152, 50],
+      "focus_rect": [-4, -4, 152, 50],
+      "state_invariant_rects": ["label"],
+      "feedback_spec": {"pressed_offset": [0, 1], "pressed_duration_ms": 70, "sound": "paper_tab"}
+    },
+    {
+      "id": "ds_review_sheet_base",
+      "kind": "runtime_asset",
+      "asset_type": "review_sheet",
+      "background": "transparent",
+      "final_size": [454, 860],
+      "visual_rect": [0, 0, 454, 860],
+      "component_rect": [1260, 130, 454, 860],
+      "clip_rect": [0, 0, 454, 860],
+      "final_path": "gd_project/Assets/ui/angus_packaging/dispatch_signoff/assetized/ds-review-sheet-base.png",
+      "asset_status": "candidate_clean_base_from_v3b_crop",
+      "source_art_path": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/01-dispatch-signoff-full-style-v3b-artboard-no-runtime-text.png",
+      "preview_path": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/11-ds-review-sheet-base-preview.png",
+      "safe_zone_overlay_path": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/12-ds-review-sheet-base-safe-zone-overlay.png",
+      "recompose_with_cta_path": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/13-ds-review-sheet-recompose-with-cta.png",
+      "filled_text_fit_test_path": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/14-ds-review-sheet-filled-text-fit-test.png",
+      "build_report_path": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/11-ds-review-sheet-base-report.json",
+      "art_pass_candidate_path": "gd_project/Assets/ui/angus_packaging/dispatch_signoff/assetized/ds-review-sheet-base-v2-art-pass.png",
+      "art_pass_source_path": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/16-ds-review-sheet-base-v2-art-pass-source.png",
+      "art_pass_normalized_path": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/17-ds-review-sheet-base-v2-art-pass-normalized-454x860.png",
+      "art_pass_manifest_overlay_path": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/18-ds-review-sheet-base-v2-art-pass-manifest-overlay.png",
+      "art_pass_status": "promising_visual_candidate_requires_content_rect_remap",
+      "godot_node": "NinePatchRect",
+      "runtime_rect": [1260, 130, 454, 860],
+      "nine_patch_margins": [42, 58, 42, 58],
+      "content_rects": [
+        {"id": "header", "rect": [36, 70, 286, 42], "max_lines": 1},
+        {"id": "summary", "rect": [36, 128, 286, 42], "max_lines": 1},
+        {"id": "special_constraint", "rect": [36, 204, 325, 36], "max_lines": 1},
+        {"id": "probability", "rect": [36, 252, 325, 96], "max_lines": 3},
+        {"id": "risk", "rect": [36, 364, 325, 42], "max_lines": 1},
+        {"id": "coverage_checks", "rect": [36, 454, 325, 42], "max_lines": 1},
+        {"id": "time_cost", "rect": [36, 506, 325, 36], "max_lines": 1},
+        {"id": "action_scope", "rect": [36, 548, 325, 54], "max_lines": 2},
+        {"id": "blocking_reason", "rect": [36, 612, 325, 30], "max_lines": 1},
+        {"id": "failure", "rect": [36, 612, 325, 30], "max_lines": 1},
+        {"id": "cta_mount", "rect": [220, 646, 174, 92], "max_lines": 0}
+      ],
+      "no_text_rects": [
+        {"id": "top_clip", "rect": [150, -20, 150, 70]},
+        {"id": "right_red_tab", "rect": [330, 34, 72, 130]},
+        {"id": "right_paper_stack", "rect": [402, 40, 38, 790]},
+        {"id": "approval_stamp_zone", "rect": [36, 646, 126, 86]},
+        {"id": "cta_mount_no_text", "rect": [220, 646, 174, 92], "rules": ["CTA component mounts here", "CTA label belongs to ds_cta_signoff_atlas only"]}
+      ],
+      "states": ["empty", "blocked", "risky_ready", "ready", "confirm_pending", "stamped", "loading"],
+      "state_invariant_rects": ["summary", "special_constraint", "probability", "risk", "coverage_checks", "time_cost", "action_scope", "blocking_reason", "failure", "cta_mount"],
+      "mutually_exclusive_text_slots": [["blocking_reason", "failure"]],
+      "child_mounts": [
+        {"id": "approval_status_stamp", "asset_id": "ds_approval_stamp_atlas", "rect": [36, 646, 126, 86], "interactive": false},
+        {"id": "primary_cta", "asset_id": "ds_cta_signoff_atlas", "rect": [220, 646, 174, 92], "interactive": true}
+      ],
+      "text_slots": [
+        {"id": "header", "content_rect": "header", "font_token": "dispatch_review_title", "color_token": "ink_dark", "max_chars": 6, "max_lines": 1, "align": "center", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 14},
+        {"id": "summary", "content_rect": "summary", "font_token": "dispatch_review_summary", "color_token": "ink_dark", "max_chars": 14, "max_lines": 1, "align": "center", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 10},
+        {"id": "special_constraint", "content_rect": "special_constraint", "font_token": "dispatch_warning", "color_token": "danger_red", "max_chars": 16, "max_lines": 1, "align": "center", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 10},
+        {"id": "probability", "content_rect": "probability", "font_token": "dispatch_probability", "color_token": "danger_red", "max_chars": 18, "max_lines": 3, "align": "center", "overflow_policy": "fixed_digits", "min_gap_to_no_text": 12},
+        {"id": "risk", "content_rect": "risk", "font_token": "dispatch_warning", "color_token": "danger_red", "max_chars": 16, "max_lines": 1, "align": "left", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 10},
+        {"id": "coverage_checks", "content_rect": "coverage_checks", "font_token": "dispatch_check", "color_token": "safe_green", "max_chars": 24, "max_lines": 1, "align": "left", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 8},
+        {"id": "time_cost", "content_rect": "time_cost", "font_token": "dispatch_body", "color_token": "ink_dark", "max_chars": 20, "max_lines": 1, "align": "left", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 10},
+        {"id": "action_scope", "content_rect": "action_scope", "font_token": "dispatch_body", "color_token": "ink_dark", "max_chars": 30, "max_lines": 2, "align": "left", "overflow_policy": "wrap_then_trim", "min_gap_to_no_text": 10},
+        {"id": "blocking_reason", "content_rect": "blocking_reason", "font_token": "dispatch_warning", "color_token": "danger_red", "max_chars": 18, "max_lines": 1, "align": "left", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 10},
+        {"id": "failure", "content_rect": "failure", "font_token": "dispatch_warning", "color_token": "danger_red", "max_chars": 18, "max_lines": 1, "align": "left", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 10}
+      ],
+      "cta_policy": "Review sheet owns time_cost, action_scope and blocking_reason only; ds_cta_signoff_atlas owns the button label and button states."
+    },
+    {
+      "id": "ds_coverage_strip_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "coverage_strip",
+      "background": "transparent",
+      "final_size": [1250, 32],
+      "frame_size": [250, 32],
+      "final_path": "gd_project/Assets/ui/angus_packaging/dispatch_signoff/assetized/ds-coverage-strip-atlas.png",
+      "godot_node": "TextureProgressBar",
+      "frames": [
+        {"id": "empty", "rect": [0, 0, 250, 32]},
+        {"id": "low", "rect": [250, 0, 250, 32]},
+        {"id": "enough", "rect": [500, 0, 250, 32]},
+        {"id": "strong", "rect": [750, 0, 250, 32]},
+        {"id": "blocked", "rect": [1000, 0, 250, 32]}
+      ],
+      "content_rects": [],
+      "no_text_rects": [{"id": "whole_strip", "rect": [0, 0, 250, 32], "rules": ["numeric labels render outside strip"]}]
+    },
+    {
+      "id": "ds_risk_stamp_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "risk_stamp",
+      "background": "transparent",
+      "final_size": [480, 96],
+      "frame_size": [120, 96],
+      "final_path": "gd_project/Assets/ui/angus_packaging/dispatch_signoff/assetized/ds-risk-stamp-atlas.png",
+      "godot_node": "TextureRect",
+      "frames": [
+        {"id": "stable", "rect": [0, 0, 120, 96]},
+        {"id": "risky", "rect": [120, 0, 120, 96]},
+        {"id": "deadline", "rect": [240, 0, 120, 96]},
+        {"id": "blocked", "rect": [360, 0, 120, 96]}
+      ],
+      "content_rects": [],
+      "no_text_rects": [{"id": "stamp_art", "rect": [0, 0, 120, 96], "rules": ["symbol only; risk text belongs to review sheet"]}]
+    },
+    {
+      "id": "ds_status_stamp_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "task_status_stamp",
+      "background": "transparent",
+      "final_size": [768, 64],
+      "frame_size": [128, 64],
+      "final_path": "gd_project/Assets/ui/angus_packaging/dispatch_signoff/assetized/ds-status-stamp-atlas.png",
+      "godot_node": "TextureRect",
+      "frames": [
+        {"id": "normal", "rect": [0, 0, 128, 64]},
+        {"id": "deadline", "rect": [128, 0, 128, 64]},
+        {"id": "chain", "rect": [256, 0, 128, 64]},
+        {"id": "black_dice", "rect": [384, 0, 128, 64]},
+        {"id": "resolved", "rect": [512, 0, 128, 64]},
+        {"id": "expired", "rect": [640, 0, 128, 64]}
+      ],
+      "content_rects": [
+        {"id": "short_label", "rect": [10, 16, 108, 28], "max_lines": 1}
+      ],
+      "no_text_rects": []
+    },
+    {
+      "id": "ds_approval_stamp_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "approval_feedback_stamp",
+      "background": "transparent",
+      "final_size": [360, 96],
+      "frame_size": [120, 96],
+      "final_path": "gd_project/Assets/ui/angus_packaging/dispatch_signoff/assetized/ds-approval-stamp-atlas.png",
+      "godot_node": "TextureRect",
+      "frames": [
+        {"id": "confirm_pending", "rect": [0, 0, 120, 96]},
+        {"id": "stamped", "rect": [120, 0, 120, 96]},
+        {"id": "cancelled", "rect": [240, 0, 120, 96]}
+      ],
+      "interactive": false,
+      "hit_rect": null,
+      "hover_rect": null,
+      "focus_rect": null,
+      "content_rects": [],
+      "no_text_rects": [{"id": "stamp_art", "rect": [0, 0, 120, 96], "rules": ["symbol only; no baked outcome text"]}]
+    },
+    {
+      "id": "ds_cta_signoff_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "primary_cta",
+      "background": "transparent",
+      "final_size": [1044, 92],
+      "frame_size": [174, 92],
+      "visual_rect": [0, 0, 174, 92],
+      "component_rect": [0, 0, 174, 92],
+      "clip_rect": [0, 0, 174, 92],
+      "final_path": "gd_project/Assets/ui/angus_packaging/dispatch_signoff/assetized/ds-cta-signoff-atlas.png",
+      "asset_status": "candidate_from_v3c_component_sheet",
+      "source_art_path": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/05-ds-cta-signoff-atlas-source-chromakey.png",
+      "alpha_source_path": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/06-ds-cta-signoff-atlas-source-alpha.png",
+      "preview_path": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/07-ds-cta-signoff-atlas-preview.png",
+      "build_report_path": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/07-ds-cta-signoff-atlas-report.json",
+      "label_test_path": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/08-ds-cta-signoff-atlas-label-test.png",
+      "recompose_default_path": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/09-ds-cta-signoff-atlas-recompose-default.png",
+      "recompose_states_path": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/10-ds-cta-signoff-atlas-recompose-states.png",
+      "godot_node": "TextureButton",
+      "states": ["default", "hover", "pressed", "disabled", "focus", "loading"],
+      "frames": [
+        {"id": "default", "rect": [0, 0, 174, 92]},
+        {"id": "hover", "rect": [174, 0, 174, 92]},
+        {"id": "pressed", "rect": [348, 0, 174, 92]},
+        {"id": "disabled", "rect": [522, 0, 174, 92]},
+        {"id": "focus", "rect": [696, 0, 174, 92]},
+        {"id": "loading", "rect": [870, 0, 174, 92]}
+      ],
+      "content_rects": [
+        {"id": "label", "rect": [20, 22, 134, 40], "max_lines": 1}
+      ],
+      "no_text_rects": [
+        {"id": "outer_stamp_left", "rect": [0, 0, 14, 92]},
+        {"id": "outer_stamp_right", "rect": [160, 0, 14, 92]},
+        {"id": "outer_stamp_top", "rect": [0, 0, 174, 12]},
+        {"id": "bottom_pressure_shadow", "rect": [0, 86, 174, 6]}
+      ],
+      "hit_rect": [0, 0, 174, 92],
+      "hover_rect": [-6, -6, 186, 104],
+      "focus_rect": [-6, -6, 186, 104],
+      "state_invariant_rects": ["label"],
+      "text_slots": [
+        {"id": "label", "content_rect": "label", "font_token": "dispatch_cta_label", "color_token": "paper_light", "max_chars": 6, "max_lines": 1, "align": "center", "overflow_policy": "trim_ellipsis", "min_gap_to_no_text": 8}
+      ],
+      "feedback_spec": {
+        "pressed_offset": [0, 3],
+        "pressed_duration_ms": 100,
+        "confirm_pending_hold_ms": 260,
+        "sound": "stamp_soft"
+      },
+      "disabled_reason_policy": "Disabled reason and time cost must render in ds_review_sheet_base.blocking_reason or action_scope, never inside the CTA label."
+    }
+  ],
+  "review_gates": [
+    "No baked task names, staff names, dice labels, probability values, button labels or fake Chinese text",
+    "Every text-bearing asset provides content_rects and no_text_rects",
+    "Every clickable asset provides hit_rect, hover_rect and state frames",
+    "content_rects must not intersect no_text_rects",
+    "Selected staff slots show full six-face dice net at 1920x1080",
+    "Candidate cards prefer full inline six-face dice net; if compact mode is used, hover or detail must show full six-face net",
+    "Review sheet owns success rate, blocking reason, failure consequence and irreversible action scope",
+    "CTA owns only sign-off action label and button feedback states; time cost belongs to review sheet",
+    "Pressed, confirm_pending, loading and stamped states must be screenshot-verifiable",
+    "Art review must pass before any asset is called production candidate"
+  ],
+  "open_questions": [
+    {"id": "staff_pool_availability_meaning", "question": "Top strip staff pool text should mean current week available staff pool, not current task capacity."},
+    {"id": "deadline_and_chain_coexistence", "question": "Confirm whether red deadline and deep chain can coexist on the same task; manifest allows both in special_constraint."},
+    {"id": "confirm_pending_behavior", "question": "Confirm whether confirm_pending is a second click or a short stamp hold before dispatch executes."},
+    {"id": "temporary_staff_entry", "question": "Confirm whether temporary informant acquisition entry appears on this page or only already-hired temporary staff cards appear here."}
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "asset": "gd_project/Assets/ui/angus_packaging/dispatch_signoff/assetized/ds-review-sheet-base.png",
+  "source_artboard": "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/01-dispatch-signoff-full-style-v3b-artboard-no-runtime-text.png",
+  "component_rect": [
+    1260,
+    130,
+    454,
+    860
+  ],
+  "final_size": [
+    454,
+    860
+  ],
+  "cleanup_rect": [
+    0,
+    502,
+    454,
+    358
+  ],
+  "paper_sample_rect": [
+    28,
+    70,
+    320,
+    320
+  ],
+  "cta_mount": [
+    220,
+    646,
+    174,
+    92
+  ],
+  "outputs": [
+    "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/11-ds-review-sheet-base-preview.png",
+    "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/12-ds-review-sheet-base-safe-zone-overlay.png",
+    "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/13-ds-review-sheet-recompose-with-cta.png",
+    "docs/screenshots/2026-06-16-dispatch-signoff-full-style-v3/14-ds-review-sheet-filled-text-fit-test.png"
+  ],
+  "invariants": [
+    "No baked CTA label",
+    "No baked time cost in CTA",
+    "Review sheet keeps action_scope and blocking_reason fields",
+    "CTA mount is empty and receives ds_cta_signoff_atlas as child"
+  ]
+}

@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>World Map V7 Right Dossier Structure Wireframe</title>
+  <style>
+    :root {
+      --bg: #07111a;
+      --panel: #0d1a25;
+      --paper: #efe3c6;
+      --paper-2: #f7ecd2;
+      --ink: #111817;
+      --muted: #4b5856;
+      --red: #c83d32;
+      --cyan: #159aa1;
+      --gold: #c4932f;
+      --blue: #2c5f88;
+      --line: rgba(224, 234, 223, 0.62);
+      --safe: rgba(31, 169, 106, 0.22);
+      --forbid: rgba(213, 55, 45, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: var(--bg);
+      color: #eef0df;
+      font-family: "Microsoft YaHei", "Microsoft YaHei UI", "Source Han Sans SC", Arial, sans-serif;
+    }
+
+    .canvas {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      padding: 30px 40px;
+      background:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+        #07111a;
+      background-size: 32px 32px;
+    }
+
+    .title {
+      position: absolute;
+      left: 40px;
+      top: 22px;
+      font-size: 30px;
+      font-weight: 800;
+      color: #f4ead4;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      position: absolute;
+      left: 40px;
+      top: 62px;
+      width: 1160px;
+      font-size: 16px;
+      color: #aebdb8;
+      line-height: 1.4;
+    }
+
+    .fail-tag {
+      position: absolute;
+      right: 40px;
+      top: 34px;
+      width: 560px;
+      height: 42px;
+      border: 2px solid rgba(200, 61, 50, 0.82);
+      color: #ffd9ce;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      background: rgba(200, 61, 50, 0.13);
+    }
+
+    .top-strip {
+      position: absolute;
+      left: 40px;
+      top: 104px;
+      width: 1840px;
+      height: 64px;
+      border: 2px solid #22616a;
+      background: rgba(10, 27, 39, 0.96);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 10px 24px;
+    }
+
+    .ticket {
+      height: 40px;
+      min-width: 170px;
+      background: var(--paper);
+      border: 2px solid #313533;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .world-state {
+      height: 42px;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      margin-left: 28px;
+      border: 1px solid rgba(91, 158, 165, 0.62);
+      background: rgba(3, 18, 28, 0.78);
+    }
+
+    .chip {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      font-size: 17px;
+      color: #d7dfcf;
+    }
+
+    .chip b {
+      color: #f1b34e;
+    }
+
+    .main {
+      position: absolute;
+      left: 40px;
+      top: 188px;
+      width: 1840px;
+      height: 750px;
+      display: grid;
+      grid-template-columns: 360px 880px 560px;
+      gap: 20px;
+    }
+
+    .left-index,
+    .map-board,
+    .right-dossier,
+    .bottom-ticker {
+      border: 2px solid rgba(181, 202, 191, 0.68);
+      background: rgba(10, 26, 38, 0.88);
+    }
+
+    .left-index {
+      padding: 18px;
+      background: #eadfc2;
+      color: var(--ink);
+    }
+
+    .section-head {
+      font-size: 24px;
+      font-weight: 900;
+      color: #0d1b24;
+      margin-bottom: 14px;
+    }
+
+    .region-card {
+      position: relative;
+      height: 130px;
+      margin-bottom: 16px;
+      padding: 18px 18px 12px 54px;
+      border: 2px solid #29302f;
+      background: #f4e6c4;
+    }
+
+    .region-card.selected {
+      border-color: var(--gold);
+      box-shadow: inset 0 0 0 3px rgba(196, 147, 47, 0.26);
+    }
+
+    .region-card.locked {
+      opacity: 0.64;
+    }
+
+    .region-num {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 42px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #b82824;
+      color: #fff8e6;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .region-card h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .region-card p {
+      margin: 3px 0;
+      font-size: 16px;
+      color: #3b4642;
+    }
+
+    .map-board {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(49, 112, 134, 0.35), transparent 36%),
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+        #091a27;
+      background-size: auto, 32px 32px, 32px 32px, auto;
+    }
+
+    .map-label {
+      position: absolute;
+      left: 24px;
+      top: 18px;
+      color: #dbe6dc;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .map-placeholder {
+      position: absolute;
+      left: 100px;
+      top: 124px;
+      width: 680px;
+      height: 430px;
+      border: 2px dashed rgba(155, 205, 221, 0.62);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #b8cbd1;
+      font-size: 26px;
+      font-weight: 800;
+    }
+
+    .pin {
+      position: absolute;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 4px solid #f4e5bd;
+      background: #be2d25;
+      box-shadow: 0 0 0 12px rgba(220, 184, 60, 0.20);
+    }
+
+    .pin.one {
+      left: 246px;
+      top: 318px;
+    }
+
+    .pin.two {
+      right: 270px;
+      top: 300px;
+      background: #5b6667;
+      box-shadow: none;
+    }
+
+    .route {
+      position: absolute;
+      left: 260px;
+      top: 340px;
+      width: 380px;
+      height: 2px;
+      background: #d44439;
+      transform: rotate(8deg);
+      transform-origin: left center;
+    }
+
+    .right-dossier {
+      position: relative;
+      padding: 18px 28px;
+      background: #eadebf;
+      color: var(--ink);
+      overflow: hidden;
+    }
+
+    .right-dossier::after {
+      content: "右侧标签/装订区仅装饰，不可压文字";
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 62px;
+      height: 100%;
+      writing-mode: vertical-rl;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(120, 44, 36, 0.74);
+      border-left: 2px dashed rgba(200, 61, 50, 0.58);
+      background: var(--forbid);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .dossier-content {
+      position: absolute;
+      left: 28px;
+      top: 18px;
+      width: 470px;
+      height: 714px;
+    }
+
+    .zone {
+      position: absolute;
+      border: 2px solid rgba(34, 74, 69, 0.62);
+      background: rgba(255, 248, 225, 0.72);
+      padding: 10px 14px;
+    }
+
+    .zone.safe {
+      box-shadow: inset 0 0 0 999px var(--safe);
+    }
+
+    .zone h4 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      color: #0d6d6e;
+      font-weight: 900;
+    }
+
+    .zone p {
+      margin: 3px 0;
+      font-size: 14px;
+      color: #303b38;
+      line-height: 1.35;
+    }
+
+    .header-zone {
+      left: 0;
+      top: 0;
+      width: 470px;
+      height: 88px;
+    }
+
+    .header-zone .name {
+      font-size: 31px;
+      font-weight: 900;
+      margin-top: 4px;
+      color: #111817;
+    }
+
+    .badges {
+      position: absolute;
+      right: 12px;
+      top: 16px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .badge {
+      border: 2px solid currentColor;
+      padding: 3px 10px;
+      font-size: 14px;
+      font-weight: 900;
+      background: rgba(255,255,255,0.32);
+    }
+
+    .media-zone {
+      left: 0;
+      top: 104px;
+      width: 470px;
+      height: 170px;
+      padding: 0;
+      overflow: hidden;
+      background:
+        linear-gradient(45deg, rgba(12, 22, 31, 0.96), rgba(17, 54, 66, 0.90)),
+        #10202a;
+      border-color: rgba(28, 38, 41, 0.86);
+      color: #e6ead7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .media-zone small {
+      display: block;
+      margin-top: 8px;
+      font-size: 14px;
+      color: #9ab3b3;
+      font-weight: 500;
+    }
+
+    .alert-zone {
+      left: 0;
+      top: 290px;
+      width: 470px;
+      height: 44px;
+      background: rgba(200, 61, 50, 0.92);
+      border-color: #7e211b;
+      color: #fff2d5;
+      font-size: 18px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+    }
+
+    .task-zone {
+      position: absolute;
+      left: 42px;
+      top: 348px;
+      width: 386px;
+      height: 52px;
+      background: rgba(21, 154, 161, 0.92);
+      border-color: #0b5a61;
+      color: #f0fff8;
+      font-size: 20px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 22px;
+      box-shadow: 4px 6px 0 rgba(0, 0, 0, 0.18);
+    }
+
+    .air-gap {
+      position: absolute;
+      left: 0;
+      top: 412px;
+      width: 470px;
+      height: 18px;
+      border: 2px dashed rgba(196, 147, 47, 0.82);
+      color: #8c641d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 900;
+      background: rgba(196, 147, 47, 0.12);
+    }
+
+    .body-zone {
+      left: 0;
+      top: 442px;
+      width: 470px;
+      height: 150px;
+    }
+
+    .body-zone .region-type {
+      display: inline-block;
+      margin: 0 0 8px;
+      padding: 3px 8px;
+      border: 1px solid rgba(21, 154, 161, 0.72);
+      color: #075f63;
+      font-size: 13px;
+      font-weight: 900;
+      background: rgba(255, 255, 255, 0.36);
+    }
+
+    .body-zone .intro {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.52;
+      color: #172320;
+    }
+
+    .footer-zone {
+      left: 0;
+      top: 604px;
+      width: 470px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      color: #744f13;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .cta-zone {
+      position: absolute;
+      left: 0;
+      top: 654px;
+      width: 470px;
+      height: 60px;
+      background: #b7322b;
+      border: 3px solid #691d17;
+      color: #fff3d8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 900;
+    }
+
+    .bottom-ticker {
+      position: absolute;
+      left: 40px;
+      top: 952px;
+      width: 1840px;
+      height: 88px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 18px;
+      padding: 16px 18px;
+      background: rgba(9, 22, 32, 0.98);
+    }
+
+    .ticker-lane {
+      position: relative;
+      background: var(--paper);
+      color: var(--ink);
+      border: 2px solid #343a38;
+      display: grid;
+      grid-template-columns: 94px 1fr 44px;
+      align-items: center;
+      padding: 0 24px;
+      gap: 16px;
+      font-size: 19px;
+      font-weight: 800;
+      box-shadow: 4px 5px 0 rgba(0, 0, 0, 0.20);
+    }
+
+    .ticker-type {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 34px;
+      border: 2px solid currentColor;
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .ticker-title {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .ticker-arrow {
+      color: #0b777c;
+      font-size: 26px;
+      text-align: right;
+    }
+
+    .legend {
+      position: absolute;
+      right: 600px;
+      top: 930px;
+      display: flex;
+      gap: 16px;
+      color: #aebdb8;
+      font-size: 13px;
+      transform: translateY(-100%);
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .swatch {
+      width: 20px;
+      height: 12px;
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+
+    .safe-swatch {
+      background: var(--safe);
+    }
+
+    .forbid-swatch {
+      background: var(--forbid);
+    }
+  </style>
+</head>
+<body>
+  <main class="canvas">
+    <div class="title">世界地图 V7 右侧地区档案结构验证 V1</div>
+    <div class="subtitle">低保真结构稿，不是美术稿。目的：先证明右侧档案能承载真实信息，再进入 Image 2 / no-text PNG 组件生产。</div>
+    <div class="fail-tag">旧 432w 右栏：FAIL，不再贴片修补</div>
+
+    <section class="top-strip">
+      <div class="ticket">探索周 01</div>
+      <div class="ticket">剩余 7 天</div>
+      <div class="world-state">
+        <div class="chip">公信 <b>42</b></div>
+        <div class="chip">诡名 <b>18</b></div>
+        <div class="chip">声望 <b>31</b></div>
+        <div class="chip">守序 <b>26</b></div>
+        <div class="chip">狂性 <b>11</b></div>
+      </div>
+    </section>
+
+    <section class="main">
+      <aside class="left-index">
+        <div class="section-head">INDEX / 地区索引</div>
+        <article class="region-card selected">
+          <div class="region-num">01</div>
+          <h3>北美禁区带</h3>
+          <p>可进入 · 红线升温</p>
+          <p>难度 中等 / 推荐 ★★★★</p>
+        </article>
+        <article class="region-card locked">
+          <div class="region-num" style="background:#10243a;">02</div>
+          <h3>东亚神秘地带</h3>
+          <p>锁定 · 声望 31/40</p>
+          <p>难度 高 / 推荐 ★★</p>
+        </article>
+        <article class="region-card">
+          <div class="region-num" style="background:#127f85;">03</div>
+          <h3>太平洋失航带</h3>
+          <p>可进入 · 普通线报</p>
+          <p>难度 低 / 推荐 ★★★</p>
+        </article>
+        <article class="region-card locked">
+          <div class="region-num">04</div>
+          <h3>南美红线档</h3>
+          <p>封存 · 许可不足</p>
+          <p>难度 异常 / 推荐 ★</p>
+        </article>
+      </aside>
+
+      <section class="map-board">
+        <div class="map-label">中央地图保留 v6g 低多边形纸质语言；无常驻文字</div>
+        <div class="map-placeholder">MAP BOARD<br />pins / selected ring / routes are runtime layers</div>
+        <div class="route"></div>
+        <div class="pin one"></div>
+        <div class="pin two"></div>
+      </section>
+
+      <aside class="right-dossier">
+        <div class="dossier-content">
+          <section class="zone safe header-zone">
+            <h4>Header 470x88：选中对象确认</h4>
+            <div class="name">北美禁区带</div>
+            <div class="badges">
+              <span class="badge" style="color:#9b6c1f;">中等</span>
+              <span class="badge" style="color:#0b777c;">推荐 ★★★★</span>
+            </div>
+          </section>
+
+          <section class="zone media-zone">
+            地区图 viewport 470x170
+            <small>图片必须被相框 / mask 裁住，禁止承载按钮和正文</small>
+          </section>
+
+          <section class="zone alert-zone">红线升温：7 天内提升狂性风险</section>
+
+          <button class="task-zone">
+            <span>查看任务情报 · 3</span>
+            <span>&gt;</span>
+          </button>
+
+          <div class="air-gap">18px air gap：避免任务按钮读作正文标题栏</div>
+
+          <section class="zone safe body-zone">
+            <h4>Prose Body 470x150：单一地区简介，只读</h4>
+            <span class="region-type">异常都市 / 封锁区</span>
+            <p class="intro">北美禁区带由城市传说、军事封锁和异常广播交叠而成。编辑部把这里视作本周最值得进入的取材区域：危险清楚、线索密集，但进入后的具体线报必须在地区任务台选择。</p>
+          </section>
+
+          <section class="zone safe footer-zone">Footer 470x38：进入不消耗天数；具体线报在任务台选择。</section>
+
+          <section class="cta-zone">进入选定地区</section>
+        </div>
+      </aside>
+    </section>
+
+    <div class="legend">
+      <span><i class="swatch safe-swatch"></i>动态文字安全区</span>
+      <span><i class="swatch forbid-swatch"></i>旧装饰 / 禁入区</span>
+      <span>本稿通过后再生成 no-text PNG 组件</span>
+    </div>
+
+    <section class="bottom-ticker">
+      <div class="ticker-lane">
+        <span class="ticker-type" style="color:#b72d27;">地区情报</span>
+        <span class="ticker-title">城市传说与军事封锁交叠</span>
+        <span class="ticker-arrow">&gt;</span>
+      </div>
+      <div class="ticker-lane">
+        <span class="ticker-type" style="color:#0b777c;">档案更新</span>
+        <span class="ticker-title">新增日志证词 / 封锁传闻</span>
+        <span class="ticker-arrow">&gt;</span>
+      </div>
+      <div class="ticker-lane">
+        <span class="ticker-type" style="color:#1d3753;">地区预警</span>
+        <span class="ticker-title">进入后先到地区任务台</span>
+        <span class="ticker-arrow">&gt;</span>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

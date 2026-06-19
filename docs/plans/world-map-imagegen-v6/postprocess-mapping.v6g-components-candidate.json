@@ -1,0 +1,34 @@
+{
+  "assets": {
+    "wm_map_board_v6g_component_candidate": {
+      "source": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6g-pixel-strong.png",
+      "mode": "stretch",
+      "crop": [532, 96, 856, 812]
+    },
+    "wm_left_index_stack_v6g_component_candidate": {
+      "source": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6g-pixel-strong.png",
+      "mode": "stretch",
+      "crop": [91, 119, 449, 812]
+    },
+    "wm_right_dossier_body_v6g_component_candidate": {
+      "source": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6g-pixel-strong.png",
+      "mode": "stretch",
+      "crop": [1386, 102, 489, 650]
+    },
+    "wm_cta_plate_v6g_default_candidate": {
+      "source": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6g-pixel-strong.png",
+      "mode": "stretch",
+      "crop": [1392, 760, 463, 158]
+    },
+    "wm_bottom_ticker_v6g_component_candidate": {
+      "source": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6g-pixel-strong.png",
+      "mode": "stretch",
+      "crop": [176, 941, 1705, 112]
+    },
+    "wm_side_tab_rail_v6g_component_candidate": {
+      "source": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6g-pixel-strong.png",
+      "mode": "stretch",
+      "crop": [1835, 98, 85, 760]
+    }
+  }
+}

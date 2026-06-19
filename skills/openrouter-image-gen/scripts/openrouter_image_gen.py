@@ -564,6 +564,31 @@ def build_payload(plan: PlannedRequest) -> dict[str, Any]:
     return payload
 
 
+def summarize_payload_for_dry_run(payload: dict[str, Any]) -> dict[str, Any]:
+    content = payload.get("messages", [{}])[0].get("content", [])
+    text_parts: list[str] = []
+    image_count = 0
+    for entry in content:
+        if not isinstance(entry, dict):
+            continue
+        if entry.get("type") == "text":
+            text_parts.append(str(entry.get("text", "")))
+        elif entry.get("type") == "image_url":
+            image_count += 1
+    return {
+        "model": payload.get("model"),
+        "modalities": payload.get("modalities"),
+        "provider": payload.get("provider"),
+        "image_config": payload.get("image_config"),
+        "quality": payload.get("quality"),
+        "size": payload.get("size"),
+        "background": payload.get("background"),
+        "output_format": payload.get("output_format"),
+        "text": "\n\n".join(text_parts),
+        "reference_image_count": image_count,
+    }
+
+
 def parse_image_url_entry(entry: dict[str, Any]) -> tuple[str, bytes]:
     image_url = entry.get("image_url") or entry.get("imageUrl") or {}
     data_url = image_url.get("url")
@@ -741,9 +766,33 @@ def save_outputs(plan: PlannedRequest, response_json: dict[str, Any], timestamp_
 
 
 def run_generate(args: argparse.Namespace) -> int:
+    plan = plan_request(args)
+
+    payload = build_payload(plan)
+    preview = {
+        "plan": {
+            "asset_type": plan.asset_type,
+            "background": plan.background,
+            "model": plan.model,
+            "model_reason": plan.model_reason,
+            "resolution": plan.resolution,
+            "aspect_ratio": plan.aspect_ratio,
+            "image_size": plan.image_size,
+            "count": plan.count,
+            "slug": plan.slug,
+            "quality": plan.quality,
+            "output_format": plan.output_format,
+            "reference_images": [str(path) for path in plan.reference_images],
+            "inference_notes": plan.inference_notes,
+        },
+        "payload_preview": summarize_payload_for_dry_run(payload),
+    }
+    if args.dry_run:
+        print(json.dumps(preview, ensure_ascii=False, indent=2))
+        return 0
+
     config = load_config()
     api_key = require_api_key(config)
-    plan = plan_request(args)
 
     timeout_seconds = int(config.get("OPENROUTER_TIMEOUT_SECONDS", "180"))
     base_url = config.get("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1").rstrip("/")
@@ -761,28 +810,6 @@ def run_generate(args: argparse.Namespace) -> int:
         request_headers["HTTP-Referer"] = referer
     if app_name := config.get("OPENROUTER_APP_NAME", "").strip():
         request_headers["X-Title"] = app_name
-
-    preview = {
-        "plan": {
-            "asset_type": plan.asset_type,
-            "background": plan.background,
-            "model": plan.model,
-            "model_reason": plan.model_reason,
-            "resolution": plan.resolution,
-            "aspect_ratio": plan.aspect_ratio,
-            "image_size": plan.image_size,
-            "count": plan.count,
-            "slug": plan.slug,
-            "quality": plan.quality,
-            "output_format": plan.output_format,
-            "reference_images": [str(path) for path in plan.reference_images],
-            "inference_notes": plan.inference_notes,
-        },
-        "payload": payload,
-    }
-    if args.dry_run:
-        print(json.dumps(preview, ensure_ascii=False, indent=2))
-        return 0
 
     timestamp_prefix = datetime.now().strftime("%Y%m%d-%H%M%S")
     all_saved: list[dict[str, Any]] = []

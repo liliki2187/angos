@@ -1,0 +1,19 @@
+{
+  "assets": {
+    "wm_fullscreen_artboard_v6e_pixel_subtle": {
+      "source": "image_gen/codex_image2_sources/2026-06-15/20260615-162450_angus-world-map-v6e-pixel-subtle.png",
+      "mode": "cover",
+      "crop": null
+    },
+    "wm_fullscreen_artboard_v6f_pixel_balanced": {
+      "source": "image_gen/codex_image2_sources/2026-06-15/20260615-161458_angus-world-map-v6f-pixel-balanced.png",
+      "mode": "cover",
+      "crop": null
+    },
+    "wm_fullscreen_artboard_v6g_pixel_strong": {
+      "source": "image_gen/codex_image2_sources/2026-06-15/20260615-161458_angus-world-map-v6g-pixel-strong.png",
+      "mode": "cover",
+      "crop": null
+    }
+  }
+}

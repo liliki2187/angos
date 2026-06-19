@@ -1,0 +1,4 @@
+interface:
+  display_name: "Angus Character Pixel Director"
+  short_description: "审查和规划 Angus 角色高清微像素 / 像素美术、四人标杆图一致性、角色 prompt 与生成验收。"
+  default_prompt: "使用 angus-character-pixel-director 根据四人标杆图和角色设计风格规范-AI包，审查或规划这个角色/像素美术方向，输出真值源、风险、prompt 和验收清单。"

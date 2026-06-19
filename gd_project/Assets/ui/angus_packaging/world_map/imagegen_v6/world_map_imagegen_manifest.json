@@ -1,0 +1,675 @@
+{
+  "id": "world_map_imagegen_v6",
+  "version": 1,
+  "status": "v6g_assetization_component_candidates",
+  "target_view": "weekly_run.explore.world",
+  "canvas_size": [1920, 1080],
+  "safe_viewports": [[1920, 1080], [1600, 900], [1366, 768]],
+  "production_selection": {
+    "selected_artboard_asset_id": "wm_fullscreen_artboard_v6g_pixel_strong",
+    "selected_artboard_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6g-pixel-strong.png",
+    "selected_by_user": "2026-06-15",
+    "rule": "Use v6g strong pixel artboard as the current component-expansion source. Do not wire the fullscreen artboard directly as interactive UI; derive or regenerate component assets and keep dynamic text/status in Godot."
+  },
+  "art_direction": {
+    "source_of_truth": "design/art-direction/angus-visual-style-guide.md",
+    "reference_translation": "docs/plans/world-map-imagegen-v6/reference-translation.md",
+    "must_keep": [
+      "clean bright ivory paper UI objects",
+      "deep navy editorial engineering board",
+      "faceted low-poly paper world map",
+      "modern supernatural weekly magazine identity",
+      "controlled red-orange anomaly/deadline marks",
+      "restrained cyan tracking/signal marks",
+      "low-noise blank content areas for Godot-rendered text"
+    ],
+    "must_avoid": [
+      "old newspaper",
+      "yellowed archive",
+      "parchment",
+      "historical case file",
+      "photographic paper noise",
+      "dirty paper speckles",
+      "cyberpunk hologram",
+      "glass SaaS panels",
+      "generic mobile game buttons",
+      "baked Chinese text",
+      "baked numbers",
+      "fake pins",
+      "fake task states",
+      "fake clickable buttons"
+    ]
+  },
+  "integration_rules": {
+    "no_baked_dynamic_text": true,
+    "no_fake_numbers": true,
+    "no_fake_pins": true,
+    "no_fake_buttons": true,
+    "no_programmatic_style_simulation": true,
+    "godot_dynamic_layer_owns": [
+      "region names",
+      "task counts",
+      "remaining days",
+      "lock reasons",
+      "button labels",
+      "hover, selected, disabled semantics",
+      "hotspots and feedback"
+    ]
+  },
+  "assets": [
+    {
+      "id": "wm_fullscreen_artboard_v6",
+      "kind": "reference_artboard",
+      "asset_type": "ui-screen",
+      "background": "opaque",
+      "model": "codex-image2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "final_size": [1920, 1080],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6.png",
+      "godot_node": "reference_only",
+      "dynamic_text_rects": [],
+      "forbidden_zones": [
+        {
+          "id": "whole_artboard",
+          "rect": [0, 0, 1920, 1080],
+          "rules": [
+            "style approval only",
+            "no readable text",
+            "no fake UI states",
+            "do not wire as interactive UI"
+          ]
+        }
+      ],
+      "acceptance_use": "Style and component-derivation approval only; do not wire as interactive UI."
+    },
+    {
+      "id": "wm_fullscreen_artboard_v6b",
+      "kind": "reference_artboard",
+      "asset_type": "ui-screen",
+      "background": "opaque",
+      "model": "codex-image2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "final_size": [1920, 1080],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6b-runtime-orthogonal.png",
+      "godot_node": "reference_only",
+      "dynamic_text_rects": [],
+      "forbidden_zones": [
+        {
+          "id": "whole_artboard",
+          "rect": [0, 0, 1920, 1080],
+          "rules": [
+            "style approval only",
+            "no readable text",
+            "no fake UI states",
+            "text-safe zones must be horizontal and front-facing",
+            "do not wire as interactive UI"
+          ]
+        }
+      ],
+      "acceptance_use": "Runtime-layout style approval only; use as a source for orthogonal text-safe component generation, not as interactive UI."
+    },
+    {
+      "id": "wm_fullscreen_artboard_v6c",
+      "kind": "reference_artboard",
+      "asset_type": "ui-screen",
+      "background": "opaque",
+      "model": "codex-image2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "final_size": [1920, 1080],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6c-orthographic-dossier-clear-index.png",
+      "godot_node": "reference_only",
+      "dynamic_text_rects": [],
+      "forbidden_zones": [
+        {
+          "id": "whole_artboard",
+          "rect": [0, 0, 1920, 1080],
+          "rules": [
+            "style approval only",
+            "no readable text",
+            "no fake UI states",
+            "right dossier front sheet must be orthographic and axis-aligned",
+            "left index cards must not be covered by decorative flaps",
+            "do not wire as interactive UI"
+          ]
+        }
+      ],
+      "acceptance_use": "Runtime-layout style approval only; use as the next candidate for component generation after user approval, not as interactive UI."
+    },
+    {
+      "id": "wm_fullscreen_artboard_v6d",
+      "kind": "reference_artboard",
+      "asset_type": "ui-screen",
+      "background": "opaque",
+      "model": "codex-image2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "final_size": [1920, 1080],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6d-clear-safe-rects.png",
+      "godot_node": "reference_only",
+      "dynamic_text_rects": [],
+      "forbidden_zones": [
+        {
+          "id": "whole_artboard",
+          "rect": [0, 0, 1920, 1080],
+          "rules": [
+            "style approval only",
+            "no readable text",
+            "no fake UI states",
+            "right dossier front sheet must be orthographic and axis-aligned",
+            "all index cards must expose full readable margins",
+            "decorative elements must stay at least 32px away from text-safe zones",
+            "do not wire as interactive UI"
+          ]
+        }
+      ],
+      "acceptance_use": "Current preferred runtime-layout artboard candidate; use as the component-generation reference after user approval, not as interactive UI."
+    },
+    {
+      "id": "wm_fullscreen_artboard_v6e_pixel_subtle",
+      "kind": "reference_artboard",
+      "asset_type": "ui-screen",
+      "background": "opaque",
+      "model": "codex-image2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "final_size": [1920, 1080],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6e-pixel-subtle.png",
+      "godot_node": "reference_only",
+      "dynamic_text_rects": [],
+      "forbidden_zones": [
+        {
+          "id": "whole_artboard",
+          "rect": [0, 0, 1920, 1080],
+          "rules": [
+            "style approval only",
+            "no readable text",
+            "no fake UI states",
+            "subtle 2-4px pixel texture only",
+            "do not wire as interactive UI"
+          ]
+        }
+      ],
+      "acceptance_use": "Pixel-intensity comparison draft A; subtle micro-pixel material, not interactive UI."
+    },
+    {
+      "id": "wm_fullscreen_artboard_v6f_pixel_balanced",
+      "kind": "reference_artboard",
+      "asset_type": "ui-screen",
+      "background": "opaque",
+      "model": "codex-image2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "final_size": [1920, 1080],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6f-pixel-balanced.png",
+      "godot_node": "reference_only",
+      "dynamic_text_rects": [],
+      "forbidden_zones": [
+        {
+          "id": "whole_artboard",
+          "rect": [0, 0, 1920, 1080],
+          "rules": [
+            "style approval only",
+            "no readable text",
+            "no fake UI states",
+            "balanced 3-5px pixel edge and halftone clusters",
+            "do not wire as interactive UI"
+          ]
+        }
+      ],
+      "acceptance_use": "Pixel-intensity comparison draft B; balanced visible pixel-print style, not interactive UI."
+    },
+    {
+      "id": "wm_fullscreen_artboard_v6g_pixel_strong",
+      "kind": "reference_artboard",
+      "asset_type": "ui-screen",
+      "background": "opaque",
+      "model": "codex-image2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "final_size": [1920, 1080],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6g-pixel-strong.png",
+      "godot_node": "reference_only",
+      "dynamic_text_rects": [],
+      "forbidden_zones": [
+        {
+          "id": "whole_artboard",
+          "rect": [0, 0, 1920, 1080],
+          "rules": [
+            "style approval only",
+            "no readable text",
+            "no fake UI states",
+            "strong 5-8px pixel-print and posterized material",
+            "current approved v6g expansion source",
+            "do not wire as interactive UI"
+          ]
+        }
+      ],
+      "acceptance_use": "User-selected strong pixel direction for v6g asset expansion. Use as the current component-generation and crop-validation source; do not wire as interactive UI."
+    },
+    {
+      "id": "wm_fullscreen_artboard_v6h_pixel_strong_bright_paper",
+      "kind": "reference_artboard",
+      "asset_type": "ui-screen",
+      "background": "opaque",
+      "model": "codex-image2",
+      "aspect_ratio": "16:9",
+      "image_size": "2K",
+      "final_size": [1920, 1080],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6h-pixel-strong-bright-paper.png",
+      "godot_node": "reference_only",
+      "dynamic_text_rects": [],
+      "forbidden_zones": [
+        {
+          "id": "whole_artboard",
+          "rect": [0, 0, 1920, 1080],
+          "rules": [
+            "style approval only",
+            "no readable text",
+            "no fake UI states",
+            "strong 5-8px pixel-print and posterized material",
+            "paper faces must remain bright clean ivory, not yellowed or sepia",
+            "do not wire as interactive UI"
+          ]
+        }
+      ],
+      "acceptance_use": "Paper-color correction reference and fallback candidate only after the latest v6g selection; not the main expansion source unless user reopens paper color."
+    },
+    {
+      "id": "wm_map_board_v6g_component_candidate",
+      "kind": "component_candidate",
+      "asset_type": "map-board-base",
+      "source_artboard_asset_id": "wm_fullscreen_artboard_v6g_pixel_strong",
+      "derivation": "crop_from_approved_artboard_for_layout_validation",
+      "background": "opaque",
+      "model": "codex-image2",
+      "final_size": [856, 812],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/components/wm-map-board-v6g-component.png",
+      "runtime_rect": [532, 96, 856, 812],
+      "godot_node": "TextureRect",
+      "dynamic_text_rects": [],
+      "forbidden_zones": [
+        {
+          "id": "map_texture_and_grid",
+          "rect": [0, 0, 856, 812],
+          "rules": [
+            "no baked pins",
+            "no baked selectable labels",
+            "Godot owns pin, route, selected and hover overlays"
+          ]
+        }
+      ],
+      "anchor_points": {
+        "north_america": [196, 346],
+        "south_america": [247, 548],
+        "europe_africa": [430, 365],
+        "east_asia": [664, 344],
+        "oceania": [710, 596]
+      },
+      "acceptance_use": "Static map board component candidate. Runtime pins, routes, labels and selection rings must be separate Godot layers or atlases."
+    },
+    {
+      "id": "wm_left_index_stack_v6g_component_candidate",
+      "kind": "component_candidate",
+      "asset_type": "index-stack-base",
+      "source_artboard_asset_id": "wm_fullscreen_artboard_v6g_pixel_strong",
+      "derivation": "crop_from_approved_artboard_for_layout_validation",
+      "background": "opaque",
+      "model": "codex-image2",
+      "final_size": [449, 812],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/components/wm-left-index-stack-v6g-component.png",
+      "runtime_rect": [91, 119, 449, 812],
+      "godot_node": "TextureRect + child Controls",
+      "frames": [
+        { "id": "slot_1", "rect": [72, 18, 360, 183] },
+        { "id": "slot_2", "rect": [72, 225, 360, 178] },
+        { "id": "slot_3", "rect": [72, 432, 360, 178] },
+        { "id": "slot_4", "rect": [72, 638, 360, 166] }
+      ],
+      "dynamic_text_rects": [
+        { "id": "slot_1_title", "rect": [96, 42, 205, 34], "min_margin_px": 18, "max_lines": 1, "noise": "low" },
+        { "id": "slot_1_meta", "rect": [96, 78, 205, 54], "min_margin_px": 18, "max_lines": 2, "noise": "low" },
+        { "id": "slot_2_title", "rect": [96, 249, 205, 34], "min_margin_px": 18, "max_lines": 1, "noise": "low" },
+        { "id": "slot_2_meta", "rect": [96, 285, 205, 54], "min_margin_px": 18, "max_lines": 2, "noise": "low" },
+        { "id": "slot_3_title", "rect": [96, 456, 205, 34], "min_margin_px": 18, "max_lines": 1, "noise": "low" },
+        { "id": "slot_3_meta", "rect": [96, 492, 205, 54], "min_margin_px": 18, "max_lines": 2, "noise": "low" },
+        { "id": "slot_4_title", "rect": [96, 662, 205, 34], "min_margin_px": 18, "max_lines": 1, "noise": "low" },
+        { "id": "slot_4_meta", "rect": [96, 698, 205, 46], "min_margin_px": 18, "max_lines": 2, "noise": "low" }
+      ],
+      "forbidden_zones": [
+        {
+          "id": "left_binding_and_status_tabs",
+          "rect": [0, 0, 82, 812],
+          "rules": ["no dynamic text", "decorative only"]
+        },
+        {
+          "id": "right_bookmarks",
+          "rect": [372, 0, 58, 812],
+          "rules": ["no dynamic text under ribbons"]
+        },
+        {
+          "id": "card_halftone_corners",
+          "rect": [330, 118, 92, 690],
+          "rules": ["keep text away from dense halftone corners"]
+        }
+      ],
+      "hit_rects": {
+        "slot_1": [72, 18, 360, 183],
+        "slot_2": [72, 225, 360, 178],
+        "slot_3": [72, 432, 360, 178],
+        "slot_4": [72, 638, 360, 166]
+      },
+      "states": ["normal", "hover", "selected", "locked", "completed"],
+      "acceptance_use": "Left index stack component candidate. Current crop validates readable slots; final production should split selectable card state frames or draw only runtime selection overlays."
+    },
+    {
+      "id": "wm_right_dossier_body_v6g_component_candidate",
+      "kind": "component_candidate",
+      "asset_type": "selected-region-dossier-base",
+      "source_artboard_asset_id": "wm_fullscreen_artboard_v6g_pixel_strong",
+      "derivation": "crop_from_approved_artboard_for_layout_validation",
+      "background": "opaque",
+      "model": "codex-image2",
+      "final_size": [489, 650],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/components/wm-right-dossier-body-v6g-component.png",
+      "runtime_rect": [1386, 102, 489, 650],
+      "godot_node": "TextureRect + child Labels",
+      "dynamic_text_rects": [
+        { "id": "region_title", "rect": [104, 78, 240, 34], "min_margin_px": 24, "max_lines": 1, "noise": "low" },
+        { "id": "story_preview_caption_or_status", "rect": [104, 120, 240, 56], "min_margin_px": 24, "max_lines": 2, "noise": "low" },
+        { "id": "detail_header", "rect": [104, 252, 240, 36], "min_margin_px": 24, "max_lines": 1, "noise": "low" },
+        { "id": "detail_body", "rect": [48, 324, 300, 206], "min_margin_px": 24, "max_lines": 5, "noise": "low" },
+        { "id": "detail_footer_status", "rect": [48, 546, 300, 48], "min_margin_px": 24, "max_lines": 2, "noise": "low" }
+      ],
+      "forbidden_zones": [
+        {
+          "id": "top_clip",
+          "rect": [145, 0, 226, 72],
+          "rules": ["no text under metal clip"]
+        },
+        {
+          "id": "bookmark_and_corner_marks",
+          "rect": [20, 18, 70, 132],
+          "rules": ["no text under ribbon/crop marks"]
+        },
+        {
+          "id": "body_bookmark",
+          "rect": [20, 190, 70, 128],
+          "rules": ["no text under body ribbon"]
+        },
+        {
+          "id": "right_halftone_corners",
+          "rect": [365, 18, 96, 620],
+          "rules": ["keep dynamic text away from dense corner dots"]
+        }
+      ],
+      "acceptance_use": "Right dossier body candidate. CTA plate is intentionally excluded and handled as its own interactive component."
+    },
+    {
+      "id": "wm_cta_plate_v6g_default_candidate",
+      "kind": "component_candidate",
+      "asset_type": "primary-cta-default",
+      "source_artboard_asset_id": "wm_fullscreen_artboard_v6g_pixel_strong",
+      "derivation": "crop_from_approved_artboard_for_layout_validation",
+      "background": "opaque",
+      "model": "codex-image2",
+      "final_size": [463, 158],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/components/wm-cta-plate-v6g-default.png",
+      "runtime_rect": [1392, 760, 463, 158],
+      "godot_node": "TextureButton + Label",
+      "dynamic_text_rects": [
+        { "id": "cta_label", "rect": [64, 35, 312, 58], "min_margin_px": 18, "max_lines": 1, "noise": "low" }
+      ],
+      "forbidden_zones": [
+        {
+          "id": "left_screw",
+          "rect": [4, 45, 54, 72],
+          "rules": ["no text", "not label area"]
+        },
+        {
+          "id": "right_screw",
+          "rect": [402, 45, 54, 72],
+          "rules": ["no text", "not label area"]
+        },
+        {
+          "id": "bottom_warning_stripe",
+          "rect": [0, 124, 463, 34],
+          "rules": ["no label text", "decorative stripe only"]
+        }
+      ],
+      "hit_rect": [0, 0, 463, 158],
+      "hover_rect": [-8, -8, 479, 174],
+      "states": ["default", "hover", "pressed", "disabled", "loading"],
+      "feedback_spec": {
+        "pressed_offset": [0, 3],
+        "hover_scale": 1.015,
+        "disabled_tint": "#31404A",
+        "duration_ms": 90
+      },
+      "acceptance_use": "Primary CTA default candidate. Must become a state atlas before final Godot replacement."
+    },
+    {
+      "id": "wm_bottom_ticker_v6g_component_candidate",
+      "kind": "component_candidate",
+      "asset_type": "bottom-ticker-base",
+      "source_artboard_asset_id": "wm_fullscreen_artboard_v6g_pixel_strong",
+      "derivation": "crop_from_approved_artboard_for_layout_validation",
+      "background": "opaque",
+      "model": "codex-image2",
+      "final_size": [1705, 112],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/components/wm-bottom-ticker-v6g-component.png",
+      "runtime_rect": [176, 941, 1705, 112],
+      "godot_node": "TextureRect + child Labels",
+      "dynamic_text_rects": [
+        { "id": "red_channel_status", "rect": [132, 22, 330, 54], "min_margin_px": 18, "max_lines": 1, "noise": "low" },
+        { "id": "cyan_channel_status", "rect": [660, 22, 330, 54], "min_margin_px": 18, "max_lines": 1, "noise": "low" },
+        { "id": "navy_channel_status", "rect": [1152, 22, 400, 54], "min_margin_px": 18, "max_lines": 1, "noise": "low" }
+      ],
+      "forbidden_zones": [
+        {
+          "id": "left_return_button_gap",
+          "rect": [0, 0, 10, 112],
+          "rules": ["kept clear for separate return button"]
+        },
+        {
+          "id": "colored_left_tabs",
+          "rect": [0, 0, 118, 112],
+          "rules": ["no long text under colored tabs"]
+        },
+        {
+          "id": "cyan_colored_left_tab",
+          "rect": [575, 0, 78, 112],
+          "rules": ["no long text under colored tabs"]
+        },
+        {
+          "id": "navy_colored_left_tab",
+          "rect": [1078, 0, 64, 112],
+          "rules": ["no long text under colored tabs"]
+        },
+        {
+          "id": "red_right_halftone_corner",
+          "rect": [492, 0, 88, 112],
+          "rules": ["labels must stay inside declared channel safe rects"]
+        },
+        {
+          "id": "cyan_right_halftone_corner",
+          "rect": [1010, 0, 88, 112],
+          "rules": ["labels must stay inside declared channel safe rects"]
+        },
+        {
+          "id": "navy_right_halftone_corner",
+          "rect": [1608, 0, 82, 112],
+          "rules": ["labels must stay inside declared channel safe rects"]
+        }
+      ],
+      "acceptance_use": "Bottom ticker component candidate. Long text must ellipsize within individual channel rects."
+    },
+    {
+      "id": "wm_side_tab_rail_v6g_component_candidate",
+      "kind": "component_candidate",
+      "asset_type": "side-tab-rail",
+      "source_artboard_asset_id": "wm_fullscreen_artboard_v6g_pixel_strong",
+      "derivation": "crop_from_approved_artboard_for_layout_validation",
+      "background": "opaque",
+      "model": "codex-image2",
+      "final_size": [85, 760],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/components/wm-side-tab-rail-v6g-component.png",
+      "runtime_rect": [1835, 98, 85, 760],
+      "godot_node": "TextureRect + tab hit Controls",
+      "dynamic_text_rects": [],
+      "forbidden_zones": [
+        {
+          "id": "whole_tab_rail",
+          "rect": [0, 0, 85, 760],
+          "rules": ["icon tabs only", "do not place text here"]
+        }
+      ],
+      "hit_rects": {
+        "anomaly_tab": [0, 0, 85, 185],
+        "alien_tab": [0, 185, 85, 145],
+        "public_tab": [0, 330, 85, 142],
+        "prestige_tab": [0, 472, 85, 142],
+        "crosshair_tab": [0, 614, 85, 146]
+      },
+      "states": ["default", "hover", "selected", "disabled"],
+      "acceptance_use": "Decorative side tab rail candidate. Text stays in dossier/index panels; tabs expose hit rects only."
+    },
+    {
+      "id": "wm_cta_plate_v6g_state_atlas_candidate",
+      "kind": "component_candidate",
+      "asset_type": "primary-cta-state-atlas",
+      "source_artboard_asset_id": "wm_fullscreen_artboard_v6g_pixel_strong",
+      "derivation": "codex_image2_component_generation",
+      "background": "opaque",
+      "model": "codex-image2",
+      "final_size": [1852, 158],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/components/wm-cta-plate-v6g-state-atlas.png",
+      "frame_size": [463, 158],
+      "frame_order": ["default", "hover", "pressed", "disabled"],
+      "godot_node": "TextureButton state textures + Label",
+      "frames": [
+        { "id": "default", "rect": [0, 0, 463, 158] },
+        { "id": "hover", "rect": [463, 0, 463, 158] },
+        { "id": "pressed", "rect": [926, 0, 463, 158] },
+        { "id": "disabled", "rect": [1389, 0, 463, 158] }
+      ],
+      "dynamic_text_rects": [
+        { "id": "default_label", "rect": [64, 35, 250, 58], "min_margin_px": 18, "max_lines": 1, "noise": "low" },
+        { "id": "hover_label", "rect": [527, 35, 250, 58], "min_margin_px": 18, "max_lines": 1, "noise": "low" },
+        { "id": "pressed_label", "rect": [990, 35, 250, 58], "min_margin_px": 18, "max_lines": 1, "noise": "low" },
+        { "id": "disabled_label", "rect": [1453, 35, 250, 58], "min_margin_px": 18, "max_lines": 1, "noise": "low" }
+      ],
+      "forbidden_zones": [
+        { "id": "default_left_screw", "rect": [4, 45, 54, 72], "rules": ["no text"] },
+        { "id": "default_right_screw", "rect": [402, 45, 54, 72], "rules": ["no text"] },
+        { "id": "default_label_halftone_corner", "rect": [314, 38, 74, 62], "rules": ["no text over halftone dots"] },
+        { "id": "default_bottom_warning_stripe", "rect": [0, 124, 463, 34], "rules": ["no label text"] },
+        { "id": "hover_left_screw", "rect": [467, 45, 54, 72], "rules": ["no text"] },
+        { "id": "hover_right_screw", "rect": [865, 45, 54, 72], "rules": ["no text"] },
+        { "id": "hover_label_halftone_corner", "rect": [777, 38, 74, 62], "rules": ["no text over halftone dots"] },
+        { "id": "hover_bottom_warning_stripe", "rect": [463, 124, 463, 34], "rules": ["no label text"] },
+        { "id": "pressed_left_screw", "rect": [930, 45, 54, 72], "rules": ["no text"] },
+        { "id": "pressed_right_screw", "rect": [1328, 45, 54, 72], "rules": ["no text"] },
+        { "id": "pressed_label_halftone_corner", "rect": [1240, 38, 74, 62], "rules": ["no text over halftone dots"] },
+        { "id": "pressed_bottom_warning_stripe", "rect": [926, 124, 463, 34], "rules": ["no label text"] },
+        { "id": "disabled_left_screw", "rect": [1393, 45, 54, 72], "rules": ["no text"] },
+        { "id": "disabled_right_screw", "rect": [1791, 45, 54, 72], "rules": ["no text"] },
+        { "id": "disabled_label_halftone_corner", "rect": [1703, 38, 74, 62], "rules": ["no text over halftone dots"] },
+        { "id": "disabled_bottom_warning_stripe", "rect": [1389, 124, 463, 34], "rules": ["no label text"] }
+      ],
+      "hit_rects": {
+        "default": [0, 0, 463, 158],
+        "hover": [463, 0, 463, 158],
+        "pressed": [926, 0, 463, 158],
+        "disabled": [1389, 0, 463, 158]
+      },
+      "states": ["default", "hover", "pressed", "disabled"],
+      "feedback_spec": {
+        "pressed_offset": [0, 3],
+        "hover_scale": 1.015,
+        "disabled_tint": "#31404A",
+        "duration_ms": 90
+      },
+      "acceptance_use": "Codex Image 2 generated CTA state atlas candidate. Use for state validation; regenerate as transparent atlas or tighter crop before final shipped UI if needed."
+    },
+    {
+      "id": "wm_pin_icon_v6g_atlas_candidate",
+      "kind": "component_candidate",
+      "asset_type": "pin-and-route-icon-atlas",
+      "source_artboard_asset_id": "wm_fullscreen_artboard_v6g_pixel_strong",
+      "derivation": "codex_image2_chroma_key_component_generation",
+      "background": "transparent",
+      "model": "codex-image2-chroma-key",
+      "final_size": [512, 64],
+      "final_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/components/wm-pin-icon-v6g-atlas.png",
+      "frame_size": [64, 64],
+      "frame_order": [
+        "pin_normal",
+        "pin_hover",
+        "pin_selected",
+        "pin_locked",
+        "pin_urgent",
+        "pin_completed",
+        "route_node_red",
+        "route_node_cyan"
+      ],
+      "godot_node": "TextureRect atlas + Area2D/Control hit targets",
+      "frames": [
+        { "id": "pin_normal", "rect": [0, 0, 64, 64] },
+        { "id": "pin_hover", "rect": [64, 0, 64, 64] },
+        { "id": "pin_selected", "rect": [128, 0, 64, 64] },
+        { "id": "pin_locked", "rect": [192, 0, 64, 64] },
+        { "id": "pin_urgent", "rect": [256, 0, 64, 64] },
+        { "id": "pin_completed", "rect": [320, 0, 64, 64] },
+        { "id": "route_node_red", "rect": [384, 0, 64, 64] },
+        { "id": "route_node_cyan", "rect": [448, 0, 64, 64] }
+      ],
+      "dynamic_text_rects": [],
+      "forbidden_zones": [],
+      "hit_rects": {
+        "pin_normal": [10, 4, 44, 56],
+        "pin_hover": [74, 4, 44, 56],
+        "pin_selected": [128, 0, 64, 64],
+        "pin_locked": [202, 4, 44, 56],
+        "pin_urgent": [266, 4, 44, 56],
+        "pin_completed": [330, 4, 44, 56],
+        "route_node_red": [394, 10, 44, 44],
+        "route_node_cyan": [458, 10, 44, 44]
+      },
+      "states": ["normal", "hover", "selected", "locked", "urgent", "completed"],
+      "acceptance_use": "Codex Image 2 chroma-key pin/icon atlas candidate. Map board must not bake pins; runtime uses this or a refined atlas for pin states."
+    }
+  ],
+  "review_gates": [
+    {
+      "id": "art_gate",
+      "owner": "angus_art_director",
+      "checks": [
+        "Paper is bright and clean, not old archive.",
+        "World map uses premium faceted low-poly paper texture.",
+        "Pixel texture is deliberate halftone / 2-4px block structure, not dirty photographic noise.",
+        "No baked dynamic text, fake numbers, fake pins, or generic UI chrome."
+      ]
+    },
+    {
+      "id": "ui_gate",
+      "owner": "ui_designer",
+      "checks": [
+        "Mother artboard can be split into reusable component assets.",
+        "Left index, right folder, ticker, tickets, and CTA reserve clean content zones.",
+        "Texture frames can support normal, hover, selected, disabled, and locked states later."
+      ]
+    },
+    {
+      "id": "ux_gate",
+      "owner": "ux_laoge",
+      "checks": [
+        "The player can distinguish map, index, selected-region dossier, and main CTA.",
+        "Decorative paper structures do not invade future dynamic text zones.",
+        "Main CTA remains the visual endpoint."
+      ]
+    }
+  ]
+}

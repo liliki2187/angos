@@ -12,3 +12,4 @@
 当前案例：
 
 - `2026-06-02-title-screen-homepage.md`：标题页 A/B 首屏、按钮遮挡、背景缩放与遮罩强度。
+- `2026-06-09-global-channel-right-panel.md`：全球频道右侧面板的容器审计、文字金字塔、语义色预算和 CTA 锚定。

@@ -4,19 +4,60 @@
 
 [node name="WeeklyRunMetricCard" type="PanelContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
+custom_minimum_size = Vector2(172, 42)
+size_flags_horizontal = 0
 script = ExtResource("1_metric_card")
 
-[node name="VBox" type="VBoxContainer" parent="."]
+[node name="HBox" type="HBoxContainer" parent="."]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 58)
+custom_minimum_size = Vector2(0, 34)
+theme_override_constants/separation = 6
 
-[node name="Title" type="Label" parent="VBox"]
+[node name="Accent" type="ColorRect" parent="HBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.84, 0.68, 0.37, 1.0)
+custom_minimum_size = Vector2(3, 0)
+color = Color(0.25, 0.86, 0.92, 1)
+
+[node name="Symbol" type="Label" parent="HBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(26, 0)
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 18
+text = "◆"
+
+[node name="VBox" type="VBoxContainer" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+
+[node name="TopRow" type="HBoxContainer" parent="HBox/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="HBox/VBox/TopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.82, 0.74, 0.58, 1)
 text = "Metric"
 
-[node name="Value" type="Label" parent="VBox"]
+[node name="Value" type="Label" parent="HBox/VBox/TopRow"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 21
-text = "0"
+custom_minimum_size = Vector2(34, 0)
+horizontal_alignment = 2
+theme_override_font_sizes/font_size = 15
+text = "00"
+
+[node name="State" type="Label" parent="HBox/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+theme_override_colors/font_color = Color(0.67, 0.68, 0.58, 1)
+text = "低频"
+text_overrun_behavior = 3
+
+[node name="Meter" type="ProgressBar" parent="HBox/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 4)
+show_percentage = false
+value = 50.0

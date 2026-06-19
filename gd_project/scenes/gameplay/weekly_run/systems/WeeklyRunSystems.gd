@@ -72,13 +72,13 @@ static func get_node_availability(state: WeeklyRunState, node: Dictionary, selec
 		return {"enabled": false, "reason": "剩余天数不足"}
 	if selected_staff_ids.is_empty():
 		return {"enabled": false, "reason": "先选择 1-3 名职员"}
-	if str(node.kind) == "temp" and bool(state.resolved_nodes.get(str(node.id), false)):
-		return {"enabled": false, "reason": "这个临时节点本周已处理"}
+	if str(node.kind) != "permanent" and bool(state.resolved_nodes.get(str(node.id), false)):
+		return {"enabled": false, "reason": "这个节点本周已处理"}
 	if node.has("deadline_day") and state.remaining_days < int(node.deadline_day):
 		return {"enabled": false, "reason": "这个突发节点已经过期"}
-	for key in node.need.keys():
-		if int(totals.get(str(key), 0)) < int(node.need[key]):
-			return {"enabled": false, "reason": "派遣属性未满足需求"}
+	var preview := calculate_effective_check_preview(node, selected_staff_ids)
+	if int(preview.potential_points) < int(preview.target):
+		return {"enabled": false, "reason": "缺少可计入的相关骰面"}
 	return {"enabled": true, "reason": "可执行"}
 
 static func has_legal_dispatches(state: WeeklyRunState) -> bool:
@@ -103,68 +103,103 @@ static func is_region_unlocked(state: WeeklyRunState, region: Dictionary) -> boo
 			return true
 		"east_asia":
 			return state.macro_stats.reputation >= 55 or bool(state.flags.get("roswell_dossier", false))
+		"pacific_chain":
+			return bool(state.flags.get("m330_chain_step_2", false))
 		_:
 			return false
 
 static func is_node_visible(state: WeeklyRunState, node: Dictionary) -> bool:
+	if str(node.kind) != "permanent" and bool(state.resolved_nodes.get(str(node.id), false)):
+		return false
+	if node.has("deadline_day") and state.current_phase == "explore" and state.remaining_days < int(node.deadline_day):
+		return false
 	if str(node.kind) != "hidden":
 		return true
 	return _hidden_node_unlocked(state, node)
 
-static func perform_split_check(node: Dictionary, totals: Dictionary) -> Dictionary:
-	var p := float(Content.DIFFICULTY_P.get(str(node.difficulty), 0.50))
-	var attr_a := int(totals.explore) + int(totals.insight) + int(totals.occult)
-	var attr_b := int(totals.survival) + int(totals.reason)
-	var total_pool: int = maxi(1, attr_a + attr_b)
-	var enemy_a := floori(float(int(node.enemy)) * attr_a / total_pool)
-	var enemy_b := int(node.enemy) - enemy_a
-	var k_a := clampi(int(node.k_a), 0, max(0, attr_a - enemy_a))
-	var k_b := clampi(int(node.k_b), 0, max(0, attr_b - enemy_b))
-	var dice_a := _roll_dice(attr_a, p)
-	var dice_b := _roll_dice(attr_b, p)
-	var negated_a := _random_negate_indices(attr_a, mini(enemy_a, attr_a))
-	var negated_b := _random_negate_indices(attr_b, mini(enemy_b, attr_b))
-	var hit_a := 0
-	for index in range(attr_a):
-		if not negated_a.has(index) and dice_a[index]:
-			hit_a += 1
-	var hit_b := 0
-	for index in range(attr_b):
-		if not negated_b.has(index) and dice_b[index]:
-			hit_b += 1
+static func perform_effective_point_check(node: Dictionary, selected_staff_ids: Array[String]) -> Dictionary:
+	var preview := calculate_effective_check_preview(node, selected_staff_ids)
+	var relevant_attrs: Array = node.get("need", {}).keys()
+	var rolled_faces: Array[Dictionary] = []
+	var effective_points := 0
+	for staff_id in selected_staff_ids:
+		var staff := _get_staff_by_id(staff_id)
+		if staff.is_empty():
+			continue
+		var faces := _get_staff_faces(staff)
+		var face: Dictionary = faces[randi() % faces.size()]
+		var attr := str(face.attr)
+		var effective := relevant_attrs.has(attr)
+		var points := int(face.get("points", 1)) if effective else 0
+		effective_points += points
+		rolled_faces.append({
+			"staff_id": staff_id,
+			"staff_name": str(staff.name),
+			"attr": attr,
+			"label": Content.ATTR_LABELS.get(attr, attr),
+			"points": points,
+			"effective": effective,
+		})
+	var target := int(preview.target)
 	var tier := "fail"
-	if hit_a >= k_a and hit_b >= k_b:
+	if effective_points >= target + 1:
 		tier = "major"
-	elif hit_a >= k_a or hit_b >= k_b:
+	elif effective_points >= target:
 		tier = "minor"
 	return {
 		"node_id": str(node.id),
-		"dice_a": dice_a,
-		"dice_b": dice_b,
-		"negated_a": negated_a,
-		"negated_b": negated_b,
-		"hit_a": hit_a,
-		"hit_b": hit_b,
-		"k_a": k_a,
-		"k_b": k_b,
+		"selected_staff_ids": selected_staff_ids.duplicate(),
+		"faces": rolled_faces,
+		"effective_points": effective_points,
+		"target": target,
 		"tier": tier,
+		"success_rate": float(preview.success_rate),
+		"risk_label": str(preview.risk_label),
 	}
 
-static func calculate_node_probabilities(node: Dictionary, totals: Dictionary) -> Dictionary:
-	var attr_a := int(totals.explore) + int(totals.insight) + int(totals.occult)
-	var attr_b := int(totals.survival) + int(totals.reason)
-	var p := float(Content.DIFFICULTY_P.get(str(node.difficulty), 0.50))
-	var total_pool: int = maxi(1, attr_a + attr_b)
-	var enemy_a := floori(float(int(node.enemy)) * attr_a / total_pool)
-	var enemy_b := int(node.enemy) - enemy_a
-	var k_a := clampi(int(node.k_a), 0, max(0, attr_a - enemy_a))
-	var k_b := clampi(int(node.k_b), 0, max(0, attr_b - enemy_b))
-	var p_a := _binomial_cdf_ge(attr_a - enemy_a, k_a, p)
-	var p_b := _binomial_cdf_ge(attr_b - enemy_b, k_b, p)
+static func calculate_node_probabilities(node: Dictionary, selected_staff_ids: Array[String]) -> Dictionary:
+	var preview := calculate_effective_check_preview(node, selected_staff_ids)
 	return {
-		"major": p_a * p_b,
-		"minor": p_a * (1.0 - p_b) + (1.0 - p_a) * p_b,
-		"fail": (1.0 - p_a) * (1.0 - p_b),
+		"major": float(preview.major),
+		"minor": float(preview.minor),
+		"fail": float(preview.fail),
+	}
+
+static func calculate_effective_check_preview(node: Dictionary, selected_staff_ids: Array[String]) -> Dictionary:
+	var target := _get_node_target(node)
+	var relevant_attrs: Array = node.get("need", {}).keys()
+	var face_sets: Array = []
+	var potential_points := 0
+	var relevant_face_count := 0
+	for staff_id in selected_staff_ids:
+		var staff := _get_staff_by_id(staff_id)
+		if staff.is_empty():
+			continue
+		var faces := _get_staff_faces(staff)
+		face_sets.append({"staff": staff, "faces": faces})
+		var best_points := 0
+		for face in faces:
+			if relevant_attrs.has(str(face.attr)):
+				relevant_face_count += 1
+				best_points = maxi(best_points, int(face.get("points", 1)))
+		potential_points += best_points
+	var counts := {"major": 0, "minor": 0, "fail": 0}
+	_count_effective_outcomes(face_sets, relevant_attrs, target, 0, 0, counts)
+	var total_outcomes: int = maxi(1, int(counts.major) + int(counts.minor) + int(counts.fail))
+	var major := float(counts.major) / float(total_outcomes)
+	var minor := float(counts.minor) / float(total_outcomes)
+	var fail := float(counts.fail) / float(total_outcomes)
+	var success_rate := major + minor
+	return {
+		"target": target,
+		"major": major,
+		"minor": minor,
+		"fail": fail,
+		"success_rate": success_rate,
+		"risk_label": _risk_label(success_rate, str(node.kind)),
+		"potential_points": potential_points,
+		"relevant_face_count": relevant_face_count,
+		"relevant_labels": _format_relevant_labels(relevant_attrs),
 	}
 
 static func apply_dispatch_resolution(state: WeeklyRunState, material_inventory: WeeklyMaterialInventory, node: Dictionary, roll: Dictionary, region_name: String) -> Dictionary:
@@ -205,6 +240,8 @@ static func apply_dispatch_resolution(state: WeeklyRunState, material_inventory:
 
 	if str(node.id) == "skin" and str(roll.tier) != "fail":
 		state.flags["roswell_dossier"] = true
+	if str(node.id) == "m330" and str(roll.tier) != "fail":
+		state.flags["m330_chain_step_2"] = true
 
 	state.opportunity_ids = collect_opportunity_ids(state)
 	return {
@@ -511,6 +548,59 @@ static func _settlement_commentary(stats: Dictionary) -> String:
 	if float(stats.profit) >= 0.0:
 		return "这一期勉强盈利，版面结构已经可用，但仍要继续压空版和偏科。"
 	return "这一期亏损，主要问题通常是空版过多、题材失衡或高价值稿件不足。"
+
+static func _get_node_target(node: Dictionary) -> int:
+	if node.has("need_target"):
+		return int(node.need_target)
+	var need_total := 0
+	for value in node.get("need", {}).values():
+		need_total += int(value)
+	return clampi(ceili(float(need_total) / 3.0), 1, 4)
+
+static func _get_staff_by_id(staff_id: String) -> Dictionary:
+	for staff in Content.STAFF_POOL:
+		if str(staff.id) == staff_id:
+			return staff
+	return {}
+
+static func _get_staff_faces(staff: Dictionary) -> Array:
+	if staff.has("faces"):
+		return (staff.faces as Array).duplicate(true)
+	var faces: Array = []
+	for key in Content.ATTR_LABELS.keys():
+		faces.append({"attr": str(key), "points": 1})
+	return faces
+
+static func _count_effective_outcomes(face_sets: Array, relevant_attrs: Array, target: int, index: int, points: int, counts: Dictionary) -> void:
+	if index >= face_sets.size():
+		if points >= target + 1:
+			counts.major = int(counts.major) + 1
+		elif points >= target:
+			counts.minor = int(counts.minor) + 1
+		else:
+			counts.fail = int(counts.fail) + 1
+		return
+	var faces: Array = face_sets[index].faces
+	for face in faces:
+		var gained := int(face.get("points", 1)) if relevant_attrs.has(str(face.attr)) else 0
+		_count_effective_outcomes(face_sets, relevant_attrs, target, index + 1, points + gained, counts)
+
+static func _risk_label(success_rate: float, node_kind: String) -> String:
+	if node_kind == "hidden":
+		return "异常"
+	if success_rate >= 0.75:
+		return "稳妥"
+	if success_rate >= 0.55:
+		return "可搏"
+	if success_rate >= 0.35:
+		return "冒险"
+	return "凶险"
+
+static func _format_relevant_labels(relevant_attrs: Array) -> String:
+	var labels: Array[String] = []
+	for attr in relevant_attrs:
+		labels.append(str(Content.ATTR_LABELS.get(str(attr), str(attr))))
+	return " / ".join(labels)
 
 static func _roll_dice(n: int, p: float) -> Array:
 	var results := []

@@ -1,0 +1,174 @@
+{
+  "source": "D:\\angos\\docs\\screenshots\\2026-06-16-dispatch-signoff-full-style-v3\\06-ds-cta-signoff-atlas-source-alpha.png",
+  "output": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\dispatch_signoff\\assetized\\ds-cta-signoff-atlas.png",
+  "frame_size": [
+    174,
+    92
+  ],
+  "frame_order": [
+    "default",
+    "hover",
+    "pressed",
+    "disabled",
+    "focus",
+    "loading"
+  ],
+  "runs": [
+    {
+      "frame": 0,
+      "state": "default",
+      "source_run": [
+        36,
+        354
+      ],
+      "source_bbox": [
+        36,
+        274,
+        318,
+        184
+      ],
+      "crop_box": [
+        28,
+        266,
+        362,
+        466
+      ],
+      "placed_rect": [
+        18,
+        5,
+        137,
+        82
+      ]
+    },
+    {
+      "frame": 1,
+      "state": "hover",
+      "source_run": [
+        394,
+        712
+      ],
+      "source_bbox": [
+        394,
+        274,
+        318,
+        184
+      ],
+      "crop_box": [
+        386,
+        266,
+        720,
+        466
+      ],
+      "placed_rect": [
+        18,
+        5,
+        137,
+        82
+      ]
+    },
+    {
+      "frame": 2,
+      "state": "pressed",
+      "source_run": [
+        750,
+        1069
+      ],
+      "source_bbox": [
+        750,
+        274,
+        319,
+        184
+      ],
+      "crop_box": [
+        742,
+        266,
+        1077,
+        466
+      ],
+      "placed_rect": [
+        18,
+        5,
+        137,
+        82
+      ]
+    },
+    {
+      "frame": 3,
+      "state": "disabled",
+      "source_run": [
+        1106,
+        1426
+      ],
+      "source_bbox": [
+        1106,
+        274,
+        320,
+        184
+      ],
+      "crop_box": [
+        1098,
+        266,
+        1434,
+        466
+      ],
+      "placed_rect": [
+        18,
+        5,
+        138,
+        82
+      ]
+    },
+    {
+      "frame": 4,
+      "state": "focus",
+      "source_run": [
+        1461,
+        1781
+      ],
+      "source_bbox": [
+        1461,
+        274,
+        320,
+        184
+      ],
+      "crop_box": [
+        1453,
+        266,
+        1789,
+        466
+      ],
+      "placed_rect": [
+        18,
+        5,
+        138,
+        82
+      ]
+    },
+    {
+      "frame": 5,
+      "state": "loading",
+      "source_run": [
+        1820,
+        2137
+      ],
+      "source_bbox": [
+        1820,
+        274,
+        317,
+        184
+      ],
+      "crop_box": [
+        1812,
+        266,
+        2145,
+        466
+      ],
+      "placed_rect": [
+        18,
+        5,
+        137,
+        82
+      ]
+    }
+  ]
+}

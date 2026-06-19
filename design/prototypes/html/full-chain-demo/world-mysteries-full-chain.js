@@ -96,7 +96,7 @@
     dayResolutionInfo: null,
     paperLayoutMode: "fixed",
     paperLabMode: false,
-    paperVisualMode: "normal",
+    paperVisualMode: "enhanced",
     publicationArchive: [],
     lastPublicationEcho: null,
     dispatchDecisionExperimentMode: false,
@@ -144,17 +144,17 @@
     return `<div class="tutorial-soft-figure" style="margin:0 0 0.65rem;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#0b1220;"><img src="${src}" alt="${a}" style="display:block;width:100%;max-height:min(30vh,220px);height:auto;object-fit:contain;" /><p style="margin:0;padding:8px 10px;font-size:0.72rem;color:var(--muted);line-height:1.45;border-top:1px solid var(--line);">${captionHtml}</p></div>`;
   }
 
-  /** 报刊组版实验 · 多页（中等密度：小标题 + 列表） */
+  /** 头版发刊实验 · 1 头版 + 2 副版 */
   const LAB_FULL_GUIDE_PAGES = [
     `${tutorialSoftFigure(
       "Assets/tutorial-editorial-guide.svg",
-      "组版示意：故事库拖入报纸版位",
-      "与正式组版同一套版心习惯；本实验跳过取材与合成。",
+      "发刊示意：候选稿拖入头版样张",
+      "与正式发刊台同一套视觉习惯；本实验跳过取材与写稿。",
     )}<div class="tutorial-soft-sheet">
-      <h4 class="tutorial-soft-h4">组版练习场是做什么的？</h4>
-      <p class="tutorial-soft-lead">主编您好。这里是《世界未解之谜周刊》的<strong>组版练习场</strong>：暂时跳过出门采访和成稿台，先熟悉报纸版心与「稿子怎么上桌」。</p>
+      <h4 class="tutorial-soft-h4">头版发刊台是做什么的？</h4>
+      <p class="tutorial-soft-lead">主编您好。这里是《世界未解之谜周刊》的<strong>发刊练习场</strong>：暂时跳过出门采访和写稿，先熟悉 1 篇头版与 2 篇副版如何锁定本期公开口径。</p>
       <ul class="tutorial-soft-ul">
-        <li>完整流程里，组版排在<strong>取材 → 合成</strong>之后。</li>
+        <li>完整流程里，发刊排在<strong>取材 → 写成报道</strong>之后。</li>
         <li>本页只练<strong>最后一步</strong>，和正式第一周用的是同一套版式习惯。</li>
       </ul>
     </div>`,
@@ -163,8 +163,8 @@
       <ul class="tutorial-soft-ul">
         <li><strong>回合札记</strong>：每周开场事件。</li>
         <li><strong>取材地图</strong>：选区域、跑探索。</li>
-        <li><strong>合成台</strong>：把线索收成报道。</li>
-        <li><strong>编辑部组版</strong>：把报道摆进版面（您现在练的就是这步）。</li>
+        <li><strong>写稿台</strong>：把线索解释成报道。</li>
+        <li><strong>头版发刊台</strong>：把报道放进本期样张（您现在练的就是这步）。</li>
       </ul>
     </div>`,
     `<div class="tutorial-soft-sheet">
@@ -177,9 +177,9 @@
     </div>`,
   ];
 
-  const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道：港区异常回波</div>
+const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道：港区异常回波</div>
 <div class="nm-chips"><span class="nm-chip ex">探索稿</span><span class="nm-chip">标签:时政 / 经济</span><span class="nm-chip">质量:Gold</span></div>
-<div class="nm-tip" style="margin-top:6px;font-size:11px;padding:6px;">拖到中间头版版位</div>`;
+<div class="nm-tip" style="margin-top:6px;font-size:11px;padding:6px;">拖到中间头版样张</div>`;
 
   const TAGS = ["Politics", "Military", "Economy", "Sport", "Gossip", "Pets", "Humor", "Shopping"];
   const QUALITY = [
@@ -206,12 +206,9 @@
   const LIFESTYLE_LIGHT = new Set(["Gossip", "Pets", "Humor"]);
 
   const slots = [
-    { id: "front-main", name: "头版头条", weight: 1.0, desc: "最高曝光，约 3.0x" },
-    { id: "front-side", name: "头版次条", weight: 0.7, desc: "高曝光，约 2.4x" },
-    { id: "feature-1", name: "重点专题 A", weight: 0.45, desc: "中高曝光，约 1.9x" },
-    { id: "feature-2", name: "重点专题 B", weight: 0.4, desc: "中高曝光，约 1.8x" },
-    { id: "inner-1", name: "内页 A", weight: 0.2, desc: "标准曝光，约 1.4x" },
-    { id: "inner-2", name: "内页 B", weight: 0.2, desc: "标准曝光，约 1.4x" },
+    { id: "front-main", name: "头版主口径", weight: 1.0, desc: "最高曝光，决定本期公开解释" },
+    { id: "front-side", name: "副版证据链", weight: 0.55, desc: "补足头版来源与公共可信度" },
+    { id: "feature-1", name: "副版异常钩子", weight: 0.45, desc: "保留读者追踪与现实回响" },
   ];
 
   state.placed = Object.fromEntries(slots.map((s) => [s.id, null]));
@@ -1687,7 +1684,7 @@
   async function runPaperLabOnboarding() {
     if (!state.paperLabMode) return;
     if (tutorialsGloballyDisabled()) return;
-    await showSoftTutorialModal("lab_fullGuide", "新手引导 · 报刊组版实验", LAB_FULL_GUIDE_PAGES, () => state.paperLabMode);
+    await showSoftTutorialModal("lab_fullGuide", "新手引导 · 头版发刊实验", LAB_FULL_GUIDE_PAGES, () => state.paperLabMode);
     openPaperDemoLab();
   }
 
@@ -1696,24 +1693,24 @@
     if (tutorialsGloballyDisabled()) return;
     await showWeek1SoftTutorialModal(
       "w1_editorial",
-      "第一周 · 编辑部组版",
+      "第一周 · 头版发刊台",
       [
         `${tutorialSoftFigure(
           "Assets/tutorial-editorial-guide.svg",
-          "组版示意：故事库拖入报纸版位",
-          "示意：左为故事库；中为报纸版位（头版 / 内页等）。",
+          "发刊示意：候选稿拖入头版样张",
+          "示意：左为候选稿件夹；中为 1 头版 + 2 副版样张。",
         )}<div class="tutorial-soft-sheet">
-          <h4 class="tutorial-soft-h4">怎么摆版？</h4>
-          <p class="tutorial-soft-lead">成稿已备好：把左侧<strong>故事库</strong>里的卡片<strong>拖进</strong>中间报纸版位。</p>
+          <h4 class="tutorial-soft-h4">怎么发刊？</h4>
+          <p class="tutorial-soft-lead">成稿已备好：把左侧<strong>候选稿件夹</strong>里的卡片<strong>拖进</strong>中间周刊样张。</p>
           <ul class="tutorial-soft-ul">
-            <li><strong>头版</strong>最吸睛；<strong>内页</strong>略逊，但都算进本期曝光。</li>
+            <li><strong>头版</strong>决定本期公开主口径；两个<strong>副版</strong>负责补证据链与异常钩子。</li>
           </ul>
         </div>`,
         `<div class="tutorial-soft-sheet">
           <h4 class="tutorial-soft-h4">收尾</h4>
           <ul class="tutorial-soft-ul">
-            <li>版式满意后点<strong>结算本期</strong>，查看销量与利润。</li>
-            <li>确认后直接开始摆版；需要重来时可用<strong>清空版面</strong>。</li>
+            <li>样张满意后点<strong>发刊本期</strong>，查看读者、势力与现实回响。</li>
+            <li>需要重来时可用<strong>清空当前排版</strong>。</li>
           </ul>
           <p class="tutorial-soft-note">本周内本提示只出现一次。</p>
         </div>`,
@@ -1970,7 +1967,7 @@
       slotPhen.innerHTML = `<div class="syn-demo-chip">现象样本</div>`;
       slotIntel.innerHTML = `<div class="syn-demo-chip">情报摘要</div>`;
       if (resultEl) {
-        resultEl.textContent = "执行合成 · 示意（演示不消耗真实素材）";
+        resultEl.textContent = "写成报道 · 示意（演示不消耗真实素材）";
         resultEl.classList.add("synth-demo-result-flash");
       }
       scheduleSynthDemoAutoReplay();
@@ -2020,7 +2017,7 @@
     runFly(phenCard, slotPhen, "现象样本", () => {
       runFly(intelCard, slotIntel, "情报摘要", () => {
         if (resultEl) {
-          resultEl.textContent = "执行合成 · 示意（演示不消耗素材）";
+          resultEl.textContent = "写成报道 · 示意（演示不消耗素材）";
           resultEl.classList.add("synth-demo-result-flash");
         }
         scheduleSynthDemoAutoReplay();
@@ -3181,11 +3178,11 @@
         <nav class="global-phase-rail" aria-label="本周流程">
           <span class="global-phase-step active"><b>1</b>探索</span>
           <span class="global-phase-divider" aria-hidden="true"></span>
-          <span class="global-phase-step"><b>2</b>线索成稿</span>
+          <span class="global-phase-step"><b>2</b>写成报道</span>
           <span class="global-phase-divider" aria-hidden="true"></span>
-          <span class="global-phase-step"><b>3</b>拖拽组版</span>
+          <span class="global-phase-step"><b>3</b>头版发刊</span>
           <span class="global-phase-divider" aria-hidden="true"></span>
-          <span class="global-phase-step"><b>4</b>结算</span>
+          <span class="global-phase-step"><b>4</b>发刊回响</span>
         </nav>
         <div class="global-status-pills" aria-label="探索周状态">
           <span class="tag on">第 ${state.week} 周</span>
@@ -6991,7 +6988,7 @@
     } else if (pk) {
       topicLine += `\n该题材本周首次公开合成，上版按满额基础值计入（仍受版面其它乘数影响）。`;
     }
-    return `${recipeLabel(recipe)}\n素材：${names}\n预计成功率：${(successRate * 100).toFixed(1)}%\n${valid ? "配方合法，可执行合成。" : "配方不合法，请调整素材组合。"}\n当前失实风险：${state.synthPollution}${topicLine}`;
+    return `${recipeLabel(recipe)}\n来源锚点：${names}\n预计成稿率：${(successRate * 100).toFixed(1)}%\n${valid ? "解释链可成立，可写成报道。" : "解释链不完整，请调整素材组合。"}\n当前失实风险：${state.synthPollution}${topicLine}`;
   }
 
   function consumeCards(ids) {
@@ -7126,7 +7123,9 @@
                   : c.kind === "therapy"
                     ? `<span class="syn-badge">解除疲劳</span>`
                     : `<span class="syn-badge">证据 ${c.evidenceValue || 0}</span>`;
+        const sourceCode = c.topicKey ? `SRC-${shortTopicLabel(c.topicKey)}` : SYNTH_KIND_ZH[c.kind] || c.kind;
         return `<div class="syn-item syn-item-draggable${placed ? " syn-item-slotted" : ""}" draggable="true" data-card="${c.id}" data-kind="${c.kind}" title="拖到右侧卡槽">
+          <div class="syn-source-kicker">${escapeHtml(sourceCode)}</div>
           <strong>${escapeHtml(c.name)}</strong>
           <div class="syn-badges"><span class="syn-badge">${c.kind}</span>${topicChip}${badge}</div>
           ${placed ? `<div class="syn-slotted-hint">已在槽位</div>` : ""}
@@ -7204,14 +7203,14 @@
         </div>`;
       })
       .join("");
-    el.synWorkbench.innerHTML = `<div class="${archCls}">${cells}</div>`;
+    el.synWorkbench.innerHTML = `<div class="syn-manuscript-desk"><div class="${archCls}">${cells}</div></div>`;
     bindSynthWorkbenchDrag();
   }
 
   function renderSynthReports() {
     if (!el.synReports) return;
     if (!state.craftedReports.length) {
-      el.synReports.innerHTML = `<div class="syn-help">尚未合成报道。至少制作 1 篇后可进入组版。</div>`;
+      el.synReports.innerHTML = `<div class="syn-help">尚未写成报道。至少制作 1 篇后可进入头版选择。</div>`;
       return;
     }
     el.synReports.innerHTML = state.craftedReports
@@ -7227,19 +7226,22 @@
         const eff = effectiveStoryBase(r);
         const intr = r.intrinsicBaseValue != null ? r.intrinsicBaseValue : r.baseValue;
         const effLine = intr !== eff ? `<span class="syn-badge">上版有效基础 ${eff}</span>` : `<span class="syn-badge">基础 ${intr}</span>`;
+        const stance = r.publicStance === "sci" ? "科学纪实" : r.publicStance === "occult" ? "神秘玄学" : r.publicStance === "pop" ? "世俗流量" : "抢先快讯";
+        const reportNo = ord ? `候选稿 ${ord}` : `候选稿 ${r.id}`;
         return `<div class="syn-report">
-        <strong>${escapeHtml(r.title)}</strong>
-        <div class="syn-badges" style="margin-top:4px;">
-          ${topicLine}
-          <span class="syn-badge">类型 ${r.recipeType}</span>
-          <span class="syn-badge">质量 ${r.quality}</span>
-          ${effLine}
-          <span class="syn-badge">轰动 ${r.attrs.sensational}</span>
-          <span class="syn-badge">可信 ${r.attrs.credibility}</span>
-          <span class="syn-badge">神秘 ${r.attrs.mystery}</span>
-          <span class="syn-badge">诡视 ${r.attrs.gaze}</span>
-        </div>
-      </div>`;
+          <div class="syn-report-tab">${escapeHtml(reportNo)} · ${escapeHtml(stance)}</div>
+          <strong>${escapeHtml(r.title)}</strong>
+          <div class="syn-report-source-line">
+            ${topicLine}
+            <span class="syn-badge">类型 ${r.recipeType}</span>
+            <span class="syn-badge">质量 ${r.quality}</span>
+            ${effLine}
+            <span class="syn-badge">轰动 ${r.attrs.sensational}</span>
+            <span class="syn-badge">可信 ${r.attrs.credibility}</span>
+            <span class="syn-badge">神秘 ${r.attrs.mystery}</span>
+            <span class="syn-badge">诡视 ${r.attrs.gaze}</span>
+          </div>
+        </div>`;
       })
       .join("");
   }
@@ -7254,13 +7256,13 @@
         el.synthesisHint.textContent =
           "内审独立于报道合成：现象→认知；可选主笔（提高高等级概率、承担 SAN）。心理干预可解除主笔本阶段疲劳。异常题材成功会增加宏观「狂性」。抢先快讯不计公开取向，深度/专栏/爆料若与既往同题取向矛盾，上版时需求受罚。";
       } else {
-        el.synthesisHint.textContent = `配方说明：${recipeLabel(state.synthRecipe)}。现象与认知可反复用于公开报道；情报为材料每次合成会消耗。爆料与工具按原规则。同题材本周多篇公开稿上版时报纸结算基础值递减。`;
+        el.synthesisHint.textContent = `解释说明：${recipeLabel(state.synthRecipe)}。现象与认知可反复作为来源锚点；情报作为材料会消耗。同题材多篇公开稿上版时会发生疲劳折减。`;
       }
     }
     const craftBtn = document.getElementById("craftBtn");
     if (craftBtn) {
       craftBtn.disabled = !validateRecipe(state.synthRecipe, cards);
-      craftBtn.textContent = state.synthRecipe === "internal" ? "生成认知" : "执行合成";
+      craftBtn.textContent = state.synthRecipe === "internal" ? "生成认知" : "写成报道";
     }
     ["recipe1", "recipe2", "recipe3", "recipe4"].forEach((bid, i) => {
       const b = document.getElementById(bid);
@@ -7394,14 +7396,14 @@
     document.getElementById("phase-synthesis").classList.remove("hidden");
     document.getElementById("phase-editorial").classList.add("hidden");
     document.getElementById("phase-summary").classList.add("hidden");
-    document.getElementById("synthesisSub").textContent = `第 ${state.week} 周 · 已带入探索线索 ${state.pendingClues.length} 条。请将素材拖入卡槽合成报道，再进入组版。`;
+    document.getElementById("synthesisSub").textContent = `第 ${state.week} 周 · 已带入探索线索 ${state.pendingClues.length} 条。请把素材压进稿纸，选择解释口径并写成候选报道。`;
     el.synInventory = document.getElementById("synInventory");
     el.synWorkbench = document.getElementById("synWorkbench");
     el.synSynthPreview = document.getElementById("synSynthPreview");
     el.synReports = document.getElementById("synReports");
     el.synthesisHint = document.getElementById("synthesisHint");
     renderSynthesis();
-    log("进入故事合成台：现象/认知/情报可合成报道。");
+    log("进入写稿台：用现象、认知与情报写成候选报道。");
     if (week1TutorialActive() && !state.tutorialSoftW1.w1_synthesis) {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
@@ -7466,7 +7468,7 @@
 
   function buildEditorialPool() {
     const craftedBase = (state.pendingReports && state.pendingReports.length) ? state.pendingReports : [];
-    const target = Math.max(10, craftedBase.length || state.pendingClues.length);
+    const target = Math.max(slots.length, craftedBase.length || state.pendingClues.length);
     let cur = state.nextStoryId;
     const exploreStories = craftedBase.length
       ? craftedBase.map((r) => ({ ...r, id: cur++ }))
@@ -7480,12 +7482,14 @@
 
   function enterEditorialPhase() {
     state.phase = "editorial";
+    state.paperLayoutMode = "fixed";
+    state.paperVisualMode = "enhanced";
     buildEditorialPool();
     document.getElementById("phase-synthesis").classList.add("hidden");
     document.getElementById("phase-explore").classList.add("hidden");
     document.getElementById("phase-editorial").classList.remove("hidden");
     document.getElementById("phase-summary").classList.add("hidden");
-    document.getElementById("editorialSub").textContent = `第 ${state.week} 周 · 已导入合成报道 ${state.pendingReports.length || state.pendingClues.length} 条，请组版后结算。`;
+    document.getElementById("editorialSub").textContent = `第 ${state.week} 周 · 已导入候选报道 ${state.pendingReports.length || state.pendingClues.length} 条，请选择头版主口径、副版证据链、副版异常钩子各 1 篇后发刊。`;
     el.storyList = document.getElementById("storyList");
     el.slotList = document.getElementById("slotList");
     el.liveStats = document.getElementById("liveStats");
@@ -7494,8 +7498,8 @@
     renderStories();
     renderSlots();
     renderLiveStats();
-    el.resultBox.innerHTML = `<div class="k">尚未结算</div><div class="nm-tip">拖拽报道到版位，再点「结算本期」。</div>`;
-    log("进入编辑部：把本周稿件拖入版位，准备结算本期。");
+    el.resultBox.innerHTML = `<div class="k">待主编签批</div><div class="nm-tip">拖拽报道到头版主口径、副版证据链与副版异常钩子，再确认代价并送印。</div>`;
+    log("进入编辑部：把本周稿件拖入头版样张，准备发刊本期。");
     if (week1TutorialActive() && !state.paperLabMode) {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
@@ -7538,7 +7542,8 @@
     const lightRatio = lightCount / totalTagCount;
     const dominantRatio = Math.max(publicRatio, massRatio, lightRatio);
     const profileNormalized = (state.editorialProfile + 100) / 200;
-    const frontWeight = placed.reduce((acc, x) => acc + x.slot.weight, 0) / 2.95;
+    const maxLayoutWeight = slots.reduce((acc, s) => acc + s.weight, 0) || 1;
+    const frontWeight = placed.reduce((acc, x) => acc + x.slot.weight, 0) / maxLayoutWeight;
     const mQuality = Math.min(1.85, 1 + 0.0008 * totalBaseValue);
     const comboBase = Math.min(1.35, 1 + 0.06 * Math.log(1 + comboRaw));
     const comboProfileBoost = 1 + 0.2 * Math.max(0, profileNormalized - 0.5);
@@ -7658,45 +7663,74 @@
   function placeStory(slotId, storyId) {
     const story = state.stories.find((s) => s.id === Number(storyId));
     state.placed[slotId] = story || null;
+    renderStories();
     renderSlots();
     renderLiveStats();
   }
 
   function renderStories() {
     el.storyList.innerHTML = "";
+    let idx = 0;
+    const photoClassForReport = (story) => {
+      const text = `${story && story.title ? story.title : ""} ${(story && story.tags ? story.tags.join(" ") : "")}`;
+      if (/港务|码头|封锁|回波|harbor/i.test(text)) return "photo-harbor";
+      if (/剧院|失踪|档案|署名|theatre/i.test(text)) return "photo-theatre";
+      if (/大法官|塔夫脱|法院|职务|court/i.test(text)) return "photo-court";
+      return "photo-signal";
+    };
+    const slotLabelForReport = (slotId) => {
+      if (slotId === "front-main") return "头版主口径";
+      if (slotId === "front-side") return "副版证据链";
+      if (slotId === "feature-1") return "副版异常钩子";
+      return "中央校样";
+    };
+    const readableReportTopic = (story) => {
+      const key = story && story.primaryTopicKey ? String(story.primaryTopicKey) : "";
+      if (key && !/paperlab_/i.test(key)) return shortTopicLabel(key);
+      const tags = ((story && story.tags) || []).slice(0, 2).map(toZhTag).filter(Boolean);
+      return tags.join(" / ") || "校样稿";
+    };
     for (const story of state.stories) {
+      const slottedEntry = Object.entries(state.placed || {}).find(([, placedStory]) => placedStory && placedStory.id === story.id);
+      const isSlotted = !!slottedEntry;
+      const slottedSlotId = slottedEntry ? slottedEntry[0] : "";
       const card = document.createElement("div");
-      card.className = "nm-story";
+      card.className = `nm-story report-film-item${isSlotted ? " is-slotted" : ""}`;
       card.draggable = true;
       card.dataset.storyId = String(story.id);
-      const negatives = story.negatives.length
-        ? `<span class="nm-chip" style="color:#fca5a5">负面:${story.negatives.join("/")}</span>`
-        : `<span class="nm-chip">负面:无</span>`;
+      card.style.setProperty("--report-index", String(idx));
+      const negatives = story.negatives.length ? `<span class="report-warn-dot" title="负面词条"></span>` : "";
       const ex = story.fromExplore ? `<span class="nm-chip ex">探索稿</span>` : "";
       const effB = effectiveStoryBase(story);
       const intrB = story.intrinsicBaseValue != null ? story.intrinsicBaseValue : story.baseValue;
-      const stanceChip =
-        story.publicStance && story.fromExplore
-          ? `<span class="nm-chip">公开取向:${story.publicStance === "sci" ? "科学纪实" : story.publicStance === "occult" ? "神秘玄学" : "世俗流量"}</span>`
-          : "";
-      const baseChip =
-        story.fromExplore && story.primaryTopicKey
-          ? `<span class="nm-chip">上版有效基础:${effB}${intrB !== effB ? `（稿内${intrB}）` : ""}</span><span class="nm-chip">题材${shortTopicLabel(story.primaryTopicKey)}</span>${
-              story.synthTopicOrder ? `<span class="nm-chip">本周稿序${story.synthTopicOrder}</span>` : ""
-            }${stanceChip}`
-          : `<span class="nm-chip">基础值:${story.baseValue}</span>`;
+      const stanceText = story.publicStance === "sci" ? "科学纪实" : story.publicStance === "occult" ? "神秘玄学" : story.publicStance === "pop" ? "世俗流量" : "待定口径";
+      const topicText = readableReportTopic(story);
+      const baseText = story.fromExplore && story.primaryTopicKey ? `${effB}${intrB !== effB ? `/${intrB}` : ""}` : String(story.baseValue);
+      const sourceLabel = story.fromExplore ? `FIELD FILE ${String(idx + 1).padStart(2, "0")}` : `DESK FILLER ${String(idx + 1).padStart(2, "0")}`;
+      const photoCls = photoClassForReport(story);
       card.innerHTML = `
-        <div class="nm-story-title">${escapeHtml(story.title)}</div>
+        <div class="report-film-edge" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="report-card-head">
+          <div class="report-card-photo ${photoCls}" aria-hidden="true"><span class="report-photo-label">${escapeHtml(topicText || "线索图")}</span></div>
+          <div>
+            <div class="report-card-kicker">${escapeHtml(sourceLabel)}</div>
+            <div class="nm-story-title">${escapeHtml(story.title)}</div>
+          </div>
+        </div>
+        ${isSlotted ? `<div class="report-card-stamp">已上版</div><div class="report-link-tag">${escapeHtml(slotLabelForReport(slottedSlotId))}</div>` : ""}
+        <div class="report-signal-row">
+          <span>口径 ${escapeHtml(stanceText)}</span>
+          <span>基础 ${escapeHtml(baseText)}</span>
+          ${negatives}
+        </div>
         <div class="nm-chips">
           ${ex}
-          <span class="nm-chip">标签:${story.tags.map(toZhTag).join(" / ")}</span>
-          <span class="nm-chip">质量:${story.quality}</span>
-          ${baseChip}
-          ${negatives}
+          <span class="nm-chip">题材:${escapeHtml(topicText || "未定")}</span>
+          <span class="nm-chip">质量:${escapeHtml(story.quality)}</span>
         </div>`;
       const tip = document.createElement("div");
       tip.className = "nm-tip";
-      tip.textContent = "拖到中间版位";
+      tip.textContent = isSlotted ? `已连到 ${slotLabelForReport(slottedSlotId)}` : "抽出稿件条，拖到中央周刊校样";
       card.appendChild(tip);
       card.addEventListener("dragstart", (ev) => {
         state.draggingStoryId = story.id;
@@ -7709,11 +7743,12 @@
         clearDropPreview();
       });
       el.storyList.appendChild(card);
+      idx += 1;
     }
   }
 
   function clearDropPreview() {
-    el.slotList.querySelectorAll(".nm-slot").forEach((node) => {
+    el.slotList.querySelectorAll(".paper-slot").forEach((node) => {
       node.classList.remove("drag-over", "good-preview", "bad-preview", "synergy");
     });
     el.slotList.querySelectorAll("[data-impact]").forEach((n) => {
@@ -7723,7 +7758,7 @@
 
   function applySynergyHighlights(projectedLinkedTags) {
     const linkSet = new Set(projectedLinkedTags || []);
-    el.slotList.querySelectorAll(".nm-slot").forEach((node) => {
+    el.slotList.querySelectorAll(".paper-slot").forEach((node) => {
       const slotId = node.dataset.slotId;
       const story = state.placed[slotId];
       if (!story) return;
@@ -7781,15 +7816,8 @@
   function renderSlots() {
     el.slotList.innerHTML = "";
     const baseline = calculate(false);
-
-    const layout = [
-      { page: 1, kind: "main", slotId: "front-main", label: "头版" },
-      { page: 1, kind: "subL", slotId: "front-side", label: "子版 A" },
-      { page: 1, kind: "subR", slotId: "feature-1", label: "子版 B" },
-      { page: 2, kind: "main", slotId: "feature-2", label: "次头版" },
-      { page: 2, kind: "subL", slotId: "inner-1", label: "子版 C" },
-      { page: 2, kind: "subR", slotId: "inner-2", label: "子版 D" },
-    ];
+    const placedPairs = getAllPlaced();
+    const issueDemand = Math.round(baseline.demand * peekStanceClashDemandMult(placedPairs)).toLocaleString("zh-CN");
 
     const attrsDots = (story) => {
       const tags = (story && story.tags) || [];
@@ -7799,58 +7827,117 @@
       return `<div class="paper-attrs">${dots.join("")}</div>`;
     };
 
-    const bodyMask = () => `<div class="paper-body">
-      <span>**** **** **** **** **** ****</span>
-      <span>**** **** **** **** **** ****</span>
-      <span>**** **** **** **** **** ****</span>
-      <span>**** **** **** **** **** ****</span>
-    </div>`;
+    const slotRole = (slotId) => {
+      if (slotId === "front-main") {
+        return {
+          label: "头版主口径",
+          kicker: "头版导语",
+          stamp: "头版已定",
+          impact: "定义本期公开口径",
+          note: "主编红笔：这篇决定本期读者先相信什么。",
+          caption: "像素线报图",
+        };
+      }
+      if (slotId === "front-side") {
+        return {
+          label: "副版证据链",
+          kicker: "证据来源",
+          stamp: "已上版",
+          impact: "补强证据链",
+          note: "校样批注：把线索来源钉在右页上方。",
+          caption: "证据剪影",
+        };
+      }
+      return {
+        label: "副版异常钩子",
+        kicker: "异常钩子",
+        stamp: "已上版",
+        impact: "制造下周追踪钩子",
+        note: "校样批注：保留疑点，不在本期说死。",
+        caption: "异常符号",
+      };
+    };
+
+    const photoClassForStory = (story) => {
+      const text = `${story && story.title ? story.title : ""} ${(story && story.tags ? story.tags.join(" ") : "")}`;
+      if (/港务|码头|封锁|回波|harbor/i.test(text)) return "photo-harbor";
+      if (/剧院|失踪|档案|署名|theatre/i.test(text)) return "photo-theatre";
+      if (/大法官|塔夫脱|法院|职务|court/i.test(text)) return "photo-court";
+      return "photo-signal";
+    };
+
+    const articleBody = (story, role, isMain) => {
+      const lead = isMain
+        ? "本期主口径：证据可交叉，结论暂保留。"
+        : "补齐证据缺口，保留下周追踪线。";
+      return `<div class="paper-article-deck">${escapeHtml(lead)}</div>
+        <div class="paper-body">
+          <span>**** **** **** **** **** ****</span>
+          <span>**** **** **** **** **** ****</span>
+          <span>**** **** **** **** **** ****</span>
+          <span>**** **** **** **** **** ****</span>
+        </div>`;
+    };
 
     const renderSlotInner = (slot, isMain, labelText) => {
       const current = state.placed[slot.id];
-      const mult = (1 + 2 * slot.weight).toFixed(1);
+      const role = slotRole(slot.id);
       if (!current) {
-        const multHint = slot.id === "front-main"
-          ? `<div class="paper-multi empty">头版奖励系数 x${mult}</div>`
-          : `<div class="paper-multi">系数 x${mult}</div>`;
+        const emptyHint = slot.id === "front-main" ? "拖入一篇稿件，决定本期头版主口径" : "拖入副版稿件，补足证据与钩子";
         return `
-          <div class="paper-slot-header"><span>${escapeHtml(labelText)}</span>${multHint}</div>
-          <div class="paper-empty">拖拽报道到此处</div>
+          <div class="paper-slot-header paper-slot-header-editorial">
+            <span>${escapeHtml(labelText)}</span>
+          </div>
+          <div class="paper-empty paper-empty-editorial" aria-label="${escapeHtml(role.label)}待定">
+            <span class="paper-empty-rule"></span>
+            <strong>${slot.id === "front-main" ? "头版主口径待定" : role.label + "待定"}</strong>
+            <span>${escapeHtml(emptyHint)}</span>
+          </div>
         `;
       }
       const titleCls = isMain ? "" : "small";
-      const removeBtn = `<button class="nm-sec" data-remove="${slot.id}" style="justify-self:end;">移除</button>`;
+      const removeBtn = `<button class="paper-remove-btn" data-remove="${slot.id}" title="从${escapeHtml(role.label)}撤下">撤稿</button>`;
+      const photoCls = photoClassForStory(current);
       return `
-        <div class="paper-slot-header">
+        <div class="paper-slot-header paper-slot-header-editorial">
           <span>${escapeHtml(labelText)}</span>
-          <span class="paper-multi">系数 x${mult}</span>
         </div>
-        <div>
+        <div class="paper-editor-note">${escapeHtml(role.note)}</div>
+        <div class="paper-article-head">
+          <div class="paper-article-kicker">${escapeHtml(role.kicker)} · ${escapeHtml(role.impact)}</div>
           <div class="paper-story-title ${titleCls}">${escapeHtml(current.title)}</div>
           ${attrsDots(current)}
         </div>
-        <div class="paper-img" aria-label="报道图片占位"></div>
-        ${bodyMask()}
+        <div class="paper-img paper-photo ${photoCls}" aria-label="报道图片占位">
+          <span class="paper-photo-label">${escapeHtml(role.caption)}</span>
+        </div>
+        ${articleBody(current, role, isMain)}
         ${removeBtn}
       `;
     };
 
     const slotById = Object.fromEntries(slots.map((s) => [s.id, s]));
+    const slotClass = (slotId, baseClass) =>
+      `paper-slot ${baseClass} ${state.placed[slotId] ? "is-filled" : "is-empty"}`;
     const page = (num) => {
-      const items = layout.filter((x) => x.page === num);
-      const main = items.find((x) => x.kind === "main");
-      const subL = items.find((x) => x.kind === "subL");
-      const subR = items.find((x) => x.kind === "subR");
-      const header = num === 1
-        ? `<div class="paper-header"><div class="paper-name">DOG NEWS</div><div class="paper-meta"><span>1930年3月</span><span>第${state.week}周</span><span>第${num}页</span></div></div>`
-        : `<div class="paper-header"><div class="paper-name" style="font-size:18px;letter-spacing:0.06em;">DOG NEWS</div><div class="paper-meta"><span>1930年3月</span><span>第${state.week}周</span><span>第${num}页</span></div></div>`;
-      return `<section class="paper-page">
-        ${header}
-        <div class="paper-grid">
-          <div class="paper-slot" data-slot="${main.slotId}">${renderSlotInner(slotById[main.slotId], true, main.label)}</div>
-          <div class="paper-row2">
-            <div class="paper-slot" data-slot="${subL.slotId}">${renderSlotInner(slotById[subL.slotId], false, subL.label)}</div>
-            <div class="paper-slot" data-slot="${subR.slotId}">${renderSlotInner(slotById[subR.slotId], false, subR.label)}</div>
+      return `<section class="paper-page magazine-spread-page">
+        <div class="magazine-page magazine-page-left">
+          <div class="paper-masthead">
+            <div class="paper-masthead-red"><span>WMW</span></div>
+            <div class="paper-masthead-core">
+              <div class="paper-kicker">WMW / ISSUE PROOF</div>
+              <div class="paper-name">WORLD MYSTERIES</div>
+              <div class="paper-subname">世界未解之谜周刊</div>
+            </div>
+          </div>
+          <div class="magazine-main-grid">
+            <div class="${slotClass("front-main", "paper-slot-main")}" data-slot="front-main">${renderSlotInner(slotById["front-main"], true, "头版主口径 · 公开解释")}</div>
+          </div>
+        </div>
+        <div class="magazine-page magazine-page-right">
+          <div class="magazine-secondary-grid">
+            <div class="${slotClass("front-side", "paper-slot-sub")}" data-slot="front-side">${renderSlotInner(slotById["front-side"], false, "副版证据链 · 来源连携")}</div>
+            <div class="${slotClass("feature-1", "paper-slot-sub")}" data-slot="feature-1">${renderSlotInner(slotById["feature-1"], false, "副版异常钩子 · 下周追踪")}</div>
           </div>
         </div>
       </section>`;
@@ -7858,7 +7945,7 @@
 
     const modeCls = state.paperLayoutMode === "fluid" ? "paper-mode-fluid" : "paper-mode-fixed";
     const visualCls = state.paperVisualMode === "enhanced" ? "paper-visual-enhanced" : "paper-visual-normal";
-    el.slotList.innerHTML = `<div class="paper-spread ${modeCls} ${visualCls}">${page(1)}${page(2)}</div>`;
+    el.slotList.innerHTML = `<div class="paper-spread ${modeCls} ${visualCls}">${page(1)}</div>`;
 
     // drag/drop handlers
     el.slotList.querySelectorAll(".paper-slot").forEach((div) => {
@@ -7896,6 +7983,7 @@
     el.slotList.querySelectorAll("[data-remove]").forEach((btn) => {
       btn.addEventListener("click", () => {
         state.placed[btn.getAttribute("data-remove")] = null;
+        renderStories();
         renderSlots();
         renderLiveStats();
       });
@@ -7907,18 +7995,57 @@
     const placed = getAllPlaced();
     const peekMult = peekStanceClashDemandMult(placed);
     const effects = analyzeTagEffects(placed.map((x) => x.story));
-    const profileLabel = state.editorialProfile <= -35 ? "信息型" : state.editorialProfile >= 35 ? "热度型" : "平衡型";
+    const frontPair = placed.find((x) => x.slot && x.slot.id === "front-main");
+    const frontFullTitle = frontPair ? frontPair.story.title : "尚未定稿";
+    const frontLabel = frontPair ? compactEchoTitle(frontPair.story.title, 30) : "尚未定稿";
+    const isComplete = r.placedCount >= slots.length;
+    const statusText = isComplete ? "待送印" : "待排版";
+    const issueWeek = document.getElementById("issuePlaqueWeek");
+    const issueFilled = document.getElementById("issuePlaqueFilled");
+    const issueState = document.getElementById("issuePlaqueState");
+    if (issueWeek) issueWeek.textContent = `第 ${state.week} 期`;
+    if (issueFilled) issueFilled.textContent = `${r.placedCount}/${slots.length} 已排版`;
+    if (issueState) issueState.textContent = statusText;
+    const signText = isComplete ? "可签" : "不可签";
+    const signClass = isComplete ? "is-ready" : "is-blocked";
+    const printBtn = document.getElementById("settleBtn");
+    const printHint = document.getElementById("printMachineHint");
+    const printMachine = printBtn && printBtn.closest ? printBtn.closest(".print-machine") : null;
+    if (printBtn) {
+      printBtn.disabled = !isComplete;
+      printBtn.textContent = isComplete ? "送印发刊" : `欠版 ${r.emptySlots}`;
+      printBtn.setAttribute("aria-disabled", String(!isComplete));
+    }
+    if (printMachine) printMachine.classList.toggle("is-locked", !isComplete);
+    if (printHint) {
+      printHint.classList.toggle("is-ready", isComplete);
+      printHint.textContent = isComplete
+        ? "确认承担代价 · 发刊后进入世界回响"
+        : "排满头版主口径、副版证据链、副版异常钩子后可送印";
+    }
+    const hasPlacedStory = placed.length > 0;
+    const spreadText = isComplete
+      ? `${Math.round(r.demand * peekMult).toLocaleString("zh-CN")} 份${peekMult < 1 ? " · 折减" : ""}`
+      : "待排满";
+    const riskText = hasPlacedStory
+      ? (peekMult >= 1 ? "无公开冲突" : `需求×${peekMult.toFixed(2)}`)
+      : "待判断";
+    const issueNote = isComplete ? "三栏已齐，送印前核对头版。" : `仍有 ${r.emptySlots} 个空版，暂不可送印。`;
     el.liveStats.innerHTML = `
-      <div class="k">已填版位</div><div class="v">${r.placedCount}/${slots.length}</div>
-      <div class="k">编辑定位</div><div class="v">${profileLabel} (${Math.round(state.editorialProfile)})</div>
-      <div class="k">独特标签数</div><div class="v">${r.uniqueTags}</div>
-      <div class="k">重复成组分</div><div class="v">${r.comboRaw.toFixed(2)}</div>
-      <div class="k">连携题材</div><div class="v ${effects.linked.length ? "nm-ok" : "nm-warn"}">${effects.linked.length ? effects.linked.map(toZhTag).join("、") : "无"}</div>
-      <div class="k">三轴 P/M/L</div><div class="v ${effects.dominantRatio > 0.7 ? "nm-bad" : "nm-ok"}">${Math.round(effects.publicRatio * 100)}/${Math.round(effects.massRatio * 100)}/${Math.round(effects.lightRatio * 100)}%</div>
-      <div class="k">预计需求</div><div class="v">${Math.round(r.demand * peekMult).toLocaleString("zh-CN")}${peekMult < 1 ? "（已乘取向预览）" : ""}</div>
-      <div class="k">订阅基数</div><div class="v">${state.subscribers.toLocaleString("zh-CN")}</div>
-      <div class="k">有效基础（版内）</div><div class="v">${r.totalBaseValue}${r.topicFatigueLoss > 0 ? ` <span style="color:#fca5a5">−${r.topicFatigueLoss}同题</span>` : ""}</div>
-      <div class="k">公开取向（预览）</div><div class="v ${peekMult < 1 ? "nm-warn" : "nm-ok"}">${peekMult >= 1 ? "与既往刊登无冲突" : `若本期结算，需求约×${peekMult.toFixed(2)}（深度/专栏取向与既往同题不一致）`}</div>`;
+      <div class="approval-sign-line ${signClass}">
+        <span>主编签批</span>
+        <strong>${signText}</strong>
+        <em>空版 ${r.emptySlots}</em>
+      </div>
+      <div class="approval-front-summary">
+        <span>本期头版定稿</span>
+        <strong title="${escapeHtml(frontFullTitle)}">${escapeHtml(frontLabel)}</strong>
+      </div>
+      <div class="approval-decision-grid">
+        <div class="approval-decision is-cyan"><span>预计扩散</span><strong>${escapeHtml(spreadText)}</strong></div>
+        <div class="approval-decision ${!hasPlacedStory ? "" : peekMult < 1 ? "is-danger" : "is-ok"}"><span>公开冲突</span><strong>${escapeHtml(riskText)}</strong></div>
+      </div>
+      <div class="approval-note">批注：${escapeHtml(issueNote)}</div>`;
   }
 
   function compactEchoTitle(title, maxLen) {
@@ -8090,7 +8217,7 @@
         story: {
           brief: "本期发出后，读者、报摊和匿名便条把同一个未追完的问题推回编辑部。",
           objective: "确认回响来自真实世界对象，还是被人借周刊版面投喂的新诱饵。",
-          stakes: "发刊回响节点。它把结算结果转成下周可追踪入口。",
+          stakes: "发刊回响节点。它把本期公开解释转成下周可追踪入口。",
           fieldIntro: "编辑部门缝里塞着一只厚信封，里面只有一张被红笔圈过的报纸。",
         },
       },
@@ -8164,28 +8291,59 @@
       <span>${escapeHtml(s.label)}</span>
       <strong class="${s.tone === "good" ? "nm-ok" : s.tone === "bad" ? "nm-bad" : ""}">${escapeHtml(s.value)}</strong>
     </div>`).join("");
+    const reactions = echo.reactions || [];
+    const writebacks = echo.writebacks || [];
+    const reader = reactions[0] || { label: "读者来信", text: "本期头版被读者剪下，圈出一个还没解释完的地名。" };
+    const force = reactions.find((x) => x.pressure) || reactions[1] || { label: "机构回函", text: "有人要求编辑部交出原始素材与受访名单。" };
+    const reality = writebacks[0] || reactions[2] || { label: "现实回响", text: "城市地图上出现一个新的追踪窗口。", writeback: true };
+    const cardHtml = [
+      { cls: "is-reader", kicker: "READER LETTER", hook: "信封编号 R-" + state.week, item: reader },
+      { cls: "is-force", kicker: "FORCE FAX", hook: "传真编号 FAX-17", item: force },
+      { cls: "is-reality", kicker: "REALITY ECHO", hook: "地图红针 / 下周钩子", item: reality },
+    ].map((entry) => `<div class="publication-echo-card ${entry.cls}">
+      <div class="publication-card-kicker">${escapeHtml(entry.kicker)}</div>
+      <strong>${escapeHtml(entry.item.label)}</strong>
+      <span>${escapeHtml(entry.item.text)}</span>
+      <div class="publication-echo-hook">${escapeHtml(entry.hook)}</div>
+    </div>`).join("");
+    const writebackHtml = writebacks.slice(0, 3).map((w) => `<div class="publication-echo-hook">${escapeHtml(w.label)} · ${escapeHtml(w.text)}</div>`).join("");
     return `
-      <section class="publication-echo-col">
-        <h3>本期刊出了什么</h3>
-        <div class="publication-echo-headline">
-          <span>${escapeHtml(echo.slotLabel || "头版")}</span>
-          <strong>《${escapeHtml(echo.headline)}》</strong>
+      <section class="publication-issued-paper">
+        <div class="publication-paper-name">世界未解之谜周刊</div>
+        <div class="publication-paper-meta"><span>${escapeHtml(echo.issueMeta || "")}</span><span>${escapeHtml(echo.slotLabel || "头版")}</span></div>
+        <div class="publication-paper-headline">《${escapeHtml(echo.headline)}》</div>
+        <div class="publication-paper-copy">公开口径：${escapeHtml(echo.stance)}</div>
+        <div class="publication-paper-copy">题材标签：${escapeHtml(echo.tags)}</div>
+        <div class="paper-body" aria-hidden="true" style="margin-top:10px;">
+          <span>**** **** **** **** **** ****</span>
+          <span>**** **** **** **** **** ****</span>
+          <span>**** **** **** **** **** ****</span>
+          <span>**** **** **** **** **** ****</span>
         </div>
-        <div class="publication-echo-copy">公开口径：${escapeHtml(echo.stance)}</div>
-        <div class="publication-echo-copy">题材标签：${escapeHtml(echo.tags)}</div>
+      </section>
+      <section class="publication-feedback-wall">
+        <h3 class="publication-wall-title">发刊回响墙</h3>
+        <div class="publication-echo-list">${cardHtml}</div>
+      </section>
+      <section class="publication-receipt">
+        <h3 class="publication-receipt-title">边缘收据</h3>
         <div class="publication-echo-stats">${statHtml}</div>
-      </section>
-      <section class="publication-echo-col">
-        <h3>谁有反应</h3>
-        <div class="publication-echo-list">${(echo.reactions || []).map(renderPublicationEchoItem).join("")}</div>
-      </section>
-      <section class="publication-echo-col">
-        <h3>写入下周</h3>
-        <div class="publication-echo-list">${(echo.writebacks || []).map(renderPublicationEchoItem).join("")}</div>
+        <div class="publication-echo-copy">写入下周</div>
+        <div class="publication-echo-list">${writebackHtml}</div>
       </section>`;
   }
 
   function settlePaper() {
+    const preflight = calculate(false);
+    if (preflight.placedCount < slots.length) {
+      const missingNames = slots.filter((slot) => !state.placed[slot.id]).map((slot) => slot.name);
+      el.resultBox.innerHTML = `
+        <div class="k">签批被驳回</div>
+        <div class="nm-tip">还缺 ${preflight.emptySlots} 个版位：${escapeHtml(missingNames.join("、"))}。补齐后才可送印。</div>`;
+      renderLiveStats();
+      showToastMessage(`欠版 ${preflight.emptySlots}：补齐头版主口径、副版证据链、副版异常钩子后才可送印。`, "warn");
+      return;
+    }
     const r = calculate(true);
     const placedPairs = getAllPlaced();
     const placed = placedPairs.map((x) => x.story);
@@ -8195,7 +8353,7 @@
     macro.声望 = Math.min(100, macro.声望 + Math.min(5, Math.floor(state.pendingClues.length / 2)));
     const profitClass = r.profit >= 0 ? "nm-ok" : "nm-bad";
     el.resultBox.innerHTML = `
-      <div class="k">本期净利润</div>
+      <div class="k">发刊收据</div>
       <div class="nm-big ${profitClass}">${fmtMoney(r.profit)}</div>
       <div class="nm-sum-grid">
         <div class="k">卖报</div><div class="v">${fmtMoney(r.circulationRevenue)}</div>
@@ -8205,7 +8363,7 @@
         <div class="k">实际销量</div><div class="v">${r.sold.toLocaleString("zh-CN")}</div>
         <div class="k">订阅（下期）</div><div class="v">${r.nextSubs.toLocaleString("zh-CN")}</div>
       </div>
-      <div class="nm-tip">乘数：质量 ${r.multipliers.mQuality.toFixed(2)} / 重复 ${r.multipliers.mCombo.toFixed(2)} / 多样性 ${r.multipliers.mDiversity.toFixed(2)} / 版位 ${r.multipliers.mLayout.toFixed(2)} / 偏科 ${r.multipliers.mBias.toFixed(2)}</div>
+      <div class="nm-tip">发刊预期：质量 ${r.multipliers.mQuality.toFixed(2)} / 来源连携 ${r.multipliers.mCombo.toFixed(2)} / 多样性 ${r.multipliers.mDiversity.toFixed(2)} / 头版权重 ${r.multipliers.mLayout.toFixed(2)} / 偏科 ${r.multipliers.mBias.toFixed(2)}</div>
       <div class="nm-tip" style="margin-top:6px;">同题报道：稿内基础合计 ${r.sumIntrinsicBase} → 上版有效合计 ${r.totalBaseValue}${r.topicFatigueLoss > 0 ? `（同题疲劳折损 ${r.topicFatigueLoss} 点基础值）` : "（无同题折损）"}</div>
       ${
         r.multipliers.mStanceClash < 1
@@ -8217,7 +8375,7 @@
     document.getElementById("summaryText").innerHTML = renderPublicationEcho(echo);
     document.getElementById("phase-editorial").classList.add("hidden");
     document.getElementById("phase-summary").classList.remove("hidden");
-    log(`报刊结算完成：利润 ${Math.round(r.profit)}`);
+    log(`本期已发刊：收据利润 ${Math.round(r.profit)}，回响已写入下周。`);
   }
 
   function nextWeek() {
@@ -8265,9 +8423,10 @@
     const clearBtn = document.getElementById("clearBtn");
     if (clearBtn) clearBtn.onclick = () => {
       for (const s of slots) state.placed[s.id] = null;
+      renderStories();
       renderSlots();
       renderLiveStats();
-      el.resultBox.innerHTML = `<div class="k">尚未结算</div><div class="nm-tip">版面已清空。</div>`;
+      el.resultBox.innerHTML = `<div class="k">待主编签批</div><div class="nm-tip">样张已撤下，请重新选择头版与副版。</div>`;
     };
     document.getElementById("settleBtn").onclick = settlePaper;
     document.getElementById("btnNextWeek").onclick = nextWeek;
@@ -8385,7 +8544,7 @@
       mk("雨夜轨道尽头的白灯：巡检员口供互相矛盾", ["Sport", "Humor"], "Bronze", 150, ["fabrication"], { sensational: 81, credibility: 27, mystery: 71, gaze: 52 }, "r4", 7),
       mk("联邦仓库短时断电：监控画面出现空白帧", ["Economy", "Gossip"], "Silver", 300, [], { sensational: 63, credibility: 66, mystery: 49, gaze: 29 }, "r1", 8),
       mk("午夜来信附带金属碎片：材质与军标不匹配", ["Military", "Shopping"], "Silver", 300, ["thin_source"], { sensational: 74, credibility: 52, mystery: 59, gaze: 37 }, "r3", 9),
-    ];
+    ].slice(0, slots.length);
   }
 
   function maybeEnterPaperLabMode() {
@@ -8399,7 +8558,7 @@
     state.pendingReports = createPaperLabReports();
     state.pendingClues = [];
     state.clues = [];
-    log("已进入报纸填充实验模式：拟物增强版面 + 新手引导与填入演示（效果 B）。");
+    log("已进入报纸填充实验模式：异常新闻编辑部工作台 + 1 头版 / 2 副版样张。");
     enterEditorialPhase();
     requestAnimationFrame(() => runPaperLabOnboarding());
     return true;

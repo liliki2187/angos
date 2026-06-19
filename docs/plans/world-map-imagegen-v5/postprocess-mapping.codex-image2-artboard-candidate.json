@@ -1,0 +1,65 @@
+{
+  "description": "Candidate mapping for the first Codex Image 2 world-map v5 fullscreen artboard. This is a review candidate, not an approved production benchmark.",
+  "assets": {
+    "wm_fullscreen_artboard_v5": {
+      "source": "image_gen/codex_image2_sources/2026-06-12/20260612-132524_codex-image2-angus-world-map-v5-artboard-candidate.png",
+      "mode": "cover",
+      "crop": null
+    },
+    "wm_bg_shell": {
+      "source": "image_gen/codex_image2_sources/2026-06-12/20260612-144349_codex-image2-wm-bg-shell-candidate.png",
+      "mode": "cover",
+      "crop": null
+    },
+    "wm_world_board_base": {
+      "source": "image_gen/codex_image2_sources/2026-06-12/20260612-144349_codex-image2-wm-world-board-base-candidate.png",
+      "mode": "cover",
+      "crop": null
+    },
+    "wm_left_index_panel": {
+      "source": "image_gen/codex_image2_sources/2026-06-12/20260612-184206_codex-image2-wm-left-index-panel-clean-alpha-candidate.png",
+      "mode": "stretch",
+      "crop": [84, 34, 784, 1584]
+    },
+    "wm_right_story_folder": {
+      "source": "image_gen/codex_image2_sources/2026-06-12/20260612-145556_codex-image2-wm-right-story-folder-alpha-candidate.png",
+      "mode": "stretch",
+      "crop": [86, 62, 890, 1387]
+    },
+    "wm_bottom_ticker": {
+      "source": "image_gen/codex_image2_sources/2026-06-12/20260612-184206_codex-image2-wm-bottom-ticker-clean-alpha-candidate.png",
+      "mode": "stretch",
+      "crop": [40, 264, 2091, 211]
+    },
+    "wm_region_strip_atlas": {
+      "source": "image_gen/codex_image2_sources/2026-06-12/20260612-184206_codex-image2-wm-region-strip-atlas-clean-alpha-candidate.png",
+      "mode": "stretch",
+      "crop": [58, 87, 816, 1553]
+    },
+    "wm_pin_atlas": {
+      "source": "image_gen/codex_image2_sources/2026-06-12/20260612-152851_codex-image2-wm-pin-atlas-alpha-candidate.png",
+      "mode": "contain",
+      "crop": null
+    },
+    "wm_ticket_atlas": {
+      "source": "image_gen/codex_image2_sources/2026-06-12/20260612-184206_codex-image2-wm-ticket-atlas-clean-alpha-candidate.png",
+      "mode": "stretch",
+      "crop": [59, 129, 906, 1296]
+    },
+    "wm_cta_enter_region_atlas": {
+      "source": "image_gen/codex_image2_sources/2026-06-12/20260612-152851_codex-image2-wm-cta-enter-region-atlas-alpha-candidate.png",
+      "mode": "stretch",
+      "crop": [35, 166, 817, 1477]
+    },
+    "wm_badge_atlas": {
+      "source": "image_gen/codex_image2_sources/2026-06-12/20260612-152851_codex-image2-wm-badge-atlas-alpha-candidate.png",
+      "mode": "contain",
+      "crop": null
+    },
+    "wm_story_preview_north_america": {
+      "source": "image_gen/codex_image2_sources/2026-06-12/20260612-152854_codex-image2-wm-story-preview-north-america-candidate.png",
+      "mode": "cover",
+      "crop": null
+    }
+  }
+}

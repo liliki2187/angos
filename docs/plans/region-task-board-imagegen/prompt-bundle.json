@@ -1,0 +1,238 @@
+{
+  "version": "2026-06-15-region-task-board-assetized-v1",
+  "purpose": "Generate production-ready bitmap components for the Angus region task board while preserving the user-approved visual style, palette, paper-map material, and central map mood from the current style draft.",
+  "source_visual_anchor": {
+    "path": "gd_project/Assets/ui/angus_packaging/region_task/region-task-board-clean-pixel-v2.png",
+    "role": "visual lock reference; preserve style, palette, material, central map mood, pixel-print texture, red/cyan route language"
+  },
+  "hard_visual_lock": [
+    "Do not redesign the visual style.",
+    "Do not change the main palette: deep navy editorial board, warm fresh ivory paper, red-orange anomaly/deadline accents, restrained cyan tracking accents.",
+    "Preserve the central map's low-poly paper texture, deep blue tone, faceted land shapes, red/cyan routes, crop marks, halftone dots, and high-end micro-pixel print grain.",
+    "Do not replace the approved map with procedural polygons, simplified vector continents, whitebox debug art, or locally drawn placeholder maps.",
+    "The new assets must look like production components derived from the current approved image, not a new UI concept.",
+    "Only remove or separate baked functional objects: labels, pins, fake buttons, fake task cards, tooltip boxes, and runtime text."
+  ],
+  "global_negative_prompt": [
+    "new color palette",
+    "different art direction",
+    "flat SaaS dashboard",
+    "generic web UI",
+    "mobile UI",
+    "old newspaper",
+    "yellowed archive paper",
+    "sepia parchment",
+    "tea stains",
+    "realistic old map",
+    "photographic noise",
+    "low resolution 8-bit pixel art",
+    "procedural polygon map",
+    "whitebox debug map",
+    "simplified vector continent",
+    "locally drawn placeholder map",
+    "readable text",
+    "Chinese characters",
+    "English UI labels",
+    "numbers",
+    "fake task state",
+    "fake map pins",
+    "fake clickable buttons",
+    "fake tooltip",
+    "watermark",
+    "signature"
+  ],
+  "production_contract": {
+    "desktop_canvas": [1920, 1080],
+    "common_instruction": "All outputs must be production components derived from the approved reference, not a redesigned UI. Use the same composition logic, material language, palette, camera/proportion, clean graphic edges, 2-4px micro-pixel grain clusters, blocky halftone, and red/cyan print misregistration. Do not invent new UI style.",
+    "text_policy": "Never bake task names, Chinese, English UI labels, numbers, button labels, fake metadata, or placeholder text into images. Runtime text belongs to Godot safe rects only.",
+    "state_policy": "Clickable assets require explicit state frames for default/normal, hover, pressed or selected, disabled, and focus/loading where applicable.",
+    "map_policy": "The clean map base is a same-source retouch of the approved map: same land silhouette, same camera/proportion, same low-poly paper material. It must not be a procedural polygon map, simplified vector continent, whitebox debug image, or locally drawn placeholder. Only remove baked runtime objects. Official interactive route highlights belong to rt_map_route_layer or Godot runtime layers."
+  },
+  "jobs": [
+    {
+      "id": "01_rt_board_shell",
+      "asset_id": "rt_board_shell",
+      "output": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-board-shell.png",
+      "type": "opaque bitmap",
+      "target_size": [1920, 1080],
+      "reference": "source_visual_anchor",
+      "content_rects": [],
+      "no_text_rects": [{"id": "whole_background", "rect": [0, 0, 1920, 1080]}],
+      "prompt": "Derive a clean full-screen board shell from the approved Angus region task board reference. Preserve the same deep navy editorial board, subtle red/cyan print marks, crop marks, premium micro-pixel grain, and magazine workbench feeling. This is background shell only: no readable text, no fake controls, no fake task cards, no pins, no tooltips, no new layout concept. Leave clear visual support for runtime left task index, central map, right detail sheet, compact HUD, and CTA components."
+    },
+    {
+      "id": "02_rt_map_base_clean",
+      "asset_id": "rt_map_base_clean",
+      "output": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-map-base-clean.png",
+      "type": "opaque bitmap",
+      "target_size": [960, 742],
+      "runtime_rect": [492, 126, 960, 742],
+      "reference": "source_visual_anchor",
+      "content_rects": [],
+      "no_text_rects": [{"id": "map_body", "rect": [0, 0, 960, 742]}],
+      "prompt": "Derive and retouch a clean map-base component from the approved Angus region task board map. Preserve the same composition, land silhouette, camera/proportion, deep navy low-poly paper material, faceted land shapes, editorial crop marks, subtle halftone, red/cyan misregistration, and high-end micro-pixel print grain. This is not a new map style, not a new map layout, not a procedural polygon map, not simplified vector continent art, and not whitebox placeholder art. Remove all baked runtime elements: no pins, no white task labels, no yellow tooltip, no task names, no location labels, no readable text, no fake buttons, no fake UI overlays. Only keep very low-weight non-interactive route-like texture traces if already part of the map mood; official runtime route highlights must be separated into rt_map_route_layer or Godot layers."
+    },
+    {
+      "id": "03_rt_map_route_layer",
+      "asset_id": "rt_map_route_layer",
+      "output": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-map-route-layer.png",
+      "type": "transparent overlay",
+      "target_size": [960, 742],
+      "runtime_rect": [492, 126, 960, 742],
+      "reference": "source_visual_anchor",
+      "content_rects": [],
+      "no_text_rects": [],
+      "prompt": "Generate a transparent PNG route overlay for the approved Angus region task board map. Preserve the reference's red-orange and cyan printed-route language, slight offset print registration, micro-pixel edges, and editorial map-wall feel. Output route strokes and small route joints only, aligned to the clean map base. No land, no paper background, no pins, no labels, no tooltip, no readable text, no fake task markers, no buttons."
+    },
+    {
+      "id": "04_rt_pin_atlas",
+      "asset_id": "rt_pin_atlas",
+      "output": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-pin-atlas.png",
+      "type": "transparent atlas",
+      "target_size": [384, 64],
+      "frame_size": [64, 64],
+      "frame_order": ["normal", "hover", "selected", "locked", "completed", "urgent"],
+      "anchor_point": [32, 56],
+      "label_anchor": [40, 16],
+      "collision_radius": 44,
+      "frames": ["normal", "hover", "selected", "locked", "completed", "urgent"],
+      "reference": "source_visual_anchor",
+      "prompt": "Generate a transparent PNG atlas of six region task map pins derived from the current Angus region task board visual style. Preserve the existing red/cyan/ivory/navy printed-paper micro-pixel look. Frames: normal, hover, selected, locked, completed, urgent/deadline. All frames must share the same anchor point, scale, and silhouette family. They should look like editorial map pins or pinned paper markers from the same current image, not generic icons. Symbols only. No letters, no numbers, no readable text, no task labels."
+    },
+    {
+      "id": "05_rt_pin_label_atlas",
+      "asset_id": "rt_pin_label_atlas",
+      "output": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-pin-label-atlas.png",
+      "type": "transparent atlas",
+      "target_size": [600, 72],
+      "frame_size": [200, 72],
+      "frame_order": ["hover", "selected", "disabled"],
+      "content_rects": [{"id": "short_label", "rect": [22, 14, 150, 38]}],
+      "no_text_rects": [{"id": "corner_halftone", "rect": [154, 42, 34, 18]}],
+      "frames": ["hover", "selected", "disabled"],
+      "reference": "source_visual_anchor",
+      "prompt": "Generate a transparent PNG atlas of short map label plates for the Angus region task board. They must match the current image's fresh ivory printed paper, dark navy outline, subtle halftone corner dots, red/cyan misregistration, and micro-pixel grain. Frames: hover, selected, disabled. These are empty runtime text plates only. Keep clean low-noise rectangular text-safe areas. No baked text, no numbers, no pins, no long task card, no tooltip bubble style."
+    },
+    {
+      "id": "06_rt_task_card_atlas",
+      "asset_id": "rt_task_card_atlas",
+      "output": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-task-card-atlas.png",
+      "type": "transparent atlas or nine-slice frames",
+      "target_size": [384, 720],
+      "frame_size": [384, 120],
+      "frame_order": ["normal", "hover", "selected", "unavailable", "assigned", "deadline"],
+      "content_rects": [
+        {"id": "title", "rect": [72, 16, 248, 28], "max_lines": 1},
+        {"id": "meta", "rect": [72, 48, 260, 42], "max_lines": 2},
+        {"id": "status", "rect": [292, 14, 58, 28], "max_lines": 1}
+      ],
+      "no_text_rects": [
+        {"id": "left_tab", "rect": [0, 0, 56, 120]},
+        {"id": "bookmark", "rect": [332, 0, 38, 48]},
+        {"id": "halftone_corner", "rect": [290, 78, 70, 28]}
+      ],
+      "frames": ["normal", "hover", "selected", "unavailable", "assigned", "deadline"],
+      "reference": "source_visual_anchor",
+      "prompt": "Generate production task-card base frames for the left region task archive list, strictly matching the current Angus region task board visual style. Fresh ivory magazine paper, dark navy editorial backing, red/cyan side tabs, subtle print grain, halftone only near corners, crisp micro-pixel edges. Frames: normal, hover, selected, unavailable, assigned, deadline. Each frame must have clean orthographic text-safe slots for title, meta, and status badge, with no decorative element crossing the writing area. No readable text, no fake task names, no numbers, no checkboxes, no web-card look."
+    },
+    {
+      "id": "07_rt_detail_sheet_base",
+      "asset_id": "rt_detail_sheet_base",
+      "output": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-detail-sheet-base.png",
+      "type": "transparent or opaque component",
+      "target_size": [386, 840],
+      "runtime_rect": [1482, 128, 386, 840],
+      "content_rects": [
+        {"id": "title", "rect": [34, 54, 300, 54], "max_lines": 2},
+        {"id": "summary", "rect": [34, 132, 306, 150], "max_lines": 5},
+        {"id": "meta", "rect": [34, 306, 306, 90], "max_lines": 3},
+        {"id": "special_status", "rect": [34, 420, 306, 94], "max_lines": 3}
+      ],
+      "no_text_rects": [
+        {"id": "clip", "rect": [128, 0, 132, 46]},
+        {"id": "right_tab", "rect": [334, 82, 42, 122]},
+        {"id": "bottom_stamp", "rect": [214, 604, 112, 92]},
+        {"id": "cta_slot", "rect": [44, 710, 318, 82]}
+      ],
+      "reference": "source_visual_anchor",
+      "prompt": "Generate the right-side selected-task detail sheet for the Angus region task board, preserving the current image's visual language and palette. It should feel like a fresh printed editorial sign-off sheet or dossier page from the same board. The outer object may have layered paper depth, tabs, clips, and subtle angled backing sheets, but every runtime text-bearing area on the front sheet must be perfectly orthographic, horizontal, rectangular, and low-noise. Reserve clear slots for title, summary, meta, and special status. Leave the bottom CTA slot visually ready but empty; the actual CTA image and CTA label belong only to rt_cta_dispatch_atlas and Godot runtime text. No readable text, no fake task fields, no numbers, no slanted writing area, no old archive paper."
+    },
+    {
+      "id": "08_rt_cta_dispatch_atlas",
+      "asset_id": "rt_cta_dispatch_atlas",
+      "output": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-cta-dispatch-atlas.png",
+      "type": "transparent atlas",
+      "target_size": [1920, 64],
+      "frame_size": [320, 64],
+      "frame_order": ["default", "hover", "pressed", "disabled", "focus", "loading"],
+      "content_rects": [{"id": "label", "rect": [44, 12, 214, 38], "max_lines": 1}],
+      "no_text_rects": [
+        {"id": "arrow", "rect": [268, 10, 34, 42]},
+        {"id": "bottom_stripe", "rect": [0, 54, 320, 10]}
+      ],
+      "frames": ["default", "hover", "pressed", "disabled", "focus", "loading"],
+      "reference": "source_visual_anchor",
+      "prompt": "Generate a transparent PNG atlas for the main dispatch sign-off CTA button in the Angus region task board. It must look like an in-world editorial action plate or sign-off stamp area from the current approved image, not a generic web button. Preserve deep navy, red-orange, cyan, fresh ivory paper, red/cyan print misregistration, halftone, and micro-pixel grain. Frames: default, hover, pressed, disabled, focus, loading. Pressed must visibly feel slightly stamped/down. Keep a clean center label content rectangle. No baked label text, no numbers."
+    },
+    {
+      "id": "09_rt_advance_day_atlas",
+      "asset_id": "rt_advance_day_atlas",
+      "output": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-advance-day-atlas.png",
+      "type": "transparent atlas",
+      "target_size": [1416, 66],
+      "frame_size": [236, 66],
+      "frame_order": ["default", "hover", "pressed", "disabled", "focus", "confirming"],
+      "content_rects": [
+        {"id": "label", "rect": [78, 12, 86, 24], "max_lines": 1},
+        {"id": "sublabel", "rect": [80, 39, 82, 16], "max_lines": 1}
+      ],
+      "no_text_rects": [
+        {"id": "calendar_icon", "rect": [18, 8, 48, 48]},
+        {"id": "arrow", "rect": [184, 12, 38, 42]},
+        {"id": "right_divider", "rect": [164, 12, 2, 42]}
+      ],
+      "frames": ["default", "hover", "pressed", "disabled", "focus", "confirming"],
+      "reference": "source_visual_anchor",
+      "prompt": "Generate a transparent PNG atlas for the global advance-day schedule button in the Angus region task board. It must read as a global calendar / schedule control in the bottom schedule strip, not as the red task dispatch CTA. Preserve the current image's deep navy editorial board, gold schedule outline, restrained cyan details, fresh ivory paper accents, red/cyan print misregistration, halftone, and micro-pixel grain. Frames: default, hover, pressed, disabled, focus, confirming. Confirming should visibly differ but still keep the same button footprint. Include an icon zone for calendar or page-turn symbol and an arrow zone, but leave clean runtime text slots. No baked label text, no numbers, no task CTA red tray, no fake task state."
+    },
+    {
+      "id": "10_rt_hud_strip",
+      "asset_id": "rt_hud_strip",
+      "output": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-hud-strip.png",
+      "type": "nine-slice component",
+      "target_size": [1856, 72],
+      "runtime_rect": [32, 24, 1856, 72],
+      "content_rects": [
+        {"id": "title", "rect": [32, 14, 420, 28], "max_lines": 1},
+        {"id": "week_status", "rect": [472, 14, 260, 28], "max_lines": 1},
+        {"id": "macro_badges", "rect": [760, 12, 680, 34], "max_lines": 1},
+        {"id": "return_action", "rect": [1590, 10, 220, 38], "max_lines": 1}
+      ],
+      "hit_rects": [{"id": "return_action", "rect": [1580, 6, 240, 48]}],
+      "hover_rects": [{"id": "return_action", "rect": [1574, 0, 252, 60]}],
+      "reference": "source_visual_anchor",
+      "prompt": "Generate one compact top HUD/channel strip component for the Angus region task board, derived from the current image's deep navy editorial board style. It must be low-weight and no taller than a compact status strip, preserving the palette and print texture without stealing attention from the central map. Include quiet zones for runtime title, week, remaining days, small macro badges, and return action. The return action is a runtime hit area, not baked text. No readable text, no fake UI labels, no large dashboard cards, no new color palette."
+    },
+    {
+      "id": "11_rt_filter_tab_atlas",
+      "asset_id": "rt_filter_tab_atlas",
+      "output": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-filter-tab-atlas.png",
+      "type": "transparent atlas",
+      "target_size": [480, 48],
+      "frame_size": [120, 48],
+      "frame_order": ["default", "hover", "selected", "disabled"],
+      "content_rects": [{"id": "label", "rect": [16, 10, 88, 24], "max_lines": 1}],
+      "no_text_rects": [],
+      "frames": ["default", "hover", "selected", "disabled"],
+      "reference": "source_visual_anchor",
+      "prompt": "Generate a transparent PNG atlas of compact filter tabs for the left task archive. They must match the current Angus region task board style: fresh ivory paper, subtle dark ink edge, restrained red/cyan accent, editorial print grain, micro-pixel edges. Frames: default, hover, selected, disabled. Keep label areas clean and orthographic. No baked text, no numbers, no web pill buttons."
+    }
+  ],
+  "review_gates": [
+    "Gate 1: Visual lock check. New assets must still look like the current approved region task board style.",
+    "Gate 2: No baked dynamic text, labels, fake buttons, fake pins, or fake task states.",
+    "Gate 3: UI production check: every text-bearing component has clean content rects and no-text rects.",
+    "Gate 4: Interaction check: every clickable component has state frames or an equivalent runtime state layer.",
+    "Gate 5: Screenshot check against the current reference image: the central map, palette, paper material, and red/cyan relationship remain recognizably the same."
+  ]
+}

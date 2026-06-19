@@ -1,0 +1,9 @@
+{
+  "assets": {
+    "wm_fullscreen_artboard_v6h_pixel_strong_bright_paper": {
+      "source": "image_gen/codex_image2_sources/2026-06-15/20260615-171641_angus-world-map-v6h-pixel-strong-bright-paper.png",
+      "mode": "cover",
+      "crop": null
+    }
+  }
+}

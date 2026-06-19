@@ -1,7 +1,12 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scenes/gameplay/weekly_run/phases/WeeklyRunExplorePhase.gd" id="1_explore_phase"]
-[ext_resource type="PackedScene" path="res://scenes/gameplay/weekly_run/components/WeeklyRunScrollableText.tscn" id="2_scrollable_text"]
+[ext_resource type="Script" path="res://scenes/gameplay/weekly_run/components/WeeklyRunMapCanvas.gd" id="2_map_canvas"]
+[ext_resource type="Texture2D" path="res://Assets/ui/angus_packaging/dispatch/dispatch-signoff-desk-v2.png" id="3_desk"]
+[ext_resource type="Texture2D" path="res://Assets/ui/angus_packaging/dispatch/dispatch-red-stamp-blank-v1.png" id="4_stamp"]
+[ext_resource type="Texture2D" path="res://Assets/ui/angus_packaging/world_map/global-channel-flat-magazine-map-v5.png" id="5_world_channel"]
+[ext_resource type="Texture2D" path="res://Assets/ui/angus_packaging/world_map/global-channel-story-preview-v1.png" id="6_story_preview"]
+[ext_resource type="Texture2D" path="res://Assets/ui/angus_packaging/world_map/global-channel-editor-sticker-v1.png" id="7_editor_sticker"]
 
 [node name="WeeklyRunExplorePhase" type="MarginContainer"]
 layout_mode = 3
@@ -12,214 +17,579 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_explore_phase")
 
-[node name="RootHBox" type="HBoxContainer" parent="."]
+[node name="RootVBox" type="VBoxContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 16
+theme_override_constants/separation = 9
 
-[node name="LeftVBox" type="VBoxContainer" parent="RootHBox"]
+[node name="StagePanel" type="PanelContainer" parent="RootVBox"]
+layout_mode = 2
+
+[node name="StageHBox" type="HBoxContainer" parent="RootVBox/StagePanel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="StageTitleBox" type="VBoxContainer" parent="RootVBox/StagePanel/StageHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.9
-theme_override_constants/separation = 16
 
-[node name="RegionPanel" type="PanelContainer" parent="RootHBox/LeftVBox"]
+[node name="StageKicker" type="Label" parent="RootVBox/StagePanel/StageHBox/StageTitleBox"]
 layout_mode = 2
-size_flags_vertical = 2
+theme_override_colors/font_color = Color(0.54, 0.78, 0.82, 1)
+text = "EXPLORE / WORLD MYSTERIES WEEKLY"
 
-[node name="RegionVBox" type="VBoxContainer" parent="RootHBox/LeftVBox/RegionPanel"]
+[node name="StageTitle" type="Label" parent="RootVBox/StagePanel/StageHBox/StageTitleBox"]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_font_sizes/font_size = 28
+text = "本周取材地图"
 
-[node name="RegionTitle" type="Label" parent="RootHBox/LeftVBox/RegionPanel/RegionVBox"]
+[node name="StageNote" type="Label" parent="RootVBox/StagePanel/StageHBox/StageTitleBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "区域与机会池"
-
-[node name="FilterRow" type="HBoxContainer" parent="RootHBox/LeftVBox/RegionPanel/RegionVBox"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="BtnFilterSci" type="Button" parent="RootHBox/LeftVBox/RegionPanel/RegionVBox/FilterRow"]
-layout_mode = 2
-text = "科学纪实"
-
-[node name="BtnFilterOccult" type="Button" parent="RootHBox/LeftVBox/RegionPanel/RegionVBox/FilterRow"]
-layout_mode = 2
-text = "神秘玄学"
-
-[node name="BtnFilterPop" type="Button" parent="RootHBox/LeftVBox/RegionPanel/RegionVBox/FilterRow"]
-layout_mode = 2
-text = "大众热度"
-
-[node name="RegionScroll" type="ScrollContainer" parent="RootHBox/LeftVBox/RegionPanel/RegionVBox"]
-custom_minimum_size = Vector2(0, 180)
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="RegionList" type="VBoxContainer" parent="RootHBox/LeftVBox/RegionPanel/RegionVBox/RegionScroll"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 8
-
-[node name="NodePanel" type="PanelContainer" parent="RootHBox/LeftVBox"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="NodeVBox" type="VBoxContainer" parent="RootHBox/LeftVBox/NodePanel"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="NodeTitle" type="Label" parent="RootHBox/LeftVBox/NodePanel/NodeVBox"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "探索节点"
-
-[node name="RegionHintLabel" type="Label" parent="RootHBox/LeftVBox/NodePanel/NodeVBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.78, 0.76, 0.82, 1)
-text = "请选择区域"
+theme_override_colors/font_color = Color(0.78, 0.76, 0.68, 1)
+text = "先选择取材区域，再进入区域审任务。"
 autowrap_mode = 3
 
-[node name="NodeScroll" type="ScrollContainer" parent="RootHBox/LeftVBox/NodePanel/NodeVBox"]
-custom_minimum_size = Vector2(0, 240)
+[node name="StageStatus" type="Label" parent="RootVBox/StagePanel/StageHBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(250, 0)
+horizontal_alignment = 2
+theme_override_font_sizes/font_size = 20
+text = "剩余 7 天"
+
+[node name="WorldView" type="HBoxContainer" parent="RootVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="WorldIndexPanel" type="PanelContainer" parent="RootVBox/WorldView"]
+layout_mode = 2
+custom_minimum_size = Vector2(306, 0)
+size_flags_vertical = 3
+
+[node name="WorldIndexVBox" type="VBoxContainer" parent="RootVBox/WorldView/WorldIndexPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="WorldIndexTitle" type="Label" parent="RootVBox/WorldView/WorldIndexPanel/WorldIndexVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "全球频道"
+
+[node name="WorldIndexSubtitle" type="Label" parent="RootVBox/WorldView/WorldIndexPanel/WorldIndexVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.66, 0.78, 0.78, 1)
+text = "本周可监听区域"
+autowrap_mode = 3
+
+[node name="RegionScroll" type="ScrollContainer" parent="RootVBox/WorldView/WorldIndexPanel/WorldIndexVBox"]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="NodeList" type="VBoxContainer" parent="RootHBox/LeftVBox/NodePanel/NodeVBox/NodeScroll"]
+[node name="RegionList" type="VBoxContainer" parent="RootVBox/WorldView/WorldIndexPanel/WorldIndexVBox/RegionScroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 8
 
-[node name="MiddleVBox" type="VBoxContainer" parent="RootHBox"]
+[node name="WorldIndexFooter" type="RichTextLabel" parent="RootVBox/WorldView/WorldIndexPanel/WorldIndexVBox"]
+custom_minimum_size = Vector2(0, 138)
+layout_mode = 2
+bbcode_enabled = true
+scroll_active = false
+text = ""
+
+[node name="WorldMapPanel" type="PanelContainer" parent="RootVBox/WorldView"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.98
-theme_override_constants/separation = 16
+size_flags_stretch_ratio = 2.28
 
-[node name="StaffPanel" type="PanelContainer" parent="RootHBox/MiddleVBox"]
+[node name="WorldMapStack" type="Control" parent="RootVBox/WorldView/WorldMapPanel"]
 layout_mode = 2
-size_flags_vertical = 2
+size_flags_vertical = 3
 
-[node name="StaffVBox" type="VBoxContainer" parent="RootHBox/MiddleVBox/StaffPanel"]
+[node name="WorldMapBackdrop" type="TextureRect" parent="RootVBox/WorldView/WorldMapPanel/WorldMapStack"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_world_channel")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="WorldMapCanvas" type="Control" parent="RootVBox/WorldView/WorldMapPanel/WorldMapStack"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_map_canvas")
+
+[node name="WorldPinLayer" type="Control" parent="RootVBox/WorldView/WorldMapPanel/WorldMapStack"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WorldEditorSticker" type="TextureRect" parent="RootVBox/WorldView/WorldMapPanel/WorldMapStack"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.84
+anchor_top = 0.02
+anchor_right = 0.98
+anchor_bottom = 0.22
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("7_editor_sticker")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="WorldDetailPanel" type="PanelContainer" parent="RootVBox/WorldView"]
+layout_mode = 2
+custom_minimum_size = Vector2(414, 0)
+size_flags_vertical = 3
+
+[node name="WorldDetailVBox" type="VBoxContainer" parent="RootVBox/WorldView/WorldDetailPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="WorldDetailKicker" type="Label" parent="RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.78, 0.82, 1)
+text = "频道摘录"
+
+[node name="RegionDetailTitle" type="Label" parent="RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+autowrap_mode = 3
+text = "北美禁区带"
+
+[node name="WorldStoryPreview" type="TextureRect" parent="RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 146)
+texture = ExtResource("6_story_preview")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="WorldTicketVBox" type="VBoxContainer" parent="RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="WorldDeadlineTicket" type="Label" parent="RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox/WorldTicketVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 52)
+text = "红条截稿"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="WorldChainTicket" type="Label" parent="RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox/WorldTicketVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 52)
+text = "青条追踪"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="RegionDetailText" type="RichTextLabel" parent="RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+scroll_active = true
+text = ""
+
+[node name="WorldCtaHint" type="RichTextLabel" parent="RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 34)
+bbcode_enabled = true
+scroll_active = false
+text = ""
+
+[node name="EnterRegionBtn" type="Button" parent="RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 58)
+text = "进入北美禁区带"
+
+[node name="WorldProofStrip" type="PanelContainer" parent="RootVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 88)
+
+[node name="WorldProofHBox" type="HBoxContainer" parent="RootVBox/WorldProofStrip"]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="WorldLogTitle" type="Label" parent="RootVBox/WorldProofStrip/WorldProofHBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(112, 0)
+text = "今日回条"
+vertical_alignment = 1
+
+[node name="WorldLogChip1" type="Label" parent="RootVBox/WorldProofStrip/WorldProofHBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(218, 0)
+size_flags_horizontal = 3
+text = "截稿回条"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="WorldLogChip2" type="Label" parent="RootVBox/WorldProofStrip/WorldProofHBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(218, 0)
+size_flags_horizontal = 3
+text = "追踪回条"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="WorldLogChip3" type="Label" parent="RootVBox/WorldProofStrip/WorldProofHBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(218, 0)
+size_flags_horizontal = 3
+text = "已选题"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="WorldProofText" type="Label" parent="RootVBox/WorldProofStrip/WorldProofHBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(260, 0)
+size_flags_horizontal = 3
+text = "进入任务台"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="RegionView" type="MarginContainer" parent="RootVBox"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RegionHBox" type="HBoxContainer" parent="RootVBox/RegionView"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 14
+
+[node name="NodeIndexPanel" type="PanelContainer" parent="RootVBox/RegionView/RegionHBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(280, 0)
+size_flags_vertical = 3
+
+[node name="NodeIndexVBox" type="VBoxContainer" parent="RootVBox/RegionView/RegionHBox/NodeIndexPanel"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="StaffTitle" type="Label" parent="RootHBox/MiddleVBox/StaffPanel/StaffVBox"]
+[node name="BackToWorldBtn" type="Button" parent="RootVBox/RegionView/RegionHBox/NodeIndexPanel/NodeIndexVBox"]
 layout_mode = 2
+custom_minimum_size = Vector2(0, 40)
+text = "返回取材地图"
+
+[node name="NodeIndexTitle" type="Label" parent="RootVBox/RegionView/RegionHBox/NodeIndexPanel/NodeIndexVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "任务档案"
+
+[node name="FilterRow" type="HBoxContainer" parent="RootVBox/RegionView/RegionHBox/NodeIndexPanel/NodeIndexVBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BtnFilterSci" type="Button" parent="RootVBox/RegionView/RegionHBox/NodeIndexPanel/NodeIndexVBox/FilterRow"]
+layout_mode = 2
+text = "纪实"
+
+[node name="BtnFilterOccult" type="Button" parent="RootVBox/RegionView/RegionHBox/NodeIndexPanel/NodeIndexVBox/FilterRow"]
+layout_mode = 2
+text = "玄学"
+
+[node name="BtnFilterPop" type="Button" parent="RootVBox/RegionView/RegionHBox/NodeIndexPanel/NodeIndexVBox/FilterRow"]
+layout_mode = 2
+text = "热度"
+
+[node name="NodeScroll" type="ScrollContainer" parent="RootVBox/RegionView/RegionHBox/NodeIndexPanel/NodeIndexVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="NodeList" type="VBoxContainer" parent="RootVBox/RegionView/RegionHBox/NodeIndexPanel/NodeIndexVBox/NodeScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="RegionMapPanel" type="PanelContainer" parent="RootVBox/RegionView/RegionHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.45
+
+[node name="RegionMapStack" type="Control" parent="RootVBox/RegionView/RegionHBox/RegionMapPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RegionMapBackdrop" type="TextureRect" parent="RootVBox/RegionView/RegionHBox/RegionMapPanel/RegionMapStack"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="RegionRouteLayer" type="TextureRect" parent="RootVBox/RegionView/RegionHBox/RegionMapPanel/RegionMapStack"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="RegionMapCanvas" type="Control" parent="RootVBox/RegionView/RegionHBox/RegionMapPanel/RegionMapStack"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_map_canvas")
+
+[node name="NodePinLayer" type="Control" parent="RootVBox/RegionView/RegionHBox/RegionMapPanel/RegionMapStack"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RegionTaskPanel" type="PanelContainer" parent="RootVBox/RegionView/RegionHBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(420, 0)
+size_flags_vertical = 3
+
+[node name="RegionTaskVBox" type="VBoxContainer" parent="RootVBox/RegionView/RegionHBox/RegionTaskPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="RegionTaskTitle" type="Label" parent="RootVBox/RegionView/RegionHBox/RegionTaskPanel/RegionTaskVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+autowrap_mode = 3
+text = "选择取材任务"
+
+[node name="RegionTaskText" type="RichTextLabel" parent="RootVBox/RegionView/RegionHBox/RegionTaskPanel/RegionTaskVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+scroll_active = true
+text = ""
+
+[node name="OpenDispatchBtn" type="Button" parent="RootVBox/RegionView/RegionHBox/RegionTaskPanel/RegionTaskVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 48)
+text = "进入派遣签批"
+
+[node name="DispatchView" type="Control" parent="RootVBox"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DispatchDeskArt" type="TextureRect" parent="RootVBox/DispatchView"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_desk")
+modulate = Color(0.75, 0.78, 0.72, 0.46)
+expand_mode = 1
+stretch_mode = 6
+
+[node name="DispatchShade" type="ColorRect" parent="RootVBox/DispatchView"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.018, 0.032, 0.040, 0.44)
+
+[node name="DispatchContent" type="MarginContainer" parent="RootVBox/DispatchView"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 92
+
+[node name="DispatchShell" type="HBoxContainer" parent="RootVBox/DispatchView/DispatchContent"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="DispatchMissionPanel" type="PanelContainer" parent="RootVBox/DispatchView/DispatchContent/DispatchShell"]
+layout_mode = 2
+custom_minimum_size = Vector2(500, 0)
+size_flags_vertical = 3
+
+[node name="DispatchMissionVBox" type="VBoxContainer" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchMissionPanel"]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="DispatchBackBtn" type="Button" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchMissionPanel/DispatchMissionVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 38)
+text = "返回区域任务台"
+
+[node name="MissionKicker" type="Label" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchMissionPanel/DispatchMissionVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.78, 0.82, 1)
+text = "任务签批文件"
+
+[node name="DispatchNodeTitleLabel" type="Label" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchMissionPanel/DispatchMissionVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+autowrap_mode = 3
+text = "选择一个取材任务"
+
+[node name="DispatchNodeFactText" type="RichTextLabel" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchMissionPanel/DispatchMissionVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = false
+scroll_active = true
+text = ""
+
+[node name="DispatchDicePoolPanel" type="PanelContainer" parent="RootVBox/DispatchView/DispatchContent/DispatchShell"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.75
+
+[node name="DispatchDicePoolVBox" type="VBoxContainer" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchDicePoolPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="DicePoolHeader" type="HBoxContainer" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchDicePoolPanel/DispatchDicePoolVBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="DicePoolTitle" type="Label" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchDicePoolPanel/DispatchDicePoolVBox/DicePoolHeader"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 22
-text = "派遣编组"
+text = "本次骰池工作台"
 
-[node name="SelectedStaffLabel" type="Label" parent="RootHBox/MiddleVBox/StaffPanel/StaffVBox"]
+[node name="SelectedStaffLabel" type="Label" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchDicePoolPanel/DispatchDicePoolVBox/DicePoolHeader"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.78, 0.76, 0.82, 1)
-text = "已选择：0 / 3"
+custom_minimum_size = Vector2(120, 0)
+horizontal_alignment = 2
+text = "已选择 0 / 3"
 
-[node name="StaffScroll" type="ScrollContainer" parent="RootHBox/MiddleVBox/StaffPanel/StaffVBox"]
-custom_minimum_size = Vector2(0, 220)
+[node name="SelectedSlotRow" type="HBoxContainer" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchDicePoolPanel/DispatchDicePoolVBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SelectedSlot1" type="Button" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchDicePoolPanel/DispatchDicePoolVBox/SelectedSlotRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 72)
+size_flags_horizontal = 3
+text = "空席位 1"
+
+[node name="SelectedSlot2" type="Button" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchDicePoolPanel/DispatchDicePoolVBox/SelectedSlotRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 72)
+size_flags_horizontal = 3
+text = "空席位 2"
+
+[node name="SelectedSlot3" type="Button" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchDicePoolPanel/DispatchDicePoolVBox/SelectedSlotRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 72)
+size_flags_horizontal = 3
+text = "空席位 3"
+
+[node name="StaffScroll" type="ScrollContainer" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchDicePoolPanel/DispatchDicePoolVBox"]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="StaffGrid" type="GridContainer" parent="RootHBox/MiddleVBox/StaffPanel/StaffVBox/StaffScroll"]
+[node name="StaffGrid" type="GridContainer" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchDicePoolPanel/DispatchDicePoolVBox/StaffScroll"]
 layout_mode = 2
 size_flags_horizontal = 3
-columns = 2
+columns = 3
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
 
-[node name="MaterialsPanel" type="PanelContainer" parent="RootHBox/MiddleVBox"]
+[node name="DispatchReviewPanel" type="PanelContainer" parent="RootVBox/DispatchView/DispatchContent/DispatchShell"]
 layout_mode = 2
-size_flags_vertical = 2
-
-[node name="MaterialsVBox" type="VBoxContainer" parent="RootHBox/MiddleVBox/MaterialsPanel"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="MaterialsTitle" type="Label" parent="RootHBox/MiddleVBox/MaterialsPanel/MaterialsVBox"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "本周新增素材"
-
-[node name="MaterialScroll" type="ScrollContainer" parent="RootHBox/MiddleVBox/MaterialsPanel/MaterialsVBox"]
-custom_minimum_size = Vector2(0, 220)
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="MaterialList" type="VBoxContainer" parent="RootHBox/MiddleVBox/MaterialsPanel/MaterialsVBox/MaterialScroll"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 8
-
-[node name="RightVBox" type="VBoxContainer" parent="RootHBox"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 1.12
-theme_override_constants/separation = 16
-
-[node name="MissionPanel" type="PanelContainer" parent="RootHBox/RightVBox"]
-layout_mode = 2
-size_flags_vertical = 2
-
-[node name="MissionVBox" type="VBoxContainer" parent="RootHBox/RightVBox/MissionPanel"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="MissionTitle" type="Label" parent="RootHBox/RightVBox/MissionPanel/MissionVBox"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "派遣简报"
-
-[node name="MissionScroll" parent="RootHBox/RightVBox/MissionPanel/MissionVBox" instance=ExtResource("2_scrollable_text")]
-custom_minimum_size = Vector2(0, 160)
-layout_mode = 2
+custom_minimum_size = Vector2(454, 0)
 size_flags_vertical = 3
 
-[node name="ProbabilityLabel" type="Label" parent="RootHBox/RightVBox/MissionPanel/MissionVBox"]
+[node name="DispatchReviewVBox" type="VBoxContainer" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchReviewPanel"]
 layout_mode = 2
-text = "理论结果：等待选点"
+theme_override_constants/separation = 10
 
-[node name="DiceText" type="RichTextLabel" parent="RootHBox/RightVBox/MissionPanel/MissionVBox"]
+[node name="ReviewTitle" type="Label" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchReviewPanel/DispatchReviewVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "签批复核纸"
+
+[node name="ProbabilityLabel" type="Label" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchReviewPanel/DispatchReviewVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 19
+autowrap_mode = 3
+text = "有效点：等待选人"
+
+[node name="DiceText" type="RichTextLabel" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchReviewPanel/DispatchReviewVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 214)
+bbcode_enabled = true
+fit_content = false
+scroll_active = true
+text = ""
+
+[node name="ResultLabel" type="Label" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchReviewPanel/DispatchReviewVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 96)
+size_flags_vertical = 3
+autowrap_mode = 3
+text = "等待签批"
+
+[node name="DispatchStampTexture" type="TextureRect" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchReviewPanel/DispatchReviewVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 54)
+texture = ExtResource("4_stamp")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ExecuteBtn" type="Button" parent="RootVBox/DispatchView/DispatchContent/DispatchShell/DispatchReviewPanel/DispatchReviewVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 64)
+text = "签批外勤"
+
+[node name="DispatchSummaryPanel" type="PanelContainer" parent="RootVBox/DispatchView"]
+layout_mode = 1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = -72.0
+offset_right = -22.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="DispatchSummaryText" type="RichTextLabel" parent="RootVBox/DispatchView/DispatchSummaryPanel"]
 layout_mode = 2
 bbcode_enabled = true
 fit_content = true
 scroll_active = false
-
-[node name="ResultLabel" type="Label" parent="RootHBox/RightVBox/MissionPanel/MissionVBox"]
-layout_mode = 2
-text = "等待执行"
-
-[node name="ExecuteBtn" type="Button" parent="RootHBox/RightVBox/MissionPanel/MissionVBox"]
-layout_mode = 2
-custom_minimum_size = Vector2(0, 46)
-text = "执行外采"
-
-[node name="LogPanel" type="PanelContainer" parent="RootHBox/RightVBox"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="LogVBox" type="VBoxContainer" parent="RootHBox/RightVBox/LogPanel"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="LogTitle" type="Label" parent="RootHBox/RightVBox/LogPanel/LogVBox"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "探索日志"
-
-[node name="LogScroll" type="ScrollContainer" parent="RootHBox/RightVBox/LogPanel/LogVBox"]
-custom_minimum_size = Vector2(0, 220)
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="LogList" type="VBoxContainer" parent="RootHBox/RightVBox/LogPanel/LogVBox/LogScroll"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 8
+autowrap_mode = 0
+text = "派遣回条：等待选择队员"

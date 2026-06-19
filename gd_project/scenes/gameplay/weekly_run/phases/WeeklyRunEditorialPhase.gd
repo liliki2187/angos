@@ -67,9 +67,15 @@ func _rebuild_action_items(container: VBoxContainer, items: Array, item_kind: St
 
 func _log_flow_start(flow_name: String, details: String = "") -> int:
 	var started_at := Time.get_ticks_usec()
-	Globals.log("WeeklyRunEditorialPhase", "%s START %s" % [flow_name, details])
+	_log_message("WeeklyRunEditorialPhase", "%s START %s" % [flow_name, details])
 	return started_at
 
 func _log_flow_end(flow_name: String, started_at: int, details: String = "") -> void:
 	var elapsed_ms := float(Time.get_ticks_usec() - started_at) / 1000.0
-	Globals.log("WeeklyRunEditorialPhase", "%s END %.2fms %s" % [flow_name, elapsed_ms, details])
+	_log_message("WeeklyRunEditorialPhase", "%s END %.2fms %s" % [flow_name, elapsed_ms, details])
+
+func _log_message(scene_name: String, message: String) -> void:
+	if Engine.has_singleton("Globals"):
+		var globals := Engine.get_singleton("Globals")
+		if globals != null and globals.has_method("log"):
+			globals.call("log", scene_name, message)

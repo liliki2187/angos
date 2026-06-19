@@ -26,10 +26,22 @@ const SLOT_DATA := [
 ]
 
 const STAFF_POOL := [
-	{"id": "ivy", "name": "艾薇·冷烛", "role": "外采调查", "attrs": {"explore": 5, "insight": 4, "occult": 2, "survival": 3, "reason": 3, "social": 2}},
-	{"id": "qiao", "name": "乔然", "role": "城市跑口", "attrs": {"explore": 3, "insight": 4, "occult": 1, "survival": 2, "reason": 5, "social": 4}},
-	{"id": "mora", "name": "莫拉", "role": "灵视记者", "attrs": {"explore": 2, "insight": 3, "occult": 5, "survival": 2, "reason": 2, "social": 3}},
-	{"id": "reed", "name": "里德", "role": "战地摄影", "attrs": {"explore": 4, "insight": 2, "occult": 1, "survival": 5, "reason": 3, "social": 2}},
+	{"id": "ivy", "name": "艾薇·冷烛", "role": "外采调查", "attrs": {"explore": 5, "insight": 4, "occult": 2, "survival": 3, "reason": 3, "social": 2}, "faces": [
+		{"attr": "explore", "points": 2}, {"attr": "explore", "points": 1}, {"attr": "insight", "points": 1},
+		{"attr": "survival", "points": 1}, {"attr": "reason", "points": 1}, {"attr": "occult", "points": 1}
+	]},
+	{"id": "qiao", "name": "乔然", "role": "城市跑口", "attrs": {"explore": 3, "insight": 4, "occult": 1, "survival": 2, "reason": 5, "social": 4}, "faces": [
+		{"attr": "reason", "points": 2}, {"attr": "social", "points": 1}, {"attr": "insight", "points": 1},
+		{"attr": "insight", "points": 1}, {"attr": "explore", "points": 1}, {"attr": "survival", "points": 1}
+	]},
+	{"id": "mora", "name": "莫拉", "role": "灵视记者", "attrs": {"explore": 2, "insight": 3, "occult": 5, "survival": 2, "reason": 2, "social": 3}, "faces": [
+		{"attr": "occult", "points": 2}, {"attr": "occult", "points": 1}, {"attr": "insight", "points": 1},
+		{"attr": "social", "points": 1}, {"attr": "explore", "points": 1}, {"attr": "reason", "points": 1}
+	]},
+	{"id": "reed", "name": "里德", "role": "战地摄影", "attrs": {"explore": 4, "insight": 2, "occult": 1, "survival": 5, "reason": 3, "social": 2}, "faces": [
+		{"attr": "survival", "points": 2}, {"attr": "survival", "points": 1}, {"attr": "explore", "points": 1},
+		{"attr": "explore", "points": 1}, {"attr": "reason", "points": 1}, {"attr": "insight", "points": 1}
+	]},
 ]
 
 const REGION_DATA := [
@@ -38,11 +50,14 @@ const REGION_DATA := [
 		"name": "北美禁区带",
 		"hint": "初始解锁。都市传说与军事封锁交叠。",
 		"unlock_rule": "always",
+		"map_pos": {"x": 0.24, "y": 0.39},
+		"unlock_gap": "已开放：本周可进入取材。",
 		"nodes": [
-			{"id": "n51", "name": "51 区外围公路", "kind": "permanent", "days": 2, "type": "sci", "difficulty": "normal", "enemy": 2, "k_a": 3, "k_b": 2, "need": {"explore": 4, "survival": 2}, "description": "围绕夜间封锁和可疑货运展开跟拍，寻找能上头版的实证。", "risk_text": "军方与保安巡逻频繁。"},
-			{"id": "skin", "name": "罗斯威尔档案残页", "kind": "permanent", "days": 1, "type": "sci", "difficulty": "normal", "enemy": 1, "k_a": 2, "k_b": 2, "need": {"insight": 3, "reason": 3}, "description": "在档案馆和旧报社之间追索失踪页。", "risk_text": "成功质量决定后续区域解锁速度。"},
-			{"id": "temp_ufo", "name": "突发：雷达异常光点", "kind": "temp", "days": 2, "type": "pop", "difficulty": "hard", "enemy": 3, "k_a": 4, "k_b": 3, "deadline_day": 4, "need": {"explore": 5, "survival": 3}, "description": "城市雷达站刚刚记录到异常光点，热度高但窗口极短。", "risk_text": "过期即消失。"},
-			{"id": "hidden_gate", "name": "灵视：黑色方尖碑的回声", "kind": "hidden", "days": 3, "type": "occult", "difficulty": "normal", "enemy": 4, "k_a": 4, "k_b": 2, "unlock_rule": "hidden_monolith", "need": {"occult": 4, "survival": 2}, "description": "当诡名与狂性同时越界，灵视记者会听见来自沙海的回声。", "risk_text": "失败会推高狂性。"},
+			{"id": "n51", "name": "51 区外围公路", "kind": "permanent", "days": 2, "type": "sci", "difficulty": "normal", "enemy": 2, "k_a": 3, "k_b": 2, "need": {"explore": 4, "survival": 2}, "need_target": 2, "map_pos": {"x": 0.28, "y": 0.54}, "description": "围绕夜间封锁和可疑货运展开跟拍，寻找能上头版的实证。", "risk_text": "军方与保安巡逻频繁。"},
+			{"id": "skin", "name": "罗斯威尔档案残页", "kind": "permanent", "days": 1, "type": "sci", "difficulty": "normal", "enemy": 1, "k_a": 2, "k_b": 2, "need": {"insight": 3, "reason": 3}, "need_target": 2, "map_pos": {"x": 0.44, "y": 0.42}, "description": "在档案馆和旧报社之间追索失踪页。", "risk_text": "成功质量决定后续区域解锁速度。"},
+			{"id": "temp_ufo", "name": "突发：雷达异常光点", "kind": "temp", "days": 2, "type": "pop", "difficulty": "normal", "enemy": 2, "k_a": 4, "k_b": 3, "deadline_day": 4, "need": {"explore": 2, "survival": 1, "insight": 1}, "need_target": 2, "map_pos": {"x": 0.66, "y": 0.32}, "description": "城市雷达站刚刚记录到异常光点，热度高但窗口极短。", "risk_text": "截稿前未处理就会关闭。"},
+			{"id": "m330", "name": "M330 末班车空白段", "kind": "chain", "days": 2, "type": "occult", "difficulty": "normal", "enemy": 2, "k_a": 3, "k_b": 2, "chain_id": "m330", "chain_step": 1, "need": {"insight": 2, "occult": 2, "reason": 1}, "need_target": 2, "map_pos": {"x": 0.58, "y": 0.66}, "description": "一段车载录音缺了三秒。乘客口供互相矛盾，但都指向同一站。", "risk_text": "成功会把连续追踪推进到下一环。"},
+			{"id": "hidden_gate", "name": "灵视：黑色方尖碑的回声", "kind": "hidden", "days": 3, "type": "occult", "difficulty": "normal", "enemy": 4, "k_a": 4, "k_b": 2, "unlock_rule": "hidden_monolith", "need": {"occult": 4, "survival": 2}, "need_target": 3, "map_pos": {"x": 0.79, "y": 0.59}, "description": "当诡名与狂性同时越界，灵视记者会听见来自沙海的回声。", "risk_text": "失败会推高狂性。"},
 		],
 	},
 	{
@@ -50,10 +65,21 @@ const REGION_DATA := [
 		"name": "东亚神秘地带",
 		"hint": "需要：声望≥55 或拿到罗斯威尔残页证据。",
 		"unlock_rule": "east_asia",
+		"map_pos": {"x": 0.74, "y": 0.44},
+		"unlock_gap": "缺口：声望≥55，或先拿到罗斯威尔档案残页证据。",
 		"nodes": [
 			{"id": "harbor_echo", "name": "港口回声仓栈", "kind": "permanent", "days": 2, "type": "pop", "difficulty": "normal", "enemy": 2, "k_a": 3, "k_b": 2, "need": {"social": 3, "reason": 3}, "description": "跟随码头流言和失踪航运记录，拼出被压下来的新闻源。", "risk_text": "适合补足大众关注。"},
 			{"id": "mountain_signal", "name": "山中电台失踪案", "kind": "permanent", "days": 3, "type": "occult", "difficulty": "hard", "enemy": 3, "k_a": 4, "k_b": 3, "need": {"explore": 4, "occult": 3, "survival": 3}, "description": "沿着废弃电台的短波干扰深入山谷。", "risk_text": "高风险高回报。"},
 		],
+	},
+	{
+		"id": "pacific",
+		"name": "太平洋失航带",
+		"hint": "需要：完成一条连续追踪的第二环。",
+		"unlock_rule": "pacific_chain",
+		"map_pos": {"x": 0.56, "y": 0.60},
+		"unlock_gap": "缺口：完成北美禁区带连续追踪第 2 环，或取得可靠线人许可。",
+		"nodes": [],
 	},
 ]
 

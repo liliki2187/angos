@@ -1,0 +1,422 @@
+{
+  "id": "region_task_board_assetized_v1",
+  "version": 1,
+  "status": "production_pipeline_spec",
+  "target_view": "weekly_run.explore.region",
+  "canvas_size": [1920, 1080],
+  "safe_viewports": [[1920, 1080], [1600, 900], [1366, 768]],
+  "visual_lock": {
+    "source_asset": "gd_project/Assets/ui/angus_packaging/region_task/region-task-board-clean-pixel-v2.png",
+    "artboard_v3_source_asset": "gd_project/Assets/ui/angus_packaging/region_task/artboard_v3/source-user-approved-reference.png",
+    "must_keep": [
+      "current region task board visual direction",
+      "deep navy editorial map-wall base",
+      "central map low-poly paper material",
+      "red-orange route and deadline accents",
+      "restrained cyan tracking accents",
+      "fresh warm ivory printed paper",
+      "halftone dots, crop marks, red-cyan misregistration, high-end micro-pixel print grain"
+    ],
+    "must_avoid": [
+      "new visual direction",
+      "new palette",
+      "flat SaaS dashboard",
+      "generic web buttons",
+      "old newspaper",
+      "yellowed archive paper",
+      "sepia parchment",
+      "realistic old map",
+      "photographic noise",
+      "baked text",
+      "baked fake pins",
+      "baked fake task labels"
+    ]
+  },
+  "integration_rules": {
+    "no_baked_dynamic_text": true,
+    "no_fake_numbers": true,
+    "no_fake_pins": true,
+    "no_fake_buttons": true,
+    "visual_lock_first": true,
+    "state_aliases": {
+      "default": "normal for controls that use default as the first atlas frame",
+      "normal": "default for controls that use normal as the first atlas frame"
+    },
+    "overflow_policy": {
+      "single_line": "trim_ellipsis",
+      "multi_line": "wrap_then_trim",
+      "button_label": "trim_ellipsis",
+      "disabled_reason": "right_detail_blocking_reason_or_tooltip_not_button_label"
+    },
+    "godot_dynamic_layer_owns": [
+      "task names",
+      "node names",
+      "task metadata",
+      "deadline countdowns",
+      "button labels",
+      "hover, selected, pressed, disabled and loading semantics",
+      "hotspots and feedback"
+    ],
+    "fallback_policy": "Legacy region-task-board-clean-pixel-v2.png and StyleBoxFlat region_task_v2 styles are fallback only. Acceptance screenshots require assetized components."
+  },
+  "qa_cases": [
+    {"id": "default_selected_task", "checks": ["left task card selected", "matching map pin selected", "right detail populated", "CTA enabled"]},
+    {"id": "long_title", "checks": ["task card title trims inside title rect", "right detail title wraps to two lines without crossing no-text rects"]},
+    {"id": "two_digit_deadline", "checks": ["deadline status fits status rect", "red deadline visual does not overlap task text"]},
+    {"id": "assigned_task", "checks": ["assigned card state visible", "assigned pin state visible", "CTA blocked or reroute copy appears outside button label"]},
+    {"id": "disabled_cta", "checks": ["CTA disabled frame visible", "disabled reason appears in right detail blocking slot or tooltip, not inside CTA label"]},
+    {"id": "hover_and_pressed", "checks": ["pin hover label has collision gap", "task card hover does not resize list", "CTA pressed frame moves visually down by pressed_offset"]},
+    {"id": "advance_day_misclick_guard", "checks": ["advance day sits in global schedule strip, not under task CTA", "advance day has confirming frame", "task_dispatch_cta and advance_day_button hit rects do not share a visual group"]},
+    {"id": "empty_region", "checks": ["map remains visually anchored", "task list empty state uses runtime text only", "no baked fake task labels visible"]},
+    {"id": "full_region", "checks": ["five hotspots remain clickable", "pin labels avoid each other", "left task list scrolls without stretching cards"]}
+  ],
+  "layout_slots": [
+    {
+      "id": "top_hud_strip",
+      "rect": [32, 24, 1856, 72],
+      "role": "low weight global status strip"
+    },
+    {
+      "id": "artboard_v3_left_task_index",
+      "rect": [110, 126, 430, 840],
+      "role": "transparent runtime layer over the user-approved left task file stack"
+    },
+    {
+      "id": "artboard_v3_center_map_hotspots",
+      "rect": [580, 116, 760, 760],
+      "role": "transparent runtime hotspot layer over the preserved baked map"
+    },
+    {
+      "id": "artboard_v3_right_detail",
+      "rect": [1380, 116, 470, 850],
+      "role": "transparent runtime text layer over the user-approved right clipboard"
+    },
+    {
+      "id": "left_task_index",
+      "rect": [52, 128, 410, 840],
+      "role": "task archive index"
+    },
+    {
+      "id": "center_region_map",
+      "rect": [492, 126, 960, 742],
+      "role": "primary region map"
+    },
+    {
+      "id": "right_task_detail",
+      "rect": [1482, 128, 386, 840],
+      "role": "selected task sign-off summary"
+    },
+    {
+      "id": "dispatch_cta",
+      "rect": [1530, 872, 318, 64],
+      "role": "send selected task to dispatch sign-off"
+    },
+    {
+      "id": "global_schedule_strip",
+      "rect": [332, 922, 998, 122],
+      "role": "global region schedule, event summary, assignment count and day advance"
+    },
+    {
+      "id": "advance_day_button",
+      "rect": [674, 944, 236, 66],
+      "role": "global day advance action; not part of selected task detail"
+    }
+  ],
+  "assets": [
+    {
+      "id": "rt_board_shell",
+      "kind": "runtime_asset",
+      "asset_type": "background",
+      "background": "opaque",
+      "final_size": [1920, 1080],
+      "final_path": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-board-shell.png",
+      "godot_node": "TextureRect",
+      "runtime_rect": [0, 0, 1920, 1080],
+      "content_rects": [],
+      "no_text_rects": [
+        {"id": "whole_background", "rect": [0, 0, 1920, 1080], "rules": ["no readable text", "no fake controls"]}
+      ]
+    },
+    {
+      "id": "rt_artboard_full",
+      "kind": "runtime_asset",
+      "asset_type": "artboard_v3",
+      "background": "opaque",
+      "final_size": [1920, 1080],
+      "final_path": "gd_project/Assets/ui/angus_packaging/region_task/artboard_v3/rt-artboard-full.png",
+      "source_path": "gd_project/Assets/ui/angus_packaging/region_task/artboard_v3/source-user-approved-reference.png",
+      "godot_node": "draw_texture_rect",
+      "runtime_rect": [0, 0, 1920, 1080],
+      "content_rects": [],
+      "no_text_rects": [
+        {"id": "whole_artboard", "rect": [0, 0, 1920, 1080], "rules": ["visual master only", "runtime labels use overlay slots"]}
+      ],
+      "preserve_policy": "User-approved visual target. Preserve the full artboard as the primary visual layer; do not overlay a second map texture on top of it."
+    },
+    {
+      "id": "rt_map_base_clean",
+      "kind": "runtime_asset",
+      "asset_type": "map",
+      "background": "opaque",
+      "final_size": [960, 742],
+      "final_path": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-map-base-clean.png",
+      "godot_node": "TextureRect",
+      "runtime_rect": [492, 126, 960, 742],
+      "content_rects": [],
+      "no_text_rects": [
+        {"id": "map_body", "rect": [0, 0, 960, 742], "rules": ["no baked pins", "no baked labels", "no baked tooltip", "no task text"]}
+      ],
+      "route_policy": "base may keep only low-weight non-interactive route texture; official route highlights belong to rt_map_route_layer or runtime drawing",
+      "hotspots": [
+        {"id": "northwest", "visual_anchor": [248, 204], "hot_rect": [216, 150, 64, 86], "feedback_anchor": [300, 160]},
+        {"id": "central", "visual_anchor": [478, 324], "hot_rect": [446, 270, 64, 86], "feedback_anchor": [530, 280]},
+        {"id": "east", "visual_anchor": [720, 290], "hot_rect": [688, 236, 64, 86], "feedback_anchor": [772, 246]},
+        {"id": "southwest", "visual_anchor": [330, 518], "hot_rect": [298, 464, 64, 86], "feedback_anchor": [382, 474]},
+        {"id": "southeast", "visual_anchor": [660, 544], "hot_rect": [628, 490, 64, 86], "feedback_anchor": [712, 500]}
+      ]
+    },
+    {
+      "id": "rt_map_route_layer",
+      "kind": "runtime_asset",
+      "asset_type": "map_overlay",
+      "background": "transparent",
+      "final_size": [960, 742],
+      "final_path": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-map-route-layer.png",
+      "godot_node": "TextureRect",
+      "runtime_rect": [492, 126, 960, 742],
+      "content_rects": [],
+      "no_text_rects": [],
+      "layer_role": "official route and route-highlight overlay; no pins, labels, tooltips or task text"
+    },
+    {
+      "id": "rt_pin_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "pin",
+      "background": "transparent",
+      "final_size": [384, 64],
+      "frame_size": [64, 64],
+      "final_path": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-pin-atlas.png",
+      "godot_node": "TextureButton",
+      "anchor_point": [32, 56],
+      "label_anchor": [40, 16],
+      "collision_radius": 44,
+      "z_index": 20,
+      "frames": [
+        {"id": "normal", "rect": [0, 0, 64, 64], "hit_rect": [14, 4, 36, 56], "hover_rect": [8, -2, 48, 68]},
+        {"id": "hover", "rect": [64, 0, 64, 64], "hit_rect": [14, 4, 36, 56], "hover_rect": [8, -2, 48, 68]},
+        {"id": "selected", "rect": [128, 0, 64, 64], "hit_rect": [14, 4, 36, 56], "hover_rect": [8, -2, 48, 68]},
+        {"id": "locked", "rect": [192, 0, 64, 64], "hit_rect": [14, 4, 36, 56], "hover_rect": [8, -2, 48, 68]},
+        {"id": "completed", "rect": [256, 0, 64, 64], "hit_rect": [14, 4, 36, 56], "hover_rect": [8, -2, 48, 68]},
+        {"id": "urgent", "rect": [320, 0, 64, 64], "hit_rect": [14, 4, 36, 56], "hover_rect": [8, -2, 48, 68]}
+      ]
+    },
+    {
+      "id": "rt_pin_label_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "pin_label",
+      "background": "transparent",
+      "final_size": [600, 72],
+      "frame_size": [200, 72],
+      "final_path": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-pin-label-atlas.png",
+      "godot_node": "NinePatchRect",
+      "anchor_point": [0, 0],
+      "collision_radius": 104,
+      "z_index": 30,
+      "frames": [
+        {"id": "hover", "rect": [0, 0, 200, 72], "content_rects": [{"id": "short_label", "rect": [22, 14, 150, 38]}], "no_text_rects": [{"id": "corner_halftone", "rect": [154, 42, 34, 18]}]},
+        {"id": "selected", "rect": [200, 0, 200, 72], "content_rects": [{"id": "short_label", "rect": [22, 14, 150, 38]}], "no_text_rects": [{"id": "corner_halftone", "rect": [154, 42, 34, 18]}]},
+        {"id": "disabled", "rect": [400, 0, 200, 72], "content_rects": [{"id": "short_label", "rect": [22, 14, 150, 38]}], "no_text_rects": [{"id": "corner_halftone", "rect": [154, 42, 34, 18]}]}
+      ]
+    },
+    {
+      "id": "rt_task_card_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "task_card",
+      "background": "transparent",
+      "final_size": [384, 720],
+      "frame_size": [384, 120],
+      "final_path": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-task-card-atlas.png",
+      "godot_node": "TextureButton",
+      "frames": [
+        {"id": "normal", "rect": [0, 0, 384, 120]},
+        {"id": "hover", "rect": [0, 120, 384, 120]},
+        {"id": "selected", "rect": [0, 240, 384, 120]},
+        {"id": "unavailable", "rect": [0, 360, 384, 120]},
+        {"id": "assigned", "rect": [0, 480, 384, 120]},
+        {"id": "deadline", "rect": [0, 600, 384, 120]}
+      ],
+      "content_rects": [
+        {"id": "title", "rect": [72, 16, 248, 28], "max_lines": 1},
+        {"id": "meta", "rect": [72, 48, 260, 42], "max_lines": 2},
+        {"id": "status", "rect": [292, 14, 58, 28], "max_lines": 1}
+      ],
+      "no_text_rects": [
+        {"id": "left_tab", "rect": [0, 0, 56, 120]},
+        {"id": "bookmark", "rect": [332, 0, 38, 48]},
+        {"id": "halftone_corner", "rect": [290, 78, 70, 28]}
+      ],
+      "overflow_policy": {
+        "title": "trim_ellipsis",
+        "meta": "wrap_then_trim_2_lines",
+        "status": "trim_ellipsis"
+      },
+      "hit_rect": [0, 0, 384, 120],
+      "hover_rect": [-4, -4, 392, 128]
+    },
+    {
+      "id": "rt_filter_tab_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "filter_tab",
+      "background": "transparent",
+      "final_size": [480, 48],
+      "frame_size": [120, 48],
+      "final_path": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-filter-tab-atlas.png",
+      "godot_node": "TextureButton",
+      "frames": [
+        {"id": "default", "rect": [0, 0, 120, 48]},
+        {"id": "hover", "rect": [120, 0, 120, 48]},
+        {"id": "selected", "rect": [240, 0, 120, 48]},
+        {"id": "disabled", "rect": [360, 0, 120, 48]}
+      ],
+      "content_rects": [
+        {"id": "label", "rect": [16, 10, 88, 24], "max_lines": 1}
+      ],
+      "no_text_rects": [],
+      "hit_rect": [0, 0, 120, 48],
+      "hover_rect": [-4, -4, 128, 56]
+    },
+    {
+      "id": "rt_detail_sheet_base",
+      "kind": "runtime_asset",
+      "asset_type": "detail_sheet",
+      "background": "transparent",
+      "final_size": [386, 840],
+      "final_path": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-detail-sheet-base.png",
+      "godot_node": "NinePatchRect",
+      "runtime_rect": [1482, 128, 386, 840],
+      "nine_patch_margins": [34, 42, 34, 42],
+      "content_rects": [
+        {"id": "title", "rect": [34, 54, 300, 54], "max_lines": 2},
+        {"id": "summary", "rect": [34, 132, 306, 150], "max_lines": 5},
+        {"id": "meta", "rect": [34, 306, 306, 90], "max_lines": 3},
+        {"id": "special_status", "rect": [34, 420, 306, 94], "max_lines": 3},
+        {"id": "blocking_reason", "rect": [34, 530, 306, 64], "max_lines": 2}
+      ],
+      "no_text_rects": [
+        {"id": "clip", "rect": [128, 0, 132, 46]},
+        {"id": "right_tab", "rect": [334, 82, 42, 122]},
+        {"id": "bottom_stamp", "rect": [214, 604, 112, 92]},
+        {"id": "cta_mount", "rect": [44, 710, 318, 82], "rules": ["CTA component mounts here", "CTA label belongs to rt_cta_dispatch_atlas only"]}
+      ],
+      "states": ["empty", "ready", "blocked", "assigned"],
+      "cta_policy": "detail sheet owns the mount slot and blocking reason only; rt_cta_dispatch_atlas owns button label and button states"
+    },
+    {
+      "id": "rt_cta_dispatch_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "primary_cta",
+      "background": "transparent",
+      "final_size": [1920, 64],
+      "frame_size": [320, 64],
+      "final_path": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-cta-dispatch-atlas.png",
+      "godot_node": "TextureButton",
+      "frames": [
+        {"id": "default", "rect": [0, 0, 320, 64]},
+        {"id": "hover", "rect": [320, 0, 320, 64]},
+        {"id": "pressed", "rect": [640, 0, 320, 64]},
+        {"id": "disabled", "rect": [960, 0, 320, 64]},
+        {"id": "focus", "rect": [1280, 0, 320, 64]},
+        {"id": "loading", "rect": [1600, 0, 320, 64]}
+      ],
+      "content_rects": [
+        {"id": "label", "rect": [44, 12, 214, 38], "max_lines": 1}
+      ],
+      "no_text_rects": [
+        {"id": "arrow", "rect": [268, 10, 34, 42]},
+        {"id": "bottom_stripe", "rect": [0, 54, 320, 10]}
+      ],
+      "hit_rect": [0, 0, 320, 64],
+      "hover_rect": [-6, -6, 332, 76],
+      "feedback_spec": {
+        "pressed_offset": [0, 2],
+        "pressed_duration_ms": 90,
+        "sound": "stamp_soft"
+      },
+      "disabled_reason_policy": "disabled reason must render in rt_detail_sheet_base.blocking_reason or tooltip, never inside this button label"
+    },
+    {
+      "id": "rt_advance_day_atlas",
+      "kind": "runtime_atlas",
+      "asset_type": "global_schedule_cta",
+      "background": "transparent",
+      "final_size": [1416, 66],
+      "frame_size": [236, 66],
+      "final_path": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-advance-day-atlas.png",
+      "godot_node": "TextureButton",
+      "runtime_rect": [674, 944, 236, 66],
+      "frames": [
+        {"id": "default", "rect": [0, 0, 236, 66]},
+        {"id": "hover", "rect": [236, 0, 236, 66]},
+        {"id": "pressed", "rect": [472, 0, 236, 66]},
+        {"id": "disabled", "rect": [708, 0, 236, 66]},
+        {"id": "focus", "rect": [944, 0, 236, 66]},
+        {"id": "confirming", "rect": [1180, 0, 236, 66]}
+      ],
+      "content_rects": [
+        {"id": "label", "rect": [78, 12, 86, 24], "max_lines": 1},
+        {"id": "sublabel", "rect": [80, 39, 82, 16], "max_lines": 1}
+      ],
+      "no_text_rects": [
+        {"id": "calendar_icon", "rect": [18, 8, 48, 48]},
+        {"id": "arrow", "rect": [184, 12, 38, 42]},
+        {"id": "right_divider", "rect": [164, 12, 2, 42]}
+      ],
+      "hit_rect": [0, 0, 236, 66],
+      "hover_rect": [-6, -6, 248, 78],
+      "action_scope": "global_region_day_advance",
+      "separation_policy": {
+        "must_not_share_visual_group_with": ["rt_cta_dispatch_atlas"],
+        "must_not_mount_inside": ["rt_detail_sheet_base"],
+        "default_runtime_rect": [674, 944, 236, 66],
+        "minimum_screen_gap_from_task_cta": 160,
+        "requires_confirmation_when": ["dispatchable_task_exists", "deadline_task_visible", "running_task_due", "week_phase_would_change"]
+      },
+      "feedback_spec": {
+        "pressed_offset": [0, 2],
+        "pressed_duration_ms": 90,
+        "confirming_label": "确认推进？",
+        "confirming_sublabel": "再次点击执行",
+        "sound": "calendar_tick"
+      },
+      "disabled_reason_policy": "disabled reason must render in global schedule strip or tooltip, never inside this button label"
+    },
+    {
+      "id": "rt_hud_strip",
+      "kind": "runtime_asset",
+      "asset_type": "hud_strip",
+      "background": "transparent",
+      "final_size": [1856, 72],
+      "final_path": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-hud-strip.png",
+      "godot_node": "NinePatchRect",
+      "runtime_rect": [32, 24, 1856, 72],
+      "nine_patch_margins": [28, 18, 28, 18],
+      "content_rects": [
+        {"id": "title", "rect": [32, 14, 420, 28], "max_lines": 1},
+        {"id": "week_status", "rect": [472, 14, 260, 28], "max_lines": 1},
+        {"id": "macro_badges", "rect": [760, 12, 680, 34], "max_lines": 1},
+        {"id": "return_action", "rect": [1590, 10, 220, 38], "max_lines": 1}
+      ],
+      "no_text_rects": [],
+      "actions": [
+        {"id": "return_action", "hit_rect": [1580, 6, 240, 48], "hover_rect": [1574, 0, 252, 60]}
+      ]
+    }
+  ],
+  "review_gates": [
+    "Visual lock check against region-task-board-clean-pixel-v2.png",
+    "No baked text, fake pins, fake labels, fake task cards or fake buttons",
+    "All text-bearing assets provide content_rects and no_text_rects",
+    "All clickable assets provide hit_rect, hover_rect and state frames",
+    "Runtime screenshots cover default, hover, selected, pressed and disabled states"
+  ]
+}
