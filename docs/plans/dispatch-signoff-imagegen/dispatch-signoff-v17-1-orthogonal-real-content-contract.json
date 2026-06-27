@@ -1,0 +1,193 @@
+{
+  "id": "dispatch_signoff_v17_1_orthogonal_real_content_contract",
+  "status": "draft_contract_not_production_source",
+  "supersedes_for_layout_constraints": "dispatch_signoff_v16_orthogonal_asset_contract",
+  "coordinate_space": {
+    "width": 1920,
+    "height": 1080
+  },
+  "source_images": {
+    "filled_state_text_mock": "docs/screenshots/2026-06-22-dispatch-signoff-v17-orthogonal-real-content-style/01-dispatch-signoff-v17-filled-default.png",
+    "candidate_pool_hover_preview": "docs/screenshots/2026-06-22-dispatch-signoff-v17-orthogonal-real-content-style/02-dispatch-signoff-v17-candidate-hover.png",
+    "center_ticket_crop_100pct": "docs/screenshots/2026-06-22-dispatch-signoff-v17-orthogonal-real-content-style/03-dispatch-signoff-v17-center-ticket-crop.png",
+    "contract_overlay": "docs/screenshots/2026-06-22-dispatch-signoff-v17-orthogonal-real-content-style/04-dispatch-signoff-v17-1-contract-overlay.png"
+  },
+  "orthogonal_function_plane_policy": {
+    "max_rotation_deg_for_runtime_content_planes": 0,
+    "max_rotation_deg_for_hit_rects": 0,
+    "allowed_angled_layers": ["background_decoration", "outer_tabs", "shadow", "halftone", "paper_stack_edge"],
+    "forbidden": [
+      "tilted writable document face",
+      "skewed text slot",
+      "perspective CTA label slot",
+      "trapezoid runtime content plane",
+      "detached footer-like equipment tray"
+    ]
+  },
+  "assets": [
+    {
+      "asset_id": "dispatch_desk_backdrop",
+      "kind": "base_bitmap",
+      "rect": [0, 0, 1920, 1080],
+      "orthogonal_content_plane": false,
+      "content_rects": [],
+      "no_text_rects": [[0, 0, 1920, 1080]],
+      "states": ["default"]
+    },
+    {
+      "asset_id": "top_status_bar",
+      "kind": "component_bitmap",
+      "rect": [32, 28, 1888, 110],
+      "orthogonal_content_plane": true,
+      "content_rects": [
+        {"id": "screen_title", "rect": [226, 50, 382, 88], "max_lines": 1},
+        {"id": "week_region_task_meta", "rect": [438, 58, 720, 82], "max_lines": 1},
+        {"id": "global_capacity_pressure", "rect": [1650, 54, 1818, 78], "max_lines": 1}
+      ],
+      "no_text_rects": [[52, 44, 198, 88], [1458, 53, 1600, 72]],
+      "hit_rects": [],
+      "states": ["default"]
+    },
+    {
+      "asset_id": "task_dossier_base",
+      "kind": "component_bitmap",
+      "rect": [40, 132, 440, 978],
+      "orthogonal_content_plane": true,
+      "content_rects": [
+        {"id": "task_identity_card", "rect": [154, 244, 410, 456], "max_lines": 6},
+        {"id": "task_brief", "rect": [148, 552, 390, 718], "max_lines": 5},
+        {"id": "screen_question_note", "rect": [146, 812, 410, 884], "max_lines": 3},
+        {"id": "weekly_field_status", "rect": [146, 920, 416, 948], "max_lines": 1}
+      ],
+      "no_text_rects": [[54, 178, 104, 682], [376, 790, 400, 812]],
+      "hit_rects": [],
+      "states": ["default"]
+    },
+    {
+      "asset_id": "dispatch_board_base",
+      "kind": "component_bitmap",
+      "rect": [464, 132, 1532, 662],
+      "orthogonal_content_plane": true,
+      "content_rects": [
+        {"id": "selected_team_header", "rect": [618, 168, 1498, 192], "max_lines": 1},
+        {"id": "selected_staff_card_texts", "rect": [614, 258, 1280, 318], "max_lines": 2},
+        {"id": "team_empty_slot_label", "rect": [1320, 286, 1458, 326], "max_lines": 2},
+        {"id": "current_item_receipt", "rect": [786, 410, 1058, 454], "max_lines": 2},
+        {"id": "risk_ruler", "rect": [540, 500, 1352, 594], "max_lines": 3}
+      ],
+      "no_text_rects": [
+        [552, 256, 606, 310],
+        [742, 256, 796, 310],
+        [932, 256, 986, 310],
+        [1122, 256, 1176, 310],
+        [1188, 236, 1360, 330],
+        [1288, 520, 1320, 558]
+      ],
+      "hit_rects": [
+        {"id": "selected_staff_1", "rect": [540, 242, 712, 352]},
+        {"id": "selected_staff_2", "rect": [730, 242, 902, 352]},
+        {"id": "selected_staff_3", "rect": [920, 242, 1092, 352]},
+        {"id": "selected_staff_4", "rect": [1110, 242, 1282, 352]},
+        {"id": "empty_staff_slot", "rect": [1300, 242, 1472, 352]},
+        {"id": "current_item_revoke", "rect": [1078, 412, 1136, 448]}
+      ],
+      "states": ["default", "crew_hover", "item_hover"]
+    },
+    {
+      "asset_id": "approval_ticket_base",
+      "kind": "component_bitmap",
+      "rect": [1560, 154, 1856, 654],
+      "orthogonal_content_plane": true,
+      "content_rects": [
+        {"id": "approval_header", "rect": [1582, 178, 1834, 226], "max_lines": 1},
+        {"id": "approval_status", "rect": [1594, 258, 1822, 318], "max_lines": 2},
+        {"id": "approval_rows", "rect": [1604, 354, 1812, 486], "max_lines": 3},
+        {"id": "approval_cta_label", "rect": [1592, 568, 1824, 630], "max_lines": 1}
+      ],
+      "no_text_rects": [
+        [1762, 178, 1816, 230],
+        [1724, 466, 1814, 540],
+        [1578, 620, 1590, 630],
+        [1840, 620, 1848, 630]
+      ],
+      "hit_rects": [
+        {"id": "approval_cta", "rect": [1592, 568, 1824, 630]}
+      ],
+      "states": ["valid", "invalid", "warning", "stamped"]
+    },
+    {
+      "asset_id": "bottom_resource_drawer_base",
+      "kind": "component_bitmap",
+      "rect_default": [464, 710, 1856, 952],
+      "rect_hover_l_shape": {
+        "candidate_expansion_rect": [464, 604, 1532, 896],
+        "equipment_layer_rect": [464, 896, 1856, 952]
+      },
+      "orthogonal_content_plane": true,
+      "content_rects": [
+        {"id": "resource_drawer_header", "rect": [492, 730, 1828, 758], "max_lines": 1},
+        {"id": "candidate_cards_default_row", "rect": [568, 792, 1580, 850], "max_lines": 2},
+        {"id": "candidate_cards_hover_rows", "rect": [568, 684, 1482, 864], "max_lines": 4},
+        {"id": "more_candidates_hint", "rect": [1658, 804, 1806, 874], "max_lines": 3},
+        {"id": "equipment_layer_labels", "rect": [492, 904, 1828, 944], "max_lines": 2}
+      ],
+      "no_text_rects": [
+        [464, 762, 1856, 768],
+        [464, 896, 1856, 898]
+      ],
+      "hit_rects": [
+        {"id": "candidate_1", "rect": [492, 776, 664, 886]},
+        {"id": "candidate_2", "rect": [682, 776, 854, 886]},
+        {"id": "candidate_3", "rect": [872, 776, 1044, 886]},
+        {"id": "candidate_4", "rect": [1062, 776, 1234, 886]},
+        {"id": "candidate_5", "rect": [1252, 776, 1424, 886]},
+        {"id": "candidate_6", "rect": [1442, 776, 1614, 886]},
+        {"id": "equipment_1", "rect": [702, 905, 880, 943]},
+        {"id": "equipment_2", "rect": [894, 905, 1072, 943]},
+        {"id": "equipment_3", "rect": [1086, 905, 1264, 943]},
+        {"id": "equipment_4", "rect": [1278, 905, 1456, 943]},
+        {"id": "equipment_5_disabled", "rect": [1470, 905, 1648, 943]}
+      ],
+      "states": ["default_one_row", "candidate_hover_two_rows", "equipment_hover"]
+    }
+  ],
+  "layout_gates": {
+    "left_weekly_status_baseline_y": 952,
+    "bottom_resource_drawer_baseline_y": 952,
+    "max_allowed_baseline_delta_px": 8,
+    "risk_ruler_rect": [540, 500, 1352, 594],
+    "risk_ruler_width_px": 812,
+    "risk_ruler_height_px": 94,
+    "risk_ruler_allowed_width_range_px": [760, 820],
+    "risk_ruler_allowed_height_range_px": [88, 96],
+    "right_approval_ticket_rect_locked": [1560, 154, 1856, 654]
+  },
+  "dynamic_rules": {
+    "selected_staff_removed_from_candidate_pool": true,
+    "max_staff_slots": 5,
+    "visible_empty_staff_slot_required_in_v17_1_mock": true,
+    "max_item_slots": 1,
+    "item_occupies_staff_slot": false,
+    "carried_item_belongs_to_team_group": true,
+    "bottom_candidate_and_equipment_share_parent_drawer": true,
+    "equipment_tray_must_not_be_detached_footer": true,
+    "primary_risk_metric": "success_rate",
+    "cta_must_include_cost": true,
+    "candidate_pool_default_rows": 1,
+    "candidate_pool_hover_rows": 2,
+    "candidate_hover_expands_upward_with_fixed_bottom_baseline": true,
+    "runtime_content_planes_must_be_axis_aligned": true
+  },
+  "production_gate": [
+    "no baked dynamic Chinese text in no-text asset master",
+    "filled-state text mock must be visually integrated, not pasted labels",
+    "all runtime writable planes are square-on and axis-aligned",
+    "bottom resource drawer baseline aligns to left weekly status baseline",
+    "candidate employees and equipment requisition share one resource drawer",
+    "equipment candidates must not render as a detached footer or inventory strip",
+    "risk ruler is a compact central judgment card, not a full-width report strip",
+    "approval CTA has independent atlas and hit rect",
+    "candidate full-blocked state is local, not global dispatch invalid",
+    "angus_art_director review required before production truth"
+  ]
+}

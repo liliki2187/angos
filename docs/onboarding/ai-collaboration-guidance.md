@@ -1299,14 +1299,15 @@ AI 先把：
 2. 后续凡涉及美术资源、新 UI 视觉包装、界面风格迁移、视觉实验页、截图风格验收或生图 prompt，默认先让 `@像素艺术` 做只读风格把关；若只是操作链、遮挡、可读性和玩家误读，则仍先交 UX 老哥。
 3. 生图或 UI 风格稿生成后，若要被称为生产标杆、资源标杆或真源候选，必须再交 `@像素艺术` 复审；生成前审 prompt 不能替代生成后审图。
 4. 复审必须显式检查像素颗粒度、颗粒密度、半调 / 套印是否成为结构语言、是否继承当前标杆图、动态文字安全区是否可落地，以及是否滑向旧报纸、旧档案、泛黄纸噪点或高清摄影噪声。
-5. 世界地图 / 全球频道类风格稿默认对照 `docs/screenshots/2026-06-07-global-channel-style-board/05-global-channel-style-board-reference-clean-modern-pixel.png` 与 `docs/screenshots/2026-06-07-global-channel-style-board/07-global-channel-full-interface-style-draft-flat-magazine-ui.png`。2026-06-11 生成的 `docs/screenshots/2026-06-11-world-map-ui-style-sheet/01-world-map-ui-style-sheet.png` 只作为元素词汇草稿和偏差案例，不作为生产标杆。
-6. 它适合审参考图、生图结果、UI 风格稿、视觉 prompt、key art 草案、像素 / 半调 / 信号噪点 / 套印错位等美术手法。
-7. 它不替代 `ui_designer` 做布局、控件清单、wireframe 或 mock；不替代 `ux_laoge` 做可读性、遮挡、操作链和 P0/P1/P2。
-8. Steam 首屏、头图、宣传片、demo 第一眼吸引力和功能 ROI 仍由 `steam_indie_appraiser` 判断；美术指导只在 SIA 之后审风格执行和 prompt。
-9. 实际生图仍用 `openrouter-image-gen`；美术指导只负责 prompt、负面约束和验收清单。
-10. 本地参考图库筛选和发送仍可先用 `art-reference-picker`；美术指导负责判断参考如何转译到 Angus、哪些不能用。
-11. 若某个美术方向意味着大量资产、人月、外包、里程碑或范围风险，转交 `game_producer` 做生产判断。
-8. 当前正式美术风格真源为 `design/art-direction/angus-visual-style-guide.md`；早期“复古报刊 + 档案感”文档只作历史探索和局部印刷隐喻参考，不能覆盖新版方向。
+5. 若用户明确要求“只看视觉层面 / 美学层面”，美术指导或父级 Codex 必须把内容、功能、叙事职责暂时剥离，只比较可观察的视觉事实：构图重心、明暗比例、色相与色彩占比、形状语言、边缘处理、材质丰富度、颗粒分布、半调 / 套印结构、物件密度和字体图形化程度。不能把“右栏是什么内容”“某按钮代表什么功能”“叙事物件是否合理”当作视觉差异结论。
+6. 世界地图 / 全球频道类风格稿默认对照 `docs/screenshots/2026-06-07-global-channel-style-board/05-global-channel-style-board-reference-clean-modern-pixel.png` 与 `docs/screenshots/2026-06-07-global-channel-style-board/07-global-channel-full-interface-style-draft-flat-magazine-ui.png`。2026-06-11 生成的 `docs/screenshots/2026-06-11-world-map-ui-style-sheet/01-world-map-ui-style-sheet.png` 只作为元素词汇草稿和偏差案例，不作为生产标杆。
+7. 它适合审参考图、生图结果、UI 风格稿、视觉 prompt、key art 草案、像素 / 半调 / 信号噪点 / 套印错位等美术手法。
+8. 它不替代 `ui_designer` 做布局、控件清单、wireframe 或 mock；不替代 `ux_laoge` 做可读性、遮挡、操作链和 P0/P1/P2。
+9. Steam 首屏、头图、宣传片、demo 第一眼吸引力和功能 ROI 仍由 `steam_indie_appraiser` 判断；美术指导只在 SIA 之后审风格执行和 prompt。
+10. 实际生图仍用 `openrouter-image-gen`；美术指导只负责 prompt、负面约束和验收清单。
+11. 本地参考图库筛选和发送仍可先用 `art-reference-picker`；美术指导负责判断参考如何转译到 Angus、哪些不能用。
+12. 若某个美术方向意味着大量资产、人月、外包、里程碑或范围风险，转交 `game_producer` 做生产判断。
+13. 当前正式美术风格真源为 `design/art-direction/angus-visual-style-guide.md`；早期“复古报刊 + 档案感”文档只作历史探索和局部印刷隐喻参考，不能覆盖新版方向。
 
 这是一条 subagent 协作规则，不写入 `docs/设计采纳记录.md`，也不替代 `design/gdd/` 玩法真源。
 
@@ -1368,6 +1369,22 @@ AI 先把：
 - `逻辑烟测截图`：只用于证明某个 P0 条件、阻断或状态机被触发，不可作为视觉验收。
 
 如果运行截图与目标效果稿不是同一个页面职责或同一套功能分区，最终回复必须明确说“这是逻辑烟测，不是视觉验收”，并同时给出下一步补齐目标界面的计划。不得把旧载体里的最小功能补丁包装成资产化 UI 落地效果。
+
+---
+
+## 7K. 资产化 UI 重构不能把旧骨架换皮冒充底层重思考
+
+用户在 2026-06-23 派遣签批台 V9 复盘中明确指出：V9 与上一版没有本质区别，不能把旧结构换标题、换纸张、换物件名后称为重新设计。后续 AI 遇到“不要小修小补 / 从底层重新思考 / 整个界面重构”这类反馈时，必须先改变信息架构和视线动线，再谈美术包装。
+
+这次错题的本质不是某个面板太宽或太窄，而是父级 Codex 没有执行“骨架剪影自检”：遮住文案后，页面仍是旧的 `左任务 + 中央卡 + 右票据 + 底候选` 四栏配置器。SIA、UX 老哥和 UI Designer 的意见不能被父级整合成局部换皮；若 agent 说要重构页面主语，就必须重排候选、任务承载、当前队伍和 CTA 的关系。
+
+后续交付前必须自问三件事：
+
+1. 第一眼大块布局是否真的不同于上一版，而不是只换了皮。
+2. 玩家动作流是否变了，例如从“配置器填表”变成“从手牌抽人、压入案卷、盖章派出”。
+3. 新结构是否放大原有核心功能，而不是为了填空新增解释块、伪状态块或不存在的玩法物件。
+
+如果三问不成立，应在内部继续重排，不要把截图发给用户试错。此条已同步到 `docs/设计采纳记录.md` 的 A107 与 `docs/onboarding/ui-interaction-guidelines.md`。
 
 ---
 

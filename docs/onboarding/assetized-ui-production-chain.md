@@ -31,6 +31,10 @@
 
 新增硬门槛（2026-06-18）：**功能承载页必须方正。** 任何会承载动态文字、数值、头像状态、按钮文案、hover / pressed / disabled 状态或 hit rect 的 UI 正面，都必须是 square-on、axis-aligned、可测量的矩形。斜切、透视、叠纸、折角、票据舌片、夹子和半调可以制造拟物层次，但只能进入背景 / 外轮廓 / `no_text_rects`。如果高保真生图中可写纸面、右侧票据、任务卡内框或 CTA 文本槽整体倾斜，即使视觉气氛更好，也必须降级为灵感图或偏差案例，不得进入 `filled-state text mock`、`no-text asset master`、manifest 或生产候选。
 
+新增硬门槛（2026-06-22）：**颜色匹配必须过 Color Contract Gate。** 任何涉及调色、去黄、提亮、压暗、冷暖、纸色、主色或“更接近参考图”的生图 / 修图，不能只凭“有采样表”或“没有明显偏黄 / 过白”通过。必须按 `docs/onboarding/imagegen-color-contract-gate.md` 建立唯一参考图、固定 ROI、`hex / RGB / Lab`、逐 token 阈值、整图均亮度、纸面 / 暗部比例和失败边界。未过颜色硬闸门时，不得进入像素颗粒、风格标杆或生产候选判断。
+
+新增硬门槛（2026-06-22）：**风格锁定稿后必须先过真实内容填充预览 Gate，不能跳到资产拆分。** 当一张图只完成视觉方向、色彩合同、材质或像素颗粒确认时，它只能标为 `visual_style_reference` / `color-locked style draft` / `no-text style draft`，不得把下一步说成组件拆分、atlas 生产、manifest 或切图。若尚未存在通过复审的 `filled-state text mock`，下一步必须是：`轻量内容合同 -> 真实内容填充预览稿 -> UI / UX / 像素艺术复审`。只有真实内容填充预览稿证明图文融合、信息密度、CTA、状态和可读性成立后，才允许进入无字资产母版 brief、组件拆分和状态 atlas。
+
 ---
 
 ## 1. 相关真源与分工
@@ -40,6 +44,7 @@
 - UI 执行细则：`docs/onboarding/ui-interaction-guidelines.md`
 - 用户偏好与 AI 常见误判：`docs/onboarding/ai-collaboration-guidance.md`
 - 可见改动截图验收：`docs/onboarding/功能改动截图指引.md`
+- 生图颜色硬闸门：`docs/onboarding/imagegen-color-contract-gate.md`
 - 设计采纳总索引：`docs/设计采纳记录.md`（按其中路由补读 `docs/design-decisions/ui-ux-decisions.md` 与 `docs/design-decisions/art-direction-decisions.md`）
 - Angus 视觉风格：`design/art-direction/angus-visual-style-guide.md`
 - 世界地图资产化规格样板：`docs/plans/world-map-assetized-ui-production-spec.md`
@@ -181,6 +186,13 @@
 - 可点击热区、tooltip、选中环、路线高亮、动态任务牌。
 
 如果一张图已经包含大量真实 UI 文案、假任务卡、假按钮、假 pin 或假 tooltip，它只能被标注为“有字效果预览稿 / 灵感图”，不能作为生产底图。要进入生产，必须另有对应的无字资产、组件 atlas、状态矩阵和 manifest。
+
+阶段跳转禁令：
+
+- `visual_style_reference` / `color-locked style draft` / 纯风格锁定图只回答“视觉方向是否可继续”，不回答“真实内容是否装得下”。
+- 如果用户问“按资产 UI 链下一步是什么”，父级必须先检查是否已有通过复审的 `filled-state text mock`。没有时，下一步只能是轻量内容合同和真实内容填充预览稿。
+- 在 `filled-state text mock` 通过 UI / UX / 像素艺术复审前，不得把“组件分组 / atlas / manifest / 切图 / 资产拆分”描述为当前下一步；最多只能说这是后续阶段。
+- 如果父级误把风格锁定稿之后的下一步说成资产拆分，应当立即纠正并更新本链路或采纳记录。
 
 ### 2.2.1 稿件类型 Gate 与降级规则
 
@@ -546,6 +558,7 @@ Prompt 必须写成一票否决句：`front writable paper faces are square-on a
 - [ ] 用户当前决策和主 CTA 是否明确。
 - [ ] 功能分区、信息容量、最长文案和状态矩阵是否已经冻结。
 - [ ] 是否已有无字风格稿和有字效果预览稿，且二者用途没有混淆。
+- [ ] 若当前只有 `visual_style_reference` / `color-locked style draft` / 无字风格方向稿，是否已明确下一步是轻量内容合同和 `filled-state text mock`，而不是组件拆分、atlas、manifest 或切图。
 - [ ] 有字效果预览稿是否验证了真实文字密度、字体 token、CTA 长度和满态 / 中间态读法。
 - [ ] 生产风格稿里是否有不该烘焙的动态信息。
 - [ ] 每个元素是否完成烘焙 / 组件 / 动态层 / 运行时反馈归属。
@@ -554,6 +567,7 @@ Prompt 必须写成一票否决句：`front writable paper faces are square-on a
 生图前：
 
 - [ ] 本轮是 `text_mock` 还是生产组件，文件名、prompt 和评审记录是否已标注清楚。
+- [ ] 若本轮涉及调色、去黄、提亮、压暗、冷暖或“更接近参考图”，是否已经按 `imagegen-color-contract-gate.md` 建立 `Color Contract v1`：唯一参考图、固定 ROI、`hex / RGB / Lab`、逐 token 阈值、整图均亮度、纸面 / 暗部比例和失败边界；没有合同不得继续写调色 prompt。
 - [ ] Prompt 是否禁止真实文字、假按钮、假 pin、假任务标签。
 - [ ] 是否要求空白安全区和独立组件 atlas。
 - [ ] 是否列出按钮、pin、任务卡等状态。

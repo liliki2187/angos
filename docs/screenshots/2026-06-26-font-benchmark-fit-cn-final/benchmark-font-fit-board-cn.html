@@ -1,0 +1,1128 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>安格斯中文字体适配板</title>
+  <style>
+    @font-face { font-family: "BigShouldersLocal"; src: url("../../skills/canvas-design/canvas-fonts/BigShoulders-Bold.ttf") format("truetype"); font-weight: 700; }
+    @font-face { font-family: "BigShouldersLocal"; src: url("../../skills/canvas-design/canvas-fonts/BigShoulders-Regular.ttf") format("truetype"); font-weight: 400; }
+    @font-face { font-family: "TekturLocal"; src: url("../../skills/canvas-design/canvas-fonts/Tektur-Medium.ttf") format("truetype"); font-weight: 600; }
+    @font-face { font-family: "TekturLocal"; src: url("../../skills/canvas-design/canvas-fonts/Tektur-Regular.ttf") format("truetype"); font-weight: 400; }
+    @font-face { font-family: "WorkSansLocal"; src: url("../../skills/canvas-design/canvas-fonts/WorkSans-Bold.ttf") format("truetype"); font-weight: 700; }
+    @font-face { font-family: "WorkSansLocal"; src: url("../../skills/canvas-design/canvas-fonts/WorkSans-Regular.ttf") format("truetype"); font-weight: 400; }
+    @font-face { font-family: "InstrumentSansLocal"; src: url("../../skills/canvas-design/canvas-fonts/InstrumentSans-Bold.ttf") format("truetype"); font-weight: 700; }
+    @font-face { font-family: "InstrumentSansLocal"; src: url("../../skills/canvas-design/canvas-fonts/InstrumentSans-Regular.ttf") format("truetype"); font-weight: 400; }
+    @font-face { font-family: "GeistMonoLocal"; src: url("../../skills/canvas-design/canvas-fonts/GeistMono-Bold.ttf") format("truetype"); font-weight: 700; }
+    @font-face { font-family: "GeistMonoLocal"; src: url("../../skills/canvas-design/canvas-fonts/GeistMono-Regular.ttf") format("truetype"); font-weight: 400; }
+    @font-face { font-family: "RedHatMonoLocal"; src: url("../../skills/canvas-design/canvas-fonts/RedHatMono-Bold.ttf") format("truetype"); font-weight: 700; }
+    @font-face { font-family: "RedHatMonoLocal"; src: url("../../skills/canvas-design/canvas-fonts/RedHatMono-Regular.ttf") format("truetype"); font-weight: 400; }
+    @font-face { font-family: "SilkscreenLocal"; src: url("../../skills/canvas-design/canvas-fonts/Silkscreen-Regular.ttf") format("truetype"); font-weight: 400; }
+    @font-face { font-family: "PixelifyLocal"; src: url("../../skills/canvas-design/canvas-fonts/PixelifySans-Medium.ttf") format("truetype"); font-weight: 500; }
+    @font-face { font-family: "NotoSansSC"; src: url("file:///C:/Windows/Fonts/NotoSansSC-VF.ttf") format("truetype"); font-weight: 100 900; }
+
+    :root {
+      --bg: #08131b;
+      --bg2: #0d1a22;
+      --panel: #0b1f27;
+      --panel2: #102a31;
+      --line: rgba(190, 181, 166, 0.46);
+      --line-dim: rgba(190, 181, 166, 0.22);
+      --paper: #c2baac;
+      --paper-mid: #b2ab9b;
+      --paper-light: #d8cfbd;
+      --paper-dark: #807868;
+      --ink: #1d2221;
+      --ink-soft: #303532;
+      --olive: #5b6a37;
+      --olive2: #7d9845;
+      --olive3: #a5b956;
+      --teal: #293c41;
+      --teal2: #3d716d;
+      --blue: #243f5d;
+      --blue2: #4d6f84;
+      --mustard: #c8a24b;
+      --rust: #7b4c32;
+      --cyan: #5fc3b8;
+      --cream: #d7cfbe;
+      --shadow: rgba(0, 0, 0, 0.42);
+      --sc: "NotoSansSC", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+      --mono: "GeistMonoLocal", "Consolas", monospace;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      color: var(--cream);
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px) 0 0 / 48px 48px,
+        linear-gradient(0deg, rgba(255,255,255,0.026) 1px, transparent 1px) 0 0 / 48px 48px,
+        radial-gradient(circle at 38% 22%, rgba(54, 111, 105, 0.2), transparent 33%),
+        linear-gradient(135deg, #071017 0%, #0a1720 42%, #0b161d 100%);
+      font-family: var(--sc);
+      letter-spacing: 0;
+    }
+
+    .board {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      padding: 24px 26px 24px 26px;
+      background:
+        linear-gradient(180deg, rgba(194,186,172,0.08), transparent 16%),
+        linear-gradient(90deg, rgba(70,103,93,0.08), transparent 58%);
+    }
+    .board::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 2px solid rgba(194, 186, 172, 0.34);
+      clip-path: polygon(0 16px, 16px 0, calc(100% - 16px) 0, 100% 16px, 100% calc(100% - 16px), calc(100% - 16px) 100%, 16px 100%, 0 calc(100% - 16px));
+      pointer-events: none;
+    }
+    .topbar {
+      position: relative;
+      height: 108px;
+      display: grid;
+      grid-template-columns: 610px 1fr 475px;
+      gap: 20px;
+      align-items: start;
+      padding: 8px 24px 0 28px;
+    }
+    .brand-row {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+    .seal {
+      width: 72px;
+      height: 72px;
+      border: 3px solid rgba(194,186,172,.62);
+      border-radius: 12px;
+      position: relative;
+      background: linear-gradient(135deg, rgba(125,152,69,.32), rgba(13,26,34,.25));
+      box-shadow: inset 0 0 0 4px rgba(8,19,27,.55);
+    }
+    .seal::before, .seal::after {
+      content: "";
+      position: absolute;
+      border: 2px solid rgba(194,186,172,.62);
+      border-radius: 50%;
+      inset: 13px;
+    }
+    .seal::after {
+      inset: 22px 7px;
+      border-left: 0;
+      border-right: 0;
+      border-radius: 50%;
+      transform: rotate(-22deg);
+      border-color: rgba(165,185,86,.72);
+    }
+    .title-big {
+      margin-top: 0;
+      font-family: "BigShouldersLocal", Impact, sans-serif;
+      font-size: 54px;
+      line-height: .9;
+      font-weight: 700;
+      color: #cfc7b6;
+      text-transform: uppercase;
+    }
+    .subtitle {
+      margin-top: 9px;
+      font-family: "TekturLocal", var(--sc);
+      color: var(--olive3);
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 600;
+    }
+    .source-strip {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      height: 86px;
+      border-bottom: 1px solid var(--line-dim);
+      border-top: 1px solid var(--line-dim);
+      padding: 10px 0;
+      color: rgba(216,207,189,.78);
+      font-family: "TekturLocal", var(--sc);
+      font-size: 17px;
+    }
+    .folder-mini {
+      width: 62px;
+      height: 44px;
+      position: relative;
+      background: linear-gradient(135deg, var(--olive2), var(--olive));
+      clip-path: polygon(0 22%, 30% 22%, 35% 4%, 58% 4%, 64% 22%, 100% 22%, 100% 100%, 0 100%);
+      box-shadow: 0 9px 12px var(--shadow);
+    }
+    .folder-mini.gold { background: linear-gradient(135deg, #d7b34d, #a67a31); }
+    .folder-mini.gray { background: linear-gradient(135deg, #b8ae99, #777063); }
+    .run-id {
+      justify-self: end;
+      width: 435px;
+      display: grid;
+      gap: 12px;
+      padding-top: 6px;
+      font-family: var(--mono);
+      color: rgba(216,207,189,.76);
+      font-size: 14px;
+      text-align: right;
+    }
+    .meter {
+      justify-self: end;
+      width: 270px;
+      height: 24px;
+      border: 2px solid rgba(194,186,172,.45);
+      padding: 4px;
+      clip-path: polygon(0 10px, 10px 0, 100% 0, 100% 100%, 0 100%);
+    }
+    .meter span {
+      display: block;
+      height: 100%;
+      width: 68%;
+      background: linear-gradient(90deg, var(--olive3), var(--olive2));
+    }
+
+    .content {
+      position: relative;
+      display: grid;
+      grid-template-columns: 650px 600px 600px;
+      gap: 26px;
+      height: 846px;
+      padding: 0 16px 0 16px;
+    }
+    .col {
+      position: relative;
+      min-width: 0;
+    }
+    .panel {
+      position: relative;
+      border: 1px solid var(--line-dim);
+      background:
+        linear-gradient(135deg, rgba(19,42,50,.7), rgba(9,22,29,.78)),
+        linear-gradient(90deg, transparent 0, rgba(194,186,172,.08) 1px, transparent 1px);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.025);
+      clip-path: polygon(0 16px, 16px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+    }
+    .panel-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px 8px;
+      font-family: "TekturLocal", var(--sc);
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--olive3);
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--line-dim);
+    }
+    .tri {
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-left: 13px solid var(--olive3);
+    }
+    .paper-stack {
+      position: relative;
+      height: 560px;
+      margin-top: 4px;
+    }
+    .paper-shadow {
+      position: absolute;
+      background: rgba(9, 13, 15, 0.58);
+      filter: blur(1px);
+      box-shadow: 0 20px 34px rgba(0,0,0,.42);
+      inset: 44px 82px 40px 58px;
+      transform: rotate(-1deg);
+    }
+    .back-paper {
+      position: absolute;
+      width: 430px;
+      height: 496px;
+      top: 28px;
+      left: 86px;
+      background: #8e887b;
+      transform: rotate(2.4deg);
+      box-shadow: 0 16px 28px rgba(0,0,0,.42);
+      clip-path: polygon(0 0, 88% 0, 100% 12%, 100% 100%, 0 100%);
+    }
+    .back-paper.green {
+      left: 38px;
+      top: 42px;
+      background: #52613b;
+      transform: rotate(-3.8deg);
+    }
+    .cover {
+      position: absolute;
+      width: 438px;
+      height: 526px;
+      left: 56px;
+      top: 14px;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.18) 0 16%, transparent 16% 100%),
+        linear-gradient(90deg, rgba(0,0,0,.08), transparent 42%),
+        var(--paper);
+      color: var(--ink);
+      transform: rotate(-2.2deg);
+      box-shadow: 0 20px 30px rgba(0,0,0,.48);
+      clip-path: polygon(0 0, 84% 0, 100% 14%, 100% 100%, 12px 100%, 0 96%);
+      padding: 34px 32px 26px;
+    }
+    .clip {
+      position: absolute;
+      left: 314px;
+      top: -30px;
+      width: 54px;
+      height: 80px;
+      border: 8px solid #171c1e;
+      border-bottom-width: 16px;
+      border-radius: 9px 9px 12px 12px;
+      background: transparent;
+      box-shadow: 0 4px 0 rgba(255,255,255,.18) inset, 0 10px 12px rgba(0,0,0,.34);
+      z-index: 5;
+    }
+    .cover h2 {
+      margin: 0;
+      font-family: "BigShouldersLocal", Impact, sans-serif;
+      font-size: 70px;
+      line-height: .88;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #202423;
+    }
+    .cover .rule {
+      height: 13px;
+      margin: 18px 0 16px;
+      background: #202423;
+    }
+    .scene-card {
+      position: relative;
+      height: 210px;
+      overflow: hidden;
+      border: 7px solid #202423;
+      background:
+        linear-gradient(128deg, transparent 0 24%, rgba(165,185,86,.16) 24% 38%, transparent 38% 100%),
+        linear-gradient(35deg, #0e2628 0 23%, #173238 23% 40%, #0c1e25 40% 63%, #223c3d 63% 100%);
+    }
+    .pyramid {
+      position: absolute;
+      left: 132px;
+      bottom: 24px;
+      width: 170px;
+      height: 156px;
+      background:
+        linear-gradient(112deg, #182224 0 28%, #333a35 28% 54%, #1e2c29 54% 100%);
+      clip-path: polygon(50% 0, 100% 100%, 0 100%);
+      box-shadow: 0 0 0 999px transparent;
+    }
+    .beam {
+      position: absolute;
+      left: 208px;
+      top: -8px;
+      width: 18px;
+      height: 170px;
+      background: linear-gradient(180deg, rgba(158,214,89,.95), rgba(158,214,89,.05));
+      filter: blur(.6px);
+    }
+    .silhouette {
+      position: absolute;
+      left: 210px;
+      bottom: 10px;
+      width: 14px;
+      height: 44px;
+      background: #070b0e;
+    }
+    .silhouette::before {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      left: -2px;
+      top: -15px;
+      background: #070b0e;
+    }
+    .cover-foot {
+      display: grid;
+      grid-template-columns: 1fr 72px;
+      gap: 18px;
+      align-items: end;
+      margin-top: 18px;
+    }
+    .thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .thumb {
+      height: 52px;
+      border: 3px solid #202423;
+      background:
+        linear-gradient(135deg, rgba(165,185,86,.28), transparent 42%),
+        linear-gradient(40deg, #172b32, #415052);
+    }
+    .issue {
+      height: 78px;
+      background: var(--olive2);
+      color: #263018;
+      font-family: "TekturLocal", var(--sc);
+      font-size: 18px;
+      font-weight: 600;
+      padding: 10px;
+      text-align: center;
+    }
+    .issue-badge-cn {
+      position: absolute;
+      right: 32px;
+      bottom: 34px;
+      width: 76px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--olive2);
+      color: #263018;
+      font-family: var(--sc);
+      font-size: 15px;
+      font-weight: 900;
+      box-shadow: 0 5px 0 rgba(29,34,33,.18);
+      z-index: 8;
+      clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 0 100%);
+    }
+    .mini-tests {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .font-ticket {
+      position: relative;
+      min-height: 112px;
+      padding: 15px 15px 13px;
+      color: var(--ink);
+      background: var(--paper-mid);
+      box-shadow: 0 12px 18px rgba(0,0,0,.28);
+      clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 18px, 100% 100%, 0 100%);
+    }
+    .font-ticket h3 {
+      margin: 0 0 8px;
+      font-size: 34px;
+      line-height: .9;
+      color: var(--ink);
+    }
+    .font-ticket p {
+      margin: 0;
+      font-family: var(--sc);
+      font-size: 13px;
+      line-height: 1.45;
+      color: rgba(29,34,33,.78);
+    }
+    .font-ticket .tag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: rgba(29,34,33,.58);
+    }
+    .t-big h3 { font-family: var(--sc); font-size: 33px; font-weight: 900; letter-spacing: .03em; }
+    .t-tektur h3 { font-family: "SimHei", var(--sc); font-size: 31px; font-weight: 900; line-height: 1.04; }
+    .t-work h3 { font-family: "Microsoft YaHei UI", "Microsoft YaHei", var(--sc); font-size: 29px; font-weight: 800; line-height: 1.04; }
+    .t-pixel h3 { font-family: "SimSun", "Songti SC", serif; font-size: 30px; font-weight: 900; line-height: 1.08; }
+    .avoid {
+      background: linear-gradient(135deg, #a07d45, #8a4e32);
+      color: #201816;
+    }
+
+    .ui-lab {
+      height: 640px;
+      padding-bottom: 12px;
+    }
+    .dossier {
+      position: relative;
+      margin: 18px 18px 0;
+      padding: 22px 24px 18px;
+      height: 370px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.12) 0 15%, transparent 15% 100%),
+        linear-gradient(28deg, rgba(91,106,55,.11) 0 38%, transparent 38% 100%),
+        var(--paper);
+      color: var(--ink);
+      box-shadow: 0 16px 24px rgba(0,0,0,.34);
+      clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 16px, 100% 100%, 0 100%);
+    }
+    .dossier::before {
+      content: "内部机密";
+      position: absolute;
+      top: 13px;
+      right: 18px;
+      font-family: "TekturLocal", var(--sc);
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(29,34,33,.55);
+    }
+    .dossier h2 {
+      margin: 2px 0 8px;
+      font-family: "BigShouldersLocal";
+      font-size: 50px;
+      line-height: .9;
+      color: #202423;
+      text-transform: uppercase;
+    }
+    .dossier .cn-title {
+      font-family: var(--sc);
+      font-weight: 800;
+      font-size: 24px;
+      line-height: 1.18;
+      color: #202423;
+    }
+    .dossier-grid {
+      display: grid;
+      grid-template-columns: 154px 1fr;
+      gap: 18px;
+      margin-top: 14px;
+    }
+    .profile {
+      height: 155px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.12), transparent 40%),
+        linear-gradient(40deg, #768055 0 30%, #4e623d 30% 58%, #384946 58% 100%);
+      border: 5px solid rgba(32,36,35,.84);
+      position: relative;
+      overflow: hidden;
+    }
+    .profile::after {
+      content: "";
+      position: absolute;
+      width: 78px;
+      height: 120px;
+      background: #1d2221;
+      left: 38px;
+      bottom: -15px;
+      clip-path: polygon(50% 0, 70% 15%, 78% 45%, 100% 100%, 0 100%, 22% 45%, 30% 15%);
+      opacity: .9;
+    }
+    .fields {
+      display: grid;
+      gap: 9px;
+      font-size: 15px;
+      line-height: 1.28;
+      color: rgba(29,34,33,.86);
+    }
+    .field {
+      display: grid;
+      grid-template-columns: 92px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      border-bottom: 1px solid rgba(29,34,33,.2);
+      padding-bottom: 5px;
+    }
+    .field b {
+      font-family: "TekturLocal", var(--sc);
+      color: rgba(29,34,33,.64);
+      font-size: 13px;
+    }
+    .field span {
+      font-family: var(--sc);
+      font-weight: 650;
+    }
+    .field code {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: rgba(29,34,33,.72);
+    }
+    .action-row {
+      display: grid;
+      grid-template-columns: 1.2fr .95fr .86fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .paper-btn {
+      height: 42px;
+      border: 0;
+      font-family: var(--sc);
+      font-size: 18px;
+      font-weight: 800;
+      color: #172018;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.18) 0 28%, transparent 28% 100%),
+        linear-gradient(90deg, var(--olive3), var(--olive2));
+      clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+      box-shadow: 0 5px 0 rgba(29,34,33,.22);
+    }
+    .paper-btn.secondary {
+      color: #202423;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.12) 0 32%, transparent 32% 100%),
+        linear-gradient(90deg, #c8a24b, #a77a34);
+    }
+    .paper-btn.danger {
+      color: #201816;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.10) 0 30%, transparent 30% 100%),
+        linear-gradient(90deg, #8a4e32, #6d462d);
+    }
+    .component-row {
+      margin: 16px 18px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .component {
+      min-height: 92px;
+      padding: 14px;
+      background: rgba(10, 25, 33, .82);
+      border: 1px solid rgba(194,186,172,.24);
+      color: #cfc7b6;
+      clip-path: polygon(0 10px, 10px 0, 100% 0, 100% 100%, 0 100%);
+    }
+    .component .kicker {
+      font-family: "TekturLocal", var(--sc);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--olive3);
+    }
+    .component strong {
+      display: block;
+      margin-top: 8px;
+      font-family: var(--sc);
+      font-size: 18px;
+      line-height: 1.18;
+    }
+    .component small {
+      display: block;
+      margin-top: 8px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: rgba(216,207,189,.62);
+    }
+    .folders {
+      height: 176px;
+      margin-top: 18px;
+      padding: 14px 18px;
+    }
+    .folder-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .folder {
+      height: 116px;
+      padding: 35px 12px 10px;
+      color: rgba(29,34,33,.76);
+      font-family: "BigShouldersLocal";
+      font-size: 29px;
+      font-weight: 700;
+      line-height: .9;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.16), transparent 35%),
+        var(--olive2);
+      clip-path: polygon(0 22%, 26% 22%, 33% 0, 60% 0, 66% 22%, 100% 22%, 100% 100%, 0 100%);
+      box-shadow: 0 9px 14px rgba(0,0,0,.32);
+    }
+    .folder:nth-child(2) { background: linear-gradient(135deg, rgba(255,255,255,.16), transparent 35%), #c8a24b; }
+    .folder:nth-child(3) { background: linear-gradient(135deg, rgba(255,255,255,.16), transparent 35%), #b2ab9b; }
+    .folder:nth-child(4) { background: linear-gradient(135deg, rgba(255,255,255,.14), transparent 35%), #8a5d39; }
+    .folder .cn {
+      display: block;
+      margin-top: 8px;
+      font-family: var(--sc);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .compare {
+      height: 548px;
+    }
+    .sample-list {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+    }
+    .sample {
+      display: grid;
+      grid-template-columns: 150px 1fr 96px;
+      gap: 12px;
+      min-height: 82px;
+      padding: 12px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.08), transparent 30%),
+        rgba(9, 22, 29, .86);
+      border: 1px solid rgba(194,186,172,.22);
+      clip-path: polygon(0 9px, 9px 0, 100% 0, 100% 100%, 0 100%);
+      align-items: center;
+    }
+    .sample .mast {
+      color: var(--paper-light);
+      text-transform: uppercase;
+      line-height: .9;
+    }
+    .sample .notes {
+      color: rgba(216,207,189,.82);
+      font-family: var(--sc);
+      font-size: 13px;
+      line-height: 1.3;
+    }
+    .sample .notes b {
+      display: block;
+      color: var(--olive3);
+      font-family: "TekturLocal", var(--sc);
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+    .sample .miniui {
+      display: grid;
+      gap: 7px;
+      font-family: var(--sc);
+      font-size: 11px;
+      color: #202423;
+    }
+    .pill {
+      min-height: 24px;
+      padding: 5px 7px;
+      background: var(--paper-mid);
+      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+      font-weight: 800;
+      text-align: center;
+    }
+    .barcode {
+      min-height: 28px;
+      background:
+        repeating-linear-gradient(90deg, #1d2221 0 3px, transparent 3px 6px, #1d2221 6px 10px, transparent 10px 15px),
+        var(--paper-light);
+      opacity: .8;
+    }
+    .sample.a .mast { font-family: var(--sc); font-size: 30px; font-weight: 900; letter-spacing: .04em; transform: scaleX(.86); transform-origin: left center; }
+    .sample.b .mast { font-family: "SimHei", var(--sc); font-size: 30px; font-weight: 900; line-height: 1.03; letter-spacing: .02em; }
+    .sample.c .mast { font-family: "Microsoft YaHei UI", "Microsoft YaHei", var(--sc); font-size: 28px; font-weight: 800; line-height: 1.05; }
+    .sample.d .mast { font-family: "SimSun", "Songti SC", serif; font-size: 28px; font-weight: 900; line-height: 1.1; color: #caa75a; }
+    .sample.d {
+      border-color: rgba(138,78,50,.58);
+      background: linear-gradient(135deg, rgba(138,78,50,.24), rgba(9,22,29,.86));
+    }
+
+    .lower-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .sizes {
+      height: 266px;
+    }
+    .size-list {
+      padding: 12px 15px 12px;
+      display: grid;
+      gap: 7px;
+    }
+    .size-row {
+      display: grid;
+      grid-template-columns: 82px 1fr 48px;
+      align-items: baseline;
+      gap: 10px;
+      border-bottom: 1px solid rgba(194,186,172,.14);
+      padding-bottom: 5px;
+    }
+    .size-row .name {
+      font-family: "TekturLocal", var(--sc);
+      color: var(--olive3);
+      font-size: 10px;
+      font-weight: 600;
+    }
+    .size-row .example {
+      color: var(--paper-light);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .size-row .px {
+      font-family: var(--mono);
+      color: rgba(216,207,189,.62);
+      font-size: 12px;
+      text-align: right;
+    }
+    .ex-h1 { font-family: var(--sc); font-size: 36px; font-weight: 900; line-height: 1; letter-spacing: .04em; }
+    .ex-h2 { font-family: var(--sc); font-size: 31px; font-weight: 900; line-height: 1; }
+    .ex-sec { font-family: var(--sc); font-size: 19px; font-weight: 850; color: var(--olive3) !important; }
+    .ex-ui { font-family: var(--sc); font-size: 19px; font-weight: 750; }
+    .ex-body { font-family: var(--sc); font-size: 15px; }
+    .ex-mono { font-family: var(--mono); font-size: 13px; }
+
+    .stickers {
+      height: 266px;
+    }
+    .sticker-grid {
+      padding: 18px 15px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .note {
+      height: 64px;
+      padding: 13px 12px;
+      color: rgba(29,34,33,.82);
+      background: #c8a24b;
+      box-shadow: 0 10px 14px rgba(0,0,0,.28);
+      transform: rotate(-2deg);
+      font-family: var(--sc);
+      font-size: 12px;
+      line-height: 1.35;
+      clip-path: polygon(0 0, 96% 0, 100% 12%, 100% 100%, 0 100%);
+    }
+    .note:nth-child(2) {
+      background: #6f914b;
+      transform: rotate(1.8deg);
+      color: #182019;
+    }
+    .note:nth-child(3) {
+      background: #507489;
+      transform: rotate(1deg);
+      color: #111b20;
+    }
+    .note:nth-child(4) {
+      background: #b2ab9b;
+      transform: rotate(-1.2deg);
+      color: #202423;
+    }
+    .note b {
+      display: block;
+      font-family: "TekturLocal", var(--sc);
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+    .decision {
+      position: absolute;
+      right: 30px;
+      bottom: 22px;
+      left: 28px;
+      height: 72px;
+      display: grid;
+      grid-template-columns: 260px 1fr 210px;
+      gap: 18px;
+      align-items: center;
+      border-top: 1px solid var(--line-dim);
+      color: rgba(216,207,189,.85);
+      font-family: var(--sc);
+      font-size: 16px;
+      line-height: 1.35;
+    }
+    .decision b {
+      font-family: "TekturLocal", var(--sc);
+      font-size: 20px;
+      color: var(--olive3);
+    }
+    .decision .stack {
+      font-family: "BigShouldersLocal";
+      font-size: 34px;
+      line-height: .9;
+      color: var(--paper-light);
+      text-transform: uppercase;
+    }
+    .decision code {
+      font-family: var(--mono);
+      color: var(--mustard);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <main class="board">
+    <header class="topbar">
+      <div class="brand-row">
+        <div class="seal"></div>
+        <div>
+          <div class="title-big">World Mystery Weekly</div>
+          <div class="subtitle">FONT FIT BOARD / CLEAN LOW-POLY WEEKLY BRANCH</div>
+        </div>
+      </div>
+      <div class="source-strip">
+        <div class="folder-mini"></div>
+        <div class="folder-mini gold"></div>
+        <div class="folder-mini gray"></div>
+        <span>按新标杆预演：封面大标题、真实中文功能字、编号、文件夹、贴纸、票条</span>
+      </div>
+      <div class="run-id">
+        <div class="meter"><span></span></div>
+        <div>WMW-FONT-FIT-BOARD / 1920x1080 / desktop only</div>
+      </div>
+    </header>
+
+    <section class="content">
+      <div class="col">
+        <div class="paper-stack">
+          <div class="paper-shadow"></div>
+          <div class="back-paper green"></div>
+          <div class="back-paper"></div>
+          <article class="cover">
+            <div class="clip"></div>
+            <h2>World<br>Mystery<br>Weekly</h2>
+            <div class="rule"></div>
+            <div class="scene-card">
+              <div class="beam"></div>
+              <div class="pyramid"></div>
+              <div class="silhouette"></div>
+            </div>
+            <div class="cover-foot">
+              <div class="thumbs">
+                <div class="thumb"></div>
+                <div class="thumb"></div>
+                <div class="thumb"></div>
+              </div>
+              <div class="issue">ISSUE<br>#001<br><span style="font-family:var(--mono);font-size:11px;">CN OK</span></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="mini-tests">
+          <div class="font-ticket t-big">
+            <span class="tag">A / 推荐</span>
+            <h3>Mystery Weekly</h3>
+            <p>BigShoulders：最接近标杆的高窄、硬块、周刊封面感。适合主标题和大号栏目。</p>
+          </div>
+          <div class="font-ticket t-tektur">
+            <span class="tag">B / 科技标签</span>
+            <h3>Mystery Weekly</h3>
+            <p>Tektur：可做 VISUAL DIRECTION、SCENE MOOD、状态标签；主标题会偏科幻终端。</p>
+          </div>
+          <div class="font-ticket t-work">
+            <span class="tag">C / 中性正文</span>
+            <h3>Mystery Weekly</h3>
+            <p>Work Sans / Instrument Sans：干净但标题识别弱；更适合说明文字或后台感界面。</p>
+          </div>
+          <div class="font-ticket t-pixel avoid">
+            <span class="tag">D / 不建议</span>
+            <h3>Mystery Weekly</h3>
+            <p>Silkscreen / Pixelify：会把新标杆拉回复古像素标题，和现代周刊感冲突。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <section class="panel ui-lab">
+          <div class="panel-title"><span class="tri"></span>Functional UI Text / 真实中文填充</div>
+          <article class="dossier">
+            <h2>Case File</h2>
+            <div class="cn-title">远东电台异常信号复核</div>
+            <div class="dossier-grid">
+              <div class="profile"></div>
+              <div class="fields">
+                <div class="field"><b>地区</b><span>北纬 43° 静默带</span><code>REG-042</code></div>
+                <div class="field"><b>线索</b><span>三次重复呼号 / 黑箱磁带</span><code>6/8</code></div>
+                <div class="field"><b>压力</b><span>本周截稿前必须回收证词</span><code>72%</code></div>
+                <div class="field"><b>风险</b><span>失联、误报、伪造新闻源</span><code>HIGH</code></div>
+                <div class="field"><b>编辑</b><span>眼镜记者 + 外星少女</span><code>DICE+2</code></div>
+              </div>
+            </div>
+            <div class="action-row">
+              <button class="paper-btn">派遣记者</button>
+              <button class="paper-btn secondary">追加预算</button>
+              <button class="paper-btn danger">封存档案</button>
+            </div>
+          </article>
+
+          <div class="component-row">
+            <div class="component">
+              <div class="kicker">SECTION LABEL / Tektur</div>
+              <strong>栏目标题可以偏机械，但正文不要机械化。</strong>
+              <small>UI-SIZE: 20-24 / uppercase label</small>
+            </div>
+            <div class="component">
+              <div class="kicker">BODY / Noto Sans SC</div>
+              <strong>中文功能字要稳、清楚、不要旧报纸衬线。</strong>
+              <small>BODY-SIZE: 14-18 / weight 500-700</small>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel folders">
+          <div class="panel-title"><span class="tri"></span>Folders & Document Tabs</div>
+          <div class="folder-row">
+            <div class="folder">ARCHIVE<span class="cn">归档</span></div>
+            <div class="folder">EVIDENCE<span class="cn">证据</span></div>
+            <div class="folder">REPORT<span class="cn">发刊</span></div>
+            <div class="folder">SECRET<span class="cn">机密</span></div>
+          </div>
+        </section>
+      </div>
+
+      <div class="col">
+        <section class="panel compare">
+          <div class="panel-title"><span class="tri"></span>Font Stack Comparison</div>
+          <div class="sample-list">
+            <div class="sample a">
+              <div class="mast">World<br>Mystery<br>Weekly</div>
+              <div class="notes"><b>A 推荐组合</b>BigShoulders 做封面和大标题；Noto Sans SC 承载中文功能；Geist Mono 管编号、概率和档案码。</div>
+              <div class="miniui"><div class="pill">派遣记者</div><div class="pill">威胁 72%</div><div class="barcode"></div></div>
+            </div>
+            <div class="sample b">
+              <div class="mast">World<br>Mystery<br>Weekly</div>
+              <div class="notes"><b>B 科技副标题</b>Tektur 在栏目、状态、HUD 标记上成立；放大到主标题会让画面偏“科幻终端”。</div>
+              <div class="miniui"><div class="pill">SCENE MOOD</div><div class="pill">REG-042</div><div class="barcode"></div></div>
+            </div>
+            <div class="sample c">
+              <div class="mast">World<br>Mystery<br>Weekly</div>
+              <div class="notes"><b>C 中性编辑部</b>Work Sans / Instrument Sans 可做低存在感正文；标题不够标杆，不建议作为主视觉。</div>
+              <div class="miniui"><div class="pill">检查线索</div><div class="pill">预算 +2</div><div class="barcode"></div></div>
+            </div>
+            <div class="sample d">
+              <div class="mast">World<br>Mystery<br>Weekly</div>
+              <div class="notes"><b>D 反例</b>Silkscreen / Pixelify 太像复古像素游戏 UI，会削弱这组新标杆的现代周刊和干净纸件感。</div>
+              <div class="miniui"><div class="pill">不建议</div><div class="pill">PIXEL</div><div class="barcode"></div></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="lower-grid">
+          <section class="panel sizes">
+            <div class="panel-title"><span class="tri"></span>Size Tokens</div>
+            <div class="size-list">
+              <div class="size-row"><span class="name">MASTHEAD</span><span class="example ex-h1">Mystery Weekly</span><span class="px">76-92</span></div>
+              <div class="size-row"><span class="name">PANEL H1</span><span class="example ex-h2">Case File</span><span class="px">44-56</span></div>
+              <div class="size-row"><span class="name">SECTION</span><span class="example ex-sec">VISUAL DIRECTION</span><span class="px">20-24</span></div>
+              <div class="size-row"><span class="name">CN ACTION</span><span class="example ex-ui">派遣记者 / 追加预算</span><span class="px">18-22</span></div>
+              <div class="size-row"><span class="name">CN BODY</span><span class="example ex-body">本周截稿前必须回收证词</span><span class="px">14-16</span></div>
+              <div class="size-row"><span class="name">CODE</span><span class="example ex-mono">WMW-2000-37 / 72%</span><span class="px">11-13</span></div>
+            </div>
+          </section>
+
+          <section class="panel stickers">
+            <div class="panel-title"><span class="tri"></span>Notes & Stickers</div>
+            <div class="sticker-grid">
+              <div class="note"><b>任务便签</b>中文便签仍用 Noto Sans SC，避免假手写难读。</div>
+              <div class="note"><b>状态标签</b>Tektur 可做小标题，不承载长句。</div>
+              <div class="note"><b>编号</b>Geist Mono 用于 ISSUE、REG、骰值。</div>
+              <div class="note"><b>图标旁字</b>字重 650-800，优先清楚。</div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <footer class="decision">
+      <b>结论</b>
+      <div>主视觉推荐 <code>BigShoulders + Noto Sans SC + Geist Mono</code>；Tektur 只做栏目/状态标签。避免把像素字体作为 UI 主字体。</div>
+      <div class="stack">Use Big<br>for masthead</div>
+    </footer>
+  </main>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const set = (selector, html) => {
+        const node = document.querySelector(selector);
+        if (node) node.innerHTML = html;
+      };
+      const setAll = (selector, values) => {
+        document.querySelectorAll(selector).forEach((node, index) => {
+          if (values[index] !== undefined) node.innerHTML = values[index];
+        });
+      };
+
+      set(".title-big", "世界神秘周刊");
+      set(".subtitle", "中文字体适配板 / 干净低多边形周刊支线");
+      set(".source-strip span", "按新标杆预演：中文刊名、功能字、编号、文件夹、贴纸、票条");
+      set(".run-id > div:last-child", "字体预演稿 / 1920×1080 / 仅桌面");
+      set(".cover h2", "世界<br>神秘<br>周刊");
+      set(".issue", "");
+      const cover = document.querySelector(".cover");
+      if (cover && !document.querySelector(".issue-badge-cn")) {
+        const badge = document.createElement("div");
+        badge.className = "issue-badge-cn";
+        badge.textContent = "第001期";
+        cover.appendChild(badge);
+      }
+
+      setAll(".font-ticket .tag", [
+        "A / 推荐",
+        "B / 系统黑体",
+        "C / 界面黑体",
+        "D / 不建议"
+      ]);
+      setAll(".font-ticket h3", [
+        "世界神秘周刊",
+        "世界神秘周刊",
+        "世界神秘周刊",
+        "世界神秘周刊"
+      ]);
+      setAll(".font-ticket p", [
+        "思源黑体类重字重：干净、现代、可横向压缩，最适合中文主标题。",
+        "黑体：力量够，但字面偏硬偏旧。可做临时占位，不建议作为最终品牌字。",
+        "微软雅黑：界面可读性强，但标题偏圆润，周刊封面冲击力弱。",
+        "宋体/仿宋：会滑向旧报纸、文学刊物或档案文书，不符合新标杆的现代感。"
+      ]);
+
+      setAll(".panel-title", [
+        "<span class=\"tri\"></span>功能界面文字 / 真实中文填充",
+        "<span class=\"tri\"></span>文件夹与文档标签",
+        "<span class=\"tri\"></span>中文字体组合对照",
+        "<span class=\"tri\"></span>中文字号标尺",
+        "<span class=\"tri\"></span>便签与贴纸"
+      ]);
+
+      set(".dossier h2", "案件档案");
+      set(".cn-title", "远东电台异常信号复核");
+      setAll(".field", [
+        "<b>地区</b><span>北纬 43° 静默带</span><code>区域042</code>",
+        "<b>线索</b><span>三次重复呼号 / 黑箱磁带</span><code>6/8</code>",
+        "<b>压力</b><span>本周截稿前必须回收证词</span><code>72%</code>",
+        "<b>风险</b><span>失联、误报、伪造新闻源</span><code>高</code>",
+        "<b>编辑</b><span>眼镜记者 + 外星少女</span><code>骰+2</code>"
+      ]);
+      setAll(".paper-btn", ["派遣记者", "追加预算", "封存档案"]);
+      setAll(".component .kicker", ["栏目标题 / 几何窄体感", "正文 / 思源黑体类"]);
+      setAll(".component strong", [
+        "栏目标题可以偏机械，但正文不要机械化。",
+        "中文功能字要稳、清楚、不要旧报纸衬线。"
+      ]);
+      setAll(".component small", [
+        "字号：20-24 / 短标签",
+        "字号：14-18 / 字重 500-700"
+      ]);
+
+      setAll(".folder", [
+        "档案<span class=\"cn\">长期归档</span>",
+        "证据<span class=\"cn\">线索材料</span>",
+        "报道<span class=\"cn\">本期发刊</span>",
+        "机密<span class=\"cn\">限制阅览</span>"
+      ]);
+
+      setAll(".sample .mast", [
+        "世界<br>神秘<br>周刊",
+        "世界<br>神秘<br>周刊",
+        "世界<br>神秘<br>周刊",
+        "世界<br>神秘<br>周刊"
+      ]);
+      setAll(".sample .notes", [
+        "<b>A 推荐组合</b>思源黑体类重字重做刊名和主标题；同家族中等字重承载中文功能；等宽字管编号和概率。",
+        "<b>B 系统黑体</b>力量感足，和标杆硬边物件能搭上；但精致度和品牌感弱，容易显得默认。",
+        "<b>C 界面黑体</b>微软雅黑适合正文和按钮；用于主标题会偏圆、偏办公，封面张力不足。",
+        "<b>D 反例</b>宋体/仿宋会把画面带向旧报纸、文学刊物或档案文书；和新标杆的现代工作台气质冲突。"
+      ]);
+      setAll(".sample.a .pill", ["派遣记者", "威胁 72%"]);
+      setAll(".sample.b .pill", ["场景氛围", "区域042"]);
+      setAll(".sample.c .pill", ["检查线索", "预算 +2"]);
+      setAll(".sample.d .pill", ["不建议", "旧报纸感"]);
+
+      setAll(".size-row", [
+        "<span class=\"name\">主刊名</span><span class=\"example ex-h1\">世界神秘周刊</span><span class=\"px\">56-76</span>",
+        "<span class=\"name\">大标题</span><span class=\"example ex-h2\">案件档案</span><span class=\"px\">40-52</span>",
+        "<span class=\"name\">栏目</span><span class=\"example ex-sec\">视觉方向</span><span class=\"px\">20-24</span>",
+        "<span class=\"name\">行动</span><span class=\"example ex-ui\">派遣记者 / 追加预算</span><span class=\"px\">18-22</span>",
+        "<span class=\"name\">正文</span><span class=\"example ex-body\">本周截稿前必须...</span><span class=\"px\">14-16</span>",
+        "<span class=\"name\">编号</span><span class=\"example ex-mono\">区域042 / 72%</span><span class=\"px\">11-13</span>"
+      ]);
+
+      setAll(".note", [
+        "<b>任务便签</b>中文便签仍用黑体类，避免假手写难读。",
+        "<b>状态标签</b>可做窄体感处理，不承载长句。",
+        "<b>编号</b>等宽数字用于期号、区域、骰值。",
+        "<b>图标旁字</b>字重 650-800，优先清楚。"
+      ]);
+
+      set(".decision > div:nth-child(2)", "主视觉推荐：思源黑体类重字重 + 中文中等字重 + 等宽数字；主刊名可横向压缩到 82%-90%，避免宋体旧报纸感。");
+      set(".decision .stack", "标题用<br>重黑体");
+    });
+  </script>
+</body>
+</html>

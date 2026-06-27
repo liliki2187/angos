@@ -42,6 +42,15 @@
 - **机制**：员工取材结果**只员工本人看见**，玩家只看到带角色性格误差的"汇报"（醉汉夸大、修女保守）。
 - **状态**：方向有趣，加入待定区，后续再想怎么用。
 
+### D7. 世界地图白色浮雕沙盘风格作为像素颗粒度分支实验
+- **来源**：2026-06-22 世界地图风格稿颗粒度实验；用户表示喜欢 `docs/screenshots/2026-06-22-world-map-branch-pixel-grain-experiment/00-source-branch-style.png` 的效果，要求“把这个当分支实验”，并与 `@像素艺术` 合作先看不同像素风颗粒度。
+- **机制 / 原则**：该方向仅作为世界地图视觉分支实验，不替代 A93 新世界地图标杆。可探索白色浮雕 / 实体地图、pin 与便签、左侧地区卡、右侧 dossier、底部卡片的物件感如何与 Angus 像素 / 半调 / 印刷语言结合；重点比较低颗粒、中颗粒、高颗粒三档对现代纸品感、地图可读性、UI 可落地性和旧档案 / 低清像素风险的影响。
+- **当前实验产物**：源图与三版输出位于 `docs/screenshots/2026-06-22-world-map-branch-pixel-grain-experiment/`：`01-variant-a-fine-micro-pixel-grain.png`、`02-variant-b-medium-angus-pixel-halftone.png`、`03-variant-c-bold-coarse-pixel-print.png`。后续补充 `04-failed-b2-too-white.png` 作为过白失败边界，`05-variant-b3-color-locked.png` 作为 B 的确定性色彩锁定候选，三联对比为 `06-compare-source-b-b3-color-lock.png`；`07-variant-b4-ai-regenerated-color-contract.png` 为首次按 B3 色彩合同进行的 AI 细节再生图，对比图为 `08-compare-source-b3-b4-ai-regeneration.png`；`09-variant-b5-local-polish-accent-paper-noise.png` 是宽合同误判案例；`15-variant-b7-strict-color-match-pass.png` 是按 `Color Contract Gate` 修正后的严格色彩通过图，合同记录为 `color-contract-v1-b7-strict-pass.md`。
+- **色彩流程补充**：B3 只用于锁定“源图色号 + B 的中颗粒 / 半调质感”这一中间状态，不代表生产标杆。后续继续 AI 生图时必须引用 `color-sampling-b-correction.md` 的色号合同，并先做颜色复采样，再讨论像素颗粒升级。
+- **当前复审结论（2026-06-22 修订）**：用户并排比较后指出 B5 与源图仍有肉眼色差；复采样确认 B5 整体偏暗、深蓝底更重、红橙和青色偏沉。此前“B5 当前最佳候选”的结论撤回，B5 改列为宽合同误判 / 过暗失败边界。后续按 `docs/onboarding/imagegen-color-contract-gate.md` 建立严格 `Color Contract v1`，B7 已通过色彩硬闸门；但色彩通过不等于生产标杆，仍需继续审像素颗粒、纸面旧化、可写区和 UI 资产化。
+- **边界**：三版都只能称为分支实验稿，不得作为生产标杆、生产真源或可直接切图母版。若后续要升级，必须先经用户确认，再经过 `@像素艺术` 生成后复审，明确解决白色浮雕沙盘、旧纸噪点、高清摄影质感、金属控制台和动态文字安全区问题。
+- **状态**：待定 / 分支实验。下一步根据三档颗粒度对比决定是否继续迭代其中一档，或回收其中的局部手法到 A93 主线。
+
 ### M1. Arkham Horror LCG · Chaos Bag（混沌袋）
 - **来源**：2026-04-25 骰子机制讨论。
 - **当前状态（历史）**：用户曾表示「没看懂」，曾重新解释后入机制库备查。

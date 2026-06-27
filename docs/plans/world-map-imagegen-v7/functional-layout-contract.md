@@ -12,7 +12,9 @@ The world map page is responsible for one decision:
 Choose a reporting region, understand whether the selected region can be entered, then enter that selected region.
 ```
 
-The page does not directly select tasks, configure staff, roll dice, advance the day, enter dispatch signoff, or show the full action log. Those responsibilities belong to the downstream region task board, dispatch signoff screen, and result/log surfaces.
+The page does not directly select tasks, configure staff, roll dice, enter dispatch signoff, or show the full action log. Those responsibilities belong to the downstream region task board, dispatch signoff screen, and result/log surfaces.
+
+2026-06-22 update, revised 2026-06-23: the world map may include `下一天 / 推进一天` only if it reuses the region task board's bottom global schedule strip grammar and behavior: deep cyan-black / gold schedule component, separate hit rect, `确认推进？` confirming state, and clear spatial separation from the right-side `进入选定地区` CTA. The anchor may be lower-middle or a left-bottom independent schedule dock depending on the page layout, but it must not become part of the region list, ticker, right dossier, or a standalone lower-right machine button.
 
 The selected region name is owned by the region title / dossier. It must not be baked into the primary CTA label. The CTA label is a fixed action slot such as `进入选定地区`; disabled / loading states may change the state text, but still must not include a dynamic region name.
 
@@ -359,7 +361,7 @@ Interactive elements must be separable assets or state atlases: map pins, select
 - The `查看任务情报 · N` ticket must sit directly below the red / state ticket, remain visually secondary, and open a read-only popover. It must have independent button affordance and must not read as the title bar of the prose paper below it. The popover must not contain task selection, dispatch, dice, success rate, or editable controls.
 - The primary CTA must use the fixed label `进入选定地区` or an equivalent fixed action phrase. It must not include the selected region name, task name, red-line name, or dispatch target.
 - The bottom ticker must read as low-weight clickable detail entrances: `地区情报`, `档案更新`, `地区预警` or equivalent. The third lane is the entry-impact / warning slot for possible punishment, debuff, lock, fatigue, reputation loss, or other region consequences. It must not become a tutorial prompt, task progress bar, filter bar, duplicate current-region display, or second task-summary lane.
-- No full task list, staff cards, dice pool, success rate, next-day control, or long action log appears on this screen.
+- No full task list, staff cards, dice pool, success rate, or long action log appears on this screen. If a next-day control appears, it must follow the 2026-06-22 bottom global schedule strip rule above and must not be a standalone lower-right control.
 - Left index, map pin, right dossier, CTA, and ticker all point to the same selected region.
 - Screenshots must include whole screen, safe-zone overlay, and 100% crops of left card, map pin, right dossier, CTA, and ticker.
 - This contract must pass before any style draft becomes a component production source.

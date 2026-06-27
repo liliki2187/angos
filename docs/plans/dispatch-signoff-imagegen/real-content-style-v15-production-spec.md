@@ -1,8 +1,8 @@
-# 派遣签批台 V15/V16 真实内容风格稿生产规格
+# 派遣签批台 V15/V16/V17.1 真实内容风格稿生产规格
 
 > 状态：生产规格底稿 / asset contract draft  
 > 稿件类型：`contract_overlay` + `no-text asset master draft` + `filled-state capacity preview`  
-> 重要边界：V15/V16 本地稿仍不是生产真源，也不是最终真实内容风格稿。它用于冻结结构、文字安全区、点击区和下一轮高保真无字 / 有字稿的生产合同。
+> 重要边界：V15/V16/V17.1 本地稿仍不是生产真源，也不是最终真实内容风格稿。它用于冻结结构、文字安全区、点击区和下一轮高保真无字 / 有字稿的生产合同。
 
 ## 0. V16 正交纠偏
 
@@ -14,6 +14,29 @@
 - 如果高保真生图出现“整体好看但可写纸面倾斜”，必须降级为灵感图 / 偏差案例，不进入 `filled-state text mock`、`no-text asset master` 或生产候选。
 
 V16 正交合同稿用于替代 V15 中右侧斜票据的生产约束；V15 仍保留为历史结构容量参考。
+
+## 0.1 V17.1 底部资源抽屉纠偏
+
+用户在 V17 截图上明确指出：判断尺太宽，而道具 / 器材领用盘太窄且贴到画面最下方，低于左侧“本周外勤状态”，导致全屏底边不一致。该反馈作为 V17.1 的布局 Gate：
+
+- 判断尺不得横向铺满中央主板；它只回答“当前组合是否达标”，应收窄为中央判断卡，建议宽度 760-820px、高度 88-96px。
+- 候选员工与器材领用同属“本次派遣草稿”的可选资源层，必须共享一个底部父容器，不能拆成两个不共享底边的系统。
+- 器材领用不得独立贴底成为页脚 / 库存条；默认可见但低权重，作为 `可选资源抽屉` 的第二层存在。
+- hover / focus 时，候选员工向上展开第二行，但底部资源抽屉底边不动；不得向下推器材，也不得遮挡或托住右侧签批票据。
+- 底部资源抽屉实心底边应与左侧 `本周外勤状态` 底边对齐，误差建议不超过 8px。
+
+V17.1 布局合同位于 `docs/plans/dispatch-signoff-imagegen/dispatch-signoff-v17-1-orthogonal-real-content-contract.json`。它替代 V16 中 `candidate_drawer_base + equipment_tray_base` 独立上下分离的布局约束；V16 仍保留为正交功能面 Gate。
+
+## 0.2 V17.2 高保真生图交接
+
+V17.2 不新增布局方向，只把 V17.1 的正交结构、内容安全区、底部统一基线和真实内容样例整理成下一轮高保真生成包。交接稿位于 `docs/plans/dispatch-signoff-imagegen/dispatch-signoff-v17-2-imagegen-handoff.md`，包含：
+
+- `no-text asset master` prompt：无动态文字、无姓名、无数值，专门检查材质、资产边界和切图潜力。
+- `filled-state text mock` prompt：带真实任务、队伍、器材、风险和签批信息，专门检查图文融合和截图感。
+- `candidate hover variant` prompt：只验证底部资源抽屉向上展开，底边 `y=952` 不动。
+- 失败样例判定：斜功能面、贴底器材条、过宽判断尺、旧档案纸、候选重复已选角色等直接退回。
+
+执行外部生图前仍需用户明确同意上传本地参考图；生成后若要称为生产标杆，必须再交 `angus_art_director` 复审。
 
 ## 1. 当前输入
 
@@ -27,6 +50,9 @@ V16 正交合同稿用于替代 V15 中右侧斜票据的生产约束；V15 仍�
 | V16 orthogonal no-text draft | `docs/screenshots/2026-06-18-dispatch-signoff-packaging-v16-orthogonal-contract/03-dispatch-signoff-editorial-object-v16-orthogonal-no-text-base.png` | 检查无动态文字时的正交可写区 |
 | V16 orthogonal contract overlay | `docs/screenshots/2026-06-18-dispatch-signoff-packaging-v16-orthogonal-contract/04-dispatch-signoff-editorial-object-v16-orthogonal-contract-overlay.png` | 绿色标注正交功能承载面，红色标注禁写装饰 |
 | V16 right-ticket crop | `docs/screenshots/2026-06-18-dispatch-signoff-packaging-v16-orthogonal-contract/05-dispatch-signoff-editorial-object-v16-right-ticket-crop.png` | 100% 局部检查右侧签批票据是否可拆、可写、可点 |
+| V17.1 filled-state text mock | `docs/screenshots/2026-06-22-dispatch-signoff-v17-orthogonal-real-content-style/01-dispatch-signoff-v17-filled-default.png` | 检查 4/5 空槽、随队器材归属、判断尺收窄与底部资源抽屉基线 |
+| V17.1 candidate hover preview | `docs/screenshots/2026-06-22-dispatch-signoff-v17-orthogonal-real-content-style/02-dispatch-signoff-v17-candidate-hover.png` | 检查候选两行向上展开，底部资源抽屉底边不动 |
+| V17.1 contract overlay | `docs/screenshots/2026-06-22-dispatch-signoff-v17-orthogonal-real-content-style/04-dispatch-signoff-v17-1-contract-overlay.png` | 标注 V17.1 content / no-text / hit rect 与统一底部基线 |
 
 ## 2. 页面职责
 
@@ -42,7 +68,7 @@ V16 正交合同稿用于替代 V15 中右侧斜票据的生产约束；V15 仍�
 | --- | --- | --- | --- |
 | 任务档案 | 我为什么要派人？ | 左侧任务档案 / 摘要纸 | 只解释任务背景和需求，不承担选人 |
 | 已选队伍槽 | 当前谁出发？ | 中央签批板上 5 张员工证 + 1 条随队道具 | 员工卡与候选卡同尺寸家族；道具在队伍下方，权重低于员工 |
-| 候选 / 器材池 | 我还能换谁 / 带什么？ | 下方员工抽屉 + 底部器材托盘 | 员工池默认一行完整卡，hover 向上展开；器材池默认可见但低权重 |
+| 候选 / 器材池 | 我还能换谁 / 带什么？ | V17.1 底部 `可选资源抽屉`：候选员工层 + 随队器材层 | 员工池默认一行完整卡，hover 向上展开；器材层默认可见但低权重，并与候选共享底边 |
 | 签批复核 | 签下去发生什么？ | 右侧签批票据 + 盖章 CTA | 主结论是达标率和消耗后果，CTA 必须写清 `消耗 2 天` |
 
 ## 3. 视觉方向
@@ -64,11 +90,11 @@ V16 正交合同稿用于替代 V15 中右侧斜票据的生产约束；V15 仍�
 | 已选队伍标题 | 中央签批板顶条 | `已选队伍 5/5` | 主标题，不能烘焙在生产底图 |
 | 已选员工卡 | 中央员工证 | 姓名、职能、dice net、移出 | 姓名 / 职能 / 移出由动态层或独立状态层承载 |
 | 随队道具 | 中央道具票根 | `匿名热线录音` | 道具名、说明、撤回按钮都在正交安全区 |
-| 风险判断 | 中央核验尺 | `达标率 78%` | 达标率最大；`13/8` 只能作为相关点上限 / 目标解释 |
+| 风险判断 | 中央判断卡 | `达标率 78%` | 达标率最大；`13/8` 只能作为相关点上限 / 目标解释；V17.1 起宽度约 760-820px，不再铺满中央 |
 | 签批票据 | 右侧票据 | `可签批 · 达标率 78%` | 只放最终复核摘要，不复读整页细节 |
 | CTA | 右侧盖章板 | `盖章派遣 · 2天` | 文案必须含动作和消耗；不同状态拆 atlas；文本槽必须方正 |
-| 候选员工 | 员工抽屉卡 | 姓名、适配、dice net、`+` | 默认露出 6 张完整卡；已选员工从候选池移出 |
-| 器材托盘 | 底部器材票签 | 道具名、可带 / 耗尽、`+` | 默认可见但低权重，hover / focus 可展开 |
+| 候选员工 | 可选资源抽屉 / 员工层 | 姓名、适配、dice net、`+` | 默认露出 6 张完整卡；已选员工从候选池移出 |
+| 随队器材候选 | 可选资源抽屉 / 器材层 | 器材名、可带 / 耗尽、`+` | 默认可见但低权重；选中后写回上方队伍槽；不得独立贴底成为页脚 |
 
 ## 5. 资产拆分清单
 
@@ -87,7 +113,8 @@ P0 资产必须先做：
 | `approval_cta_plate` | atlas | `default / hover / pressed / loading / disabled / stamped` |
 | `candidate_staff_card_frame` | atlas | 候选员工证卡，`default / hover / disabled / full_blocked` |
 | `candidate_drawer_base` | component bitmap | 员工抽屉底板，默认一行与 hover 两行态 |
-| `equipment_tray_base` | component bitmap | 器材托盘底板 |
+| `bottom_resource_drawer_base` | component bitmap | V17.1 起承载候选员工与随队器材的共享底部资源抽屉，底边对齐左侧状态基线 |
+| `equipment_tray_base` | component bitmap | V16 历史项；V17.1 起降级为 `bottom_resource_drawer_base` 内部器材层，不再独立贴底 |
 | `equipment_ticket` | atlas | 道具票签，`available / hover / selected / exhausted / disabled` |
 
 P1 资产后续再做：
@@ -104,9 +131,9 @@ P1 资产后续再做：
 | 主 CTA | `default / hover / pressed / loading / disabled / stamped` | 真实界面只显示一个当前状态；状态矩阵只进规格页 |
 | 已选员工卡 | `default / hover / remove_hover / removing / disabled` | 上方已选区是权威状态，不缩略 |
 | 候选员工卡 | `default / hover / selected-preview / full_blocked / disabled` | 满员只在候选卡局部阻断，不让全局签批不可用 |
-| 员工抽屉 | `default_one_row / hover_two_rows` | hover 向上展开，不推动右侧票据 |
+| 底部资源抽屉 | `default_one_row / candidate_hover_two_rows / equipment_hover` | 候选员工与器材共享父容器；hover 向上展开，底边不动 |
 | 本次道具槽 | `empty / occupied / hover / revoke_hover / disabled` | 道具不占员工位，只能 0-1 个 |
-| 器材托盘 | `default_compact / hover_expanded` | 默认比员工池低权重 |
+| 器材层 | `default_compact / hover_expanded` | 默认比员工池低权重，作为底部资源抽屉第二层 |
 | 签批票据 | `valid / invalid / warning / stamped` | 只承载最终复核摘要 |
 
 ## 7. 高保真生成 brief
@@ -114,18 +141,18 @@ P1 资产后续再做：
 下一轮生成 / 精修必须产出两张图：
 
 1. `no-text asset master`：无动态文字、无真实姓名、无动态数值，但保留物件、卡槽、票据、按钮底板、头像占位和安全区。
-2. `filled-state text mock`：使用 `M330 未班车空白段`、5 名员工头像 / 姓名、`匿名热线录音`、`达标率 78%`、`盖章派遣 · 2天` 等真实内容，检查图文融合与截图感。
+2. `filled-state text mock`：使用 `M330 未班车空白段`、4 名已选员工 + 1 个同尺寸空槽、`匿名热线录音`、`达标率 78%`、`盖章派遣 · 2天` 等真实内容，检查图文融合与截图感。空槽必须可见，用于验证“任务人员空槽”功能区。
 
 正向关键词：
 
 ```text
-modern midnight editorial dispatch approval desk, Angus supernatural weekly magazine, deep-sea navy dominant field, clean ivory printed paper, vivid red-orange approval stamp, restrained cyan signal accents, high-definition micro-pixel character portraits, structured halftone dots, crop marks, red-cyan print misregistration, graphicized physical objects, central dispatch board, compact right approval receipt, square-on axis-aligned writable document faces, orthogonal functional panels, candidate employee badge drawer, equipment requisition tray, polished in-game UI screenshot
+modern midnight editorial dispatch approval desk, Angus supernatural weekly magazine, deep-sea navy dominant field, clean ivory printed paper, vivid red-orange approval stamp, restrained cyan signal accents, high-definition micro-pixel character portraits, structured halftone dots, crop marks, red-cyan print misregistration, graphicized physical objects, central dispatch board, compact central risk judgment card, shared bottom resource drawer with candidate employee badges and low-priority equipment requisition layer, compact right approval receipt, square-on axis-aligned writable document faces, orthogonal functional panels, polished in-game UI screenshot
 ```
 
 负向关键词：
 
 ```text
-old archive, yellowed dirty paper, torn parchment, coffee stains, warm wood desk, nostalgic office, Sultan palace ornament, ornate gold filigree, SaaS dashboard, generic admin panel, programmer wireframe, simple PIL rectangles, CAD grid, full-screen cyan outlines, tilted writable documents, skewed UI panels, perspective paper carrying body text or CTA, overly literal office props, excessive clips, rivets, binder holes, stacked paper mechanics, default UI labels pasted on art
+old archive, yellowed dirty paper, torn parchment, coffee stains, warm wood desk, nostalgic office, Sultan palace ornament, ornate gold filigree, SaaS dashboard, generic admin panel, programmer wireframe, simple PIL rectangles, CAD grid, full-screen cyan outlines, tilted writable documents, skewed UI panels, perspective paper carrying body text or CTA, detached footer equipment tray, inventory bar at the screen bottom, over-wide report strip risk ruler, overly literal office props, excessive clips, rivets, binder holes, stacked paper mechanics, default UI labels pasted on art
 ```
 
 ## 8. 通过标准
@@ -133,6 +160,8 @@ old archive, yellowed dirty paper, torn parchment, coffee stains, warm wood desk
 - 缩小图第一眼读成 Angus 派遣签批工作台，不是后台表单、旧办公室或卡牌管理器。
 - 四个核心功能区都能在无说明下读出。
 - `达标率 78%` 是风险判断主结论，`13/8` 不再被读成确定通关。
+- V17.1 起判断尺是中央判断卡，宽度约 760-820px，不再横铺中央主板。
+- 底部资源抽屉与左侧 `本周外勤状态` 底边对齐；器材层在抽屉内部，不得贴到屏幕最下方成为页脚 / 库存条。
 - CTA 明确表达 `盖章派遣` 与 `消耗 2 天`，不需要玩家从字段里拼后果。
 - 无字底图里没有动态文字、任务名、数值、员工姓名和按钮文案烘焙。
 - 有字效果图的文字、头像和按钮像同一轮美术系统，不像贴在底图上的 Label。

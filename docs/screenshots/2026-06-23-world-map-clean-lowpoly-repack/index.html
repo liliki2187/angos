@@ -1,0 +1,1096 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>B7 世界地图 · Clean Low-Poly Repack</title>
+  <style>
+    :root {
+      --bg: #061219;
+      --bg-2: #0a1a22;
+      --panel: #10252d;
+      --panel-2: #162f36;
+      --paper: #d7cfba;
+      --paper-2: #c8bea5;
+      --ink: #242722;
+      --muted: #6f817d;
+      --line: rgba(202, 193, 163, .38);
+      --cyan: #3e9ba7;
+      --cyan-soft: #74b7b5;
+      --olive: #94a84f;
+      --olive-dark: #5c7036;
+      --gold: #d2a64f;
+      --red: #c7472e;
+      --red-dark: #832d25;
+      --shadow: rgba(0, 0, 0, .36);
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      background: #02080d;
+      color: #f3eddb;
+      font-family: "Microsoft YaHei", "Noto Sans SC", "Segoe UI", sans-serif;
+      overflow: hidden;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+    }
+
+    .screen {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px) 0 0 / 80px 80px,
+        linear-gradient(0deg, rgba(255,255,255,.018) 1px, transparent 1px) 0 0 / 80px 80px,
+        radial-gradient(circle at 62% 18%, rgba(62,155,167,.12), transparent 34%),
+        linear-gradient(145deg, #07131a 0%, #091920 48%, #040d14 100%);
+    }
+
+    .screen::before,
+    .screen::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      inset: 22px;
+      border: 1px solid rgba(216, 207, 184, .28);
+      clip-path: polygon(0 18px, 18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%);
+    }
+
+    .screen::after {
+      inset: 0;
+      border: none;
+      background:
+        linear-gradient(90deg, transparent 0 18%, rgba(148,168,79,.08) 18% 18.3%, transparent 18.3%),
+        linear-gradient(0deg, transparent 0 69%, rgba(62,155,167,.07) 69% 69.3%, transparent 69.3%);
+      mix-blend-mode: screen;
+    }
+
+    .topbar {
+      position: absolute;
+      left: 42px;
+      right: 42px;
+      top: 32px;
+      height: 74px;
+      display: grid;
+      grid-template-columns: 370px 1fr;
+      gap: 28px;
+      z-index: 3;
+    }
+
+    .brand {
+      position: relative;
+      padding: 10px 0 0 22px;
+      border-left: 5px solid var(--olive);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 36px;
+      letter-spacing: .02em;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .brand p {
+      margin: 8px 0 0;
+      color: rgba(216,207,184,.72);
+      font-size: 15px;
+      letter-spacing: .08em;
+    }
+
+    .brand .globe {
+      position: absolute;
+      right: 8px;
+      top: 6px;
+      width: 56px;
+      height: 56px;
+      border: 3px solid rgba(216,207,184,.76);
+      border-radius: 50%;
+    }
+
+    .brand .globe::before,
+    .brand .globe::after {
+      content: "";
+      position: absolute;
+      inset: 8px 4px;
+      border: 2px solid rgba(216,207,184,.54);
+      border-left-color: transparent;
+      border-right-color: transparent;
+      border-radius: 50%;
+    }
+
+    .brand .globe::after {
+      inset: 0 17px;
+      border-top: 0;
+      border-bottom: 0;
+      border-left-color: rgba(216,207,184,.54);
+      border-right-color: rgba(216,207,184,.54);
+    }
+
+    .status-strip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .week-tab,
+    .stat-chip {
+      height: 46px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 20px;
+      border: 1px solid rgba(216,207,184,.28);
+      background: rgba(16,37,45,.78);
+      box-shadow: 0 16px 28px rgba(0,0,0,.24);
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+      color: rgba(243,237,219,.9);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .week-tab.primary {
+      background: linear-gradient(180deg, #a23e2c, #7e2b22);
+      color: #fff1df;
+      border-color: rgba(255,208,177,.32);
+    }
+
+    .week-tab.day {
+      background: linear-gradient(180deg, #b69143, #8a6e34);
+      color: #1e231c;
+    }
+
+    .stat-chip {
+      flex: 1;
+      min-width: 0;
+      justify-content: space-between;
+      padding: 0 14px;
+      background: rgba(13,31,38,.62);
+      color: rgba(216,207,184,.74);
+      font-size: 15px;
+    }
+
+    .stat-chip strong {
+      color: var(--cyan-soft);
+      font-size: 20px;
+      letter-spacing: .04em;
+    }
+
+    .layout {
+      position: absolute;
+      left: 42px;
+      right: 42px;
+      top: 124px;
+      bottom: 34px;
+      display: grid;
+      grid-template-columns: 342px 1fr 462px;
+      grid-template-rows: 1fr 156px;
+      gap: 18px;
+      z-index: 2;
+    }
+
+    .left-rail {
+      grid-row: 1;
+      display: grid;
+      gap: 14px;
+      align-content: start;
+      padding-top: 8px;
+    }
+
+    .region-card {
+      position: relative;
+      height: 128px;
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 16px;
+      padding: 17px 18px 14px 16px;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.22), transparent 22%),
+        linear-gradient(180deg, var(--paper), var(--paper-2));
+      border: 1px solid rgba(42, 47, 39, .24);
+      box-shadow: 0 14px 24px var(--shadow);
+      clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+    }
+
+    .region-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 9px;
+      height: 100%;
+      background: var(--cyan);
+    }
+
+    .region-card.selected::before,
+    .region-card.red::before {
+      background: var(--red);
+    }
+
+    .region-card.locked::before {
+      background: #6e7466;
+    }
+
+    .region-card.selected {
+      transform: translateX(8px);
+      box-shadow: 0 18px 32px rgba(199,71,46,.23), 0 14px 24px var(--shadow);
+    }
+
+    .region-card.selected::after {
+      content: "";
+      position: absolute;
+      right: -14px;
+      top: 45px;
+      width: 0;
+      height: 0;
+      border-top: 18px solid transparent;
+      border-bottom: 18px solid transparent;
+      border-left: 14px solid var(--red);
+    }
+
+    .region-icon {
+      position: relative;
+      width: 76px;
+      height: 76px;
+      margin-top: 8px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 48% 48%, transparent 49%, rgba(36,39,34,.18) 50%, transparent 52%),
+        conic-gradient(from 12deg, rgba(199,71,46,.78), rgba(199,71,46,.28), rgba(148,168,79,.45), rgba(199,71,46,.78));
+      border: 2px solid rgba(36,39,34,.22);
+    }
+
+    .region-card.cyan .region-icon {
+      background:
+        radial-gradient(circle at 48% 48%, transparent 49%, rgba(36,39,34,.18) 50%, transparent 52%),
+        conic-gradient(from 22deg, rgba(62,155,167,.8), rgba(62,155,167,.25), rgba(148,168,79,.42), rgba(62,155,167,.8));
+    }
+
+    .region-icon::before,
+    .region-icon::after {
+      content: "";
+      position: absolute;
+      background: rgba(36,39,34,.18);
+      clip-path: polygon(10% 40%, 30% 18%, 65% 28%, 76% 55%, 54% 78%, 22% 70%);
+    }
+
+    .region-icon::before {
+      inset: 15px 20px 18px 14px;
+    }
+
+    .region-icon::after {
+      inset: 29px 13px 24px 45px;
+      clip-path: polygon(12% 16%, 88% 30%, 72% 82%, 20% 64%);
+    }
+
+    .region-copy h2 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.05;
+      letter-spacing: .02em;
+      color: #1f2521;
+    }
+
+    .region-copy .tags {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 9px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      height: 24px;
+      padding: 0 10px;
+      background: rgba(36,39,34,.12);
+      color: #37413a;
+      font-size: 13px;
+      font-weight: 900;
+      clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 0 100%);
+    }
+
+    .tag.red {
+      background: var(--red);
+      color: #fff3e7;
+    }
+
+    .tag.cyan {
+      background: var(--cyan);
+      color: #e8ffff;
+    }
+
+    .tag.dark {
+      background: #555d56;
+      color: #f2ead4;
+    }
+
+    .meter {
+      display: flex;
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    .meter span {
+      width: 9px;
+      height: 13px;
+      background: rgba(36,39,34,.18);
+    }
+
+    .meter span.on.red { background: var(--red); }
+    .meter span.on.cyan { background: var(--cyan); }
+    .meter span.on.olive { background: var(--olive-dark); }
+
+    .main-map {
+      position: relative;
+      grid-row: 1;
+      min-width: 0;
+      background:
+        linear-gradient(90deg, rgba(216,207,184,.05) 1px, transparent 1px) 0 0 / 42px 42px,
+        linear-gradient(0deg, rgba(216,207,184,.04) 1px, transparent 1px) 0 0 / 42px 42px,
+        linear-gradient(180deg, rgba(16,37,45,.92), rgba(7,20,27,.95));
+      border: 1px solid rgba(216,207,184,.26);
+      box-shadow: 0 22px 42px rgba(0,0,0,.38);
+      clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%);
+      overflow: hidden;
+    }
+
+    .main-map::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(199,71,46,.45);
+      pointer-events: none;
+    }
+
+    .main-map::after {
+      content: "";
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 24px;
+      height: 42px;
+      background:
+        linear-gradient(90deg, var(--red) 0 10px, transparent 10px 18px, var(--cyan) 18px 30px, transparent 30px 60px) 0 8px / 96px 12px repeat-x,
+        linear-gradient(90deg, rgba(216,207,184,.28), transparent 64%);
+      opacity: .55;
+      pointer-events: none;
+    }
+
+    .map-title {
+      position: absolute;
+      left: 34px;
+      top: 24px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(216,207,184,.72);
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+
+    .map-title span {
+      width: 12px;
+      height: 12px;
+      background: var(--olive);
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
+    }
+
+    .world {
+      position: absolute;
+      inset: 78px 38px 78px 38px;
+      width: calc(100% - 76px);
+      height: calc(100% - 156px);
+      filter: drop-shadow(0 14px 20px rgba(0,0,0,.33));
+    }
+
+    .poly {
+      stroke: rgba(255,255,255,.16);
+      stroke-width: 1;
+    }
+
+    .land-a { fill: #c7bda5; }
+    .land-b { fill: #d7cfba; }
+    .land-c { fill: #aba18d; }
+    .land-d { fill: #ece3ce; }
+    .land-e { fill: #8f897b; }
+
+    .route {
+      fill: none;
+      stroke-width: 2;
+      stroke-dasharray: 7 9;
+      opacity: .72;
+    }
+
+    .route.red { stroke: var(--red); }
+    .route.cyan { stroke: var(--cyan); }
+    .route.olive { stroke: var(--olive); opacity: .45; }
+
+    .map-dot-grid {
+      position: absolute;
+      right: 58px;
+      top: 190px;
+      width: 190px;
+      height: 128px;
+      opacity: .72;
+      background-image: radial-gradient(circle, rgba(62,155,167,.8) 1.8px, transparent 2.2px);
+      background-size: 14px 14px;
+      mask-image: linear-gradient(90deg, transparent, #000 25%, #000 80%, transparent);
+    }
+
+    .map-dot-grid.red {
+      left: 132px;
+      top: 374px;
+      width: 150px;
+      height: 110px;
+      background-image: radial-gradient(circle, rgba(199,71,46,.78) 1.8px, transparent 2.2px);
+    }
+
+    .pin {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--cyan);
+      border: 3px solid rgba(255,255,255,.72);
+      box-shadow: 0 7px 0 rgba(0,0,0,.28);
+      z-index: 4;
+    }
+
+    .pin::after {
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: 18px;
+      width: 5px;
+      height: 28px;
+      background: rgba(36,39,34,.7);
+      transform: rotate(5deg);
+      transform-origin: top;
+      z-index: -1;
+    }
+
+    .pin.red { background: var(--red); }
+    .pin.gold { background: var(--gold); }
+    .pin.locked { background: #59615d; }
+
+    .pin.selected {
+      width: 32px;
+      height: 32px;
+      border-width: 4px;
+      box-shadow: 0 0 0 10px rgba(199,71,46,.18), 0 9px 0 rgba(0,0,0,.3);
+    }
+
+    .pin-label {
+      position: absolute;
+      z-index: 5;
+      width: 164px;
+      height: 44px;
+      padding: 8px 12px;
+      background: linear-gradient(180deg, #d8cfba, #c7bda5);
+      color: var(--ink);
+      border: 1px solid rgba(36,39,34,.18);
+      box-shadow: 0 10px 18px rgba(0,0,0,.28);
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .pin-label em {
+      display: block;
+      margin-top: 3px;
+      color: var(--red);
+      font-style: normal;
+      font-size: 12px;
+    }
+
+    .right-dossier {
+      grid-row: 1 / span 2;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 42px 38px 34px;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.2), transparent 18%),
+        linear-gradient(180deg, #ddd5c2, #cfc5ad);
+      box-shadow: 0 22px 42px rgba(0,0,0,.38);
+      clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%);
+      overflow: hidden;
+    }
+
+    .right-dossier::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 118px;
+      width: 138px;
+      height: 30px;
+      background: #b03f2c;
+      clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 100%, 0 100%);
+    }
+
+    .right-dossier::after {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(36,39,34,.18);
+      pointer-events: none;
+    }
+
+    .dossier-kicker {
+      color: #535a4e;
+      font-size: 14px;
+      letter-spacing: .08em;
+      font-weight: 900;
+    }
+
+    .right-dossier h2 {
+      margin: 14px 0 8px;
+      font-size: 46px;
+      line-height: 1;
+      letter-spacing: .02em;
+      color: #20251f;
+    }
+
+    .dossier-badges {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .badge {
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 12px;
+      background: rgba(36,39,34,.12);
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: .04em;
+    }
+
+    .badge.red { background: var(--red); color: #fff5e9; }
+    .badge.gold { background: var(--gold); color: #2a2619; }
+
+    .snapshot {
+      position: relative;
+      height: 205px;
+      padding: 10px;
+      background: #f0eadc;
+      box-shadow: 0 10px 18px rgba(0,0,0,.24);
+      margin-bottom: 20px;
+    }
+
+    .snapshot::before {
+      content: "";
+      position: absolute;
+      left: 42%;
+      top: -11px;
+      width: 42px;
+      height: 16px;
+      background: var(--olive);
+      opacity: .85;
+    }
+
+    .snap-art {
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, #1b3440 0 48%, #0f252e 48% 100%);
+    }
+
+    .snap-art .moon {
+      position: absolute;
+      left: 52%;
+      top: 10%;
+      width: 6px;
+      height: 92px;
+      background: linear-gradient(180deg, #bde7c7, transparent);
+      box-shadow: 0 0 30px rgba(148,168,79,.85);
+    }
+
+    .snap-art .mountain,
+    .snap-art .mountain::before,
+    .snap-art .mountain::after {
+      position: absolute;
+      content: "";
+      bottom: 0;
+      clip-path: polygon(50% 0, 100% 100%, 0 100%);
+      background: linear-gradient(135deg, #1b2630, #687177 52%, #273940 53%);
+    }
+
+    .snap-art .mountain {
+      left: 80px;
+      width: 165px;
+      height: 150px;
+    }
+
+    .snap-art .mountain::before {
+      left: -94px;
+      bottom: 0;
+      width: 136px;
+      height: 98px;
+      background: linear-gradient(135deg, #233443, #526170);
+    }
+
+    .snap-art .mountain::after {
+      right: -130px;
+      bottom: 0;
+      width: 160px;
+      height: 116px;
+      background: linear-gradient(135deg, #1b2c34, #4b5962);
+    }
+
+    .alert-strip {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 16px;
+      background: linear-gradient(180deg, #b74430, #8e3025);
+      color: #fff4e9;
+      box-shadow: 0 8px 14px rgba(0,0,0,.2);
+      font-weight: 900;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .alert-strip .icon {
+      width: 28px;
+      height: 28px;
+      border: 2px solid rgba(255,255,255,.7);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+    }
+
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid rgba(36,39,34,.18);
+      margin-bottom: 18px;
+    }
+
+    .fact {
+      min-height: 48px;
+      display: grid;
+      place-items: center;
+      gap: 2px;
+      border-right: 1px solid rgba(36,39,34,.14);
+      font-size: 13px;
+      color: #4b534b;
+      font-weight: 900;
+    }
+
+    .fact:last-child { border-right: 0; }
+
+    .fact strong {
+      color: var(--red);
+      font-size: 17px;
+    }
+
+    .dossier-body {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.7;
+      color: #30362d;
+    }
+
+    .dossier-body .bullet {
+      color: var(--red);
+      font-weight: 900;
+      padding-right: 8px;
+    }
+
+    .info-link {
+      margin-top: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #236f7b;
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .cta {
+      margin-top: auto;
+      height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px 0 28px;
+      background: linear-gradient(180deg, #b74430, #8e3025);
+      color: #fff2e4;
+      box-shadow: 0 16px 24px rgba(0,0,0,.34);
+      border: 1px solid rgba(255,255,255,.2);
+      clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: .05em;
+    }
+
+    .cta .mark {
+      width: 44px;
+      height: 44px;
+      border: 2px solid rgba(255,255,255,.55);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+    }
+
+    .cta .arrow {
+      font-size: 42px;
+      line-height: 1;
+    }
+
+    .bottom-left {
+      grid-column: 1;
+      grid-row: 2;
+      position: relative;
+      display: grid;
+      grid-template-columns: 76px 1fr 70px;
+      align-items: center;
+      gap: 16px;
+      padding: 18px;
+      background: linear-gradient(180deg, #0e242d, #081821);
+      border: 1px solid rgba(210,166,79,.42);
+      box-shadow: 0 18px 28px rgba(0,0,0,.34);
+      clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
+    }
+
+    .bottom-left::before {
+      content: "GLOBAL SCHEDULE";
+      position: absolute;
+      left: 22px;
+      top: 10px;
+      color: rgba(216,207,184,.52);
+      font-size: 10px;
+      letter-spacing: .15em;
+      font-weight: 900;
+    }
+
+    .calendar-icon {
+      width: 64px;
+      height: 64px;
+      margin-top: 16px;
+      border: 2px solid var(--gold);
+      display: grid;
+      place-items: center;
+      color: var(--gold);
+      font-size: 35px;
+      font-weight: 900;
+      background: rgba(210,166,79,.06);
+    }
+
+    .advance-copy {
+      margin-top: 12px;
+    }
+
+    .advance-copy strong {
+      display: block;
+      color: #fff0ca;
+      font-size: 31px;
+      line-height: 1.05;
+    }
+
+    .advance-copy span {
+      color: var(--gold);
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    .advance-arrow {
+      width: 62px;
+      height: 92px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, #c5a24d, #8a7234);
+      color: #151c17;
+      font-size: 48px;
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
+      opacity: .78;
+    }
+
+    .bottom-tools {
+      grid-column: 2;
+      grid-row: 2;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .tool-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 72px 1fr 34px;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 18px 18px 16px;
+      background: linear-gradient(180deg, #d8cfba, #c7bda5);
+      color: var(--ink);
+      box-shadow: 0 14px 24px rgba(0,0,0,.28);
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+    }
+
+    .tool-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 42px;
+      height: 42px;
+      background: var(--cyan);
+      clip-path: polygon(0 0, 100% 0, 0 100%);
+    }
+
+    .tool-card.red::before { background: var(--red); }
+
+    .tool-icon {
+      width: 58px;
+      height: 58px;
+      border: 3px solid currentColor;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--cyan);
+      font-size: 27px;
+      font-weight: 900;
+    }
+
+    .tool-card.red .tool-icon { color: var(--red); }
+
+    .tool-copy strong {
+      display: block;
+      font-size: 20px;
+      color: #2c312b;
+      margin-bottom: 5px;
+    }
+
+    .tool-copy span {
+      color: #5e675c;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .tool-arrow {
+      color: rgba(36,39,34,.62);
+      font-size: 34px;
+    }
+
+    .notes {
+      position: absolute;
+      left: 410px;
+      right: 492px;
+      bottom: 198px;
+      height: 22px;
+      display: flex;
+      justify-content: space-between;
+      color: rgba(216,207,184,.4);
+      font-size: 10px;
+      letter-spacing: .2em;
+      font-weight: 900;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <main class="screen" aria-label="B7 世界地图新标杆风格重包装试稿">
+    <header class="topbar">
+      <section class="brand">
+        <h1>B7 世界地图</h1>
+        <p>Angus / 《世界未解之谜周刊》</p>
+        <div class="globe" aria-hidden="true"></div>
+      </section>
+      <section class="status-strip" aria-label="周状态">
+        <div class="week-tab primary">探索周 01</div>
+        <div class="week-tab day">剩余 5 天</div>
+        <div class="stat-chip"><span>公信</span><strong>42</strong></div>
+        <div class="stat-chip"><span>诡名</span><strong>18</strong></div>
+        <div class="stat-chip"><span>声望</span><strong>12</strong></div>
+        <div class="stat-chip"><span>守序</span><strong>34</strong></div>
+        <div class="stat-chip"><span>狂性</span><strong>16</strong></div>
+      </section>
+    </header>
+
+    <section class="layout">
+      <aside class="left-rail" aria-label="地区索引册">
+        <article class="region-card selected red">
+          <div class="region-icon" aria-hidden="true"></div>
+          <div class="region-copy">
+            <h2>北美禁区</h2>
+            <div class="tags"><span class="tag red">红线升温</span><span class="tag">3天内</span></div>
+            <div class="meter" aria-label="难度高 推荐三星">
+              <span class="on red"></span><span class="on red"></span><span class="on red"></span><span class="on red"></span><span class="on red"></span><span></span><span></span><span></span>
+            </div>
+          </div>
+        </article>
+
+        <article class="region-card cyan">
+          <div class="region-icon" aria-hidden="true"></div>
+          <div class="region-copy">
+            <h2>欧洲裂隙</h2>
+            <div class="tags"><span class="tag cyan">可进入</span></div>
+            <div class="meter">
+              <span class="on cyan"></span><span class="on cyan"></span><span class="on cyan"></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+        </article>
+
+        <article class="region-card locked">
+          <div class="region-icon" aria-hidden="true"></div>
+          <div class="region-copy">
+            <h2>东亚镜像城</h2>
+            <div class="tags"><span class="tag dark">锁定</span></div>
+            <div class="meter">
+              <span class="on red"></span><span class="on red"></span><span class="on red"></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+        </article>
+
+        <article class="region-card cyan">
+          <div class="region-icon" aria-hidden="true"></div>
+          <div class="region-copy">
+            <h2>南美遗迹</h2>
+            <div class="tags"><span class="tag cyan">可进入</span></div>
+            <div class="meter">
+              <span class="on cyan"></span><span class="on cyan"></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+        </article>
+      </aside>
+
+      <section class="main-map" aria-label="低多边形世界地图主舞台">
+        <div class="map-title"><span></span>LOW-POLY WORLD SIGNAL BOARD</div>
+        <svg class="world" viewBox="0 0 1020 560" role="img" aria-label="世界地图">
+          <path class="route red" d="M190 210 C 290 120, 402 186, 488 258 S 678 354, 840 296" />
+          <path class="route cyan" d="M210 384 C 352 450, 468 360, 554 314 S 716 190, 902 236" />
+          <path class="route olive" d="M170 300 C 352 280, 474 430, 674 406 S 846 462, 940 390" />
+
+          <g opacity=".98">
+            <polygon class="poly land-a" points="104,130 164,90 240,118 280,184 250,262 176,286 110,238" />
+            <polygon class="poly land-d" points="164,90 238,74 322,104 280,184 240,118" />
+            <polygon class="poly land-c" points="176,286 250,262 286,344 236,438 160,392" />
+            <polygon class="poly land-b" points="110,238 176,286 160,392 90,350 78,276" />
+            <polygon class="poly land-e" points="250,262 326,268 346,338 286,344" />
+          </g>
+
+          <g opacity=".98">
+            <polygon class="poly land-d" points="390,82 500,56 600,96 552,166 452,152" />
+            <polygon class="poly land-a" points="452,152 552,166 596,248 518,286 420,238" />
+            <polygon class="poly land-c" points="596,248 686,230 738,300 700,384 604,342" />
+            <polygon class="poly land-b" points="518,286 604,342 572,468 482,418 448,332" />
+            <polygon class="poly land-e" points="686,230 788,218 852,286 738,300" />
+            <polygon class="poly land-d" points="788,218 922,210 964,288 852,286" />
+            <polygon class="poly land-c" points="700,384 794,386 858,464 750,486" />
+            <polygon class="poly land-a" points="430,86 346,96 310,172 390,188 452,152" />
+          </g>
+
+          <g opacity=".9">
+            <polygon class="poly land-b" points="812,418 890,390 958,436 936,506 846,502" />
+            <polygon class="poly land-e" points="344,404 386,386 424,422 400,468 348,458" />
+            <polygon class="poly land-c" points="690,94 724,76 756,104 738,136" />
+            <polygon class="poly land-d" points="744,94 780,86 808,112 784,144" />
+            <polygon class="poly land-a" points="818,120 852,106 888,132 866,166" />
+          </g>
+        </svg>
+        <div class="map-dot-grid"></div>
+        <div class="map-dot-grid red"></div>
+
+        <div class="pin selected red" style="left: 245px; top: 200px;"></div>
+        <div class="pin-label" style="left: 286px; top: 182px;">北美禁区<em>红线升温 · 3天内</em></div>
+        <div class="pin cyan" style="left: 710px; top: 238px;"></div>
+        <div class="pin red" style="left: 568px; top: 355px;"></div>
+        <div class="pin cyan" style="left: 802px; top: 405px;"></div>
+        <div class="pin gold" style="left: 412px; top: 448px;"></div>
+        <div class="pin locked" style="left: 930px; top: 286px;"></div>
+
+        <div class="notes"><span>REGION SIGNAL</span><span>WMW-2000-37</span><span>SELECTED DOSSIER LINKED</span></div>
+      </section>
+
+      <aside class="right-dossier" aria-label="选中地区详情">
+        <div class="dossier-kicker">选定地区</div>
+        <h2>北美禁区</h2>
+        <div class="dossier-badges">
+          <span class="badge red">难度 高</span>
+          <span class="badge gold">推荐 ★★★</span>
+        </div>
+
+        <div class="snapshot" aria-label="北美禁区快照">
+          <div class="snap-art">
+            <span class="moon"></span>
+            <span class="mountain"></span>
+          </div>
+        </div>
+
+        <div class="alert-strip"><span class="icon">!</span><span>红线升温 · 3天内收益最高</span></div>
+
+        <div class="facts">
+          <div class="fact">收益窗口<strong>3天</strong></div>
+          <div class="fact">进入消耗<strong style="color:#2f8590">1天</strong></div>
+          <div class="fact">可见任务<strong>3</strong></div>
+        </div>
+
+        <p class="dossier-body">
+          废弃广播塔复述不存在的晨间新闻。封锁线外出现同步采访记录，三名目击者都听见尚未出生的播报员。
+          <br><span class="bullet">＋</span>地方电台会在静默时段反复播出同一段天气预报
+          <br><span class="bullet">＋</span>日期指向下周，但事发地点已经提前出现人群
+        </p>
+
+        <div class="info-link">ⓘ 查看任务情报 · 3</div>
+
+        <button class="cta" type="button" aria-label="进入北美禁区">
+          <span class="mark">◎</span>
+          <span>进入北美禁区</span>
+          <span class="arrow">›</span>
+        </button>
+      </aside>
+
+      <section class="bottom-left" aria-label="全局日程推进">
+        <div class="calendar-icon">日</div>
+        <div class="advance-copy">
+          <strong>推进一天</strong>
+          <span>Day 1 / 剩余 5 天</span>
+        </div>
+        <div class="advance-arrow">›</div>
+      </section>
+
+      <section class="bottom-tools" aria-label="地区辅助入口">
+        <article class="tool-card red">
+          <div class="tool-icon">◎</div>
+          <div class="tool-copy"><strong>地区情报</strong><span>封锁线里摸采访</span></div>
+          <div class="tool-arrow">›</div>
+        </article>
+        <article class="tool-card">
+          <div class="tool-icon">▤</div>
+          <div class="tool-copy"><strong>档案更新</strong><span>镜像缺口更新</span></div>
+          <div class="tool-arrow">›</div>
+        </article>
+        <article class="tool-card red">
+          <div class="tool-icon">!</div>
+          <div class="tool-copy"><strong>地区预警</strong><span>失联损失公信</span></div>
+          <div class="tool-arrow">›</div>
+        </article>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
