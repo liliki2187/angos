@@ -1,0 +1,20 @@
+{
+  "id": "world_map_wmw_real_text_fill_v0_71",
+  "source": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\156-world-map-wmw-real-text-fill-v0-70-textfit.png",
+  "base_material": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\140-world-map-wmw-paper-atlas-v3-refill-v0-66-info-gray.png",
+  "output": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\160-world-map-wmw-real-text-fill-v0-71-caption-safe.png",
+  "change": "restore photo caption strip from v0.66 and replace tight long caption with short safe label",
+  "caption_glyph_bbox": [
+    1248,
+    495,
+    1300,
+    507
+  ],
+  "caption_field": [
+    1244,
+    489,
+    1454,
+    512
+  ],
+  "caption_min_margin_px": 4
+}

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <style>
+      .bg{fill:#fffaf0}.ink{fill:#111827}.muted{fill:#475569}.teal{fill:#0f766e}.blue{fill:#1d4ed8}.orange{fill:#c2410c}.red{fill:#b91c1c}
+      .card{fill:#ffffff;stroke:#cbd5e1;stroke-width:2}.soft{fill:#f8fafc;stroke:#cbd5e1;stroke-width:2}.strip{fill:#fff7ed;stroke:#fed7aa;stroke-width:2}
+      .title{font:700 54px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif}.sub{font:700 34px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif}
+      .h{font:700 30px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif}.body{font:500 24px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif}
+      .small{font:500 20px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif}.num{font:700 26px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;fill:white}
+    </style>
+  </defs>
+  <rect width="1600" height="900" class="bg"/>
+  <text x="42" y="70" class="title ink">每日 AI 新工具｜视频局部编辑工具</text>
+  <text x="42" y="124" class="sub teal">今日重点：把已有录屏做局部实时改</text>
+  <rect x="42" y="155" width="420" height="62" rx="14" class="soft"/><text x="72" y="195" class="body ink">工具 / 论文名：<tspan class="teal" font-weight="700">LiveEdit</tspan></text>
+  <rect x="490" y="155" width="360" height="62" rx="14" class="soft"/><text x="520" y="195" class="body ink">类型：视频编辑研究</text>
+  <rect x="878" y="155" width="300" height="62" rx="14" class="soft"/><text x="908" y="195" class="body ink">动作：<tspan class="red" font-weight="700">观察 + 小试</tspan></text>
+
+  <rect x="42" y="250" width="455" height="395" rx="18" class="card"/>
+  <circle cx="86" cy="292" r="26" fill="#0f766e"/><text x="78" y="301" class="num">1</text><text x="124" y="302" class="h teal">它是什么</text>
+  <text x="72" y="360" class="body ink">• 不是从零生成整段视频</text>
+  <text x="72" y="408" class="body ink">• 是编辑已有视频的研究框架</text>
+  <text x="72" y="456" class="body ink">• 目标是改局部，同时保持其它区域稳定</text>
+  <rect x="100" y="510" width="310" height="92" rx="14" fill="#eff6ff" stroke="#bfdbfe" stroke-width="2"/>
+  <text x="137" y="565" class="body blue" font-weight="700">已有录屏 + 局部遮罩</text>
+
+  <rect x="535" y="250" width="515" height="395" rx="18" class="card"/>
+  <circle cx="579" cy="292" r="26" fill="#1d4ed8"/><text x="571" y="301" class="num">2</text><text x="617" y="302" class="h blue">它真正能做什么</text>
+  <text x="575" y="360" class="body ink">1. 输入已有视频</text>
+  <text x="575" y="415" class="body ink">2. 指定编辑区域</text>
+  <text x="575" y="470" class="body ink">3. 逐帧局部修改</text>
+  <text x="575" y="525" class="body ink">4. 保留未编辑区域</text>
+  <text x="575" y="580" class="body ink">5. 降低交互延迟</text>
+  <rect x="610" y="604" width="320" height="42" rx="10" fill="#dbeafe"/><text x="642" y="633" class="small blue" font-weight="700">论文报告：约 12.66 FPS</text>
+
+  <rect x="1088" y="250" width="470" height="395" rx="18" class="card"/>
+  <circle cx="1132" cy="292" r="26" fill="#c2410c"/><text x="1124" y="301" class="num">3</text><text x="1170" y="302" class="h orange">典型用法</text>
+  <rect x="1120" y="335" width="175" height="165" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="1152" y="383" class="body ink">原始录屏</text>
+  <text x="1143" y="430" class="small muted">展示力一般</text>
+  <text x="1315" y="420" class="h orange">→</text>
+  <rect x="1360" y="335" width="165" height="165" rx="14" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+  <text x="1384" y="383" class="body orange">局部增强</text>
+  <text x="1383" y="430" class="small muted">光影 / 氛围</text>
+  <text x="1120" y="560" class="body ink">从整段重画 → 局部可控编辑</text>
+  <text x="1120" y="610" class="small red" font-weight="700">研究 demo，不等于稳定商用工具</text>
+
+  <rect x="42" y="675" width="1516" height="145" rx="18" class="strip"/>
+  <text x="72" y="730" class="h ink">制作人判断</text>
+  <text x="250" y="724" class="body ink">对 Angus 来说，LiveEdit 的现实价值不是自动生成宣传片，</text>
+  <text x="250" y="766" class="body ink">而是测试 10-15 秒原型录屏能否变成 Steam GIF / 宣传片草稿。</text>
+  <text x="250" y="808" class="body red" font-weight="700">短期只做素材验证，不进正式生产管线。</text>
+</svg>

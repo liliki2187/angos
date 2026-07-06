@@ -1,0 +1,365 @@
+{
+  "artifact": "WMW pseudo no-text runtime fill v0.3",
+  "date": "2026-07-06",
+  "source_reference": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\258-world-map-wmw-benchmark-shell-reference-v0-1.png",
+  "semantic_manifest": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\271-world-map-wmw-resource-function-fit-v0-2-semantic-manifest.json",
+  "preview": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\274-world-map-wmw-v0-3-pseudo-no-text-runtime-fill-preview.png",
+  "qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\275-world-map-wmw-v0-3-pseudo-no-text-runtime-fill-qa.png",
+  "crops": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\276-world-map-wmw-v0-3-pseudo-no-text-runtime-fill-crops.png",
+  "purpose": "Validate whether the v0.2 semantic contract can hold real runtime Chinese text after pseudo no-text cleanup and before true atlas production.",
+  "status": "downgraded after user review: text fit passes, but functional art shell is visibly slanted; not a production pass",
+  "font_policy": "Chinese strings are encoded with Unicode escapes and rendered with Microsoft YaHei / SimHei / NotoSansSC fallback; no question-mark or tofu fallback allowed.",
+  "fit_report": [
+    {
+      "text": "北美禁区带",
+      "rect": [
+        1278,
+        135,
+        1482,
+        159
+      ],
+      "font_size": 23,
+      "fits": true,
+      "text_px": [
+        115,
+        23
+      ]
+    },
+    {
+      "text": "红线升温",
+      "rect": [
+        1276,
+        181,
+        1370,
+        195
+      ],
+      "font_size": 14,
+      "fits": true,
+      "text_px": [
+        56,
+        14
+      ]
+    },
+    {
+      "text": "高危",
+      "rect": [
+        1532,
+        143,
+        1584,
+        166
+      ],
+      "font_size": 22,
+      "fits": true,
+      "text_px": [
+        44,
+        22
+      ]
+    },
+    {
+      "text": "推荐 2",
+      "rect": [
+        1530,
+        171,
+        1588,
+        190
+      ],
+      "font_size": 14,
+      "fits": true,
+      "text_px": [
+        41,
+        13
+      ]
+    },
+    {
+      "text": "异常热点   卫星阵列 / 方尖碑",
+      "rect": [
+        1228,
+        457,
+        1464,
+        471
+      ],
+      "font_size": 12,
+      "fits": true,
+      "text_px": [
+        152,
+        14
+      ]
+    },
+    {
+      "text": "进入北美禁区 · 消耗1天",
+      "rect": [
+        1280,
+        524,
+        1518,
+        548
+      ],
+      "font_size": 22,
+      "fits": true,
+      "text_px": [
+        236,
+        23
+      ]
+    },
+    {
+      "text": "查看任务情报 · 线报3",
+      "rect": [
+        1280,
+        604,
+        1518,
+        628
+      ],
+      "font_size": 22,
+      "fits": true,
+      "text_px": [
+        214,
+        23
+      ]
+    },
+    {
+      "text": "红线截止 · 4天",
+      "rect": [
+        1280,
+        687,
+        1518,
+        710
+      ],
+      "font_size": 21,
+      "fits": true,
+      "text_px": [
+        139,
+        22
+      ]
+    },
+    {
+      "text": "北美禁区带",
+      "rect": [
+        78,
+        271,
+        228,
+        291
+      ],
+      "font_size": 19,
+      "fits": true,
+      "text_px": [
+        95,
+        20
+      ]
+    },
+    {
+      "text": "红线升温",
+      "rect": [
+        78,
+        290,
+        228,
+        307
+      ],
+      "font_size": 12,
+      "fits": true,
+      "text_px": [
+        48,
+        12
+      ]
+    },
+    {
+      "text": "欧洲灰域",
+      "rect": [
+        78,
+        493,
+        222,
+        515
+      ],
+      "font_size": 20,
+      "fits": true,
+      "text_px": [
+        80,
+        21
+      ]
+    },
+    {
+      "text": "可派遣   线报 2",
+      "rect": [
+        78,
+        514,
+        222,
+        532
+      ],
+      "font_size": 12,
+      "fits": true,
+      "text_px": [
+        83,
+        13
+      ]
+    },
+    {
+      "text": "非洲禁区带",
+      "rect": [
+        78,
+        674,
+        228,
+        693
+      ],
+      "font_size": 18,
+      "fits": true,
+      "text_px": [
+        90,
+        19
+      ]
+    },
+    {
+      "text": "高危   推荐 1",
+      "rect": [
+        78,
+        692,
+        228,
+        708
+      ],
+      "font_size": 12,
+      "fits": true,
+      "text_px": [
+        71,
+        12
+      ]
+    },
+    {
+      "text": "南美禁区带",
+      "rect": [
+        78,
+        858,
+        230,
+        876
+      ],
+      "font_size": 17,
+      "fits": true,
+      "text_px": [
+        85,
+        18
+      ]
+    },
+    {
+      "text": "锁定   需3线报",
+      "rect": [
+        78,
+        875,
+        230,
+        890
+      ],
+      "font_size": 12,
+      "fits": true,
+      "text_px": [
+        79,
+        12
+      ]
+    },
+    {
+      "text": "本周行动",
+      "rect": [
+        512,
+        772,
+        604,
+        790
+      ],
+      "font_size": 17,
+      "fits": true,
+      "text_px": [
+        68,
+        18
+      ]
+    },
+    {
+      "text": "余 6 天",
+      "rect": [
+        516,
+        810,
+        604,
+        832
+      ],
+      "font_size": 22,
+      "fits": true,
+      "text_px": [
+        72,
+        22
+      ]
+    },
+    {
+      "text": "情报余量",
+      "rect": [
+        802,
+        772,
+        894,
+        790
+      ],
+      "font_size": 17,
+      "fits": true,
+      "text_px": [
+        68,
+        18
+      ]
+    },
+    {
+      "text": "线报 3",
+      "rect": [
+        806,
+        810,
+        894,
+        832
+      ],
+      "font_size": 21,
+      "fits": true,
+      "text_px": [
+        61,
+        22
+      ]
+    },
+    {
+      "text": "红线台账",
+      "rect": [
+        1070,
+        772,
+        1170,
+        790
+      ],
+      "font_size": 18,
+      "fits": true,
+      "text_px": [
+        72,
+        18
+      ]
+    },
+    {
+      "text": "4天后升温",
+      "rect": [
+        1073,
+        810,
+        1172,
+        832
+      ],
+      "font_size": 21,
+      "fits": true,
+      "text_px": [
+        97,
+        21
+      ]
+    }
+  ],
+  "fit_summary": {
+    "items": 22,
+    "issues": 0,
+    "pass": true
+  },
+  "fit_issues": [],
+  "known_limits": [
+    "Text removal is simulated by local plate fills, not hand-painted/inpainted final art.",
+    "The benchmark source still has baked texture/text interactions outside the dynamic plates.",
+    "Only one real-content state plus several component states are tested; a longer stress sheet should follow if approved."
+  ],
+  "user_review_failure": {
+    "date": "2026-07-06",
+    "issue": "runtime text is orthogonal but underlying functional art carriers are slanted/perspective-warped",
+    "scope": [
+      "right_dossier_header",
+      "right_cta_rows",
+      "text-bearing functional carriers"
+    ],
+    "decision": "do not use v0.3 as atlas basis; next pass must rebuild orthogonal no-text art shells before text refill"
+  }
+}

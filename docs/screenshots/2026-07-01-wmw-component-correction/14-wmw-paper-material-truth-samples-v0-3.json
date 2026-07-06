@@ -1,0 +1,272 @@
+[
+  {
+    "group": "BENCHMARK PAPER TOKENS",
+    "id": "T_paper_warm_cover",
+    "src": "b1",
+    "box": [
+      126,
+      170,
+      720,
+      395
+    ],
+    "role": "warm gray-beige source; big flat paper planes",
+    "mode": "paper",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops-v0-3\\T_paper_warm_cover.png",
+    "metrics": {
+      "hex": "#B7A488",
+      "rgb": [
+        183,
+        164,
+        136
+      ],
+      "h": 35.7,
+      "s": 0.246,
+      "l": 0.625,
+      "std_lum": 24.9,
+      "pixels": 97384
+    }
+  },
+  {
+    "group": "BENCHMARK PAPER TOKENS",
+    "id": "T_paper_casefile",
+    "src": "b2",
+    "box": [
+      800,
+      640,
+      1220,
+      900
+    ],
+    "role": "deeper case-file paper; muted not dirty",
+    "mode": "paper",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops-v0-3\\T_paper_casefile.png",
+    "metrics": {
+      "hex": "#967E5E",
+      "rgb": [
+        150,
+        126,
+        94
+      ],
+      "h": 34.3,
+      "s": 0.23,
+      "l": 0.478,
+      "std_lum": 24.9,
+      "pixels": 94675
+    }
+  },
+  {
+    "group": "BENCHMARK PAPER TOKENS",
+    "id": "T_ivory_edge",
+    "src": "b1",
+    "box": [
+      804,
+      210,
+      1160,
+      252
+    ],
+    "role": "thin ivory paper / photo edge",
+    "mode": "paper_light",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops-v0-3\\T_ivory_edge.png",
+    "metrics": {
+      "hex": "#C0B9B3",
+      "rgb": [
+        192,
+        185,
+        179
+      ],
+      "h": 27.7,
+      "s": 0.094,
+      "l": 0.727,
+      "std_lum": 34.4,
+      "pixels": 11876
+    }
+  },
+  {
+    "group": "BENCHMARK PAPER TOKENS",
+    "id": "T_gray_backing_board",
+    "src": "b1",
+    "box": [
+      1608,
+      235,
+      1850,
+      805
+    ],
+    "role": "gray-green backing board; low saturation",
+    "mode": "board",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops-v0-3\\T_gray_backing_board.png",
+    "metrics": {
+      "hex": "#686554",
+      "rgb": [
+        104,
+        101,
+        84
+      ],
+      "h": 51.0,
+      "s": 0.106,
+      "l": 0.369,
+      "std_lum": 55.0,
+      "pixels": 137940
+    }
+  },
+  {
+    "group": "BENCHMARK PAPER TOKENS",
+    "id": "T_note_yellow_paper",
+    "src": "b1",
+    "box": [
+      1220,
+      570,
+      1400,
+      760
+    ],
+    "role": "colored note paper; still muted, not neon",
+    "mode": "paper",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops-v0-3\\T_note_yellow_paper.png",
+    "metrics": {
+      "hex": "#B3A456",
+      "rgb": [
+        179,
+        164,
+        86
+      ],
+      "h": 50.3,
+      "s": 0.38,
+      "l": 0.52,
+      "std_lum": 30.1,
+      "pixels": 22553
+    }
+  },
+  {
+    "group": "BENCHMARK PAPER TOKENS",
+    "id": "T_sticker_edge",
+    "src": "b1",
+    "box": [
+      1695,
+      390,
+      1940,
+      615
+    ],
+    "role": "sticker paper edge and backing context",
+    "mode": "paper_light",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops-v0-3\\T_sticker_edge.png",
+    "metrics": {
+      "hex": "#ABA290",
+      "rgb": [
+        171,
+        162,
+        144
+      ],
+      "h": 40.0,
+      "s": 0.138,
+      "l": 0.618,
+      "std_lum": 34.6,
+      "pixels": 20812
+    }
+  },
+  {
+    "group": "DRIFT EXAMPLES",
+    "id": "D_receipt_cream",
+    "src": "drift_receipts",
+    "box": [
+      430,
+      82,
+      735,
+      222
+    ],
+    "role": "too cream / too form-like",
+    "mode": "paper",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops-v0-3\\D_receipt_cream.png",
+    "metrics": {
+      "hex": "#C3B29F",
+      "rgb": [
+        195,
+        178,
+        159
+      ],
+      "h": 31.7,
+      "s": 0.231,
+      "l": 0.694,
+      "std_lum": 36.0,
+      "pixels": 37974
+    }
+  },
+  {
+    "group": "DRIFT EXAMPLES",
+    "id": "D_receipt_brown",
+    "src": "drift_receipts",
+    "box": [
+      805,
+      90,
+      1110,
+      220
+    ],
+    "role": "brown old-receipt drift",
+    "mode": "paper",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops-v0-3\\D_receipt_brown.png",
+    "metrics": {
+      "hex": "#BAA795",
+      "rgb": [
+        186,
+        167,
+        149
+      ],
+      "h": 29.2,
+      "s": 0.211,
+      "l": 0.657,
+      "std_lum": 39.0,
+      "pixels": 32088
+    }
+  },
+  {
+    "group": "DRIFT EXAMPLES",
+    "id": "D_v05_top_cream",
+    "src": "drift_v05",
+    "box": [
+      18,
+      26,
+      462,
+      130
+    ],
+    "role": "too pale cream top highlight",
+    "mode": "paper",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops-v0-3\\D_v05_top_cream.png",
+    "metrics": {
+      "hex": "#CDBBA5",
+      "rgb": [
+        205,
+        187,
+        165
+      ],
+      "h": 33.0,
+      "s": 0.286,
+      "l": 0.725,
+      "std_lum": 43.8,
+      "pixels": 44575
+    }
+  },
+  {
+    "group": "DRIFT EXAMPLES",
+    "id": "D_v05_body_grime",
+    "src": "drift_v05",
+    "box": [
+      20,
+      392,
+      510,
+      585
+    ],
+    "role": "old-paper grime / cloud stain risk",
+    "mode": "paper",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops-v0-3\\D_v05_body_grime.png",
+    "metrics": {
+      "hex": "#AD9981",
+      "rgb": [
+        173,
+        153,
+        129
+      ],
+      "h": 32.7,
+      "s": 0.212,
+      "l": 0.592,
+      "std_lum": 23.7,
+      "pixels": 59497
+    }
+  }
+]

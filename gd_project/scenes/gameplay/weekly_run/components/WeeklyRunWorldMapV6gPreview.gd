@@ -24,6 +24,10 @@ const TEXT_FOOTER := "footer"
 const TEXT_TICKER := "ticker"
 const TEXT_CTA := "cta"
 
+const SELECTED_REGION_OLIVE := Color(0.376, 0.396, 0.282, 1.0) # #606548
+const SELECTED_REGION_OLIVE_DARK := Color(0.357, 0.369, 0.243, 1.0) # #5B5E3E
+const SELECTED_REGION_OLIVE_LIGHT := Color(0.502, 0.494, 0.314, 1.0) # #807E50
+
 var show_debug_zones := false
 var show_task_intel_popover := false
 
@@ -185,7 +189,7 @@ func _add_selection_halo(anchor: Vector2) -> void:
 		points.append(anchor + Vector2(cos(angle), sin(angle)) * radius)
 	halo.points = points
 	halo.width = 3.0
-	halo.default_color = Color(0.94, 0.78, 0.34, 0.90)
+	halo.default_color = Color(SELECTED_REGION_OLIVE_LIGHT.r, SELECTED_REGION_OLIVE_LIGHT.g, SELECTED_REGION_OLIVE_LIGHT.b, 0.88)
 	halo.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	halo.z_index = 16
 	_world_root.add_child(halo)
@@ -423,12 +427,12 @@ func _add_selected_index_overlay() -> void:
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.z_index = 24
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.92, 0.74, 0.22, 0.030)
+	style.bg_color = Color(SELECTED_REGION_OLIVE.r, SELECTED_REGION_OLIVE.g, SELECTED_REGION_OLIVE.b, 0.052)
 	style.border_color = Color.TRANSPARENT
 	style.set_border_width_all(0)
 	panel.add_theme_stylebox_override("panel", style)
 	_world_root.add_child(panel)
-	_add_corner_brackets(Rect2(panel.position, panel.size), Color(0.88, 0.66, 0.20, 0.90), "NorthAmericaIndexSelectedBrackets", 25)
+	_add_corner_brackets(Rect2(panel.position, panel.size), Color(SELECTED_REGION_OLIVE_LIGHT.r, SELECTED_REGION_OLIVE_LIGHT.g, SELECTED_REGION_OLIVE_LIGHT.b, 0.88), "NorthAmericaIndexSelectedBrackets", 25)
 
 func _add_region_status_badges(red: Color, cyan: Color) -> void:
 	var status_rect := _global_text_rect(ASSET_RIGHT_DOSSIER, "story_preview_caption_or_status")

@@ -1,0 +1,476 @@
+# Lightweight workflow gate table for Angus.
+# This file is intentionally simple so it can become script input later.
+
+risk_levels:
+  tiny:
+    default_required:
+      - concise_summary
+    default_not_required:
+      - router_card
+      - subagent_review
+      - screenshot
+  normal:
+    default_required:
+      - decision_strip
+      - human_brief
+      - router_card
+      - task_specific_validation
+  risky:
+    default_required:
+      - decision_strip
+      - human_brief
+      - router_card
+      - delivery_manifest
+      - relevant_source_read
+      - target_specific_gate
+      - screenshot_or_test_evidence
+  production:
+    default_required:
+      - decision_strip
+      - human_brief
+      - router_card
+      - delivery_manifest
+      - relevant_source_read
+      - required_subagent_review
+      - hard_gate
+      - screenshot_or_test_evidence
+      - drift_check
+  experimental:
+    default_required:
+      - decision_strip
+      - human_brief
+      - narrow_question
+      - minimum_output
+      - stop_condition
+      - non_source_status_label
+
+feedback_contract:
+  applies_to_modes:
+    - workflow_gate
+    - loop_log
+    - blocked_or_user_decision
+    - pass_fail_judgment
+  not_for_modes:
+    - direct_answer
+    - completion_report
+    - progress_update
+    - casual_discussion
+  required_order:
+    - decision_status
+    - user_impact
+    - concrete_next_action
+  max_decision_lines: 3
+  detail_order_after_decision:
+    - actual_work_done
+    - current_blocker
+    - blocker_reason
+    - minimum_next_validation
+    - do_not_do_this_round
+  max_brief_bullets: 5
+  plain_language_rules:
+    - decision_strip_before_human_brief
+    - no_jargon_as_main_subject
+    - jargon_only_in_parentheses_or_detail_layer
+    - explain_user_action_before_gate_names
+    - state_actual_done_separately_from_planned_next
+  detail_after_brief:
+    - router_card
+    - delivery_manifest
+    - loop_log
+    - gate_checklist
+  blockers:
+    - decision_strip_used_for_ordinary_reply
+    - checklist_without_conclusion
+    - human_brief_before_decision_strip
+    - jargon_first_response
+    - human_brief_as_field_dump
+    - planned_work_written_as_done
+    - gate_name_without_user_action
+    - mixed_current_deliverable_and_routed_artifact
+
+loop_log_contract:
+  auto_required_when:
+    user_message_contains_any_of:
+      - 这次错在
+      - 哪里错了
+      - 为什么还是
+      - 为什么又
+      - 复盘
+      - 怎么避免
+      - 防复发
+      - 先别落地
+      - 不要继续
+      - 不改文件
+      - 错题本
+      - 这个要进错题本
+      - 转成 eval case
+      - workflow 没跑完整
+      - 没触发 gate
+      - 没有按流程
+      - 你误判了
+      - 你跳步了
+      - 你漏调 agent
+      - 你乱调 agent
+    system_or_self_detects_any_of:
+      - delivery_claim_retracted
+      - user_corrects_pass_fail_judgment
+      - stage_transition_was_wrong
+      - artifact_type_was_overclaimed
+      - required_gate_was_missing
+      - required_evidence_was_missing
+      - required_agent_was_missing
+      - unnecessary_agent_was_called
+      - final_answer_was_unreadable
+      - implementation_started_after_user_requested_no_implementation
+  required_sections:
+    - decision_strip
+    - trigger_source
+    - original_problem
+    - failure_cause
+    - current_handling
+    - recurrence_protection
+    - sedimentation_decision
+  blockers:
+    - apology_without_loop_log
+    - explanation_without_failure_cause
+    - future_rule_without_current_handling
+    - no_sedimentation_decision_for_repeatable_error
+    - user_requested_no_file_changes_but_files_changed
+    - loop_log_missing_decision_strip
+
+artifact_types:
+  structure_wireframe:
+    proves:
+      - functional_partition
+      - rough_capacity
+    cannot_claim:
+      - visual_pass
+      - production_candidate
+      - cuttable_assets
+  problem_overlay:
+    proves:
+      - problem_layer
+      - target_layer
+    cannot_claim:
+      - real_ui_effect
+      - runtime_pass
+  interaction_fix_sketch:
+    proves:
+      - operation_relationship
+      - local_correction
+    cannot_claim:
+      - filled_state_text_mock
+      - no_text_asset_master
+  safe_zone_capacity_validation:
+    proves:
+      - text_capacity
+      - rect_pressure
+    cannot_claim:
+      - typography_integration
+      - formal_ui_quality
+  logic_smoke:
+    proves:
+      - p0_condition_triggered
+      - blocker_or_state_machine_runs
+    cannot_claim:
+      - visual_acceptance
+      - target_ui_landed
+  visual_style_reference:
+    proves:
+      - style_potential
+      - material_direction
+    cannot_claim:
+      - functional_capacity
+      - dynamic_text_fit
+  color_locked_style_draft:
+    proves:
+      - color_contract_stage_passed
+    cannot_claim:
+      - asset_split_ready
+      - production_candidate
+  no_text_style_draft:
+    proves:
+      - no_text_composition
+      - writable_area_direction
+    cannot_claim:
+      - real_content_screenshot
+      - runtime_background
+  filled_state_text_mock:
+    proves:
+      - text_image_integration
+      - information_density
+      - typography_mood
+    cannot_claim:
+      - manifest_source
+      - runtime_background
+  no_text_asset_master:
+    proves:
+      - dynamic_text_slots
+      - component_boundaries
+    cannot_claim:
+      - final_player_screenshot
+  runtime_skeleton:
+    proves:
+      - dynamic_fields_can_bind
+      - hit_rects_can_attach
+    cannot_claim:
+      - final_visual_quality
+  runtime_state_preview:
+    proves:
+      - one_or_few_runtime_states
+    cannot_claim:
+      - all_states_production_pass
+  production_candidate:
+    proves:
+      - assets_dynamic_layer_state_matrix_and_screenshots_are_basically_ready
+    cannot_claim:
+      - source_of_truth_without_review
+  godot_agent_smoke:
+    proves:
+      - gdscript_parse_and_compile_health
+      - weekly_run_scene_minimum_runtime_path
+    cannot_claim:
+      - visual_acceptance
+      - all_gameplay_states_covered
+      - production_candidate
+
+stage_transitions:
+  idea:
+    allowed_next:
+      - router_card
+      - structure_wireframe
+      - design_brief
+  structure_wireframe:
+    allowed_next:
+      - capacity_table
+      - problem_overlay
+      - visual_style_reference
+    forbidden_next:
+      - manifest
+      - atlas
+      - production_candidate
+  visual_style_reference:
+    allowed_next:
+      - color_contract
+      - no_text_style_draft
+      - lightweight_content_contract
+    forbidden_next:
+      - atlas
+      - manifest
+      - production_candidate
+  color_locked_style_draft:
+    allowed_next:
+      - lightweight_content_contract
+      - filled_state_text_mock
+    forbidden_next:
+      - atlas
+      - manifest
+      - production_candidate
+  no_text_style_draft:
+    allowed_next:
+      - lightweight_content_contract
+      - filled_state_text_mock
+    forbidden_next:
+      - runtime_background
+      - manifest
+      - production_candidate
+  filled_state_text_mock:
+    allowed_next:
+      - ui_ux_art_review
+      - no_text_asset_master_brief
+      - content_rect_revision
+    forbidden_next:
+      - runtime_background
+  no_text_asset_master:
+    allowed_next:
+      - component_atlas
+      - manifest
+      - runtime_skeleton
+    forbidden_next:
+      - final_visual_claim_without_runtime
+  runtime_skeleton:
+    allowed_next:
+      - runtime_state_preview
+      - binding_fix
+    forbidden_next:
+      - visual_acceptance_without_target_comparison
+  runtime_state_preview:
+    allowed_next:
+      - multi_state_screenshot
+      - production_candidate
+      - rollback_to_content_rects
+
+hard_gates:
+  assetized_ui:
+    required:
+      - functional_partition_table
+      - information_capacity_table
+      - longest_copy_cases
+      - content_rects
+      - no_text_rects
+      - hit_rects
+      - ui_geometry_gate
+      - filled_state_text_mock
+      - ui_ux_art_review
+      - runtime_target_comparison
+    blockers:
+      - logic_smoke_claimed_as_visual_acceptance
+      - safe_zone_claimed_as_formal_ui_quality
+      - no_text_draft_claimed_as_text_integration
+      - default_label_feel_in_filled_state_mock
+      - information_bearing_surface_tilted
+      - cta_or_text_slot_skewed
+      - orthogonal_claim_without_local_crops_or_guides
+  image_color:
+    required:
+      - unique_reference_image
+      - fixed_roi
+      - color_tokens
+      - failure_boundaries
+      - post_check_same_roi
+    blockers:
+      - no_sampling_table
+      - broad_pass_without_token_results
+      - user_says_color_differs_and_no_contract_revision
+  ui_geometry:
+    auto_required_when:
+      - artifact_type_in:
+          - visual_style_reference
+          - color_locked_style_draft
+          - no_text_style_draft
+          - filled_state_text_mock
+          - no_text_asset_master
+          - runtime_state_preview
+          - production_candidate
+      - task_contains_assetized_ui_or_imagegen
+      - response_claims_any_of:
+          - orthogonal_pass
+          - can_continue_to_asset_split
+          - can_continue_to_manifest
+          - can_continue_to_runtime
+          - production_candidate
+          - visual_acceptance_pass
+      - visible_surface_contains_any_of:
+          - dynamic_text
+          - button_label
+          - cta
+          - hit_rect
+          - avatar_state
+          - numeric_state
+          - task_card
+          - ticket_or_receipt
+          - dossier_or_paper_sheet
+          - map_pin_label
+      - prompt_or_feedback_mentions_any_of:
+          - tilted
+          - skewed
+          - perspective
+          - angled
+          - slanted
+          - 斜
+          - 歪
+          - 倾斜
+          - 透视
+      - stage_transition_to_any_of:
+          - filled_state_text_mock
+          - no_text_asset_master
+          - manifest
+          - runtime_background
+          - production_candidate
+    not_required_when:
+      - pure_text_discussion_without_visual_claim
+      - structure_wireframe_without_visual_acceptance_claim
+      - decorative_illustration_with_no_content_or_hit_rects
+      - existing_gate_result_only_being_summarized
+    required:
+      - information_surface_inventory
+      - core_surface_crops
+      - horizontal_vertical_guides
+      - edge_angle_check
+      - decorative_vs_content_surface_split
+      - explicit_tilt_pass_or_fail
+    evidence_required:
+      min_core_surface_crops: 3
+      required_crop_targets_if_present:
+        - primary_text_panel
+        - right_dossier_or_ticket
+        - task_card_or_list_item
+        - cta_or_button_plate
+        - bottom_receipt_or_status_strip
+      reference_lines:
+        - horizontal_guides
+        - vertical_guides
+      must_state:
+        - pass_or_fail_per_core_surface
+        - whether_tilt_is_content_surface_or_decoration
+        - allowed_next_step_after_geometry_result
+    thresholds:
+      dynamic_text_surface_max_tilt_degrees: 1
+      cta_or_hit_rect_surface_max_tilt_degrees: 1
+      decorative_surface_allowed_only_in: no_text_rects
+    blockers:
+      - claimed_orthogonal_without_crop_or_guides
+      - dynamic_text_surface_tilt_over_threshold
+      - tilted_writable_surface_in_style_draft
+      - skewed_cta_or_button_plate
+      - perspective_paper_carrying_dynamic_text
+      - decorative_tilt_inside_content_rects
+      - whole_screen_only_no_core_surface_crops
+  godot_agent_smoke:
+    auto_required_when:
+      - changed_files_match_any_of:
+          - gd_project/scenes/**/*.gd
+          - gd_project/scenes/**/*.tscn
+          - gd_project/project.godot
+      - task_touches_any_of:
+          - weekly_run
+          - world_map
+          - region_task
+          - dispatch
+          - editorial
+          - summary
+          - phase_switching
+          - node_paths
+          - autoload
+          - preload_paths
+    not_required_when:
+      - markdown_only
+      - ai_radar_only
+      - html_only_without_godot_changes
+      - design_discussion_without_file_changes
+    required:
+      - gda_script_validate_json
+      - parse_gda_valid_field
+      - godot_headless_weekly_run_smoke
+      - godot_debug_skill_lookup_on_failure
+    blockers:
+      - gda_valid_false
+      - godot_headless_nonzero_exit
+      - node_not_found
+      - null_method_call
+      - preload_or_autoload_runtime_error
+      - native_godot_process_crash_requires_separate_gui_exe_check
+  godot_gui_startup:
+    auto_required_when:
+      - user_reports_any_of:
+          - windows_application_error
+          - memory_could_not_be_read
+          - godot_gui_crash
+          - editor_crash
+      - task_requires_any_of:
+          - open_godot_editor
+          - verify_exact_godot_exe
+          - compare_godot_versions
+      - screenshot_or_log_mentions_any_of:
+          - Godot_v4.6.2-stable_win64.exe
+          - 应用程序错误
+          - 内存不能为 read
+    required:
+      - exact_godot_exe_path
+      - gui_startup_check_script
+      - timeout_or_quit_after_result
+      - log_file_path
+    blockers:
+      - exact_gui_exe_exits_nonzero
+      - exact_gui_exe_hangs_or_modal_crash_dialog
+      - headless_smoke_used_as_gui_crash_proof

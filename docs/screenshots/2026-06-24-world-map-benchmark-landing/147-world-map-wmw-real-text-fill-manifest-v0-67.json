@@ -1,0 +1,373 @@
+{
+  "id": "world_map_wmw_real_text_fill_v0_67",
+  "source": "docs/screenshots/2026-06-24-world-map-benchmark-landing/140-world-map-wmw-paper-atlas-v3-refill-v0-66-info-gray.png",
+  "output": "docs/screenshots/2026-06-24-world-map-benchmark-landing/144-world-map-wmw-real-text-fill-v0-67.png",
+  "intent": "real Chinese content and component state fill over v0.66 material-locked candidate; no layout regeneration",
+  "fonts": {
+    "regular": "C:\\Windows\\Fonts\\NotoSansSC-VF.ttf",
+    "medium": "C:\\Windows\\Fonts\\msyh.ttc",
+    "bold": "C:\\Windows\\Fonts\\msyhbd.ttc",
+    "light": "C:\\Windows\\Fonts\\msyhl.ttc"
+  },
+  "rules": [
+    "functional text surfaces remain orthogonal",
+    "green CTA is the only primary action",
+    "small component text uses regular/medium weight",
+    "map pins use short IDs only",
+    "paper/color material not globally adjusted"
+  ],
+  "text_items": [
+    {
+      "text": "WMW ? ????",
+      "xy": [
+        122,
+        45
+      ],
+      "size": 18,
+      "weight": "medium",
+      "anchor": "la"
+    },
+    {
+      "text": "? 01 ?",
+      "xy": [
+        332,
+        45
+      ],
+      "size": 17,
+      "weight": "regular",
+      "anchor": "la"
+    },
+    {
+      "text": "? 6 ?",
+      "xy": [
+        420,
+        45
+      ],
+      "size": 17,
+      "weight": "medium",
+      "anchor": "la"
+    },
+    {
+      "text": "?? 42   ?? 18   ?? 4",
+      "xy": [
+        735,
+        45
+      ],
+      "size": 16,
+      "weight": "regular",
+      "anchor": "la"
+    },
+    {
+      "text": "?????",
+      "box": [
+        112,
+        122,
+        302,
+        154
+      ],
+      "size": 21,
+      "weight": "medium",
+      "align": "left"
+    },
+    {
+      "text": "???? ? ??2",
+      "box": [
+        59,
+        280,
+        214,
+        320
+      ],
+      "size": 16,
+      "weight": "regular",
+      "align": "left"
+    },
+    {
+      "text": "????",
+      "box": [
+        112,
+        353,
+        302,
+        385
+      ],
+      "size": 21,
+      "weight": "medium",
+      "align": "left"
+    },
+    {
+      "text": "??? ? ??2",
+      "box": [
+        59,
+        510,
+        214,
+        550
+      ],
+      "size": 16,
+      "weight": "regular",
+      "align": "left"
+    },
+    {
+      "text": "?????",
+      "box": [
+        112,
+        584,
+        302,
+        616
+      ],
+      "size": 21,
+      "weight": "medium",
+      "align": "left"
+    },
+    {
+      "text": "?? ? ??1",
+      "box": [
+        59,
+        704,
+        214,
+        742
+      ],
+      "size": 16,
+      "weight": "regular",
+      "align": "left"
+    },
+    {
+      "text": "?????",
+      "box": [
+        112,
+        779,
+        302,
+        811
+      ],
+      "size": 21,
+      "weight": "medium",
+      "align": "left"
+    },
+    {
+      "text": "?? ? ?3??",
+      "box": [
+        60,
+        895,
+        194,
+        925
+      ],
+      "size": 16,
+      "weight": "regular",
+      "align": "left"
+    },
+    {
+      "text": "?????",
+      "box": [
+        1278,
+        124,
+        1518,
+        164
+      ],
+      "size": 30,
+      "weight": "bold",
+      "align": "left"
+    },
+    {
+      "text": "????",
+      "xy": [
+        1280,
+        178
+      ],
+      "size": 18,
+      "weight": "medium",
+      "anchor": "la"
+    },
+    {
+      "text": "??",
+      "box": [
+        1535,
+        124,
+        1614,
+        160
+      ],
+      "size": 26,
+      "weight": "bold",
+      "align": "center"
+    },
+    {
+      "text": "?? 2",
+      "box": [
+        1535,
+        163,
+        1614,
+        190
+      ],
+      "size": 17,
+      "weight": "medium",
+      "align": "center"
+    },
+    {
+      "text": "?",
+      "xy": [
+        1222,
+        494
+      ],
+      "size": 16,
+      "weight": "regular",
+      "anchor": "la"
+    },
+    {
+      "text": "????   ???? / ???",
+      "box": [
+        1244,
+        489,
+        1454,
+        512
+      ],
+      "size": 16,
+      "weight": "regular",
+      "align": "left"
+    },
+    {
+      "text": "?????? ? ??1?",
+      "box": [
+        1300,
+        545,
+        1536,
+        585
+      ],
+      "size": 23,
+      "weight": "bold",
+      "align": "left"
+    },
+    {
+      "text": "?????? ? ??3",
+      "box": [
+        1300,
+        616,
+        1536,
+        660
+      ],
+      "size": 20,
+      "weight": "medium",
+      "align": "left"
+    },
+    {
+      "text": "???? ? 4?",
+      "box": [
+        1300,
+        697,
+        1536,
+        743
+      ],
+      "size": 21,
+      "weight": "medium",
+      "align": "left"
+    },
+    {
+      "text": "????",
+      "box": [
+        500,
+        803,
+        623,
+        828
+      ],
+      "size": 18,
+      "weight": "medium",
+      "align": "left"
+    },
+    {
+      "text": "? 6 ?",
+      "box": [
+        500,
+        832,
+        623,
+        862
+      ],
+      "size": 24,
+      "weight": "bold",
+      "align": "left"
+    },
+    {
+      "text": "????",
+      "box": [
+        790,
+        803,
+        910,
+        828
+      ],
+      "size": 18,
+      "weight": "medium",
+      "align": "left"
+    },
+    {
+      "text": "?? 3",
+      "box": [
+        790,
+        832,
+        910,
+        862
+      ],
+      "size": 24,
+      "weight": "bold",
+      "align": "left"
+    },
+    {
+      "text": "????",
+      "box": [
+        1085,
+        803,
+        1192,
+        828
+      ],
+      "size": 18,
+      "weight": "medium",
+      "align": "left"
+    },
+    {
+      "text": "4????",
+      "box": [
+        1050,
+        832,
+        1198,
+        862
+      ],
+      "size": 21,
+      "weight": "medium",
+      "align": "left"
+    },
+    {
+      "text": "N-01",
+      "xy": [
+        536,
+        292
+      ],
+      "size": 12,
+      "weight": "regular",
+      "anchor": "la"
+    },
+    {
+      "text": "E-02",
+      "xy": [
+        813,
+        310
+      ],
+      "size": 12,
+      "weight": "regular",
+      "anchor": "la"
+    },
+    {
+      "text": "A-03",
+      "xy": [
+        1016,
+        358
+      ],
+      "size": 12,
+      "weight": "regular",
+      "anchor": "la"
+    },
+    {
+      "text": "S-04",
+      "xy": [
+        662,
+        558
+      ],
+      "size": 12,
+      "weight": "regular",
+      "anchor": "la"
+    }
+  ]
+}

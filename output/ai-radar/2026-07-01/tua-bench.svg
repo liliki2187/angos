@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <style>
+      .bg{fill:#fffaf0}.ink{fill:#111827}.muted{fill:#475569}.teal{fill:#0f766e}.blue{fill:#1d4ed8}.orange{fill:#c2410c}.red{fill:#b91c1c}
+      .card{fill:#ffffff;stroke:#cbd5e1;stroke-width:2}.soft{fill:#f8fafc;stroke:#cbd5e1;stroke-width:2}.strip{fill:#fff7ed;stroke:#fed7aa;stroke-width:2}
+      .title{font:700 54px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif}.sub{font:700 34px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif}
+      .h{font:700 30px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif}.body{font:500 24px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif}
+      .small{font:500 20px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif}.num{font:700 26px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;fill:white}
+    </style>
+  </defs>
+  <rect width="1600" height="900" class="bg"/>
+  <text x="42" y="70" class="title ink">每日 AI 新工具｜Agent 评测集</text>
+  <text x="42" y="124" class="sub teal">今日重点：给 Codex 做一次真实工作考试</text>
+  <rect x="42" y="155" width="450" height="62" rx="14" class="soft"/><text x="72" y="195" class="body ink">工具 / 论文名：<tspan class="teal" font-weight="700">TUA-Bench</tspan></text>
+  <rect x="520" y="155" width="430" height="62" rx="14" class="soft"/><text x="550" y="195" class="body ink">类型：Agent 评测 / Harness / Eval</text>
+  <rect x="978" y="155" width="320" height="62" rx="14" class="soft"/><text x="1008" y="195" class="body ink">动作：<tspan class="red" font-weight="700">本周可试</tspan></text>
+
+  <rect x="42" y="250" width="455" height="395" rx="18" class="card"/>
+  <circle cx="86" cy="292" r="26" fill="#0f766e"/><text x="78" y="301" class="num">1</text>
+  <text x="124" y="302" class="h teal">它是什么</text>
+  <text x="72" y="360" class="body ink">• 不是新软件，也不是插件</text>
+  <text x="72" y="408" class="body ink">• 是一套考试题库 + 评分方法</text>
+  <text x="72" y="456" class="body ink">• 专门验证终端 Agent 的真实任务能力</text>
+  <rect x="90" y="505" width="330" height="95" rx="14" fill="#ecfeff" stroke="#99f6e4" stroke-width="2"/>
+  <text x="132" y="565" class="body teal">Agent 在终端里参加考试</text>
+
+  <rect x="535" y="250" width="515" height="395" rx="18" class="card"/>
+  <circle cx="579" cy="292" r="26" fill="#1d4ed8"/><text x="571" y="301" class="num">2</text>
+  <text x="617" y="302" class="h blue">它真正能做什么</text>
+  <g class="body ink">
+    <circle cx="585" cy="358" r="18" fill="#1d4ed8"/><text x="579" y="367" class="num" font-size="20">1</text><text x="620" y="367">准备 120 个真实任务</text>
+    <circle cx="585" cy="415" r="18" fill="#1d4ed8"/><text x="579" y="424" class="num" font-size="20">2</text><text x="620" y="424">搭好可复现环境</text>
+    <circle cx="585" cy="472" r="18" fill="#1d4ed8"/><text x="579" y="481" class="num" font-size="20">3</text><text x="620" y="481">让 Agent 执行任务</text>
+    <circle cx="585" cy="529" r="18" fill="#1d4ed8"/><text x="579" y="538" class="num" font-size="20">4</text><text x="620" y="538">按协议自动评分</text>
+    <circle cx="585" cy="586" r="18" fill="#1d4ed8"/><text x="579" y="595" class="num" font-size="20">5</text><text x="620" y="595">暴露能力边界</text>
+  </g>
+  <rect x="700" y="334" width="290" height="58" rx="12" fill="#dbeafe"/><text x="730" y="372" class="body blue" font-weight="700">它评测 Agent，不替 Agent 做任务</text>
+
+  <rect x="1088" y="250" width="470" height="395" rx="18" class="card"/>
+  <circle cx="1132" cy="292" r="26" fill="#c2410c"/><text x="1124" y="301" class="num">3</text>
+  <text x="1170" y="302" class="h orange">它用什么题考试</text>
+  <text x="1120" y="360" class="body ink">• 文档编辑题</text>
+  <text x="1120" y="408" class="body ink">• 邮件管理题</text>
+  <text x="1120" y="456" class="body ink">• 网页查找题</text>
+  <text x="1120" y="504" class="body ink">• 软件流程题</text>
+  <text x="1120" y="552" class="body ink">• 终端执行题</text>
+  <rect x="1120" y="585" width="385" height="42" rx="10" fill="#fee2e2"/><text x="1142" y="614" class="small red" font-weight="700">这些是考试题目类型，不是功能</text>
+
+  <rect x="42" y="675" width="1516" height="145" rx="18" class="strip"/>
+  <text x="72" y="730" class="h ink">制作人判断</text>
+  <text x="250" y="724" class="body ink">TUA-Bench 不必直接接入 Angus；它提醒我们：不要只相信 Agent 的回答，</text>
+  <text x="250" y="766" class="body ink">要用项目任务验证 Codex。下一步可做 5 个 Angus mini eval：</text>
+  <text x="250" y="808" class="body red" font-weight="700">读 GDD、改原型、跑测试、截图、写沉淀。</text>
+</svg>

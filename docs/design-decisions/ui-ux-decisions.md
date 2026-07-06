@@ -752,3 +752,40 @@
 - **世界地图应用口径**：当前分支删除右下小按钮组，右侧 dossier 下部空间优先给 `当前地区任务`、收益 / 消耗摘要、行动确认和 `进入地区` 主 CTA。若未来需要地图图层、定位、筛选或情报视图，应先进入功能设计和组件合同，不得作为空白填充物塞回右下。
 - **当前产物**：v2.2.3 填充验证稿为 `docs/screenshots/2026-06-23-world-map-clean-lowpoly-style-target/30-v2-2-3-clean-right-function.png`；右侧裁切为 `31-v2-2-3-clean-right-function-crop.png`；行动确认裁切为 `32-v2-2-3-clean-right-action-crop.png`。v2.2 / v2.2.1 / v2.2.2 仅作为过程文件，不作为对外引用稿。
 - **状态**：已采纳为世界地图右下空间规则。后续若为了画面平衡重新加入无真实功能按钮，应判定为 UI 信息架构回退；空白优先留给真实地区功能或保留为负空间。
+
+### A121. 无字标杆底图不得靠程序叠字升级为真实文字融合稿
+
+- **来源**：2026-06-28 世界地图 clean low-poly weekly 无字底图中文填充测试。用户看到 `docs/screenshots/2026-06-28-world-map-benchmark-text-fill/10-world-map-benchmark-real-chinese-fill-v4.png` 后明确指出“文字和界面贴合度很差”，并要求与 UX 老哥一起诊断。UX 老哥复审判定：这不是坐标微调问题，而是 `safe-zone / capacity validation` 稿被误推到 `filled-state text mock` 质量要求上。
+- **问题根因**：文字没有被纸面、票据、地图 pin、CTA 组件吸收，而是作为运行时 Label 覆盖在 bitmap 上。地区名、状态、风险、按钮、地图短签和底部动作共用近似的硬黑 / 硬彩 Label 语法，缺少纸面标题、纸面小字、状态章、地图短签、CTA label 各自的字体 token、行高、墨色、压印和承载物关系。
+- **机制 / 原则**：无字风格目标图只能证明底图风格潜力，不能直接通过程序叠字升级为真实文字融合稿。进入 `filled-state text mock` 前，必须先建立 `content_role`、`content_rects`、`no_text_rects`、`safe_rects`、`hit_rects` 和真实选中态语义链。Control / DOM rect 通过不等于视觉可写区通过；若文字压到印刷线、纸边、角标、色条、打孔、半调、地图路线或装饰凸起，即使坐标未越界，也应判定为视觉可写区失败。
+- **世界地图应用口径**：下一版世界地图文字融合测试应只选一个真实状态，例如 `亚洲沉默区 selected + 金字塔信号可进入 + 高风险截稿`，让左栏、地图、右栏和 CTA 围绕同一对象写。必须先明确世界地图页到底是“选地区”还是“选地区内事件”；CTA 文案应精确为 `进入亚洲沉默区` 或 `调查金字塔信号` 等可验证作用范围，不得让地区、事件、派遣入口混用。地图 pin 的中文短签必须挂在 pin / 短签组件上，禁止裸贴在地图噪声和路线之上。
+- **交付前 Gate**：下一版不得只交整屏。至少裁切左侧地区卡、右侧 dossier、主 CTA、底部周进度、地图 pin 五处 100% 局部。关掉 hover / 点击 / 动效，让陌生人看 5 秒，应能回答：当前选中什么、风险是什么、下一步点哪、点了影响什么。若仍读作“干净底图 + UI 贴字”，则仍为失败稿，不得命名为生产候选、资源标杆或可切图母版。
+- **状态**：已采纳为世界地图 / 地区界面 / 同类资产化 UI 的文字融合 Gate。当前 v4 中文填充图降级为“真实字贴图感问题案例”；可作为诊断材料，不作为后续落地样张。
+### A123. 世界地图 WMW 支线以 v0.51 生图候选和 proof v2 色号合同为当前来源，v6g 降级为历史测试床
+
+- **来源**：2026-06-30 世界地图 World Mystery Weekly 新标杆落地继续推进。用户指出最新色彩相比第一版严重变暗、颜色不对，要求重新矫正并追问为什么每次微调都会改变配色和质感。经连续 v0.51-v0.53 复盘、局部橄榄色 proof v2、`@像素艺术` 和 UX 老哥复审后确认：v0.51 是当前可继续推进的生图候选；proof v2 只作为局部 selected-region palette token / 实现 proof；旧 v6g Godot 预览只能作为 runtime-token / 资产化测试床，不能作为新标杆验收图。
+- **问题根因**：旧 v6g manifest 与生产文档仍残留“current component-expansion source / current component-generation source”的措辞。它在 2026-06-15 v6g 资产化阶段成立，但在当前 clean low-poly weekly / WMW 支线中会误导后续实现者把旧 v6g 组件、冷蓝地图、强红青点阵、贴字感运行界面当成新标杆来源，造成视觉方向回退。
+- **机制 / 原则**：世界地图 WMW 支线的当前三层边界为：`95-world-map-imagegen-color-recorrected-v0-51.png` 是生图风格候选；`103/104` proof v2 是局部选区色号合同与实现 proof；`105/106` v6g runtime token 截图只验证 Godot token 叠层，不进入新标杆序列。后续不得用“修局部色相”继续整屏重染导致全屏变暗；不得把 runtime proof、safe-zone 图、程序叠字图命名为生产标杆或资源标杆。
+- **世界地图应用口径**：真实替换前必须新建或明确当前分支 manifest / README 的四类产物标签：`style_candidate`、`local_proof`、`runtime_testbed`、`production_components`。动态地区名、推荐、难度、线报、天数、按钮文案、hover / selected / disabled / locked / urgent 状态、地图 pin 和选中 overlay 必须 runtime；地图底板、左卡壳、右 dossier 纸面、底部票据、CTA plate、贴纸 / icon atlas 可作为无字组件资产。选中地区不能只烘焙北美，需每地区 mask / LUT 或 runtime selected overlay。
+- **已同步**：已将 `gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/world_map_imagegen_manifest.json`、`docs/plans/world-map-imagegen-v6/prompt-bundle.json`、`docs/plans/world-map-imagegen-v6/componentization-spec.md` 和 `docs/plans/world-map-assetized-ui-production-spec.md` 中 v6g “当前来源”措辞降级为 legacy runtime-token / assetization test bed；新增 `docs/plans/world-map-benchmark-landing/2026-06-30-world-map-wmw-source-manifest.json`、`docs/plans/world-map-benchmark-landing/2026-06-30-world-map-selected-region-palette-token-contract.md` 与 `docs/plans/world-map-benchmark-landing/2026-06-30-world-map-benchmark-implementation-checklist.md`。
+- **状态**：已采纳为 WMW 支线世界地图落地 source-of-truth 覆盖规则。A63 保留为历史 v6g 阶段记录，不得覆盖本条；若后续要重新启用 v6g 作为视觉来源，必须由用户明确确认并更新本条状态。
+
+### A124. 所有功能组件必须正交，不承载功能的装饰元素才可以倾斜
+
+- **来源**：2026-06-30 世界地图 WMW 支线正交验收复盘。父级 Codex 在一次生图后把右侧 dossier 误判为“基本正交”，用户指出右侧明显倾斜，并进一步纠正：问题不只在右侧，所有功能组件都不应该是斜的，只有不承载功能的装饰性元素才可以是斜的。
+- **问题根因**：此前口径容易被误读成“右侧功能面一票否决”，从而遗漏左侧卡片、中央地图板、底部 receipt、CTA、地图 pin、日程器、拖拽槽、筛选签等同样承载功能的组件。真正需要约束的不是页面方位，而是组件是否承载信息、状态、点击、hover、pressed、disabled、selected、drag-over 或其它玩家可操作语义。
+- **机制 / 原则**：所有功能组件必须使用 0 度正交功能面，保持与画布水平 / 垂直对齐，可用矩形 `content_rects / hit_rects / state_rects` 描述。不得把任务卡、地区卡、dossier、照片框、按钮条、状态票据、地图 pin、ticker、日程器、候选卡、签批票据、拖拽槽或任何可点击 / 可读 / 可变状态组件做成倾斜、旋转、透视、梯形或斜切承载面。斜切、纸边、背页、夹子、胶带、贴纸白边、阴影、外侧标签和半调装饰可以存在，但只能作为 `no_text_rects`、背景或纯装饰层。
+- **验收口径**：验收顺序改为先功能几何、后美术风格。只要任一功能组件肉眼可见倾斜，即使颜色、低多边形块面、文字嵌合或整体氛围更接近标杆，也必须降级为偏差样本，不得进入 `filled-state text mock`、no-text 生产母版、manifest 或 Godot 运行候选。不得再用“基本正”“比上一版好”“整体还行”放行。
+- **应用范围**：世界地图、地区界面、任务派遣 / 签批台、报道重组、发刊结算、弹窗、ticker、地图 pin、候选卡、拖拽槽、CTA、日程器和所有后续 bitmap / 生图 / PNG / atlas 承载的 Angus UI。
+- **状态**：已采纳为资产化 UI 全局正交功能组件 Gate；已同步到 `docs/onboarding/ui-interaction-guidelines.md`。后续 WMW 支线合同和生图 prompt 必须使用“all functional components must be orthogonal”，而不是只写 right dossier。
+
+### A128. 资产化 UI 必须以真实颜色模块 / carrier / glyph 三层合同作为图文落地硬门槛
+
+- **来源**：2026-07-02 世界地图 WMW 支线组件合同 v0.89 复盘。此前多轮修正中，父级 Codex 反复把自画的 safe-zone / inner box 当成真实可写区域，导致文字偏上、偏下、落在深色条外、落在棕色模块下方、标题与装饰图形冲突，且每次微调又误伤原有配色、低多边形色块和纸面质感。用户确认 v0.89 “这一版效果是对的”，但要求复盘全部错误并沉淀为后续资产 UI 化工作流。
+- **问题根因**：此前验收顺序错了。AI 先画理想文本框，再检查文字是否落在理想框内；但真正需要先识别的是图像里已经存在的视觉承载模块：深色标题条、浅色标签纸、按钮内板、状态章、票据色块和图标禁入区。只要 carrier 没有贴住真实色块，后面的 `inner_rect`、字号、居中、PASS 指标都会变成虚假通过。
+- **机制 / 原则**：资产化 UI 的动态文字槽必须分三层描述并逐层通过：第一层 `visible_color_module_rect`，来自真实图像中的颜色模块 / 深色条 / 浅色底板 / 章槽；第二层 `carrier_rect`，是可承载该字段的功能面；第三层 `inner_rect / glyph_bbox`，才是文字排版区域。`visible_color_module_rect` 先于 `carrier_rect`，`carrier_rect` 先于文字。不得反过来从文字位置倒推图像区域。
+- **硬门槛**：`module_match == true` 是 pass 前置条件；`glyph_inside_inner == true` 是文字不越界前置条件；功能 carrier 必须 `axis_aligned == true`；每个字段必须声明 role，例如 `receipt_field_lane`、`header_title_lane`、`header_status_lane`、`button_label_plate`、`card_title_plate`、`grouped_meta_plate`、`stamp_slot`，不得用万能 field lane 覆盖不同视觉结构。任何字段越出真实颜色模块、贴住边线、被图标 / 纸夹 / 章槽侵占，或只在自画框里居中，都判失败。
+- **验收口径**：交付不能只给整图或指标摘要。至少要输出 100% 局部 crop，展示 raw source、真实颜色模块、carrier、inner 和 glyph 关系；人眼先确认“文字确实在该颜色模块里”，再看数值。若用户指出视觉上不在模块内，必须优先相信视觉反馈，回到模块分割，而不是继续调字号或坐标。
+- **应用范围**：世界地图、地区界面、任务派遣 / 签批台、发刊、票据、按钮、任务卡、地图 pin、ticker、日程器和所有 bitmap / 生图 / 拟物 UI 中承载动态文字的组件。先做组件合同，合同过了再回填整屏；不得把整屏生图中的偶然对齐当成生产规则。
+- **当前产物**：v0.89 当前正确效果为 `docs/screenshots/2026-06-24-world-map-benchmark-landing/223-world-map-wmw-component-carrier-contract-v10-v0-89.png`，manifest 为 `224-world-map-wmw-component-carrier-contract-v10-v0-89.json`，100% 复核裁切为 `225`、`226`、`227`、`228` 四张 crop。它是下一步世界地图真实内容回填的组件承载合同，不是最终整屏世界地图成品。
+- **状态**：已采纳为资产化 UI 图文落地硬门槛，并同步到 `docs/onboarding/assetized-ui-production-chain.md`、`docs/onboarding/ui-interaction-guidelines.md`、`docs/onboarding/ai-collaboration-guidance.md` 与 WMW 支线美术合同。后续类似任务若跳过真实颜色模块分割，或用 safe-zone / overlay pass 冒充 UI 通过，应判定为流程回退。

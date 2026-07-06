@@ -1,0 +1,538 @@
+{
+  "id": "world_map_wmw_component_carrier_contract_v4_v0_83",
+  "source": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\140-world-map-wmw-paper-atlas-v3-refill-v0-66-info-gray.png",
+  "output": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\199-world-map-wmw-component-carrier-contract-v4-v0-83.png",
+  "method": "identify semantic text carriers first, then calculate inner/glyph metrics per carrier type",
+  "carrier_rules": {
+    "field_lane": {
+      "align": "left",
+      "pad": [
+        9,
+        3,
+        8,
+        3
+      ],
+      "w": [
+        0.25,
+        0.85
+      ],
+      "h": [
+        0.45,
+        0.78
+      ],
+      "dy": 2.5,
+      "note": "printed lane: left aligned; empty tail is allowed if intentional"
+    },
+    "button_label_plate": {
+      "align": "center",
+      "pad": [
+        14,
+        7,
+        14,
+        7
+      ],
+      "w": [
+        0.55,
+        0.88
+      ],
+      "h": [
+        0.46,
+        0.68
+      ],
+      "dy": 3.0,
+      "note": "button label: center and fill visually"
+    },
+    "short_chip": {
+      "align": "center",
+      "pad": [
+        8,
+        4,
+        8,
+        4
+      ],
+      "w": [
+        0.45,
+        0.9
+      ],
+      "h": [
+        0.42,
+        0.7
+      ],
+      "dy": 2.5,
+      "note": "compact status/value chip"
+    },
+    "status_stamp": {
+      "align": "center",
+      "pad": [
+        8,
+        6,
+        8,
+        6
+      ],
+      "w": [
+        0.35,
+        0.8
+      ],
+      "h": [
+        0.35,
+        0.68
+      ],
+      "dy": 3.0,
+      "note": "stamp is its own carrier, not NO_TEXT"
+    }
+  },
+  "blocks": [
+    {
+      "title": "1. CTA rows / button_label_plate",
+      "target": [
+        42,
+        134,
+        652,
+        481
+      ],
+      "metrics": [
+        {
+          "label": "进入北美禁区  消耗1天",
+          "kind": "button_label_plate",
+          "carrier": [
+            100,
+            30,
+            350,
+            74
+          ],
+          "inner": [
+            114,
+            37,
+            336,
+            67
+          ],
+          "glyph": [
+            133.5,
+            43.0,
+            316.5,
+            63.0
+          ],
+          "font_size": 18,
+          "width_ratio": 0.824,
+          "height_ratio": 0.455,
+          "center_delta_y": 1.0,
+          "pass": false,
+          "reason": "too small vertically"
+        },
+        {
+          "label": "查看任务情报  线报3",
+          "kind": "button_label_plate",
+          "carrier": [
+            100,
+            106,
+            350,
+            150
+          ],
+          "inner": [
+            114,
+            113,
+            336,
+            143
+          ],
+          "glyph": [
+            151.5,
+            120.5,
+            298.5,
+            137.5
+          ],
+          "font_size": 16,
+          "width_ratio": 0.662,
+          "height_ratio": 0.386,
+          "center_delta_y": 1.0,
+          "pass": false,
+          "reason": "too small vertically"
+        },
+        {
+          "label": "红线截止  4天",
+          "kind": "button_label_plate",
+          "carrier": [
+            100,
+            186,
+            350,
+            230
+          ],
+          "inner": [
+            114,
+            193,
+            336,
+            223
+          ],
+          "glyph": [
+            172.5,
+            200.0,
+            277.5,
+            218.0
+          ],
+          "font_size": 17,
+          "width_ratio": 0.473,
+          "height_ratio": 0.409,
+          "center_delta_y": 1.0,
+          "pass": false,
+          "reason": "underfilled"
+        }
+      ],
+      "notes": [
+        "CTA 的白色中段是按钮 label plate；左右图标/动作区是 NO。",
+        "若红行不是动作，下一步应改成 field_lane 或 warning strip，不保留箭头。"
+      ]
+    },
+    {
+      "title": "2. Bottom receipt / dark field lanes",
+      "target": [
+        708,
+        134,
+        1128,
+        345
+      ],
+      "metrics": [
+        {
+          "label": "本周行动",
+          "kind": "field_lane",
+          "carrier": [
+            116,
+            36,
+            246,
+            55
+          ],
+          "inner": [
+            125,
+            39,
+            238,
+            52
+          ],
+          "glyph": [
+            125,
+            40.0,
+            177,
+            53.0
+          ],
+          "font_size": 13,
+          "width_ratio": 0.46,
+          "height_ratio": 0.684,
+          "center_delta_y": 1.0,
+          "pass": true,
+          "reason": "ok"
+        },
+        {
+          "label": "余 6 天",
+          "kind": "field_lane",
+          "carrier": [
+            116,
+            68,
+            191,
+            88
+          ],
+          "inner": [
+            125,
+            71,
+            183,
+            85
+          ],
+          "glyph": [
+            125,
+            72.0,
+            172,
+            86.0
+          ],
+          "font_size": 15,
+          "width_ratio": 0.81,
+          "height_ratio": 0.7,
+          "center_delta_y": 1.0,
+          "pass": true,
+          "reason": "ok"
+        }
+      ],
+      "notes": [
+        "两条深灰横条才是 carrier；色格不是文字区。",
+        "field_lane 默认左对齐，空尾作为印刷字段余量，不按按钮填充率判断。"
+      ]
+    },
+    {
+      "title": "3. Left card / split chips instead of one long label",
+      "target": [
+        42,
+        604,
+        562,
+        1071
+      ],
+      "metrics": [
+        {
+          "label": "红线升温",
+          "kind": "short_chip",
+          "carrier": [
+            34,
+            34,
+            116,
+            67
+          ],
+          "inner": [
+            42,
+            38,
+            108,
+            63
+          ],
+          "glyph": [
+            47.0,
+            45.0,
+            103.0,
+            58.0
+          ],
+          "font_size": 14,
+          "width_ratio": 0.848,
+          "height_ratio": 0.394,
+          "center_delta_y": 1.0,
+          "pass": false,
+          "reason": "too small vertically"
+        },
+        {
+          "label": "推荐2",
+          "kind": "short_chip",
+          "carrier": [
+            120,
+            34,
+            178,
+            67
+          ],
+          "inner": [
+            128,
+            38,
+            170,
+            63
+          ],
+          "glyph": [
+            131.0,
+            45.0,
+            167.0,
+            58.0
+          ],
+          "font_size": 14,
+          "width_ratio": 0.857,
+          "height_ratio": 0.394,
+          "center_delta_y": 1.0,
+          "pass": false,
+          "reason": "too small vertically"
+        },
+        {
+          "label": "欧亚灰域",
+          "kind": "button_label_plate",
+          "carrier": [
+            79,
+            108,
+            277,
+            142
+          ],
+          "inner": [
+            93,
+            115,
+            263,
+            135
+          ],
+          "glyph": [
+            140.0,
+            116.0,
+            216.0,
+            136.0
+          ],
+          "font_size": 19,
+          "width_ratio": 0.447,
+          "height_ratio": 0.588,
+          "center_delta_y": 1.0,
+          "pass": false,
+          "reason": "underfilled"
+        },
+        {
+          "label": "可派遣",
+          "kind": "short_chip",
+          "carrier": [
+            34,
+            206,
+            100,
+            240
+          ],
+          "inner": [
+            42,
+            210,
+            92,
+            236
+          ],
+          "glyph": [
+            46.0,
+            217.5,
+            88.0,
+            230.5
+          ],
+          "font_size": 14,
+          "width_ratio": 0.84,
+          "height_ratio": 0.382,
+          "center_delta_y": 1.0,
+          "pass": false,
+          "reason": "too small vertically"
+        },
+        {
+          "label": "线报2",
+          "kind": "short_chip",
+          "carrier": [
+            104,
+            206,
+            176,
+            240
+          ],
+          "inner": [
+            112,
+            210,
+            168,
+            236
+          ],
+          "glyph": [
+            122.0,
+            217.5,
+            158.0,
+            230.5
+          ],
+          "font_size": 14,
+          "width_ratio": 0.643,
+          "height_ratio": 0.382,
+          "center_delta_y": 1.0,
+          "pass": false,
+          "reason": "too small vertically"
+        }
+      ],
+      "notes": [
+        "长 meta 不应硬塞进一个 plate；拆成状态 chip + value chip。",
+        "右侧章/靶心依旧 NO，不参与文字 carrier。"
+      ]
+    },
+    {
+      "title": "4. Right header / field lanes + status stamp",
+      "target": [
+        708,
+        604,
+        1318,
+        790
+      ],
+      "metrics": [
+        {
+          "label": "北美禁区",
+          "kind": "field_lane",
+          "carrier": [
+            96,
+            36,
+            306,
+            70
+          ],
+          "inner": [
+            105,
+            39,
+            298,
+            67
+          ],
+          "glyph": [
+            105,
+            43.5,
+            197,
+            66.5
+          ],
+          "font_size": 23,
+          "width_ratio": 0.477,
+          "height_ratio": 0.676,
+          "center_delta_y": 2.0,
+          "pass": true,
+          "reason": "ok"
+        },
+        {
+          "label": "红线升温",
+          "kind": "field_lane",
+          "carrier": [
+            96,
+            81,
+            198,
+            105
+          ],
+          "inner": [
+            105,
+            84,
+            190,
+            102
+          ],
+          "glyph": [
+            105,
+            89.0,
+            157,
+            101.0
+          ],
+          "font_size": 13,
+          "width_ratio": 0.612,
+          "height_ratio": 0.5,
+          "center_delta_y": 2.0,
+          "pass": true,
+          "reason": "ok"
+        },
+        {
+          "label": "高危",
+          "kind": "status_stamp",
+          "carrier": [
+            333,
+            22,
+            429,
+            126
+          ],
+          "inner": [
+            341,
+            28,
+            421,
+            120
+          ],
+          "glyph": [
+            361.0,
+            48.5,
+            401.0,
+            69.5
+          ],
+          "font_size": 20,
+          "width_ratio": 0.5,
+          "height_ratio": 0.202,
+          "center_delta_y": -15.0,
+          "pass": false,
+          "reason": "too small vertically"
+        },
+        {
+          "label": "推荐 2",
+          "kind": "status_stamp",
+          "carrier": [
+            333,
+            22,
+            429,
+            126
+          ],
+          "inner": [
+            341,
+            28,
+            421,
+            120
+          ],
+          "glyph": [
+            363.5,
+            84.5,
+            398.5,
+            95.5
+          ],
+          "font_size": 12,
+          "width_ratio": 0.438,
+          "height_ratio": 0.106,
+          "center_delta_y": 16.0,
+          "pass": false,
+          "reason": "too small vertically"
+        }
+      ],
+      "notes": [
+        "灰色横条是 title/status field_lane；不是浅纸面。",
+        "虚线章是 status_stamp carrier，不能标成 NO_TEXT。"
+      ]
+    }
+  ]
+}

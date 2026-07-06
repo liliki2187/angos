@@ -1,7 +1,7 @@
 {
   "id": "world_map_imagegen_v6",
   "version": 1,
-  "status": "v6g_assetization_component_candidates",
+  "status": "v6g_legacy_runtime_testbed_not_current_benchmark",
   "target_view": "weekly_run.explore.world",
   "canvas_size": [1920, 1080],
   "safe_viewports": [[1920, 1080], [1600, 900], [1366, 768]],
@@ -9,7 +9,7 @@
     "selected_artboard_asset_id": "wm_fullscreen_artboard_v6g_pixel_strong",
     "selected_artboard_path": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6g-pixel-strong.png",
     "selected_by_user": "2026-06-15",
-    "rule": "Use v6g strong pixel artboard as the current component-expansion source. Do not wire the fullscreen artboard directly as interactive UI; derive or regenerate component assets and keep dynamic text/status in Godot."
+    "rule": "Legacy v6g component candidates may be used only as runtime-token and assetization test beds. Do not use v6g as the current World Mystery Weekly benchmark component-expansion source; the clean low-poly weekly branch uses the v0.51 generated candidate plus proof-v2 palette-token contract."
   },
   "art_direction": {
     "source_of_truth": "design/art-direction/angus-visual-style-guide.md",
@@ -242,12 +242,12 @@
             "no readable text",
             "no fake UI states",
             "strong 5-8px pixel-print and posterized material",
-            "current approved v6g expansion source",
+            "legacy v6g expansion source, no longer current for the World Mystery Weekly benchmark branch",
             "do not wire as interactive UI"
           ]
         }
       ],
-      "acceptance_use": "User-selected strong pixel direction for v6g asset expansion. Use as the current component-generation and crop-validation source; do not wire as interactive UI."
+      "acceptance_use": "Historical user-selected strong-pixel direction for the v6g assetization pass. Use only as a legacy runtime-token / crop-validation test bed; it is not the active production source for the World Mystery Weekly benchmark branch."
     },
     {
       "id": "wm_fullscreen_artboard_v6h_pixel_strong_bright_paper",

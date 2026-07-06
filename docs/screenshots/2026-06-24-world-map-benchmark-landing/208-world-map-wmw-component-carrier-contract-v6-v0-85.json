@@ -1,0 +1,594 @@
+{
+  "id": "world_map_wmw_component_carrier_contract_v6_v0_85",
+  "source": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\140-world-map-wmw-paper-atlas-v3-refill-v0-66-info-gray.png",
+  "output": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\207-world-map-wmw-component-carrier-contract-v6-v0-85.png",
+  "method": "strict inner containment; role-specific carriers; no tilted functional components",
+  "carrier_rules": {
+    "receipt_field_lane": {
+      "align": "left",
+      "pad": [
+        9,
+        2,
+        8,
+        2
+      ],
+      "w": [
+        0.32,
+        0.88
+      ],
+      "h": [
+        0.48,
+        0.82
+      ],
+      "dy": 1.5,
+      "note": "receipt dark printed lane; empty tail is allowed"
+    },
+    "header_title_lane": {
+      "align": "left",
+      "pad": [
+        9,
+        2,
+        8,
+        2
+      ],
+      "w": [
+        0.42,
+        0.86
+      ],
+      "h": [
+        0.66,
+        0.84
+      ],
+      "dy": 1.5,
+      "note": "main title lane; should visually occupy the dark bar"
+    },
+    "header_status_lane": {
+      "align": "left",
+      "pad": [
+        9,
+        2,
+        8,
+        2
+      ],
+      "w": [
+        0.42,
+        0.86
+      ],
+      "h": [
+        0.54,
+        0.76
+      ],
+      "dy": 1.5,
+      "note": "secondary status lane; smaller than title but still belongs to the bar"
+    },
+    "button_label_plate": {
+      "align": "center",
+      "pad": [
+        13,
+        5,
+        13,
+        5
+      ],
+      "w": [
+        0.5,
+        0.92
+      ],
+      "h": [
+        0.44,
+        0.72
+      ],
+      "dy": 1.5,
+      "note": "clickable label plate; concise copy should fill the plate confidently"
+    },
+    "card_title_plate": {
+      "align": "center",
+      "pad": [
+        9,
+        4,
+        9,
+        4
+      ],
+      "w": [
+        0.35,
+        0.82
+      ],
+      "h": [
+        0.44,
+        0.72
+      ],
+      "dy": 1.5,
+      "note": "region/card title plate; it may leave more tail than a CTA"
+    },
+    "grouped_meta_plate": {
+      "align": "center",
+      "pad": [
+        8,
+        4,
+        8,
+        4
+      ],
+      "w": [
+        0.44,
+        0.96
+      ],
+      "h": [
+        0.42,
+        0.72
+      ],
+      "dy": 1.5,
+      "note": "single visible meta plate; label and value travel together"
+    },
+    "stamp_primary_slot": {
+      "align": "center",
+      "pad": [
+        7,
+        4,
+        7,
+        4
+      ],
+      "w": [
+        0.35,
+        0.9
+      ],
+      "h": [
+        0.44,
+        0.78
+      ],
+      "dy": 1.5,
+      "note": "top line inside the stamp"
+    },
+    "stamp_secondary_slot": {
+      "align": "center",
+      "pad": [
+        7,
+        3,
+        7,
+        3
+      ],
+      "w": [
+        0.35,
+        0.86
+      ],
+      "h": [
+        0.38,
+        0.76
+      ],
+      "dy": 1.5,
+      "note": "small line inside the stamp"
+    }
+  },
+  "blocks": [
+    {
+      "title": "1. CTA rows / button_label_plate",
+      "target": [
+        42,
+        134,
+        652,
+        481
+      ],
+      "metrics": [
+        {
+          "label": "进入北美禁区 · 1天",
+          "kind": "button_label_plate",
+          "carrier": [
+            100,
+            30,
+            350,
+            74
+          ],
+          "inner": [
+            113,
+            35,
+            337,
+            69
+          ],
+          "glyph": [
+            125.5,
+            40.0,
+            324.5,
+            64.0
+          ],
+          "font_size": 23,
+          "width_ratio": 0.888,
+          "height_ratio": 0.545,
+          "center_delta_y": 0.0,
+          "pass": true,
+          "reason": "ok",
+          "glyph_inside_inner": true,
+          "axis_aligned": true,
+          "angle_deg": 0.0
+        },
+        {
+          "label": "任务情报 · 线报3",
+          "kind": "button_label_plate",
+          "carrier": [
+            100,
+            106,
+            350,
+            150
+          ],
+          "inner": [
+            113,
+            111,
+            337,
+            145
+          ],
+          "glyph": [
+            147.5,
+            117.5,
+            302.5,
+            138.5
+          ],
+          "font_size": 21,
+          "width_ratio": 0.692,
+          "height_ratio": 0.477,
+          "center_delta_y": 0.0,
+          "pass": true,
+          "reason": "ok",
+          "glyph_inside_inner": true,
+          "axis_aligned": true,
+          "angle_deg": 0.0
+        },
+        {
+          "label": "红线截止 · 4天",
+          "kind": "button_label_plate",
+          "carrier": [
+            100,
+            186,
+            350,
+            230
+          ],
+          "inner": [
+            113,
+            191,
+            337,
+            225
+          ],
+          "glyph": [
+            155.5,
+            197.0,
+            294.5,
+            219.0
+          ],
+          "font_size": 21,
+          "width_ratio": 0.621,
+          "height_ratio": 0.5,
+          "center_delta_y": 0.0,
+          "pass": true,
+          "reason": "ok",
+          "glyph_inside_inner": true,
+          "axis_aligned": true,
+          "angle_deg": 0.0
+        }
+      ],
+      "notes": [
+        "短动作句进入浅色 label plate；不压瘦字体。",
+        "图标、右侧确认/箭头区属于 NO。"
+      ]
+    },
+    {
+      "title": "2. Bottom receipt / receipt_field_lane",
+      "target": [
+        708,
+        134,
+        1128,
+        345
+      ],
+      "metrics": [
+        {
+          "label": "本周行动",
+          "kind": "receipt_field_lane",
+          "carrier": [
+            116,
+            36,
+            246,
+            55
+          ],
+          "inner": [
+            125,
+            38,
+            238,
+            53
+          ],
+          "glyph": [
+            125,
+            39.0,
+            181,
+            52.0
+          ],
+          "font_size": 14,
+          "width_ratio": 0.496,
+          "height_ratio": 0.684,
+          "center_delta_y": 0.0,
+          "pass": true,
+          "reason": "ok",
+          "glyph_inside_inner": true,
+          "axis_aligned": true,
+          "angle_deg": 0.0
+        },
+        {
+          "label": "余 6 天",
+          "kind": "receipt_field_lane",
+          "carrier": [
+            116,
+            68,
+            191,
+            88
+          ],
+          "inner": [
+            125,
+            70,
+            183,
+            86
+          ],
+          "glyph": [
+            125,
+            71.0,
+            172,
+            85.0
+          ],
+          "font_size": 15,
+          "width_ratio": 0.81,
+          "height_ratio": 0.7,
+          "center_delta_y": 0.0,
+          "pass": true,
+          "reason": "ok",
+          "glyph_inside_inner": true,
+          "axis_aligned": true,
+          "angle_deg": 0.0
+        }
+      ],
+      "notes": [
+        "深灰横条才是 receipt 文字槽；色格和纸面空白不承载文字。",
+        "glyph_inside_inner 是硬门槛。"
+      ]
+    },
+    {
+      "title": "3. Left card / grouped meta + card title",
+      "target": [
+        42,
+        604,
+        562,
+        1071
+      ],
+      "metrics": [
+        {
+          "label": "红线升温  推荐2",
+          "kind": "grouped_meta_plate",
+          "carrier": [
+            34,
+            34,
+            178,
+            67
+          ],
+          "inner": [
+            42,
+            38,
+            170,
+            63
+          ],
+          "glyph": [
+            52.5,
+            43.5,
+            159.5,
+            57.5
+          ],
+          "font_size": 15,
+          "width_ratio": 0.836,
+          "height_ratio": 0.424,
+          "center_delta_y": 0.0,
+          "pass": true,
+          "reason": "ok",
+          "glyph_inside_inner": true,
+          "axis_aligned": true,
+          "angle_deg": 0.0
+        },
+        {
+          "label": "欧亚灰域",
+          "kind": "card_title_plate",
+          "carrier": [
+            79,
+            108,
+            277,
+            142
+          ],
+          "inner": [
+            88,
+            112,
+            268,
+            138
+          ],
+          "glyph": [
+            136.0,
+            114.5,
+            220.0,
+            135.5
+          ],
+          "font_size": 21,
+          "width_ratio": 0.467,
+          "height_ratio": 0.618,
+          "center_delta_y": 0.0,
+          "pass": true,
+          "reason": "ok",
+          "glyph_inside_inner": true,
+          "axis_aligned": true,
+          "angle_deg": 0.0
+        },
+        {
+          "label": "可派遣  线报2",
+          "kind": "grouped_meta_plate",
+          "carrier": [
+            34,
+            206,
+            176,
+            240
+          ],
+          "inner": [
+            42,
+            210,
+            168,
+            236
+          ],
+          "glyph": [
+            62.0,
+            216.0,
+            148.0,
+            230.0
+          ],
+          "font_size": 14,
+          "width_ratio": 0.683,
+          "height_ratio": 0.412,
+          "center_delta_y": 0.0,
+          "pass": false,
+          "reason": "too small vertically",
+          "glyph_inside_inner": true,
+          "axis_aligned": true,
+          "angle_deg": 0.0
+        }
+      ],
+      "notes": [
+        "区域名是 card_title_plate，不叫按钮。",
+        "一块可见 meta 底板优先承载一组短信息，不拆漂浮框。"
+      ]
+    },
+    {
+      "title": "4. Right header / header lanes + stamp slots",
+      "target": [
+        708,
+        604,
+        1318,
+        790
+      ],
+      "metrics": [
+        {
+          "label": "北美禁区",
+          "kind": "header_title_lane",
+          "carrier": [
+            96,
+            36,
+            306,
+            70
+          ],
+          "inner": [
+            105,
+            38,
+            298,
+            68
+          ],
+          "glyph": [
+            105,
+            40.0,
+            205,
+            66.0
+          ],
+          "font_size": 25,
+          "width_ratio": 0.518,
+          "height_ratio": 0.765,
+          "center_delta_y": 0.0,
+          "pass": true,
+          "reason": "ok",
+          "glyph_inside_inner": true,
+          "axis_aligned": true,
+          "angle_deg": 0.0
+        },
+        {
+          "label": "红线升温",
+          "kind": "header_status_lane",
+          "carrier": [
+            96,
+            81,
+            198,
+            105
+          ],
+          "inner": [
+            105,
+            83,
+            190,
+            103
+          ],
+          "glyph": [
+            105,
+            86.0,
+            165,
+            100.0
+          ],
+          "font_size": 15,
+          "width_ratio": 0.706,
+          "height_ratio": 0.583,
+          "center_delta_y": 0.0,
+          "pass": true,
+          "reason": "ok",
+          "glyph_inside_inner": true,
+          "axis_aligned": true,
+          "angle_deg": 0.0
+        },
+        {
+          "label": "高危",
+          "kind": "stamp_primary_slot",
+          "carrier": [
+            346,
+            35,
+            416,
+            72
+          ],
+          "inner": [
+            353,
+            39,
+            409,
+            68
+          ],
+          "glyph": [
+            359.0,
+            42.5,
+            403.0,
+            64.5
+          ],
+          "font_size": 22,
+          "width_ratio": 0.786,
+          "height_ratio": 0.595,
+          "center_delta_y": 0.0,
+          "pass": true,
+          "reason": "ok",
+          "glyph_inside_inner": true,
+          "axis_aligned": true,
+          "angle_deg": 0.0
+        },
+        {
+          "label": "推荐 2",
+          "kind": "stamp_secondary_slot",
+          "carrier": [
+            346,
+            78,
+            416,
+            110
+          ],
+          "inner": [
+            353,
+            81,
+            409,
+            107
+          ],
+          "glyph": [
+            361.0,
+            87.5,
+            401.0,
+            100.5
+          ],
+          "font_size": 14,
+          "width_ratio": 0.714,
+          "height_ratio": 0.406,
+          "center_delta_y": 0.0,
+          "pass": true,
+          "reason": "ok",
+          "glyph_inside_inner": true,
+          "axis_aligned": true,
+          "angle_deg": 0.0
+        }
+      ],
+      "notes": [
+        "标题和状态分别按 header_title_lane / header_status_lane 验收。",
+        "虚线章是容器；高危/推荐2 是两个 slot。"
+      ]
+    }
+  ]
+}

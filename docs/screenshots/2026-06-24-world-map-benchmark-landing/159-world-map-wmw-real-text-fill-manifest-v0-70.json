@@ -1,0 +1,911 @@
+{
+  "id": "world_map_wmw_real_text_fill_v0_70",
+  "source": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\140-world-map-wmw-paper-atlas-v3-refill-v0-66-info-gray.png",
+  "output": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\156-world-map-wmw-real-text-fill-v0-70-textfit.png",
+  "intent": "text-fit correction from v0.66 material base after v0.69 failed glyph comfort and icon/title fusion",
+  "rules": [
+    "all text from v0.66 base, not v0.69",
+    "actual glyph bboxes are QAed",
+    "small meta text contrast raised",
+    "bottom receipt labels/values reduced",
+    "right title icon repainted as hand-cut printed globe"
+  ],
+  "qa_items": [
+    {
+      "tag": "top_channel",
+      "text": "WMW · 全球频道",
+      "box": [
+        126,
+        39,
+        304,
+        67
+      ],
+      "inner": [
+        134,
+        43,
+        296,
+        63
+      ],
+      "size": 13,
+      "weight": "medium",
+      "align": "left",
+      "glyph_bbox": [
+        134,
+        48.0,
+        236,
+        60.0
+      ],
+      "margins": [
+        8,
+        9.0,
+        68,
+        7.0
+      ],
+      "glyph_height_ratio": 0.429,
+      "min_margin_px": 7.0,
+      "pass_textfit": true
+    },
+    {
+      "tag": "top_week",
+      "text": "第01周",
+      "box": [
+        330,
+        38,
+        384,
+        66
+      ],
+      "inner": [
+        333,
+        42,
+        381,
+        62
+      ],
+      "size": 11,
+      "weight": "regular",
+      "align": "center",
+      "glyph_bbox": [
+        340.0,
+        47.0,
+        374.0,
+        59.0
+      ],
+      "margins": [
+        10.0,
+        9.0,
+        10.0,
+        7.0
+      ],
+      "glyph_height_ratio": 0.429,
+      "min_margin_px": 7.0,
+      "pass_textfit": true
+    },
+    {
+      "tag": "top_days",
+      "text": "余 6 天",
+      "size": 14,
+      "weight": "medium",
+      "anchor": "la",
+      "glyph_bbox": [
+        421,
+        51,
+        465,
+        63
+      ]
+    },
+    {
+      "tag": "top_macro",
+      "text": "公信 42   压力 18   红线 4",
+      "size": 13,
+      "weight": "regular",
+      "anchor": "la",
+      "glyph_bbox": [
+        735,
+        48,
+        875,
+        62
+      ]
+    },
+    {
+      "tag": "left_title",
+      "text": "北美禁区带",
+      "box": [
+        112,
+        122,
+        302,
+        154
+      ],
+      "inner": [
+        122,
+        127,
+        292,
+        149
+      ],
+      "size": 16,
+      "weight": "medium",
+      "align": "left",
+      "glyph_bbox": [
+        122,
+        131.0,
+        202,
+        148.0
+      ],
+      "margins": [
+        10,
+        9.0,
+        100,
+        6.0
+      ],
+      "glyph_height_ratio": 0.531,
+      "min_margin_px": 6.0,
+      "pass_textfit": true
+    },
+    {
+      "tag": "left_meta",
+      "text": "红线升温 · 推荐2",
+      "box": [
+        59,
+        280,
+        214,
+        320
+      ],
+      "inner": [
+        68,
+        286,
+        205,
+        314
+      ],
+      "size": 15,
+      "weight": "medium",
+      "align": "left",
+      "glyph_bbox": [
+        68,
+        295.0,
+        179,
+        309.0
+      ],
+      "margins": [
+        9,
+        15.0,
+        35,
+        11.0
+      ],
+      "glyph_height_ratio": 0.35,
+      "min_margin_px": 9,
+      "pass_textfit": true
+    },
+    {
+      "tag": "left_title",
+      "text": "欧亚灰域",
+      "box": [
+        112,
+        353,
+        302,
+        385
+      ],
+      "inner": [
+        122,
+        358,
+        292,
+        380
+      ],
+      "size": 16,
+      "weight": "medium",
+      "align": "left",
+      "glyph_bbox": [
+        122,
+        363.0,
+        186,
+        379.0
+      ],
+      "margins": [
+        10,
+        10.0,
+        116,
+        6.0
+      ],
+      "glyph_height_ratio": 0.5,
+      "min_margin_px": 6.0,
+      "pass_textfit": true
+    },
+    {
+      "tag": "left_meta",
+      "text": "可派遣 · 线报2",
+      "box": [
+        59,
+        510,
+        214,
+        550
+      ],
+      "inner": [
+        68,
+        516,
+        205,
+        544
+      ],
+      "size": 15,
+      "weight": "medium",
+      "align": "left",
+      "glyph_bbox": [
+        68,
+        524.0,
+        164,
+        539.0
+      ],
+      "margins": [
+        9,
+        14.0,
+        50,
+        11.0
+      ],
+      "glyph_height_ratio": 0.375,
+      "min_margin_px": 9,
+      "pass_textfit": true
+    },
+    {
+      "tag": "left_title",
+      "text": "非洲遗址带",
+      "box": [
+        112,
+        584,
+        302,
+        616
+      ],
+      "inner": [
+        122,
+        589,
+        292,
+        611
+      ],
+      "size": 16,
+      "weight": "medium",
+      "align": "left",
+      "glyph_bbox": [
+        122,
+        594.0,
+        202,
+        610.0
+      ],
+      "margins": [
+        10,
+        10.0,
+        100,
+        6.0
+      ],
+      "glyph_height_ratio": 0.5,
+      "min_margin_px": 6.0,
+      "pass_textfit": true
+    },
+    {
+      "tag": "left_meta",
+      "text": "紧急 · 线报1",
+      "box": [
+        59,
+        704,
+        214,
+        742
+      ],
+      "inner": [
+        68,
+        710,
+        205,
+        736
+      ],
+      "size": 15,
+      "weight": "medium",
+      "align": "left",
+      "glyph_bbox": [
+        68,
+        718.0,
+        149,
+        732.0
+      ],
+      "margins": [
+        9,
+        14.0,
+        65,
+        10.0
+      ],
+      "glyph_height_ratio": 0.368,
+      "min_margin_px": 9,
+      "pass_textfit": true
+    },
+    {
+      "tag": "left_title",
+      "text": "南美黑林带",
+      "box": [
+        112,
+        779,
+        302,
+        811
+      ],
+      "inner": [
+        122,
+        784,
+        292,
+        806
+      ],
+      "size": 16,
+      "weight": "medium",
+      "align": "left",
+      "glyph_bbox": [
+        122,
+        788.0,
+        202,
+        805.0
+      ],
+      "margins": [
+        10,
+        9.0,
+        100,
+        6.0
+      ],
+      "glyph_height_ratio": 0.531,
+      "min_margin_px": 6.0,
+      "pass_textfit": true
+    },
+    {
+      "tag": "left_meta",
+      "text": "锁定 · 需3线报",
+      "box": [
+        60,
+        895,
+        194,
+        925
+      ],
+      "inner": [
+        69,
+        901,
+        185,
+        919
+      ],
+      "size": 13,
+      "weight": "regular",
+      "align": "left",
+      "glyph_bbox": [
+        69,
+        904.0,
+        160,
+        918.0
+      ],
+      "margins": [
+        9,
+        9.0,
+        34,
+        7.0
+      ],
+      "glyph_height_ratio": 0.467,
+      "min_margin_px": 7.0,
+      "pass_textfit": true
+    },
+    {
+      "tag": "right_header_icon_repaint",
+      "note": "hand-cut printed globe replaces thin generic line icon",
+      "glyph_bbox": [
+        1221,
+        127,
+        1283,
+        187
+      ]
+    },
+    {
+      "tag": "right_title",
+      "text": "北美禁区带",
+      "box": [
+        1278,
+        124,
+        1518,
+        164
+      ],
+      "inner": [
+        1286,
+        130,
+        1510,
+        158
+      ],
+      "size": 23,
+      "weight": "bold",
+      "align": "left",
+      "glyph_bbox": [
+        1286,
+        135.0,
+        1401,
+        158.0
+      ],
+      "margins": [
+        8,
+        11.0,
+        117,
+        6.0
+      ],
+      "glyph_height_ratio": 0.575,
+      "min_margin_px": 6.0,
+      "pass_textfit": true
+    },
+    {
+      "tag": "right_risk_label",
+      "text": "红线升温",
+      "size": 16,
+      "weight": "medium",
+      "anchor": "la",
+      "glyph_bbox": [
+        1280,
+        182,
+        1344,
+        198
+      ]
+    },
+    {
+      "tag": "risk_stamp",
+      "text": "高危",
+      "box": [
+        1535,
+        124,
+        1614,
+        160
+      ],
+      "inner": [
+        1541,
+        129,
+        1608,
+        155
+      ],
+      "size": 18,
+      "weight": "bold",
+      "align": "center",
+      "glyph_bbox": [
+        1556.5,
+        136.0,
+        1592.5,
+        155.0
+      ],
+      "margins": [
+        21.5,
+        12.0,
+        21.5,
+        5.0
+      ],
+      "glyph_height_ratio": 0.528,
+      "min_margin_px": 5.0,
+      "pass_textfit": true
+    },
+    {
+      "tag": "risk_rec",
+      "text": "推荐 2",
+      "box": [
+        1535,
+        163,
+        1614,
+        190
+      ],
+      "inner": [
+        1539,
+        168,
+        1610,
+        185
+      ],
+      "size": 12,
+      "weight": "medium",
+      "align": "center",
+      "glyph_bbox": [
+        1556.5,
+        172.5,
+        1591.5,
+        183.5
+      ],
+      "margins": [
+        21.5,
+        9.5,
+        22.5,
+        6.5
+      ],
+      "glyph_height_ratio": 0.407,
+      "min_margin_px": 6.5,
+      "pass_textfit": true
+    },
+    {
+      "tag": "caption_square",
+      "text": "■",
+      "size": 15,
+      "weight": "regular",
+      "anchor": "la",
+      "glyph_bbox": [
+        1222,
+        497,
+        1237,
+        509
+      ]
+    },
+    {
+      "tag": "photo_caption",
+      "text": "异常热点  /  卫星阵列",
+      "box": [
+        1244,
+        489,
+        1454,
+        512
+      ],
+      "inner": [
+        1250,
+        493,
+        1448,
+        508
+      ],
+      "size": 12,
+      "weight": "medium",
+      "align": "left",
+      "glyph_bbox": [
+        1250,
+        496.5,
+        1367,
+        508.5
+      ],
+      "margins": [
+        6,
+        7.5,
+        87,
+        3.5
+      ],
+      "glyph_height_ratio": 0.522,
+      "min_margin_px": 3.5,
+      "pass_textfit": false
+    },
+    {
+      "tag": "primary_cta",
+      "text": "进入北美禁区 · 消耗1天",
+      "box": [
+        1300,
+        545,
+        1536,
+        585
+      ],
+      "inner": [
+        1312,
+        552,
+        1524,
+        578
+      ],
+      "size": 17,
+      "weight": "bold",
+      "align": "left",
+      "glyph_bbox": [
+        1312,
+        559.0,
+        1492,
+        577.0
+      ],
+      "margins": [
+        12,
+        14.0,
+        44,
+        8.0
+      ],
+      "glyph_height_ratio": 0.45,
+      "min_margin_px": 8.0,
+      "pass_textfit": true
+    },
+    {
+      "tag": "secondary_cta",
+      "text": "查看任务情报 · 线报3",
+      "box": [
+        1300,
+        616,
+        1536,
+        660
+      ],
+      "inner": [
+        1312,
+        624,
+        1524,
+        652
+      ],
+      "size": 15,
+      "weight": "medium",
+      "align": "left",
+      "glyph_bbox": [
+        1312,
+        633.0,
+        1453,
+        648.0
+      ],
+      "margins": [
+        12,
+        17.0,
+        83,
+        12.0
+      ],
+      "glyph_height_ratio": 0.341,
+      "min_margin_px": 12,
+      "pass_textfit": true
+    },
+    {
+      "tag": "warning_row",
+      "text": "红线截止 · 4天",
+      "box": [
+        1300,
+        697,
+        1536,
+        743
+      ],
+      "inner": [
+        1312,
+        705,
+        1524,
+        735
+      ],
+      "size": 17,
+      "weight": "medium",
+      "align": "left",
+      "glyph_bbox": [
+        1312,
+        713.0,
+        1421,
+        731.0
+      ],
+      "margins": [
+        12,
+        16.0,
+        115,
+        12.0
+      ],
+      "glyph_height_ratio": 0.391,
+      "min_margin_px": 12,
+      "pass_textfit": true
+    },
+    {
+      "tag": "bottom_title",
+      "text": "本周行动",
+      "box": [
+        500,
+        803,
+        623,
+        828
+      ],
+      "inner": [
+        508,
+        809,
+        615,
+        822
+      ],
+      "size": 12,
+      "weight": "medium",
+      "align": "left",
+      "glyph_bbox": [
+        508,
+        811.5,
+        556,
+        823.5
+      ],
+      "margins": [
+        8,
+        8.5,
+        67,
+        4.5
+      ],
+      "glyph_height_ratio": 0.48,
+      "min_margin_px": 4.5,
+      "pass_textfit": true
+    },
+    {
+      "tag": "bottom_value",
+      "text": "余 6 天",
+      "box": [
+        500,
+        832,
+        623,
+        862
+      ],
+      "inner": [
+        508,
+        839,
+        615,
+        855
+      ],
+      "size": 17,
+      "weight": "medium",
+      "align": "left",
+      "glyph_bbox": [
+        508,
+        841.0,
+        562,
+        857.0
+      ],
+      "margins": [
+        8,
+        9.0,
+        61,
+        5.0
+      ],
+      "glyph_height_ratio": 0.533,
+      "min_margin_px": 5.0,
+      "pass_textfit": true
+    },
+    {
+      "tag": "bottom_title",
+      "text": "情报余量",
+      "box": [
+        790,
+        803,
+        910,
+        828
+      ],
+      "inner": [
+        798,
+        809,
+        902,
+        822
+      ],
+      "size": 12,
+      "weight": "medium",
+      "align": "left",
+      "glyph_bbox": [
+        798,
+        811.5,
+        846,
+        823.5
+      ],
+      "margins": [
+        8,
+        8.5,
+        64,
+        4.5
+      ],
+      "glyph_height_ratio": 0.48,
+      "min_margin_px": 4.5,
+      "pass_textfit": true
+    },
+    {
+      "tag": "bottom_value",
+      "text": "线报 3",
+      "box": [
+        790,
+        832,
+        910,
+        862
+      ],
+      "inner": [
+        798,
+        839,
+        902,
+        855
+      ],
+      "size": 17,
+      "weight": "medium",
+      "align": "left",
+      "glyph_bbox": [
+        798,
+        841.0,
+        847,
+        857.0
+      ],
+      "margins": [
+        8,
+        9.0,
+        63,
+        5.0
+      ],
+      "glyph_height_ratio": 0.533,
+      "min_margin_px": 5.0,
+      "pass_textfit": true
+    },
+    {
+      "tag": "bottom_title",
+      "text": "红线台账",
+      "box": [
+        1085,
+        803,
+        1192,
+        828
+      ],
+      "inner": [
+        1093,
+        809,
+        1184,
+        822
+      ],
+      "size": 12,
+      "weight": "medium",
+      "align": "left",
+      "glyph_bbox": [
+        1093,
+        811.5,
+        1141,
+        822.5
+      ],
+      "margins": [
+        8,
+        8.5,
+        51,
+        5.5
+      ],
+      "glyph_height_ratio": 0.44,
+      "min_margin_px": 5.5,
+      "pass_textfit": true
+    },
+    {
+      "tag": "bottom_value",
+      "text": "4天后升温",
+      "box": [
+        1085,
+        832,
+        1200,
+        862
+      ],
+      "inner": [
+        1093,
+        839,
+        1192,
+        855
+      ],
+      "size": 15,
+      "weight": "regular",
+      "align": "left",
+      "glyph_bbox": [
+        1093,
+        841.0,
+        1161,
+        856.0
+      ],
+      "margins": [
+        8,
+        9.0,
+        39,
+        6.0
+      ],
+      "glyph_height_ratio": 0.5,
+      "min_margin_px": 6.0,
+      "pass_textfit": true
+    },
+    {
+      "tag": "map_pin",
+      "text": "N-01",
+      "size": 11,
+      "weight": "regular",
+      "anchor": "la",
+      "glyph_bbox": [
+        536,
+        295,
+        560,
+        303
+      ]
+    },
+    {
+      "tag": "map_pin",
+      "text": "E-02",
+      "size": 11,
+      "weight": "regular",
+      "anchor": "la",
+      "glyph_bbox": [
+        813,
+        313,
+        835,
+        321
+      ]
+    },
+    {
+      "tag": "map_pin",
+      "text": "A-03",
+      "size": 11,
+      "weight": "regular",
+      "anchor": "la",
+      "glyph_bbox": [
+        1016,
+        361,
+        1038,
+        369
+      ]
+    },
+    {
+      "tag": "map_pin",
+      "text": "S-04",
+      "size": 11,
+      "weight": "regular",
+      "anchor": "la",
+      "glyph_bbox": [
+        662,
+        561,
+        684,
+        569
+      ]
+    }
+  ]
+}

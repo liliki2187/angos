@@ -1,0 +1,277 @@
+[
+  {
+    "group": "BENCHMARK PAPER TRUTH",
+    "id": "B01_cover_paper_light",
+    "src": "benchmark_board_01",
+    "box": [
+      120,
+      185,
+      650,
+      405
+    ],
+    "role": "paper_high/mid",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops\\B01_cover_paper_light.png",
+    "metrics": {
+      "hex": "#B4A185",
+      "rgb": [
+        180,
+        161,
+        133
+      ],
+      "h": 35.7,
+      "s": 0.239,
+      "l": 0.614,
+      "std_lum": 53.8
+    }
+  },
+  {
+    "group": "BENCHMARK PAPER TRUTH",
+    "id": "B01_cover_paper_mid",
+    "src": "benchmark_board_01",
+    "box": [
+      120,
+      760,
+      655,
+      1010
+    ],
+    "role": "paper_mid + polygon blocks",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops\\B01_cover_paper_mid.png",
+    "metrics": {
+      "hex": "#262F28",
+      "rgb": [
+        38,
+        47,
+        40
+      ],
+      "h": 133.3,
+      "s": 0.106,
+      "l": 0.167,
+      "std_lum": 56.1
+    }
+  },
+  {
+    "group": "BENCHMARK PAPER TRUTH",
+    "id": "B02_case_file_body",
+    "src": "benchmark_board_02",
+    "box": [
+      800,
+      640,
+      1245,
+      955
+    ],
+    "role": "paper_shadow/mid",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops\\B02_case_file_body.png",
+    "metrics": {
+      "hex": "#957D5D",
+      "rgb": [
+        149,
+        125,
+        93
+      ],
+      "h": 34.3,
+      "s": 0.231,
+      "l": 0.475,
+      "std_lum": 37.0
+    }
+  },
+  {
+    "group": "BENCHMARK PAPER TRUTH",
+    "id": "B02_folder_doc_paper",
+    "src": "benchmark_board_02",
+    "box": [
+      1900,
+      700,
+      2220,
+      860
+    ],
+    "role": "clean document paper",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops\\B02_folder_doc_paper.png",
+    "metrics": {
+      "hex": "#091920",
+      "rgb": [
+        9,
+        25,
+        32
+      ],
+      "h": 198.3,
+      "s": 0.561,
+      "l": 0.08,
+      "std_lum": 47.2
+    }
+  },
+  {
+    "group": "BENCHMARK PAPER TRUTH",
+    "id": "B01_sticker_ivory_edge",
+    "src": "benchmark_board_01",
+    "box": [
+      1710,
+      395,
+      1930,
+      610
+    ],
+    "role": "ivory sticker edge",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops\\B01_sticker_ivory_edge.png",
+    "metrics": {
+      "hex": "#676352",
+      "rgb": [
+        103,
+        99,
+        82
+      ],
+      "h": 48.6,
+      "s": 0.114,
+      "l": 0.363,
+      "std_lum": 55.8
+    }
+  },
+  {
+    "group": "BENCHMARK PAPER TRUTH",
+    "id": "B01_gray_pinboard",
+    "src": "benchmark_board_01",
+    "box": [
+      1608,
+      232,
+      1850,
+      805
+    ],
+    "role": "gray backing board",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops\\B01_gray_pinboard.png",
+    "metrics": {
+      "hex": "#686553",
+      "rgb": [
+        104,
+        101,
+        83
+      ],
+      "h": 51.4,
+      "s": 0.112,
+      "l": 0.367,
+      "std_lum": 55.1
+    }
+  },
+  {
+    "group": "CURRENT DRIFT EXAMPLES",
+    "id": "P01_receipt_left",
+    "src": "current_receipts_problem",
+    "box": [
+      44,
+      80,
+      380,
+      220
+    ],
+    "role": "too pale/flat paper",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops\\P01_receipt_left.png",
+    "metrics": {
+      "hex": "#908671",
+      "rgb": [
+        144,
+        134,
+        113
+      ],
+      "h": 40.6,
+      "s": 0.123,
+      "l": 0.504,
+      "std_lum": 48.8
+    }
+  },
+  {
+    "group": "CURRENT DRIFT EXAMPLES",
+    "id": "P02_receipt_mid",
+    "src": "current_receipts_problem",
+    "box": [
+      430,
+      82,
+      735,
+      222
+    ],
+    "role": "too cream/clean form",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops\\P02_receipt_mid.png",
+    "metrics": {
+      "hex": "#BFAF9D",
+      "rgb": [
+        191,
+        175,
+        157
+      ],
+      "h": 31.8,
+      "s": 0.21,
+      "l": 0.682,
+      "std_lum": 52.3
+    }
+  },
+  {
+    "group": "CURRENT DRIFT EXAMPLES",
+    "id": "P03_v05_top_paper",
+    "src": "current_v05_problem",
+    "box": [
+      18,
+      26,
+      462,
+      130
+    ],
+    "role": "too bright cream top",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops\\P03_v05_top_paper.png",
+    "metrics": {
+      "hex": "#CDBBA4",
+      "rgb": [
+        205,
+        187,
+        164
+      ],
+      "h": 33.7,
+      "s": 0.291,
+      "l": 0.724,
+      "std_lum": 48.7
+    }
+  },
+  {
+    "group": "CURRENT DRIFT EXAMPLES",
+    "id": "P04_v05_body_paper",
+    "src": "current_v05_problem",
+    "box": [
+      18,
+      410,
+      510,
+      610
+    ],
+    "role": "too dirty old paper",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops\\P04_v05_body_paper.png",
+    "metrics": {
+      "hex": "#646153",
+      "rgb": [
+        100,
+        97,
+        83
+      ],
+      "h": 49.4,
+      "s": 0.093,
+      "l": 0.359,
+      "std_lum": 76.6
+    }
+  },
+  {
+    "group": "CURRENT DRIFT EXAMPLES",
+    "id": "P05_v05_receipt_full",
+    "src": "component_v05_full",
+    "box": [
+      50,
+      810,
+      372,
+      925
+    ],
+    "role": "candidate bottom receipt",
+    "crop_path": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops\\P05_v05_receipt_full.png",
+    "metrics": {
+      "hex": "#B1A28E",
+      "rgb": [
+        177,
+        162,
+        142
+      ],
+      "h": 34.3,
+      "s": 0.183,
+      "l": 0.625,
+      "std_lum": 69.9
+    }
+  }
+]

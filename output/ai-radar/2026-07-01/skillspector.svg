@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <style>
+      .bg{fill:#fffaf0}.ink{fill:#111827}.muted{fill:#475569}.teal{fill:#0f766e}.blue{fill:#1d4ed8}.orange{fill:#c2410c}.red{fill:#b91c1c}
+      .card{fill:#ffffff;stroke:#cbd5e1;stroke-width:2}.soft{fill:#f8fafc;stroke:#cbd5e1;stroke-width:2}.strip{fill:#fff7ed;stroke:#fed7aa;stroke-width:2}
+      .title{font:700 54px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif}.sub{font:700 34px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif}
+      .h{font:700 30px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif}.body{font:500 24px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif}
+      .small{font:500 20px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif}.num{font:700 26px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;fill:white}
+    </style>
+  </defs>
+  <rect width="1600" height="900" class="bg"/>
+  <text x="42" y="70" class="title ink">每日 AI 新工具｜Agent Skill 安全扫描</text>
+  <text x="42" y="124" class="sub teal">今日重点：给外部 skill 装一道安检门</text>
+  <rect x="42" y="155" width="455" height="62" rx="14" class="soft"/><text x="72" y="195" class="body ink">工具 / 仓库名：<tspan class="teal" font-weight="700">SkillSpector</tspan></text>
+  <rect x="525" y="155" width="400" height="62" rx="14" class="soft"/><text x="555" y="195" class="body ink">类型：Agent Skill 安全扫描</text>
+  <rect x="953" y="155" width="380" height="62" rx="14" class="soft"/><text x="983" y="195" class="body ink">动作：<tspan class="red" font-weight="700">观察 + 只读审查</tspan></text>
+
+  <rect x="42" y="250" width="455" height="395" rx="18" class="card"/>
+  <circle cx="86" cy="292" r="26" fill="#0f766e"/><text x="78" y="301" class="num">1</text><text x="124" y="302" class="h teal">它是什么</text>
+  <text x="72" y="360" class="body ink">• 不是插件市场，也不是安全白名单</text>
+  <text x="72" y="408" class="body ink">• 是一个 skill 风险扫描器</text>
+  <text x="72" y="456" class="body ink">• 检查外部 skill / repo 能否安全试用</text>
+  <rect x="105" y="510" width="300" height="86" rx="16" fill="#ecfdf5" stroke="#86efac" stroke-width="2"/>
+  <text x="165" y="562" class="body teal" font-weight="700">扫描器 ≠ 安全保证</text>
+
+  <rect x="535" y="250" width="515" height="395" rx="18" class="card"/>
+  <circle cx="579" cy="292" r="26" fill="#1d4ed8"/><text x="571" y="301" class="num">2</text><text x="617" y="302" class="h blue">它真正能做什么</text>
+  <text x="575" y="360" class="body ink">1. Prompt 注入：隐藏恶意指令</text>
+  <text x="575" y="415" class="body ink">2. 数据外泄：读取并外传上下文</text>
+  <text x="575" y="470" class="body ink">3. 危险代码：执行可疑脚本</text>
+  <text x="575" y="525" class="body ink">4. 权限过大：要求不必要访问</text>
+  <text x="575" y="580" class="body ink">5. MCP 风险：工具描述和行为不一致</text>
+  <rect x="610" y="604" width="360" height="42" rx="10" fill="#dbeafe"/><text x="645" y="633" class="small blue" font-weight="700">输出风险分数和修复建议</text>
+
+  <rect x="1088" y="250" width="470" height="395" rx="18" class="card"/>
+  <circle cx="1132" cy="292" r="26" fill="#c2410c"/><text x="1124" y="301" class="num">3</text><text x="1170" y="302" class="h orange">典型用法</text>
+  <text x="1120" y="360" class="body ink">外部 skill</text>
+  <text x="1120" y="415" class="body ink">→ 只读扫描</text>
+  <text x="1120" y="470" class="body ink">→ 风险报告</text>
+  <text x="1120" y="525" class="body ink">→ 人工确认</text>
+  <text x="1120" y="580" class="body ink">→ 决定是否试用</text>
+  <rect x="1210" y="600" width="270" height="42" rx="10" fill="#fee2e2"/><text x="1240" y="629" class="small red" font-weight="700">先审查，不自动安装</text>
+
+  <rect x="42" y="675" width="1516" height="145" rx="18" class="strip"/>
+  <text x="72" y="730" class="h ink">制作人判断</text>
+  <text x="250" y="724" class="body ink">对 Angus 来说，SkillSpector 的价值是建立小工具入库闸门：</text>
+  <text x="250" y="766" class="body ink">日报可以推荐工具，但不能默认 clone / install / run。</text>
+  <text x="250" y="808" class="body red" font-weight="700">先做来源核验、权限检查、只读审查。</text>
+</svg>

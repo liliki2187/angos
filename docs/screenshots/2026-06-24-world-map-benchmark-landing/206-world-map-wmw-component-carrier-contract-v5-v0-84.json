@@ -1,0 +1,501 @@
+{
+  "id": "world_map_wmw_component_carrier_contract_v5_v0_84",
+  "source": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\140-world-map-wmw-paper-atlas-v3-refill-v0-66-info-gray.png",
+  "output": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\205-world-map-wmw-component-carrier-contract-v5-v0-84.png",
+  "method": "carrier semantics first; concise copy; glyph fit by carrier type; no tilted functional component",
+  "carrier_rules": {
+    "field_lane": {
+      "align": "left",
+      "pad": [
+        9,
+        2,
+        8,
+        2
+      ],
+      "w": [
+        0.32,
+        0.88
+      ],
+      "h": [
+        0.48,
+        0.82
+      ],
+      "dy": 2.0,
+      "note": "dark / gray printed lane; text belongs inside the bar, left aligned"
+    },
+    "button_label_plate": {
+      "align": "center",
+      "pad": [
+        13,
+        5,
+        13,
+        5
+      ],
+      "w": [
+        0.5,
+        0.9
+      ],
+      "h": [
+        0.44,
+        0.72
+      ],
+      "dy": 2.0,
+      "note": "clickable label plate; concise copy should fill the plate confidently"
+    },
+    "status_stamp_title": {
+      "align": "center",
+      "pad": [
+        8,
+        4,
+        8,
+        4
+      ],
+      "w": [
+        0.35,
+        0.78
+      ],
+      "h": [
+        0.42,
+        0.76
+      ],
+      "dy": 2.0,
+      "note": "top line inside status stamp"
+    },
+    "status_stamp_sub": {
+      "align": "center",
+      "pad": [
+        8,
+        3,
+        8,
+        3
+      ],
+      "w": [
+        0.35,
+        0.8
+      ],
+      "h": [
+        0.42,
+        0.76
+      ],
+      "dy": 2.0,
+      "note": "small line inside status stamp"
+    },
+    "grouped_meta_plate": {
+      "align": "center",
+      "pad": [
+        9,
+        4,
+        9,
+        4
+      ],
+      "w": [
+        0.48,
+        0.9
+      ],
+      "h": [
+        0.42,
+        0.7
+      ],
+      "dy": 2.0,
+      "note": "single visible meta plate; label and value travel together"
+    }
+  },
+  "blocks": [
+    {
+      "title": "1. CTA rows / concise label plates",
+      "target": [
+        42,
+        134,
+        652,
+        481
+      ],
+      "metrics": [
+        {
+          "label": "进入北美禁区 · 1天",
+          "kind": "button_label_plate",
+          "carrier": [
+            100,
+            30,
+            350,
+            74
+          ],
+          "inner": [
+            113,
+            35,
+            337,
+            69
+          ],
+          "glyph": [
+            125.5,
+            40.0,
+            324.5,
+            64.0
+          ],
+          "font_size": 23,
+          "width_ratio": 0.888,
+          "height_ratio": 0.545,
+          "center_delta_y": 0.0,
+          "pass": true,
+          "reason": "ok"
+        },
+        {
+          "label": "任务情报 · 线报3",
+          "kind": "button_label_plate",
+          "carrier": [
+            100,
+            106,
+            350,
+            150
+          ],
+          "inner": [
+            113,
+            111,
+            337,
+            145
+          ],
+          "glyph": [
+            147.5,
+            117.5,
+            302.5,
+            138.5
+          ],
+          "font_size": 21,
+          "width_ratio": 0.692,
+          "height_ratio": 0.477,
+          "center_delta_y": 0.0,
+          "pass": true,
+          "reason": "ok"
+        },
+        {
+          "label": "红线截止 · 4天",
+          "kind": "button_label_plate",
+          "carrier": [
+            100,
+            186,
+            350,
+            230
+          ],
+          "inner": [
+            113,
+            191,
+            337,
+            225
+          ],
+          "glyph": [
+            155.5,
+            197.0,
+            294.5,
+            219.0
+          ],
+          "font_size": 21,
+          "width_ratio": 0.621,
+          "height_ratio": 0.5,
+          "center_delta_y": 0.0,
+          "pass": true,
+          "reason": "ok"
+        }
+      ],
+      "notes": [
+        "CTA 使用短动作句，不靠压瘦/缩小长句硬塞。",
+        "左右图标与动作章是 NO；文字只在浅色 label plate 内。"
+      ]
+    },
+    {
+      "title": "2. Bottom receipt / text belongs to dark lanes",
+      "target": [
+        708,
+        134,
+        1128,
+        345
+      ],
+      "metrics": [
+        {
+          "label": "本周行动",
+          "kind": "field_lane",
+          "carrier": [
+            116,
+            36,
+            246,
+            55
+          ],
+          "inner": [
+            125,
+            38,
+            238,
+            53
+          ],
+          "glyph": [
+            125,
+            39.0,
+            181,
+            52.0
+          ],
+          "font_size": 14,
+          "width_ratio": 0.496,
+          "height_ratio": 0.684,
+          "center_delta_y": 0.0,
+          "pass": true,
+          "reason": "ok"
+        },
+        {
+          "label": "余 6 天",
+          "kind": "field_lane",
+          "carrier": [
+            116,
+            68,
+            191,
+            88
+          ],
+          "inner": [
+            125,
+            70,
+            183,
+            86
+          ],
+          "glyph": [
+            125,
+            71.0,
+            172,
+            85.0
+          ],
+          "font_size": 15,
+          "width_ratio": 0.81,
+          "height_ratio": 0.7,
+          "center_delta_y": 0.0,
+          "pass": true,
+          "reason": "ok"
+        }
+      ],
+      "notes": [
+        "两条深灰横条是字段载体；下方色格只表达进度/状态，不承载文字。",
+        "如果后续要更多字，先改资源：加长横条，而不是把字落到纸面空白。"
+      ]
+    },
+    {
+      "title": "3. Left card / visible meta plates",
+      "target": [
+        42,
+        604,
+        562,
+        1071
+      ],
+      "metrics": [
+        {
+          "label": "红线升温  推荐2",
+          "kind": "grouped_meta_plate",
+          "carrier": [
+            34,
+            34,
+            178,
+            67
+          ],
+          "inner": [
+            43,
+            38,
+            169,
+            63
+          ],
+          "glyph": [
+            48.5,
+            42.0,
+            163.5,
+            59.0
+          ],
+          "font_size": 16,
+          "width_ratio": 0.913,
+          "height_ratio": 0.515,
+          "center_delta_y": 0.0,
+          "pass": false,
+          "reason": "too long"
+        },
+        {
+          "label": "欧亚灰域",
+          "kind": "button_label_plate",
+          "carrier": [
+            79,
+            108,
+            277,
+            142
+          ],
+          "inner": [
+            92,
+            113,
+            264,
+            137
+          ],
+          "glyph": [
+            138.0,
+            115.0,
+            218.0,
+            135.0
+          ],
+          "font_size": 20,
+          "width_ratio": 0.465,
+          "height_ratio": 0.588,
+          "center_delta_y": 0.0,
+          "pass": false,
+          "reason": "underfilled"
+        },
+        {
+          "label": "可派遣  线报2",
+          "kind": "grouped_meta_plate",
+          "carrier": [
+            34,
+            206,
+            176,
+            240
+          ],
+          "inner": [
+            43,
+            210,
+            167,
+            236
+          ],
+          "glyph": [
+            59.0,
+            215.5,
+            151.0,
+            230.5
+          ],
+          "font_size": 15,
+          "width_ratio": 0.742,
+          "height_ratio": 0.441,
+          "center_delta_y": 0.0,
+          "pass": true,
+          "reason": "ok"
+        }
+      ],
+      "notes": [
+        "有可见浅色底板时，优先把整块底板作为一组 meta plate。",
+        "不要把一块完整底板误拆成多个漂浮小框，导致文字偏下或太空。"
+      ]
+    },
+    {
+      "title": "4. Right header / dark lanes + split stamp",
+      "target": [
+        708,
+        604,
+        1318,
+        790
+      ],
+      "metrics": [
+        {
+          "label": "北美禁区",
+          "kind": "field_lane",
+          "carrier": [
+            96,
+            36,
+            306,
+            70
+          ],
+          "inner": [
+            105,
+            38,
+            298,
+            68
+          ],
+          "glyph": [
+            105,
+            40.0,
+            205,
+            66.0
+          ],
+          "font_size": 25,
+          "width_ratio": 0.518,
+          "height_ratio": 0.765,
+          "center_delta_y": 0.0,
+          "pass": true,
+          "reason": "ok"
+        },
+        {
+          "label": "红线升温",
+          "kind": "field_lane",
+          "carrier": [
+            96,
+            81,
+            198,
+            105
+          ],
+          "inner": [
+            105,
+            83,
+            190,
+            103
+          ],
+          "glyph": [
+            105,
+            86.0,
+            165,
+            100.0
+          ],
+          "font_size": 15,
+          "width_ratio": 0.706,
+          "height_ratio": 0.583,
+          "center_delta_y": 0.0,
+          "pass": true,
+          "reason": "ok"
+        },
+        {
+          "label": "高危",
+          "kind": "status_stamp_title",
+          "carrier": [
+            346,
+            35,
+            416,
+            72
+          ],
+          "inner": [
+            354,
+            39,
+            408,
+            68
+          ],
+          "glyph": [
+            359.0,
+            42.5,
+            403.0,
+            64.5
+          ],
+          "font_size": 22,
+          "width_ratio": 0.815,
+          "height_ratio": 0.595,
+          "center_delta_y": 0.0,
+          "pass": false,
+          "reason": "too long"
+        },
+        {
+          "label": "推荐 2",
+          "kind": "status_stamp_sub",
+          "carrier": [
+            346,
+            78,
+            416,
+            110
+          ],
+          "inner": [
+            354,
+            81,
+            408,
+            107
+          ],
+          "glyph": [
+            362.0,
+            87.5,
+            400.0,
+            100.5
+          ],
+          "font_size": 13,
+          "width_ratio": 0.704,
+          "height_ratio": 0.406,
+          "center_delta_y": 0.0,
+          "pass": false,
+          "reason": "too small vertically"
+        }
+      ],
+      "notes": [
+        "标题/状态必须落在灰色横条内，不能漂到白纸面。",
+        "右侧虚线章不是 NO；但要拆成上下两个独立文字槽。"
+      ]
+    }
+  ]
+}

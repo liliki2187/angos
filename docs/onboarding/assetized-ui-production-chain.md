@@ -3,7 +3,7 @@
 > **用途**：把 Angus 的 UI 风格稿、AI 生图、bitmap 资产、Godot / HTML 动态层和截图验收串成一条可执行流程，避免再次出现“图片很好看，但不能承载真实功能”的问题。  
 > **定位**：这是总链路和检查入口，不替代 `ui-interaction-guidelines.md`、美术规范、GDD 或具体页面规格。  
 > **适用范围**：世界地图、地区任务台、派遣签批台、发刊前报道板、票据、任务卡、地图 pin、按钮、索引册、签批纸和所有使用 PNG / 生图 / 拟物资产承载动态 UI 的界面。  
-> **最后更新**：2026-06-18
+> **最后更新**：2026-07-02
 
 ---
 
@@ -31,10 +31,17 @@
 
 新增硬门槛（2026-06-18）：**功能承载页必须方正。** 任何会承载动态文字、数值、头像状态、按钮文案、hover / pressed / disabled 状态或 hit rect 的 UI 正面，都必须是 square-on、axis-aligned、可测量的矩形。斜切、透视、叠纸、折角、票据舌片、夹子和半调可以制造拟物层次，但只能进入背景 / 外轮廓 / `no_text_rects`。如果高保真生图中可写纸面、右侧票据、任务卡内框或 CTA 文本槽整体倾斜，即使视觉气氛更好，也必须降级为灵感图或偏差案例，不得进入 `filled-state text mock`、`no-text asset master`、manifest 或生产候选。
 
+新增硬门槛（2026-06-30，2026-07-03 修订）：**正交证据由 AI 自动触发，不等用户提醒。** 当本轮交付或评审对象是资产化 UI 风格稿、生图稿、有字 mock、无字资产母版、运行预览或生产候选，并且画面里存在动态文字、按钮文案、CTA、hit rect、头像状态、数值、任务卡、票据、dossier、纸面或地图 pin 标签时，父级 Codex 必须主动触发 `ui_geometry_gate`：至少裁切 3 个核心信息面，画水平 / 垂直参考线或给出等价角度说明，并逐项声明通过 / 未通过。凡要宣称“正交通过 / 可继续拆资产 / 可进 manifest / 可进 runtime / 可作为生产候选 / 视觉验收通过”，或要把图交给用户做正向把关，都必须附该证据；没有证据只能写“几何未验证”，不得写“通过 / 基本正交 / 可以把关”。纯文字讨论、低保真结构线框且不声称视觉通过、无动态内容或 hit rect 的纯装饰图，不强制触发。
+
+新增硬门槛（2026-07-03）：**文字功能面不得继续依赖整屏有字生图纠偏。** 若同一类文字 / CTA / hit rect / 状态功能面已经因倾斜失败，下一版 prompt-only 生图仍出现可见倾斜，必须停止继续整屏有字生成。后续路径改为分层资产 UI 化：生图负责无字外观、低多边形主图、纸张外轮廓、贴纸、夹子、胶带、阴影和装饰；文字槽、按钮 label、状态条、hit rect、hover / pressed / disabled / selected 面必须由正交 no-text 资产、mask、Godot / DOM 运行时层或可测量矢量层承担，并先过几何 QA 再进入用户把关。
+
 新增硬门槛（2026-06-22）：**颜色匹配必须过 Color Contract Gate。** 任何涉及调色、去黄、提亮、压暗、冷暖、纸色、主色或“更接近参考图”的生图 / 修图，不能只凭“有采样表”或“没有明显偏黄 / 过白”通过。必须按 `docs/onboarding/imagegen-color-contract-gate.md` 建立唯一参考图、固定 ROI、`hex / RGB / Lab`、逐 token 阈值、整图均亮度、纸面 / 暗部比例和失败边界。未过颜色硬闸门时，不得进入像素颗粒、风格标杆或生产候选判断。
 
 新增硬门槛（2026-06-22）：**风格锁定稿后必须先过真实内容填充预览 Gate，不能跳到资产拆分。** 当一张图只完成视觉方向、色彩合同、材质或像素颗粒确认时，它只能标为 `visual_style_reference` / `color-locked style draft` / `no-text style draft`，不得把下一步说成组件拆分、atlas 生产、manifest 或切图。若尚未存在通过复审的 `filled-state text mock`，下一步必须是：`轻量内容合同 -> 真实内容填充预览稿 -> UI / UX / 像素艺术复审`。只有真实内容填充预览稿证明图文融合、信息密度、CTA、状态和可读性成立后，才允许进入无字资产母版 brief、组件拆分和状态 atlas。
 
+新增硬门槛（2026-07-02）：**真实颜色模块 / carrier / glyph 三层合同先于整屏回填。** 任何拟物、生图、PNG、bitmap 或 atlas 组件，只要承载动态文字、状态、数字、按钮文案、地图标签、票据字段或卡片标题，就必须先从图像本身分割 `visible_color_module_rect`，再定义 `carrier_rect`，最后才定义 `inner_rect` 与 `glyph_bbox`。不得先画理想 safe-zone，再把它当成真实可写区域。验收顺序固定为：`raw source -> visible_color_module_rect -> carrier_rect -> inner_rect -> glyph_bbox -> role metrics -> 100% crop -> full-screen refill`。`module_match == true`、`glyph_inside_inner == true`、`axis_aligned == true` 三项任一失败，不得进入真实内容回填、生产 manifest 或 runtime 候选。
+
+新增硬门槛（2026-07-02）：**组件合同通过前，不准用整屏生图运气替代局部承载规则。** 每个动态字段必须声明 role，例如 `receipt_field_lane`、`header_title_lane`、`header_status_lane`、`button_label_plate`、`card_title_plate`、`grouped_meta_plate`、`stamp_slot`。不同 role 的垂直居中、字号、行高、左侧图标禁入区、右侧按钮禁入区、纸边安全距和色块贴合要求不同，不得用一个通用文本框套所有组件。交付时必须给 100% 局部 crop；若 crop 中文字没有明显落在真实颜色模块内，即使 overlay 数值为 PASS，也判定失败。
 ---
 
 ## 1. 相关真源与分工

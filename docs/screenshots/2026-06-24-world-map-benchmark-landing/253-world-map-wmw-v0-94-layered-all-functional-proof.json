@@ -1,0 +1,443 @@
+{
+  "artifact": "v0.94 layered all-functional orthogonal proof",
+  "source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\244-world-map-wmw-single-state-refill-v0-92-imagegen.png",
+  "full": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\250-world-map-wmw-v0-94-layered-all-functional-proof.png",
+  "qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\251-world-map-wmw-v0-94-layered-all-functional-geometry-qa.png",
+  "contact_sheet": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\252-world-map-wmw-v0-94-functional-crops-contact-sheet.png",
+  "functional_components": [
+    {
+      "name": "right_header_title_lane",
+      "role": "header_title_lane",
+      "box": [
+        1268,
+        126,
+        1492,
+        168
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "?????"
+    },
+    {
+      "name": "right_header_status_lane",
+      "role": "header_status_lane",
+      "box": [
+        1274,
+        172,
+        1372,
+        200
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "????"
+    },
+    {
+      "name": "right_header_stamp_slot",
+      "role": "stamp_slot",
+      "box": [
+        1514,
+        130,
+        1605,
+        207
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "?? / ?? 2"
+    },
+    {
+      "name": "right_cta_primary_row",
+      "role": "cta_row",
+      "box": [
+        1195,
+        503,
+        1616,
+        565
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "进入北美禁区 ? 消耗1天"
+    },
+    {
+      "name": "right_cta_primary_label_plate",
+      "role": "button_label_plate",
+      "box": [
+        1287,
+        515,
+        1528,
+        553
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "进入北美禁区 ? 消耗1天"
+    },
+    {
+      "name": "right_cta_primary_action_box",
+      "role": "button_action_box",
+      "box": [
+        1546,
+        511,
+        1602,
+        557
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "check"
+    },
+    {
+      "name": "right_cta_secondary_row",
+      "role": "cta_row",
+      "box": [
+        1195,
+        584,
+        1616,
+        646
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "查看任务情报 ? 线报3"
+    },
+    {
+      "name": "right_cta_secondary_label_plate",
+      "role": "button_label_plate",
+      "box": [
+        1287,
+        596,
+        1528,
+        634
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "查看任务情报 ? 线报3"
+    },
+    {
+      "name": "right_cta_secondary_action_box",
+      "role": "button_action_box",
+      "box": [
+        1546,
+        592,
+        1602,
+        638
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "target"
+    },
+    {
+      "name": "right_cta_warning_row",
+      "role": "cta_row",
+      "box": [
+        1195,
+        665,
+        1616,
+        727
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "红线截止 ? 4天"
+    },
+    {
+      "name": "right_cta_warning_label_plate",
+      "role": "button_label_plate",
+      "box": [
+        1287,
+        677,
+        1528,
+        715
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "红线截止 ? 4天"
+    },
+    {
+      "name": "right_cta_warning_action_box",
+      "role": "button_action_box",
+      "box": [
+        1546,
+        673,
+        1602,
+        719
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "arrow"
+    },
+    {
+      "name": "left_card_na_title_plate",
+      "role": "left_card_title_plate",
+      "box": [
+        73,
+        268,
+        231,
+        295
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "北美禁区带"
+    },
+    {
+      "name": "left_card_na_meta_plate",
+      "role": "left_card_meta_plate",
+      "box": [
+        74,
+        296,
+        230,
+        310
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "红线升温   推荐2"
+    },
+    {
+      "name": "left_card_eu_title_plate",
+      "role": "left_card_title_plate",
+      "box": [
+        73,
+        491,
+        225,
+        518
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "欧洲灰域"
+    },
+    {
+      "name": "left_card_eu_meta_plate",
+      "role": "left_card_meta_plate",
+      "box": [
+        74,
+        519,
+        224,
+        536
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "可派遣   线报2"
+    },
+    {
+      "name": "left_card_af_title_plate",
+      "role": "left_card_title_plate",
+      "box": [
+        66,
+        670,
+        238,
+        718
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "非洲禁区带"
+    },
+    {
+      "name": "left_card_sa_title_plate",
+      "role": "left_card_title_plate",
+      "box": [
+        66,
+        848,
+        240,
+        898
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "南美禁区带"
+    },
+    {
+      "name": "bottom_action_title_lane",
+      "role": "receipt_title_lane",
+      "box": [
+        500,
+        768,
+        650,
+        796
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "本周行动"
+    },
+    {
+      "name": "bottom_action_value_lane",
+      "role": "receipt_value_lane",
+      "box": [
+        500,
+        802,
+        650,
+        846
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "余 6 天"
+    },
+    {
+      "name": "bottom_action_progress_bar",
+      "role": "receipt_progress_bar",
+      "box": [
+        422,
+        840,
+        650,
+        887
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": ""
+    },
+    {
+      "name": "bottom_info_title_lane",
+      "role": "receipt_title_lane",
+      "box": [
+        788,
+        768,
+        928,
+        796
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "情报余量"
+    },
+    {
+      "name": "bottom_info_value_lane",
+      "role": "receipt_value_lane",
+      "box": [
+        788,
+        802,
+        928,
+        846
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "线报 3"
+    },
+    {
+      "name": "bottom_info_progress_bar",
+      "role": "receipt_progress_bar",
+      "box": [
+        710,
+        850,
+        940,
+        888
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": ""
+    },
+    {
+      "name": "bottom_redline_title_lane",
+      "role": "receipt_title_lane",
+      "box": [
+        1058,
+        768,
+        1196,
+        796
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "红线台账"
+    },
+    {
+      "name": "bottom_redline_value_lane",
+      "role": "receipt_value_lane",
+      "box": [
+        1058,
+        802,
+        1196,
+        846
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": "4天后升温"
+    },
+    {
+      "name": "bottom_redline_progress_bar",
+      "role": "receipt_progress_bar",
+      "box": [
+        982,
+        850,
+        1200,
+        888
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "angle_left_deg": 0.0,
+      "angle_right_deg": 0.0,
+      "axis_aligned": true,
+      "text": ""
+    }
+  ],
+  "result": "geometry pass by construction; visual polish still requires WMW component atlas pass",
+  "method": "imagegen background/mood retained; text-bearing, click-bearing, and state-bearing surfaces rebuilt as deterministic axis-aligned coordinate layers"
+}

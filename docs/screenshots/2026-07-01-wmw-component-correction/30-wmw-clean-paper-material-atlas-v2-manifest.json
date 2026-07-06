@@ -1,0 +1,144 @@
+{
+  "status": "clean token material atlas v2 - no embedded text/photo/icon content; benchmark sampled color tokens + broad low-poly paper planes",
+  "tiles": [
+    {
+      "id": "warm_paper",
+      "hex": "#B7A488",
+      "role": "main dossier / card paper face",
+      "tile_path": "paper-material-atlas-clean-v2/warm_paper_tile.png",
+      "tile_stats": {
+        "mean_hex": "#B7A487",
+        "h": 36.3,
+        "s": 0.247,
+        "l": 0.623,
+        "std_lum": 1.8
+      },
+      "delta_to_target": 1.0
+    },
+    {
+      "id": "case_paper",
+      "hex": "#967E5E",
+      "role": "deeper case-file body / secondary paper",
+      "tile_path": "paper-material-atlas-clean-v2/case_paper_tile.png",
+      "tile_stats": {
+        "mean_hex": "#957E5E",
+        "h": 34.5,
+        "s": 0.228,
+        "l": 0.476,
+        "std_lum": 1.8
+      },
+      "delta_to_target": 1.0
+    },
+    {
+      "id": "ivory_edge",
+      "hex": "#C0B9B3",
+      "role": "photo edge / sticker rim / narrow paper edge",
+      "tile_path": "paper-material-atlas-clean-v2/ivory_edge_tile.png",
+      "tile_stats": {
+        "mean_hex": "#BFB8B2",
+        "h": 26.5,
+        "s": 0.091,
+        "l": 0.725,
+        "std_lum": 1.7
+      },
+      "delta_to_target": 1.7
+    },
+    {
+      "id": "gray_board",
+      "hex": "#686554",
+      "role": "gray-green backing board / clipboard backing",
+      "tile_path": "paper-material-atlas-clean-v2/gray_board_tile.png",
+      "tile_stats": {
+        "mean_hex": "#686553",
+        "h": 52.3,
+        "s": 0.109,
+        "l": 0.366,
+        "std_lum": 2.2
+      },
+      "delta_to_target": 1.0
+    },
+    {
+      "id": "note_paper",
+      "hex": "#B3A456",
+      "role": "muted yellow note paper",
+      "tile_path": "paper-material-atlas-clean-v2/note_paper_tile.png",
+      "tile_stats": {
+        "mean_hex": "#B2A356",
+        "h": 50.3,
+        "s": 0.375,
+        "l": 0.518,
+        "std_lum": 2.9
+      },
+      "delta_to_target": 1.4
+    },
+    {
+      "id": "sticker_edge",
+      "hex": "#ABA290",
+      "role": "sticker cut paper edge / off-white rim",
+      "tile_path": "paper-material-atlas-clean-v2/sticker_edge_tile.png",
+      "tile_stats": {
+        "mean_hex": "#AAA190",
+        "h": 38.9,
+        "s": 0.136,
+        "l": 0.616,
+        "std_lum": 1.6
+      },
+      "delta_to_target": 1.4
+    },
+    {
+      "id": "dark_board",
+      "hex": "#16191C",
+      "role": "charcoal navy-gray background board",
+      "tile_path": "paper-material-atlas-clean-v2/dark_board_tile.png",
+      "tile_stats": {
+        "mean_hex": "#15181B",
+        "h": 210.8,
+        "s": 0.127,
+        "l": 0.095,
+        "std_lum": 1.4
+      },
+      "delta_to_target": 1.7
+    }
+  ],
+  "reject_examples": [
+    {
+      "id": "too_cream",
+      "hex": "#CDBBA5",
+      "reason": "too pale cream / form paper",
+      "tile_path": "paper-material-atlas-clean-v2/reject_too_cream.png",
+      "tile_stats": {
+        "mean_hex": "#CCBBA4",
+        "h": 33.4,
+        "s": 0.282,
+        "l": 0.723,
+        "std_lum": 3.4
+      }
+    },
+    {
+      "id": "too_brown",
+      "hex": "#BAA795",
+      "reason": "old receipt brown drift",
+      "tile_path": "paper-material-atlas-clean-v2/reject_too_brown.png",
+      "tile_stats": {
+        "mean_hex": "#BAA694",
+        "h": 28.4,
+        "s": 0.212,
+        "l": 0.655,
+        "std_lum": 4.4
+      }
+    },
+    {
+      "id": "too_grimy",
+      "hex": "#AD9981",
+      "reason": "cloud stain / old-file grime",
+      "tile_path": "paper-material-atlas-clean-v2/reject_too_grimy.png",
+      "tile_stats": {
+        "mean_hex": "#AC9981",
+        "h": 33.0,
+        "s": 0.209,
+        "l": 0.59,
+        "std_lum": 3.0
+      }
+    }
+  ]
+}

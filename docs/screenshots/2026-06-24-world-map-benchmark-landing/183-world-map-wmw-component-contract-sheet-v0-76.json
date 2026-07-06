@@ -1,0 +1,345 @@
+{
+  "id": "world_map_wmw_component_contract_sheet_v0_76",
+  "source": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\175-world-map-wmw-text-component-fit-v0-74.png",
+  "output": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\182-world-map-wmw-component-contract-sheet-v0-76.png",
+  "purpose": "Define text-safe zones, no-text zones, hit rects, typography tokens, and state semantics before further full-screen refill.",
+  "blocks": [
+    {
+      "title": "1. CTA Row Contract / 右侧三条动作与状态",
+      "source_box": [
+        1188,
+        510,
+        1634,
+        764
+      ],
+      "target": [
+        42,
+        132,
+        652,
+        479
+      ],
+      "boxes": [
+        {
+          "kind": "no",
+          "box": [
+            0,
+            22,
+            92,
+            83
+          ]
+        },
+        {
+          "kind": "safe",
+          "box": [
+            132,
+            30,
+            388,
+            74
+          ]
+        },
+        {
+          "kind": "no",
+          "box": [
+            396,
+            19,
+            444,
+            88
+          ]
+        },
+        {
+          "kind": "hit",
+          "box": [
+            0,
+            14,
+            444,
+            92
+          ],
+          "label": false
+        },
+        {
+          "kind": "no",
+          "box": [
+            0,
+            97,
+            92,
+            160
+          ]
+        },
+        {
+          "kind": "safe",
+          "box": [
+            132,
+            106,
+            388,
+            150
+          ]
+        },
+        {
+          "kind": "no",
+          "box": [
+            396,
+            94,
+            444,
+            165
+          ]
+        },
+        {
+          "kind": "hit",
+          "box": [
+            0,
+            92,
+            444,
+            169
+          ],
+          "label": false
+        },
+        {
+          "kind": "no",
+          "box": [
+            0,
+            178,
+            92,
+            240
+          ]
+        },
+        {
+          "kind": "safe",
+          "box": [
+            132,
+            186,
+            388,
+            230
+          ]
+        },
+        {
+          "kind": "no",
+          "box": [
+            396,
+            172,
+            444,
+            244
+          ]
+        },
+        {
+          "kind": "hit",
+          "box": [
+            0,
+            170,
+            444,
+            250
+          ],
+          "label": false
+        }
+      ]
+    },
+    {
+      "title": "2. Bottom Receipt Contract / 底部票据",
+      "source_box": [
+        382,
+        780,
+        684,
+        932
+      ],
+      "target": [
+        708,
+        132,
+        1128,
+        343
+      ],
+      "boxes": [
+        {
+          "kind": "no",
+          "box": [
+            0,
+            0,
+            300,
+            36
+          ]
+        },
+        {
+          "kind": "no",
+          "box": [
+            0,
+            110,
+            300,
+            152
+          ]
+        },
+        {
+          "kind": "no",
+          "box": [
+            0,
+            0,
+            62,
+            152
+          ]
+        },
+        {
+          "kind": "safe",
+          "box": [
+            100,
+            34,
+            244,
+            63
+          ]
+        },
+        {
+          "kind": "safe",
+          "box": [
+            100,
+            68,
+            244,
+            96
+          ]
+        },
+        {
+          "kind": "hit",
+          "box": [
+            0,
+            0,
+            300,
+            152
+          ],
+          "label": false
+        }
+      ]
+    },
+    {
+      "title": "3. Left Card Meta Contract / 左侧地区卡小字段",
+      "source_box": [
+        34,
+        250,
+        370,
+        552
+      ],
+      "target": [
+        42,
+        566,
+        562,
+        1033
+      ],
+      "boxes": [
+        {
+          "kind": "safe",
+          "box": [
+            34,
+            34,
+            180,
+            66
+          ]
+        },
+        {
+          "kind": "no",
+          "box": [
+            244,
+            17,
+            334,
+            90
+          ]
+        },
+        {
+          "kind": "safe",
+          "box": [
+            34,
+            206,
+            176,
+            240
+          ]
+        },
+        {
+          "kind": "no",
+          "box": [
+            246,
+            188,
+            334,
+            266
+          ]
+        },
+        {
+          "kind": "hit",
+          "box": [
+            0,
+            0,
+            336,
+            143
+          ],
+          "label": false
+        },
+        {
+          "kind": "hit",
+          "box": [
+            0,
+            158,
+            336,
+            302
+          ],
+          "label": false
+        }
+      ]
+    },
+    {
+      "title": "4. Right Header Contract / 右侧标题与风险",
+      "source_box": [
+        1190,
+        90,
+        1628,
+        224
+      ],
+      "target": [
+        708,
+        566,
+        1318,
+        752
+      ],
+      "boxes": [
+        {
+          "kind": "no",
+          "box": [
+            0,
+            0,
+            92,
+            120
+          ]
+        },
+        {
+          "kind": "safe",
+          "box": [
+            96,
+            36,
+            300,
+            70
+          ]
+        },
+        {
+          "kind": "safe",
+          "box": [
+            96,
+            78,
+            190,
+            104
+          ]
+        },
+        {
+          "kind": "no",
+          "box": [
+            330,
+            22,
+            430,
+            126
+          ]
+        },
+        {
+          "kind": "hit",
+          "box": [
+            0,
+            0,
+            438,
+            134
+          ],
+          "label": false
+        }
+      ]
+    }
+  ],
+  "next_step": "User reviews contract sheet. If accepted, create a clean no-text component atlas and then a filled-state mock."
+}

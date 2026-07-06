@@ -51,4 +51,6 @@ skills/claude-to-im/dist/
 
 # MCP local (if any)
 mcps/
+tools/xiaohongshu-mcp/
+tools/rednote-mcp-node/
 

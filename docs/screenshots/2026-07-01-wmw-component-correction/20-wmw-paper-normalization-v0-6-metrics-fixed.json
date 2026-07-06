@@ -1,0 +1,182 @@
+[
+  {
+    "region": "central dossier cover margin",
+    "version": "v0.5",
+    "target": "warm_paper",
+    "mean_hex": "#AB9D8B",
+    "delta_rgb_to_target": 14.6,
+    "h": 34.3,
+    "s": 0.156,
+    "l": 0.608
+  },
+  {
+    "region": "central dossier cover margin",
+    "version": "v0.6",
+    "target": "warm_paper",
+    "mean_hex": "#A2937C",
+    "delta_rgb_to_target": 29.4,
+    "h": 35.5,
+    "s": 0.172,
+    "l": 0.562
+  },
+  {
+    "region": "central dossier lower body",
+    "version": "v0.5",
+    "target": "warm_paper",
+    "mean_hex": "#A79174",
+    "delta_rgb_to_target": 31.3,
+    "h": 34.1,
+    "s": 0.226,
+    "l": 0.556
+  },
+  {
+    "region": "central dossier lower body",
+    "version": "v0.6",
+    "target": "warm_paper",
+    "mean_hex": "#B39F83",
+    "delta_rgb_to_target": 8.0,
+    "h": 35.1,
+    "s": 0.239,
+    "l": 0.608
+  },
+  {
+    "region": "right CTA olive writable slot",
+    "version": "v0.5",
+    "target": "warm_paper",
+    "mean_hex": "#BDA78B",
+    "delta_rgb_to_target": 7.6,
+    "h": 33.2,
+    "s": 0.279,
+    "l": 0.644
+  },
+  {
+    "region": "right CTA olive writable slot",
+    "version": "v0.6",
+    "target": "warm_paper",
+    "mean_hex": "#B8A488",
+    "delta_rgb_to_target": 0.8,
+    "h": 35.1,
+    "s": 0.252,
+    "l": 0.626
+  },
+  {
+    "region": "right CTA blue writable slot",
+    "version": "v0.5",
+    "target": "warm_paper",
+    "mean_hex": "#BEAA91",
+    "delta_rgb_to_target": 13.2,
+    "h": 32.6,
+    "s": 0.257,
+    "l": 0.658
+  },
+  {
+    "region": "right CTA blue writable slot",
+    "version": "v0.6",
+    "target": "warm_paper",
+    "mean_hex": "#B8A589",
+    "delta_rgb_to_target": 1.4,
+    "h": 35.6,
+    "s": 0.248,
+    "l": 0.629
+  },
+  {
+    "region": "right CTA rust writable slot",
+    "version": "v0.5",
+    "target": "warm_paper",
+    "mean_hex": "#BCA68C",
+    "delta_rgb_to_target": 6.7,
+    "h": 32.7,
+    "s": 0.266,
+    "l": 0.643
+  },
+  {
+    "region": "right CTA rust writable slot",
+    "version": "v0.6",
+    "target": "warm_paper",
+    "mean_hex": "#B7A488",
+    "delta_rgb_to_target": 0.6,
+    "h": 35.3,
+    "s": 0.248,
+    "l": 0.625
+  },
+  {
+    "region": "bottom receipt left body",
+    "version": "v0.5",
+    "target": "warm_paper",
+    "mean_hex": "#978C77",
+    "delta_rgb_to_target": 43.5,
+    "h": 39.4,
+    "s": 0.132,
+    "l": 0.53
+  },
+  {
+    "region": "bottom receipt left body",
+    "version": "v0.6",
+    "target": "warm_paper",
+    "mean_hex": "#94876F",
+    "delta_rgb_to_target": 52.1,
+    "h": 39.4,
+    "s": 0.148,
+    "l": 0.507
+  },
+  {
+    "region": "bottom receipt middle body",
+    "version": "v0.5",
+    "target": "warm_paper",
+    "mean_hex": "#938C7E",
+    "delta_rgb_to_target": 44.6,
+    "h": 38.5,
+    "s": 0.088,
+    "l": 0.536
+  },
+  {
+    "region": "bottom receipt middle body",
+    "version": "v0.6",
+    "target": "warm_paper",
+    "mean_hex": "#908775",
+    "delta_rgb_to_target": 52.3,
+    "h": 39.4,
+    "s": 0.109,
+    "l": 0.512
+  },
+  {
+    "region": "bottom receipt right body",
+    "version": "v0.5",
+    "target": "warm_paper",
+    "mean_hex": "#9C8874",
+    "delta_rgb_to_target": 43.7,
+    "h": 29.5,
+    "s": 0.17,
+    "l": 0.534
+  },
+  {
+    "region": "bottom receipt right body",
+    "version": "v0.6",
+    "target": "warm_paper",
+    "mean_hex": "#99846D",
+    "delta_rgb_to_target": 51.5,
+    "h": 31.4,
+    "s": 0.179,
+    "l": 0.514
+  },
+  {
+    "region": "photo ivory edge sample",
+    "version": "v0.5",
+    "target": "ivory_edge",
+    "mean_hex": "#253332",
+    "delta_rgb_to_target": 241.8,
+    "h": 177.1,
+    "s": 0.156,
+    "l": 0.173
+  },
+  {
+    "region": "photo ivory edge sample",
+    "version": "v0.6",
+    "target": "ivory_edge",
+    "mean_hex": "#263435",
+    "delta_rgb_to_target": 239.7,
+    "h": 183.4,
+    "s": 0.168,
+    "l": 0.177
+  }
+]

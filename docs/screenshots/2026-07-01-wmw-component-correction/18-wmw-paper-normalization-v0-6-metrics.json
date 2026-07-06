@@ -1,0 +1,102 @@
+[
+  {
+    "region": "central dossier top paper",
+    "version": "v0.5",
+    "target": "warm_paper",
+    "mean_hex": "#7D7668",
+    "delta_rgb_to_target": 80.8,
+    "h": 40.7,
+    "s": 0.092,
+    "l": 0.448
+  },
+  {
+    "region": "central dossier top paper",
+    "version": "v0.6",
+    "target": "warm_paper",
+    "mean_hex": "#7F7665",
+    "delta_rgb_to_target": 80.6,
+    "h": 39.6,
+    "s": 0.115,
+    "l": 0.446
+  },
+  {
+    "region": "central dossier body paper",
+    "version": "v0.5",
+    "target": "warm_paper",
+    "mean_hex": "#746857",
+    "delta_rgb_to_target": 102.9,
+    "h": 36.3,
+    "s": 0.143,
+    "l": 0.396
+  },
+  {
+    "region": "central dossier body paper",
+    "version": "v0.6",
+    "target": "warm_paper",
+    "mean_hex": "#7A705F",
+    "delta_rgb_to_target": 90.5,
+    "h": 37.8,
+    "s": 0.126,
+    "l": 0.424
+  },
+  {
+    "region": "right CTA writable slot",
+    "version": "v0.5",
+    "target": "warm_paper",
+    "mean_hex": "#3E3B2C",
+    "delta_rgb_to_target": 185.1,
+    "h": 49.7,
+    "s": 0.167,
+    "l": 0.207
+  },
+  {
+    "region": "right CTA writable slot",
+    "version": "v0.6",
+    "target": "warm_paper",
+    "mean_hex": "#3D3A2B",
+    "delta_rgb_to_target": 186.2,
+    "h": 50.9,
+    "s": 0.166,
+    "l": 0.204
+  },
+  {
+    "region": "bottom receipt left body",
+    "version": "v0.5",
+    "target": "warm_paper",
+    "mean_hex": "#010101",
+    "delta_rgb_to_target": 279.5,
+    "h": 202.9,
+    "s": 0.366,
+    "l": 0.003
+  },
+  {
+    "region": "bottom receipt left body",
+    "version": "v0.6",
+    "target": "warm_paper",
+    "mean_hex": "#010101",
+    "delta_rgb_to_target": 279.5,
+    "h": 202.9,
+    "s": 0.366,
+    "l": 0.003
+  },
+  {
+    "region": "polaroid / ivory edge",
+    "version": "v0.5",
+    "target": "ivory_edge",
+    "mean_hex": "#373631",
+    "delta_rgb_to_target": 229.5,
+    "h": 52.9,
+    "s": 0.057,
+    "l": 0.204
+  },
+  {
+    "region": "polaroid / ivory edge",
+    "version": "v0.6",
+    "target": "ivory_edge",
+    "mean_hex": "#373631",
+    "delta_rgb_to_target": 229.5,
+    "h": 53.0,
+    "s": 0.056,
+    "l": 0.204
+  }
+]

@@ -1,0 +1,151 @@
+{
+  "status": "clean token material atlas v3 - visible broad low-poly paper planes, no embedded text/photo/icon content",
+  "tiles": [
+    {
+      "id": "warm_paper",
+      "hex": "#B7A488",
+      "role": "main dossier / card paper face",
+      "tile_path": "paper-material-atlas-clean-v3/warm_paper_tile.png",
+      "tile_stats": {
+        "mean_hex": "#B6A488",
+        "h": 35.7,
+        "s": 0.242,
+        "l": 0.624,
+        "std_lum": 5.1
+      },
+      "delta_to_target": 1.0,
+      "intended_std_lum_range": "6-16 for paper faces; lower for dark_board/edges"
+    },
+    {
+      "id": "case_paper",
+      "hex": "#967E5E",
+      "role": "deeper case-file body / secondary paper",
+      "tile_path": "paper-material-atlas-clean-v3/case_paper_tile.png",
+      "tile_stats": {
+        "mean_hex": "#957E5D",
+        "h": 35.0,
+        "s": 0.23,
+        "l": 0.476,
+        "std_lum": 3.1
+      },
+      "delta_to_target": 1.4,
+      "intended_std_lum_range": "6-16 for paper faces; lower for dark_board/edges"
+    },
+    {
+      "id": "ivory_edge",
+      "hex": "#C0B9B3",
+      "role": "photo edge / sticker rim / narrow paper edge",
+      "tile_path": "paper-material-atlas-clean-v3/ivory_edge_tile.png",
+      "tile_stats": {
+        "mean_hex": "#C0B9B2",
+        "h": 30.5,
+        "s": 0.097,
+        "l": 0.725,
+        "std_lum": 2.0
+      },
+      "delta_to_target": 1.0,
+      "intended_std_lum_range": "6-16 for paper faces; lower for dark_board/edges"
+    },
+    {
+      "id": "gray_board",
+      "hex": "#686554",
+      "role": "gray-green backing board / clipboard backing",
+      "tile_path": "paper-material-atlas-clean-v3/gray_board_tile.png",
+      "tile_stats": {
+        "mean_hex": "#676453",
+        "h": 50.9,
+        "s": 0.107,
+        "l": 0.366,
+        "std_lum": 3.5
+      },
+      "delta_to_target": 1.7,
+      "intended_std_lum_range": "6-16 for paper faces; lower for dark_board/edges"
+    },
+    {
+      "id": "note_paper",
+      "hex": "#B3A456",
+      "role": "muted yellow note paper",
+      "tile_path": "paper-material-atlas-clean-v3/note_paper_tile.png",
+      "tile_stats": {
+        "mean_hex": "#B3A455",
+        "h": 50.5,
+        "s": 0.38,
+        "l": 0.517,
+        "std_lum": 3.1
+      },
+      "delta_to_target": 1.0,
+      "intended_std_lum_range": "6-16 for paper faces; lower for dark_board/edges"
+    },
+    {
+      "id": "sticker_edge",
+      "hex": "#ABA290",
+      "role": "sticker cut paper edge / off-white rim",
+      "tile_path": "paper-material-atlas-clean-v3/sticker_edge_tile.png",
+      "tile_stats": {
+        "mean_hex": "#ABA190",
+        "h": 38.9,
+        "s": 0.136,
+        "l": 0.617,
+        "std_lum": 2.8
+      },
+      "delta_to_target": 1.0,
+      "intended_std_lum_range": "6-16 for paper faces; lower for dark_board/edges"
+    },
+    {
+      "id": "dark_board",
+      "hex": "#16191C",
+      "role": "charcoal navy-gray background board",
+      "tile_path": "paper-material-atlas-clean-v3/dark_board_tile.png",
+      "tile_stats": {
+        "mean_hex": "#15181B",
+        "h": 208.6,
+        "s": 0.126,
+        "l": 0.095,
+        "std_lum": 2.7
+      },
+      "delta_to_target": 1.7,
+      "intended_std_lum_range": "6-16 for paper faces; lower for dark_board/edges"
+    }
+  ],
+  "reject_examples": [
+    {
+      "id": "too_cream",
+      "hex": "#CDBBA5",
+      "reason": "too pale cream / form paper",
+      "tile_path": "paper-material-atlas-clean-v3/reject_too_cream.png",
+      "tile_stats": {
+        "mean_hex": "#CDBAA5",
+        "h": 32.6,
+        "s": 0.284,
+        "l": 0.724,
+        "std_lum": 4.7
+      }
+    },
+    {
+      "id": "too_brown",
+      "hex": "#BAA795",
+      "reason": "old receipt brown drift",
+      "tile_path": "paper-material-atlas-clean-v3/reject_too_brown.png",
+      "tile_stats": {
+        "mean_hex": "#BAA794",
+        "h": 29.8,
+        "s": 0.215,
+        "l": 0.655,
+        "std_lum": 3.5
+      }
+    },
+    {
+      "id": "too_grimy",
+      "hex": "#AD9981",
+      "reason": "cloud stain / old-file grime",
+      "tile_path": "paper-material-atlas-clean-v3/reject_too_grimy.png",
+      "tile_stats": {
+        "mean_hex": "#AC9980",
+        "h": 32.9,
+        "s": 0.211,
+        "l": 0.59,
+        "std_lum": 5.5
+      }
+    }
+  ]
+}

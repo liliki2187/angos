@@ -1,0 +1,419 @@
+{
+  "id": "world_map_wmw_component_contract_sheet_v3_v0_82",
+  "source": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\140-world-map-wmw-paper-atlas-v3-refill-v0-66-info-gray.png",
+  "output": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\196-world-map-wmw-component-contract-sheet-v3-v0-82.png",
+  "method": "plate/inner/glyph/no-text/hit plus visual occupancy and optical center metrics",
+  "targets": {
+    "cta": {
+      "w": [
+        0.55,
+        0.85
+      ],
+      "h": [
+        0.48,
+        0.68
+      ],
+      "dy": 3.0
+    },
+    "secondary": {
+      "w": [
+        0.45,
+        0.78
+      ],
+      "h": [
+        0.42,
+        0.62
+      ],
+      "dy": 3.0
+    },
+    "meta": {
+      "w": [
+        0.45,
+        0.75
+      ],
+      "h": [
+        0.42,
+        0.62
+      ],
+      "dy": 2.0
+    },
+    "title": {
+      "w": [
+        0.4,
+        0.82
+      ],
+      "h": [
+        0.48,
+        0.68
+      ],
+      "dy": 3.0
+    },
+    "resource": {
+      "w": [
+        0.42,
+        0.76
+      ],
+      "h": [
+        0.5,
+        0.7
+      ],
+      "dy": 2.0
+    }
+  },
+  "blocks": [
+    {
+      "title": "1. CTA Rows / 填充率与中心线",
+      "target": [
+        42,
+        134,
+        652,
+        481
+      ],
+      "metrics": [
+        {
+          "label": "进入北美禁区  消耗1天",
+          "role": "cta",
+          "font_size": 19,
+          "plate": [
+            100,
+            30,
+            350,
+            74
+          ],
+          "inner": [
+            112,
+            36,
+            338,
+            68
+          ],
+          "glyph": [
+            127.5,
+            40.5,
+            322.5,
+            61.5
+          ],
+          "width_ratio": 0.863,
+          "height_ratio": 0.477,
+          "center_delta_y": -1.0,
+          "ok_width": false,
+          "ok_height": false,
+          "ok_center": true,
+          "pass": false,
+          "action": "text too long for plate"
+        },
+        {
+          "label": "查看任务情报  线报3",
+          "role": "secondary",
+          "font_size": 16,
+          "plate": [
+            100,
+            106,
+            350,
+            150
+          ],
+          "inner": [
+            114,
+            114,
+            336,
+            142
+          ],
+          "glyph": [
+            151.5,
+            118.5,
+            298.5,
+            135.5
+          ],
+          "width_ratio": 0.662,
+          "height_ratio": 0.386,
+          "center_delta_y": -1.0,
+          "ok_width": true,
+          "ok_height": false,
+          "ok_center": true,
+          "pass": false,
+          "action": "font height mismatch"
+        },
+        {
+          "label": "红线截止  4天",
+          "role": "secondary",
+          "font_size": 17,
+          "plate": [
+            100,
+            186,
+            350,
+            230
+          ],
+          "inner": [
+            114,
+            194,
+            336,
+            222
+          ],
+          "glyph": [
+            172.5,
+            198.0,
+            277.5,
+            216.0
+          ],
+          "width_ratio": 0.473,
+          "height_ratio": 0.409,
+          "center_delta_y": -1.0,
+          "ok_width": true,
+          "ok_height": false,
+          "ok_center": true,
+          "pass": false,
+          "action": "font height mismatch"
+        }
+      ]
+    },
+    {
+      "title": "2. Bottom Receipt / 票据字段填充",
+      "target": [
+        708,
+        134,
+        1128,
+        345
+      ],
+      "metrics": [
+        {
+          "label": "本周行动",
+          "role": "meta",
+          "font_size": 14,
+          "plate": [
+            94,
+            35,
+            248,
+            63
+          ],
+          "inner": [
+            106,
+            40,
+            236,
+            58
+          ],
+          "glyph": [
+            143.0,
+            41.5,
+            199.0,
+            54.5
+          ],
+          "width_ratio": 0.431,
+          "height_ratio": 0.464,
+          "center_delta_y": -1.0,
+          "ok_width": false,
+          "ok_height": true,
+          "ok_center": true,
+          "pass": false,
+          "action": "text too small or plate too wide"
+        },
+        {
+          "label": "余 6 天",
+          "role": "resource",
+          "font_size": 17,
+          "plate": [
+            94,
+            68,
+            248,
+            96
+          ],
+          "inner": [
+            106,
+            73,
+            236,
+            91
+          ],
+          "glyph": [
+            144.0,
+            72.0,
+            198.0,
+            90.0
+          ],
+          "width_ratio": 0.415,
+          "height_ratio": 0.643,
+          "center_delta_y": -1.0,
+          "ok_width": false,
+          "ok_height": true,
+          "ok_center": true,
+          "pass": false,
+          "action": "text too small or plate too wide"
+        }
+      ]
+    },
+    {
+      "title": "3. Left Card / 小字段不能空也不能偏下",
+      "target": [
+        42,
+        604,
+        562,
+        1071
+      ],
+      "metrics": [
+        {
+          "label": "红线升温  推荐2",
+          "role": "meta",
+          "font_size": 15,
+          "plate": [
+            34,
+            34,
+            178,
+            67
+          ],
+          "inner": [
+            44,
+            40,
+            168,
+            61
+          ],
+          "glyph": [
+            52.5,
+            42.5,
+            159.5,
+            56.5
+          ],
+          "width_ratio": 0.863,
+          "height_ratio": 0.424,
+          "center_delta_y": -1.0,
+          "ok_width": false,
+          "ok_height": true,
+          "ok_center": true,
+          "pass": false,
+          "action": "text too long for plate"
+        },
+        {
+          "label": "可派遣  线报2",
+          "role": "meta",
+          "font_size": 15,
+          "plate": [
+            34,
+            206,
+            176,
+            240
+          ],
+          "inner": [
+            44,
+            212,
+            166,
+            234
+          ],
+          "glyph": [
+            59.0,
+            214.5,
+            151.0,
+            229.5
+          ],
+          "width_ratio": 0.754,
+          "height_ratio": 0.441,
+          "center_delta_y": -1.0,
+          "ok_width": false,
+          "ok_height": true,
+          "ok_center": true,
+          "pass": false,
+          "action": "text too long for plate"
+        },
+        {
+          "label": "欧亚灰域",
+          "role": "title",
+          "font_size": 19,
+          "plate": [
+            79,
+            108,
+            277,
+            142
+          ],
+          "inner": [
+            91,
+            114,
+            265,
+            136
+          ],
+          "glyph": [
+            140.0,
+            114.0,
+            216.0,
+            134.0
+          ],
+          "width_ratio": 0.437,
+          "height_ratio": 0.588,
+          "center_delta_y": -1.0,
+          "ok_width": true,
+          "ok_height": true,
+          "ok_center": true,
+          "pass": true,
+          "action": "ok"
+        }
+      ]
+    },
+    {
+      "title": "4. Right Header / 标题与状态居中",
+      "target": [
+        708,
+        604,
+        1318,
+        790
+      ],
+      "metrics": [
+        {
+          "label": "北美禁区",
+          "role": "title",
+          "font_size": 23,
+          "plate": [
+            96,
+            35,
+            305,
+            70
+          ],
+          "inner": [
+            108,
+            41,
+            293,
+            64
+          ],
+          "glyph": [
+            154.5,
+            40.0,
+            246.5,
+            63.0
+          ],
+          "width_ratio": 0.497,
+          "height_ratio": 0.657,
+          "center_delta_y": -1.0,
+          "ok_width": true,
+          "ok_height": true,
+          "ok_center": true,
+          "pass": true,
+          "action": "ok"
+        },
+        {
+          "label": "红线升温",
+          "role": "meta",
+          "font_size": 14,
+          "plate": [
+            96,
+            79,
+            196,
+            105
+          ],
+          "inner": [
+            104,
+            84,
+            188,
+            100
+          ],
+          "glyph": [
+            118.0,
+            84.5,
+            174.0,
+            97.5
+          ],
+          "width_ratio": 0.667,
+          "height_ratio": 0.5,
+          "center_delta_y": -1.0,
+          "ok_width": true,
+          "ok_height": true,
+          "ok_center": true,
+          "pass": true,
+          "action": "ok"
+        }
+      ]
+    }
+  ]
+}

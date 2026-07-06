@@ -1,0 +1,212 @@
+{
+  "id": "world_map_wmw_component_contract_sheet_v2_v0_80",
+  "source": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\140-world-map-wmw-paper-atlas-v3-refill-v0-66-info-gray.png",
+  "output": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\192-world-map-wmw-component-contract-sheet-v2-v0-80.png",
+  "method": "plate boundary -> inner safe -> rendered glyph bbox -> no-text/hit separation",
+  "blocks": [
+    {
+      "title": "1. CTA Rows / 三分区按钮合同",
+      "target": [
+        42,
+        134,
+        652,
+        481
+      ],
+      "glyphs": [
+        {
+          "text": "进入北美禁区  消耗1天",
+          "font_size": 17,
+          "glyph_bbox": [
+            138.5,
+            43.0,
+            311.5,
+            61.0
+          ],
+          "safe_box": [
+            116,
+            38,
+            334,
+            66
+          ]
+        },
+        {
+          "text": "查看任务情报  线报3",
+          "font_size": 15,
+          "glyph_bbox": [
+            156.5,
+            120.5,
+            293.5,
+            135.5
+          ],
+          "safe_box": [
+            116,
+            114,
+            334,
+            142
+          ]
+        },
+        {
+          "text": "红线截止  4天",
+          "font_size": 16,
+          "glyph_bbox": [
+            175.5,
+            199.5,
+            274.5,
+            216.5
+          ],
+          "safe_box": [
+            116,
+            194,
+            334,
+            222
+          ]
+        }
+      ]
+    },
+    {
+      "title": "2. Bottom Receipt / 票据字段合同",
+      "target": [
+        708,
+        134,
+        1128,
+        345
+      ],
+      "glyphs": [
+        {
+          "text": "本周行动",
+          "font_size": 13,
+          "glyph_bbox": [
+            145.0,
+            42.5,
+            197.0,
+            55.5
+          ],
+          "safe_box": [
+            106,
+            41,
+            236,
+            57
+          ]
+        },
+        {
+          "text": "余 6 天",
+          "font_size": 17,
+          "glyph_bbox": [
+            144.0,
+            73.0,
+            198.0,
+            91.0
+          ],
+          "safe_box": [
+            106,
+            73,
+            236,
+            91
+          ]
+        }
+      ]
+    },
+    {
+      "title": "3. Left Card / 小字段与标题合同",
+      "target": [
+        42,
+        566,
+        562,
+        1033
+      ],
+      "glyphs": [
+        {
+          "text": "红线升温  推荐2",
+          "font_size": 14,
+          "glyph_bbox": [
+            56.0,
+            44.0,
+            156.0,
+            57.0
+          ],
+          "safe_box": [
+            48,
+            42,
+            164,
+            59
+          ]
+        },
+        {
+          "text": "可派遣  线报2",
+          "font_size": 14,
+          "glyph_bbox": [
+            62.0,
+            216.0,
+            148.0,
+            230.0
+          ],
+          "safe_box": [
+            48,
+            214,
+            162,
+            232
+          ]
+        },
+        {
+          "text": "欧亚灰域",
+          "font_size": 18,
+          "glyph_bbox": [
+            142.0,
+            116.0,
+            214.0,
+            134.0
+          ],
+          "safe_box": [
+            93,
+            115,
+            263,
+            135
+          ]
+        }
+      ]
+    },
+    {
+      "title": "4. Right Header / 标题与状态合同",
+      "target": [
+        708,
+        566,
+        1318,
+        752
+      ],
+      "glyphs": [
+        {
+          "text": "北美禁区",
+          "font_size": 20,
+          "glyph_bbox": [
+            160.5,
+            42.0,
+            240.5,
+            63.0
+          ],
+          "safe_box": [
+            112,
+            42,
+            289,
+            63
+          ]
+        },
+        {
+          "text": "红线升温",
+          "font_size": 13,
+          "glyph_bbox": [
+            120.0,
+            86.0,
+            172.0,
+            98.0
+          ],
+          "safe_box": [
+            106,
+            85,
+            186,
+            99
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -92,6 +92,8 @@ v5 的核心改动是：先生成整屏美术母版，再从母版派生组件 a
 
 2026-06-15 用户明确选择 `wm_fullscreen_artboard_v6g_pixel_strong` 作为当前强像素拓展源。v6g 不直接替换运行界面，而是按资产化链路拆成组件候选：
 
+> 2026-06-30 分支覆盖规则：在 World Mystery Weekly 干净低多边形周刊支线中，v6g 已降级为历史 runtime-token / 资产化测试床，不再作为当前视觉标杆、组件扩展源或 crop-validation 真源。当前支线以 `docs/screenshots/2026-06-24-world-map-benchmark-landing/95-world-map-imagegen-color-recorrected-v0-51.png` 作为生图候选，以 proof v2 和 `2026-06-30-world-map-selected-region-palette-token-contract.md` 作为局部选区色号合同。
+
 - 中央地图底板：只承载地图材质、网格、低多边形纸质大陆；pin、路线、选中圈和标签由 Godot / atlas 负责。
 - 左索引栈：保留四张强像素纸卡和装订结构；每张卡的标题 / meta 文字进入 manifest 文字安全区，热区覆盖整张卡。
 - 右选区档案正文：只承载预览 / 正文纸面和夹具；CTA 从右档案中拆出独立按钮组件。

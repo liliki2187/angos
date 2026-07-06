@@ -1,0 +1,287 @@
+{
+  "artifact": "WMW resource-function fit preview v0.1",
+  "source_reference": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\258-world-map-wmw-benchmark-shell-reference-v0-1.png",
+  "contract_manifest": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\264-world-map-wmw-benchmark-component-resource-contract-v0-2.json",
+  "preview": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\265-world-map-wmw-resource-function-fit-preview-v0-1.png",
+  "qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\266-world-map-wmw-resource-function-fit-qa-v0-1.png",
+  "contact_sheet": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\267-world-map-wmw-resource-function-fit-crops-v0-1.png",
+  "purpose": "Validate whether benchmark visual shells can hold real runtime text/status/hit rects before producing no-text atlas assets.",
+  "result": "dry-run only; not production atlas; highlights fit risks before resource slicing",
+  "fit_report": [
+    {
+      "component": "right_dossier_sheet",
+      "role": "header_title_lane",
+      "rect": [
+        1266,
+        126,
+        1494,
+        168
+      ],
+      "text": "北美禁区带",
+      "font_size": 30,
+      "fits": true
+    },
+    {
+      "component": "right_dossier_sheet",
+      "role": "header_status_lane",
+      "rect": [
+        1268,
+        174,
+        1378,
+        198
+      ],
+      "text": "红线升温",
+      "font_size": 17,
+      "fits": true
+    },
+    {
+      "component": "right_dossier_sheet",
+      "role": "photo_caption_lane",
+      "rect": [
+        1217,
+        452,
+        1475,
+        478
+      ],
+      "text": "异常热点  卫星阵列 / 方尖碑",
+      "font_size": 17,
+      "fits": true
+    },
+    {
+      "component": "right_dossier_sheet",
+      "role": "stamp_slot",
+      "rect": [
+        1510,
+        130,
+        1604,
+        207
+      ],
+      "text": "高危 / 推荐 2",
+      "font_size": [
+        23,
+        16
+      ],
+      "fits": true
+    },
+    {
+      "component": "cta_primary",
+      "role": "button_label_plate",
+      "rect": [
+        1282,
+        516,
+        1534,
+        554
+      ],
+      "text": "进入北美禁区 · 消耗1天",
+      "font_size": 22,
+      "fits": true
+    },
+    {
+      "component": "cta_secondary",
+      "role": "button_label_plate",
+      "rect": [
+        1282,
+        597,
+        1534,
+        635
+      ],
+      "text": "查看任务情报 · 线报3",
+      "font_size": 23,
+      "fits": true
+    },
+    {
+      "component": "cta_warning",
+      "role": "button_label_plate",
+      "rect": [
+        1282,
+        679,
+        1534,
+        717
+      ],
+      "text": "红线截止 · 4天",
+      "font_size": 23,
+      "fits": true
+    },
+    {
+      "component": "left_na",
+      "role": "card_title_meta_plate",
+      "rect": [
+        66,
+        265,
+        238,
+        315
+      ],
+      "text": "北美禁区带 / 红线升温 推荐2",
+      "font_size": [
+        20,
+        14
+      ],
+      "fits": true
+    },
+    {
+      "component": "left_eu",
+      "role": "card_title_meta_plate",
+      "rect": [
+        66,
+        486,
+        232,
+        541
+      ],
+      "text": "欧洲灰域 / 可派遣 线报2",
+      "font_size": [
+        20,
+        14
+      ],
+      "fits": true
+    },
+    {
+      "component": "left_af",
+      "role": "card_title_meta_plate",
+      "rect": [
+        66,
+        670,
+        238,
+        718
+      ],
+      "text": "非洲禁区带",
+      "font_size": 22,
+      "fits": true
+    },
+    {
+      "component": "left_sa",
+      "role": "card_title_meta_plate",
+      "rect": [
+        66,
+        850,
+        240,
+        898
+      ],
+      "text": "南美禁区带",
+      "font_size": 22,
+      "fits": true
+    },
+    {
+      "component": "receipt_action",
+      "role": "receipt_title_lane",
+      "rect": [
+        502,
+        770,
+        650,
+        798
+      ],
+      "text": "本周行动",
+      "font_size": 20,
+      "fits": true
+    },
+    {
+      "component": "receipt_action",
+      "role": "receipt_value_lane",
+      "rect": [
+        502,
+        806,
+        650,
+        838
+      ],
+      "text": "余 6 天",
+      "font_size": 21,
+      "fits": true
+    },
+    {
+      "component": "receipt_action",
+      "role": "receipt_progress_bar",
+      "rect": [
+        422,
+        848,
+        650,
+        887
+      ],
+      "text": "",
+      "font_size": null,
+      "fits": true
+    },
+    {
+      "component": "receipt_info",
+      "role": "receipt_title_lane",
+      "rect": [
+        790,
+        770,
+        930,
+        798
+      ],
+      "text": "情报余量",
+      "font_size": 20,
+      "fits": true
+    },
+    {
+      "component": "receipt_info",
+      "role": "receipt_value_lane",
+      "rect": [
+        790,
+        806,
+        930,
+        838
+      ],
+      "text": "线报 3",
+      "font_size": 21,
+      "fits": true
+    },
+    {
+      "component": "receipt_info",
+      "role": "receipt_progress_bar",
+      "rect": [
+        710,
+        850,
+        940,
+        888
+      ],
+      "text": "",
+      "font_size": null,
+      "fits": true
+    },
+    {
+      "component": "receipt_redline",
+      "role": "receipt_title_lane",
+      "rect": [
+        1058,
+        770,
+        1196,
+        798
+      ],
+      "text": "红线台账",
+      "font_size": 20,
+      "fits": true
+    },
+    {
+      "component": "receipt_redline",
+      "role": "receipt_value_lane",
+      "rect": [
+        1058,
+        806,
+        1196,
+        838
+      ],
+      "text": "4天后升温",
+      "font_size": 21,
+      "fits": true
+    },
+    {
+      "component": "receipt_redline",
+      "role": "receipt_progress_bar",
+      "rect": [
+        982,
+        850,
+        1200,
+        888
+      ],
+      "text": "",
+      "font_size": null,
+      "fits": true
+    }
+  ],
+  "gates": {
+    "dynamic_text_drawn_runtime_style": true,
+    "bitmap_shell_preserved_from_benchmark_reference": true,
+    "no_text_atlas_not_yet_created": true,
+    "requires_100_percent_crop_review_before_atlas": true
+  }
+}

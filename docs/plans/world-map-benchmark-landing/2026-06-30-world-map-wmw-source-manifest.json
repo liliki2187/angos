@@ -1,0 +1,117 @@
+{
+  "id": "world_map_wmw_benchmark_branch",
+  "status": "branch_source_of_truth_manifest",
+  "target_view": "weekly_run.explore.world",
+  "canvas_size": [1920, 1080],
+  "source_boundaries": {
+    "style_candidate": {
+      "id": "v0_51_generated_candidate",
+      "path": "docs/screenshots/2026-06-24-world-map-benchmark-landing/95-world-map-imagegen-color-recorrected-v0-51.png",
+      "role": "Generated visual style candidate for the World Mystery Weekly branch. Not a production slicing source by itself."
+    },
+    "color_guardrail": {
+      "id": "first_version_color_reference",
+      "path": "docs/screenshots/2026-06-24-world-map-benchmark-landing/92-world-map-first-version-color-reference.png",
+      "role": "Brightness and overall color guardrail used to reject full-screen dark drift."
+    },
+    "local_proof": {
+      "id": "selected_region_olive_proof_v2",
+      "paths": [
+        "docs/screenshots/2026-06-24-world-map-benchmark-landing/103-world-map-v051-local-olive-grade-proof-v2.png",
+        "docs/screenshots/2026-06-24-world-map-benchmark-landing/104-world-map-v051-local-olive-proof-v2-color-check.png"
+      ],
+      "role": "Local palette-token proof for selected-region olive. Not a generated full-screen style candidate."
+    },
+    "runtime_testbed": {
+      "id": "legacy_v6g_runtime_token_preview",
+      "paths": [
+        "docs/screenshots/2026-06-24-world-map-benchmark-landing/105-world-map-v6g-runtime-selected-olive-token-preview.png",
+        "docs/screenshots/2026-06-24-world-map-benchmark-landing/106-world-map-v6g-runtime-selected-olive-token-safe-zones.png"
+      ],
+      "role": "Legacy v6g Godot token preview only. Not benchmark acceptance art and not a current component source."
+    }
+  },
+  "contracts": {
+    "single_state_component_contract": "docs/plans/world-map-benchmark-landing/2026-06-30-world-map-wmw-single-state-component-contract.json",
+    "no_text_orthogonal_imagegen_brief": "docs/plans/world-map-benchmark-landing/2026-06-30-world-map-wmw-no-text-orthogonal-imagegen-brief.md"
+  },
+  "palette_tokens": {
+    "selected_region_olive": "#606548",
+    "selected_region_olive_dark": "#5B5E3E",
+    "selected_region_olive_light": "#807E50"
+  },
+  "production_components": [
+    {
+      "id": "wmw_map_board_no_text",
+      "status": "pending",
+      "must_support": ["region_masks", "runtime_pins", "runtime_selected_overlay"]
+    },
+    {
+      "id": "wmw_left_region_card_stack",
+      "status": "pending",
+      "must_support": ["normal", "hover", "selected", "locked", "urgent"]
+    },
+    {
+      "id": "wmw_right_dossier_sheet",
+      "status": "pending",
+      "must_support": ["orthogonal_content_rects", "media_viewport", "status_stamp_slot", "cta_anchor"]
+    },
+    {
+      "id": "wmw_bottom_status_cards",
+      "status": "pending",
+      "must_support": ["global_action_summary", "intel_summary", "deadline_summary"]
+    },
+    {
+      "id": "wmw_cta_plate_atlas",
+      "status": "pending",
+      "must_support": ["default", "hover", "pressed", "disabled", "loading"]
+    },
+    {
+      "id": "wmw_sticker_icon_atlas",
+      "status": "pending",
+      "must_support": ["globe", "eye", "warning", "check", "hand"]
+    }
+  ],
+  "runtime_fields": [
+    "region_name",
+    "region_status",
+    "difficulty",
+    "recommendation",
+    "intel_count",
+    "task_count",
+    "remaining_days",
+    "action_day_cost",
+    "deadline_countdown",
+    "macro_attribute_values",
+    "button_labels",
+    "hover_selected_disabled_locked_urgent_completed_states"
+  ],
+  "fixed_art_assets": [
+    "WMW",
+    "globe_sticker",
+    "eye_sticker",
+    "warning_sticker",
+    "hand_sticker",
+    "short_status_stamp_shells"
+  ],
+  "rejection_rules": [
+    "full_screen_dark_drift",
+    "tilted_content_panels",
+    "tilted_functional_components",
+    "tilted_interactive_or_state_components",
+    "skewed_or_perspective_content_rects",
+    "blank_placeholder_text_fields",
+    "runtime_text_baked_into_generated_texture",
+    "legacy_v6g_used_as_current_benchmark",
+    "high_saturation_yellowgreen_selected_region",
+    "over_detailed_micro_ui_clutter",
+    "dense_world_map_triangulation_mesh",
+    "flat_component_bodies_without_lowpoly_color_blocks",
+    "crease_or_wrinkle_lines_cross_runtime_text_slots",
+    "high_contrast_diagonal_fold_or_tear_patch_on_functional_component",
+    "v0_55_right_dossier_slant_regression",
+    "manual_qa_box_aligned_but_actual_component_edge_slanted",
+    "v0_56_bottom_receipt_fold_and_cta_slant_regression",
+    "orthogonality_overcorrection_erases_benchmark_style_dna"
+  ]
+}

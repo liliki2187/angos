@@ -18,6 +18,12 @@
 - `design/art-direction/references/clean-lowpoly-weekly-branch/benchmark-board-01.png`
 - `design/art-direction/references/clean-lowpoly-weekly-branch/benchmark-board-02.png`
 
+纸张材质合同：
+
+- `design/art-direction/clean-lowpoly-weekly-paper-material-contract.md`
+- `docs/screenshots/2026-07-01-wmw-component-correction/13-wmw-paper-material-truth-board-v0-3.png`
+- `docs/screenshots/2026-07-01-wmw-component-correction/14-wmw-paper-material-truth-samples-v0-3.json`
+
 关键问题裁切：
 
 - `design/art-direction/references/clean-lowpoly-weekly-branch/sticker-reference-crop.png`
@@ -34,6 +40,8 @@
 - `docs/screenshots/2026-06-24-world-map-benchmark-landing/09-world-map-1920-dossier-v0-4-validation.png`
 - `docs/screenshots/2026-06-24-world-map-benchmark-landing/10-ticket-symbol-atlas-v0-5-handdrawn.png`
 - `docs/screenshots/2026-06-24-world-map-benchmark-landing/11-ticket-symbol-atlas-v0-6-premium-light.png`
+- `docs/screenshots/2026-07-01-wmw-component-correction/01-wmw-component-correction-sheet-v0-1.png`
+- `docs/screenshots/2026-07-01-wmw-component-correction/02-wmw-component-correction-sheet-v0-2-no-text.png`
 
 ## 3. 核心理解
 
@@ -138,6 +146,24 @@
 9. **信息承载面被纸件感带斜。**  
    v0.18 虽然减少了碎三角和微细节，但右侧 dossier、左侧地区卡、底部票据整体倾斜，违反“承载信息的 UI 面必须正交”的硬规则。后续 prompt 和验收必须先锁定：凡有动态文字、可点击热区、缩略图框、状态条、按钮文案或真实中文填充的正面区域，一律 0 度水平 / 垂直；斜切、胶带、夹子、背后纸张露边只能存在于 no-text 装饰层。
 
+10. **为了修正交把风格修平。**  
+    v0.54 这类正交约束稿虽然改善了功能面倾斜，但中央世界地图多边形变成更碎的细密三角网，左侧卡片、右侧 dossier、CTA 和底部票据上的低多边形平面色块被抹平，结果从“低多边形周刊纸品”滑向“干净软件 UI”。后续必须双闸门验收：先看功能面是否正交，再看同一批功能面是否仍保留大块平面色块、4-8 个主要明度块面、块状阴影和手绘贴纸张力。不能用扁平空白矩形解决文字安全区。
+
+11. **把色块误写成褶皱。**  
+    v0.55 的 prompt 把标杆文字组件上的平面明度色块误写为 `folds / 褶皱 / 折痕`，导致文本槽出现纸张折起感。原标杆的文字组件不是折纸纹理：它们只有低对比、平面的低多边形色块和明度块面，不应有明显 crease / wrinkle 线穿过可写区。后续 prompt 必须写 `flat low-poly color-value blocks`，并负向排除 `creases / wrinkles across text slots`。
+
+12. **右侧 dossier 轻斜仍然一票否决。**  
+    v0.55 虽然找回了一部分大色块，但右侧 dossier / CTA stack 仍有可见倾斜。该图降级为“色块恢复但正交失败”的偏差样本，不得作为生产候选或下一步切图源。后续生成后必须先裁切右侧 dossier、CTA stack、底部 receipt 并叠水平 / 垂直参考线；只看整屏观感或说“基本正”都不算验收。
+
+13. **QA 框不能替代真实边线。**  
+    v0.56 暴露两个复发问题：底部 receipt 右侧出现高对比白色折角 / 撕裂状痕迹，仍然把“平面低多边形色块”误生成为纸张 fold / tear；右侧 CTA stack 的真实生成边线仍有可见倾斜。`111-world-map-wmw-flat-color-orthogonal-v0-56-qa.png` 与 `112-world-map-wmw-flat-color-orthogonal-v0-56-right-qa-crop.png` 只能证明手动画的参考框是正的，不能证明图本身正交。后续 QA 线必须贴住真实生成边缘；只要真实边缘斜，即使参考框水平也失败。
+
+14. **把组件校正误扩成整屏重生。**  
+    用户的原始诉求是把标杆中的组件改成能承载真实游戏 UI 的组件语言，而不是持续重生整张世界地图。整屏生图每次都会重新解释地图、配色、纸张、按钮、材质和构图，导致旧优点被冲掉、新问题不断出现。后续应先做组件校正板：地区卡、右侧 dossier、CTA、底部 receipt、贴纸图标、标题条等逐类转译；只修正正交、可写区、状态矩阵和符号嵌合问题，其它标杆味道尽量不动。组件板通过后，再把组件放回世界地图做单状态验证。
+
+15. **不能靠 prompt 形容词复刻纸张。**  
+    纸张是这条支线的基础材质，不能每轮让生图模型重新理解 `warm beige / advanced gray / paper texture`。后续必须先引用 `clean-lowpoly-weekly-paper-material-contract.md`：从标杆裁切 token 锁定纸色和纸纹，再做组件形状、生图、后处理或回填验证。v0.5 只能作为色彩方向候选，不是纸张材质真源；纸张真源来自标杆 crop board。
+
 ## 7.5 高级感 / 舒适度闸门
 
 小组件必须同时满足“手绘概括”和“干净高级”。不能只因为符号不规整、色块回来了，就放行。
@@ -204,6 +230,8 @@ v0.7 的临时色彩目标：
 - v0.16 是当前较干净的小组件候选，适合进入真实 UI 验证，但仍不是 exact 色号通过。
 - v0.18 在“大块色面、低微细节”上比 v0.17 有进步，但因信息面倾斜，降级为偏差样本。
 - v0.19 是当前世界地图局部落地验证候选：在保持 v0.18 大块面方向的同时，恢复了信息承载面的正交硬规则。
+- 2026-07-01 的 `02-wmw-component-correction-sheet-v0-2-no-text.png` 是组件转译候选：相比继续整屏重生，它更符合“先修可复用组件、其它不动”的流程；但尚未经过真实中文填充、逐组件安全区、色号复采样和像素艺术复审，不能升级为生产候选。
+- 2026-07-01 的 `07-wmw-component-correction-sheet-v0-5-balanced-advanced-gray.png` 是当前“高级灰但不土”的色彩方向候选：比 v0.3 少黄褐土味，比 v0.4 少旧档案感。它仍不是生产候选；warning / rust 的饱和度和纸面高光还需在真实世界地图单状态里继续压测。
 
 仍未通过：
 

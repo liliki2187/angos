@@ -1,0 +1,994 @@
+{
+  "artifact": "WMW resource-function fit semantic QA v0.2",
+  "date": "2026-07-03",
+  "source_reference": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\258-world-map-wmw-benchmark-shell-reference-v0-1.png",
+  "previous_failed_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\266-world-map-wmw-resource-function-fit-qa-v0-1.png",
+  "semantic_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\269-world-map-wmw-resource-function-fit-v0-2-semantic-qa.png",
+  "contact_sheet": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\270-world-map-wmw-resource-function-fit-v0-2-semantic-crops.png",
+  "purpose": "Rebuild QA contract so visual module, text plate, ink safe, and hit rect are separate and visibly mapped to the benchmark resource.",
+  "status": "v0.2 clean semantic QA generated; ready for visual review, not production atlas",
+  "layer_legend": {
+    "visual_module_rect": "Actual colored/paper surface visible in the art. Must match the real GUI module, including bevel but excluding unrelated decoration.",
+    "text_plate_rect": "Surface intended to carry text. Must sit inside the visual module and follow the real plate, not an arbitrary authored box.",
+    "ink_safe_rect": "Inner glyph rendering box. Smaller than text_plate_rect; text fit checks apply here.",
+    "hit_rect": "Clickable area. May be larger than glyph/plate, but must not be confused with visual glyph location.",
+    "glyph_rect": "Icon/arrow/check glyph visible area only; not a hit rect."
+  },
+  "components": [
+    {
+      "id": "right_dossier_sheet",
+      "layers": [
+        {
+          "role": "paper_visual_module",
+          "type": "visual_module_rect",
+          "rect": [
+            1174,
+            98,
+            1642,
+            760
+          ]
+        },
+        {
+          "role": "photo_art_module",
+          "type": "art_rect",
+          "rect": [
+            1202,
+            214,
+            1615,
+            441
+          ]
+        },
+        {
+          "role": "header_title_plate",
+          "type": "text_plate_rect",
+          "rect": [
+            1266,
+            129,
+            1495,
+            166
+          ]
+        },
+        {
+          "role": "header_title_ink_safe",
+          "type": "ink_safe_rect",
+          "rect": [
+            1278,
+            135,
+            1482,
+            159
+          ]
+        },
+        {
+          "role": "header_status_plate",
+          "type": "text_plate_rect",
+          "rect": [
+            1269,
+            177,
+            1377,
+            198
+          ]
+        },
+        {
+          "role": "header_status_ink_safe",
+          "type": "ink_safe_rect",
+          "rect": [
+            1276,
+            181,
+            1370,
+            195
+          ]
+        },
+        {
+          "role": "stamp_visual_module",
+          "type": "visual_module_rect",
+          "rect": [
+            1510,
+            130,
+            1605,
+            205
+          ]
+        },
+        {
+          "role": "stamp_ink_safe",
+          "type": "ink_safe_rect",
+          "rect": [
+            1530,
+            145,
+            1586,
+            190
+          ]
+        },
+        {
+          "role": "caption_plate",
+          "type": "text_plate_rect",
+          "rect": [
+            1218,
+            451,
+            1475,
+            478
+          ]
+        },
+        {
+          "role": "caption_ink_safe",
+          "type": "ink_safe_rect",
+          "rect": [
+            1228,
+            457,
+            1464,
+            471
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cta_primary",
+      "layers": [
+        {
+          "role": "row_visual_module",
+          "type": "visual_module_rect",
+          "rect": [
+            1187,
+            502,
+            1630,
+            570
+          ]
+        },
+        {
+          "role": "label_text_plate",
+          "type": "text_plate_rect",
+          "rect": [
+            1264,
+            516,
+            1532,
+            556
+          ]
+        },
+        {
+          "role": "label_ink_safe",
+          "type": "ink_safe_rect",
+          "rect": [
+            1280,
+            524,
+            1518,
+            548
+          ]
+        },
+        {
+          "role": "left_icon_visual_plate",
+          "type": "visual_module_rect",
+          "rect": [
+            1202,
+            512,
+            1264,
+            560
+          ]
+        },
+        {
+          "role": "action_visual_plate",
+          "type": "visual_module_rect",
+          "rect": [
+            1543,
+            511,
+            1612,
+            560
+          ]
+        },
+        {
+          "role": "action_glyph_rect",
+          "type": "glyph_rect",
+          "rect": [
+            1562,
+            521,
+            1595,
+            551
+          ]
+        },
+        {
+          "role": "action_hit_rect",
+          "type": "hit_rect",
+          "rect": [
+            1535,
+            506,
+            1620,
+            566
+          ]
+        },
+        {
+          "role": "row_hit_rect",
+          "type": "hit_rect",
+          "rect": [
+            1187,
+            502,
+            1630,
+            570
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cta_secondary",
+      "layers": [
+        {
+          "role": "row_visual_module",
+          "type": "visual_module_rect",
+          "rect": [
+            1187,
+            583,
+            1628,
+            648
+          ]
+        },
+        {
+          "role": "label_text_plate",
+          "type": "text_plate_rect",
+          "rect": [
+            1264,
+            598,
+            1532,
+            636
+          ]
+        },
+        {
+          "role": "label_ink_safe",
+          "type": "ink_safe_rect",
+          "rect": [
+            1280,
+            604,
+            1518,
+            628
+          ]
+        },
+        {
+          "role": "left_icon_visual_plate",
+          "type": "visual_module_rect",
+          "rect": [
+            1202,
+            593,
+            1264,
+            640
+          ]
+        },
+        {
+          "role": "action_visual_plate",
+          "type": "visual_module_rect",
+          "rect": [
+            1543,
+            591,
+            1612,
+            640
+          ]
+        },
+        {
+          "role": "action_glyph_rect",
+          "type": "glyph_rect",
+          "rect": [
+            1564,
+            602,
+            1595,
+            632
+          ]
+        },
+        {
+          "role": "action_hit_rect",
+          "type": "hit_rect",
+          "rect": [
+            1535,
+            586,
+            1620,
+            646
+          ]
+        },
+        {
+          "role": "row_hit_rect",
+          "type": "hit_rect",
+          "rect": [
+            1187,
+            583,
+            1628,
+            648
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cta_warning",
+      "layers": [
+        {
+          "role": "row_visual_module",
+          "type": "visual_module_rect",
+          "rect": [
+            1187,
+            665,
+            1628,
+            730
+          ]
+        },
+        {
+          "role": "label_text_plate",
+          "type": "text_plate_rect",
+          "rect": [
+            1264,
+            681,
+            1532,
+            718
+          ]
+        },
+        {
+          "role": "label_ink_safe",
+          "type": "ink_safe_rect",
+          "rect": [
+            1280,
+            687,
+            1518,
+            710
+          ]
+        },
+        {
+          "role": "left_icon_visual_plate",
+          "type": "visual_module_rect",
+          "rect": [
+            1202,
+            675,
+            1264,
+            722
+          ]
+        },
+        {
+          "role": "action_visual_plate",
+          "type": "visual_module_rect",
+          "rect": [
+            1543,
+            674,
+            1612,
+            723
+          ]
+        },
+        {
+          "role": "action_glyph_rect",
+          "type": "glyph_rect",
+          "rect": [
+            1560,
+            686,
+            1595,
+            715
+          ]
+        },
+        {
+          "role": "action_hit_rect",
+          "type": "hit_rect",
+          "rect": [
+            1535,
+            669,
+            1620,
+            729
+          ]
+        },
+        {
+          "role": "row_hit_rect",
+          "type": "hit_rect",
+          "rect": [
+            1187,
+            665,
+            1628,
+            730
+          ]
+        }
+      ]
+    },
+    {
+      "id": "left_na",
+      "layers": [
+        {
+          "role": "card_visual_module",
+          "type": "visual_module_rect",
+          "rect": [
+            42,
+            103,
+            383,
+            328
+          ]
+        },
+        {
+          "role": "thumbnail_art_module",
+          "type": "art_rect",
+          "rect": [
+            70,
+            128,
+            365,
+            255
+          ]
+        },
+        {
+          "role": "label_text_plate",
+          "type": "text_plate_rect",
+          "rect": [
+            66,
+            263,
+            238,
+            315
+          ]
+        },
+        {
+          "role": "label_ink_safe",
+          "type": "ink_safe_rect",
+          "rect": [
+            78,
+            271,
+            228,
+            307
+          ]
+        },
+        {
+          "role": "state_action_visual_plate",
+          "type": "visual_module_rect",
+          "rect": [
+            307,
+            262,
+            365,
+            318
+          ]
+        },
+        {
+          "role": "state_action_glyph_rect",
+          "type": "glyph_rect",
+          "rect": [
+            322,
+            279,
+            350,
+            305
+          ]
+        },
+        {
+          "role": "state_action_hit_rect",
+          "type": "hit_rect",
+          "rect": [
+            304,
+            258,
+            370,
+            323
+          ]
+        },
+        {
+          "role": "card_hit_rect",
+          "type": "hit_rect",
+          "rect": [
+            42,
+            103,
+            383,
+            328
+          ]
+        }
+      ]
+    },
+    {
+      "id": "left_eu",
+      "layers": [
+        {
+          "role": "card_visual_module",
+          "type": "visual_module_rect",
+          "rect": [
+            42,
+            342,
+            383,
+            554
+          ]
+        },
+        {
+          "role": "thumbnail_art_module",
+          "type": "art_rect",
+          "rect": [
+            70,
+            368,
+            365,
+            476
+          ]
+        },
+        {
+          "role": "label_text_plate",
+          "type": "text_plate_rect",
+          "rect": [
+            66,
+            485,
+            232,
+            541
+          ]
+        },
+        {
+          "role": "label_ink_safe",
+          "type": "ink_safe_rect",
+          "rect": [
+            78,
+            493,
+            222,
+            532
+          ]
+        },
+        {
+          "role": "state_action_visual_plate",
+          "type": "visual_module_rect",
+          "rect": [
+            307,
+            485,
+            365,
+            541
+          ]
+        },
+        {
+          "role": "state_action_glyph_rect",
+          "type": "glyph_rect",
+          "rect": [
+            320,
+            497,
+            354,
+            530
+          ]
+        },
+        {
+          "role": "state_action_hit_rect",
+          "type": "hit_rect",
+          "rect": [
+            304,
+            480,
+            370,
+            546
+          ]
+        },
+        {
+          "role": "card_hit_rect",
+          "type": "hit_rect",
+          "rect": [
+            42,
+            342,
+            383,
+            554
+          ]
+        }
+      ]
+    },
+    {
+      "id": "left_af",
+      "layers": [
+        {
+          "role": "card_visual_module",
+          "type": "visual_module_rect",
+          "rect": [
+            42,
+            562,
+            383,
+            726
+          ]
+        },
+        {
+          "role": "thumbnail_art_module",
+          "type": "art_rect",
+          "rect": [
+            70,
+            587,
+            365,
+            657
+          ]
+        },
+        {
+          "role": "label_text_plate",
+          "type": "text_plate_rect",
+          "rect": [
+            66,
+            667,
+            238,
+            717
+          ]
+        },
+        {
+          "role": "label_ink_safe",
+          "type": "ink_safe_rect",
+          "rect": [
+            78,
+            674,
+            228,
+            708
+          ]
+        },
+        {
+          "role": "state_action_visual_plate",
+          "type": "visual_module_rect",
+          "rect": [
+            307,
+            671,
+            365,
+            718
+          ]
+        },
+        {
+          "role": "state_action_glyph_rect",
+          "type": "glyph_rect",
+          "rect": [
+            324,
+            683,
+            349,
+            706
+          ]
+        },
+        {
+          "role": "state_action_hit_rect",
+          "type": "hit_rect",
+          "rect": [
+            304,
+            665,
+            370,
+            722
+          ]
+        },
+        {
+          "role": "card_hit_rect",
+          "type": "hit_rect",
+          "rect": [
+            42,
+            562,
+            383,
+            726
+          ]
+        }
+      ]
+    },
+    {
+      "id": "left_sa",
+      "layers": [
+        {
+          "role": "card_visual_module",
+          "type": "visual_module_rect",
+          "rect": [
+            42,
+            727,
+            383,
+            899
+          ]
+        },
+        {
+          "role": "thumbnail_art_module",
+          "type": "art_rect",
+          "rect": [
+            70,
+            755,
+            365,
+            841
+          ]
+        },
+        {
+          "role": "label_text_plate",
+          "type": "text_plate_rect",
+          "rect": [
+            66,
+            851,
+            240,
+            897
+          ]
+        },
+        {
+          "role": "label_ink_safe",
+          "type": "ink_safe_rect",
+          "rect": [
+            78,
+            858,
+            230,
+            890
+          ]
+        },
+        {
+          "role": "state_action_visual_plate",
+          "type": "visual_module_rect",
+          "rect": [
+            307,
+            849,
+            365,
+            896
+          ]
+        },
+        {
+          "role": "state_action_glyph_rect",
+          "type": "glyph_rect",
+          "rect": [
+            326,
+            862,
+            348,
+            884
+          ]
+        },
+        {
+          "role": "state_action_hit_rect",
+          "type": "hit_rect",
+          "rect": [
+            304,
+            844,
+            370,
+            900
+          ]
+        },
+        {
+          "role": "card_hit_rect",
+          "type": "hit_rect",
+          "rect": [
+            42,
+            727,
+            383,
+            899
+          ]
+        }
+      ]
+    },
+    {
+      "id": "receipt_action",
+      "layers": [
+        {
+          "role": "receipt_visual_module",
+          "type": "visual_module_rect",
+          "rect": [
+            407,
+            744,
+            676,
+            899
+          ]
+        },
+        {
+          "role": "title_text_plate",
+          "type": "text_plate_rect",
+          "rect": [
+            502,
+            766,
+            615,
+            797
+          ]
+        },
+        {
+          "role": "title_ink_safe",
+          "type": "ink_safe_rect",
+          "rect": [
+            512,
+            772,
+            604,
+            790
+          ]
+        },
+        {
+          "role": "value_text_plate",
+          "type": "text_plate_rect",
+          "rect": [
+            502,
+            803,
+            615,
+            839
+          ]
+        },
+        {
+          "role": "value_ink_safe",
+          "type": "ink_safe_rect",
+          "rect": [
+            516,
+            810,
+            604,
+            832
+          ]
+        },
+        {
+          "role": "progress_visual_module",
+          "type": "visual_module_rect",
+          "rect": [
+            428,
+            851,
+            640,
+            882
+          ]
+        },
+        {
+          "role": "progress_hit_rect",
+          "type": "hit_rect",
+          "rect": [
+            428,
+            851,
+            640,
+            882
+          ]
+        },
+        {
+          "role": "receipt_hit_rect",
+          "type": "hit_rect",
+          "rect": [
+            407,
+            744,
+            676,
+            899
+          ]
+        }
+      ]
+    },
+    {
+      "id": "receipt_info",
+      "layers": [
+        {
+          "role": "receipt_visual_module",
+          "type": "visual_module_rect",
+          "rect": [
+            691,
+            744,
+            945,
+            899
+          ]
+        },
+        {
+          "role": "title_text_plate",
+          "type": "text_plate_rect",
+          "rect": [
+            792,
+            766,
+            902,
+            797
+          ]
+        },
+        {
+          "role": "title_ink_safe",
+          "type": "ink_safe_rect",
+          "rect": [
+            802,
+            772,
+            894,
+            790
+          ]
+        },
+        {
+          "role": "value_text_plate",
+          "type": "text_plate_rect",
+          "rect": [
+            792,
+            803,
+            902,
+            839
+          ]
+        },
+        {
+          "role": "value_ink_safe",
+          "type": "ink_safe_rect",
+          "rect": [
+            806,
+            810,
+            894,
+            832
+          ]
+        },
+        {
+          "role": "progress_visual_module",
+          "type": "visual_module_rect",
+          "rect": [
+            713,
+            852,
+            928,
+            882
+          ]
+        },
+        {
+          "role": "progress_hit_rect",
+          "type": "hit_rect",
+          "rect": [
+            713,
+            852,
+            928,
+            882
+          ]
+        },
+        {
+          "role": "receipt_hit_rect",
+          "type": "hit_rect",
+          "rect": [
+            691,
+            744,
+            945,
+            899
+          ]
+        }
+      ]
+    },
+    {
+      "id": "receipt_warning",
+      "layers": [
+        {
+          "role": "receipt_visual_module",
+          "type": "visual_module_rect",
+          "rect": [
+            965,
+            744,
+            1216,
+            899
+          ]
+        },
+        {
+          "role": "title_text_plate",
+          "type": "text_plate_rect",
+          "rect": [
+            1060,
+            766,
+            1178,
+            797
+          ]
+        },
+        {
+          "role": "title_ink_safe",
+          "type": "ink_safe_rect",
+          "rect": [
+            1070,
+            772,
+            1170,
+            790
+          ]
+        },
+        {
+          "role": "value_text_plate",
+          "type": "text_plate_rect",
+          "rect": [
+            1060,
+            803,
+            1180,
+            839
+          ]
+        },
+        {
+          "role": "value_ink_safe",
+          "type": "ink_safe_rect",
+          "rect": [
+            1073,
+            810,
+            1172,
+            832
+          ]
+        },
+        {
+          "role": "progress_visual_module",
+          "type": "visual_module_rect",
+          "rect": [
+            1002,
+            852,
+            1180,
+            882
+          ]
+        },
+        {
+          "role": "progress_hit_rect",
+          "type": "hit_rect",
+          "rect": [
+            1002,
+            852,
+            1180,
+            882
+          ]
+        },
+        {
+          "role": "receipt_hit_rect",
+          "type": "hit_rect",
+          "rect": [
+            965,
+            744,
+            1216,
+            899
+          ]
+        }
+      ]
+    }
+  ],
+  "v0_1_failure_fixed": [
+    "right_action_icon_hit split into action_visual_plate, action_glyph_rect, and action_hit_rect",
+    "green ink-safe rectangles no longer imply full visual plate overlap",
+    "bottom receipt title/value/progress lanes have separate text_plate and ink_safe layers",
+    "left card labels separate card visual module, text plate, state glyph, and hit rect"
+  ],
+  "known_limitations": [
+    "Coordinates are manually authored from the benchmark shell; final atlas must re-check against no-text assets.",
+    "The source is still a text-baked benchmark image, so text removal / clean shell is not represented here.",
+    "This is a contract QA image, not a final runtime screenshot."
+  ],
+  "semantic_qa_clean": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\272-world-map-wmw-resource-function-fit-v0-2-clean-semantic-qa.png",
+  "contact_sheet_clean": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\273-world-map-wmw-resource-function-fit-v0-2-clean-semantic-crops.png",
+  "validation_summary": {
+    "component_count": 11,
+    "layer_count": 90,
+    "axis_aligned_rects": 90,
+    "validation_issues": [],
+    "validation_pass": true
+  }
+}

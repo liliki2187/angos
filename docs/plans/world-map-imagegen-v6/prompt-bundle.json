@@ -1,7 +1,7 @@
 {
   "id": "world_map_imagegen_v6_prompt_bundle",
   "version": 1,
-  "status": "v6g_component_expansion_ready_for_codex_image2",
+  "status": "legacy_v6g_component_expansion_testbed_not_current_benchmark",
   "target_manifest": "gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/world_map_imagegen_manifest.json",
   "output_root": "image_gen/YYYY-MM-DD/",
   "generation_policy": {

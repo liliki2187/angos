@@ -66,6 +66,75 @@
 - **应用范围**：世界地图、地区任务台、派遣签批台、报道主板、任何资产化 UI 风格实验、生图风格稿、色彩锁定稿、像素颗粒度实验和后续生产候选。
 - **状态**：已采纳为资产化 UI 阶段判断硬门槛，并同步到 `docs/onboarding/assetized-ui-production-chain.md` 与 `docs/onboarding/subagent-collaboration-improvement.md`。后续若父级或子 agent 再把风格锁定稿之后的当前下一步说成资产拆分，应判定为流程违规并立即纠正。
 
+### A122. Angus workflow harness 采用从轻到重的 Router / Manifest / Lab / Hard Gate 渐进链
+
+- **来源**：2026-06-29 关于 AI 工作流从 harness 到 loop 的讨论。用户在检索近期错题本后确认：按“先轻量、再中间验证实验、最后高风险硬 gate”的方案开始完善，避免一步到位走得太远。
+- **机制 / 原则**：Angus 不直接上重型自动 workflow。先用 `Router Card` 在开工前判断任务类型、风险等级、当前阶段、目标载体、必读真源、必调 agent、本轮只验证什么和本轮不做什么；再用 `Delivery Manifest` 在交付前声明产物类型、能证明什么、不能证明什么、已过 / 未过 gate、下一步允许做什么和禁止跳到什么。只有 risky / production 任务才进入 hard gate；tiny typo、明显小 bug 和低风险单点修复可轻量处理。
+- **Loop 口径**：工作 loop 从“用户纠错后沉淀”前移到“交付前 Route -> Scope -> Build -> Inspect -> Classify -> Decide -> Sediment”。其中 `Classify` 是关键步骤：如果产物只是逻辑烟测、safe-zone 容量验证、无字风格稿或运行骨架图，父级必须主动降级，不得包装成视觉验收、真实内容风格稿、生产候选或真源候选。
+- **中间验证实验**：在脚本化或 CI 化前，先做 3-5 次 Workflow Lab：产物类型判定、阶段跳转、agent 调用预算、截图验收和沉淀分层实验。只有证明某个 gate 能稳定减少误判，才考虑写成轻量检查脚本或自动阻断。
+- **防僵化边界**：不得把 harness 误用成所有任务强制多 agent 会审；subagent 只提供证据链，父级 Codex 是 DRI，负责合并冲突、说明取舍成本并在必要时交给用户裁决。连续两轮同类失败时应熔断，回到上游定义或请用户裁决，而不是继续生成。
+- **落地文档**：执行入口为 `docs/workflows/angus-workflow-harness.md`；机器可读 gate 草案为 `docs/workflows/workflow-gates.yml`；模板位于 `docs/workflows/templates/`。
+- **应用范围**：AI / Codex 协作流程、复杂 UI / 资产化 UI / 生图 / 主流程玩法 / 数值 / 状态机 / GDD 真源变更 / 生产候选交付。具体任务仍需按总索引跨读 UI、机制、美术或其它分册。
+- **状态**：已采纳为渐进 workflow 入口；已新增 `docs/workflows/` 文档和模板，并同步到 `AGENTS.md`。当前阶段先人工试用，不新增 CI 或硬脚本。
+- **已修订（2026-06-29 · 回馈可读性）**：Router Card、Delivery Manifest 和 Loop Log 必须先给 `白话摘要 / Human Brief`，用 4-6 行说明“这句话到底是什么意思、做了什么、卡在哪里、为什么不能跳过、下一步怎么验证、本轮不要做什么”，再列详细清单。白话摘要必须用自然语言；`no_text_style_draft`、`filled_state_text_mock`、`production_candidate` 等标签只能放在括号或第二层术语清单里，不能用术语代替结论。Router Card 必须区分 `本轮交付物类型` 与 `被路由对象类型`，避免把“本轮只交 Router Card”误写成“被评估对象已进入 no-text / runtime / production 阶段”。本轮必读真源与进入下一步才需要读取的真源也应分开，避免填卡本身变成重流程。
+- **已再修订（2026-06-29 · 决策条优先）**：`Human Brief` 仍有阅读门槛，因此第一屏改为三行 `Decision Strip / 决策条`：`结论 / 影响 / 下一步`。它必须让用户不读 Router、gate、agent 或 Loop Log 细节，也能立即知道是否通过、会挡住什么和下一轮具体做什么。Human Brief 降为第二层解释，术语清单降为第三层审计。
+- **已再修订（2026-06-29 · 防模板泛化）**：决策条只用于 workflow gate、Loop Log、是否通过判断、卡住/返工/需要裁决等场景。普通解释、讨论、完成汇报、进度更新和轻量问答应回到自然语言；不得把 `结论 / 影响 / 下一步`、Human Brief 或 Router 字段泛化成所有回复的固定格式。
+- **已再修订（2026-06-30 · 风格稿组件倾斜拦截）**：资产化 UI 的风格稿、生图稿、有字 mock、无字资产母版和生产候选必须显式触发 `ui_geometry_gate`。父级必须列出承载动态文字、按钮文案、头像状态、数值或点击热区的核心表面，并用局部裁切 + 水平 / 垂直参考线检查是否 0 度正交；只看整屏观感不得宣称几何通过。可写纸面、CTA、任务卡内框、右侧票据或按钮底板倾斜时，产物必须降级为灵感图 / 偏差案例，不得继续进入 `filled_state_text_mock`、`no_text_asset_master`、manifest 或 production candidate。
+- **已再修订（2026-06-30 · 正交证据自动触发）**：用户不需要每次提醒“给裁切和参考线”。当任务对象是资产化 UI 风格稿、生图稿、有字 mock、无字资产母版、运行预览或生产候选，且画面里存在动态文字、按钮文案、CTA、hit rect、头像状态、数值、任务卡、票据、dossier、纸面或地图 pin 标签时，父级必须自动触发 `ui_geometry_gate`。凡要宣称“正交通过 / 可继续拆资产 / 可进 manifest / 可进 runtime / 可作为生产候选 / 视觉验收通过”，都必须至少给出 3 个核心信息面裁切、水平 / 垂直参考线或等价角度说明、逐项通过 / 未通过结论；没有证据只能写“几何未验证”，不得写“通过”。纯文字讨论、低保真结构线框且不声称视觉通过、无动态内容或 hit rect 的纯装饰图，不强制触发。
+- **已再修订（2026-06-30 · Loop Log 自动触发）**：用户不需要说 `Loop Log`。当用户说“这次错在 / 哪里错了 / 为什么又 / 复盘 / 怎么避免 / 防复发 / 先别落地 / 不改文件 / 进错题本 / 转成 eval case / workflow 没跑完整 / 没触发 gate / 你误判了 / 你跳步了 / 漏调或乱调 agent”，或父级自检发现阶段、产物类型、证据、agent、可读性、实现范围或交付声明误判时，必须自动切到 `loop_log` 模式。触发后最低输出包括决策条、触发来源、原始问题、失败归因、本轮处理、复发保护和沉淀判断；只道歉或普通解释不算 Loop Log。
+
+### A126. AI 日报 / 次报采用上下文对象化侧车，保护强反馈、错题本、eval case 和报告状态
+
+- **来源**：2026-07-02 AI 日报 / 次报工作流讨论。用户认可将“用户强反馈 / 错题本 / eval case / 已采纳设计”明确对象化，用来解决日报规则、用户反馈、自动化复盘在上下文压缩后容易丢失的问题。
+- **机制 / 原则**：AI 情报线程不只依赖聊天上下文，而应维护轻量 context sidecar。重要信息分为五类对象：用户强反馈、错题本 / Loop Case、可测试 eval case、已采纳规则、上次报告状态。每类对象都要记录来源、错误模式或规则、复发保护、适用范围和状态，避免下一次报告时凭印象复述。
+- **日报规则**：发日报 / 次报前必须先读 `docs/workflows/ai-radar-memory.md` 和 `docs/workflows/ai-radar-loop-cases.md`。报告必须有覆盖窗口、人话标题、新在哪里、工具实际能力、典型例子、制作人判断、风险 / 不要误读和来源。Angus 判断必须位于事实解释之后，不能用项目推演替代工具能力说明。
+- **错题保护**：TUA-Bench 这类 benchmark 不得被写成工具能力；LiveEdit 这类单项工具不得被误命名为“雷达”；图文页不得为了图形化降低信息密度；上次重点条目不得无新进展重复；Codex 自动化未真实触发时不得称为可用。
+- **报告状态**：每次正式日报 / 次报后更新 last-report state，包括报告标题、覆盖窗口、重点条目、弱信号、下次禁止重复项和允许追踪条件。用户手动说“发次报”时，默认覆盖上次正式报告之后到当前时间。
+- **落地文档**：执行入口为 `docs/workflows/ai-radar-memory.md`；当前错题本和报告状态为 `docs/workflows/ai-radar-loop-cases.md`。
+- **应用范围**：Angus AI 日报、次报、周报交接、AI 工具筛选、图文页生成、日报自动化复盘和后续可脚本化 eval。
+- **状态**：已采纳为 AI 情报线程的上下文保护规则。当前先人工维护 Markdown 对象；若重复稳定，可再升级为 JSONL、脚本化 checklist 或 Codex eval。
+
+### A127. Godot 改动采用 gda 编译体检 + headless 场景烟测双层验收
+
+- **来源**：2026-07-02 `gda/godot-agent` Windows headless 最小实验与 Angus 真实 `WeeklyRunGame` 故障实验。用户确认按方案落地 Godot 体检流程。
+- **机制 / 原则**：后续 Codex 只要改动 Godot 脚本、`.tscn` 场景、节点层级、autoload、preload 路径、周循环阶段、世界地图、地区任务、派遣、排版或发刊流程，交付前必须跑双层体检：先用 `gda script validate` 检查 GDScript 语法 / 编译健康，再用 Godot `--headless` 跑真实 `WeeklyRunGame.tscn` 最小交互路径，检查场景能否加载、关键节点是否存在、阶段能否推进到探索和派遣。
+- **关键经验**：`gda script validate` 能抓少冒号、缩进、解析失败等脚本错误，但不能单独抓 `.tscn` 节点被改名后的运行期错误；同时 `gda` 在脚本无效时仍可能以进程退出码 `0` 结束，因此必须解析 JSON 的 `valid` 字段。Godot headless smoke 用来抓 `Node not found`、null 调用、autoload / preload 运行期错误等“脚本看着没错，跑起来爆红”的问题。
+- **落地文件**：执行脚本为 `scripts/run_godot_agent_smoke.ps1`；真实场景烟测为 `gd_project/tests/gda_angus_weekly_run_smoke.gd`；说明文档为 `docs/workflows/godot-agent-smoke.md`；工作流 gate 同步到 `docs/workflows/angus-workflow-harness.md` 与 `docs/workflows/workflow-gates.yml`。默认 `gda` 只校验入口脚本和 smoke runner；其它 `class_name` 脚本主要由 headless 场景运行覆盖，避免单文件校验触发 Godot 全局类误报。
+- **边界**：这是运行体检，不是视觉验收、资产化 UI 验收、全状态覆盖或玩法平衡验证。它通过后只能说 Godot 周循环最小真实路径没有爆红；若任务涉及可见 UI、截图、资产化 UI 或生产候选，仍需额外跑对应截图 / UI / UX / 美术 gate。
+- **状态**：已采纳并落地为 Angus Godot 改动的默认交付前体检。只改 Markdown、AI 日报、纯 HTML 原型或未落 Godot 的设计讨论时不强制跑。
+
+### A129. Godot Debug Skill v0 作为 Angus Godot 报错错题本与修复入口
+
+- **来源**：2026-07-03 AI 次报后的 Godot Debug Skill v0 方案讨论。用户确认“推进”，要求把“收集 5 个真实 Godot 报错，写成错误签名 / 原因 / 修复 / 验证命令”的方案落地，并保持足够简单易懂。
+- **机制 / 原则**：Angus 维护一个轻量 Godot 报错错题本，用来把常见 Godot 失败从“看不懂的引擎红字”翻译成 Codex 可执行的修复卡。每张卡必须包含：报错长相、人话解释、常见原因、窄修法、验证命令和通过标准。Codex 遇到 Godot smoke 失败、用户报告 Godot 报错、或改动节点 / 场景 / GDScript 前后，应先按错题本归类，再做最小修复，最后跑 `gda + Godot headless smoke`。
+- **首批错误卡**：GDScript 语法 / 编译错误、节点路径找不到、运行期 null 或方法缺失、`class_name` 单文件校验假阳性、Godot 版本 / PowerShell / `gda` 环境失败。首批卡片来自 2026-07-02 Windows headless 实验和 Angus `WeeklyRunGame` 真实故障演练。
+- **落地文件**：错题本入口为 `docs/workflows/godot-debug-skill-v0.md`；Godot 体检入口仍为 `docs/workflows/godot-agent-smoke.md`、`scripts/run_godot_agent_smoke.ps1` 与 `gd_project/tests/gda_angus_weekly_run_smoke.gd`；workflow gate 已要求 Godot smoke 失败时查错题本。
+- **边界**：Debug Skill 不是 Godot 教程，也不是自动修复器；它只定义“如何识别和修复高频错误”。它不能替代视觉截图、资产化 UI gate、玩法平衡、全状态覆盖或 GDD 真源同步。
+- **状态**：已采纳并落地为 Angus Godot 报错处理入口。后续出现新的可复发 Godot 错误时，应追加新卡，而不是只在聊天里口头解释。
+- **已修订（2026-07-03 · Godot GUI 原生崩溃）**：用户截图显示 `Godot_v4.6.2-stable_win64.exe - 应用程序错误 / 内存不能为 read`。复盘确认 `gda + headless smoke` 只能证明脚本与最小 headless 场景路径健康，不能证明 GUI / 编辑器 / 指定 Godot exe 不会原生崩溃。因此新增 `scripts/run_godot_gui_startup_check.ps1`，用于启动指定 GUI exe、加载项目、等待 `--quit-after` 自动退出并检查退出码 / 日志。后续遇到 Windows 应用程序错误、GUI / editor crash、版本 exe 差异时，必须单独跑 GUI startup check，不能用 headless smoke 通过冒充该层通过。
+
+### A130. 美术资源 / 动效资产落地采用分阶段中间验收工作流
+
+- **来源**：2026-07-03 3D 骰子动效讨论。用户确认可以试做，但明确要求这不是单纯调一个骰子效果，而是探索一套区别于成熟 UI 资产化链路的“美术资源 / 动效资源落地工作流”，并说明中间版本做到什么程度适合交给用户验收。
+- **机制 / 原则**：美术资源与动效资产不直接套用静态 UI 的 `content_rects / no_text_rects / hit_rects` 链路。默认分为 `motion_blockout -> asset_read_proof -> atlas_or_rig_contract -> runtime_cell_preview -> production_candidate`。每次交付必须先标注产物类型，并说明本轮能判断什么、不能判断什么、禁止跳到什么阶段。
+- **中间验收口径**：`motion_blockout` 阶段可以给用户看，但它只验证节奏、空间边界、触地 / 回弹 / 缓入缓出、镜头可读性和结果停顿，不验证最终材质、贴图、角色 UI 布局、面数 atlas 或生产可用性。它至少应包含 1 个短动态图（GIF / animated WebP / MP4）和 3-6 张关键帧截图，并在图面或交付说明中写清“这是 blockout，不是最终美术”。
+- **3D 骰子试点**：当前试点目标是“2D 界面承载的俯视 / 斜俯视 3D 判定骰子”：每个角色的骰子保持在自己的 UI 槽位内，同时保留物理骰子落下、翻滚、碰撞、回弹和结果停住的信号。运行期可采用受约束的伪物理 / 烘焙物理，而不是让真实 Rigidbody 任意位移。框内位移优先控制在角色框宽度约 15%-25% 内，使用旋转、压缩、阴影、碰撞音效和微回弹来补足重量感。
+- **落地文件**：流程文档为 `docs/workflows/art-motion-asset-landing-workflow.md`；3D 骰子 blockout 试点位于 `gd_project/scenes/dev/Dice3DV7Prototype.gd` 与 `gd_project/scenes/dev/Dice3DV7Prototype.tscn`；截图脚本为 `gd_project/tests/capture_dice_3d_v7_prototype.gd`。
+- **执行保护**：未通过 `runtime_cell_preview` 和状态矩阵前，不得称为 `production_candidate`。如果交付物只有灰盒、临时数字、临时材质或孤立实验场景，只能要求用户判断“方向 / 节奏 / 空间 / 读感”，不能要求用户判断“可上线 / 可拆包 / 可直接替换正式界面”。
+- **状态**：已采纳为试行流程。后续 UI 动效、2D 角色动作、3D 骰子、特效和其它非静态美术资源都应优先按此流程给出中间验收，而不是一口气跳到完整生产资产。
+- **已修订（2026-07-03 · 2D UI 承载校正）**：用户指出实际游戏内更可能是 2D 界面下的俯视 3D 骰子效果，类似《苏丹的游戏》判定桌面，而不是独立 3D 场景。因此 v7.3 只能作为纯运动实验留档；v7.4 起改为 `ui_carrier_motion_blockout`，必须把骰子放回 2D 判定盘 / 角色槽承载中检查。
+- **已修订（2026-07-03 · 局部判定槽预览）**：v7.5 起新增 `runtime_cell_preview_v0` 验收层，把 3D 骰子放进带任务目标、角色槽、结果预览和提交操作的局部判定弹窗中检查。该层只判断真实信息压力下的读感、槽内约束和主操作干扰，不验证最终美术材质、完整状态矩阵或生产可替换性。
+- **已修订（2026-07-06 · 动态演示交付）**：动效类资源只交静态截图不足以验收节奏和重量感。后续动效 blockout / runtime preview 默认交付短动态图 + 关键帧截图；截图负责逐帧问题定位，动图负责判断节奏、物理感、停顿和是否抢主操作。
+
+### A131. 动态效果交付必须提供动图或视频，截图只作关键帧补充
+
+- **来源**：2026-07-06 骰子 v7.5 动态演示讨论。用户明确要求将“涉及动态效果的内容，一定要给出动图或视频展示，而不是只给截图审核”升格为核心硬规则。
+- **机制 / 原则**：凡交付对象包含 UI 动效、2D/3D 角色动作、骰子 / 特效 / 转场、可交互美术小组件、物理反馈、进入 / 退出动画、hover / click / submit 反馈，或任何需要用户判断时间节奏、重量感、停顿、反馈强弱、是否抢主操作的内容，必须提供真实动图或视频。允许格式为 GIF、animated WebP、MP4、WebM，或等价的本地可播放 HTML / Godot capture 页面。
+- **截图边界**：截图仍必须用于关键帧定位，尤其是静止、起势、主动作、冲击、回弹、落定和最终读数；但截图不能替代动态演示，也不能让用户仅凭静态图判断动效是否通过。
+- **最低交付**：动效类中间版至少交付 1 个短动态图或视频 + 3-6 张关键帧截图。交付说明必须写明本轮能判断什么、不能判断什么；如果由于环境限制暂时无法导出动图 / 视频，必须说明原因，并提供可运行播放页、逐帧序列或明确的补导计划作为临时替代。
+- **应用范围**：Angus 的 Godot / HTML 原型、UI 动效、2D 角色动作、3D 骰子、特效、转场、运行时反馈、资产化 UI 中的动态组件和后续所有需要动态审核的美术 / 交互任务。
+- **状态**：已采纳为项目核心硬规则，并同步到 `AGENTS.md` 与 `docs/workflows/art-motion-asset-landing-workflow.md`。后续若只交截图却要求用户审核动态效果，应视为交付不完整。
+
 ### D3. Steam 独游小爆款研究以 10 万份作为成功样本门槛
 - **来源**：2026-05-31 Steam 独立游戏鉴赏师 subagent 讨论。
 - **机制**：后续构建 Steam 独立游戏鉴赏师 / 市场对照知识库时，不只研究年度级爆款，也要重点研究近三年发布、销量或估算销量达到 10 万份以上的小爆款；优先选择与《世界未解之谜周刊》在调查、未解之谜、异常事件、报刊 / 档案 / 桌面工作、卡牌叙事、周回合经营或轻策略取舍上有相似维度的样本。

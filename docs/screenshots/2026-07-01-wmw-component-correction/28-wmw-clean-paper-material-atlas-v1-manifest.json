@@ -1,0 +1,215 @@
+{
+  "status": "clean material atlas v1 - benchmark crop texture normalized to sampled tokens",
+  "tiles": [
+    {
+      "id": "paper_warm_cover",
+      "src": "T_paper_warm_cover.png",
+      "box": [
+        360,
+        8,
+        560,
+        150
+      ],
+      "target": "#B7A488",
+      "role": "main dossier / card paper face",
+      "raw_path": "paper-material-atlas-clean-v1/paper_warm_cover_raw.png",
+      "tile_path": "paper-material-atlas-clean-v1/paper_warm_cover_tile.png",
+      "tile_stats": {
+        "mean_hex": "#B6A487",
+        "h": 35.8,
+        "s": 0.245,
+        "l": 0.623,
+        "std_lum": 20.3
+      },
+      "delta_to_target": 1.4
+    },
+    {
+      "id": "paper_casefile",
+      "src": "T_paper_casefile.png",
+      "box": [
+        18,
+        18,
+        170,
+        108
+      ],
+      "target": "#967E5E",
+      "role": "deeper case-file body / secondary paper",
+      "raw_path": "paper-material-atlas-clean-v1/paper_casefile_raw.png",
+      "tile_path": "paper-material-atlas-clean-v1/paper_casefile_tile.png",
+      "tile_stats": {
+        "mean_hex": "#967D5E",
+        "h": 34.3,
+        "s": 0.23,
+        "l": 0.476,
+        "std_lum": 14.8
+      },
+      "delta_to_target": 1.0
+    },
+    {
+      "id": "ivory_edge",
+      "src": "T_ivory_edge.png",
+      "box": [
+        0,
+        0,
+        356,
+        20
+      ],
+      "target": "#C0B9B3",
+      "role": "photo edge / sticker rim / narrow paper edge",
+      "raw_path": "paper-material-atlas-clean-v1/ivory_edge_raw.png",
+      "tile_path": "paper-material-atlas-clean-v1/ivory_edge_tile.png",
+      "tile_stats": {
+        "mean_hex": "#BFB9B2",
+        "h": 27.8,
+        "s": 0.093,
+        "l": 0.725,
+        "std_lum": 22.2
+      },
+      "delta_to_target": 1.4
+    },
+    {
+      "id": "gray_backing_board",
+      "src": "T_gray_backing_board.png",
+      "box": [
+        150,
+        250,
+        232,
+        455
+      ],
+      "target": "#686554",
+      "role": "gray-green backing board / clipboard backing",
+      "raw_path": "paper-material-atlas-clean-v1/gray_backing_board_raw.png",
+      "tile_path": "paper-material-atlas-clean-v1/gray_backing_board_tile.png",
+      "tile_stats": {
+        "mean_hex": "#676553",
+        "h": 51.0,
+        "s": 0.107,
+        "l": 0.367,
+        "std_lum": 23.0
+      },
+      "delta_to_target": 1.4
+    },
+    {
+      "id": "note_yellow_paper",
+      "src": "T_note_yellow_paper.png",
+      "box": [
+        80,
+        95,
+        176,
+        178
+      ],
+      "target": "#B3A456",
+      "role": "muted yellow note paper",
+      "raw_path": "paper-material-atlas-clean-v1/note_yellow_paper_raw.png",
+      "tile_path": "paper-material-atlas-clean-v1/note_yellow_paper_tile.png",
+      "tile_stats": {
+        "mean_hex": "#B3A355",
+        "h": 50.3,
+        "s": 0.378,
+        "l": 0.518,
+        "std_lum": 26.1
+      },
+      "delta_to_target": 1.4
+    },
+    {
+      "id": "sticker_edge",
+      "src": "T_sticker_edge.png",
+      "box": [
+        132,
+        106,
+        224,
+        178
+      ],
+      "target": "#ABA290",
+      "role": "sticker cut paper edge / off-white rim",
+      "raw_path": "paper-material-atlas-clean-v1/sticker_edge_raw.png",
+      "tile_path": "paper-material-atlas-clean-v1/sticker_edge_tile.png",
+      "tile_stats": {
+        "mean_hex": "#ABA18F",
+        "h": 39.9,
+        "s": 0.138,
+        "l": 0.616,
+        "std_lum": 19.5
+      },
+      "delta_to_target": 1.4
+    }
+  ],
+  "reject_examples": [
+    {
+      "id": "reject_receipt_cream",
+      "src": "D_receipt_cream.png",
+      "box": [
+        20,
+        25,
+        280,
+        105
+      ],
+      "reason": "too cream / form-like",
+      "tile_path": "paper-material-atlas-clean-v1/reject_receipt_cream.png",
+      "tile_stats": {
+        "mean_hex": "#A39689",
+        "h": 30.8,
+        "s": 0.127,
+        "l": 0.588,
+        "std_lum": 37.8
+      }
+    },
+    {
+      "id": "reject_receipt_brown",
+      "src": "D_receipt_brown.png",
+      "box": [
+        20,
+        15,
+        280,
+        105
+      ],
+      "reason": "brown old-receipt drift",
+      "tile_path": "paper-material-atlas-clean-v1/reject_receipt_brown.png",
+      "tile_stats": {
+        "mean_hex": "#A19182",
+        "h": 28.9,
+        "s": 0.142,
+        "l": 0.57,
+        "std_lum": 35.3
+      }
+    },
+    {
+      "id": "reject_top_cream",
+      "src": "D_v05_top_cream.png",
+      "box": [
+        30,
+        18,
+        380,
+        88
+      ],
+      "reason": "too pale cream highlight",
+      "tile_path": "paper-material-atlas-clean-v1/reject_top_cream.png",
+      "tile_stats": {
+        "mean_hex": "#A1927F",
+        "h": 33.6,
+        "s": 0.154,
+        "l": 0.565,
+        "std_lum": 48.7
+      }
+    },
+    {
+      "id": "reject_body_grime",
+      "src": "D_v05_body_grime.png",
+      "box": [
+        80,
+        90,
+        380,
+        180
+      ],
+      "reason": "old-paper grime / cloud stain",
+      "tile_path": "paper-material-atlas-clean-v1/reject_body_grime.png",
+      "tile_stats": {
+        "mean_hex": "#494036",
+        "h": 32.5,
+        "s": 0.148,
+        "l": 0.249,
+        "std_lum": 76.6
+      }
+    }
+  ]
+}

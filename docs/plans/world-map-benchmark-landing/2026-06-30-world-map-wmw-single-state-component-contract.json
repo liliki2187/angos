@@ -1,0 +1,242 @@
+{
+  "id": "world_map_wmw_single_state_component_contract",
+  "status": "branch_contract_before_no_text_generation",
+  "target_view": "weekly_run.explore.world",
+  "canvas_size": [1920, 1080],
+  "style_source": "docs/screenshots/2026-06-24-world-map-benchmark-landing/95-world-map-imagegen-color-recorrected-v0-51.png",
+  "color_contract": "docs/plans/world-map-benchmark-landing/2026-06-30-world-map-selected-region-palette-token-contract.md",
+  "state_scope": {
+    "selected_region_id": "north_america_forbidden_zone",
+    "selected_region_name": "北美禁区带",
+    "risk_state": "红线升温",
+    "recommendation": 2,
+    "intel_count": 3,
+    "entry_day_cost": 1,
+    "deadline_days": 4,
+    "week_remaining_days": 6
+  },
+  "orthogonal_functional_surface_gate": {
+    "rule": "All functional components must be square-on, axis-aligned, and measurable. Any component that carries information, state, click, hover, pressed, disabled, selected, drag-over, or other player-facing operation semantics must use a 0-degree orthogonal functional face. Decorative outer paper edges may be irregular, but content_rects, hit_rects, and state_rects must remain 0-degree rectangles.",
+    "required_rotation_degrees": 0,
+    "max_allowed_visual_tilt_degrees": 0.5,
+    "reject_if": [
+      "content_rect is tilted, rotated, skewed, trapezoid, or perspective",
+      "hit_rect follows a diagonal paper edge",
+      "button label area is slanted",
+      "photo/media frame is skewed",
+      "title field baseline is angled",
+      "status ticket or CTA plate uses a non-axis-aligned writable face",
+      "model uses a tilted paper sheet as the main functional panel",
+      "the manually drawn QA box is orthogonal but the actual generated component edge remains slanted"
+    ],
+    "allowed_decoration": [
+      "tilted paper clips outside content_rects",
+      "slightly uneven cut-paper outer silhouettes",
+      "back-page tabs and folder露边 outside no_text_rects",
+      "irregular sticker white borders",
+      "shadow and paper layering outside functional faces"
+    ]
+  },
+  "style_retention_gate": {
+    "rule": "The orthogonal correction must preserve the clean low-poly weekly benchmark language. Functional faces stay square-on, but their skins must retain broad flat polygonal color-value planes, large color blocks, subtle cut-paper shadows, and hand-cut sticker/icon irregularity. Readability zones may be quiet and must not show crease/wrinkle/fold/tear lines; component bodies must not become flat software panels.",
+    "required": [
+      "central map landmasses use fewer larger low-poly planes rather than dense triangulation",
+      "left region cards keep visible broad faceted color blocks in card bodies and colored frames",
+      "right dossier sheet keeps paper-body polygonal value blocks outside calm runtime text rectangles",
+      "CTA plates and bottom receipts keep 4-8 large flat low-poly value planes per component without crease, fold, or tear lines through text slots",
+      "sticker/icon atlas keeps hand-cut, hand-drawn graphic tension rather than regular software icon geometry"
+    ],
+    "reject_if": [
+      "geometry passes but component shells become flat empty rectangles",
+      "map reads as GIS triangulation or fine mesh texture",
+      "low-poly treatment appears only inside thumbnails and not on the UI component bodies",
+      "readability is achieved by erasing all color blocks and cut-paper value shifts",
+      "icons become perfectly regular vector toolbar glyphs",
+      "high-contrast diagonal folded-corner, torn-paper, crease, or wrinkle patches appear inside functional cards, CTA plates, bottom receipts, dossier text bodies, or label slots"
+    ]
+  },
+  "layout_regions": [
+    {
+      "id": "top_status_strip",
+      "role": "low-weight global week and macro status",
+      "asset_rect": [45, 28, 1830, 58],
+      "content_rects": {
+        "week_label": [92, 38, 220, 36],
+        "remaining_days": [340, 38, 190, 36],
+        "macro_values": [700, 36, 780, 38]
+      },
+      "hit_rects": {},
+      "no_text_rects": {
+        "left_icon_block": [45, 28, 42, 58],
+        "right_icons": [1580, 28, 295, 58]
+      },
+      "orthogonal_required": true
+    },
+    {
+      "id": "left_region_card_stack",
+      "role": "scan/select available and locked regions",
+      "asset_rect": [42, 108, 342, 820],
+      "content_rects": {
+        "card_1_title": [116, 260, 140, 40],
+        "card_1_meta": [116, 306, 150, 28],
+        "card_2_title": [116, 450, 140, 40],
+        "card_2_meta": [116, 496, 150, 28],
+        "card_3_title": [116, 640, 140, 40],
+        "card_3_meta": [116, 686, 150, 28],
+        "card_4_title": [116, 830, 140, 40],
+        "card_4_meta": [116, 876, 150, 28]
+      },
+      "hit_rects": {
+        "card_1": [54, 112, 318, 178],
+        "card_2": [54, 302, 318, 178],
+        "card_3": [54, 492, 318, 178],
+        "card_4": [54, 682, 318, 178]
+      },
+      "no_text_rects": {
+        "status_icon_column": [58, 118, 52, 740],
+        "thumbnail_stack": [116, 128, 220, 470],
+        "right_badges": [282, 236, 72, 620]
+      },
+      "states": ["normal", "hover", "selected", "locked", "urgent", "disabled"],
+      "orthogonal_required": true
+    },
+    {
+      "id": "center_world_map_board",
+      "role": "main map selection surface",
+      "asset_rect": [410, 100, 915, 640],
+      "content_rects": {},
+      "hit_rects": {
+        "north_america": [475, 175, 220, 230],
+        "europe": [805, 222, 120, 92],
+        "africa": [780, 360, 150, 180],
+        "south_america": [620, 475, 140, 210],
+        "asia": [950, 210, 230, 230],
+        "australia": [1130, 520, 130, 105]
+      },
+      "no_text_rects": {
+        "map_art": [430, 118, 875, 600],
+        "grid_and_frame": [410, 100, 915, 640]
+      },
+      "runtime_layers": [
+        "region_masks",
+        "selected_region_overlay",
+        "selected_halo",
+        "map_pins",
+        "hover_ring"
+      ],
+      "orthogonal_required": true,
+      "notes": "Map itself may contain faceted landmass shapes, but the board frame remains axis-aligned. Do not bake region names or route lines into the map art."
+    },
+    {
+      "id": "right_dossier_sheet",
+      "role": "selected region summary and action stack",
+      "asset_rect": [1360, 88, 500, 820],
+      "content_rects": {
+        "region_title": [1450, 122, 230, 58],
+        "risk_stamp": [1695, 112, 96, 72],
+        "subtitle_status": [1450, 184, 280, 28],
+        "media_caption": [1420, 456, 355, 30],
+        "detail_line": [1420, 500, 370, 34],
+        "primary_cta_label": [1480, 594, 270, 44],
+        "secondary_cta_label": [1480, 690, 270, 44],
+        "deadline_cta_label": [1480, 786, 270, 44]
+      },
+      "media_rects": {
+        "selected_region_snapshot": [1415, 220, 380, 220]
+      },
+      "hit_rects": {
+        "primary_cta": [1400, 570, 430, 78],
+        "secondary_cta": [1400, 666, 430, 78],
+        "deadline_cta": [1400, 762, 430, 78]
+      },
+      "no_text_rects": {
+        "paperclip": [1370, 58, 70, 105],
+        "outer_tabs": [1815, 130, 45, 650],
+        "button_icons": [1410, 582, 58, 246],
+        "button_right_symbols": [1754, 582, 58, 246],
+        "sheet_edges_and_shadows": [1360, 88, 500, 820]
+      },
+      "states": ["normal", "hover", "pressed", "disabled", "urgent"],
+      "orthogonal_required": true,
+      "notes": "Dossier sheet may have uneven outer cut edges, but header, media frame, tickets, CTA plates, and all hit rectangles must be parallel to canvas edges."
+    },
+    {
+      "id": "bottom_status_cards",
+      "role": "global status summaries and receipts",
+      "asset_rect": [405, 790, 940, 178],
+      "content_rects": {
+        "weekly_action_title": [520, 833, 180, 42],
+        "weekly_action_value": [520, 880, 170, 38],
+        "intel_title": [805, 833, 180, 42],
+        "intel_value": [805, 880, 170, 38],
+        "deadline_title": [1090, 833, 180, 42],
+        "deadline_value": [1090, 880, 170, 38]
+      },
+      "hit_rects": {
+        "weekly_action": [414, 806, 278, 136],
+        "intel_summary": [700, 806, 278, 136],
+        "deadline_summary": [986, 806, 278, 136]
+      },
+      "no_text_rects": {
+        "left_icons": [425, 820, 80, 105],
+        "barcode_or_small_marks": [620, 888, 620, 45],
+        "paper_tape_tabs": [405, 775, 940, 42]
+      },
+      "states": ["normal", "hover", "urgent"],
+      "orthogonal_required": true
+    },
+    {
+      "id": "sticker_icon_atlas_area",
+      "role": "fixed decorative and state icon source",
+      "asset_rect": [1420, 906, 390, 120],
+      "content_rects": {},
+      "hit_rects": {},
+      "no_text_rects": {
+        "whole_area": [1420, 906, 390, 120]
+      },
+      "fixed_assets": ["globe", "eye", "check", "warning", "hand"],
+      "orthogonal_required": false,
+      "notes": "Stickers may be hand-cut and slightly rotated because they do not carry dynamic text or hit rects."
+    }
+  ],
+  "runtime_fields": [
+    "region_name",
+    "risk_state",
+    "recommendation",
+    "intel_count",
+    "task_count",
+    "entry_day_cost",
+    "deadline_days",
+    "remaining_days",
+    "macro_attribute_values",
+    "cta_labels",
+    "hover_selected_disabled_locked_urgent_completed_states"
+  ],
+  "generation_rejection_rules": [
+    "any text-bearing panel visibly tilted",
+    "any functional component visibly tilted",
+    "any CTA plate tilted or trapezoid",
+    "any hit_rect or state surface implied by a diagonal visual face",
+    "any media frame skewed",
+    "any dynamic text baked into the texture",
+    "any placeholder text blocks inside content_rects",
+    "selected region rendered as saturated yellow-green instead of low-chroma olive",
+    "legacy v6g cold-blue runtime look",
+    "cross-map route lines baked into the art",
+    "dense micro details, tiny holes, barcode clutter, or photographic grain over text zones",
+    "dense triangulated world-map mesh instead of broad low-poly planes",
+    "flat software-panel component bodies with no broad polygonal color-value blocks",
+    "crease_or_wrinkle_lines_cross_runtime_text_slots",
+    "high_contrast_diagonal_fold_or_tear_patch_on_functional_component",
+    "orthogonality achieved by erasing the benchmark's color-block material language",
+    "manual_qa_box_aligned_but_actual_component_edge_slanted",
+    "v0_56_bottom_receipt_fold_and_cta_slant_regression"
+  ],
+  "qa_crops_required": [
+    "left_region_card_100pct",
+    "center_selected_region_100pct",
+    "right_dossier_header_media_cta_100pct",
+    "bottom_status_cards_100pct",
+    "sticker_icon_area_100pct"
+  ]
+}

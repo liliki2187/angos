@@ -1,0 +1,49 @@
+{
+  "artifact": "v0.93 layered orthogonal CTA proof",
+  "source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\244-world-map-wmw-single-state-refill-v0-92-imagegen.png",
+  "full": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\246-world-map-wmw-v0-93-layered-orthogonal-cta-proof.png",
+  "crop": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\247-world-map-wmw-v0-93-right-cta-layered-crop.png",
+  "qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\248-world-map-wmw-v0-93-right-cta-geometry-qa.png",
+  "functional_rows": [
+    {
+      "name": "primary",
+      "box": [
+        1195,
+        503,
+        1616,
+        565
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "axis_aligned": true,
+      "text": "进入北美禁区 · 消耗1天"
+    },
+    {
+      "name": "secondary",
+      "box": [
+        1195,
+        584,
+        1616,
+        646
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "axis_aligned": true,
+      "text": "查看任务情报 · 线报3"
+    },
+    {
+      "name": "warning",
+      "box": [
+        1195,
+        665,
+        1616,
+        727
+      ],
+      "angle_top_deg": 0.0,
+      "angle_bottom_deg": 0.0,
+      "axis_aligned": true,
+      "text": "红线截止 · 4天"
+    }
+  ],
+  "note": "Deterministic layered UI proof: imagegen style remains background; text-bearing CTA surfaces are rebuilt as measurable orthogonal UI assets."
+}

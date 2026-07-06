@@ -1,12 +1,12 @@
 # World Map v6g Assetized UI Componentization Spec
 
-> Status: 2026-06-16 component candidate pass, formal UI quality not yet passed.  
+> Status: 2026-06-16 component candidate pass, formal UI quality not yet passed; 2026-06-30 downgraded to legacy runtime-token / assetization test bed for the World Mystery Weekly benchmark branch.
 > Source artboard: `gd_project/Assets/ui/angus_packaging/world_map/imagegen_v6/final/wm-fullscreen-artboard-v6g-pixel-strong.png`.  
-> Rule: v6g is the current user-selected strong-pixel expansion source. The fullscreen artboard is never wired directly as an interactive UI.
+> Rule: v6g is not the current clean low-poly weekly benchmark source. Keep this pass for historical comparison, crop-validation lessons, and runtime-token tests only.
 
 ## Production Flow
 
-1. Treat v6g as the approved style and layout source for this pass.
+1. Treat v6g as the legacy style and layout source for this historical pass only.
 2. Derive component candidates by crop / resize / transparent padding only.
 3. Register each candidate in `world_map_imagegen_manifest.json` with `runtime_rect`, `dynamic_text_rects`, `forbidden_zones`, state contract, and hit contract where applicable.
 4. Generate `review-overlays` before any Godot replacement.

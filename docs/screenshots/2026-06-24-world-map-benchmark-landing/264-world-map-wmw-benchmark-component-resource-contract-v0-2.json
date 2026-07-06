@@ -1,0 +1,948 @@
+{
+  "artifact": "WMW benchmark component resource contract v0.2",
+  "source_reference": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\258-world-map-wmw-benchmark-shell-reference-v0-1.png",
+  "overlay": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\262-world-map-wmw-benchmark-component-resource-contract-v0-2-overlay.png",
+  "contact_sheet": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\263-world-map-wmw-benchmark-component-resource-contract-v0-2-crops.png",
+  "principle": "Benchmark image defines visual shell; runtime/function layer defines orthogonal content/hit rects. Do not cut v0.95 temporary proof as art.",
+  "component_count": 11,
+  "roles": [
+    {
+      "id": "right_dossier_sheet",
+      "name": "右侧 dossier 纸面",
+      "kind": "dossier_sheet",
+      "visual_shell_rect": [
+        1172,
+        98,
+        1640,
+        760
+      ],
+      "content_rects": [
+        {
+          "role": "header_title_lane",
+          "rect": [
+            1266,
+            126,
+            1494,
+            168
+          ],
+          "text_max": "北美禁区带"
+        },
+        {
+          "role": "header_status_lane",
+          "rect": [
+            1268,
+            174,
+            1378,
+            198
+          ],
+          "text_max": "红线升温"
+        },
+        {
+          "role": "photo_caption_lane",
+          "rect": [
+            1217,
+            452,
+            1475,
+            478
+          ],
+          "text_max": "异常热点  卫星阵列 / 方尖碑"
+        }
+      ],
+      "icon_rects": [
+        {
+          "role": "global_glyph",
+          "rect": [
+            1202,
+            126,
+            1260,
+            184
+          ]
+        }
+      ],
+      "action_rects": [
+        {
+          "role": "stamp_slot",
+          "rect": [
+            1510,
+            130,
+            1604,
+            207
+          ],
+          "text_max": "高危 / 推荐 2"
+        }
+      ],
+      "no_text_rects": [
+        {
+          "role": "paper_clip",
+          "rect": [
+            1230,
+            86,
+            1272,
+            137
+          ]
+        },
+        {
+          "role": "backing_pages_tabs",
+          "rect": [
+            1638,
+            110,
+            1670,
+            747
+          ]
+        },
+        {
+          "role": "photo_frame_art",
+          "rect": [
+            1202,
+            215,
+            1614,
+            440
+          ]
+        }
+      ],
+      "hit_rects": [],
+      "axis_aligned_required": true,
+      "visual_shell_source": "benchmark image, not v0.95 overlay",
+      "runtime_layer_rule": "dynamic text and hit rect use axis-aligned rects; decoration may extend outside but cannot carry text",
+      "notes": "Keep paper shell/photo/clip from benchmark; rebuild only title/status/stamp/caption as runtime layers."
+    },
+    {
+      "id": "cta_primary",
+      "name": "? CTA",
+      "kind": "primary_cta_row",
+      "visual_shell_rect": [
+        1188,
+        502,
+        1628,
+        570
+      ],
+      "content_rects": [
+        {
+          "role": "button_label_plate",
+          "rect": [
+            1282,
+            516,
+            1534,
+            554
+          ],
+          "text_max": "进入北美禁区 · 消耗1天"
+        }
+      ],
+      "icon_rects": [
+        {
+          "role": "left_semantic_icon",
+          "rect": [
+            1205,
+            512,
+            1265,
+            558
+          ]
+        }
+      ],
+      "action_rects": [
+        {
+          "role": "right_action_icon_hit",
+          "rect": [
+            1548,
+            512,
+            1610,
+            558
+          ]
+        }
+      ],
+      "no_text_rects": [
+        {
+          "role": "outer_bevel_shadow_tabs",
+          "rect": [
+            1188,
+            502,
+            1628,
+            570
+          ]
+        }
+      ],
+      "hit_rects": [
+        {
+          "role": "button_hit_rect",
+          "rect": [
+            1188,
+            502,
+            1628,
+            570
+          ]
+        }
+      ],
+      "axis_aligned_required": true,
+      "visual_shell_source": "benchmark image, not v0.95 overlay",
+      "runtime_layer_rule": "dynamic text and hit rect use axis-aligned rects; decoration may extend outside but cannot carry text",
+      "notes": "Use benchmark CTA shell as no-text bitmap; label/action/hit stay in axis-aligned runtime rects."
+    },
+    {
+      "id": "cta_secondary",
+      "name": "?? CTA",
+      "kind": "secondary_cta_row",
+      "visual_shell_rect": [
+        1188,
+        583,
+        1628,
+        648
+      ],
+      "content_rects": [
+        {
+          "role": "button_label_plate",
+          "rect": [
+            1282,
+            597,
+            1534,
+            635
+          ],
+          "text_max": "查看任务情报 · 线报3"
+        }
+      ],
+      "icon_rects": [
+        {
+          "role": "left_semantic_icon",
+          "rect": [
+            1205,
+            593,
+            1265,
+            639
+          ]
+        }
+      ],
+      "action_rects": [
+        {
+          "role": "right_action_icon_hit",
+          "rect": [
+            1548,
+            593,
+            1610,
+            639
+          ]
+        }
+      ],
+      "no_text_rects": [
+        {
+          "role": "outer_bevel_shadow_tabs",
+          "rect": [
+            1188,
+            583,
+            1628,
+            648
+          ]
+        }
+      ],
+      "hit_rects": [
+        {
+          "role": "button_hit_rect",
+          "rect": [
+            1188,
+            583,
+            1628,
+            648
+          ]
+        }
+      ],
+      "axis_aligned_required": true,
+      "visual_shell_source": "benchmark image, not v0.95 overlay",
+      "runtime_layer_rule": "dynamic text and hit rect use axis-aligned rects; decoration may extend outside but cannot carry text",
+      "notes": "Use benchmark CTA shell as no-text bitmap; label/action/hit stay in axis-aligned runtime rects."
+    },
+    {
+      "id": "cta_warning",
+      "name": "?? CTA",
+      "kind": "warning_cta_row",
+      "visual_shell_rect": [
+        1188,
+        665,
+        1628,
+        730
+      ],
+      "content_rects": [
+        {
+          "role": "button_label_plate",
+          "rect": [
+            1282,
+            679,
+            1534,
+            717
+          ],
+          "text_max": "红线截止 · 4天"
+        }
+      ],
+      "icon_rects": [
+        {
+          "role": "left_semantic_icon",
+          "rect": [
+            1205,
+            675,
+            1265,
+            721
+          ]
+        }
+      ],
+      "action_rects": [
+        {
+          "role": "right_action_icon_hit",
+          "rect": [
+            1548,
+            675,
+            1610,
+            721
+          ]
+        }
+      ],
+      "no_text_rects": [
+        {
+          "role": "outer_bevel_shadow_tabs",
+          "rect": [
+            1188,
+            665,
+            1628,
+            730
+          ]
+        }
+      ],
+      "hit_rects": [
+        {
+          "role": "button_hit_rect",
+          "rect": [
+            1188,
+            665,
+            1628,
+            730
+          ]
+        }
+      ],
+      "axis_aligned_required": true,
+      "visual_shell_source": "benchmark image, not v0.95 overlay",
+      "runtime_layer_rule": "dynamic text and hit rect use axis-aligned rects; decoration may extend outside but cannot carry text",
+      "notes": "Use benchmark CTA shell as no-text bitmap; label/action/hit stay in axis-aligned runtime rects."
+    },
+    {
+      "id": "left_na",
+      "name": "?????",
+      "kind": "selected_region_card",
+      "visual_shell_rect": [
+        42,
+        103,
+        383,
+        328
+      ],
+      "content_rects": [
+        {
+          "role": "card_title_meta_plate",
+          "rect": [
+            66,
+            265,
+            238,
+            315
+          ],
+          "text_max": "北美禁区带 / 红线升温 推荐2"
+        }
+      ],
+      "icon_rects": [
+        {
+          "role": "card_global_icon",
+          "rect": [
+            60,
+            112,
+            112,
+            165
+          ]
+        }
+      ],
+      "action_rects": [
+        {
+          "role": "card_state_action",
+          "rect": [
+            307,
+            262,
+            365,
+            318
+          ]
+        }
+      ],
+      "no_text_rects": [
+        {
+          "role": "thumbnail_art",
+          "rect": [
+            70,
+            129,
+            365,
+            255
+          ]
+        },
+        {
+          "role": "outer_frame_bevel_shadow",
+          "rect": [
+            42,
+            103,
+            383,
+            328
+          ]
+        }
+      ],
+      "hit_rects": [
+        {
+          "role": "card_hit_rect",
+          "rect": [
+            42,
+            103,
+            383,
+            328
+          ]
+        }
+      ],
+      "axis_aligned_required": true,
+      "visual_shell_source": "benchmark image, not v0.95 overlay",
+      "runtime_layer_rule": "dynamic text and hit rect use axis-aligned rects; decoration may extend outside but cannot carry text",
+      "notes": "Use benchmark card shell and thumbnail; runtime text only enters the bottom label plate."
+    },
+    {
+      "id": "left_eu",
+      "name": "?????",
+      "kind": "available_region_card",
+      "visual_shell_rect": [
+        42,
+        342,
+        383,
+        554
+      ],
+      "content_rects": [
+        {
+          "role": "card_title_meta_plate",
+          "rect": [
+            66,
+            486,
+            232,
+            541
+          ],
+          "text_max": "欧洲灰域 / 可派遣 线报2"
+        }
+      ],
+      "icon_rects": [
+        {
+          "role": "card_global_icon",
+          "rect": [
+            60,
+            357,
+            112,
+            408
+          ]
+        }
+      ],
+      "action_rects": [
+        {
+          "role": "card_state_action",
+          "rect": [
+            307,
+            486,
+            365,
+            541
+          ]
+        }
+      ],
+      "no_text_rects": [
+        {
+          "role": "thumbnail_art",
+          "rect": [
+            70,
+            368,
+            365,
+            476
+          ]
+        },
+        {
+          "role": "outer_frame_bevel_shadow",
+          "rect": [
+            42,
+            342,
+            383,
+            554
+          ]
+        }
+      ],
+      "hit_rects": [
+        {
+          "role": "card_hit_rect",
+          "rect": [
+            42,
+            342,
+            383,
+            554
+          ]
+        }
+      ],
+      "axis_aligned_required": true,
+      "visual_shell_source": "benchmark image, not v0.95 overlay",
+      "runtime_layer_rule": "dynamic text and hit rect use axis-aligned rects; decoration may extend outside but cannot carry text",
+      "notes": "Use benchmark card shell and thumbnail; runtime text only enters the bottom label plate."
+    },
+    {
+      "id": "left_af",
+      "name": "?????",
+      "kind": "warning_region_card",
+      "visual_shell_rect": [
+        42,
+        565,
+        383,
+        725
+      ],
+      "content_rects": [
+        {
+          "role": "card_title_meta_plate",
+          "rect": [
+            66,
+            670,
+            238,
+            718
+          ],
+          "text_max": "非洲禁区带"
+        }
+      ],
+      "icon_rects": [
+        {
+          "role": "card_global_icon",
+          "rect": [
+            60,
+            581,
+            112,
+            630
+          ]
+        }
+      ],
+      "action_rects": [
+        {
+          "role": "card_state_action",
+          "rect": [
+            307,
+            665,
+            365,
+            720
+          ]
+        }
+      ],
+      "no_text_rects": [
+        {
+          "role": "thumbnail_art",
+          "rect": [
+            70,
+            591,
+            365,
+            660
+          ]
+        },
+        {
+          "role": "outer_frame_bevel_shadow",
+          "rect": [
+            42,
+            565,
+            383,
+            725
+          ]
+        }
+      ],
+      "hit_rects": [
+        {
+          "role": "card_hit_rect",
+          "rect": [
+            42,
+            565,
+            383,
+            725
+          ]
+        }
+      ],
+      "axis_aligned_required": true,
+      "visual_shell_source": "benchmark image, not v0.95 overlay",
+      "runtime_layer_rule": "dynamic text and hit rect use axis-aligned rects; decoration may extend outside but cannot carry text",
+      "notes": "Use benchmark card shell and thumbnail; runtime text only enters the bottom label plate."
+    },
+    {
+      "id": "left_sa",
+      "name": "?????",
+      "kind": "locked_region_card",
+      "visual_shell_rect": [
+        42,
+        728,
+        383,
+        906
+      ],
+      "content_rects": [
+        {
+          "role": "card_title_meta_plate",
+          "rect": [
+            66,
+            850,
+            240,
+            898
+          ],
+          "text_max": "南美禁区带"
+        }
+      ],
+      "icon_rects": [
+        {
+          "role": "card_global_icon",
+          "rect": [
+            60,
+            744,
+            112,
+            792
+          ]
+        }
+      ],
+      "action_rects": [
+        {
+          "role": "card_state_action",
+          "rect": [
+            307,
+            850,
+            365,
+            900
+          ]
+        }
+      ],
+      "no_text_rects": [
+        {
+          "role": "thumbnail_art",
+          "rect": [
+            70,
+            754,
+            365,
+            840
+          ]
+        },
+        {
+          "role": "outer_frame_bevel_shadow",
+          "rect": [
+            42,
+            728,
+            383,
+            906
+          ]
+        }
+      ],
+      "hit_rects": [
+        {
+          "role": "card_hit_rect",
+          "rect": [
+            42,
+            728,
+            383,
+            906
+          ]
+        }
+      ],
+      "axis_aligned_required": true,
+      "visual_shell_source": "benchmark image, not v0.95 overlay",
+      "runtime_layer_rule": "dynamic text and hit rect use axis-aligned rects; decoration may extend outside but cannot carry text",
+      "notes": "Use benchmark card shell and thumbnail; runtime text only enters the bottom label plate."
+    },
+    {
+      "id": "receipt_action",
+      "name": "??????",
+      "kind": "bottom_receipt_action",
+      "visual_shell_rect": [
+        407,
+        742,
+        674,
+        908
+      ],
+      "content_rects": [
+        {
+          "role": "receipt_title_lane",
+          "rect": [
+            502,
+            770,
+            650,
+            798
+          ],
+          "text_max": "本周行动"
+        },
+        {
+          "role": "receipt_value_lane",
+          "rect": [
+            502,
+            806,
+            650,
+            838
+          ],
+          "text_max": "余 6 天"
+        },
+        {
+          "role": "receipt_progress_bar",
+          "rect": [
+            422,
+            848,
+            650,
+            887
+          ],
+          "text_max": ""
+        }
+      ],
+      "icon_rects": [
+        {
+          "role": "receipt_semantic_icon",
+          "rect": [
+            431,
+            760,
+            490,
+            820
+          ]
+        }
+      ],
+      "action_rects": [],
+      "no_text_rects": [
+        {
+          "role": "tape_or_colored_corner",
+          "rect": [
+            407,
+            742,
+            477,
+            784
+          ]
+        },
+        {
+          "role": "perforation_edge",
+          "rect": [
+            646,
+            762,
+            674,
+            888
+          ]
+        },
+        {
+          "role": "outer_paper_edge_shadow",
+          "rect": [
+            407,
+            742,
+            674,
+            908
+          ]
+        }
+      ],
+      "hit_rects": [
+        {
+          "role": "receipt_hit_rect_or_status_rect",
+          "rect": [
+            407,
+            742,
+            674,
+            908
+          ]
+        }
+      ],
+      "axis_aligned_required": true,
+      "visual_shell_source": "benchmark image, not v0.95 overlay",
+      "runtime_layer_rule": "dynamic text and hit rect use axis-aligned rects; decoration may extend outside but cannot carry text",
+      "notes": "Use benchmark receipt shell/perforation/color corner; title/value/progress are runtime state layers."
+    },
+    {
+      "id": "receipt_info",
+      "name": "??????",
+      "kind": "bottom_receipt_info",
+      "visual_shell_rect": [
+        697,
+        742,
+        944,
+        908
+      ],
+      "content_rects": [
+        {
+          "role": "receipt_title_lane",
+          "rect": [
+            790,
+            770,
+            930,
+            798
+          ],
+          "text_max": "情报余量"
+        },
+        {
+          "role": "receipt_value_lane",
+          "rect": [
+            790,
+            806,
+            930,
+            838
+          ],
+          "text_max": "线报 3"
+        },
+        {
+          "role": "receipt_progress_bar",
+          "rect": [
+            710,
+            850,
+            940,
+            888
+          ],
+          "text_max": ""
+        }
+      ],
+      "icon_rects": [
+        {
+          "role": "receipt_semantic_icon",
+          "rect": [
+            724,
+            760,
+            776,
+            820
+          ]
+        }
+      ],
+      "action_rects": [],
+      "no_text_rects": [
+        {
+          "role": "tape_or_colored_corner",
+          "rect": [
+            697,
+            742,
+            767,
+            784
+          ]
+        },
+        {
+          "role": "perforation_edge",
+          "rect": [
+            916,
+            762,
+            944,
+            888
+          ]
+        },
+        {
+          "role": "outer_paper_edge_shadow",
+          "rect": [
+            697,
+            742,
+            944,
+            908
+          ]
+        }
+      ],
+      "hit_rects": [
+        {
+          "role": "receipt_hit_rect_or_status_rect",
+          "rect": [
+            697,
+            742,
+            944,
+            908
+          ]
+        }
+      ],
+      "axis_aligned_required": true,
+      "visual_shell_source": "benchmark image, not v0.95 overlay",
+      "runtime_layer_rule": "dynamic text and hit rect use axis-aligned rects; decoration may extend outside but cannot carry text",
+      "notes": "Use benchmark receipt shell/perforation/color corner; title/value/progress are runtime state layers."
+    },
+    {
+      "id": "receipt_redline",
+      "name": "??????",
+      "kind": "bottom_receipt_redline",
+      "visual_shell_rect": [
+        964,
+        742,
+        1212,
+        908
+      ],
+      "content_rects": [
+        {
+          "role": "receipt_title_lane",
+          "rect": [
+            1058,
+            770,
+            1196,
+            798
+          ],
+          "text_max": "红线台账"
+        },
+        {
+          "role": "receipt_value_lane",
+          "rect": [
+            1058,
+            806,
+            1196,
+            838
+          ],
+          "text_max": "4天后升温"
+        },
+        {
+          "role": "receipt_progress_bar",
+          "rect": [
+            982,
+            850,
+            1200,
+            888
+          ],
+          "text_max": ""
+        }
+      ],
+      "icon_rects": [
+        {
+          "role": "receipt_semantic_icon",
+          "rect": [
+            991,
+            760,
+            1046,
+            820
+          ]
+        }
+      ],
+      "action_rects": [],
+      "no_text_rects": [
+        {
+          "role": "tape_or_colored_corner",
+          "rect": [
+            964,
+            742,
+            1034,
+            784
+          ]
+        },
+        {
+          "role": "perforation_edge",
+          "rect": [
+            1184,
+            762,
+            1212,
+            888
+          ]
+        },
+        {
+          "role": "outer_paper_edge_shadow",
+          "rect": [
+            964,
+            742,
+            1212,
+            908
+          ]
+        }
+      ],
+      "hit_rects": [
+        {
+          "role": "receipt_hit_rect_or_status_rect",
+          "rect": [
+            964,
+            742,
+            1212,
+            908
+          ]
+        }
+      ],
+      "axis_aligned_required": true,
+      "visual_shell_source": "benchmark image, not v0.95 overlay",
+      "runtime_layer_rule": "dynamic text and hit rect use axis-aligned rects; decoration may extend outside but cannot carry text",
+      "notes": "Use benchmark receipt shell/perforation/color corner; title/value/progress are runtime state layers."
+    }
+  ],
+  "gates": {
+    "visual_shell_from_benchmark_required": true,
+    "content_rect_axis_aligned_required": true,
+    "dynamic_text_baked_into_bitmap": false,
+    "hit_rect_can_follow_slanted_decoration": false,
+    "geometry_gate_before_user_review": true,
+    "visual_shell_must_be_checked_against_real_runtime_content": true
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "status": "branch material atlas v1 - direct benchmark crop tiles; not global Angus truth",
+  "source_truth_board": "13-wmw-paper-material-truth-board-v0-3.png",
+  "tiles": [
+    {
+      "id": "paper_warm_cover",
+      "tile_path": "paper-material-atlas-v1/paper_warm_cover_tile_v1.png",
+      "role": "warm gray-beige source; big flat paper planes",
+      "sample_hex": "#B7A488",
+      "tile_mean_hex": "#8A7D6A",
+      "source_crop": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops-v0-3\\T_paper_warm_cover.png"
+    },
+    {
+      "id": "paper_casefile",
+      "tile_path": "paper-material-atlas-v1/paper_casefile_tile_v1.png",
+      "role": "deeper case-file paper; muted not dirty",
+      "sample_hex": "#967E5E",
+      "tile_mean_hex": "#7C6E53",
+      "source_crop": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops-v0-3\\T_paper_casefile.png"
+    },
+    {
+      "id": "ivory_edge",
+      "tile_path": "paper-material-atlas-v1/ivory_edge_tile_v1.png",
+      "role": "thin ivory paper / photo edge",
+      "sample_hex": "#C0B9B3",
+      "tile_mean_hex": "#969898",
+      "source_crop": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops-v0-3\\T_ivory_edge.png"
+    },
+    {
+      "id": "gray_backing_board",
+      "tile_path": "paper-material-atlas-v1/gray_backing_board_tile_v1.png",
+      "role": "gray-green backing board; low saturation",
+      "sample_hex": "#686554",
+      "tile_mean_hex": "#6F6F5E",
+      "source_crop": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops-v0-3\\T_gray_backing_board.png"
+    },
+    {
+      "id": "note_yellow_paper",
+      "tile_path": "paper-material-atlas-v1/note_yellow_paper_tile_v1.png",
+      "role": "colored note paper; still muted, not neon",
+      "sample_hex": "#B3A456",
+      "tile_mean_hex": "#625A39",
+      "source_crop": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops-v0-3\\T_note_yellow_paper.png"
+    },
+    {
+      "id": "sticker_edge",
+      "tile_path": "paper-material-atlas-v1/sticker_edge_tile_v1.png",
+      "role": "sticker paper edge and backing context",
+      "sample_hex": "#ABA290",
+      "tile_mean_hex": "#5A5950",
+      "source_crop": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops-v0-3\\T_sticker_edge.png"
+    }
+  ],
+  "reject_examples": [
+    {
+      "id": "D_receipt_cream",
+      "tile_path": "paper-material-atlas-v1/D_receipt_cream_reject_tile.png",
+      "reject_reason": "too cream / too form-like",
+      "sample_hex": "#C3B29F",
+      "tile_mean_hex": "#9E9285",
+      "source_crop": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops-v0-3\\D_receipt_cream.png"
+    },
+    {
+      "id": "D_receipt_brown",
+      "tile_path": "paper-material-atlas-v1/D_receipt_brown_reject_tile.png",
+      "reject_reason": "brown old-receipt drift",
+      "sample_hex": "#BAA795",
+      "tile_mean_hex": "#917D6F",
+      "source_crop": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops-v0-3\\D_receipt_brown.png"
+    },
+    {
+      "id": "D_v05_top_cream",
+      "tile_path": "paper-material-atlas-v1/D_v05_top_cream_reject_tile.png",
+      "reject_reason": "too pale cream top highlight",
+      "sample_hex": "#CDBBA5",
+      "tile_mean_hex": "#AB9B87",
+      "source_crop": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops-v0-3\\D_v05_top_cream.png"
+    },
+    {
+      "id": "D_v05_body_grime",
+      "tile_path": "paper-material-atlas-v1/D_v05_body_grime_reject_tile.png",
+      "reject_reason": "old-paper grime / cloud stain risk",
+      "sample_hex": "#AD9981",
+      "tile_mean_hex": "#746757",
+      "source_crop": "docs\\screenshots\\2026-07-01-wmw-component-correction\\paper-material-truth-crops-v0-3\\D_v05_body_grime.png"
+    }
+  ]
+}

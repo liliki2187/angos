@@ -1,0 +1,541 @@
+{
+  "id": "world_map_wmw_text_component_fit_v0_74",
+  "source_material": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\140-world-map-wmw-paper-atlas-v3-refill-v0-66-info-gray.png",
+  "previous_rejected": "v0.71 and v0.73",
+  "output": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\175-world-map-wmw-text-component-fit-v0-74.png",
+  "scope": [
+    "text-only refill from v0.66 material base",
+    "bottom receipt text fit",
+    "left meta legibility",
+    "right header title/icon relationship",
+    "CTA label fit without horizontal compression"
+  ],
+  "hard_rules": [
+    "no functional component tilt introduced",
+    "no full-screen color or material regeneration",
+    "font fitting only by size reduction, never horizontal scaling"
+  ],
+  "checks": [
+    {
+      "tag": "top_channel",
+      "text": "WMW 本周侦测",
+      "rect": [
+        134,
+        45,
+        296,
+        62
+      ],
+      "font_size": 12,
+      "bbox": [
+        134,
+        48.0,
+        222,
+        59.0
+      ],
+      "fits": true,
+      "width_ratio": 0.543,
+      "height_ratio": 0.647
+    },
+    {
+      "tag": "top_week",
+      "text": "第1周",
+      "rect": [
+        335,
+        43,
+        380,
+        62
+      ],
+      "font_size": 12,
+      "bbox": [
+        342.0,
+        46.5,
+        373.0,
+        58.5
+      ],
+      "fits": true,
+      "width_ratio": 0.689,
+      "height_ratio": 0.632
+    },
+    {
+      "tag": "top_days",
+      "text": "余6天",
+      "rect": [
+        418,
+        43,
+        466,
+        62
+      ],
+      "font_size": 12,
+      "bbox": [
+        426.5,
+        47.0,
+        457.5,
+        58.0
+      ],
+      "fits": true,
+      "width_ratio": 0.646,
+      "height_ratio": 0.579
+    },
+    {
+      "tag": "left_title",
+      "text": "北美禁区",
+      "rect": [
+        122,
+        126,
+        292,
+        150
+      ],
+      "font_size": 17,
+      "bbox": [
+        122,
+        129.5,
+        190,
+        146.5
+      ],
+      "fits": true,
+      "width_ratio": 0.4,
+      "height_ratio": 0.708
+    },
+    {
+      "tag": "left_meta",
+      "text": "红线升温  推荐2",
+      "rect": [
+        67,
+        287,
+        206,
+        313
+      ],
+      "font_size": 15,
+      "bbox": [
+        67,
+        293.0,
+        174,
+        307.0
+      ],
+      "fits": true,
+      "width_ratio": 0.77,
+      "height_ratio": 0.538
+    },
+    {
+      "tag": "left_title",
+      "text": "欧亚灰域",
+      "rect": [
+        122,
+        358,
+        292,
+        382
+      ],
+      "font_size": 17,
+      "bbox": [
+        122,
+        361.5,
+        190,
+        378.5
+      ],
+      "fits": true,
+      "width_ratio": 0.4,
+      "height_ratio": 0.708
+    },
+    {
+      "tag": "left_meta",
+      "text": "可派遣  线报2",
+      "rect": [
+        67,
+        517,
+        206,
+        543
+      ],
+      "font_size": 15,
+      "bbox": [
+        67,
+        522.5,
+        159,
+        537.5
+      ],
+      "fits": true,
+      "width_ratio": 0.662,
+      "height_ratio": 0.577
+    },
+    {
+      "tag": "left_title",
+      "text": "非洲遗址",
+      "rect": [
+        122,
+        589,
+        292,
+        613
+      ],
+      "font_size": 17,
+      "bbox": [
+        122,
+        592.5,
+        190,
+        609.5
+      ],
+      "fits": true,
+      "width_ratio": 0.4,
+      "height_ratio": 0.708
+    },
+    {
+      "tag": "left_meta",
+      "text": "紧急  线报1",
+      "rect": [
+        67,
+        711,
+        206,
+        737
+      ],
+      "font_size": 15,
+      "bbox": [
+        67,
+        717.0,
+        144,
+        731.0
+      ],
+      "fits": true,
+      "width_ratio": 0.554,
+      "height_ratio": 0.538
+    },
+    {
+      "tag": "left_title",
+      "text": "南美黑林",
+      "rect": [
+        122,
+        784,
+        292,
+        808
+      ],
+      "font_size": 17,
+      "bbox": [
+        122,
+        787.5,
+        190,
+        804.5
+      ],
+      "fits": true,
+      "width_ratio": 0.4,
+      "height_ratio": 0.708
+    },
+    {
+      "tag": "left_meta",
+      "text": "锁定  需3线报",
+      "rect": [
+        68,
+        902,
+        186,
+        920
+      ],
+      "font_size": 15,
+      "bbox": [
+        68,
+        904.0,
+        160,
+        918.0
+      ],
+      "fits": true,
+      "width_ratio": 0.78,
+      "height_ratio": 0.778
+    },
+    {
+      "tag": "right_title",
+      "text": "北美禁区",
+      "rect": [
+        1290,
+        128,
+        1510,
+        160
+      ],
+      "font_size": 25,
+      "bbox": [
+        1290,
+        131.0,
+        1390,
+        157.0
+      ],
+      "fits": true,
+      "width_ratio": 0.455,
+      "height_ratio": 0.812
+    },
+    {
+      "tag": "right_risk_text",
+      "text": "红线升温",
+      "rect": [
+        1280,
+        180,
+        1368,
+        199
+      ],
+      "font_size": 13,
+      "bbox": [
+        1280,
+        183.5,
+        1332,
+        195.5
+      ],
+      "fits": true,
+      "width_ratio": 0.591,
+      "height_ratio": 0.632
+    },
+    {
+      "tag": "risk_stamp",
+      "text": "高危",
+      "rect": [
+        1544,
+        126,
+        1605,
+        156
+      ],
+      "font_size": 19,
+      "bbox": [
+        1555.5,
+        131.0,
+        1593.5,
+        151.0
+      ],
+      "fits": true,
+      "width_ratio": 0.623,
+      "height_ratio": 0.667
+    },
+    {
+      "tag": "risk_rec",
+      "text": "推荐 2",
+      "rect": [
+        1540,
+        164,
+        1610,
+        187
+      ],
+      "font_size": 12,
+      "bbox": [
+        1557.5,
+        170.0,
+        1592.5,
+        181.0
+      ],
+      "fits": true,
+      "width_ratio": 0.5,
+      "height_ratio": 0.478
+    },
+    {
+      "tag": "photo_caption",
+      "text": "异常热点",
+      "rect": [
+        1250,
+        494,
+        1334,
+        510
+      ],
+      "font_size": 12,
+      "bbox": [
+        1250,
+        496.5,
+        1298,
+        507.5
+      ],
+      "fits": true,
+      "width_ratio": 0.571,
+      "height_ratio": 0.688
+    },
+    {
+      "tag": "photo_meta",
+      "text": "卫星阵列 / 方尖碑",
+      "rect": [
+        1340,
+        494,
+        1500,
+        510
+      ],
+      "font_size": 12,
+      "bbox": [
+        1340,
+        496.0,
+        1437,
+        508.0
+      ],
+      "fits": true,
+      "width_ratio": 0.606,
+      "height_ratio": 0.75
+    },
+    {
+      "tag": "primary_cta",
+      "text": "进入北美禁区  消耗1天",
+      "rect": [
+        1310,
+        548,
+        1530,
+        584
+      ],
+      "font_size": 17,
+      "bbox": [
+        1333.5,
+        557.0,
+        1506.5,
+        575.0
+      ],
+      "fits": true,
+      "width_ratio": 0.786,
+      "height_ratio": 0.5
+    },
+    {
+      "tag": "secondary_cta",
+      "text": "查看任务情报  线报3",
+      "rect": [
+        1310,
+        622,
+        1530,
+        654
+      ],
+      "font_size": 15,
+      "bbox": [
+        1351.5,
+        630.5,
+        1488.5,
+        645.5
+      ],
+      "fits": true,
+      "width_ratio": 0.623,
+      "height_ratio": 0.469
+    },
+    {
+      "tag": "warning_row",
+      "text": "红线截止  4天",
+      "rect": [
+        1310,
+        700,
+        1530,
+        736
+      ],
+      "font_size": 16,
+      "bbox": [
+        1370.5,
+        709.5,
+        1469.5,
+        726.5
+      ],
+      "fits": true,
+      "width_ratio": 0.45,
+      "height_ratio": 0.472
+    },
+    {
+      "tag": "bottom_title",
+      "text": "本周行动",
+      "rect": [
+        502,
+        808,
+        624,
+        827
+      ],
+      "font_size": 13,
+      "bbox": [
+        502,
+        811.0,
+        554,
+        824.0
+      ],
+      "fits": true,
+      "width_ratio": 0.426,
+      "height_ratio": 0.684
+    },
+    {
+      "tag": "bottom_value",
+      "text": "余 6 天",
+      "rect": [
+        502,
+        832,
+        624,
+        856
+      ],
+      "font_size": 18,
+      "bbox": [
+        502,
+        834.5,
+        559,
+        853.5
+      ],
+      "fits": true,
+      "width_ratio": 0.467,
+      "height_ratio": 0.792
+    },
+    {
+      "tag": "bottom_title",
+      "text": "情报余量",
+      "rect": [
+        792,
+        808,
+        908,
+        827
+      ],
+      "font_size": 13,
+      "bbox": [
+        792,
+        810.5,
+        844,
+        824.5
+      ],
+      "fits": true,
+      "width_ratio": 0.448,
+      "height_ratio": 0.737
+    },
+    {
+      "tag": "bottom_value",
+      "text": "线报 3",
+      "rect": [
+        792,
+        832,
+        908,
+        856
+      ],
+      "font_size": 18,
+      "bbox": [
+        792,
+        834.5,
+        844,
+        853.5
+      ],
+      "fits": true,
+      "width_ratio": 0.448,
+      "height_ratio": 0.792
+    },
+    {
+      "tag": "bottom_title",
+      "text": "红线台账",
+      "rect": [
+        1086,
+        808,
+        1194,
+        827
+      ],
+      "font_size": 13,
+      "bbox": [
+        1086,
+        811.5,
+        1138,
+        823.5
+      ],
+      "fits": true,
+      "width_ratio": 0.481,
+      "height_ratio": 0.632
+    },
+    {
+      "tag": "bottom_value",
+      "text": "4天后",
+      "rect": [
+        1086,
+        832,
+        1194,
+        856
+      ],
+      "font_size": 18,
+      "bbox": [
+        1086,
+        835.0,
+        1133,
+        853.0
+      ],
+      "fits": true,
+      "width_ratio": 0.435,
+      "height_ratio": 0.75
+    }
+  ],
+  "all_text_fits": true
+}
