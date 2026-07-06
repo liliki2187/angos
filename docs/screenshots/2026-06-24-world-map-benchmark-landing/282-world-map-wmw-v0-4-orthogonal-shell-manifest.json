@@ -1,0 +1,228 @@
+{
+  "artifact": "WMW v0.4 orthogonal functional art shell proof",
+  "date": "2026-07-06",
+  "source_reference": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\258-world-map-wmw-benchmark-shell-reference-v0-1.png",
+  "shell_proof": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\278-world-map-wmw-v0-4-orthogonal-no-text-shell-proof.png",
+  "filled_preview": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\281-world-map-wmw-v0-4-orthogonal-shell-text-refill-preview.png",
+  "geometry_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\279-world-map-wmw-v0-4-orthogonal-shell-geometry-qa.png",
+  "crops": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\280-world-map-wmw-v0-4-orthogonal-shell-crops.png",
+  "status": "art_shell_geometry_proof_candidate; not final art; not atlas",
+  "scope": [
+    "right_dossier_header",
+    "right_cta_primary",
+    "right_cta_secondary",
+    "right_cta_warning"
+  ],
+  "principle": "Functional text/click carriers are rebuilt as orthogonal no-text surfaces before runtime text refill.",
+  "geometry_summary": {
+    "checked_surfaces": 17,
+    "axis_aligned": true,
+    "known_limit": "This is a deterministic shell proof; final art still needs style-preserving no-text generation or painting."
+  },
+  "checks": [
+    {
+      "name": "paper_main",
+      "kind": "visual_module",
+      "rect": [
+        1178,
+        100,
+        1638,
+        760
+      ],
+      "axis_aligned": true,
+      "edge_policy": "0-degree horizontal/vertical carrier edges; chamfered corners are decorative only"
+    },
+    {
+      "name": "header_title_plate",
+      "kind": "functional_carrier",
+      "rect": [
+        1264,
+        126,
+        1498,
+        173
+      ],
+      "axis_aligned": true,
+      "edge_policy": "0-degree horizontal/vertical carrier edges; chamfered corners are decorative only"
+    },
+    {
+      "name": "header_status_plate",
+      "kind": "functional_carrier",
+      "rect": [
+        1268,
+        179,
+        1382,
+        199
+      ],
+      "axis_aligned": true,
+      "edge_policy": "0-degree horizontal/vertical carrier edges; chamfered corners are decorative only"
+    },
+    {
+      "name": "stamp_plate",
+      "kind": "functional_carrier",
+      "rect": [
+        1510,
+        130,
+        1605,
+        205
+      ],
+      "axis_aligned": true,
+      "edge_policy": "0-degree horizontal/vertical carrier edges; chamfered corners are decorative only"
+    },
+    {
+      "name": "caption_plate",
+      "kind": "functional_carrier",
+      "rect": [
+        1218,
+        452,
+        1476,
+        479
+      ],
+      "axis_aligned": true,
+      "edge_policy": "0-degree horizontal/vertical carrier edges; chamfered corners are decorative only"
+    },
+    {
+      "name": "cta_0_row",
+      "kind": "functional_carrier",
+      "rect": [
+        1188,
+        502,
+        1628,
+        570
+      ],
+      "axis_aligned": true,
+      "edge_policy": "0-degree horizontal/vertical carrier edges; chamfered corners are decorative only"
+    },
+    {
+      "name": "cta_0_label_plate",
+      "kind": "text_plate",
+      "rect": [
+        1264,
+        516,
+        1532,
+        556
+      ],
+      "axis_aligned": true,
+      "edge_policy": "0-degree horizontal/vertical carrier edges; chamfered corners are decorative only"
+    },
+    {
+      "name": "cta_0_action_plate",
+      "kind": "action_plate",
+      "rect": [
+        1543,
+        511,
+        1612,
+        560
+      ],
+      "axis_aligned": true,
+      "edge_policy": "0-degree horizontal/vertical carrier edges; chamfered corners are decorative only"
+    },
+    {
+      "name": "cta_0_hit",
+      "kind": "hit_rect",
+      "rect": [
+        1188,
+        502,
+        1628,
+        570
+      ],
+      "axis_aligned": true,
+      "edge_policy": "0-degree horizontal/vertical carrier edges; chamfered corners are decorative only"
+    },
+    {
+      "name": "cta_1_row",
+      "kind": "functional_carrier",
+      "rect": [
+        1188,
+        583,
+        1628,
+        648
+      ],
+      "axis_aligned": true,
+      "edge_policy": "0-degree horizontal/vertical carrier edges; chamfered corners are decorative only"
+    },
+    {
+      "name": "cta_1_label_plate",
+      "kind": "text_plate",
+      "rect": [
+        1264,
+        597,
+        1532,
+        634
+      ],
+      "axis_aligned": true,
+      "edge_policy": "0-degree horizontal/vertical carrier edges; chamfered corners are decorative only"
+    },
+    {
+      "name": "cta_1_action_plate",
+      "kind": "action_plate",
+      "rect": [
+        1543,
+        592,
+        1612,
+        638
+      ],
+      "axis_aligned": true,
+      "edge_policy": "0-degree horizontal/vertical carrier edges; chamfered corners are decorative only"
+    },
+    {
+      "name": "cta_1_hit",
+      "kind": "hit_rect",
+      "rect": [
+        1188,
+        583,
+        1628,
+        648
+      ],
+      "axis_aligned": true,
+      "edge_policy": "0-degree horizontal/vertical carrier edges; chamfered corners are decorative only"
+    },
+    {
+      "name": "cta_2_row",
+      "kind": "functional_carrier",
+      "rect": [
+        1188,
+        665,
+        1628,
+        730
+      ],
+      "axis_aligned": true,
+      "edge_policy": "0-degree horizontal/vertical carrier edges; chamfered corners are decorative only"
+    },
+    {
+      "name": "cta_2_label_plate",
+      "kind": "text_plate",
+      "rect": [
+        1264,
+        679,
+        1532,
+        716
+      ],
+      "axis_aligned": true,
+      "edge_policy": "0-degree horizontal/vertical carrier edges; chamfered corners are decorative only"
+    },
+    {
+      "name": "cta_2_action_plate",
+      "kind": "action_plate",
+      "rect": [
+        1543,
+        674,
+        1612,
+        720
+      ],
+      "axis_aligned": true,
+      "edge_policy": "0-degree horizontal/vertical carrier edges; chamfered corners are decorative only"
+    },
+    {
+      "name": "cta_2_hit",
+      "kind": "hit_rect",
+      "rect": [
+        1188,
+        665,
+        1628,
+        730
+      ],
+      "axis_aligned": true,
+      "edge_policy": "0-degree horizontal/vertical carrier edges; chamfered corners are decorative only"
+    }
+  ]
+}
