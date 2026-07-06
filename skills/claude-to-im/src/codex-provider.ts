@@ -24,6 +24,7 @@ import {
 } from './feishu-history.js';
 import { prependSystemPrompt } from './session-prompt.js';
 import { prependPathEntry, resolvePreferredWindowsShellPath } from './windows-shell.js';
+import { prepareCodexShadowHome } from './codex-shadow-home.js';
 
 /** MIME → file extension for temp image files. */
 const MIME_EXT: Record<string, string> = {
@@ -169,6 +170,26 @@ function shouldPassModelToCodex(): boolean {
   return process.env.CTI_CODEX_PASS_MODEL === 'true';
 }
 
+function shouldEnableCodexImageGeneration(
+  env: NodeJS.ProcessEnv = process.env,
+): boolean {
+  return env.CTI_CODEX_IMAGE_GENERATION !== 'false';
+}
+
+export function buildCodexConfigOverrides(
+  env: NodeJS.ProcessEnv = process.env,
+): Record<string, unknown> | undefined {
+  if (!shouldEnableCodexImageGeneration(env)) {
+    return undefined;
+  }
+
+  return {
+    features: {
+      image_generation: true,
+    },
+  };
+}
+
 export function buildCodexCliEnv(
   baseEnv: NodeJS.ProcessEnv = process.env,
 ): Record<string, string> {
@@ -179,21 +200,43 @@ export function buildCodexCliEnv(
     }
   }
 
-  const shellPath = resolvePreferredWindowsShellPath(baseEnv);
-  if (process.platform === 'win32' && shellPath) {
-    const shellDir = path.dirname(shellPath);
-    const nextPath = prependPathEntry(env.Path || env.PATH, shellDir);
-    env.Path = nextPath;
-    env.PATH = nextPath;
-    env.ComSpec = shellPath;
-    env.COMSPEC = shellPath;
-    env.SHELL = shellPath;
+  if (process.platform === 'win32') {
+    let nextPath = env.Path || env.PATH;
+
+    const nodeDir = path.dirname(process.execPath);
+    nextPath = prependPathEntry(nextPath, nodeDir);
+
+    const systemRoot = baseEnv.SYSTEMROOT || baseEnv.SystemRoot || path.join('C:', 'Windows');
+    const legacyPowerShellDir = path.join(systemRoot, 'System32', 'WindowsPowerShell', 'v1.0');
+    if (fs.existsSync(legacyPowerShellDir)) {
+      nextPath = prependPathEntry(nextPath, legacyPowerShellDir);
+    }
+
+    const shellPath = resolvePreferredWindowsShellPath(baseEnv);
+    if (shellPath) {
+      const shellDir = path.dirname(shellPath);
+      nextPath = prependPathEntry(nextPath, shellDir);
+      env.ComSpec = shellPath;
+      env.COMSPEC = shellPath;
+      env.SHELL = shellPath;
+    }
+
+    if (nextPath) {
+      env.Path = nextPath;
+      env.PATH = nextPath;
+    }
+  }
+
+  const shadowHome = prepareCodexShadowHome(baseEnv);
+  if (shadowHome.mode === 'shadow' && shadowHome.codexHome) {
+    env.CODEX_HOME = shadowHome.codexHome;
   }
 
   return env;
 }
 
 type CodexSandboxMode = 'read-only' | 'workspace-write' | 'danger-full-access';
+type CodexModelReasoningEffort = 'minimal' | 'low' | 'medium' | 'high' | 'xhigh';
 
 function normalizeSandboxMode(value?: string): CodexSandboxMode | undefined {
   switch (value?.trim()) {
@@ -217,6 +260,19 @@ function resolveNetworkAccessEnabled(sandboxMode: CodexSandboxMode): boolean | u
   return sandboxMode === 'danger-full-access' ? true : undefined;
 }
 
+function resolveModelReasoningEffort(): CodexModelReasoningEffort | undefined {
+  switch (process.env.CTI_CODEX_MODEL_REASONING_EFFORT?.trim()) {
+    case 'minimal':
+    case 'low':
+    case 'medium':
+    case 'high':
+    case 'xhigh':
+      return process.env.CTI_CODEX_MODEL_REASONING_EFFORT.trim() as CodexModelReasoningEffort;
+    default:
+      return undefined;
+  }
+}
+
 function looksLikeClaudeModel(model?: string): boolean {
   return !!model && /^claude[-_]/i.test(model);
 }
@@ -235,6 +291,7 @@ export function buildThreadOptions(
 ): Record<string, unknown> {
   const sandboxMode = resolveSandboxMode();
   const networkAccessEnabled = resolveNetworkAccessEnabled(sandboxMode);
+  const modelReasoningEffort = resolveModelReasoningEffort();
 
   return {
     ...(shouldPassModelToCodex() && params.model ? { model: params.model } : {}),
@@ -242,6 +299,7 @@ export function buildThreadOptions(
     approvalPolicy: toApprovalPolicy(params.permissionMode),
     sandboxMode,
     ...(networkAccessEnabled !== undefined ? { networkAccessEnabled } : {}),
+    ...(modelReasoningEffort ? { modelReasoningEffort } : {}),
   };
 }
 
@@ -277,11 +335,13 @@ export class CodexProvider implements LLMProvider {
       || process.env.OPENAI_API_KEY
       || undefined;
     const baseUrl = process.env.CTI_CODEX_BASE_URL || undefined;
+    const configOverrides = buildCodexConfigOverrides();
 
     const CodexClass = this.sdk.Codex;
     this.codex = new CodexClass({
       ...(apiKey ? { apiKey } : {}),
       ...(baseUrl ? { baseUrl } : {}),
+      ...(configOverrides ? { config: configOverrides } : {}),
       env: buildCodexCliEnv(),
     });
 
@@ -428,7 +488,8 @@ export class CodexProvider implements LLMProvider {
                     }
 
                     case 'turn.failed': {
-                      const error = (event as { message?: string }).message;
+                      const error = (event as { message?: string; error?: { message?: string } }).message
+                        || (event as { error?: { message?: string } }).error?.message;
                       controller.enqueue(sseEvent('error', error || 'Turn failed'));
                       break;
                     }

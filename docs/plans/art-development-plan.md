@@ -10,7 +10,7 @@
 
 ### 已完成/已沉淀
 
-- 已围绕“复古报刊 + 怪谈 + 档案感”建立第一轮选图口径，并通过 `skills/art-reference-picker/` 固化参考图筛选标准；该口径现已降级为历史参考，不再覆盖当前正式视觉方向
+- 已围绕“复古报刊 + 怪谈 + 档案感”建立第一轮选图口径，并完成第一轮参考图归档；该口径曾通过 `skills/art-reference-picker/` 固化筛选标准，现已降级为历史参考，不再覆盖当前正式视觉方向
 - `design/references/original-art/2026-03-17_to_2026-03-18/` 已归档原始参考图、分析截图和 README
 - `design/references/settlement-reference/2026-03-18/` 已产出 5 套发行结算参考图和 1 套神秘特刊版式
 - `06-mystery-broadsheet-reference.png` 已接入 Godot 主菜单模态，用于验证参考图到引擎内预览的落地链路

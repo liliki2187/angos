@@ -38,6 +38,7 @@ $PidFile    = Join-Path $RuntimeDir 'bridge.pid'
 $StatusFile = Join-Path $RuntimeDir 'status.json'
 $LogFile    = Join-Path (Join-Path $CtiHome 'logs') 'bridge.log'
 $DaemonMjs  = Join-Path (Join-Path $SkillDir 'dist') 'daemon.mjs'
+$ResetSessionsScript = Join-Path (Join-Path $SkillDir 'scripts') 'reset-sessions.mjs'
 
 $ServiceName = 'ClaudeToIMBridge'
 
@@ -154,6 +155,63 @@ function Get-NodePath {
         exit 1
     }
     return $nodePath
+}
+
+function Get-ConfigEnvValue {
+    param([string]$Name)
+
+    $configPath = Join-Path $CtiHome 'config.env'
+    if (-not (Test-Path $configPath)) {
+        return $null
+    }
+
+    foreach ($line in Get-Content $configPath) {
+        $trimmed = $line.Trim()
+        if (-not $trimmed -or $trimmed.StartsWith('#')) {
+            continue
+        }
+        $idx = $trimmed.IndexOf('=')
+        if ($idx -lt 0) {
+            continue
+        }
+        $key = $trimmed.Substring(0, $idx).Trim()
+        if ($key -ne $Name) {
+            continue
+        }
+        $value = $trimmed.Substring($idx + 1).Trim()
+        if (
+            ($value.StartsWith('"') -and $value.EndsWith('"')) -or
+            ($value.StartsWith("'") -and $value.EndsWith("'"))
+        ) {
+            $value = $value.Substring(1, $value.Length - 2)
+        }
+        return $value
+    }
+
+    return $null
+}
+
+function Reset-BridgeSessions {
+    $resetSessions = $env:CTI_RESTART_RESET_SESSIONS
+    if ([string]::IsNullOrWhiteSpace($resetSessions)) {
+        $resetSessions = Get-ConfigEnvValue 'CTI_RESTART_RESET_SESSIONS'
+    }
+
+    if ([string]::IsNullOrWhiteSpace($resetSessions)) {
+        return
+    }
+
+    if ($resetSessions.Trim().ToLowerInvariant() -ne 'true') {
+        return
+    }
+
+    $nodePath = Get-NodePath
+    if (-not (Test-Path $ResetSessionsScript)) {
+        Write-Warning "Session reset script not found: $ResetSessionsScript"
+        return
+    }
+
+    & $nodePath $ResetSessionsScript
 }
 
 # ── WinSW / NSSM detection ──
@@ -410,6 +468,7 @@ switch ($Command) {
         Start-Sleep -Seconds 2
 
         Ensure-Dirs
+        Reset-BridgeSessions
         Ensure-Built
 
         if ($svc) {

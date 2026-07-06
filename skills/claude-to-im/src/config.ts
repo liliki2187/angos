@@ -11,7 +11,13 @@ export interface Config {
   defaultMode: string;
   codexSandboxMode?: 'read-only' | 'workspace-write' | 'danger-full-access';
   codexNetworkAccess?: boolean;
+  codexPassModel?: boolean;
+  codexModelReasoningEffort?: 'minimal' | 'low' | 'medium' | 'high' | 'xhigh';
   codexWindowsShell?: string;
+  codexHomeMode?: 'inherit' | 'shadow';
+  codexShadowHome?: string;
+  codexSourceHome?: string;
+  codexImageGeneration?: boolean;
   // Telegram
   tgBotToken?: string;
   tgChatId?: string;
@@ -24,6 +30,7 @@ export interface Config {
   feishuAllowedUsers?: string[];
   feishuHideToolMetadata?: boolean;
   feishuForceCard?: boolean;
+  feishuAutoSendImagePaths?: boolean;
   // Discord
   discordBotToken?: string;
   discordAllowedUsers?: string[];
@@ -88,6 +95,26 @@ function parseCodexSandboxMode(value: string | undefined): Config["codexSandboxM
   return undefined;
 }
 
+function parseCodexHomeMode(value: string | undefined): Config["codexHomeMode"] {
+  if (value === 'inherit' || value === 'shadow') {
+    return value;
+  }
+  return undefined;
+}
+
+function parseCodexModelReasoningEffort(value: string | undefined): Config["codexModelReasoningEffort"] {
+  if (
+    value === 'minimal' ||
+    value === 'low' ||
+    value === 'medium' ||
+    value === 'high' ||
+    value === 'xhigh'
+  ) {
+    return value;
+  }
+  return undefined;
+}
+
 export function loadConfig(): Config {
   let env = new Map<string, string>();
   try {
@@ -108,7 +135,13 @@ export function loadConfig(): Config {
     defaultMode: env.get("CTI_DEFAULT_MODE") || "code",
     codexSandboxMode: parseCodexSandboxMode(env.get("CTI_CODEX_SANDBOX_MODE")),
     codexNetworkAccess: parseBoolean(env.get("CTI_CODEX_NETWORK_ACCESS")),
+    codexPassModel: parseBoolean(env.get("CTI_CODEX_PASS_MODEL")),
+    codexModelReasoningEffort: parseCodexModelReasoningEffort(env.get("CTI_CODEX_MODEL_REASONING_EFFORT")),
     codexWindowsShell: env.get("CTI_CODEX_WINDOWS_SHELL") || undefined,
+    codexHomeMode: parseCodexHomeMode(env.get("CTI_CODEX_HOME_MODE")),
+    codexShadowHome: env.get("CTI_CODEX_SHADOW_HOME") || undefined,
+    codexSourceHome: env.get("CTI_CODEX_SOURCE_HOME") || undefined,
+    codexImageGeneration: parseBoolean(env.get("CTI_CODEX_IMAGE_GENERATION")),
     tgBotToken: env.get("CTI_TG_BOT_TOKEN") || undefined,
     tgChatId: env.get("CTI_TG_CHAT_ID") || undefined,
     tgAllowedUsers: splitCsv(env.get("CTI_TG_ALLOWED_USERS")),
@@ -122,6 +155,9 @@ export function loadConfig(): Config {
       : undefined,
     feishuForceCard: env.has("CTI_FEISHU_FORCE_CARD")
       ? env.get("CTI_FEISHU_FORCE_CARD") === "true"
+      : undefined,
+    feishuAutoSendImagePaths: env.has("CTI_FEISHU_AUTO_SEND_IMAGE_PATHS")
+      ? env.get("CTI_FEISHU_AUTO_SEND_IMAGE_PATHS") === "true"
       : undefined,
     discordBotToken: env.get("CTI_DISCORD_BOT_TOKEN") || undefined,
     discordAllowedUsers: splitCsv(env.get("CTI_DISCORD_ALLOWED_USERS")),
@@ -160,7 +196,16 @@ export function saveConfig(config: Config): void {
   if (config.codexSandboxMode) out += formatEnvLine("CTI_CODEX_SANDBOX_MODE", config.codexSandboxMode);
   if (config.codexNetworkAccess !== undefined)
     out += formatEnvLine("CTI_CODEX_NETWORK_ACCESS", String(config.codexNetworkAccess));
+  if (config.codexPassModel !== undefined)
+    out += formatEnvLine("CTI_CODEX_PASS_MODEL", String(config.codexPassModel));
+  if (config.codexModelReasoningEffort)
+    out += formatEnvLine("CTI_CODEX_MODEL_REASONING_EFFORT", config.codexModelReasoningEffort);
   if (config.codexWindowsShell) out += formatEnvLine("CTI_CODEX_WINDOWS_SHELL", config.codexWindowsShell);
+  if (config.codexHomeMode) out += formatEnvLine("CTI_CODEX_HOME_MODE", config.codexHomeMode);
+  if (config.codexShadowHome) out += formatEnvLine("CTI_CODEX_SHADOW_HOME", config.codexShadowHome);
+  if (config.codexSourceHome) out += formatEnvLine("CTI_CODEX_SOURCE_HOME", config.codexSourceHome);
+  if (config.codexImageGeneration !== undefined)
+    out += formatEnvLine("CTI_CODEX_IMAGE_GENERATION", String(config.codexImageGeneration));
   out += formatEnvLine("CTI_TG_BOT_TOKEN", config.tgBotToken);
   out += formatEnvLine("CTI_TG_CHAT_ID", config.tgChatId);
   out += formatEnvLine(
@@ -179,6 +224,8 @@ export function saveConfig(config: Config): void {
     out += formatEnvLine("CTI_FEISHU_HIDE_TOOL_METADATA", String(config.feishuHideToolMetadata));
   if (config.feishuForceCard !== undefined)
     out += formatEnvLine("CTI_FEISHU_FORCE_CARD", String(config.feishuForceCard));
+  if (config.feishuAutoSendImagePaths !== undefined)
+    out += formatEnvLine("CTI_FEISHU_AUTO_SEND_IMAGE_PATHS", String(config.feishuAutoSendImagePaths));
   out += formatEnvLine("CTI_DISCORD_BOT_TOKEN", config.discordBotToken);
   out += formatEnvLine(
     "CTI_DISCORD_ALLOWED_USERS",
@@ -275,6 +322,8 @@ export function configToSettings(config: Config): Map<string, string> {
     m.set("bridge_feishu_hide_tool_metadata", String(config.feishuHideToolMetadata));
   if (config.feishuForceCard !== undefined)
     m.set("bridge_feishu_force_card", String(config.feishuForceCard));
+  if (config.feishuAutoSendImagePaths !== undefined)
+    m.set("bridge_feishu_auto_send_image_paths", String(config.feishuAutoSendImagePaths));
 
   // ── QQ ──
   // Upstream keys: bridge_qq_enabled, bridge_qq_app_id, bridge_qq_app_secret,

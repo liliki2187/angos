@@ -36,7 +36,7 @@
 
 ## 备注
 
-- 请使用 Godot 4.3 打开 `gd_project/project.godot`。
+- 请使用 Godot 4.6.2 stable 打开 `gd_project/project.godot`。
 - 运行时开发工作应把 `gd_project/` 视为正式游戏目录。
 - 如果你在处理 HTML 原型源码，默认把它当作参考材料，除非某份 GDD 或 ADR 明确将对应行为提升为正式游戏规则。
 

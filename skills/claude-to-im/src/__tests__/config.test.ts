@@ -85,6 +85,7 @@ describe('configToSettings', () => {
       feishuAllowedUsers: ['fu1'],
       feishuHideToolMetadata: true,
       feishuForceCard: true,
+      feishuAutoSendImagePaths: true,
     });
     assert.equal(m.get('bridge_feishu_app_id'), 'app-id');
     assert.equal(m.get('bridge_feishu_app_secret'), 'app-secret');
@@ -93,6 +94,7 @@ describe('configToSettings', () => {
     assert.equal(m.get('bridge_feishu_allowed_users'), 'fu1');
     assert.equal(m.get('bridge_feishu_hide_tool_metadata'), 'true');
     assert.equal(m.get('bridge_feishu_force_card'), 'true');
+    assert.equal(m.get('bridge_feishu_auto_send_image_paths'), 'true');
   });
 
   it('sets bridge_qq_enabled based on enabledChannels', () => {

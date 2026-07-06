@@ -7,6 +7,7 @@ import json
 import mimetypes
 import os
 import re
+import struct
 import sys
 from dataclasses import dataclass
 from datetime import datetime
@@ -22,35 +23,8 @@ CONFIG_EXAMPLE_PATH = SKILL_DIR / "config.env.example"
 OUTPUT_ROOT = REPO_ROOT / "image_gen"
 
 SUPPORTED_IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".webp", ".gif"}
-SUPPORTED_GEMINI_RESOLUTIONS = {
-    "1024x1024": "1:1",
-    "832x1248": "2:3",
-    "1248x832": "3:2",
-    "864x1184": "3:4",
-    "1184x864": "4:3",
-    "896x1152": "4:5",
-    "1152x896": "5:4",
-    "768x1344": "9:16",
-    "1344x768": "16:9",
-    "1536x672": "21:9",
-}
-STANDARD_GEMINI_ASPECT_RATIOS = {
-    "1:1",
-    "2:3",
-    "3:2",
-    "3:4",
-    "4:3",
-    "4:5",
-    "5:4",
-    "9:16",
-    "16:9",
-    "21:9",
-}
-EXTENDED_NANO_BANANA_2_ASPECT_RATIOS = {"1:4", "4:1", "1:8", "8:1"}
 GPT_IMAGE_RESOLUTIONS = {"1024x1024", "1536x1024", "1024x1536", "auto"}
 GPT_IMAGE_BACKGROUND = {"transparent", "opaque", "auto"}
-NANO_BANANA_IMAGE_SIZES = {"1K", "2K", "4K"}
-NANO_BANANA_2_IMAGE_SIZES = {"0.5K", "1K", "2K", "4K"}
 SUPPORTED_COUNT_RANGE = range(1, 9)
 MAX_REFERENCE_IMAGES = 4
 
@@ -58,10 +32,12 @@ MODEL_ALIASES = {
     "auto": "auto",
     "gpt-5-image": "openai/gpt-5-image",
     "openai/gpt-5-image": "openai/gpt-5-image",
-    "nano-banana": "google/gemini-2.5-flash-image",
-    "google/gemini-2.5-flash-image": "google/gemini-2.5-flash-image",
-    "nano-banana-2": "google/gemini-3.1-flash-image-preview",
-    "google/gemini-3.1-flash-image-preview": "google/gemini-3.1-flash-image-preview",
+}
+LEGACY_MODEL_ALIASES = {
+    "nano-banana",
+    "google/gemini-2.5-flash-image",
+    "nano-banana-2",
+    "google/gemini-3.1-flash-image-preview",
 }
 
 TRANSPARENT_FIRST_ASSET_TYPES = {
@@ -168,53 +144,6 @@ ASSET_TYPE_NEGATIVES = {
     ],
 }
 
-DEFAULT_GEMINI_ASPECT_RATIOS = {
-    "icon": "1:1",
-    "item": "1:1",
-    "prop": "1:1",
-    "sprite": "1:1",
-    "vfx": "1:1",
-    "decal": "1:1",
-    "texture": "1:1",
-    "tileable-texture": "1:1",
-    "portrait": "3:4",
-    "character-concept": "3:4",
-    "creature-concept": "2:3",
-    "environment-concept": "16:9",
-    "background": "16:9",
-    "key-art": "3:4",
-    "poster": "3:4",
-    "ui-screen": "16:9",
-    "ui-banner": "16:9",
-    "logo-mark": "1:1",
-    "card-art": "3:4",
-    "isometric-asset": "1:1",
-}
-
-DEFAULT_GEMINI_IMAGE_SIZES = {
-    "icon": "1K",
-    "item": "1K",
-    "prop": "1K",
-    "sprite": "1K",
-    "vfx": "1K",
-    "decal": "1K",
-    "texture": "2K",
-    "tileable-texture": "2K",
-    "portrait": "1K",
-    "character-concept": "2K",
-    "creature-concept": "2K",
-    "environment-concept": "2K",
-    "background": "2K",
-    "key-art": "2K",
-    "poster": "2K",
-    "ui-screen": "2K",
-    "ui-banner": "2K",
-    "logo-mark": "1K",
-    "card-art": "2K",
-    "isometric-asset": "1K",
-}
-
-
 class ValidationError(RuntimeError):
     pass
 
@@ -240,6 +169,7 @@ class PlannedRequest:
     negative_constraints: list[str]
     inference_notes: list[str]
     provider_object: dict[str, Any]
+    execution_mode: str
 
 
 def load_env_file(path: Path) -> dict[str, str]:
@@ -290,7 +220,10 @@ def infer_background(background: str, asset_type: str, notes: list[str]) -> str:
 
 
 def normalize_model(model: str) -> str:
-    normalized = MODEL_ALIASES.get(model.strip().lower())
+    lowered = model.strip().lower()
+    if lowered in LEGACY_MODEL_ALIASES:
+        raise ValidationError("Nano Banana routes are retired here. Opaque requests must use built-in imagegen instead of --model nano-banana.")
+    normalized = MODEL_ALIASES.get(lowered)
     if not normalized:
         allowed = ", ".join(sorted(MODEL_ALIASES))
         raise ValidationError(f"Unsupported model alias '{model}'. Allowed values: {allowed}")
@@ -298,14 +231,8 @@ def normalize_model(model: str) -> str:
 
 
 def choose_model(
-    asset_type: str,
     background: str,
     requested_model: str,
-    references: list[Path],
-    prompt: str,
-    aspect_ratio: str | None,
-    image_size: str | None,
-    notes: list[str],
 ) -> tuple[str, str]:
     normalized_model = normalize_model(requested_model)
     if background == "transparent":
@@ -313,48 +240,10 @@ def choose_model(
             raise ValidationError("Transparent background requests must use GPT-5 Image in this skill.")
         return "openai/gpt-5-image", "Transparent background requested; GPT-5 Image is the only supported transparent model in this skill."
 
-    if normalized_model == "google/gemini-2.5-flash-image":
-        return normalized_model, "User explicitly selected Nano Banana."
-    if normalized_model == "google/gemini-3.1-flash-image-preview":
-        return normalized_model, "User explicitly selected Nano Banana 2."
-    if normalized_model == "openai/gpt-5-image":
-        raise ValidationError("Opaque requests in this skill must route to Nano Banana or Nano Banana 2, not GPT-5 Image.")
-
-    lower_prompt = prompt.lower()
-    score = 0
-    if asset_type in {"key-art", "poster", "ui-banner", "environment-concept"}:
-        score += 2
-    if len(references) > 1:
-        score += 2
-    if aspect_ratio in EXTENDED_NANO_BANANA_2_ASPECT_RATIOS:
-        score += 3
-    if image_size == "4K":
-        score += 1
-    for marker in (
-        "poster",
-        "key art",
-        "marketing",
-        "banner",
-        "title treatment",
-        "multi character",
-        "multi-character",
-        "crowd",
-        "complex",
-        "intricate",
-        "layout",
-        "typography",
-        "logo",
-        "story scene",
-        "cinematic",
-    ):
-        if marker in lower_prompt:
-            score += 2
-            break
-    if score >= 3:
-        notes.append("Selected Nano Banana 2 because the request is composition-heavy or reference-heavy.")
-        return "google/gemini-3.1-flash-image-preview", "Complex opaque request: multi-element or higher-control composition."
-    notes.append("Selected Nano Banana because the request is a simpler opaque generation task.")
-    return "google/gemini-2.5-flash-image", "Simpler opaque request: faster image generation is sufficient."
+    raise ValidationError(
+        "Opaque requests in this skill route to built-in imagegen, not the OpenRouter helper script. "
+        "If built-in image_gen is unavailable in the current session, stop and report that opaque image generation cannot be completed."
+    )
 
 
 def validate_count(count: int) -> None:
@@ -392,7 +281,7 @@ def map_gpt_image_resolution(asset_type: str, aspect_ratio: str | None) -> str:
     return "1536x1024"
 
 
-def validate_transparent_request(
+def validate_gpt_image_request(
     resolution: str | None,
     aspect_ratio: str | None,
     background: str,
@@ -404,10 +293,10 @@ def validate_transparent_request(
         raise ValidationError(f"Unsupported GPT Image background value: {background}. Allowed: {allowed}")
     if resolution and resolution not in GPT_IMAGE_RESOLUTIONS:
         allowed = ", ".join(sorted(GPT_IMAGE_RESOLUTIONS))
-        raise ValidationError(f"Unsupported transparent resolution: {resolution}. Allowed: {allowed}")
+        raise ValidationError(f"Unsupported GPT Image resolution: {resolution}. Allowed: {allowed}")
     if aspect_ratio and aspect_ratio not in {"1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9"}:
         raise ValidationError(
-            "Transparent GPT-5 Image requests only accept square, portrait, or landscape ratios that can map to 1024x1024, 1024x1536, or 1536x1024."
+            "GPT-5 Image requests only accept square, portrait, or landscape ratios that can map to 1024x1024, 1024x1536, or 1536x1024."
         )
     if quality not in {"low", "medium", "high", "auto"}:
         raise ValidationError("quality must be one of low, medium, high, auto")
@@ -421,52 +310,6 @@ def validate_transparent_request(
     elif output_format == "auto":
         resolved_format = "png"
     return resolution or "auto", resolved_format
-
-
-def validate_gemini_request(model: str, resolution: str | None, aspect_ratio: str | None, image_size: str | None) -> tuple[str, str]:
-    if resolution:
-        if resolution == "auto":
-            raise ValidationError("Gemini requests in this skill do not accept resolution=auto. Use an allowed literal Gemini resolution or aspect_ratio + image_size.")
-        mapped_aspect_ratio = SUPPORTED_GEMINI_RESOLUTIONS.get(resolution)
-        if not mapped_aspect_ratio:
-            allowed = ", ".join(sorted(SUPPORTED_GEMINI_RESOLUTIONS))
-            raise ValidationError(
-                f"Unsupported literal Gemini resolution: {resolution}. Allowed literal resolutions: {allowed}. Otherwise use --aspect-ratio plus --image-size."
-            )
-        if aspect_ratio and aspect_ratio != mapped_aspect_ratio:
-            raise ValidationError(f"resolution={resolution} maps to aspect_ratio={mapped_aspect_ratio}, which conflicts with explicit aspect_ratio={aspect_ratio}.")
-        aspect_ratio = mapped_aspect_ratio
-        image_size = image_size or "1K"
-
-    if not aspect_ratio:
-        aspect_ratio = "1:1"
-    allowed_aspects = set(STANDARD_GEMINI_ASPECT_RATIOS)
-    if model == "google/gemini-3.1-flash-image-preview":
-        allowed_aspects |= EXTENDED_NANO_BANANA_2_ASPECT_RATIOS
-    if aspect_ratio not in allowed_aspects:
-        allowed = ", ".join(sorted(allowed_aspects))
-        raise ValidationError(f"Unsupported aspect_ratio={aspect_ratio} for model={model}. Allowed: {allowed}")
-
-    if not image_size:
-        image_size = "1K"
-    allowed_sizes = NANO_BANANA_IMAGE_SIZES if model == "google/gemini-2.5-flash-image" else NANO_BANANA_2_IMAGE_SIZES
-    if image_size not in allowed_sizes:
-        allowed = ", ".join(sorted(allowed_sizes))
-        raise ValidationError(f"Unsupported image_size={image_size} for model={model}. Allowed: {allowed}")
-    return aspect_ratio, image_size
-
-
-def default_gemini_aspect_ratio(asset_type: str) -> str:
-    return DEFAULT_GEMINI_ASPECT_RATIOS.get(asset_type, "1:1")
-
-
-def default_gemini_image_size(asset_type: str, model: str) -> str:
-    preferred = DEFAULT_GEMINI_IMAGE_SIZES.get(asset_type, "1K")
-    if preferred == "0.5K" and model != "google/gemini-3.1-flash-image-preview":
-        return "1K"
-    if preferred == "4K" and model == "google/gemini-2.5-flash-image":
-        return "4K"
-    return preferred
 
 
 def build_negative_constraints(asset_type: str, background: str, user_negatives: list[str]) -> list[str]:
@@ -549,18 +392,12 @@ def build_payload(plan: PlannedRequest) -> dict[str, Any]:
     if plan.seed is not None:
         payload["seed"] = plan.seed
 
-    if plan.model.startswith("google/"):
-        payload["image_config"] = {
-            "aspect_ratio": plan.aspect_ratio,
-            "image_size": plan.image_size,
-        }
-    else:
-        payload["background"] = plan.background
-        payload["size"] = plan.resolution
-        payload["quality"] = plan.quality
-        payload["output_format"] = plan.output_format
-        if plan.output_compression is not None:
-            payload["output_compression"] = plan.output_compression
+    payload["background"] = plan.background
+    payload["size"] = plan.resolution
+    payload["quality"] = plan.quality
+    payload["output_format"] = plan.output_format
+    if plan.output_compression is not None:
+        payload["output_compression"] = plan.output_compression
     return payload
 
 
@@ -611,6 +448,60 @@ def extension_for_mime(mime_type: str) -> str:
     }.get(mime_type, ".bin")
 
 
+def sniff_image_dimensions(raw_bytes: bytes, mime_type: str) -> tuple[int, int] | None:
+    if mime_type == "image/png" and raw_bytes.startswith(b"\x89PNG\r\n\x1a\n") and len(raw_bytes) >= 24:
+        width, height = struct.unpack(">II", raw_bytes[16:24])
+        return width, height
+    if mime_type == "image/gif" and raw_bytes[:6] in {b"GIF87a", b"GIF89a"} and len(raw_bytes) >= 10:
+        width, height = struct.unpack("<HH", raw_bytes[6:10])
+        return width, height
+    if mime_type == "image/webp" and len(raw_bytes) >= 30 and raw_bytes[:4] == b"RIFF" and raw_bytes[8:12] == b"WEBP":
+        chunk = raw_bytes[12:16]
+        if chunk == b"VP8X" and len(raw_bytes) >= 30:
+            width = int.from_bytes(raw_bytes[24:27], "little") + 1
+            height = int.from_bytes(raw_bytes[27:30], "little") + 1
+            return width, height
+        if chunk == b"VP8 ":
+            start = raw_bytes.find(b"\x9d\x01\x2a")
+            if start != -1 and len(raw_bytes) >= start + 7:
+                width, height = struct.unpack("<HH", raw_bytes[start + 3:start + 7])
+                return width & 0x3FFF, height & 0x3FFF
+        if chunk == b"VP8L" and len(raw_bytes) >= 25 and raw_bytes[20] == 0x2F:
+            bits = int.from_bytes(raw_bytes[21:25], "little")
+            width = (bits & 0x3FFF) + 1
+            height = ((bits >> 14) & 0x3FFF) + 1
+            return width, height
+    if mime_type == "image/jpeg" and raw_bytes.startswith(b"\xff\xd8"):
+        index = 2
+        while index + 9 < len(raw_bytes):
+            if raw_bytes[index] != 0xFF:
+                index += 1
+                continue
+            marker = raw_bytes[index + 1]
+            index += 2
+            if marker in {0xD8, 0xD9}:
+                continue
+            if index + 2 > len(raw_bytes):
+                break
+            segment_length = struct.unpack(">H", raw_bytes[index:index + 2])[0]
+            if segment_length < 2 or index + segment_length > len(raw_bytes):
+                break
+            if marker in {0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7, 0xC9, 0xCA, 0xCB, 0xCD, 0xCE, 0xCF}:
+                if index + 7 <= len(raw_bytes):
+                    height, width = struct.unpack(">HH", raw_bytes[index + 3:index + 7])
+                    return width, height
+                break
+            index += segment_length
+    return None
+
+
+def dimensions_match_requested(actual: tuple[int, int] | None, requested: str) -> bool:
+    if actual is None or requested == "auto":
+        return True
+    width, height = actual
+    return f"{width}x{height}" == requested
+
+
 def plan_request(args: argparse.Namespace) -> PlannedRequest:
     validate_count(args.count)
     reference_images = [Path(value).resolve() for value in args.reference_image]
@@ -625,49 +516,25 @@ def plan_request(args: argparse.Namespace) -> PlannedRequest:
     image_size = args.image_size
 
     model, model_reason = choose_model(
-        asset_type=asset_type,
         background=background,
         requested_model=args.model,
-        references=reference_images,
-        prompt=args.prompt,
-        aspect_ratio=aspect_ratio,
-        image_size=image_size,
-        notes=inference_notes,
     )
 
-    if model == "openai/gpt-5-image":
-        if args.image_size is not None:
-            raise ValidationError("GPT-5 Image requests in this skill do not support --image-size. Use --resolution instead.")
-        resolution, output_format = validate_transparent_request(
-            resolution=resolution or map_gpt_image_resolution(asset_type, aspect_ratio),
-            aspect_ratio=aspect_ratio,
-            background=background,
-            output_format=args.output_format,
-            quality="medium" if args.quality == "auto" else args.quality,
-        )
-        aspect_ratio = None
-        image_size = None
-        output_compression = args.output_compression
-        quality = "medium" if args.quality == "auto" else args.quality
-        if output_format == "png":
-            output_compression = None
-    else:
-        if args.output_format not in {"auto", "png"}:
-            raise ValidationError("Opaque Nano Banana workflows in this skill only save PNG outputs.")
-        if not aspect_ratio and not resolution:
-            aspect_ratio = default_gemini_aspect_ratio(asset_type)
-        if not image_size:
-            image_size = default_gemini_image_size(asset_type, model)
-        aspect_ratio, image_size = validate_gemini_request(
-            model=model,
-            resolution=resolution,
-            aspect_ratio=aspect_ratio,
-            image_size=image_size,
-        )
-        resolution = None
-        output_format = "png"
+    if args.image_size is not None:
+        raise ValidationError("The OpenRouter helper script is now transparent-only and does not support --image-size. Use --resolution instead.")
+    resolution, output_format = validate_gpt_image_request(
+        resolution=resolution or map_gpt_image_resolution(asset_type, aspect_ratio),
+        aspect_ratio=aspect_ratio,
+        background=background,
+        output_format=args.output_format,
+        quality="medium" if args.quality == "auto" else args.quality,
+    )
+    aspect_ratio = None
+    image_size = None
+    output_compression = args.output_compression
+    quality = "medium" if args.quality == "auto" else args.quality
+    if output_format == "png":
         output_compression = None
-        quality = args.quality
 
     negatives = build_negative_constraints(asset_type, background, args.negative)
     compiled_prompt = build_prompt(
@@ -679,6 +546,7 @@ def plan_request(args: argparse.Namespace) -> PlannedRequest:
     )
 
     provider_object: dict[str, Any] = {"require_parameters": True, "allow_fallbacks": True}
+    execution_mode = "openrouter-gpt-5-image-transparent"
 
     return PlannedRequest(
         original_prompt=args.prompt,
@@ -700,6 +568,7 @@ def plan_request(args: argparse.Namespace) -> PlannedRequest:
         negative_constraints=negatives,
         inference_notes=inference_notes,
         provider_object=provider_object,
+        execution_mode=execution_mode,
     )
 
 
@@ -719,10 +588,18 @@ def save_outputs(plan: PlannedRequest, response_json: dict[str, Any], timestamp_
     for offset, entry in enumerate(images, start=image_index_start):
         mime_type, raw_bytes = parse_image_url_entry(entry)
         extension = extension_for_mime(mime_type)
+        actual_dimensions = sniff_image_dimensions(raw_bytes, mime_type)
         stem = f"{timestamp_prefix}_{plan.slug}_{offset:02d}"
         image_path = date_dir / f"{stem}{extension}"
         metadata_path = date_dir / f"{stem}.json"
         image_path.write_bytes(raw_bytes)
+        dimension_warning = None
+        if not dimensions_match_requested(actual_dimensions, plan.resolution):
+            actual_label = "unknown" if actual_dimensions is None else f"{actual_dimensions[0]}x{actual_dimensions[1]}"
+            dimension_warning = (
+                f"Provider returned image dimensions {actual_label}, which do not match requested resolution {plan.resolution}."
+            )
+            print(f"WARNING: {dimension_warning}", file=sys.stderr)
 
         metadata = {
             "timestamp": timestamp_prefix,
@@ -745,6 +622,7 @@ def save_outputs(plan: PlannedRequest, response_json: dict[str, Any], timestamp_
             "reference_images": [str(path) for path in plan.reference_images],
             "inference_notes": plan.inference_notes,
             "provider_object": plan.provider_object,
+            "execution_mode": plan.execution_mode,
             "openrouter": {
                 "id": response_json.get("id"),
                 "model": response_json.get("model"),
@@ -756,10 +634,13 @@ def save_outputs(plan: PlannedRequest, response_json: dict[str, Any], timestamp_
                 "image": str(image_path),
                 "metadata": str(metadata_path),
                 "mime_type": mime_type,
+                "actual_dimensions": list(actual_dimensions) if actual_dimensions is not None else None,
                 "bytes": len(raw_bytes),
                 "sha256": sha256_for_file(image_path),
             },
         }
+        if dimension_warning:
+            metadata["warnings"] = [dimension_warning]
         metadata_path.write_text(json.dumps(metadata, ensure_ascii=False, indent=2), encoding="utf-8")
         saved.append({"image": str(image_path), "metadata": str(metadata_path)})
     return saved
@@ -767,6 +648,14 @@ def save_outputs(plan: PlannedRequest, response_json: dict[str, Any], timestamp_
 
 def run_generate(args: argparse.Namespace) -> int:
     plan = plan_request(args)
+    config = load_config()
+
+    timeout_seconds = int(config.get("OPENROUTER_TIMEOUT_SECONDS", "180"))
+    base_url = config.get("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1").rstrip("/")
+    if allowed := config.get("OPENROUTER_ALLOWED_PROVIDERS", "").strip():
+        provider_list = [item.strip() for item in allowed.split(",") if item.strip()]
+        if provider_list:
+            plan.provider_object["only"] = provider_list
 
     payload = build_payload(plan)
     preview = {
@@ -782,6 +671,7 @@ def run_generate(args: argparse.Namespace) -> int:
             "slug": plan.slug,
             "quality": plan.quality,
             "output_format": plan.output_format,
+            "execution_mode": plan.execution_mode,
             "reference_images": [str(path) for path in plan.reference_images],
             "inference_notes": plan.inference_notes,
         },
@@ -791,17 +681,7 @@ def run_generate(args: argparse.Namespace) -> int:
         print(json.dumps(preview, ensure_ascii=False, indent=2))
         return 0
 
-    config = load_config()
     api_key = require_api_key(config)
-
-    timeout_seconds = int(config.get("OPENROUTER_TIMEOUT_SECONDS", "180"))
-    base_url = config.get("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1").rstrip("/")
-    if allowed := config.get("OPENROUTER_ALLOWED_PROVIDERS", "").strip():
-        provider_list = [item.strip() for item in allowed.split(",") if item.strip()]
-        if provider_list:
-            plan.provider_object["only"] = provider_list
-
-    payload = build_payload(plan)
     request_headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
@@ -864,27 +744,26 @@ def run_doctor(_: argparse.Namespace) -> int:
         "image_model_count": len(data),
         "required_models_present": {
             "openai/gpt-5-image": "openai/gpt-5-image" in model_ids,
-            "google/gemini-2.5-flash-image": "google/gemini-2.5-flash-image" in model_ids,
-            "google/gemini-3.1-flash-image-preview": "google/gemini-3.1-flash-image-preview" in model_ids,
         },
+        "opaque_route": "built-in imagegen only; no OpenRouter fallback when image_gen is unavailable",
     }
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Generate game-ready images through OpenRouter.")
+    parser = argparse.ArgumentParser(description="Generate transparent game-ready images through OpenRouter GPT-5 Image.")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     doctor = subparsers.add_parser("doctor", help="Validate config and query OpenRouter image models.")
     doctor.set_defaults(func=run_doctor)
 
-    generate = subparsers.add_parser("generate", help="Generate one or more images and save them under image_gen/YYYY-MM-DD.")
+    generate = subparsers.add_parser("generate", help="Generate one or more transparent images and save them under image_gen/YYYY-MM-DD.")
     generate.add_argument("--prompt", required=True, help="Core generation prompt or edit instruction.")
     generate.add_argument("--user-request", default=None, help="Original user phrasing to record in metadata.")
     generate.add_argument("--asset-type", required=True, choices=sorted(ASSET_TYPE_SUFFIXES), help="Normalized asset category used for prompt defaults and validation.")
-    generate.add_argument("--background", default="auto", choices=["auto", "transparent", "opaque"], help="Use transparent only for GPT-5 Image workflows.")
-    generate.add_argument("--model", default="auto", choices=sorted(MODEL_ALIASES), help="Model alias. Use auto to let the skill route between GPT-5 Image, Nano Banana, and Nano Banana 2.")
+    generate.add_argument("--background", default="auto", choices=["auto", "transparent", "opaque"], help="Transparent requests use GPT-5 Image. Opaque requests are rejected here because the skill routes them to built-in imagegen only.")
+    generate.add_argument("--model", default="auto", help="Model alias. Use auto or gpt-5-image for the transparent OpenRouter path.")
     generate.add_argument("--count", type=int, default=1, help="How many images to generate. Supported range: 1-8.")
     generate.add_argument("--resolution", default=None, help="Literal output resolution, for example 1024x1024.")
     generate.add_argument("--aspect-ratio", default=None, help="Gemini image_config.aspect_ratio, such as 16:9 or 3:4.")

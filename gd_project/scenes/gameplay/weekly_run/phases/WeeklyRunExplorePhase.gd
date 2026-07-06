@@ -924,6 +924,15 @@ func _style_filter_button(button: Button, selected: bool) -> void:
 	else:
 		UiStyle.apply_button_style(button, selected, true)
 
+func _on_world_map_filter_pressed(tag: String) -> void:
+	filter_toggled.emit(tag)
+
+func _on_world_map_region_pressed(region_id: String) -> void:
+	region_selected.emit(region_id)
+
+func _on_world_map_node_pressed(node_id: String) -> void:
+	node_selected.emit(node_id)
+
 func _rebuild_action_items(container: Control, items: Array, item_kind: String) -> void:
 	_clear_container(container)
 	for item in items:

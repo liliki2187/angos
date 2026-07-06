@@ -28,6 +28,7 @@ Claude Code / Codex → 读写你的代码库
 - **流式预览** — 实时查看 Claude 的输出（Telegram 和 Discord 支持）
 - **会话持久化** — 对话在守护进程重启后保留
 - **密钥保护** — token 以 `chmod 600` 存储，日志中自动脱敏
+- **Codex shadow home** — `CTI_RUNTIME=codex` 时默认使用桥接专用 `CODEX_HOME`，自动同步登录态并让系统级 skills 在桥接会话里可见
 - **无需编写代码** — 安装 Skill 后运行 `/claude-to-im setup` 即可
 
 ## 前置要求
@@ -179,6 +180,7 @@ skills/.claude-to-im/
 │   ├── bindings.json
 │   ├── permissions.json
 │   └── messages/          ← 按会话分文件的消息历史
+├── codex-home/            ← bridge 专用 CODEX_HOME（Codex runtime 默认启用）
 ├── logs/
 │   └── bridge.log         ← 自动轮转，密钥脱敏
 └── runtime/
@@ -195,6 +197,7 @@ skills/.claude-to-im/
 | `src/store.ts` | JSON 文件 BridgeStore（30 个方法，写穿缓存） |
 | `src/llm-provider.ts` | Claude Agent SDK `query()` → SSE 流 |
 | `src/codex-provider.ts` | Codex SDK `runStreamed()` → SSE 流 |
+| `src/codex-shadow-home.ts` | 为桥接会话准备专用 `CODEX_HOME`，同步 `auth.json` 并隔离系统 skill/runtime 状态 |
 | `src/sse-utils.ts` | 共享的 SSE 格式化辅助函数 |
 | `src/permission-gateway.ts` | 异步桥接：SDK `canUseTool` ↔ IM 按钮 |
 | `src/logger.ts` | 密钥脱敏的文件日志，支持轮转 |

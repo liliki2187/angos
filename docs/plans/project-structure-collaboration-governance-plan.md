@@ -302,7 +302,7 @@ specs/
 - 策划起草新功能：`brainstorm` / `map-systems` / `sprint-plan`
 - 程序落地前整理边界：`architecture-decision` / `reverse-document`
 - GUI 落资源：`team-ui` / `psd-to-godot-ui`
-- 美术与参考筛选：`art-reference-picker` / `asset-audit`
+- 美术与参考筛选：`asset-audit`
 - 里程碑前统一检查：`milestone-review` / `gate-check`
 
 ## 8. 分阶段实施计划

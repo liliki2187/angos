@@ -2,39 +2,25 @@
 
 Use this file whenever you need to choose a model, normalize size parameters, or reject an invalid request.
 
-## Supported Models
+## Supported Routes
 
-| Alias | Model ID | Use For | Notes |
+| Route | Backend | Use For | Notes |
 | --- | --- | --- | --- |
-| `gpt-5-image` | `openai/gpt-5-image` | Transparent PNG/WebP assets, clean cutout assets, precise isolated game objects | Required for transparent background in this skill |
-| `nano-banana` | `google/gemini-2.5-flash-image` | Fast opaque generation, simple icons, props, portraits, basic concepts, lower composition complexity | Supports `image_config.aspect_ratio` |
-| `nano-banana-2` | `google/gemini-3.1-flash-image-preview` | Opaque generation with more subjects, more references, more layout complexity, heavier text/logo demands, extended aspect ratios | Supports extended aspect ratios and `0.5K` |
+| `gpt-5-image` | `openai/gpt-5-image` | Transparent PNG/WebP assets, clean cutout assets, precise isolated game objects | The only OpenRouter path in this skill |
+| `built-in-imagegen-opaque` | built-in `image_gen` tool | Non-transparent textures, concepts, posters, UI banners, portraits, environments, and other opaque outputs | Default opaque path; does not require OpenRouter config |
 
 ## Hard Routing Rule
 
 - `background=transparent` -> only `openai/gpt-5-image`
-- `background=opaque` -> choose between `nano-banana` and `nano-banana-2`
+- `background=opaque` -> only built-in `image_gen`
+- If built-in `image_gen` is unavailable, fail directly and tell the user the current session cannot complete opaque image generation.
 
-## Complexity Heuristic For Opaque Images
+## Legacy Terms
 
-Prefer `nano-banana` when the request is mostly one of these:
+- `nano-banana`
+- `nano-banana-2`
 
-- single icon or item
-- isolated prop
-- single portrait
-- simple environment mood frame
-- quick exploration thumbnails
-
-Prefer `nano-banana-2` when one or more of these apply:
-
-- multi-subject composition
-- complex scene storytelling
-- poster / key art / marketing composition
-- UI banners or hero banners
-- text must render clearly in-image
-- more than one reference image
-- extended aspect ratios (`1:4`, `4:1`, `1:8`, `8:1`)
-- the user explicitly asks for cleaner layout control or more faithful reference-driven edits
+Treat those as legacy user phrasing only. They should still resolve to this skill, but the actual opaque execution path must be built-in `image_gen`, not a third-party OpenRouter image model.
 
 ## Supported Count Range
 
@@ -60,66 +46,17 @@ For `openai/gpt-5-image` in this skill:
   - `output_format=png` unless the user explicitly asks for `webp`
 - Reject non-square panoramic transparent requests that cannot map cleanly to the supported GPT Image sizes.
 
-## Opaque Request Validation
+## Opaque Request Handling
 
-For Gemini image models in this skill, prefer OpenRouter's documented `image_config` fields instead of arbitrary pixel sizes.
+For opaque requests in this skill:
 
-### Allowed aspect ratios
-
-- `1:1`
-- `2:3`
-- `3:2`
-- `3:4`
-- `4:3`
-- `4:5`
-- `5:4`
-- `9:16`
-- `16:9`
-- `21:9`
-
-Additional aspect ratios supported only by `nano-banana-2`:
-
-- `1:4`
-- `4:1`
-- `1:8`
-- `8:1`
-
-### Allowed image sizes
-
-For `nano-banana`:
-
-- `1K`
-- `2K`
-- `4K`
-
-For `nano-banana-2`:
-
-- `0.5K`
-- `1K`
-- `2K`
-- `4K`
-
-### Allowed literal resolutions for Gemini fallback mapping
-
-Only accept these literal resolutions for Gemini requests. Convert them to `aspect_ratio` plus default `1K`.
-
-| Resolution | Aspect Ratio |
-| --- | --- |
-| `1024x1024` | `1:1` |
-| `832x1248` | `2:3` |
-| `1248x832` | `3:2` |
-| `864x1184` | `3:4` |
-| `1184x864` | `4:3` |
-| `896x1152` | `4:5` |
-| `1152x896` | `5:4` |
-| `768x1344` | `9:16` |
-| `1344x768` | `16:9` |
-| `1536x672` | `21:9` |
-
-Reject other literal Gemini resolutions early and ask the user to switch to:
-
-- an allowed literal resolution above, or
-- `aspect_ratio` plus `image_size`
+- do not call `scripts/openrouter_image_gen.py`
+- do not require `config.env`
+- do not mention or choose Nano Banana / Nano Banana 2
+- use built-in `image_gen`
+- express size or framing needs in the prompt bundle instead of OpenRouter `image_config`
+- if the result is project-bound, copy the selected built-in output into workspace `image_gen/YYYY-MM-DD/` and write a sidecar JSON
+- if built-in `image_gen` is unavailable, stop and report failure instead of falling back to OpenRouter
 
 ## Reference Images
 
@@ -141,9 +78,8 @@ Set:
 
 This asks OpenRouter to route only to providers that support the parameters in the request, which is especially important when using:
 
-- `image_config`
 - transparent-background GPT Image fields
-- provider-specific image options
+- provider-specific transparent-image options
 
 ## Storage Contract
 
@@ -151,3 +87,4 @@ This asks OpenRouter to route only to providers that support the parameters in t
 - Date partition: `YYYY-MM-DD`
 - File pattern: `YYYYMMDD-HHMMSS_slug_01.png`
 - Sidecar pattern: `YYYYMMDD-HHMMSS_slug_01.json`
+- For built-in opaque requests, include the original `$CODEX_HOME/generated_images/...` source path in the JSON metadata.

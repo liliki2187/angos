@@ -1,6 +1,13 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildCodexCliEnv, buildPromptText, buildThreadOptions, normalizeStoredMessageContent } from '../codex-provider.js';
+import path from 'node:path';
+import {
+  buildCodexCliEnv,
+  buildCodexConfigOverrides,
+  buildPromptText,
+  buildThreadOptions,
+  normalizeStoredMessageContent,
+} from '../codex-provider.js';
 
 // ── SSE utils tests ─────────────────────────────────────────
 
@@ -62,7 +69,9 @@ describe('CodexProvider', () => {
     assert.ok(env.COMSPEC, 'Expected COMSPEC to be set');
     assert.ok(env.SHELL, 'Expected SHELL to be set');
     assert.equal(env.COMSPEC, env.SHELL);
-    assert.ok((env.PATH || '').toLowerCase().includes('powershell') || (env.PATH || '').toLowerCase().includes('windowsapps'));
+    const resolvedPath = env.PATH || env.Path || '';
+    assert.ok(resolvedPath.toLowerCase().includes('powershell') || resolvedPath.toLowerCase().includes('windowsapps'));
+    assert.ok(resolvedPath.toLowerCase().includes(path.dirname(process.execPath).toLowerCase()), 'Expected node.exe directory to be added to PATH');
   });
 
   it('emits error when SDK init fails', async () => {
@@ -481,14 +490,30 @@ describe('Codex prompt helpers', () => {
 // ── Image input building tests ──────────────────────────────
 
 describe('Codex thread options', () => {
+  it('enables Codex native image generation by default', () => {
+    assert.deepEqual(
+      buildCodexConfigOverrides({}),
+      { features: { image_generation: true } },
+    );
+  });
+
+  it('allows disabling Codex native image generation for diagnostics', () => {
+    assert.equal(
+      buildCodexConfigOverrides({ CTI_CODEX_IMAGE_GENERATION: 'false' }),
+      undefined,
+    );
+  });
+
   it('defaults bridge-launched Codex threads to danger-full-access', () => {
     const oldSandbox = process.env.CTI_CODEX_SANDBOX_MODE;
     const oldNetwork = process.env.CTI_CODEX_NETWORK_ACCESS;
     const oldPassModel = process.env.CTI_CODEX_PASS_MODEL;
+    const oldReasoningEffort = process.env.CTI_CODEX_MODEL_REASONING_EFFORT;
 
     delete process.env.CTI_CODEX_SANDBOX_MODE;
     delete process.env.CTI_CODEX_NETWORK_ACCESS;
     delete process.env.CTI_CODEX_PASS_MODEL;
+    delete process.env.CTI_CODEX_MODEL_REASONING_EFFORT;
 
     try {
       const options = buildThreadOptions({
@@ -502,6 +527,7 @@ describe('Codex thread options', () => {
       assert.equal(options.networkAccessEnabled, true);
       assert.equal(options.workingDirectory, 'D:/repo');
       assert.ok(!Object.prototype.hasOwnProperty.call(options, 'model'));
+      assert.ok(!Object.prototype.hasOwnProperty.call(options, 'modelReasoningEffort'));
     } finally {
       if (oldSandbox === undefined) delete process.env.CTI_CODEX_SANDBOX_MODE;
       else process.env.CTI_CODEX_SANDBOX_MODE = oldSandbox;
@@ -511,17 +537,22 @@ describe('Codex thread options', () => {
 
       if (oldPassModel === undefined) delete process.env.CTI_CODEX_PASS_MODEL;
       else process.env.CTI_CODEX_PASS_MODEL = oldPassModel;
+
+      if (oldReasoningEffort === undefined) delete process.env.CTI_CODEX_MODEL_REASONING_EFFORT;
+      else process.env.CTI_CODEX_MODEL_REASONING_EFFORT = oldReasoningEffort;
     }
   });
 
-  it('honors explicit sandbox, network, and model forwarding overrides', () => {
+  it('honors explicit sandbox, network, model forwarding, and reasoning overrides', () => {
     const oldSandbox = process.env.CTI_CODEX_SANDBOX_MODE;
     const oldNetwork = process.env.CTI_CODEX_NETWORK_ACCESS;
     const oldPassModel = process.env.CTI_CODEX_PASS_MODEL;
+    const oldReasoningEffort = process.env.CTI_CODEX_MODEL_REASONING_EFFORT;
 
     process.env.CTI_CODEX_SANDBOX_MODE = 'workspace-write';
     process.env.CTI_CODEX_NETWORK_ACCESS = 'false';
     process.env.CTI_CODEX_PASS_MODEL = 'true';
+    process.env.CTI_CODEX_MODEL_REASONING_EFFORT = 'xhigh';
 
     try {
       const options = buildThreadOptions({
@@ -534,6 +565,7 @@ describe('Codex thread options', () => {
       assert.equal(options.sandboxMode, 'workspace-write');
       assert.equal(options.networkAccessEnabled, false);
       assert.equal(options.model, 'gpt-5-codex');
+      assert.equal(options.modelReasoningEffort, 'xhigh');
     } finally {
       if (oldSandbox === undefined) delete process.env.CTI_CODEX_SANDBOX_MODE;
       else process.env.CTI_CODEX_SANDBOX_MODE = oldSandbox;
@@ -543,6 +575,9 @@ describe('Codex thread options', () => {
 
       if (oldPassModel === undefined) delete process.env.CTI_CODEX_PASS_MODEL;
       else process.env.CTI_CODEX_PASS_MODEL = oldPassModel;
+
+      if (oldReasoningEffort === undefined) delete process.env.CTI_CODEX_MODEL_REASONING_EFFORT;
+      else process.env.CTI_CODEX_MODEL_REASONING_EFFORT = oldReasoningEffort;
     }
   });
 });
@@ -754,6 +789,37 @@ describe('CodexProvider error events', () => {
     const errorEvent = events.find(e => e.type === 'error');
     assert.ok(errorEvent, 'Should emit an error event');
     assert.equal(errorEvent!.data, 'Rate limit exceeded');
+  });
+
+  it('reads nested error.message from turn.failed event', async () => {
+    const { CodexProvider } = await import('../codex-provider.js');
+    const { PendingPermissions } = await import('../permission-gateway.js');
+    const provider = new CodexProvider(new PendingPermissions());
+
+    const mockThread = {
+      runStreamed: () => ({
+        events: (async function* () {
+          yield { type: 'turn.failed', error: { message: 'Nested failure' } };
+        })(),
+      }),
+    };
+    (provider as any).sdk = {
+      Codex: class { constructor() {} },
+    };
+    (provider as any).codex = {
+      startThread: () => mockThread,
+    };
+
+    const stream = provider.streamChat({
+      prompt: 'test',
+      sessionId: 'err-session-nested',
+    });
+
+    const chunks = await collectStream(stream);
+    const events = parseSSEChunks(chunks);
+    const errorEvent = events.find(e => e.type === 'error');
+    assert.ok(errorEvent, 'Should emit an error event');
+    assert.equal(errorEvent!.data, 'Nested failure');
   });
 
   it('reads message field from error event', async () => {

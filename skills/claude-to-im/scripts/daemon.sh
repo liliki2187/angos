@@ -6,6 +6,7 @@ CTI_HOME="${CTI_HOME:-$SKILLS_DIR/.claude-to-im}"
 PID_FILE="$CTI_HOME/runtime/bridge.pid"
 STATUS_FILE="$CTI_HOME/runtime/status.json"
 LOG_FILE="$CTI_HOME/logs/bridge.log"
+RESET_SESSIONS_SCRIPT="$SKILL_DIR/scripts/reset-sessions.mjs"
 
 # ── Common helpers ──
 
@@ -98,6 +99,17 @@ show_failure_help() {
   echo "  1. Run diagnostics:  bash \"$SKILL_DIR/scripts/doctor.sh\""
   echo "  2. Check full logs:  bash \"$SKILL_DIR/scripts/daemon.sh\" logs 100"
   echo "  3. Rebuild bundle:   cd \"$SKILL_DIR\" && npm run build"
+}
+
+reset_bridge_sessions() {
+  if [ "${CTI_RESTART_RESET_SESSIONS:-false}" != "true" ]; then
+    return
+  fi
+  if [ ! -f "$RESET_SESSIONS_SCRIPT" ]; then
+    echo "Session reset script not found: $RESET_SESSIONS_SCRIPT" >&2
+    return
+  fi
+  node "$RESET_SESSIONS_SCRIPT"
 }
 
 # ── Load platform-specific supervisor ──
@@ -196,6 +208,7 @@ case "${1:-help}" in
   restart)
     echo "Restarting bridge..."
     "$0" stop || true
+    reset_bridge_sessions
     sleep 1
     "$0" start
     ;;

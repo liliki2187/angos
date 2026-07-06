@@ -59,7 +59,7 @@ python scripts/import/build_psd_ui_bundle.py path\\to\\mockup.psd --mode preview
 python scripts/import/configure_importality_psd.py
 ```
 
-它会把以下字段写入 `editor_settings-4.3.tres`：
+它会把以下字段写入 `editor_settings-4.6.tres`：
 
 - `importality/temporary_files_directory_path`
 - `importality/command_building_rules_for_custom_image_loader`

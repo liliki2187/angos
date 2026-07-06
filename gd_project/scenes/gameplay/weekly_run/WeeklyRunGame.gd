@@ -419,37 +419,64 @@ func _build_briefing_payload() -> Dictionary:
 func _build_explore_payload() -> Dictionary:
 	var started_at := _log_flow_start("_build_explore_payload", "selected_region=%s selected_node=%s" % [selected_region_id, selected_node_id])
 	var regions: Array = []
+	var map_nodes: Array = []
 	for region in Content.REGION_DATA:
-		var unlocked := Systems.is_region_unlocked(run_state, region)
+		var region_id := str(region.id)
+		var region_enabled := Systems.is_region_unlocked(run_state, region)
 		var region_counts := _build_region_counts(region)
 		var visible_count := int(region_counts.get("visible", 0))
 		var deadline_count := int(region_counts.get("deadline", 0))
 		var chain_count := int(region_counts.get("chain", 0))
 		var card_no := regions.size() + 1
-		var region_state_line := _build_region_card_status_line(region, region_counts, unlocked)
+		var region_state_line := _build_region_card_status_line(region, region_counts, region_enabled)
 		var region_summary_line := _build_region_card_summary_line(region_counts)
 		var region_card_style := "region_file_red" if card_no % 2 == 1 else "region_file_cyan"
-		if not unlocked:
+		if not region_enabled:
 			region_card_style = "region_locked_file"
 		var region_tone := "normal"
-		if not unlocked:
+		if not region_enabled:
 			region_tone = "locked"
 		elif deadline_count > 0:
 			region_tone = "deadline"
 		elif chain_count > 0:
 			region_tone = "chain"
 		regions.append({
-			"id": str(region.id),
+			"id": region_id,
+			"name": str(region.name),
+			"hint": str(region.hint),
 			"label": str(region.name),
 			"text": "%02d  %s\n%s\n%s" % [card_no, str(region.name), region_state_line, region_summary_line],
-			"selected": selected_region_id == str(region.id),
-			"enabled": unlocked,
-			"unlocked": unlocked,
+			"selected": selected_region_id == region_id,
+			"enabled": region_enabled,
+			"unlocked": region_enabled,
 			"tone": region_tone,
 			"visual_style": region_card_style,
 			"map_pos": region.get("map_pos", {"x": 0.5, "y": 0.5}),
 			"min_height": 112.0,
 		})
+		if not region_enabled:
+			continue
+		for node in region.nodes:
+			if not Systems.is_node_visible(run_state, node):
+				continue
+			if not bool(filter_state.get(str(node.type), true)):
+				continue
+			var map_availability := _get_node_availability(node)
+			map_nodes.append({
+				"id": str(node.id),
+				"region_id": region_id,
+				"region_name": str(region.name),
+				"name": str(node.name),
+				"kind": str(node.kind),
+				"days": int(node.days),
+				"type": str(node.type),
+				"difficulty": str(node.difficulty),
+				"enemy": int(node.enemy),
+				"selected": selected_node_id == str(node.id),
+				"enabled": bool(map_availability.enabled),
+				"selectable": true,
+				"availability_reason": str(map_availability.reason),
+			})
 
 	var nodes: Array = []
 	var region := _get_selected_region()
@@ -510,6 +537,12 @@ func _build_explore_payload() -> Dictionary:
 					],
 					"selected": selected_node_id == str(node.id),
 					"enabled": not bool(run_state.resolved_nodes.get(str(node.id), false)),
+					"name": str(node.name),
+					"kind": str(node.kind),
+					"days": int(node.days),
+					"type": str(node.type),
+					"difficulty": str(node.difficulty),
+					"enemy": int(node.enemy),
 					"tone": _node_tone(node),
 					"visual_style": _node_visual_style(node),
 					"map_pos": node.get("map_pos", {"x": 0.5, "y": 0.5}),
@@ -584,6 +617,9 @@ func _build_explore_payload() -> Dictionary:
 		"selected_node_id": selected_node_id,
 		"filters": filter_state.duplicate(true),
 		"regions": regions,
+		"map_regions": regions,
+		"map_nodes": map_nodes,
+		"week_days": Content.WEEK_DAYS,
 		"region_title": region_title,
 		"region_detail_title": region_title,
 		"region_detail_text": region_detail_text,
@@ -1273,6 +1309,9 @@ func _on_back_to_region_requested() -> void:
 
 func _on_node_pressed(node_id: String) -> void:
 	var started_at := _log_flow_start("_on_node_pressed", "incoming_node=%s previous_node=%s" % [node_id, selected_node_id])
+	var owning_region_id := _get_region_id_for_node(node_id)
+	if owning_region_id != "":
+		selected_region_id = owning_region_id
 	explore_view_mode = "region"
 	if selected_node_id != node_id:
 		selected_staff_ids.clear()
@@ -1467,6 +1506,13 @@ func _get_staff_data(staff_id: String) -> Dictionary:
 		if str(staff_data.get("id", "")) == staff_id:
 			return staff_data
 	return {}
+
+func _get_region_id_for_node(node_id: String) -> String:
+	for region in Content.REGION_DATA:
+		for node in region.nodes:
+			if str(node.id) == node_id:
+				return str(region.id)
+	return ""
 
 func _get_selected_staff_totals() -> Dictionary:
 	var totals := {"explore": 0, "insight": 0, "occult": 0, "survival": 0, "reason": 0, "social": 0}
