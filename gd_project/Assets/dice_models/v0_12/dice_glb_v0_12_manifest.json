@@ -1,0 +1,79 @@
+{
+  "id": "angus_dice_glb_v0_12_closed_beveled_uv",
+  "status": "glb_uv_runtime_preview_input",
+  "mesh_contract": {
+    "type": "closed beveled cube mesh",
+    "central_faces": 6,
+    "edge_chamfers": 12,
+    "corner_chamfers": 8,
+    "former_gap_fix": "faces are part of one indexed mesh; bevel strips close top-side and side-side transitions"
+  },
+  "uv_contract": {
+    "atlas_layout": "3x2",
+    "tiles": {
+      "top": [
+        0,
+        0
+      ],
+      "front": [
+        1,
+        0
+      ],
+      "right": [
+        2,
+        0
+      ],
+      "back": [
+        0,
+        1
+      ],
+      "left": [
+        1,
+        1
+      ],
+      "bottom": [
+        2,
+        1
+      ]
+    },
+    "note": "Top uses true Chinese/value tile; side, bottom, bevels and corners use watermark/rim regions from the same atlas."
+  },
+  "models": [
+    {
+      "kind": "explore",
+      "label": "探索",
+      "glb": "gd_project/Assets/dice_models/v0_12/dice_explore_v0_12.glb",
+      "atlas": "gd_project/Assets/dice_models/v0_12/dice_explore_uv_atlas_v0_12.png",
+      "uv_proof": "gd_project/Assets/dice_models/v0_12/dice_explore_uv_atlas_v0_12_proof.png",
+      "source_top": "gd_project/Assets/dice_textures/v0_11/dice_face_top_explore.png",
+      "source_side": "gd_project/Assets/dice_textures/v0_11/dice_face_side_explore_watermark.png"
+    },
+    {
+      "kind": "reason",
+      "label": "理性",
+      "glb": "gd_project/Assets/dice_models/v0_12/dice_reason_v0_12.glb",
+      "atlas": "gd_project/Assets/dice_models/v0_12/dice_reason_uv_atlas_v0_12.png",
+      "uv_proof": "gd_project/Assets/dice_models/v0_12/dice_reason_uv_atlas_v0_12_proof.png",
+      "source_top": "gd_project/Assets/dice_textures/v0_11/dice_face_top_reason.png",
+      "source_side": "gd_project/Assets/dice_textures/v0_11/dice_face_side_reason_watermark.png"
+    },
+    {
+      "kind": "occult",
+      "label": "诡思",
+      "glb": "gd_project/Assets/dice_models/v0_12/dice_occult_v0_12.glb",
+      "atlas": "gd_project/Assets/dice_models/v0_12/dice_occult_uv_atlas_v0_12.png",
+      "uv_proof": "gd_project/Assets/dice_models/v0_12/dice_occult_uv_atlas_v0_12_proof.png",
+      "source_top": "gd_project/Assets/dice_textures/v0_11/dice_face_top_occult.png",
+      "source_side": "gd_project/Assets/dice_textures/v0_11/dice_face_side_occult_watermark.png"
+    },
+    {
+      "kind": "ghost",
+      "label": "鬼迹",
+      "glb": "gd_project/Assets/dice_models/v0_12/dice_ghost_v0_12.glb",
+      "atlas": "gd_project/Assets/dice_models/v0_12/dice_ghost_uv_atlas_v0_12.png",
+      "uv_proof": "gd_project/Assets/dice_models/v0_12/dice_ghost_uv_atlas_v0_12_proof.png",
+      "source_top": "gd_project/Assets/dice_textures/v0_11/dice_face_top_ghost.png",
+      "source_side": "gd_project/Assets/dice_textures/v0_11/dice_face_side_ghost_watermark.png"
+    }
+  ]
+}

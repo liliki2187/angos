@@ -1,0 +1,107 @@
+{
+  "id": "angus_dice_glb_v0_19_text_only_d_layout_uv",
+  "status": "runtime_texture_input_glb_generated_outside_godot_scan",
+  "extends": "v0.14 number-priority GLB/UV",
+  "source_style_reference": "design/art-direction/dice-style/dice-face-text-only-no-frame-layouts-imagegen-v0-19.png",
+  "selected_reference_variant": "D",
+  "top_information_contract": {
+    "title_rect": [
+      58,
+      54,
+      454,
+      192
+    ],
+    "value_rect": [
+      102,
+      194,
+      410,
+      396
+    ],
+    "rule": "v0.19D: large attribute title, large value, no icon, no watermark, no title frame"
+  },
+  "mesh_contract": {
+    "type": "closed beveled cube mesh",
+    "central_faces": 6,
+    "edge_chamfers": 12,
+    "corner_chamfers": 8,
+    "former_gap_fix": "same one-mesh beveled body as v0.12-v0.14; no floating top decal plane"
+  },
+  "uv_contract": {
+    "atlas_layout": "3x2",
+    "tiles": {
+      "top": [
+        0,
+        0
+      ],
+      "front": [
+        1,
+        0
+      ],
+      "right": [
+        2,
+        0
+      ],
+      "back": [
+        0,
+        1
+      ],
+      "left": [
+        1,
+        1
+      ],
+      "bottom": [
+        2,
+        1
+      ]
+    },
+    "note": "Top tile carries the readable text; side, back, left, right and bottom use icon-free material tiles."
+  },
+  "models": [
+    {
+      "kind": "explore",
+      "label": "探索",
+      "value": "+2",
+      "glb": "design/art-direction/dice-style/glb-v0-19-disabled/dice_explore_v0_19.glb",
+      "top_tile": "gd_project/Assets/dice_models/v0_19/dice_explore_top_text_only_d_v0_19.png",
+      "side_tile": "gd_project/Assets/dice_models/v0_19/dice_explore_side_plain_v0_19.png",
+      "atlas": "gd_project/Assets/dice_models/v0_19/dice_explore_uv_atlas_v0_19.png",
+      "uv_proof": "gd_project/Assets/dice_models/v0_19/dice_explore_uv_atlas_v0_19_proof.png",
+      "source_material": "gd_project/Assets/dice_textures/v0_11/dice_face_side_explore_watermark.png"
+    },
+    {
+      "kind": "reason",
+      "label": "理性",
+      "value": "+2",
+      "glb": "design/art-direction/dice-style/glb-v0-19-disabled/dice_reason_v0_19.glb",
+      "top_tile": "gd_project/Assets/dice_models/v0_19/dice_reason_top_text_only_d_v0_19.png",
+      "side_tile": "gd_project/Assets/dice_models/v0_19/dice_reason_side_plain_v0_19.png",
+      "atlas": "gd_project/Assets/dice_models/v0_19/dice_reason_uv_atlas_v0_19.png",
+      "uv_proof": "gd_project/Assets/dice_models/v0_19/dice_reason_uv_atlas_v0_19_proof.png",
+      "source_material": "gd_project/Assets/dice_textures/v0_11/dice_face_side_reason_watermark.png"
+    },
+    {
+      "kind": "occult",
+      "label": "诡思",
+      "value": "+2",
+      "glb": "design/art-direction/dice-style/glb-v0-19-disabled/dice_occult_v0_19.glb",
+      "top_tile": "gd_project/Assets/dice_models/v0_19/dice_occult_top_text_only_d_v0_19.png",
+      "side_tile": "gd_project/Assets/dice_models/v0_19/dice_occult_side_plain_v0_19.png",
+      "atlas": "gd_project/Assets/dice_models/v0_19/dice_occult_uv_atlas_v0_19.png",
+      "uv_proof": "gd_project/Assets/dice_models/v0_19/dice_occult_uv_atlas_v0_19_proof.png",
+      "source_material": "gd_project/Assets/dice_textures/v0_11/dice_face_side_occult_watermark.png"
+    },
+    {
+      "kind": "ghost",
+      "label": "鬼迹",
+      "value": "!",
+      "glb": "design/art-direction/dice-style/glb-v0-19-disabled/dice_ghost_v0_19.glb",
+      "top_tile": "gd_project/Assets/dice_models/v0_19/dice_ghost_top_text_only_d_v0_19.png",
+      "side_tile": "gd_project/Assets/dice_models/v0_19/dice_ghost_side_plain_v0_19.png",
+      "atlas": "gd_project/Assets/dice_models/v0_19/dice_ghost_uv_atlas_v0_19.png",
+      "uv_proof": "gd_project/Assets/dice_models/v0_19/dice_ghost_uv_atlas_v0_19_proof.png",
+      "source_material": "gd_project/Assets/dice_textures/v0_11/dice_face_side_ghost_watermark.png"
+    }
+  ],
+  "style_contact_sheet": "design/art-direction/dice-style/dice-face-layout-v0-19-d-text-only-sheet.png",
+  "readability_review": "design/art-direction/dice-style/dice-face-layout-v0-19-d-readability-review.png"
+}

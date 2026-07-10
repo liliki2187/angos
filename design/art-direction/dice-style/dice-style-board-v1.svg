@@ -1,0 +1,360 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#08111f"/>
+      <stop offset="0.5" stop-color="#0f1a2e"/>
+      <stop offset="1" stop-color="#07121a"/>
+    </linearGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7efd9"/>
+      <stop offset="1" stop-color="#cfc3a6"/>
+    </linearGradient>
+    <linearGradient id="greenTop" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dae9a3"/>
+      <stop offset="1" stop-color="#7f9f41"/>
+    </linearGradient>
+    <linearGradient id="cyanTop" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#b2e1df"/>
+      <stop offset="1" stop-color="#2c7685"/>
+    </linearGradient>
+    <linearGradient id="amberTop" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f2d38a"/>
+      <stop offset="1" stop-color="#a77a36"/>
+    </linearGradient>
+    <linearGradient id="blackTop" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#45222b"/>
+      <stop offset="0.58" stop-color="#140d15"/>
+      <stop offset="1" stop-color="#050409"/>
+    </linearGradient>
+    <filter id="shadow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000000" flood-opacity="0.48"/>
+    </filter>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000000" flood-opacity="0.32"/>
+    </filter>
+    <pattern id="grid" width="38" height="38" patternUnits="userSpaceOnUse">
+      <path d="M38 0H0V38" fill="none" stroke="#244054" stroke-width="1" opacity="0.22"/>
+    </pattern>
+    <pattern id="halftone" width="18" height="18" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="4" r="1.2" fill="#f5edd8" opacity="0.25"/>
+      <circle cx="13" cy="13" r="0.9" fill="#f5edd8" opacity="0.18"/>
+    </pattern>
+    <clipPath id="cutBoard">
+      <path d="M36 24H1884L1904 44V1036L1884 1056H36L16 1036V44Z"/>
+    </clipPath>
+    <style>
+      .font { font-family: "Microsoft YaHei", "Noto Sans CJK SC", SimHei, Arial, sans-serif; }
+      .title { font: 800 54px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; letter-spacing: 0; fill: #f5edd8; }
+      .subtitle { font: 500 18px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #9fb3b1; }
+      .section-title { font: 800 24px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #d6e599; }
+      .label { font: 700 17px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #f5edd8; }
+      .small { font: 500 14px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #aab7b3; }
+      .tiny { font: 500 12px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #7e928f; }
+      .mono { font: 700 14px Consolas, "Microsoft YaHei", monospace; fill: #d8c8a2; }
+      .faceText { font: 900 30px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #101923; }
+      .faceSmall { font: 900 17px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #101923; }
+      .blackFaceText { font: 900 30px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #f5edd8; stroke: #050409; stroke-width: 3; paint-order: stroke; }
+      .panel { fill: #101b29; stroke: #5b6d68; stroke-width: 1.4; opacity: 0.96; }
+      .panel2 { fill: #142231; stroke: #314657; stroke-width: 1; opacity: 0.98; }
+      .paper { fill: url(#paper); stroke: #2b2924; stroke-width: 1.4; }
+      .rule { stroke: #6d7b72; stroke-width: 1; opacity: 0.48; }
+      .accentLine { stroke: #9cb34d; stroke-width: 4; stroke-linecap: square; }
+      .dangerLine { stroke: #e84b2c; stroke-width: 4; stroke-linecap: square; }
+      .cyanLine { stroke: #3aaec4; stroke-width: 4; stroke-linecap: square; }
+      .badge { fill: #e84b2c; stroke: #f5edd8; stroke-width: 1.4; }
+      .gold { fill: #d8ac57; }
+      .green { fill: #9cb34d; }
+      .cyan { fill: #3aaec4; }
+      .red { fill: #e84b2c; }
+      .ink { fill: #111923; }
+      .muted { opacity: 0.52; }
+    </style>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <g clip-path="url(#cutBoard)">
+    <rect x="0" y="0" width="1920" height="1080" fill="url(#grid)" opacity="0.85"/>
+    <rect x="0" y="0" width="1920" height="1080" fill="url(#halftone)" opacity="0.12"/>
+  </g>
+  <path d="M36 24H1884L1904 44V1036L1884 1056H36L16 1036V44Z" fill="none" stroke="#65726e" stroke-width="2"/>
+  <path d="M52 44H1868L1884 60V1020L1868 1036H52L36 1020V60Z" fill="none" stroke="#263d4c" stroke-width="1"/>
+
+  <g transform="translate(76 54)">
+    <text class="title">ANGUS DICE STYLE BOARD</text>
+    <text class="subtitle" x="2" y="38">v0.1 / 普通角色骰 · 330 黑骰 · 真实骰面信息 / clean low-poly weekly benchmark translation</text>
+    <g transform="translate(1360 4)">
+      <rect x="0" y="0" width="362" height="52" fill="#0b141d" stroke="#42514e" stroke-width="1"/>
+      <text class="mono" x="18" y="21">DATA SOURCE</text>
+      <text class="tiny" x="18" y="40">WeeklyRunContent.gd / black-dice-330-bus.md</text>
+    </g>
+  </g>
+
+  <g transform="translate(76 140)">
+    <rect class="panel" x="0" y="0" width="642" height="840" rx="0"/>
+    <path class="accentLine" d="M24 34H172"/>
+    <text class="section-title" x="24" y="72">01 普通角色骰：低多边形证据方块</text>
+    <text class="small" x="24" y="101">每名参判角色投 1 颗角色骰；骰面命中任务需求属性才计入有效点。</text>
+
+    <g transform="translate(30 130)">
+      <rect class="panel2" x="0" y="0" width="282" height="318"/>
+      <text class="label" x="18" y="30">艾薇·冷烛 / 外采调查</text>
+      <text class="small" x="18" y="55">主面：探索 +2</text>
+      <g transform="translate(60 82)" filter="url(#shadow)">
+        <ellipse cx="82" cy="184" rx="92" ry="28" fill="#000" opacity="0.32"/>
+        <polygon points="0,42 82,0 164,42 82,85" fill="url(#greenTop)" stroke="#17251e" stroke-width="2"/>
+        <polygon points="0,42 82,85 82,188 0,144" fill="#34442f" stroke="#17251e" stroke-width="2"/>
+        <polygon points="164,42 82,85 82,188 164,144" fill="#1b3135" stroke="#17251e" stroke-width="2"/>
+        <text class="faceText" x="82" y="53" text-anchor="middle">探索</text>
+        <text class="faceSmall" x="82" y="76" text-anchor="middle">+2</text>
+        <text class="faceSmall" x="41" y="132" text-anchor="middle" fill="#f5edd8">洞察</text>
+        <text class="faceSmall" x="122" y="132" text-anchor="middle" fill="#f5edd8">生存</text>
+      </g>
+      <g transform="translate(18 286)">
+        <text class="tiny" x="0" y="-12">六面分布</text>
+        <rect x="0" y="0" width="36" height="22" fill="#9cb34d"/><text class="tiny ink" x="18" y="15" text-anchor="middle">探2</text>
+        <rect x="42" y="0" width="36" height="22" fill="#6f8d37"/><text class="tiny ink" x="60" y="15" text-anchor="middle">探1</text>
+        <rect x="84" y="0" width="36" height="22" fill="#3aaec4"/><text class="tiny ink" x="102" y="15" text-anchor="middle">洞1</text>
+        <rect x="126" y="0" width="36" height="22" fill="#d8ac57"/><text class="tiny ink" x="144" y="15" text-anchor="middle">生1</text>
+        <rect x="168" y="0" width="36" height="22" fill="#f5edd8"/><text class="tiny ink" x="186" y="15" text-anchor="middle">理1</text>
+        <rect x="210" y="0" width="36" height="22" fill="#b990ce"/><text class="tiny ink" x="228" y="15" text-anchor="middle">诡1</text>
+      </g>
+    </g>
+
+    <g transform="translate(330 130)">
+      <rect class="panel2" x="0" y="0" width="282" height="318"/>
+      <text class="label" x="18" y="30">乔然 / 城市跑口</text>
+      <text class="small" x="18" y="55">主面：理性 +2</text>
+      <g transform="translate(60 82)" filter="url(#shadow)">
+        <ellipse cx="82" cy="184" rx="92" ry="28" fill="#000" opacity="0.32"/>
+        <polygon points="0,42 82,0 164,42 82,85" fill="url(#paper)" stroke="#17251e" stroke-width="2"/>
+        <polygon points="0,42 82,85 82,188 0,144" fill="#455059" stroke="#17251e" stroke-width="2"/>
+        <polygon points="164,42 82,85 82,188 164,144" fill="#284857" stroke="#17251e" stroke-width="2"/>
+        <text class="faceText" x="82" y="53" text-anchor="middle">理性</text>
+        <text class="faceSmall" x="82" y="76" text-anchor="middle">+2</text>
+        <text class="faceSmall" x="41" y="132" text-anchor="middle" fill="#f5edd8">社交</text>
+        <text class="faceSmall" x="122" y="132" text-anchor="middle" fill="#f5edd8">洞察</text>
+      </g>
+      <g transform="translate(18 286)">
+        <text class="tiny" x="0" y="-12">六面分布</text>
+        <rect x="0" y="0" width="36" height="22" fill="#f5edd8"/><text class="tiny ink" x="18" y="15" text-anchor="middle">理2</text>
+        <rect x="42" y="0" width="36" height="22" fill="#5b78a5"/><text class="tiny ink" x="60" y="15" text-anchor="middle">社1</text>
+        <rect x="84" y="0" width="36" height="22" fill="#3aaec4"/><text class="tiny ink" x="102" y="15" text-anchor="middle">洞1</text>
+        <rect x="126" y="0" width="36" height="22" fill="#3aaec4"/><text class="tiny ink" x="144" y="15" text-anchor="middle">洞1</text>
+        <rect x="168" y="0" width="36" height="22" fill="#9cb34d"/><text class="tiny ink" x="186" y="15" text-anchor="middle">探1</text>
+        <rect x="210" y="0" width="36" height="22" fill="#d8ac57"/><text class="tiny ink" x="228" y="15" text-anchor="middle">生1</text>
+      </g>
+    </g>
+
+    <g transform="translate(30 480)">
+      <rect class="panel2" x="0" y="0" width="282" height="318"/>
+      <text class="label" x="18" y="30">莫拉 / 灵视记者</text>
+      <text class="small" x="18" y="55">主面：诡思 +2</text>
+      <g transform="translate(60 82)" filter="url(#shadow)">
+        <ellipse cx="82" cy="184" rx="92" ry="28" fill="#000" opacity="0.32"/>
+        <polygon points="0,42 82,0 164,42 82,85" fill="#b990ce" stroke="#17251e" stroke-width="2"/>
+        <polygon points="0,42 82,85 82,188 0,144" fill="#3a3047" stroke="#17251e" stroke-width="2"/>
+        <polygon points="164,42 82,85 82,188 164,144" fill="#193742" stroke="#17251e" stroke-width="2"/>
+        <text class="faceText" x="82" y="53" text-anchor="middle">诡思</text>
+        <text class="faceSmall" x="82" y="76" text-anchor="middle">+2</text>
+        <text class="faceSmall" x="41" y="132" text-anchor="middle" fill="#f5edd8">社交</text>
+        <text class="faceSmall" x="122" y="132" text-anchor="middle" fill="#f5edd8">洞察</text>
+      </g>
+      <g transform="translate(18 286)">
+        <text class="tiny" x="0" y="-12">六面分布</text>
+        <rect x="0" y="0" width="36" height="22" fill="#b990ce"/><text class="tiny ink" x="18" y="15" text-anchor="middle">诡2</text>
+        <rect x="42" y="0" width="36" height="22" fill="#9a73ac"/><text class="tiny ink" x="60" y="15" text-anchor="middle">诡1</text>
+        <rect x="84" y="0" width="36" height="22" fill="#3aaec4"/><text class="tiny ink" x="102" y="15" text-anchor="middle">洞1</text>
+        <rect x="126" y="0" width="36" height="22" fill="#5b78a5"/><text class="tiny ink" x="144" y="15" text-anchor="middle">社1</text>
+        <rect x="168" y="0" width="36" height="22" fill="#9cb34d"/><text class="tiny ink" x="186" y="15" text-anchor="middle">探1</text>
+        <rect x="210" y="0" width="36" height="22" fill="#f5edd8"/><text class="tiny ink" x="228" y="15" text-anchor="middle">理1</text>
+      </g>
+    </g>
+
+    <g transform="translate(330 480)">
+      <rect class="panel2" x="0" y="0" width="282" height="318"/>
+      <text class="label" x="18" y="30">里德 / 战地摄影</text>
+      <text class="small" x="18" y="55">主面：生存 +2</text>
+      <g transform="translate(60 82)" filter="url(#shadow)">
+        <ellipse cx="82" cy="184" rx="92" ry="28" fill="#000" opacity="0.32"/>
+        <polygon points="0,42 82,0 164,42 82,85" fill="url(#amberTop)" stroke="#17251e" stroke-width="2"/>
+        <polygon points="0,42 82,85 82,188 0,144" fill="#4f3d25" stroke="#17251e" stroke-width="2"/>
+        <polygon points="164,42 82,85 82,188 164,144" fill="#253f3c" stroke="#17251e" stroke-width="2"/>
+        <text class="faceText" x="82" y="53" text-anchor="middle">生存</text>
+        <text class="faceSmall" x="82" y="76" text-anchor="middle">+2</text>
+        <text class="faceSmall" x="41" y="132" text-anchor="middle" fill="#f5edd8">探索</text>
+        <text class="faceSmall" x="122" y="132" text-anchor="middle" fill="#f5edd8">理性</text>
+      </g>
+      <g transform="translate(18 286)">
+        <text class="tiny" x="0" y="-12">六面分布</text>
+        <rect x="0" y="0" width="36" height="22" fill="#d8ac57"/><text class="tiny ink" x="18" y="15" text-anchor="middle">生2</text>
+        <rect x="42" y="0" width="36" height="22" fill="#b9893a"/><text class="tiny ink" x="60" y="15" text-anchor="middle">生1</text>
+        <rect x="84" y="0" width="36" height="22" fill="#9cb34d"/><text class="tiny ink" x="102" y="15" text-anchor="middle">探1</text>
+        <rect x="126" y="0" width="36" height="22" fill="#9cb34d"/><text class="tiny ink" x="144" y="15" text-anchor="middle">探1</text>
+        <rect x="168" y="0" width="36" height="22" fill="#f5edd8"/><text class="tiny ink" x="186" y="15" text-anchor="middle">理1</text>
+        <rect x="210" y="0" width="36" height="22" fill="#3aaec4"/><text class="tiny ink" x="228" y="15" text-anchor="middle">洞1</text>
+      </g>
+    </g>
+  </g>
+
+  <g transform="translate(754 140)">
+    <rect class="panel" x="0" y="0" width="474" height="840"/>
+    <path class="cyanLine" d="M24 34H172"/>
+    <text class="section-title" x="24" y="72">02 骰面 Atlas：真实属性面</text>
+    <text class="small" x="24" y="101">字段来自 ATTR_LABELS 与 STAFF_POOL.faces。命中任务需求才计点。</text>
+
+    <g transform="translate(28 132)">
+      <g>
+        <rect class="paper" x="0" y="0" width="128" height="128" filter="url(#softShadow)"/>
+        <polygon points="0,0 128,0 128,128 0,128" fill="#9cb34d" opacity="0.22"/>
+        <path d="M28 76 L64 30 L100 76 L78 76 L78 100 L50 100 L50 76Z" fill="#111923"/>
+        <text class="label ink" x="64" y="116" text-anchor="middle">探索</text>
+        <text class="tiny ink" x="64" y="139" text-anchor="middle">explore / 跟拍 / 进入现场</text>
+      </g>
+      <g transform="translate(150 0)">
+        <rect class="paper" x="0" y="0" width="128" height="128" filter="url(#softShadow)"/>
+        <polygon points="0,0 128,0 128,128 0,128" fill="#3aaec4" opacity="0.24"/>
+        <path d="M29 65 Q64 30 99 65 Q64 98 29 65Z" fill="none" stroke="#111923" stroke-width="9"/>
+        <circle cx="64" cy="65" r="17" fill="#111923"/>
+        <text class="label ink" x="64" y="116" text-anchor="middle">洞察</text>
+        <text class="tiny ink" x="64" y="139" text-anchor="middle">insight / 识别矛盾</text>
+      </g>
+      <g transform="translate(300 0)">
+        <rect class="paper" x="0" y="0" width="128" height="128" filter="url(#softShadow)"/>
+        <polygon points="0,0 128,0 128,128 0,128" fill="#b990ce" opacity="0.24"/>
+        <path d="M64 25 L101 93 H27Z" fill="none" stroke="#111923" stroke-width="8"/>
+        <path d="M64 42 C84 54 84 80 64 92 C44 80 44 54 64 42Z" fill="#111923"/>
+        <text class="label ink" x="64" y="116" text-anchor="middle">诡思</text>
+        <text class="tiny ink" x="64" y="139" text-anchor="middle">occult / 读异常</text>
+      </g>
+    </g>
+
+    <g transform="translate(28 330)">
+      <g>
+        <rect class="paper" x="0" y="0" width="128" height="128" filter="url(#softShadow)"/>
+        <polygon points="0,0 128,0 128,128 0,128" fill="#d8ac57" opacity="0.28"/>
+        <path d="M41 91 L50 38 L64 25 L78 38 L87 91 L64 104Z" fill="#111923"/>
+        <path d="M44 68 H84" stroke="#f5edd8" stroke-width="6"/>
+        <text class="label ink" x="64" y="116" text-anchor="middle">生存</text>
+        <text class="tiny ink" x="64" y="139" text-anchor="middle">survival / 规避风险</text>
+      </g>
+      <g transform="translate(150 0)">
+        <rect class="paper" x="0" y="0" width="128" height="128" filter="url(#softShadow)"/>
+        <polygon points="0,0 128,0 128,128 0,128" fill="#f5edd8" opacity="0.52"/>
+        <path d="M39 29 H90 V99 H39Z" fill="none" stroke="#111923" stroke-width="8"/>
+        <path d="M51 52 H80 M51 70 H80 M51 88 H70" stroke="#111923" stroke-width="5"/>
+        <text class="label ink" x="64" y="116" text-anchor="middle">理性</text>
+        <text class="tiny ink" x="64" y="139" text-anchor="middle">reason / 校核证据</text>
+      </g>
+      <g transform="translate(300 0)">
+        <rect class="paper" x="0" y="0" width="128" height="128" filter="url(#softShadow)"/>
+        <polygon points="0,0 128,0 128,128 0,128" fill="#5b78a5" opacity="0.28"/>
+        <circle cx="48" cy="57" r="18" fill="#111923"/>
+        <circle cx="80" cy="57" r="18" fill="#111923"/>
+        <path d="M34 94 C42 77 56 75 64 75 C72 75 86 77 94 94" fill="none" stroke="#111923" stroke-width="8"/>
+        <text class="label ink" x="64" y="116" text-anchor="middle">社交</text>
+        <text class="tiny ink" x="64" y="139" text-anchor="middle">social / 线人关系</text>
+      </g>
+    </g>
+
+    <g transform="translate(28 548)">
+      <rect class="panel2" x="0" y="0" width="420" height="248"/>
+      <text class="label" x="18" y="34">骰面状态覆盖层</text>
+      <text class="small" x="18" y="61">覆盖层独立于属性面，方便 3D 贴图 / 动效状态机复用。</text>
+      <g transform="translate(20 86)">
+        <rect x="0" y="0" width="84" height="84" fill="#f5edd8" stroke="#111923" stroke-width="2"/>
+        <path d="M12 12H72V72H12Z" fill="none" stroke="#d8ac57" stroke-width="5"/>
+        <text class="faceText" x="42" y="54" text-anchor="middle">锁</text>
+        <text class="tiny" x="42" y="108" text-anchor="middle">已锁定</text>
+      </g>
+      <g transform="translate(124 86)">
+        <rect x="0" y="0" width="84" height="84" fill="#f5edd8" stroke="#111923" stroke-width="2"/>
+        <path d="M22 44 C22 24 48 18 61 32" fill="none" stroke="#3aaec4" stroke-width="7"/>
+        <path d="M62 25 L64 43 L47 39" fill="#3aaec4"/>
+        <text class="tiny" x="42" y="108" text-anchor="middle">重投组</text>
+      </g>
+      <g transform="translate(228 86)">
+        <rect x="0" y="0" width="84" height="84" fill="#f5edd8" stroke="#111923" stroke-width="2"/>
+        <circle cx="42" cy="42" r="29" fill="none" stroke="#9cb34d" stroke-width="7"/>
+        <text class="faceText" x="42" y="54" text-anchor="middle">计</text>
+        <text class="tiny" x="42" y="108" text-anchor="middle">计入有效点</text>
+      </g>
+      <g transform="translate(332 86)">
+        <rect x="0" y="0" width="84" height="84" fill="#27333a" stroke="#111923" stroke-width="2"/>
+        <text class="faceText" x="42" y="54" fill="#7e928f" text-anchor="middle">0</text>
+        <text class="tiny" x="42" y="108" text-anchor="middle">任务外面</text>
+      </g>
+    </g>
+  </g>
+
+  <g transform="translate(1264 140)">
+    <rect class="panel" x="0" y="0" width="580" height="840"/>
+    <path class="dangerLine" d="M24 34H172"/>
+    <text class="section-title" x="24" y="72">03 黑骰：330 公交“鬼混入人群”</text>
+    <text class="small" x="24" y="101">黑骰不是固定扣点坏骰；它改变锁定、重投、计入的心理含义。</text>
+
+    <g transform="translate(26 130)">
+      <rect class="panel2" x="0" y="0" width="528" height="270"/>
+      <text class="label" x="18" y="32">黑骰三态：隐藏附身 → 重投提示 → 提交污染</text>
+      <g transform="translate(38 70)" filter="url(#shadow)">
+        <ellipse cx="76" cy="174" rx="86" ry="24" fill="#000" opacity="0.34"/>
+        <polygon points="0,42 76,0 152,42 76,82" fill="url(#greenTop)" stroke="#08070a" stroke-width="2"/>
+        <polygon points="0,42 76,82 76,170 0,132" fill="#2c3b31" stroke="#08070a" stroke-width="2"/>
+        <polygon points="152,42 76,82 76,170 152,132" fill="#15272d" stroke="#08070a" stroke-width="2"/>
+        <path d="M18 48 C42 15 108 18 135 46 C105 36 54 37 18 48Z" fill="#050409" opacity="0.28"/>
+        <text class="faceText" x="76" y="53" text-anchor="middle">洞察</text>
+        <text class="faceSmall" x="76" y="76" text-anchor="middle">+1</text>
+        <text class="tiny" x="76" y="210" text-anchor="middle">附身：初始不可见</text>
+      </g>
+      <g transform="translate(194 70)" filter="url(#shadow)">
+        <ellipse cx="76" cy="174" rx="86" ry="24" fill="#000" opacity="0.42"/>
+        <polygon points="0,42 76,0 152,42 76,82" fill="url(#blackTop)" stroke="#e84b2c" stroke-width="2"/>
+        <polygon points="0,42 76,82 76,170 0,132" fill="#22151c" stroke="#08070a" stroke-width="2"/>
+        <polygon points="152,42 76,82 76,170 152,132" fill="#09070d" stroke="#08070a" stroke-width="2"/>
+        <path d="M40 62 C52 28 98 28 110 62 C93 52 57 52 40 62Z" fill="#e84b2c" opacity="0.8"/>
+        <text class="blackFaceText" x="76" y="58" text-anchor="middle">鬼迹</text>
+        <text class="tiny" x="76" y="210" text-anchor="middle">只提示重投组</text>
+      </g>
+      <g transform="translate(350 70)" filter="url(#shadow)">
+        <ellipse cx="76" cy="174" rx="86" ry="24" fill="#000" opacity="0.44"/>
+        <polygon points="0,42 76,0 152,42 76,82" fill="url(#blackTop)" stroke="#e84b2c" stroke-width="2"/>
+        <polygon points="0,42 76,82 76,170 0,132" fill="#2c1119" stroke="#08070a" stroke-width="2"/>
+        <polygon points="152,42 76,82 76,170 152,132" fill="#0f0a12" stroke="#08070a" stroke-width="2"/>
+        <path d="M23 38 L53 54 L36 78 L82 55 L73 83 L129 42" fill="none" stroke="#e84b2c" stroke-width="7" stroke-linejoin="bevel"/>
+        <text class="blackFaceText" x="76" y="61" text-anchor="middle">污染</text>
+        <text class="tiny" x="76" y="210" text-anchor="middle">带入鬼：取消优秀</text>
+      </g>
+    </g>
+
+    <g transform="translate(26 430)">
+      <rect class="panel2" x="0" y="0" width="528" height="186"/>
+      <text class="label" x="18" y="32">当前真实任务需求样例</text>
+      <text class="small" x="18" y="58">用于测试骰面是否有“真实信息”，不是装饰符号。</text>
+      <g transform="translate(18 82)">
+        <rect x="0" y="0" width="238" height="74" fill="#f5edd8" opacity="0.9" stroke="#111923"/>
+        <text class="label ink" x="14" y="26">51 区外围公路</text>
+        <text class="small ink" x="14" y="49">需求：探索 4 / 生存 2</text>
+        <text class="small ink" x="148" y="49">目标：2 点</text>
+      </g>
+      <g transform="translate(270 82)">
+        <rect x="0" y="0" width="238" height="74" fill="#f5edd8" opacity="0.9" stroke="#111923"/>
+        <text class="label ink" x="14" y="26">M330 末班车空白段</text>
+        <text class="small ink" x="14" y="49">需求：洞察 / 诡思 / 理性</text>
+        <text class="small ink" x="148" y="49">目标：2 点</text>
+      </g>
+    </g>
+
+    <g transform="translate(26 646)">
+      <rect class="panel2" x="0" y="0" width="528" height="150"/>
+      <text class="label" x="18" y="32">3D / 动效落地约束</text>
+      <text class="small" x="18" y="61">1. 最终判定面必须俯视朝上，文字作为骰面贴图，不做屏幕标签。</text>
+      <text class="small" x="18" y="88">2. 骰面不透明；内部线框、背面边和网格不能穿过文字。</text>
+      <text class="small" x="18" y="115">3. 位移控制在角色框体内，用小弹跳、旋转、碰撞阴影模拟实体感。</text>
+      <text class="small" x="18" y="142">4. 黑骰先表现为覆盖/污染状态，再进入独立黑骰终局风格。</text>
+    </g>
+  </g>
+
+  <g transform="translate(76 1004)">
+    <text class="tiny">Style intent: dark editorial board + clean low-poly evidence objects + restrained paper material + cyan/green signal + red-orange anomaly. Not final production asset.</text>
+    <text class="tiny" x="1110">Source benchmark: clean-lowpoly-weekly-branch / benchmark-board-01, benchmark-board-02</text>
+  </g>
+</svg>

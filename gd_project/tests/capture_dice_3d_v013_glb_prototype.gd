@@ -1,7 +1,7 @@
 extends SceneTree
 
-const OUT_DIR := "res://../docs/screenshots/2026-07-07-dice-3d-v019d-text-only-runtime-godot/animation_frames"
-const SCENE := "res://scenes/dev/Dice3DV7Prototype.tscn"
+const OUT_DIR := "res://../docs/screenshots/2026-07-07-dice-3d-v013-text-safe-glb-uv-godot"
+const SCENE := "res://scenes/dev/Dice3DV013GlbPrototype.tscn"
 
 func _init() -> void:
 	call_deferred("_run")
@@ -20,24 +20,18 @@ func _run() -> void:
 	scene.offset_bottom = 0.0
 
 	await _settle_frames(8)
-
-	var times: Array[float] = []
-	for _i in range(4):
-		times.append(0.0)
-	var motion_frames := 30
-	for i in range(motion_frames):
-		var t := lerpf(0.0, 1.18, float(i) / float(motion_frames - 1))
-		times.append(t)
-	for _i in range(12):
-		times.append(1.12)
-
-	var frame_index := 0
-	for t in times:
-		scene.set_demo_time(t)
+	var frames := [
+		["30-runtime-cell-contract.png", 0.0],
+		["31-runtime-cell-precompress.png", 0.06],
+		["32-runtime-cell-fast-tumble.png", 0.28],
+		["33-runtime-cell-impact.png", 0.53],
+		["34-runtime-cell-rebound-settle.png", 0.78],
+		["35-runtime-cell-final-read.png", 1.12],
+	]
+	for item in frames:
+		scene.set_demo_time(float(item[1]))
 		await _settle_frames(4)
-		_save_png("frame_%03d.png" % frame_index)
-		frame_index += 1
-
+		_save_png(String(item[0]))
 	quit(0)
 
 func _settle_frames(count: int) -> void:

@@ -1,0 +1,110 @@
+{
+  "id": "dice_face_textures_v0_11_simplified_square_cells",
+  "status": "bitmap_face_runtime_preview_input",
+  "geometry_contract": "source sheets are 1:1; each 2x2 cell is square before tile export",
+  "target_tile_size": [
+    512,
+    512
+  ],
+  "sources": {
+    "no_text_base": {
+      "path": "design/art-direction/dice-style/dice-face-simplified-v0-11-r1-ai-base-sheet.png",
+      "grid": [
+        2,
+        2
+      ],
+      "cell_size": [
+        627,
+        627
+      ],
+      "note": "No-text AI image layer. Top faces use program-rendered Chinese/value overlay after square crop; side/bottom faces keep the watermark-only base."
+    }
+  },
+  "tiles": [
+    {
+      "kind": "explore",
+      "label": "探索",
+      "value": "+2",
+      "top_id": "dice_face_top_explore",
+      "top_path": "gd_project/Assets/dice_textures/v0_11/dice_face_top_explore.png",
+      "side_id": "dice_face_side_explore_watermark",
+      "side_path": "gd_project/Assets/dice_textures/v0_11/dice_face_side_explore_watermark.png",
+      "source_cell": [
+        0,
+        0
+      ],
+      "source_cell_size": [
+        627,
+        627
+      ],
+      "export_size": [
+        512,
+        512
+      ]
+    },
+    {
+      "kind": "reason",
+      "label": "理性",
+      "value": "+2",
+      "top_id": "dice_face_top_reason",
+      "top_path": "gd_project/Assets/dice_textures/v0_11/dice_face_top_reason.png",
+      "side_id": "dice_face_side_reason_watermark",
+      "side_path": "gd_project/Assets/dice_textures/v0_11/dice_face_side_reason_watermark.png",
+      "source_cell": [
+        1,
+        0
+      ],
+      "source_cell_size": [
+        627,
+        627
+      ],
+      "export_size": [
+        512,
+        512
+      ]
+    },
+    {
+      "kind": "occult",
+      "label": "诡思",
+      "value": "+2",
+      "top_id": "dice_face_top_occult",
+      "top_path": "gd_project/Assets/dice_textures/v0_11/dice_face_top_occult.png",
+      "side_id": "dice_face_side_occult_watermark",
+      "side_path": "gd_project/Assets/dice_textures/v0_11/dice_face_side_occult_watermark.png",
+      "source_cell": [
+        0,
+        1
+      ],
+      "source_cell_size": [
+        627,
+        627
+      ],
+      "export_size": [
+        512,
+        512
+      ]
+    },
+    {
+      "kind": "ghost",
+      "label": "鬼迹",
+      "value": "!",
+      "top_id": "dice_face_top_ghost",
+      "top_path": "gd_project/Assets/dice_textures/v0_11/dice_face_top_ghost.png",
+      "side_id": "dice_face_side_ghost_watermark",
+      "side_path": "gd_project/Assets/dice_textures/v0_11/dice_face_side_ghost_watermark.png",
+      "source_cell": [
+        1,
+        1
+      ],
+      "source_cell_size": [
+        627,
+        627
+      ],
+      "export_size": [
+        512,
+        512
+      ]
+    }
+  ],
+  "contact_sheet": "gd_project/Assets/dice_textures/v0_11/dice_face_tiles_v0_11_contact_sheet.png"
+}

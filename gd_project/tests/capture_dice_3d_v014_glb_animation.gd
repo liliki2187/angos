@@ -1,7 +1,7 @@
 extends SceneTree
 
-const OUT_DIR := "res://../docs/screenshots/2026-07-07-dice-3d-v019d-text-only-runtime-godot/animation_frames"
-const SCENE := "res://scenes/dev/Dice3DV7Prototype.tscn"
+const OUT_DIR := "res://../docs/screenshots/2026-07-07-dice-3d-v014-number-priority-glb-uv-godot/animation_frames"
+const SCENE := "res://scenes/dev/Dice3DV014GlbPrototype.tscn"
 
 func _init() -> void:
 	call_deferred("_run")

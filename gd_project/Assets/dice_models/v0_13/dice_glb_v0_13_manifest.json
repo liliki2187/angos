@@ -1,0 +1,111 @@
+{
+  "id": "angus_dice_glb_v0_13_text_safe_uv",
+  "status": "glb_uv_runtime_preview_input",
+  "extends": "v0.12 closed beveled GLB mesh",
+  "top_information_contract": {
+    "title_rect": [
+      72,
+      54,
+      440,
+      158
+    ],
+    "value_rect": [
+      168,
+      170,
+      344,
+      264
+    ],
+    "watermark_rect": [
+      96,
+      276,
+      416,
+      430
+    ],
+    "rule": "title, value and watermark regions are separate; icon is a low-priority watermark and must not force title/value overlap"
+  },
+  "mesh_contract": {
+    "type": "closed beveled cube mesh",
+    "central_faces": 6,
+    "edge_chamfers": 12,
+    "corner_chamfers": 8,
+    "former_gap_fix": "same one-mesh beveled body as v0.12; no independent decal-plane gaps"
+  },
+  "uv_contract": {
+    "atlas_layout": "3x2",
+    "tiles": {
+      "top": [
+        0,
+        0
+      ],
+      "front": [
+        1,
+        0
+      ],
+      "right": [
+        2,
+        0
+      ],
+      "back": [
+        0,
+        1
+      ],
+      "left": [
+        1,
+        1
+      ],
+      "bottom": [
+        2,
+        1
+      ]
+    },
+    "note": "Top uses text-safe tile; side, bottom, bevels and corners use watermark/rim regions from the same atlas."
+  },
+  "models": [
+    {
+      "kind": "explore",
+      "label": "探索",
+      "value": "+2",
+      "glb": "gd_project/Assets/dice_models/v0_13/dice_explore_v0_13.glb",
+      "top_tile": "gd_project/Assets/dice_models/v0_13/dice_explore_top_text_safe_v0_13.png",
+      "atlas": "gd_project/Assets/dice_models/v0_13/dice_explore_uv_atlas_v0_13.png",
+      "uv_proof": "gd_project/Assets/dice_models/v0_13/dice_explore_uv_atlas_v0_13_proof.png",
+      "source_base": "design/art-direction/dice-style/dice-face-simplified-v0-11-r1-ai-base-sheet.png",
+      "source_side": "gd_project/Assets/dice_textures/v0_11/dice_face_side_explore_watermark.png"
+    },
+    {
+      "kind": "reason",
+      "label": "理性",
+      "value": "+2",
+      "glb": "gd_project/Assets/dice_models/v0_13/dice_reason_v0_13.glb",
+      "top_tile": "gd_project/Assets/dice_models/v0_13/dice_reason_top_text_safe_v0_13.png",
+      "atlas": "gd_project/Assets/dice_models/v0_13/dice_reason_uv_atlas_v0_13.png",
+      "uv_proof": "gd_project/Assets/dice_models/v0_13/dice_reason_uv_atlas_v0_13_proof.png",
+      "source_base": "design/art-direction/dice-style/dice-face-simplified-v0-11-r1-ai-base-sheet.png",
+      "source_side": "gd_project/Assets/dice_textures/v0_11/dice_face_side_reason_watermark.png"
+    },
+    {
+      "kind": "occult",
+      "label": "诡思",
+      "value": "+2",
+      "glb": "gd_project/Assets/dice_models/v0_13/dice_occult_v0_13.glb",
+      "top_tile": "gd_project/Assets/dice_models/v0_13/dice_occult_top_text_safe_v0_13.png",
+      "atlas": "gd_project/Assets/dice_models/v0_13/dice_occult_uv_atlas_v0_13.png",
+      "uv_proof": "gd_project/Assets/dice_models/v0_13/dice_occult_uv_atlas_v0_13_proof.png",
+      "source_base": "design/art-direction/dice-style/dice-face-simplified-v0-11-r1-ai-base-sheet.png",
+      "source_side": "gd_project/Assets/dice_textures/v0_11/dice_face_side_occult_watermark.png"
+    },
+    {
+      "kind": "ghost",
+      "label": "鬼迹",
+      "value": "!",
+      "glb": "gd_project/Assets/dice_models/v0_13/dice_ghost_v0_13.glb",
+      "top_tile": "gd_project/Assets/dice_models/v0_13/dice_ghost_top_text_safe_v0_13.png",
+      "atlas": "gd_project/Assets/dice_models/v0_13/dice_ghost_uv_atlas_v0_13.png",
+      "uv_proof": "gd_project/Assets/dice_models/v0_13/dice_ghost_uv_atlas_v0_13_proof.png",
+      "source_base": "design/art-direction/dice-style/dice-face-simplified-v0-11-r1-ai-base-sheet.png",
+      "source_side": "gd_project/Assets/dice_textures/v0_11/dice_face_side_ghost_watermark.png"
+    }
+  ],
+  "style_contact_sheet": "design/art-direction/dice-style/dice-face-layout-v0-13-text-safe-sheet.png",
+  "text_safe_review": "design/art-direction/dice-style/dice-face-layout-v0-13-text-safe-review.png"
+}

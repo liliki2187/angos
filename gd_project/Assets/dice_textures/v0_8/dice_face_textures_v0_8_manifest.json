@@ -1,0 +1,262 @@
+{
+  "id": "dice_face_textures_v0_8_square_cells",
+  "status": "bitmap_face_asset_pass",
+  "geometry_contract": "source sheets are 1:1; each 2x2 source cell is square before tile export",
+  "target_tile_size": [
+    512,
+    512
+  ],
+  "sources": {
+    "top": {
+      "path": "design/art-direction/dice-style/generated-assets/dice-face-sheet-v0-8-top-2x2.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "cell_size": [
+        627,
+        627
+      ]
+    },
+    "side": {
+      "path": "design/art-direction/dice-style/generated-assets/dice-face-sheet-v0-8-side-2x2.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "cell_size": [
+        627,
+        627
+      ]
+    },
+    "state": {
+      "path": "design/art-direction/dice-style/generated-assets/dice-face-sheet-v0-8-state-2x2.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "grid": [
+        2,
+        2
+      ],
+      "cell_size": [
+        627,
+        627
+      ]
+    }
+  },
+  "tiles": [
+    {
+      "id": "dice_face_top_explore",
+      "path": "gd_project/Assets/dice_textures/v0_8/dice_face_top_explore.png",
+      "source_group": "top",
+      "source_cell": [
+        0,
+        0
+      ],
+      "source_cell_size": [
+        627,
+        627
+      ],
+      "export_size": [
+        512,
+        512
+      ]
+    },
+    {
+      "id": "dice_face_top_reason",
+      "path": "gd_project/Assets/dice_textures/v0_8/dice_face_top_reason.png",
+      "source_group": "top",
+      "source_cell": [
+        1,
+        0
+      ],
+      "source_cell_size": [
+        627,
+        627
+      ],
+      "export_size": [
+        512,
+        512
+      ]
+    },
+    {
+      "id": "dice_face_top_occult",
+      "path": "gd_project/Assets/dice_textures/v0_8/dice_face_top_occult.png",
+      "source_group": "top",
+      "source_cell": [
+        0,
+        1
+      ],
+      "source_cell_size": [
+        627,
+        627
+      ],
+      "export_size": [
+        512,
+        512
+      ]
+    },
+    {
+      "id": "dice_face_top_ghost",
+      "path": "gd_project/Assets/dice_textures/v0_8/dice_face_top_ghost.png",
+      "source_group": "top",
+      "source_cell": [
+        1,
+        1
+      ],
+      "source_cell_size": [
+        627,
+        627
+      ],
+      "export_size": [
+        512,
+        512
+      ]
+    },
+    {
+      "id": "dice_face_side_explore_search",
+      "path": "gd_project/Assets/dice_textures/v0_8/dice_face_side_explore_search.png",
+      "source_group": "side",
+      "source_cell": [
+        0,
+        0
+      ],
+      "source_cell_size": [
+        627,
+        627
+      ],
+      "export_size": [
+        512,
+        512
+      ]
+    },
+    {
+      "id": "dice_face_side_reason_chart",
+      "path": "gd_project/Assets/dice_textures/v0_8/dice_face_side_reason_chart.png",
+      "source_group": "side",
+      "source_cell": [
+        1,
+        0
+      ],
+      "source_cell_size": [
+        627,
+        627
+      ],
+      "export_size": [
+        512,
+        512
+      ]
+    },
+    {
+      "id": "dice_face_side_occult_spiral",
+      "path": "gd_project/Assets/dice_textures/v0_8/dice_face_side_occult_spiral.png",
+      "source_group": "side",
+      "source_cell": [
+        0,
+        1
+      ],
+      "source_cell_size": [
+        627,
+        627
+      ],
+      "export_size": [
+        512,
+        512
+      ]
+    },
+    {
+      "id": "dice_face_side_ghost",
+      "path": "gd_project/Assets/dice_textures/v0_8/dice_face_side_ghost.png",
+      "source_group": "side",
+      "source_cell": [
+        1,
+        1
+      ],
+      "source_cell_size": [
+        627,
+        627
+      ],
+      "export_size": [
+        512,
+        512
+      ]
+    },
+    {
+      "id": "dice_face_insight",
+      "path": "gd_project/Assets/dice_textures/v0_8/dice_face_insight.png",
+      "source_group": "state",
+      "source_cell": [
+        0,
+        0
+      ],
+      "source_cell_size": [
+        627,
+        627
+      ],
+      "export_size": [
+        512,
+        512
+      ]
+    },
+    {
+      "id": "dice_face_survival",
+      "path": "gd_project/Assets/dice_textures/v0_8/dice_face_survival.png",
+      "source_group": "state",
+      "source_cell": [
+        1,
+        0
+      ],
+      "source_cell_size": [
+        627,
+        627
+      ],
+      "export_size": [
+        512,
+        512
+      ]
+    },
+    {
+      "id": "dice_face_pollution",
+      "path": "gd_project/Assets/dice_textures/v0_8/dice_face_pollution.png",
+      "source_group": "state",
+      "source_cell": [
+        0,
+        1
+      ],
+      "source_cell_size": [
+        627,
+        627
+      ],
+      "export_size": [
+        512,
+        512
+      ]
+    },
+    {
+      "id": "dice_face_neutral",
+      "path": "gd_project/Assets/dice_textures/v0_8/dice_face_neutral.png",
+      "source_group": "state",
+      "source_cell": [
+        1,
+        1
+      ],
+      "source_cell_size": [
+        627,
+        627
+      ],
+      "export_size": [
+        512,
+        512
+      ]
+    }
+  ]
+}

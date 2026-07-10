@@ -1,7 +1,9 @@
 extends Control
 
 const VIEW_SIZE := Vector2i(680, 396)
+const VIEW_RENDER_SCALE := 2
 const ROLL_END := 1.18
+const DICE_SCALE := 0.66
 
 var _viewport: SubViewport
 var _stage_label: Label
@@ -42,7 +44,7 @@ func _build_ui() -> void:
 	var title := Label.new()
 	title.position = Vector2(96, 54)
 	title.size = Vector2(1220, 42)
-	title.text = "Dice Motion v7.5 - 3D dice inside a real judgment cell"
+	title.text = "Dice Motion v0.19D - Angus 3D角色骰大字无图标 Runtime 验证"
 	title.add_theme_font_size_override("font_size", 34)
 	title.add_theme_color_override("font_color", Color("#f3d38a"))
 	add_child(title)
@@ -50,7 +52,7 @@ func _build_ui() -> void:
 	var subtitle := Label.new()
 	subtitle.position = Vector2(98, 106)
 	subtitle.size = Vector2(1220, 28)
-	subtitle.text = "Goal: validate the dice inside a local Angus judgment modal, not a standalone 3D stage."
+	subtitle.text = "目标：按 v0.19D 版式落地：属性大字、点数大字、无图标、无标题框，并在2D判定框内保持物理感。"
 	subtitle.add_theme_font_size_override("font_size", 18)
 	subtitle.add_theme_color_override("font_color", Color("#c8d2dc"))
 	add_child(subtitle)
@@ -67,13 +69,13 @@ func _build_ui() -> void:
 	task_card.add_theme_stylebox_override("panel", _panel_style(Color("#d5c8a6"), Color("#7c6640")))
 	frame.add_child(task_card)
 
-	_add_label(task_card, Vector2(22, 18), Vector2(292, 28), "M330 Last Bus", 26, Color("#2a241e"))
-	_add_label(task_card, Vector2(22, 54), Vector2(292, 28), "Task goal", 18, Color("#72542d"))
-	_add_label(task_card, Vector2(22, 84), Vector2(292, 54), "Reach effective points before the final witness account collapses.", 18, Color("#393028"), true)
-	_add_metric_chip(task_card, Vector2(22, 154), "Target", "6")
-	_add_metric_chip(task_card, Vector2(122, 154), "Current", "6")
-	_add_metric_chip(task_card, Vector2(222, 154), "Risk", "+2")
-	_add_label(task_card, Vector2(22, 216), Vector2(292, 24), "Relevant faces: Leads / Insight / Nerves", 16, Color("#40352a"))
+	_add_label(task_card, Vector2(22, 18), Vector2(292, 28), "M330 末班车空白段", 26, Color("#2a241e"))
+	_add_label(task_card, Vector2(22, 54), Vector2(292, 28), "任务需求", 18, Color("#72542d"))
+	_add_label(task_card, Vector2(22, 84), Vector2(292, 54), "只计入命中需求的真实骰面；鬼迹不点名单颗骰。", 18, Color("#393028"), true)
+	_add_metric_chip(task_card, Vector2(22, 154), "目标", "6")
+	_add_metric_chip(task_card, Vector2(122, 154), "当前", "6")
+	_add_metric_chip(task_card, Vector2(222, 154), "鬼迹", "?")
+	_add_label(task_card, Vector2(22, 216), Vector2(292, 24), "计入：洞察 / 诡思 / 理性", 16, Color("#40352a"))
 
 	var summary_card := Panel.new()
 	summary_card.position = Vector2(24, 302)
@@ -81,10 +83,10 @@ func _build_ui() -> void:
 	summary_card.add_theme_stylebox_override("panel", _panel_style(Color("#20262a"), Color("#50606a")))
 	frame.add_child(summary_card)
 
-	_add_label(summary_card, Vector2(20, 18), Vector2(288, 28), "Judgment contract", 22, Color("#f3d38a"))
-	_add_label(summary_card, Vector2(20, 60), Vector2(288, 104), "This preview keeps the real judgment structure visible: task goal, character dice, result summary, and submit action.", 18, Color("#cfd7d2"), true)
-	_add_label(summary_card, Vector2(20, 174), Vector2(288, 28), "This round validates:", 18, Color("#f3d38a"))
-	_add_label(summary_card, Vector2(20, 208), Vector2(288, 48), "3D dice scale inside a 2D modal\nresult readability after the motion stops", 16, Color("#cfd7d2"), true)
+	_add_label(summary_card, Vector2(20, 18), Vector2(288, 28), "本轮验收点", 22, Color("#f3d38a"))
+	_add_label(summary_card, Vector2(20, 60), Vector2(288, 104), "本轮改为 v0.19D：稳定运行时骰体 + 顶面大字无图标贴图。重点看文字体量、框内位移和骰面是否还像实体道具。", 18, Color("#cfd7d2"), true)
+	_add_label(summary_card, Vector2(20, 174), Vector2(288, 28), "暂不验收：", 18, Color("#f3d38a"))
+	_add_label(summary_card, Vector2(20, 208), Vector2(288, 48), "Blender 精修 / 全状态矩阵 / 正式判定弹窗", 16, Color("#cfd7d2"), true)
 
 	var tray_frame := Panel.new()
 	tray_frame.position = Vector2(384, 22)
@@ -92,8 +94,8 @@ func _build_ui() -> void:
 	tray_frame.add_theme_stylebox_override("panel", _panel_style(Color("#111719"), Color("#9d7f42")))
 	frame.add_child(tray_frame)
 
-	_add_label(tray_frame, Vector2(22, 16), Vector2(500, 30), "Roll board", 26, Color("#f3d38a"))
-	_add_label(tray_frame, Vector2(22, 50), Vector2(420, 24), "Three participating character dice, bounded to their own slots.", 16, Color("#c8d2dc"))
+	_add_label(tray_frame, Vector2(22, 16), Vector2(500, 30), "判定骰盘", 26, Color("#f3d38a"))
+	_add_label(tray_frame, Vector2(22, 50), Vector2(520, 24), "真实角色骰 + 黑骰提示；所有位移限制在各自槽位内。", 16, Color("#c8d2dc"))
 
 	var viewport_wrap := SubViewportContainer.new()
 	viewport_wrap.position = Vector2(22, 78)
@@ -103,9 +105,10 @@ func _build_ui() -> void:
 	tray_frame.add_child(viewport_wrap)
 
 	_viewport = SubViewport.new()
-	_viewport.size = VIEW_SIZE
+	_viewport.size = VIEW_SIZE * VIEW_RENDER_SCALE
 	_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	_viewport.own_world_3d = true
+	_viewport.msaa_3d = Viewport.MSAA_4X
 	viewport_wrap.add_child(_viewport)
 
 	var control_strip := Panel.new()
@@ -114,11 +117,11 @@ func _build_ui() -> void:
 	control_strip.add_theme_stylebox_override("panel", _panel_style(Color("#1c2226"), Color("#42515a")))
 	frame.add_child(control_strip)
 
-	_add_label(control_strip, Vector2(22, 18), Vector2(240, 28), "Player control", 22, Color("#f3d38a"))
-	_add_label(control_strip, Vector2(462, 18), Vector2(230, 28), "Preview: 6/6 · pass", 20, Color("#b8f0ca"))
-	_add_button_plate(control_strip, Vector2(22, 62), Vector2(164, 60), "Lock 2")
-	_add_button_plate(control_strip, Vector2(202, 62), Vector2(210, 60), "Reroll 1 die")
-	_add_button_plate(control_strip, Vector2(428, 62), Vector2(264, 60), "Submit judgment", true)
+	_add_label(control_strip, Vector2(22, 18), Vector2(240, 28), "玩家操作", 22, Color("#f3d38a"))
+	_add_label(control_strip, Vector2(462, 18), Vector2(230, 28), "预览：6/6 可提交", 20, Color("#b8f0ca"))
+	_add_button_plate(control_strip, Vector2(22, 62), Vector2(164, 60), "锁定2颗")
+	_add_button_plate(control_strip, Vector2(202, 62), Vector2(210, 60), "重投未锁定")
+	_add_button_plate(control_strip, Vector2(428, 62), Vector2(264, 60), "提交判定", true)
 
 	var result_card := Panel.new()
 	result_card.position = Vector2(1128, 22)
@@ -126,14 +129,14 @@ func _build_ui() -> void:
 	result_card.add_theme_stylebox_override("panel", _panel_style(Color("#2a201b"), Color("#8b5f36")))
 	frame.add_child(result_card)
 
-	_add_label(result_card, Vector2(12, 18), Vector2(44, 28), "OK", 22, Color("#f3d38a"))
+	_add_label(result_card, Vector2(12, 18), Vector2(44, 28), "可", 22, Color("#f3d38a"))
 	_add_vertical_result(result_card, Vector2(18, 70), "6/6")
-	_add_label(result_card, Vector2(10, 548), Vector2(48, 60), "PASS", 16, Color("#b8f0ca"))
+	_add_label(result_card, Vector2(10, 548), Vector2(48, 60), "达标", 16, Color("#b8f0ca"))
 
 	_stage_label = Label.new()
 	_stage_label.position = Vector2(24, 696)
 	_stage_label.size = Vector2(1170, 26)
-	_stage_label.text = "Artifact type: runtime_cell_preview_v0"
+	_stage_label.text = "Artifact type: godot_runtime_dice_motion_v0_19d_text_only"
 	_stage_label.add_theme_font_size_override("font_size", 18)
 	_stage_label.add_theme_color_override("font_color", Color("#f3d38a"))
 	frame.add_child(_stage_label)
@@ -156,19 +159,21 @@ func _build_ui() -> void:
 	bullets.scroll_active = false
 	bullets.bbcode_enabled = true
 	bullets.add_theme_font_size_override("normal_font_size", 18)
-	bullets.text = "[color=#f3d38a][b]Review gate[/b][/color]\n\n" \
-		+ "This is a runtime cell preview, not final art.\n\n" \
-		+ "Show now:\n" \
-		+ "- dice inside judgment layout\n" \
-		+ "- task goal near result\n" \
-		+ "- submit preview stays readable\n" \
-		+ "- motion does not steal the page\n\n" \
-		+ "Do not judge yet:\n" \
-		+ "- final Angus material\n" \
-		+ "- face atlas direction\n" \
-		+ "- final modal ornament\n" \
-		+ "- full interaction state matrix\n\n" \
-		+ "[color=#c8d2dc]Pass condition: at 1920x1080, a player can read task target, rolled result, and submit status without the dice overpowering the UI.[/color]"
+	bullets.text = "[color=#f3d38a][b]动态验收口径[/b][/color]\n\n" \
+		+ "这张图是 Godot 运行中的 v0.19D 贴图验证稿，用稳定软立方承载新骰面资源。\n\n" \
+		+ "本轮看：\n" \
+		+ "- v0.19D 大字无框版式是否成立\n" \
+		+ "- 顶面是否没有图标/水印残留\n" \
+		+ "- 框体内位移是否还有掷骰物理感\n" \
+		+ "- 真实角色骰信息停住后能否读清\n" \
+		+ "- 停止帧是否仍像一个实体桌面道具\n\n" \
+		+ "暂不看：\n" \
+		+ "- Blender 手工精修模型\n" \
+		+ "- 正式 GLB / UV 展开\n" \
+		+ "- 正式边角连续纹理精修\n" \
+		+ "- 锁定、污染、重投全状态\n" \
+		+ "- 正式判定弹窗美术包装\n\n" \
+		+ "[color=#c8d2dc]通过条件：1920x1080 下，顶面优先读到属性与点数，运动不越出槽位，边角不再露空。[/color]"
 	side_margin.add_child(bullets)
 
 
@@ -297,32 +302,52 @@ func _build_scene() -> void:
 	table_mesh.size = Vector2(7.4, 3.18)
 	table.mesh = table_mesh
 	table.position = Vector3(0, -0.74, 0)
-	table.material_override = _mat(Color("#202827"), 0.94, Color("#000000"))
+	table.material_override = _mat(Color("#142124"), 0.94, Color("#000000"))
 	world.add_child(table)
 
 	_add_dice_cell(world, {
-		"label": "Mara",
-		"top": "2",
-		"kind": "field",
-		"center": Vector3(-2.08, -0.2, 0.05),
-		"accent": Color("#f0b35e"),
+		"label": "艾薇·冷烛",
+		"face": "探索",
+		"value": "+2",
+		"kind": "explore",
+		"side_a": "洞察+1",
+		"side_b": "生存+1",
+		"center": Vector3(-2.7, -0.2, 0.05),
+		"accent": Color("#b8d894"),
 		"offset": 0.0,
 	})
 	_add_dice_cell(world, {
-		"label": "Dr. Ke",
-		"top": "3",
-		"kind": "blue",
-		"center": Vector3(0.0, -0.2, 0.05),
-		"accent": Color("#5ab9d6"),
+		"label": "乔然",
+		"face": "理性",
+		"value": "+2",
+		"kind": "reason",
+		"side_a": "社交+1",
+		"side_b": "洞察+1",
+		"center": Vector3(-0.9, -0.2, 0.05),
+		"accent": Color("#8bd6df"),
 		"offset": 0.045,
 	})
 	_add_dice_cell(world, {
-		"label": "Ives",
-		"top": "1",
-		"kind": "black",
-		"center": Vector3(2.08, -0.2, 0.05),
-		"accent": Color("#d35b69"),
+		"label": "莫拉",
+		"face": "诡思",
+		"value": "+2",
+		"kind": "occult",
+		"side_a": "洞察+1",
+		"side_b": "社交+1",
+		"center": Vector3(0.9, -0.2, 0.05),
+		"accent": Color("#c8accf"),
 		"offset": 0.09,
+	})
+	_add_dice_cell(world, {
+		"label": "鬼迹",
+		"face": "鬼迹",
+		"value": "!",
+		"kind": "ghost",
+		"side_a": "污染",
+		"side_b": "黑骰",
+		"center": Vector3(2.7, -0.2, 0.05),
+		"accent": Color("#e85b36"),
+		"offset": 0.135,
 	})
 
 
@@ -336,9 +361,9 @@ func _add_dice_cell(world: Node3D, spec: Dictionary) -> void:
 	shadow.scale = Vector3(0.54, 1.0, 0.32)
 	world.add_child(shadow)
 
-	var die := _make_die(String(spec["kind"]), String(spec["top"]))
+	var die := _make_die(spec)
 	die.position = center
-	die.scale = Vector3.ONE * 0.62
+	die.scale = Vector3.ONE * DICE_SCALE
 	world.add_child(die)
 
 	_dice_entries.append({
@@ -346,42 +371,42 @@ func _add_dice_cell(world: Node3D, spec: Dictionary) -> void:
 		"shadow": shadow,
 		"base": center,
 		"offset": float(spec["offset"]),
-		"max_x": 0.16,
-		"max_z": 0.075,
+		"max_x": 0.13,
+		"max_z": 0.065,
 	})
 
 
 func _add_cell_frame(world: Node3D, center: Vector3, label_text: String, accent: Color) -> void:
 	var pad := MeshInstance3D.new()
 	var pad_mesh := PlaneMesh.new()
-	pad_mesh.size = Vector2(1.62, 1.18)
+	pad_mesh.size = Vector2(1.42, 1.16)
 	pad.mesh = pad_mesh
 	pad.position = Vector3(center.x, -0.735, center.z)
 	pad.material_override = _mat(Color("#18201f"), 0.9, Color("#000000"))
 	world.add_child(pad)
 
 	var rail_mat := _mat(accent.darkened(0.22), 0.86, accent)
-	_add_rail(world, Vector3(center.x, -0.705, center.z - 0.64), Vector3(1.76, 0.024, 0.03), rail_mat)
-	_add_rail(world, Vector3(center.x, -0.705, center.z + 0.64), Vector3(1.76, 0.024, 0.03), rail_mat)
-	_add_rail(world, Vector3(center.x - 0.88, -0.705, center.z), Vector3(0.03, 0.024, 1.28), rail_mat)
-	_add_rail(world, Vector3(center.x + 0.88, -0.705, center.z), Vector3(0.03, 0.024, 1.28), rail_mat)
+	_add_rail(world, Vector3(center.x, -0.705, center.z - 0.62), Vector3(1.54, 0.024, 0.03), rail_mat)
+	_add_rail(world, Vector3(center.x, -0.705, center.z + 0.62), Vector3(1.54, 0.024, 0.03), rail_mat)
+	_add_rail(world, Vector3(center.x - 0.77, -0.705, center.z), Vector3(0.03, 0.024, 1.24), rail_mat)
+	_add_rail(world, Vector3(center.x + 0.77, -0.705, center.z), Vector3(0.03, 0.024, 1.24), rail_mat)
 
 	var name_plate := MeshInstance3D.new()
 	var name_mesh := BoxMesh.new()
-	name_mesh.size = Vector3(1.22, 0.024, 0.16)
+	name_mesh.size = Vector3(1.24, 0.024, 0.16)
 	name_plate.mesh = name_mesh
-	name_plate.position = Vector3(center.x, -0.695, center.z + 0.82)
-	name_plate.material_override = _mat(Color("#332820"), 0.88, accent.darkened(0.15))
+	name_plate.position = Vector3(center.x, -0.695, center.z + 0.78)
+	name_plate.material_override = _mat(Color("#25302d"), 0.88, accent.darkened(0.15))
 	world.add_child(name_plate)
 
 	var label := Label3D.new()
 	label.text = label_text
-	label.font_size = 30
+	label.font_size = 24
 	label.modulate = Color("#f6e6ad")
 	label.outline_size = 4
 	label.outline_modulate = Color(0.02, 0.015, 0.01, 0.86)
 	label.shaded = false
-	label.position = Vector3(center.x, -0.665, center.z + 0.825)
+	label.position = Vector3(center.x, -0.665, center.z + 0.785)
 	label.rotation_degrees = Vector3(-90, 0, 0)
 	world.add_child(label)
 
@@ -396,19 +421,23 @@ func _add_rail(world: Node3D, pos: Vector3, size: Vector3, mat: StandardMaterial
 	world.add_child(rail)
 
 
-func _make_die(kind: String, top_text: String) -> Node3D:
+func _make_die(spec: Dictionary) -> Node3D:
 	var root := Node3D.new()
 	root.name = "ContainedDice3D"
+	var style := _dice_style(String(spec["kind"]))
 
 	var body := MeshInstance3D.new()
-	body.mesh = _make_soft_cube_mesh(1.0, 0.16, 10)
-	body.material_override = _dice_material(kind)
+	body.mesh = _make_soft_cube_mesh(1.0, 0.12, 7)
+	body.material_override = _dice_material(style)
 	body.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
 	root.add_child(body)
 
-	_add_face_label(root, top_text, Vector3(0, 0.516, 0), Vector3.UP, Vector3.FORWARD, 72)
-	_add_face_label(root, "+", Vector3(0, 0, 0.516), Vector3.FORWARD, Vector3.UP, 48)
-	_add_face_label(root, "-", Vector3(0.516, 0, 0), Vector3.RIGHT, Vector3.UP, 48)
+	_add_face_texture(root, String(style["top_tex"]), "top")
+	_add_face_texture(root, String(style["front_tex"]), "front")
+	_add_face_texture(root, String(style["right_tex"]), "right")
+	_add_face_texture(root, String(style["front_tex"]), "back")
+	_add_face_texture(root, String(style["right_tex"]), "left")
+	_add_face_texture(root, String(style["bottom_tex"]), "bottom")
 	return root
 
 
@@ -478,29 +507,130 @@ func _face_normal(axis: int, sign: float) -> Vector3:
 	return Vector3(0.0, 0.0, sign)
 
 
-func _add_face_label(root: Node3D, text: String, pos: Vector3, normal: Vector3, up_hint: Vector3, font_size: int) -> void:
+func _add_face_texture(root: Node3D, texture_path: String, face: String) -> void:
+	var texture := _load_runtime_texture(texture_path)
+	if texture == null:
+		return
+	var plane := MeshInstance3D.new()
+	var mesh := PlaneMesh.new()
+	mesh.size = Vector2(0.91, 0.91)
+	plane.mesh = mesh
+	plane.material_override = _face_texture_material(texture)
+	if face == "front":
+		plane.position = Vector3(0, 0, 0.532)
+		plane.rotation_degrees = Vector3(90, 0, 0)
+	elif face == "back":
+		plane.position = Vector3(0, 0, -0.532)
+		plane.rotation_degrees = Vector3(-90, 0, 0)
+	elif face == "right":
+		plane.position = Vector3(0.532, 0, 0)
+		plane.rotation_degrees = Vector3(0, 0, -90)
+	elif face == "left":
+		plane.position = Vector3(-0.532, 0, 0)
+		plane.rotation_degrees = Vector3(0, 0, 90)
+	elif face == "bottom":
+		plane.position = Vector3(0, -0.532, 0)
+		plane.rotation_degrees = Vector3(180, 0, 0)
+	else:
+		plane.position = Vector3(0, 0.532, 0)
+	root.add_child(plane)
+
+
+func _load_runtime_texture(texture_path: String) -> Texture2D:
+	var image := Image.new()
+	var err := image.load(ProjectSettings.globalize_path(texture_path))
+	if err != OK:
+		push_warning("Failed to load dice texture: %s" % texture_path)
+		return null
+	image.generate_mipmaps()
+	return ImageTexture.create_from_image(image)
+
+
+func _face_texture_material(texture: Texture2D) -> StandardMaterial3D:
+	var mat := StandardMaterial3D.new()
+	mat.albedo_texture = texture
+	mat.roughness = 0.82
+	mat.metallic = 0.0
+	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+	mat.specular_mode = BaseMaterial3D.SPECULAR_SCHLICK_GGX
+	mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC
+	return mat
+
+
+func _add_face_label(root: Node3D, text: String, pos: Vector3, normal: Vector3, up_hint: Vector3, font_size: int, color: Color, outline: Color) -> void:
 	var label := Label3D.new()
 	label.text = text
 	label.font_size = font_size
-	label.modulate = Color("#fff1c5")
-	label.outline_size = 10
-	label.outline_modulate = Color(0.03, 0.02, 0.01, 0.92)
+	label.modulate = color
+	label.outline_size = 7
+	label.outline_modulate = outline
 	label.shaded = true
 	label.double_sided = true
 	label.no_depth_test = false
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	if normal.is_equal_approx(Vector3.UP):
+		label.position = pos
 		label.rotation_degrees = Vector3(-90, 0, 0)
 	else:
 		label.look_at_from_position(pos, pos + normal, up_hint)
 	root.add_child(label)
 
 
-func _dice_material(kind: String) -> StandardMaterial3D:
-	if kind == "black":
-		return _mat(Color("#8d2531"), 0.82, Color("#d35b69"))
-	if kind == "blue":
-		return _mat(Color("#276f86"), 0.84, Color("#5ab9d6"))
-	return _mat(Color("#b36a24"), 0.84, Color("#f0b35e"))
+func _dice_style(kind: String) -> Dictionary:
+	if kind == "reason":
+		return {
+			"body": Color("#1f7884"),
+			"rim": Color("#d9e3d6"),
+			"print": Color("#f2e5bc"),
+			"side_print": Color("#d4ded6"),
+			"outline": Color(0.02, 0.08, 0.09, 0.9),
+			"top_tex": "res://Assets/dice_models/v0_19/dice_reason_top_text_only_d_v0_19.png",
+			"front_tex": "res://Assets/dice_models/v0_19/dice_reason_side_plain_v0_19.png",
+			"right_tex": "res://Assets/dice_models/v0_19/dice_reason_side_plain_v0_19.png",
+			"bottom_tex": "res://Assets/dice_models/v0_19/dice_reason_side_plain_v0_19.png",
+		}
+	if kind == "occult":
+		return {
+			"body": Color("#463158"),
+			"rim": Color("#a886b7"),
+			"print": Color("#f0dfba"),
+			"side_print": Color("#c9b6d2"),
+			"outline": Color(0.03, 0.02, 0.05, 0.92),
+			"top_tex": "res://Assets/dice_models/v0_19/dice_occult_top_text_only_d_v0_19.png",
+			"front_tex": "res://Assets/dice_models/v0_19/dice_occult_side_plain_v0_19.png",
+			"right_tex": "res://Assets/dice_models/v0_19/dice_occult_side_plain_v0_19.png",
+			"bottom_tex": "res://Assets/dice_models/v0_19/dice_occult_side_plain_v0_19.png",
+		}
+	if kind == "ghost":
+		return {
+			"body": Color("#171719"),
+			"rim": Color("#e85b36"),
+			"print": Color("#ff7048"),
+			"side_print": Color("#a79aa7"),
+			"outline": Color(0.02, 0.01, 0.01, 0.95),
+			"top_tex": "res://Assets/dice_models/v0_19/dice_ghost_top_text_only_d_v0_19.png",
+			"front_tex": "res://Assets/dice_models/v0_19/dice_ghost_side_plain_v0_19.png",
+			"right_tex": "res://Assets/dice_models/v0_19/dice_ghost_side_plain_v0_19.png",
+			"bottom_tex": "res://Assets/dice_models/v0_19/dice_ghost_side_plain_v0_19.png",
+		}
+	return {
+		"body": Color("#43552a"),
+		"rim": Color("#d5ddb2"),
+		"print": Color("#f2e5bc"),
+		"side_print": Color("#cbd5a4"),
+		"outline": Color(0.02, 0.04, 0.02, 0.92),
+		"top_tex": "res://Assets/dice_models/v0_19/dice_explore_top_text_only_d_v0_19.png",
+		"front_tex": "res://Assets/dice_models/v0_19/dice_explore_side_plain_v0_19.png",
+		"right_tex": "res://Assets/dice_models/v0_19/dice_explore_side_plain_v0_19.png",
+		"bottom_tex": "res://Assets/dice_models/v0_19/dice_explore_side_plain_v0_19.png",
+	}
+
+
+func _dice_material(style: Dictionary) -> StandardMaterial3D:
+	var body_color := style["body"] as Color
+	var rim_color := style["rim"] as Color
+	return _mat(body_color, 0.86, rim_color)
 
 
 func _mat(albedo: Color, roughness: float, emission := Color("#000000")) -> StandardMaterial3D:
@@ -535,13 +665,13 @@ func _apply_motion(t: float) -> void:
 	if _dice_entries.is_empty():
 		return
 	var tt: float = clampf(t, 0.0, ROLL_END)
-	var stage := "motion blockout"
+	var stage := "runtime dice motion v0.19D"
 
 	for entry in _dice_entries:
 		var local_t: float = clampf(tt - float(entry["offset"]), 0.0, 1.16)
 		stage = _apply_contained_motion(entry, local_t)
 
-	_stage_label.text = "Artifact: runtime_cell_preview_v0 / Stage: %s / %.0fms" % [stage, tt * 1000.0]
+	_stage_label.text = "Artifact: godot_runtime_dice_motion_v0_19d_text_only / Stage: %s / %.0fms" % [stage, tt * 1000.0]
 
 
 func _apply_contained_motion(entry: Dictionary, tt: float) -> String:
@@ -553,7 +683,7 @@ func _apply_contained_motion(entry: Dictionary, tt: float) -> String:
 	var stage := "prep"
 	var pos := base
 	var rot := Vector3(0.0, 0.0, 0.0)
-	var scale := Vector3.ONE * 0.62
+	var scale := Vector3.ONE * DICE_SCALE
 	var shadow_scale := Vector3(0.54, 1.0, 0.32)
 	var shadow_alpha := 0.28
 
@@ -562,7 +692,7 @@ func _apply_contained_motion(entry: Dictionary, tt: float) -> String:
 		stage = "pre-compress"
 		pos.y = lerpf(base.y + 0.02, base.y - 0.035, p)
 		rot.z = lerpf(0.08, -0.08, p)
-		scale = Vector3(0.63, 0.60, 0.63).lerp(Vector3(0.65, 0.56, 0.65), p)
+		scale = Vector3(DICE_SCALE + 0.01, DICE_SCALE - 0.02, DICE_SCALE + 0.01).lerp(Vector3(DICE_SCALE + 0.03, DICE_SCALE - 0.06, DICE_SCALE + 0.03), p)
 		shadow_scale = Vector3(0.58, 1.0, 0.34)
 		shadow_alpha = 0.36
 	elif tt < 0.42:
@@ -580,7 +710,7 @@ func _apply_contained_motion(entry: Dictionary, tt: float) -> String:
 		var end := base + Vector3(max_x * 0.58, -0.02, max_z * 0.28)
 		pos = start.lerp(end, _ease_in(p))
 		rot = Vector3(-TAU * 2.35 - p * 0.55, TAU * 1.65 + p * 0.3, -0.1)
-		scale = Vector3(0.62 + p * 0.03, 0.62 - p * 0.07, 0.62 + p * 0.03)
+		scale = Vector3(DICE_SCALE + p * 0.03, DICE_SCALE - p * 0.06, DICE_SCALE + p * 0.03)
 		shadow_scale = Vector3(0.5 + p * 0.2, 1.0, 0.28 + p * 0.1)
 		shadow_alpha = 0.25 + p * 0.32
 	elif tt < 0.76:
@@ -589,7 +719,7 @@ func _apply_contained_motion(entry: Dictionary, tt: float) -> String:
 		var rebound := sin(p * PI) * 0.13
 		pos = base + Vector3(lerpf(max_x * 0.58, max_x * 0.18, p), 0.03 + rebound, lerpf(max_z * 0.28, 0.0, p))
 		rot = Vector3(-1.0 + p * 0.42, 0.12 - p * 0.08, -0.08 + rebound * 0.46)
-		scale = Vector3.ONE * 0.62
+		scale = Vector3.ONE * DICE_SCALE
 		shadow_scale = Vector3(0.68 - p * 0.08, 1.0, 0.38 - p * 0.04)
 		shadow_alpha = 0.44 - p * 0.12
 	elif tt < 0.98:
@@ -605,7 +735,7 @@ func _apply_contained_motion(entry: Dictionary, tt: float) -> String:
 		pos = base
 		rot = Vector3.ZERO
 		var pulse: float = sin(clampf(p, 0.0, 1.0) * PI)
-		scale = Vector3.ONE * (0.62 + pulse * 0.022)
+		scale = Vector3.ONE * (DICE_SCALE + pulse * 0.022)
 		shadow_scale = Vector3(0.58 + pulse * 0.08, 1.0, 0.34 + pulse * 0.04)
 		shadow_alpha = 0.38 + pulse * 0.1
 
