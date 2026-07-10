@@ -569,6 +569,42 @@ hard_gates:
       - exact_gui_exe_exits_nonzero
       - exact_gui_exe_hangs_or_modal_crash_dialog
       - headless_smoke_used_as_gui_crash_proof
+  handoff_completeness:
+    status: trial
+    auto_required_when:
+      - user_requests_cross_endpoint_continuation
+      - user_requests_multi_remote_push
+      - response_claims_seamless_handoff
+    classifications:
+      - GIT_INCLUDED
+      - ACTIVE
+      - REPRODUCIBLE
+      - EXTERNALIZED
+      - SECRET
+      - DISPOSABLE
+      - LOCAL_ONLY_REQUIRED
+      - UNKNOWN
+    required:
+      - explicit_target_remotes_and_branches
+      - fetched_remote_tracking_refs
+      - fast_forward_check_per_remote
+      - handoff_manifest_for_all_unstaged_related_paths
+      - reason_for_every_non_git_classification
+      - evidence_for_reproducible_externalized_and_secret
+      - separate_submission_ready_and_seamless_ready_results
+    active_exception:
+      allowed_only_when: user_explicitly_allows_current_running_work_to_remain_local
+      permits_submission_ready: true
+      permits_seamless_ready: false
+    blockers:
+      - UNKNOWN
+      - LOCAL_ONLY_REQUIRED
+      - missing_classification_reason
+      - missing_reproduction_or_externalization_evidence
+      - active_without_explicit_authorization
+      - target_remote_not_configured
+      - target_remote_not_fetched
+      - target_remote_non_fast_forward
 
 # gate 生命周期（2026-07-08 起）：防止 gate 只增不减导致流程僵化。
 gate_lifecycle:

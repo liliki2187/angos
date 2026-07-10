@@ -1,4 +1,4 @@
 interface:
   display_name: "Git 云端提交"
-  short_description: "按 Luna、Terra、Sol 分级审计并安全提交仓库改动"
-  default_prompt: "Use $git-cloud-submit to audit, batch, verify, commit, and push the current repository changes safely."
+  short_description: "分级审计、跨端交接检查并安全同步多个 Git 远端"
+  default_prompt: "Use $git-cloud-submit to audit handoff completeness, batch and verify changes, then safely sync all authorized Git remotes."

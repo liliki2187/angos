@@ -273,6 +273,17 @@
 - **状态**：已采纳并落地（2026-07-10）。
 
 
+### A177. Git 提交增加交接完整性 Gate 与多远端逐一核验
+
+- **来源**：2026-07-10 跨端续做讨论。用户明确指出关注点不是某一次未提交清单，而是当前“不提交”规则是否会妨碍另一端无缝衔接；在确认风险后采纳完善方案，并要求按新工作流同时提交 `origin` 与 daydream 远端。
+- **核心机制**：`不进 Git` 不再等同于 `不做同步`。每个未纳入当前提交、但与续做有关的路径必须归为 `ACTIVE / REPRODUCIBLE / EXTERNALIZED / SECRET / DISPOSABLE / LOCAL_ONLY_REQUIRED`；没有规则匹配时记为 `UNKNOWN`。生产代码、生产资产、manifest、GDD、设计决策和正式标杆不得标为可丢弃。
+- **放行口径**：`submission_ready` 与 `seamless_ready` 分开。用户明确允许当前仍在运行的任务暂留本机时，`ACTIVE` 可以不阻断本次普通提交，但必须在回执列出，且 `seamless_ready` 仍为否；`UNKNOWN`、`LOCAL_ONLY_REQUIRED`、缺失复现或外部位置证据一律阻断无缝交接声明。
+- **多远端规则**：逐个核对远端名称、脱敏 URL、目标分支和授权；逐个 fetch、确认远端分支是当前 HEAD 的祖先、执行非强制 push，再逐个核对远端跟踪引用。一个远端成功不代表其他远端成功；分叉时停止，不静默 merge / rebase / force。
+- **截图与大产物**：A166 继续有效。过程截图默认不进 Git，但如果另一端继续判断必须看到，就要外部同步并在 handoff manifest 记录位置，或提升为真源例外显式入库；不能只留当前机器又声称无缝交接。
+- **落地位置**：执行真源为 [`skills/git-cloud-submit/SKILL.md`](../../skills/git-cloud-submit/SKILL.md) 与其 [`handoff-completeness.md`](../../skills/git-cloud-submit/references/handoff-completeness.md)；机器可读 gate 为 [`docs/workflows/workflow-gates.yml`](../workflows/workflow-gates.yml) 的 `hard_gates.handoff_completeness`；只读审计脚本支持 handoff manifest 与多远端快进检查。
+- **状态**：已采纳并落地（2026-07-10，trial；按一条完整提交线或两周后复核转正 / 收窄）。
+
+
 ### D3. Steam 独游小爆款研究以 10 万份作为成功样本门槛
 - **来源**：2026-05-31 Steam 独立游戏鉴赏师 subagent 讨论。
 - **机制**：后续构建 Steam 独立游戏鉴赏师 / 市场对照知识库时，不只研究年度级爆款，也要重点研究近三年发布、销量或估算销量达到 10 万份以上的小爆款；优先选择与《世界未解之谜周刊》在调查、未解之谜、异常事件、报刊 / 档案 / 桌面工作、卡牌叙事、周回合经营或轻策略取舍上有相似维度的样本。

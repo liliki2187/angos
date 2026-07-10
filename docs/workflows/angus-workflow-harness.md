@@ -213,6 +213,8 @@ python scripts/check_delivery_manifest.py <manifest或评审文档路径>
 - 资产线 `STATUS.md` 每轮更新；评审中文落盘；证据脚本不得引用 `tmp/`。
 - 未通过前不得进入 `atlas / manifest / production_candidate`。
 
+Git 多远端 / 跨端交接使用专用 gate：只要用户要求“同步另一端”“无缝衔接”或推送多个远端，就按 [`../../skills/git-cloud-submit/SKILL.md`](../../skills/git-cloud-submit/SKILL.md) 执行 handoff completeness 检查。每个未入 Git 的相关路径必须归为 `ACTIVE / REPRODUCIBLE / EXTERNALIZED / SECRET / DISPOSABLE / LOCAL_ONLY_REQUIRED`；存在未分类或仅存本机的必需内容时阻断“无缝交接完成”声明。机器可读清单见 `workflow-gates.yml` 的 `hard_gates.handoff_completeness`。
+
 几何正交一票否决：自动触发条件、1 度阈值、双通行证（`text_geometry_pass` + `art_shell_geometry_pass`）、最低证据（3 个核心面裁切 + 参考线 + 逐项判定）统一见 [`ui-geometry-and-text-safety-gates.md`](./ui-geometry-and-text-safety-gates.md)，本文件不再维护副本。核心口径：没有几何证据只能写“几何未验证”，不能写“通过”；任一核心信息面倾斜即降级为灵感图 / 偏差案例。
 
 ## 3. 风险等级

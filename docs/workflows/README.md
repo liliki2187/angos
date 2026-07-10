@@ -5,7 +5,7 @@
 任务复杂度超过 tiny typo 或明显小 bug 时，按需使用以下文件：
 
 - [`angus-workflow-harness.md`](./angus-workflow-harness.md)：主流程，从轻量路由到 hard gate。
-- [`../../skills/git-cloud-submit/SKILL.md`](../../skills/git-cloud-submit/SKILL.md)：Git 工作区盘点、分批、验证、提交与推送的固定流程，按 Luna / Terra / Sol 分配模型职责。
+- [`../../skills/git-cloud-submit/SKILL.md`](../../skills/git-cloud-submit/SKILL.md)：Git 工作区盘点、交接完整性分类、分批验证、多远端提交与推送的固定流程，按 Luna / Terra / Sol 分配模型职责。
 - [`workflow-gates.yml`](./workflow-gates.yml)：机器可读的阶段、风险与产物规则；自 2026-07-08 起作为产物类型、阶段转换与 hard gate 真源，gate 变更必须同步写入此文件。
 - [`ui-geometry-and-text-safety-gates.md`](./ui-geometry-and-text-safety-gates.md)：资产化 UI 链和美术动效链共用的几何、正交与文字安全 gate 真源。
 - [`godot-agent-smoke.md`](./godot-agent-smoke.md)：Codex 改动后的 Godot 健康检查，组合 `gda script validate` 与真实 headless weekly-run smoke。

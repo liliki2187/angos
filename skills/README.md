@@ -30,7 +30,7 @@
 - `claude-to-im`：会话桥接到 Telegram / Discord / 飞书 / QQ，及一次性飞书文本 / 图片发送。别名：`bridge`、`start bridge`、`bridge status`、`bridge logs`、`send to feishu` 等。
 - `art-reference-picker`：审阅本地美术参考图库，按项目文档挑选最相关参考并给出适配原因，可归档或发送飞书群。
 - `psd-to-godot-ui`：把 Photoshop PSD 转成可复用的 Godot UI 资产包（图层 PNG、预览、manifest、`Control` 根节点 `.tscn`）。别名：`import psd`、`psd ui`、`photoshop ui import`。
-- `git-cloud-submit`：盘点、分批、验证、提交并推送当前 Git 工作区改动；固定采用 Luna 机械审计、Terra 默认编排与执行、Sol 高风险裁决的三级路由，并把 stage / commit / push / 历史改写分开授权。
+- `git-cloud-submit`：盘点、分批、验证、提交并推送当前 Git 工作区改动；固定采用 Luna 机械审计、Terra 默认编排与执行、Sol 高风险裁决的三级路由，并把 stage / commit / push / 历史改写分开授权。多远端或跨端续做时追加 handoff completeness Gate，区分 Git 真源、运行中、可复现、已外部同步、秘密渠道与可丢弃状态。
 - `reply-image-context`、`svg-to-png`：图像与资产辅助小工具。
 
 ## game-studio 导入技能（按需查阅）

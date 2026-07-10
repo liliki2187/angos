@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0",
+  "allow_active": true,
+  "active_authorization": "用户在 2026-07-10 明确允许当前仍在运行的内容暂留本机，同时要求其余已完成内容按新工作流同步两个远端。",
+  "target_remotes": [
+    {
+      "name": "origin",
+      "branch": "main"
+    },
+    {
+      "name": "daydreamer",
+      "branch": "main"
+    }
+  ],
+  "entries": [
+    {
+      "pattern": "docs/screenshots/2026-06-24-world-map-benchmark-landing/278-*",
+      "classification": "DISPOSABLE",
+      "reason": "A166 下的历史过程验收截图修改，不是当前规则、标杆或资产真源；远端保留原已跟踪版本即可。",
+      "evidence": "docs/design-decisions/process-and-research-decisions.md#A166"
+    },
+    {
+      "pattern": "docs/screenshots/2026-06-24-world-map-benchmark-landing/279-*",
+      "classification": "DISPOSABLE",
+      "reason": "A166 下的历史过程验收截图修改，不是当前规则、标杆或资产真源；远端保留原已跟踪版本即可。",
+      "evidence": "docs/design-decisions/process-and-research-decisions.md#A166"
+    },
+    {
+      "pattern": "docs/screenshots/2026-06-24-world-map-benchmark-landing/280-*",
+      "classification": "DISPOSABLE",
+      "reason": "A166 下的历史过程验收截图修改，不是当前规则、标杆或资产真源；远端保留原已跟踪版本即可。",
+      "evidence": "docs/design-decisions/process-and-research-decisions.md#A166"
+    },
+    {
+      "pattern": "docs/screenshots/2026-06-24-world-map-benchmark-landing/281-*",
+      "classification": "DISPOSABLE",
+      "reason": "A166 下的历史过程验收截图修改，不是当前规则、标杆或资产真源；远端保留原已跟踪版本即可。",
+      "evidence": "docs/design-decisions/process-and-research-decisions.md#A166"
+    },
+    {
+      "pattern": "docs/plans/world-map-benchmark-landing/STATUS.md",
+      "classification": "ACTIVE",
+      "reason": "WMW 左卡 B2.9 资产线仍在运行并持续更新状态。",
+      "evidence": "当前工作区在本次审计期间继续出现同线文件。"
+    },
+    {
+      "pattern": "docs/plans/world-map-benchmark-landing/2026-07-10-world-map-wmw-left-card-b2-9-*",
+      "classification": "ACTIVE",
+      "reason": "WMW 左卡 B2.9 的评审和 Loop 记录仍在生成。",
+      "evidence": "当前工作区在本次审计期间继续出现同线文件。"
+    },
+    {
+      "pattern": "docs/workflows/wmw-hollow-shell-photo-pipeline.md",
+      "classification": "ACTIVE",
+      "reason": "WMW 左卡 B2.9 的执行规程仍在同步修订。",
+      "evidence": "当前工作区在本次审计期间继续出现同线文件。"
+    },
+    {
+      "pattern": "gd_project/tests/capture_world_map_wmw_left_card_runtime_v09.gd",
+      "classification": "ACTIVE",
+      "reason": "WMW 左卡 B2.9 运行截图脚本仍在迭代。",
+      "evidence": "当前工作区在本次审计期间继续出现同线文件。"
+    },
+    {
+      "pattern": "scripts/run_wmw_godot_capture_v09.ps1",
+      "classification": "ACTIVE",
+      "reason": "WMW 左卡 B2.9 运行入口仍在迭代。",
+      "evidence": "当前工作区在本次审计期间继续出现同线文件。"
+    },
+    {
+      "pattern": "scripts/ui-contracts/wmw/wmw_v0915_left_card_b29_no_inpaint_badge_pipeline.py",
+      "classification": "ACTIVE",
+      "reason": "WMW 左卡 B2.9 生产管线仍在迭代。",
+      "evidence": "当前工作区在本次审计期间继续出现同线文件。"
+    },
+    {
+      "pattern": "gd_project/Assets/ui/angus_packaging/world_map/wmw_v09_left_card_slice/ingredients/left_region_card_b29_*",
+      "classification": "ACTIVE",
+      "reason": "WMW 左卡 B2.9 配料资源仍由运行中的管线生成。",
+      "evidence": "当前工作区在本次审计期间继续出现同线文件。"
+    },
+    {
+      "pattern": "gd_project/Assets/ui/angus_packaging/world_map/wmw_v09_left_card_slice/left_region_card_b29_*",
+      "classification": "ACTIVE",
+      "reason": "WMW 左卡 B2.9 atlas 与 manifest 仍由运行中的管线生成。",
+      "evidence": "当前工作区在本次审计期间继续出现同线文件。"
+    }
+  ]
+}

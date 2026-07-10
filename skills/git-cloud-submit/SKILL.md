@@ -1,11 +1,11 @@
 ---
 name: git-cloud-submit
-description: 审计、分批、验证、提交并推送 Git 工作区改动到远端，按 GPT-5.6 Luna、Terra、Sol 分配机械盘点、常规判断和高风险裁决。用户提出“提交未提交资源”“同步云端”“stage/commit/push 当前改动”“整理脏工作区后上传”等请求时使用；也用于只读评估当前改动是否适合提交。
+description: 审计、分批、验证、提交并推送 Git 工作区改动到一个或多个远端，并检查跨端交接是否完整；按 GPT-5.6 Luna、Terra、Sol 分配机械盘点、常规判断和高风险裁决。用户提出“提交未提交资源”“同步云端”“多远端同步”“另一端无缝衔接”“stage/commit/push 当前改动”“整理脏工作区后上传”等请求时使用；也用于只读评估当前改动是否适合提交或是否仍有仅存本机的必需内容。
 ---
 
 # Git 云端提交
 
-把一次云端提交拆成可审计的阶段。默认由 Terra 负责整单，Luna 只做确定性只读工作，Sol 只处理会改变风险结论的裁决。
+把一次云端提交拆成可审计的阶段。默认由 Terra 负责整单，Luna 只做确定性只读工作，Sol 只处理会改变风险结论的裁决。把“不进 Git”与“不做同步”分开：只有 Git 真源、外部交接物、可复现状态、秘密渠道和可丢弃状态都已说明时，才能声称跨端交接完整。
 
 ## 先冻结权限边界
 
@@ -35,6 +35,14 @@ description: 审计、分批、验证、提交并推送 Git 工作区改动到�
 powershell -ExecutionPolicy Bypass -File skills/git-cloud-submit/scripts/audit_git_submit.ps1 -Format Text
 ```
 
+多远端或跨任务交接时传入目标远端和 handoff manifest：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File skills/git-cloud-submit/scripts/audit_git_submit.ps1 `
+  -Format Text -RemoteNames origin,daydreamer `
+  -HandoffManifest docs/handoff/current-git-sync.json
+```
+
 需要机器可读结果时使用 `-Format Json`。脚本只读取 Git 和文件元数据，不读取或显示疑似密钥文件内容。
 
 把以下任一结果视为停止信号：
@@ -48,13 +56,27 @@ powershell -ExecutionPolicy Bypass -File skills/git-cloud-submit/scripts/audit_g
 
 脚本的 `review` 标记只表示进入 Terra 复核，不自动触发 Sol。`MANY_UNTRACKED`、`BINARY_WITHOUT_LFS`、`MIXED_TOP_LEVEL`、`DELETIONS` 或 `PRIMARY_BRANCH` 单独出现时仍由 Terra 处理；只有 Terra 复核后确认存在下节所列实际高风险取舍，才升级 Sol。脚本的 `block` 标记表示停止写操作，也不等于“换成 Sol 就可以继续”。
 
+## 交接完整性 Gate
+
+在暂存前读取 [交接完整性规则](references/handoff-completeness.md)，把每个未入本次 Git 提交、但与当前工作区有关的路径归为 `ACTIVE`、`REPRODUCIBLE`、`EXTERNALIZED`、`SECRET`、`DISPOSABLE` 或 `LOCAL_ONLY_REQUIRED`。未分类路径阻断提交回执；`LOCAL_ONLY_REQUIRED` 阻断跨端交接；`ACTIVE` 只有在用户明确允许继续运行中的内容暂留本机时才允许随本次提交保留。
+
+只在以下条件全部成立时写“无缝交接完成”：
+
+- staged diff 覆盖全部 Git 真源；
+- 没有 `UNKNOWN`、`LOCAL_ONLY_REQUIRED` 或缺失证据的分类；
+- 没有 `ACTIVE`；若用户允许 active exception，只能写“提交完成，仍有运行中内容”，不能写“无缝交接完成”；
+- `REPRODUCIBLE` 有版本、输入和复现命令，`EXTERNALIZED` 有外部位置与校验指针，`SECRET` 有安全交接说明；
+- 所有目标远端都已 fetch，且目标分支是 HEAD 的祖先，可非强制快进。
+
 ## 阶段 B：冻结提交清单
 
 按 [提交清单模板](references/submission-manifest.md) 输出清单。至少写清：
 
 - 目标 remote、branch 与 upstream；
 - 每个批次的目的、精确 include / exclude 路径、验证命令和 commit message；
+- 每个目标 remote / branch 的 URL、ahead / behind、快进关系与 push 授权；
 - 删除、重命名、生成物、归档、图片 / 音视频、代码、GDD / 设计决策是否混批；
+- 所有未提交项的 handoff 分类、原因和证据；
 - `stage / commit / push` 各自是否已获授权；
 - 当前模型路由，以及是否命中 Sol 升级条件。
 
@@ -62,7 +84,7 @@ powershell -ExecutionPolicy Bypass -File skills/git-cloud-submit/scripts/audit_g
 
 Angus 特有规则：
 
-- `docs/screenshots/**` 的过程截图默认不入库；真源例外必须按截图指引显式 `git add -f` 并确认引用关系。
+- `docs/screenshots/**` 的过程截图默认不入库；真源例外必须按截图指引显式 `git add -f` 并确认引用关系。若另一端继续工作必须看到某张过程证据，则它不能只留本机：应标为 `EXTERNALIZED` 并记录位置，或提升为真源例外入库。
 - 玩法 / 规则 / 常量改动必须检查 `design/gdd/` 与实现是否同步；不一致时显式提醒用户选择修正文档或实现。
 - `_obsolete/` 只收明确废弃材料；每个新增归档目录要有说明废弃原因的 README。
 - 不把本任务新建的提交技能与工作区内其它用户改动无条件混成一个 commit。
@@ -88,8 +110,8 @@ Sol 只返回裁决与修订后的提交清单。仍由 Terra 在用户授权范
 3. 运行与该批次风险相称的测试。资源批至少验证 manifest / 引用 / 导入关系；代码批运行相关测试；文档批检查链接和真源同步。
 4. staged diff 与清单不一致时取消该批次继续执行并上报；不得自行扩大 include。
 5. 提交后再次读取 `git status --short` 和 `git log -1 --oneline`。
-6. 只有用户明确要求推送时，核对 remote URL、目标 branch、upstream 与 ahead / behind，再执行非 force push。
-7. push 后核对本地 HEAD 与对应远端跟踪引用。无法验证远端引用时，只报告“push 命令成功”，不得声称远端内容已完整验收。
+6. 只有用户明确要求推送时，逐个 fetch 并核对目标 remote URL、branch、跟踪引用、ahead / behind 与快进关系，再执行非 force push。一个远端成功不代表其余远端成功。
+7. push 后逐个 fetch 或读取更新后的远端跟踪引用，核对本地 HEAD 与每个目标远端分支。无法验证某个远端引用时，只报告该远端“push 命令成功”，不得声称多远端或交接内容已完整验收。
 
 ## 运行时能力回退
 
@@ -108,5 +130,6 @@ Sol 只返回裁决与修订后的提交清单。仍由 Terra 在用户授权范
 - 实际采用的模型路由与是否发生升级；
 - 每个 commit 的哈希、主题和验证结果；
 - push 的 remote / branch 与核验结果；
-- 仍未提交、被排除或需要用户裁决的内容；
+- 仍未提交、被排除或需要用户裁决的内容，以及对应的 handoff 分类；
+- `submission_ready` 与 `seamless_ready` 必须分开报告；存在用户已允许的 `ACTIVE` 时，前者可以通过，后者必须为否；
 - 若只完成审计或暂存，明确停在哪一阶段。
