@@ -1,6 +1,6 @@
 # 设计采纳分册：待定、进阶与备查机制库
 
-> 主索引：[`../设计采纳记录.md`](../设计采纳记录.md)。拆分前全文归档：[`archive-raw-adoption-log.md`](archive-raw-adoption-log.md)。
+> 主索引：[`../设计采纳记录.md`](../设计采纳记录.md)。拆分前全文归档：`_obsolete/design-decisions-archive/archive-raw-adoption-log.md`（仅历史考证用）。
 > 新增 / 修订时先更新主索引，再把完整条目写入本分册；跨领域内容必须在主索引补 cross-read tags。
 
 ## 收录范围

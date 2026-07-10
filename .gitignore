@@ -46,6 +46,13 @@ artifacts/
 image_gen/
 docs/screenshots/**/*.wav
 
+# Screenshots: 过程截图不入 git（2026-07-08 治理，A166）。
+# 背景：截图已达 1.8GB / 2394 文件，git 历史 2.9GB，且随截图交付硬规则持续增长。
+# 已被 git 跟踪的历史截图不受影响（gitignore 只拦未跟踪文件）。
+# 例外约定：被规则文档引用为真源 / 标杆 / 校色尺 / 合同证据的关键图，
+# 用 `git add -f <路径>` 显式入库，并在引用文档处注明；详见 docs/onboarding/功能改动截图指引.md §10。
+docs/screenshots/**
+
 # Optional: if you add Node later
 node_modules/
 skills/claude-to-im/dist/

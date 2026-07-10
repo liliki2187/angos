@@ -76,6 +76,36 @@ powershell -ExecutionPolicy Bypass -File scripts/run_weekly_run_smoke_tests.ps1 
   -GodotPath tools/godot/4.6.2-stable/Godot_v4.6.2-stable_win64_console.exe
 ```
 
+### UI 截图 / capture 脚本
+
+逻辑测试、manifest 校验可以继续用 `--headless`：
+
+```powershell
+tools/godot/4.6.2-stable/Godot_v4.6.2-stable_win64_console.exe --headless --path gd_project -s res://tests/test_world_map_imagegen_v6_manifest.gd
+```
+
+**UI 截图脚本不要用 `--headless`**。Godot 4.6 在 headless 下使用 dummy renderer，`root.get_texture()` 与 `SubViewport.get_texture()` 都会返回 null。
+
+推荐 windowed + OpenGL3：
+
+```powershell
+tools/godot/4.6.2-stable/Godot_v4.6.2-stable_win64_console.exe `
+  --path gd_project `
+  --resolution 1920x1080 `
+  --windowed `
+  --audio-driver Dummy `
+  --rendering-driver opengl3 `
+  -s res://tests/capture_world_map_wmw_left_card_runtime_v09.gd
+```
+
+WMW 左卡 v0.9 推荐直接跑：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/run_wmw_godot_capture_v09.ps1
+```
+
+最小复现：`gd_project/tests/godot_capture_minimal_repro.gd`
+
 ## 禁止事项
 
 - 不要把 `E:\angus\tools\godot-4.3` 这类外部目录继续当作默认运行时真源。

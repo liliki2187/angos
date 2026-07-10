@@ -1,5 +1,12 @@
 # Lightweight workflow gate table for Angus.
 # This file is intentionally simple so it can become script input later.
+#
+# 真源分工（2026-07-08 起）：
+# - 本文件是产物类型（artifact_types）、阶段跳转（stage_transitions）与 hard gate 的机器可读真源。
+# - docs/onboarding/assetized-ui-production-chain.md 负责资产化 UI 的操作细则与解释。
+# - docs/workflows/angus-workflow-harness.md 负责风险分级、回复格式与 loop 生命周期。
+# - docs/workflows/ui-geometry-and-text-safety-gates.md 负责几何 / 正交 / 文字安全的统一阈值。
+# - 新增或修改 gate 必须同时落本文件与对应文档，只落一处视为未生效。
 
 risk_levels:
   tiny:
@@ -15,6 +22,9 @@ risk_levels:
       - human_brief
       - router_card
       - task_specific_validation
+      # trial 2026-07-08（A165 二次复发升级律配套）：交付前三问
+      # 1 产物诚实（F1）2 范围一致（F3）3 同类扫描（F4），详见 harness Level 1
+      - pre_delivery_three_questions
   risky:
     default_required:
       - decision_strip
@@ -127,6 +137,9 @@ loop_log_contract:
     - trigger_source
     - original_problem
     - failure_cause
+    # trial 2026-07-08（A165）：先查 guidance §7.0 错误家族索引做复发判定；
+    # 同族第二次复发时沉淀判断必须按 harness §5.2 升级防线，不得只补文档规则。
+    - recurrence_check
     - current_handling
     - recurrence_protection
     - sedimentation_decision
@@ -203,6 +216,44 @@ artifact_types:
     cannot_claim:
       - manifest_source
       - runtime_background
+  component_aspect_taxonomy:
+    proves:
+      - role_based_shape_families
+      - square_permission_per_role
+    cannot_claim:
+      - class_contract
+      - cuttable_assets
+      - production_candidate
+  component_class_contract:
+    proves:
+      - normalized_export_size_and_slots
+      - state_skins_share_geometry
+      - resolution_and_export_scale_declared
+    cannot_claim:
+      - final_art
+      - atlas_ready
+      - runtime_pass
+  full_screen_reinsert_proof:
+    proves:
+      - class_fits_full_page_layout
+      - no_overlap_with_reserved_zones
+    cannot_claim:
+      - visual_acceptance
+      - production_candidate
+  text_capacity_stress:
+    proves:
+      - fields_fit_normal_and_stress_copy
+    cannot_claim:
+      - final_typography
+      - final_font_metrics
+  vertical_slice_proof:
+    proves:
+      - one_class_full_chain_from_art_to_engine
+      - art_production_can_obey_contract
+      - manifest_to_engine_binding_works
+    cannot_claim:
+      - full_page_production_pass
+      - all_states_covered
   no_text_asset_master:
     proves:
       - dynamic_text_slots
@@ -253,6 +304,7 @@ stage_transitions:
     allowed_next:
       - color_contract
       - no_text_style_draft
+      - component_aspect_taxonomy
       - lightweight_content_contract
     forbidden_next:
       - atlas
@@ -260,6 +312,7 @@ stage_transitions:
       - production_candidate
   color_locked_style_draft:
     allowed_next:
+      - component_aspect_taxonomy
       - lightweight_content_contract
       - filled_state_text_mock
     forbidden_next:
@@ -268,11 +321,39 @@ stage_transitions:
       - production_candidate
   no_text_style_draft:
     allowed_next:
+      - component_aspect_taxonomy
       - lightweight_content_contract
       - filled_state_text_mock
     forbidden_next:
       - runtime_background
       - manifest
+      - production_candidate
+  component_aspect_taxonomy:
+    allowed_next:
+      - page_contract_board
+    forbidden_next:
+      - clean_sprite_brief
+      - atlas
+      - manifest
+      - production_candidate
+  # page_contract_board 是批处理阶段：同页全部主 class 在一轮内完成
+  # 量测、归一、整屏回填、文案压力，用户裁决一次过整板。
+  page_contract_board:
+    allowed_next:
+      - vertical_slice
+      - light_contract_parallel_completion
+    forbidden_next:
+      - full_page_clean_sprite_production_before_vertical_slice
+      - atlas
+      - production_candidate
+  # vertical_slice 是风险前置阶段：先用 1 个已锁 class 打通
+  # 无字素材 -> gate -> 切图 -> Godot 单组件 -> 运行截图。
+  vertical_slice:
+    allowed_next:
+      - clean_sprite_brief_batch
+      - contract_revision_with_version_bump
+      - godot_debug_lookup
+    forbidden_next:
       - production_candidate
   filled_state_text_mock:
     allowed_next:
@@ -306,13 +387,19 @@ hard_gates:
       - functional_partition_table
       - information_capacity_table
       - longest_copy_cases
+      - component_aspect_taxonomy
+      - page_contract_board_with_resolution_and_export_scale
+      - full_screen_reinsert_proof
+      - frozen_vs_provisional_field_split
+      - vertical_slice_before_batch_sprite_production
       - content_rects
       - no_text_rects
       - hit_rects
       - ui_geometry_gate
-      - filled_state_text_mock
+      - filled_state_mock_or_layered_refill_preview
       - ui_ux_art_review
       - runtime_target_comparison
+      - status_md_updated_each_round
     blockers:
       - logic_smoke_claimed_as_visual_acceptance
       - safe_zone_claimed_as_formal_ui_quality
@@ -321,6 +408,14 @@ hard_gates:
       - information_bearing_surface_tilted
       - cta_or_text_slot_skewed
       - orthogonal_claim_without_local_crops_or_guides
+      - square_component_defining_non_badge_roles
+      - per_component_serial_contract_rounds_instead_of_page_board
+      - contract_frozen_without_full_screen_reinsert
+      - contract_missing_resolution_or_export_scale
+      - batch_sprite_production_before_vertical_slice
+      - art_output_silently_changing_frozen_contract_fields
+      - evidence_script_referenced_from_tmp
+      - review_doc_not_in_chinese
   image_color:
     required:
       - unique_reference_image
@@ -474,3 +569,18 @@ hard_gates:
       - exact_gui_exe_exits_nonzero
       - exact_gui_exe_hangs_or_modal_crash_dialog
       - headless_smoke_used_as_gui_crash_proof
+
+# gate 生命周期（2026-07-08 起）：防止 gate 只增不减导致流程僵化。
+gate_lifecycle:
+  new_gate_default_status: trial
+  promotion_condition: survives_one_full_asset_line_or_two_weeks
+  consolidation_trigger:
+    - asset_line_completed
+    - every_two_weeks
+  consolidation_actions:
+    - merge_duplicate_gates
+    - mark_superseded_rules
+    - narrow_overly_broad_triggers
+    - retire_gates_with_no_recent_catches
+  sync_rule: gate_changes_must_land_in_yaml_and_owning_doc_together
+  batching_rule: same_page_same_kind_work_merges_into_one_board_one_decision

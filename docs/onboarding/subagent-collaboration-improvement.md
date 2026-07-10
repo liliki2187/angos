@@ -2,7 +2,7 @@
 
 > **用途**：规定父级 Codex 如何和 `game_producer`、`game_sys_architect`、`game_numerical`、`game_logic_check`、`ux_laoge`、`ui_designer`、`angus_art_director`、`angus_character_pixel_director`、`steam_indie_appraiser` 等项目级 subagent 协作，并把实战经验沉淀成可复用知识，而不是把核心文档越写越臃肿。
 > **定位**：这是项目级协作规则，不是某个 subagent 的自身 prompt。
-> **最后更新**：2026-06-15
+> **最后更新**：2026-07-08（新增 §8 冷备冻结与解冻提醒）
 
 ---
 
@@ -16,6 +16,7 @@ subagent 成长只允许按层沉淀，不把普通案例直接塞进核心规�
 - **重复出现的模式**：先在 casebook 里累计，至少 3 次以上稳定出现，再提炼成 `references/patterns.md` 或对应方法论文档。
 - **用户明确采纳 / 撤回 / 待定**：先写入 `docs/设计采纳记录.md` 总索引，再按索引路由写入 `docs/design-decisions/` 对应分册。该文档记录用户决策，不替代规格文档；跨领域意见必须补 cross-read tags，避免后续只读单一分册而漏掉 UI / 机制 / 美术 / 流程上下文。
 - **Codex Desktop 注册壳**：`.codex/agents/*.toml` 只保留短启动壳，不承载完整中文规程、案例库或 references 清单。
+- **沉淀去重律（2026-07-08 起）**：同一条经验只允许一个主承载位（全文），其他位置只准短引用 + 链接；写入前先 `rg` 查重，命中就更新原条目而不是新开日期补丁或在别处重写全文。完整规则见 `docs/workflows/angus-workflow-harness.md` §7.1。
 
 ## 2. 父级 Codex 的角色
 
@@ -265,3 +266,42 @@ casebook 每条只记录可迁移的短经验，禁止写成长篇复盘。推�
 - Angus Character Pixel Director：`skills/angus-character-pixel-director/references/casebook/`
 
 后续每次有值得复用的实战判断，优先补一条 casebook。只有达到升级门槛，再改 `SKILL.md`、方法论文档或 `AGENTS.md`。
+
+## 8. 冷备冻结与解冻提醒（2026-07-08 起）
+
+### 冻结状态表
+
+2026-07-08 的 agent 体系评审确认：以下四个 subagent 自导入（2026-06-05）以来在 onboarding 路由文档之外没有真实使用记录，转入冷备冻结。
+
+| Agent | 状态 | 冻结日期 | 解冻日期 |
+| --- | --- | --- | --- |
+| `game_producer` | 冷备冻结 | 2026-07-08 | — |
+| `game_sys_architect` | 冷备冻结 | 2026-07-08 | — |
+| `game_numerical` | 冷备冻结 | 2026-07-08 | — |
+| `game_logic_check` | 冷备冻结 | 2026-07-08 | — |
+
+### 冻结含义
+
+- 保留 `.codex/agents/*.toml` 注册壳与 `skills/` 技能目录，随时可用。
+- 用户显式触发词（`@制作人`、`@系统架构`、`@数值策划`、`@逻辑审查`）调用时仍正常执行，不需要先走解冻流程；但 AI 应在执行时顺带提醒该 agent 处于冷备，并询问是否正式解冻。
+- 冻结期间不再为这四个 agent 投入维护：不新增规则、不扩写 SKILL.md、不补 references / casebook、不做能力校准。
+- AI 不主动 spawn 它们参与常规任务链路（UI 双 agent 链、美术守门链等不受影响）。
+
+### 解冻提醒义务（硬规则）
+
+用户明确表示自己无法判断解冻时机，且可能忘记冻结这件事。因此 AI（父级 Codex / 任何后续会话）在任务中识别到下列价值窗口时，**必须当场主动提醒用户**，不得默默替代该 agent 职责而不提醒，也不得等用户自己想起：
+
+| 冷备 agent | 解冻触发条件（命中任一即提醒） |
+| --- | --- |
+| `game_producer` | 用户讨论要不要做某个大功能、立项 / 砍范围 / 里程碑 / 熔断、项目方向变化；或 AI 自检发现范围膨胀、工期风险、系统增殖失控迹象 |
+| `game_sys_architect` | 要新增玩法系统或长期玩法层、准备更新 `design/gdd/systems-index.md`、多系统耦合冲突、资源流产消不清 |
+| `game_numerical` | 玩法数值调校启动：达标率、概率校准、任务目标值、黑骰反噬、周压力、发刊结算数值、势力 / 宏观属性参数、配表或平衡验证 |
+| `game_logic_check` | 规则 / 状态机 / 配表 / 剧情时间线成形并准备实现前；或原型出现重复结算、流程卡死、exploit、状态永久锁死类问题 |
+
+提醒格式：一句话说明命中了哪个触发条件 + 建议解冻哪个 agent + 不解冻时的替代方案（通常是父级在当前线程按对应 `SKILL.md` 执行同等流程，但不做能力沉淀）。是否解冻由用户决定；用户未回应时按替代方案继续当前任务，不算解冻。
+
+### 解冻流程
+
+1. 用户明确同意解冻后，更新本节冻结状态表（填解冻日期）。
+2. 同步修订 `AGENTS.md` 的「冷备 subagent 冻结与解冻提醒顶层规则」条目，把该 agent 从冷备名单移除。
+3. 恢复该 agent 的正常维护投入；首次实战使用后按 §4 格式补一条 casebook，再按 §5 门槛决定是否校准 SKILL.md。

@@ -1,6 +1,6 @@
 # 设计采纳分册：UI/UX 与资产化界面
 
-> 主索引：[`../设计采纳记录.md`](../设计采纳记录.md)。拆分前全文归档：[`archive-raw-adoption-log.md`](archive-raw-adoption-log.md)。
+> 主索引：[`../设计采纳记录.md`](../设计采纳记录.md)。拆分前全文归档：`_obsolete/design-decisions-archive/archive-raw-adoption-log.md`（仅历史考证用）。
 > 新增 / 修订时先更新主索引，再把完整条目写入本分册；跨领域内容必须在主索引补 cross-read tags。
 
 ## 收录范围
@@ -789,3 +789,39 @@
 - **应用范围**：世界地图、地区界面、任务派遣 / 签批台、发刊、票据、按钮、任务卡、地图 pin、ticker、日程器和所有 bitmap / 生图 / 拟物 UI 中承载动态文字的组件。先做组件合同，合同过了再回填整屏；不得把整屏生图中的偶然对齐当成生产规则。
 - **当前产物**：v0.89 当前正确效果为 `docs/screenshots/2026-06-24-world-map-benchmark-landing/223-world-map-wmw-component-carrier-contract-v10-v0-89.png`，manifest 为 `224-world-map-wmw-component-carrier-contract-v10-v0-89.json`，100% 复核裁切为 `225`、`226`、`227`、`228` 四张 crop。它是下一步世界地图真实内容回填的组件承载合同，不是最终整屏世界地图成品。
 - **状态**：已采纳为资产化 UI 图文落地硬门槛，并同步到 `docs/onboarding/assetized-ui-production-chain.md`、`docs/onboarding/ui-interaction-guidelines.md`、`docs/onboarding/ai-collaboration-guidance.md` 与 WMW 支线美术合同。后续类似任务若跳过真实颜色模块分割，或用 safe-zone / overlay pass 冒充 UI 通过，应判定为流程回退。
+
+### A170. WMW 左侧地区卡采纳候选 B 方向并进入 B1 局部美术微调（原误编 A164，2026-07-09 改号，与流程册 A164 撞号）
+
+- **来源**：2026-07-08 WMW `left_region_card` 候选 B 纵向切片复审后用户裁决。用户明确接受候选 B 的方向，进入局部美术微调；不回 brief 重摇生图。裁决依据为 `docs/plans/world-map-benchmark-landing/2026-07-08-world-map-wmw-left-card-candidate-b-text-fit-and-review.md` 中的 392 复审板差异点与 UX 老哥 P1/P2。
+- **机制 / 原则**：候选 B 证明 `left_region_card` 的无字壳、四状态同构、正交功能面、2x atlas、Python 回填和 Godot 单组件截图链路已经成立；下一步不是推翻方向，而是在不改变 `left_region_card.json` v0.8.2 frozen 合同的前提下，把它推进到 B1 局部美术微调版。微调目标是减薄卡片外框、清理非 selected 的绿色残边、增强 `photo_slot` 地区暗示、提高 warning 三角红色显著性，同时保持无字、无假字、功能面正交、四状态同构和 204x160 外形比例。
+- **运行时边界**：`label_title` 与 `meta_status` 属于运行时字体 / 字号 / 墨色 token，不烘焙进素材，也不通过扩大或移动 `label_plate`、`meta_line` 等 frozen 槽位解决。`meta_line` 可读性改善优先走短文案 token、墨色加深和 19px 上限内的字体调整；若未来必须改槽位，需显式升合同版本并重跑整屏回填。
+- **验收链路**：B1 必须重新走完整纵向切片：真实生图 / 局部编辑候选 B1 → 几何 QA → 2x atlas → Python 回填预览 → Godot windowed opengl3 单组件截图与 QA → manifest → STATUS 更新。几何比例 gate 不得通过压缩 / 裁切凑比例；UI 截图不得使用 headless；截图生成后必须做非黑 / 颜色多样性程序校验和肉眼确认。
+- **状态**：已采纳为 WMW 左侧地区卡 v0.9.2 / B1 的推进口径。B 方向被接受，但 B 与 B1 均不自动升级为冻结生产资源；只有 B1 通过上述完整切片并经用户确认后，才能继续讨论批量生产其它 class。
+
+### A168. 含图片槽资产采用“矩形照片底层 + 镂空框体上层 + 运行时文字”结构
+
+- **来源**：2026-07-09 WMW `left_region_card` B2 视觉拒收后的结构裁决。用户明确拍板：左卡拼装改为三层 z 序结构，底层是普通矩形地区照片，上层是镂空框体，运行时再叠中文文字；照片不承担右缘、下缘或地球圆弧边界。
+- **问题背景**：B2 失败证明 `left_region_card` 的照片窗口不是简单矩形：左上被地球徽章啃出圆弧，右缘 / 下缘也与合同 `photo_slot` 存在可见窗口差异。矩形照片若被裁进合同槽，必然露出旧图、底板或接缝；若继续把照片裁成弧形 / 窗口形状，又会回到坐标补丁与像素手术。
+- **机制 / 原则**：后续含图片槽的资产默认采用 `photo_rect underlay -> hollow_frame_skin -> runtime_text`。照片只是一张 cover 铺满窗口外接矩形的内容层，允许向右 / 向下溢出；所有不规则边界、遮挡、纸签底板、地球徽章、action badge、框唇和状态皮肤都属于上层镂空框体。照片层禁止做形状裁切、弧形裁切、窗口 mask 或为了贴合边界而压缩 / 裁切凑比例。
+- **运行时结构**：未来 Godot 正式实现应与该结构一致：地区照片是地区内容节点，框体是状态皮肤节点，中文 label / meta 是运行时文字节点。本轮 B2.1 先烘焙合成 2x atlas 以验证视觉与 gate，不改变现有运行时代码结构，也不修改 `design/ui-contracts/world-map/` frozen 字段。
+- **验收 gate**：镂空框体必须通过旧图签名扫描，窗口区域旧夜空像素命中数为 0；合成后卡体轮廓内 alpha 100% 不透明；地球圆弧下方、窗口右缘、窗口下缘必须提供 200% 放大目检截图，确认无旧图带、无色带、无缝隙、无重影；Godot windowed 截图必须通过非黑与颜色多样性校验。
+- **应用范围**：WMW `left_region_card` B2.1 立即执行；后续 `right_dossier_page`、地图 pin 预览、地区界面照片槽、任务证据图槽等含图片窗口的 assetized UI class，应优先沿用同一分层结构，再按各自合同定义尺寸、状态和运行时文字。
+- **状态**：已采纳为含图片槽资产的结构规则；当前落地对象为 B2.1（v0.9.7）。B2.1 通过三处放大目检和 Godot 截图前，不得写入 STATUS 或 manifest 为视觉通过。
+- **已修订（2026-07-09 · A172）**：三层结构中"运行时文字"扩展为"运行时文字 + 状态图标"——badge 字形不再烘焙进壳，详见 A172。
+
+### A172. 状态语义图标归运行时层：badge 字形不烘焙不贴换，壳保留干净底盘
+
+- **来源**：2026-07-09 WMW `left_region_card` B2.5 复审后的止损裁决。badge 烘焙字形贴换连续三轮失败（B2.3 坐标贴片双环 → B2.4 矩形裁片错色 → B2.5 形状贴片未清母版旧字形导致新旧字形交叠），同时 B2.5 地球贴片夹带母版旧照片像素、随状态换色染色后骗过颜色签名扫描。按止损规则停止修补，AI 提出两个结构方案，用户裁决："走方案 A"。
+- **核心规则**：承载状态语义的字形（勾 / 靶心 / 警示三角 / 锁等）不烘焙进壳 atlas、不做派生贴换，一律作为独立图标小图由运行时（Godot / HTML）绘制进 `icon_badge` / `action_badge` 槽。壳的 badge 底盘保持干净：母版原字形一次性清空（清理覆盖抗锯齿与阴影残留），底盘内芯随状态换色，由 `badge_state_color_consistency` gate 校验。
+- **原则依据**：图标是状态语义，与动态文字同属运行时层；此前"图标单轨制选烘焙"是在双轨叠画背景下的决定，改为"只走运行时"仍满足单轨制。"从压平图抠配料再贴回"的派生方式被判定为结构性不可靠，整类缺陷随本裁决从结构上消失。
+- **配套规则**：仍需烘焙的静态装饰贴片（如全状态共用的地球徽章）走配料级验收——纯度 gate（`ingredient_purity`）+ 一次性 400% 目检后冻结，合成只准使用已冻结配料；颜色签名类残留扫描必须在状态换色前执行。
+- **应用范围**：WMW `left_region_card` B2.6 起立即执行；后续所有含状态图标的 assetized UI class（dossier 状态章、票据状态、地图 pin 状态等）默认沿用"壳干净底盘 + 运行时图标"结构。
+- **状态**：已采纳为正式产线规则，主承载位为 `docs/onboarding/assetized-ui-production-chain.md` §5.3 与 gates 文档 §5.1。
+
+### A174. WMW 左卡状态徽章回归标杆位置并明确为非独立按钮；纯照片、地球线稿与完整状态字形必须分源
+
+- **来源**：2026-07-10 用户复核 B2.7 / 507 Godot 截图，指出欧洲灰域右下状态徽章过于贴近右框、靶心字形被截断，左上地球下方仍有旧圆章月牙残留。父级 Codex 拆层后确认：B2.7 把冻结 `action_badge` 槽误当成装饰外环 bbox；四个 runtime icon 都从合同左边界 `x=316` 起裁，源字形已被切断；照片层又从 428 压平 atlas 裁取，夹带原地球圆章下缘。用户随后明确要求按该结构方案修复。
+- **交互语义**：右下徽章正式定义为“地区状态徽章”，不是独立按钮。整张 `left_region_card` 的 `hit_rect` 负责地区选择；徽章只显示 `selected / available / warning / locked`。`selected` 表示当前右侧 dossier 所属地区，`available` 表示可选择，`warning` 表示可选择但有风险，`locked` 表示不可进入；真正进入地区仍由右侧主 CTA 执行。代码字段可继续使用 `action_badge`，产品与评审文案统一称“状态徽章”。
+- **几何裁决**：卡体 `204x160`、四卡位置、照片 / 文字槽与整卡 hit rect 均不变；状态徽章回归候选 B 标杆视觉中心约 `(166,123)`，合同显式升版并把 `action_badge` 修订为 `[144,101,44,44]`。不得再用“严格对齐旧错误槽位”替代标杆右边距验收；必须测外环到真实右框唇的视觉 gutter。
+- **配料裁决**：状态字形继续遵守 A172，只在运行时层出现，但必须从完整源形状提取，输出带透明 padding，禁止任何非透明像素触碰配料边界；增加形状完整性和内芯光学边距 gate。左上地球只允许独立米白线稿及必要抗锯齿；地区照片必须来自 396 等纯场景区域，禁止再从 428 这类含地球 / 框体的压平 atlas 裁取。
+- **状态**：已采纳，B2.8 起执行。该裁决允许显式修改 `left_region_card` 的 frozen `action_badge` 并升合同版本，但不允许修改卡尺寸或其它 frozen 槽位；修改后必须重跑合同校验、整屏回填、Python / Godot windowed 截图和全部视觉 gate。

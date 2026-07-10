@@ -19,4 +19,4 @@
 | `art-direction-decisions.md` | 美术方向、像素 / 半调 / 印刷材质、角色风格与美术守门 |
 | `process-and-research-decisions.md` | 流程、研究、subagent、采纳记录维护与跨分类检索规则 |
 | `backlog-and-deferred.md` | 待定、进阶、备查机制库 |
-| `archive-raw-adoption-log.md` | 2026-06-15 拆分前全文归档，不作为新增写入口 |
+| `_obsolete/design-decisions-archive/archive-raw-adoption-log.md` | 2026-06-15 拆分前全文归档（2026-07-08 挪入 `_obsolete/`），仅历史考证用，不作为新增写入口 |

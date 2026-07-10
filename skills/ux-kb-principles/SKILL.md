@@ -1,24 +1,24 @@
 ---
 name: ux-kb-principles
-description: "UX 原则/理论扩展库。需要 Tier 3 原则（Doherty Threshold / 信噪比 / Jakob's Law / Nielsen #6/7/9 / Gestalt 闭合等）时加载。包含 32 条原则详细说明（含出处+适用场景+批评什么）。"
+description: "UX 原则/理论扩展库。需要 Tier 3 原则（Doherty Threshold / 信噪比 / Jakob's Law / Nielsen #6/7/9 / Gestalt 闭合 / Postel / MAYA 等）时加载。包含 37 条原则详细说明（含出处+适用场景+批评什么）。"
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
   category: "game-ux-knowledge"
   trigger: "需要 Tier 3 原则引用时"
 ---
 
-# KB-Principles · 原则/理论完整库（32 条）
+# KB-Principles · 原则/理论完整库（37 条）
 
 > **使用频率**：长尾按需（D 类）
 > **加载触发**：诊断需要引用 Tier 3 原则（主 spec §3 未覆盖的）时
-> **来源**：Magic UX 采访 Round 1 E 节
+> **来源**：Magic UX 采访 Round 1 E 节；KB-P-33~37 来自 Round 6（2026-07-08）增补
 
 ---
 
 ## 使用方法
 
-主 spec §3 已列出 **Tier 1（7 条）+ Tier 2（9 条）= 16 条**最高频原则。本 KB 补全剩余 16 条详细说明。
+主 spec §3 已列出 **Tier 1（7 条）+ Tier 2（9 条）= 16 条**最高频原则。本 KB 补全剩余 21 条详细说明。
 
 加载时机：
 - 诊断涉及 Tier 3 原则（如 Doherty Threshold、信噪比、Jakob's Law 等）
@@ -30,7 +30,7 @@ metadata:
 
 ---
 
-## 32 条原则完整索引
+## 37 条原则完整索引
 
 | # | 原则名（出处/作者） | 适用场景 | 最常用来批评什么 | Tier |
 |---|---------------------|---------|----------------|------|
@@ -66,6 +66,11 @@ metadata:
 | KB-P-30 | **Krug's First Law** "Don't Make Me Think"（Steve Krug） | 全局 | 需要停下来思考"这是什么/该点哪" | T1 |
 | KB-P-31 | **Proximity of Feedback 反馈就近**（基于 Gestalt） | 操作反馈位置 | 反馈出现在远离操作区的位置 | T2 |
 | KB-P-32 | **Dual Coding Theory 双重编码**（Paivio, 1971） | 信息表达 | 纯文字表达可用"文字+图形"双通道强化 | T2 |
+| KB-P-33 | **Banner 盲区效应**（Benway & Lane, 1998） | 广告位/通知位 | 重要信息放在"广告位"形态区域被用户自动忽略 | T3 |
+| KB-P-34 | **Postel 法则（宽容律）**（Jon Postel, RFC 761） | 输入容错 | 输入格式过严、无容错提示（如手机号不允许空格） | T3 |
+| KB-P-35 | **序列位置效应**（Ebbinghaus / Murdock） | 列表/导航排序 | 重要选项放列表中间位置被遗忘（首尾记忆最强） | T3 |
+| KB-P-36 | **MAYA 原则**（Raymond Loewy） | 创新 UI | 设计过于激进超出用户理解（Most Advanced Yet Acceptable） | T3 |
+| KB-P-37 | **控制感假说**（Langer, 1975） | 等待/加载 | 长等待无进度条/无取消按钮，用户失去控制感 | T3 |
 
 ---
 
@@ -81,7 +86,21 @@ metadata:
 | 诱饵效应（Decoy Effect） | 检查多档定价是否让"中间档"凸显出"超值感" |
 | KB-P-21 峰终定律 | 检查支付完成后是否有仪式感反馈 |
 
-> 注：诱饵效应未列入 32 条主表，但商城场景必备。完整 32 条 + 诱饵效应 = 33 条可用原则。
+> 注：诱饵效应未列入 37 条主表，但商城场景必备。完整 37 条 + 诱饵效应 = 38 条可用原则。
+
+---
+
+## Round 6 场景增补（2026-07-08，对既有 7 条原则只补场景，不重复建条）
+
+| 原则 | Round 6 增补的适用场景 / 批评点 |
+|------|------------------------------|
+| KB-P-1 Miller 7±2 | 信息分组维度：单视口信息组≤5±2 组；>9 个并列项无分组即触发（见主 spec §4 信息密度增补） |
+| KB-P-2 Hick's Law | 选项多且无默认推荐 → 症状"选择瘫痪"（KB-S-39）；决策时间随选项数对数增长 |
+| KB-P-18 渐进披露 | 复杂表单/设置页一次暴露全部选项致过载；AI 参数面板同理 |
+| KB-P-19 锚定效应 | 缺参照锚点致无法判断价值（不限于价格：数据看板无基线、进度无目标线同样适用） |
+| KB-P-21 峰终定律 | 流程结束页（成功/失败态）设计草率——失败态尤其常被忽略 |
+| KB-P-22 Von Restorff | 需突出的元素未做足够差异化（不限于 CTA：风险警告、唯一可行路径同样适用） |
+| KB-P-23 Doherty Threshold | 响应超 400ms 无过渡反馈；流式输出（AI 对话）首 token 延迟同样受此约束 |
 
 ---
 
