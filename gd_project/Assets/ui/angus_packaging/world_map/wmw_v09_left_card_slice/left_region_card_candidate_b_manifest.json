@@ -1,0 +1,272 @@
+{
+  "artifact": "WMW v0.9.1 left_region_card vertical slice candidate B",
+  "date": "2026-07-08",
+  "status": "vertical_slice_candidate_b_geometry_pass; atlas_candidate_ready; godot_b_capture_pass_windowed",
+  "source_reference": "D:\\angos\\.codex-remote-attachments\\019ef3f7-be2f-70d3-ae57-7df7fa181048\\285fb7d4-37f0-4a98-86f4-c1652013a1d1\\1-Photo-1.jpg",
+  "contract": "D:\\angos\\design\\ui-contracts\\world-map\\left_region_card.json",
+  "imagegen_source": "C:\\Users\\gzfangyue\\.codex\\generated_images\\019ef3f7-be2f-70d3-ae57-7df7fa181048\\ig_0cad4bba272177e1016a4dfe0fb4b88191a1467c4c2976c3ff.png",
+  "outputs": {
+    "wireframe_prompt_anchor": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\382-world-map-wmw-v0-9-1-left-card-no-text-wireframe-anchor.png",
+    "imagegen_candidate": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+    "geometry_qa": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\384-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b-geometry-qa.png",
+    "candidate_atlas_2x": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\385-world-map-wmw-v0-9-1-left-card-candidate-b-atlas-2x.png",
+    "runtime_fill": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\386-world-map-wmw-v0-9-1-left-card-candidate-b-runtime-fill.png",
+    "runtime_fill_qa": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\387-world-map-wmw-v0-9-1-left-card-candidate-b-runtime-fill-qa.png",
+    "manifest": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\388-world-map-wmw-v0-9-1-left-card-candidate-b-manifest.json",
+    "godot_atlas": "gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\left_region_card_candidate_b_atlas_2x.png",
+    "godot_manifest": "gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\left_region_card_candidate_b_manifest.json",
+    "godot_single_component": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\389-world-map-wmw-v0-9-1-left-card-candidate-b-godot-single-component.png",
+    "godot_single_component_qa": "docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\390-world-map-wmw-v0-9-1-left-card-candidate-b-godot-single-component-qa.png"
+  },
+  "contract_summary": {
+    "class_id": "left_region_card",
+    "contract_version": "0.8.2",
+    "reference_resolution": [
+      1280,
+      720
+    ],
+    "runtime_resolution": [
+      1920,
+      1080
+    ],
+    "export_scale": 2,
+    "export_size": [
+      204,
+      160
+    ],
+    "slots": {
+      "photo_slot": [
+        21,
+        24,
+        174,
+        64
+      ],
+      "label_plate": [
+        22,
+        104,
+        114,
+        32
+      ],
+      "meta_line": [
+        22,
+        138,
+        96,
+        10
+      ],
+      "icon_badge": [
+        8,
+        8,
+        32,
+        32
+      ],
+      "action_badge": [
+        158,
+        106,
+        38,
+        38
+      ]
+    },
+    "positions": [
+      [
+        44,
+        24
+      ],
+      [
+        44,
+        196
+      ],
+      [
+        44,
+        368
+      ],
+      [
+        44,
+        540
+      ]
+    ]
+  },
+  "imagegen_geometry_rows": [
+    {
+      "state": "selected",
+      "detected_bbox": [
+        65,
+        63,
+        625,
+        490
+      ],
+      "detected_ratio": 1.2755,
+      "target_ratio": 1.275,
+      "ratio_delta": 0.0005,
+      "ratio_pass": true
+    },
+    {
+      "state": "available",
+      "detected_bbox": [
+        748,
+        63,
+        614,
+        490
+      ],
+      "detected_ratio": 1.2531,
+      "target_ratio": 1.275,
+      "ratio_delta": -0.0219,
+      "ratio_pass": true
+    },
+    {
+      "state": "warning",
+      "detected_bbox": [
+        65,
+        576,
+        625,
+        486
+      ],
+      "detected_ratio": 1.286,
+      "target_ratio": 1.275,
+      "ratio_delta": 0.011,
+      "ratio_pass": true
+    },
+    {
+      "state": "locked",
+      "detected_bbox": [
+        748,
+        576,
+        614,
+        486
+      ],
+      "detected_ratio": 1.2634,
+      "target_ratio": 1.275,
+      "ratio_delta": -0.0116,
+      "ratio_pass": true
+    }
+  ],
+  "atlas_frames": [
+    {
+      "state": "selected",
+      "frame": [
+        0,
+        0,
+        408,
+        320
+      ],
+      "source_size": [
+        641,
+        506
+      ],
+      "fit_size": [
+        405,
+        320
+      ],
+      "offset": [
+        1,
+        0
+      ],
+      "scale": 0.6324110671936759,
+      "letterbox": [
+        3,
+        0
+      ]
+    },
+    {
+      "state": "available",
+      "frame": [
+        408,
+        0,
+        408,
+        320
+      ],
+      "source_size": [
+        630,
+        506
+      ],
+      "fit_size": [
+        398,
+        320
+      ],
+      "offset": [
+        5,
+        0
+      ],
+      "scale": 0.6324110671936759,
+      "letterbox": [
+        10,
+        0
+      ]
+    },
+    {
+      "state": "warning",
+      "frame": [
+        816,
+        0,
+        408,
+        320
+      ],
+      "source_size": [
+        641,
+        502
+      ],
+      "fit_size": [
+        408,
+        320
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 0.6365054602184087,
+      "letterbox": [
+        0,
+        0
+      ]
+    },
+    {
+      "state": "locked",
+      "frame": [
+        1224,
+        0,
+        408,
+        320
+      ],
+      "source_size": [
+        630,
+        502
+      ],
+      "fit_size": [
+        402,
+        320
+      ],
+      "offset": [
+        3,
+        0
+      ],
+      "scale": 0.6374501992031872,
+      "letterbox": [
+        6,
+        0
+      ]
+    }
+  ],
+  "gates": {
+    "no_fake_text": "manual_check_pass_on_candidate_b_383: four no-text card shells inspected; label/meta plates contain no baked readable text or digits",
+    "functional_faces_orthogonal": "manual_check_pass_on_candidate_b_384_389: photo/label/meta/action faces remain axis-aligned in geometry QA and Godot runtime fill",
+    "same_state_layout": "manual_check_pass_on_candidate_b_383_384_389: selected/available/warning/locked share one left_region_card shell layout and contract slots; only state skin/icon/colors vary",
+    "contract_aspect_ratio": "pass",
+    "atlas_ready": true,
+    "runtime_text_fill_preview": "generated",
+    "godot_single_component": "pass: windowed opengl3 via scripts/run_wmw_godot_capture_v09.ps1; 389/390 generated with candidate B atlas and verified non-black"
+  },
+  "decision": "Candidate B passes imagegen geometry ratio gate and Godot single-component runtime capture (389/390). Do not use old 380/381 screenshots as evidence for candidate B. Candidate B may proceed to text-fit and art review; it is still a candidate, not a frozen production atlas.",
+  "godot_capture_attempts": [
+    {
+      "command": "D:/angos/tools/godot/4.6.2-stable/Godot_v4.6.2-stable_win64_console.exe --path D:/angos/gd_project --resolution 1920x1080 --windowed --audio-driver Dummy --rendering-driver opengl3 -s res://tests/capture_world_map_wmw_left_card_runtime_v09.gd",
+      "result": "earlier session reported signal 11 (not reproduced from a normal local shell); rerun via runner passed"
+    },
+    {
+      "command": "powershell -ExecutionPolicy Bypass -File D:/angos/scripts/run_wmw_godot_capture_v09.ps1 -SkipRepro (first rerun)",
+      "result": "script exited OK but 389/390 were all-black: capture happened before a real draw pass"
+    },
+    {
+      "command": "powershell -ExecutionPolicy Bypass -File D:/angos/scripts/run_wmw_godot_capture_v09.ps1 -SkipRepro (after frame_post_draw fix)",
+      "result": "pass: capture script now awaits RenderingServer.frame_post_draw and rejects all-black frames; 389/390 verified with real content"
+    }
+  ]
+}

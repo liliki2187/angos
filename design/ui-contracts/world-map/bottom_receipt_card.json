@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "contract_version": "0.8.5",
+  "status": "locked_candidate",
+  "page": "world_map",
+  "class_id": "bottom_receipt_card",
+  "role": "底部状态票据卡（宽票据家族，比例目标 1.75-1.90）",
+  "reference_resolution": [1280, 720],
+  "runtime_resolution": [1920, 1080],
+  "export_scale": 2,
+  "frozen": {
+    "export_size": [246, 138],
+    "positions": [[288, 558], [557, 558], [826, 558]],
+    "gap": 23,
+    "hit_rect": [0, 0, 246, 138],
+    "slots": {
+      "left_icon_zone": [24, 28, 52, 52],
+      "title_slot": [92, 23, 120, 28],
+      "value_slot": [92, 57, 128, 32],
+      "meter_slot": [28, 101, 166, 24]
+    },
+    "no_text_rects": {
+      "side_notch": [224, 20, 14, 96]
+    }
+  },
+  "provisional": {
+    "value_slot_note": "压力文案“12天后升温”宽 120px，接近 128px 槽上限；若底部票据视觉太抢眼，应降字重 / 字号层级，不得改组件尺寸（v0.8.5 结论）。",
+    "font_assumptions": "文字压力测试基于脚本字体渲染；最终 UI 字体确定后若更宽，必须重跑 text_capacity_stress 再进 atlas。"
+  },
+  "states": ["weekly_action", "intel_pool", "redline_account"],
+  "state_may_change": ["颜色皮肤", "left_icon_zone 图案", "meter 填充色"],
+  "state_may_not_change": ["export_size", "title_slot / value_slot 位置", "meter_slot 宽度（不得随资源数量变宽）", "hit_rect", "gap"],
+  "notes": "redline 卡不得因警示文案更长而变高；胶带、纸影、色签不得扩大运行时边界；第三张票据靠近右侧 icon 簇，后续整屏 QA 必须保持该安全距。",
+  "evidence": {
+    "reviews": [
+      "docs/plans/world-map-benchmark-landing/2026-07-08-world-map-wmw-bottom-receipt-contract-v0-8-5-review.md"
+    ],
+    "measurement_manifests": [
+      "docs/screenshots/2026-06-24-world-map-benchmark-landing/372-world-map-wmw-v0-8-5-bottom-receipt-manifest.json"
+    ],
+    "scripts": [
+      "scripts/ui-contracts/wmw/wmw_v085_bottom_receipt_contract.py"
+    ]
+  }
+}

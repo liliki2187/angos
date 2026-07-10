@@ -1,0 +1,1369 @@
+{
+  "schema_version": 1,
+  "asset_id": "world_map_wmw_left_region_card_b2_constructed_pipeline_trial",
+  "version": "v0.9.6",
+  "status": "visual_fail_shape_mask_and_frame_overlay_missing",
+  "date": "2026-07-09",
+  "contract": "D:\\angos\\design\\ui-contracts\\world-map\\left_region_card.json",
+  "contract_frozen_fields_changed": false,
+  "pipeline_shift": "imagegen/style bitmap ingredients -> contract-slot layer assembly -> atlas; frozen contract geometry remains unchanged",
+  "visual_failure": {
+    "topic": "shape_mask_and_frame_overlay_missing",
+    "contract_photo_slot_2x": [
+      42,
+      48,
+      390,
+      176
+    ],
+    "visual_photo_window_2x": [
+      42,
+      48,
+      390,
+      176
+    ],
+    "right_lip_outer_edge_2x": 408,
+    "basis": "2026-07-09 user review of 445: the Europe card photo does not follow the globe cutout arc, the bottom reveals underlying plate/image material, and the right side still reads as an incorrect seam. B2 machine gates pass but visual composition fails.",
+    "requires_shaped_photo_mask": true,
+    "requires_independent_frame_overlay": true,
+    "production_freeze_allowed": false
+  },
+  "inputs": {
+    "candidate_b_shell_material": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+    "candidate_b1_imagegen_photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+    "failed_b1_3_manifest": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\431-world-map-wmw-v0-9-5-left-card-candidate-b1-3-manifest.json"
+  },
+  "outputs": {
+    "ingredient_board": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\436-world-map-wmw-v0-9-6-left-card-b2-constructed-ingredients.png",
+    "candidate_b2_composite": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\437-world-map-wmw-v0-9-6-left-card-b2-constructed-composite.png",
+    "geometry_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\438-world-map-wmw-v0-9-6-left-card-b2-geometry-qa.png",
+    "atlas_2x": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\439-world-map-wmw-v0-9-6-left-card-b2-atlas-2x.png",
+    "runtime_fill_preview": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\440-world-map-wmw-v0-9-6-left-card-b2-runtime-fill.png",
+    "runtime_fill_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\441-world-map-wmw-v0-9-6-left-card-b2-runtime-fill-qa.png",
+    "manifest": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\442-world-map-wmw-v0-9-6-left-card-b2-manifest.json",
+    "edge_texture_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\443-world-map-wmw-v0-9-6-left-card-b2-edge-and-texture-qa.png",
+    "b1_3_vs_b2_constructed_board": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\444-world-map-wmw-v0-9-6-left-card-b1-3-vs-b2-constructed-board.png",
+    "godot_single_component": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\445-world-map-wmw-v0-9-6-left-card-b2-godot-single-component.png",
+    "godot_single_component_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\446-world-map-wmw-v0-9-6-left-card-b2-godot-single-component-qa.png",
+    "godot_atlas_copy": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\left_region_card_b2_constructed_atlas_2x.png",
+    "godot_manifest_copy": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\left_region_card_b2_constructed_manifest.json"
+  },
+  "runtime_tokens": {
+    "label_title": {
+      "python_font_px": 19,
+      "godot_font_size": 25,
+      "color": "#121612"
+    },
+    "meta_status": {
+      "python_font_px": 11,
+      "godot_font_size": 14,
+      "color": "#421c14"
+    }
+  },
+  "base_frame_sources": [
+    {
+      "state": "selected",
+      "box": [
+        65,
+        63,
+        690,
+        553
+      ],
+      "expanded_box": [
+        57,
+        55,
+        698,
+        561
+      ],
+      "fit": {
+        "source_size": [
+          641,
+          506
+        ],
+        "fit_size": [
+          405,
+          320
+        ],
+        "offset": [
+          1,
+          0
+        ],
+        "scale": 0.6324110671936759,
+        "letterbox": [
+          3,
+          0
+        ]
+      }
+    },
+    {
+      "state": "available",
+      "box": [
+        748,
+        63,
+        1362,
+        553
+      ],
+      "expanded_box": [
+        740,
+        55,
+        1370,
+        561
+      ],
+      "fit": {
+        "source_size": [
+          630,
+          506
+        ],
+        "fit_size": [
+          398,
+          320
+        ],
+        "offset": [
+          5,
+          0
+        ],
+        "scale": 0.6324110671936759,
+        "letterbox": [
+          10,
+          0
+        ]
+      }
+    },
+    {
+      "state": "warning",
+      "box": [
+        65,
+        576,
+        690,
+        1062
+      ],
+      "expanded_box": [
+        57,
+        568,
+        698,
+        1070
+      ],
+      "fit": {
+        "source_size": [
+          641,
+          502
+        ],
+        "fit_size": [
+          408,
+          320
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "scale": 0.6365054602184087,
+        "letterbox": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "state": "locked",
+      "box": [
+        748,
+        576,
+        1362,
+        1062
+      ],
+      "expanded_box": [
+        740,
+        568,
+        1370,
+        1070
+      ],
+      "fit": {
+        "source_size": [
+          630,
+          502
+        ],
+        "fit_size": [
+          402,
+          320
+        ],
+        "offset": [
+          3,
+          0
+        ],
+        "scale": 0.6374501992031872,
+        "letterbox": [
+          6,
+          0
+        ]
+      }
+    }
+  ],
+  "composition": [
+    {
+      "state": "selected",
+      "pipeline": "constructed_ingredients",
+      "base_frame_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+      "plate_texture": {
+        "state": "selected",
+        "source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+        "sample_rects_2x": {
+          "upper_plate": [
+            54,
+            180,
+            300,
+            205
+          ],
+          "left_plate": [
+            46,
+            184,
+            94,
+            284
+          ]
+        },
+        "tile_size": [
+          246,
+          125
+        ],
+        "target_size": [
+          366,
+          128
+        ],
+        "method": "mirror-tiled B-shell plate material; no synthetic flat color band"
+      },
+      "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+      "photo_source_box": [
+        0,
+        0,
+        704,
+        558
+      ],
+      "photo_rel_crop_b2": [
+        0.31,
+        0.09,
+        0.86,
+        0.59
+      ],
+      "contract_photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "visual_photo_window_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "photo_clear_rect_2x": [
+        42,
+        48,
+        408,
+        176
+      ],
+      "window_lips": "top/bottom/left copied from B shell; right lip mirrors B-shell left-edge material across x390..408",
+      "icon_track": "B shell globe and B shell state badge only; no runtime warning overlay"
+    },
+    {
+      "state": "available",
+      "pipeline": "constructed_ingredients",
+      "base_frame_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+      "plate_texture": {
+        "state": "available",
+        "source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+        "sample_rects_2x": {
+          "upper_plate": [
+            54,
+            180,
+            300,
+            205
+          ],
+          "left_plate": [
+            46,
+            184,
+            94,
+            284
+          ]
+        },
+        "tile_size": [
+          246,
+          125
+        ],
+        "target_size": [
+          366,
+          128
+        ],
+        "method": "mirror-tiled B-shell plate material; no synthetic flat color band"
+      },
+      "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+      "photo_source_box": [
+        704,
+        0,
+        1408,
+        558
+      ],
+      "photo_rel_crop_b2": [
+        0.31,
+        0.09,
+        0.8,
+        0.59
+      ],
+      "contract_photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "visual_photo_window_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "photo_clear_rect_2x": [
+        42,
+        48,
+        408,
+        176
+      ],
+      "window_lips": "top/bottom/left copied from B shell; right lip mirrors B-shell left-edge material across x390..408",
+      "icon_track": "B shell globe and B shell state badge only; no runtime warning overlay"
+    },
+    {
+      "state": "warning",
+      "pipeline": "constructed_ingredients",
+      "base_frame_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+      "plate_texture": {
+        "state": "warning",
+        "source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+        "sample_rects_2x": {
+          "upper_plate": [
+            54,
+            180,
+            300,
+            205
+          ],
+          "left_plate": [
+            46,
+            184,
+            94,
+            284
+          ]
+        },
+        "tile_size": [
+          246,
+          125
+        ],
+        "target_size": [
+          366,
+          128
+        ],
+        "method": "mirror-tiled B-shell plate material; no synthetic flat color band"
+      },
+      "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+      "photo_source_box": [
+        0,
+        558,
+        704,
+        1117
+      ],
+      "photo_rel_crop_b2": [
+        0.29,
+        0.09,
+        0.84,
+        0.6
+      ],
+      "contract_photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "visual_photo_window_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "photo_clear_rect_2x": [
+        42,
+        48,
+        408,
+        176
+      ],
+      "window_lips": "top/bottom/left copied from B shell; right lip mirrors B-shell left-edge material across x390..408",
+      "icon_track": "B shell globe and B shell state badge only; no runtime warning overlay"
+    },
+    {
+      "state": "locked",
+      "pipeline": "constructed_ingredients",
+      "base_frame_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+      "plate_texture": {
+        "state": "locked",
+        "source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+        "sample_rects_2x": {
+          "upper_plate": [
+            54,
+            180,
+            300,
+            205
+          ],
+          "left_plate": [
+            46,
+            184,
+            94,
+            284
+          ]
+        },
+        "tile_size": [
+          246,
+          125
+        ],
+        "target_size": [
+          366,
+          128
+        ],
+        "method": "mirror-tiled B-shell plate material; no synthetic flat color band"
+      },
+      "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+      "photo_source_box": [
+        704,
+        558,
+        1408,
+        1117
+      ],
+      "photo_rel_crop_b2": [
+        0.31,
+        0.09,
+        0.8,
+        0.6
+      ],
+      "contract_photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "visual_photo_window_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "photo_clear_rect_2x": [
+        42,
+        48,
+        408,
+        176
+      ],
+      "window_lips": "top/bottom/left copied from B shell; right lip mirrors B-shell left-edge material across x390..408",
+      "icon_track": "B shell globe and B shell state badge only; no runtime warning overlay"
+    }
+  ],
+  "geometry_metrics": [
+    {
+      "state": "selected",
+      "export_size_2x": [
+        408,
+        320
+      ],
+      "export_size_1x": [
+        204,
+        160
+      ],
+      "ratio": 1.275,
+      "ratio_target": 1.275,
+      "ratio_delta": 0.0,
+      "ratio_pass": true,
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ],
+      "composition": {
+        "state": "selected",
+        "pipeline": "constructed_ingredients",
+        "base_frame_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+        "plate_texture": {
+          "state": "selected",
+          "source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+          "sample_rects_2x": {
+            "upper_plate": [
+              54,
+              180,
+              300,
+              205
+            ],
+            "left_plate": [
+              46,
+              184,
+              94,
+              284
+            ]
+          },
+          "tile_size": [
+            246,
+            125
+          ],
+          "target_size": [
+            366,
+            128
+          ],
+          "method": "mirror-tiled B-shell plate material; no synthetic flat color band"
+        },
+        "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+        "photo_source_box": [
+          0,
+          0,
+          704,
+          558
+        ],
+        "photo_rel_crop_b2": [
+          0.31,
+          0.09,
+          0.86,
+          0.59
+        ],
+        "contract_photo_slot_2x": [
+          42,
+          48,
+          390,
+          176
+        ],
+        "visual_photo_window_2x": [
+          42,
+          48,
+          390,
+          176
+        ],
+        "photo_clear_rect_2x": [
+          42,
+          48,
+          408,
+          176
+        ],
+        "window_lips": "top/bottom/left copied from B shell; right lip mirrors B-shell left-edge material across x390..408",
+        "icon_track": "B shell globe and B shell state badge only; no runtime warning overlay"
+      }
+    },
+    {
+      "state": "available",
+      "export_size_2x": [
+        408,
+        320
+      ],
+      "export_size_1x": [
+        204,
+        160
+      ],
+      "ratio": 1.275,
+      "ratio_target": 1.275,
+      "ratio_delta": 0.0,
+      "ratio_pass": true,
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ],
+      "composition": {
+        "state": "available",
+        "pipeline": "constructed_ingredients",
+        "base_frame_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+        "plate_texture": {
+          "state": "available",
+          "source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+          "sample_rects_2x": {
+            "upper_plate": [
+              54,
+              180,
+              300,
+              205
+            ],
+            "left_plate": [
+              46,
+              184,
+              94,
+              284
+            ]
+          },
+          "tile_size": [
+            246,
+            125
+          ],
+          "target_size": [
+            366,
+            128
+          ],
+          "method": "mirror-tiled B-shell plate material; no synthetic flat color band"
+        },
+        "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+        "photo_source_box": [
+          704,
+          0,
+          1408,
+          558
+        ],
+        "photo_rel_crop_b2": [
+          0.31,
+          0.09,
+          0.8,
+          0.59
+        ],
+        "contract_photo_slot_2x": [
+          42,
+          48,
+          390,
+          176
+        ],
+        "visual_photo_window_2x": [
+          42,
+          48,
+          390,
+          176
+        ],
+        "photo_clear_rect_2x": [
+          42,
+          48,
+          408,
+          176
+        ],
+        "window_lips": "top/bottom/left copied from B shell; right lip mirrors B-shell left-edge material across x390..408",
+        "icon_track": "B shell globe and B shell state badge only; no runtime warning overlay"
+      }
+    },
+    {
+      "state": "warning",
+      "export_size_2x": [
+        408,
+        320
+      ],
+      "export_size_1x": [
+        204,
+        160
+      ],
+      "ratio": 1.275,
+      "ratio_target": 1.275,
+      "ratio_delta": 0.0,
+      "ratio_pass": true,
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ],
+      "composition": {
+        "state": "warning",
+        "pipeline": "constructed_ingredients",
+        "base_frame_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+        "plate_texture": {
+          "state": "warning",
+          "source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+          "sample_rects_2x": {
+            "upper_plate": [
+              54,
+              180,
+              300,
+              205
+            ],
+            "left_plate": [
+              46,
+              184,
+              94,
+              284
+            ]
+          },
+          "tile_size": [
+            246,
+            125
+          ],
+          "target_size": [
+            366,
+            128
+          ],
+          "method": "mirror-tiled B-shell plate material; no synthetic flat color band"
+        },
+        "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+        "photo_source_box": [
+          0,
+          558,
+          704,
+          1117
+        ],
+        "photo_rel_crop_b2": [
+          0.29,
+          0.09,
+          0.84,
+          0.6
+        ],
+        "contract_photo_slot_2x": [
+          42,
+          48,
+          390,
+          176
+        ],
+        "visual_photo_window_2x": [
+          42,
+          48,
+          390,
+          176
+        ],
+        "photo_clear_rect_2x": [
+          42,
+          48,
+          408,
+          176
+        ],
+        "window_lips": "top/bottom/left copied from B shell; right lip mirrors B-shell left-edge material across x390..408",
+        "icon_track": "B shell globe and B shell state badge only; no runtime warning overlay"
+      }
+    },
+    {
+      "state": "locked",
+      "export_size_2x": [
+        408,
+        320
+      ],
+      "export_size_1x": [
+        204,
+        160
+      ],
+      "ratio": 1.275,
+      "ratio_target": 1.275,
+      "ratio_delta": 0.0,
+      "ratio_pass": true,
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ],
+      "composition": {
+        "state": "locked",
+        "pipeline": "constructed_ingredients",
+        "base_frame_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+        "plate_texture": {
+          "state": "locked",
+          "source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+          "sample_rects_2x": {
+            "upper_plate": [
+              54,
+              180,
+              300,
+              205
+            ],
+            "left_plate": [
+              46,
+              184,
+              94,
+              284
+            ]
+          },
+          "tile_size": [
+            246,
+            125
+          ],
+          "target_size": [
+            366,
+            128
+          ],
+          "method": "mirror-tiled B-shell plate material; no synthetic flat color band"
+        },
+        "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+        "photo_source_box": [
+          704,
+          558,
+          1408,
+          1117
+        ],
+        "photo_rel_crop_b2": [
+          0.31,
+          0.09,
+          0.8,
+          0.6
+        ],
+        "contract_photo_slot_2x": [
+          42,
+          48,
+          390,
+          176
+        ],
+        "visual_photo_window_2x": [
+          42,
+          48,
+          390,
+          176
+        ],
+        "photo_clear_rect_2x": [
+          42,
+          48,
+          408,
+          176
+        ],
+        "window_lips": "top/bottom/left copied from B shell; right lip mirrors B-shell left-edge material across x390..408",
+        "icon_track": "B shell globe and B shell state badge only; no runtime warning overlay"
+      }
+    }
+  ],
+  "artifact_green_stats": {
+    "selected": {
+      "artifact_greenish_pixels_full_frame": 0,
+      "sample_pixels": [],
+      "range": "full 408x320 atlas frame after chroma-key alpha removal",
+      "definition": "alpha>8 and r<=90 and g>=120 and b<=105 and g-r>=35 and g-b>=30"
+    },
+    "available": {
+      "artifact_greenish_pixels_full_frame": 0,
+      "sample_pixels": [],
+      "range": "full 408x320 atlas frame after chroma-key alpha removal",
+      "definition": "alpha>8 and r<=90 and g>=120 and b<=105 and g-r>=35 and g-b>=30"
+    },
+    "warning": {
+      "artifact_greenish_pixels_full_frame": 0,
+      "sample_pixels": [],
+      "range": "full 408x320 atlas frame after chroma-key alpha removal",
+      "definition": "alpha>8 and r<=90 and g>=120 and b<=105 and g-r>=35 and g-b>=30"
+    },
+    "locked": {
+      "artifact_greenish_pixels_full_frame": 0,
+      "sample_pixels": [],
+      "range": "full 408x320 atlas frame after chroma-key alpha removal",
+      "definition": "alpha>8 and r<=90 and g>=120 and b<=105 and g-r>=35 and g-b>=30"
+    }
+  },
+  "alpha_probe_stats": {
+    "selected": {
+      "alpha_probe_range_2x": [
+        390,
+        40,
+        408,
+        300
+      ],
+      "opaque_control_probe_range_2x": [
+        42,
+        40,
+        390,
+        300
+      ],
+      "expected_opaque_b_shell_pixels_in_probe": 2596,
+      "transparent_pixels_in_right_shell_band": 0,
+      "transparent_pixels_in_body_control": 0,
+      "threshold": "alpha < 250",
+      "mask_basis": "only pixels opaque in candidate B shell source are counted; legal transparent bleed outside the card silhouette is ignored",
+      "sample_transparent_pixels": [],
+      "status": "pass"
+    },
+    "available": {
+      "alpha_probe_range_2x": [
+        390,
+        40,
+        408,
+        300
+      ],
+      "opaque_control_probe_range_2x": [
+        42,
+        40,
+        390,
+        300
+      ],
+      "expected_opaque_b_shell_pixels_in_probe": 1817,
+      "transparent_pixels_in_right_shell_band": 0,
+      "transparent_pixels_in_body_control": 0,
+      "threshold": "alpha < 250",
+      "mask_basis": "only pixels opaque in candidate B shell source are counted; legal transparent bleed outside the card silhouette is ignored",
+      "sample_transparent_pixels": [],
+      "status": "pass"
+    },
+    "warning": {
+      "alpha_probe_range_2x": [
+        390,
+        40,
+        408,
+        300
+      ],
+      "opaque_control_probe_range_2x": [
+        42,
+        40,
+        390,
+        300
+      ],
+      "expected_opaque_b_shell_pixels_in_probe": 3113,
+      "transparent_pixels_in_right_shell_band": 0,
+      "transparent_pixels_in_body_control": 0,
+      "threshold": "alpha < 250",
+      "mask_basis": "only pixels opaque in candidate B shell source are counted; legal transparent bleed outside the card silhouette is ignored",
+      "sample_transparent_pixels": [],
+      "status": "pass"
+    },
+    "locked": {
+      "alpha_probe_range_2x": [
+        390,
+        40,
+        408,
+        300
+      ],
+      "opaque_control_probe_range_2x": [
+        42,
+        40,
+        390,
+        300
+      ],
+      "expected_opaque_b_shell_pixels_in_probe": 2334,
+      "transparent_pixels_in_right_shell_band": 0,
+      "transparent_pixels_in_body_control": 0,
+      "threshold": "alpha < 250",
+      "mask_basis": "only pixels opaque in candidate B shell source are counted; legal transparent bleed outside the card silhouette is ignored",
+      "sample_transparent_pixels": [],
+      "status": "pass"
+    }
+  },
+  "right_band_texture_stats": {
+    "selected": {
+      "range_2x": [
+        390,
+        48,
+        408,
+        176
+      ],
+      "unique_colors": 1299,
+      "sampled_luma_stddev": 37.803,
+      "status": "pass",
+      "basis": "right band must retain bitmap material variation; a flat program color strip fails"
+    },
+    "available": {
+      "range_2x": [
+        390,
+        48,
+        408,
+        176
+      ],
+      "unique_colors": 1230,
+      "sampled_luma_stddev": 30.927,
+      "status": "pass",
+      "basis": "right band must retain bitmap material variation; a flat program color strip fails"
+    },
+    "warning": {
+      "range_2x": [
+        390,
+        48,
+        408,
+        176
+      ],
+      "unique_colors": 1452,
+      "sampled_luma_stddev": 43.868,
+      "status": "pass",
+      "basis": "right band must retain bitmap material variation; a flat program color strip fails"
+    },
+    "locked": {
+      "range_2x": [
+        390,
+        48,
+        408,
+        176
+      ],
+      "unique_colors": 961,
+      "sampled_luma_stddev": 36.051,
+      "status": "pass",
+      "basis": "right band must retain bitmap material variation; a flat program color strip fails"
+    }
+  },
+  "gates": {
+    "construction_geometry_exact": {
+      "status": "pass",
+      "basis": "frame size and all slots are copied from left_region_card.json v0.8.2; geometry is an input to construction"
+    },
+    "geometry_ratio_1_275": {
+      "status": "pass",
+      "target_ratio": 1.275,
+      "tolerance": 0.015
+    },
+    "ingredient_layer_model": {
+      "status": "pass",
+      "basis": "frame/plate/photo/icon/text are independent layers; no flattened B1.x composite is used as the final source"
+    },
+    "photo_layer_contract_slot_mask": {
+      "status": "pass",
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "basis": "photo ingredient is fitted before paste and pasted only to the frozen contract photo_slot"
+    },
+    "photo_window_vs_photo_slot_conflict": {
+      "status": "visual_fail_shape_mask_and_frame_overlay_missing",
+      "contract_photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "right_lip_band_2x": [
+        390,
+        48,
+        408,
+        176
+      ],
+      "basis": "B2 keeps photo in contract slot and reconstructs x390..408 as frame lip material, but user review shows the broader photo/window/frame/globe masking is wrong; production freeze is blocked"
+    },
+    "card_body_opacity_probe": {
+      "status": "pass",
+      "basis": "right card-body probe must contain zero transparent pixels; dark backgrounds cannot mask holes",
+      "stats": {
+        "selected": {
+          "alpha_probe_range_2x": [
+            390,
+            40,
+            408,
+            300
+          ],
+          "opaque_control_probe_range_2x": [
+            42,
+            40,
+            390,
+            300
+          ],
+          "expected_opaque_b_shell_pixels_in_probe": 2596,
+          "transparent_pixels_in_right_shell_band": 0,
+          "transparent_pixels_in_body_control": 0,
+          "threshold": "alpha < 250",
+          "mask_basis": "only pixels opaque in candidate B shell source are counted; legal transparent bleed outside the card silhouette is ignored",
+          "sample_transparent_pixels": [],
+          "status": "pass"
+        },
+        "available": {
+          "alpha_probe_range_2x": [
+            390,
+            40,
+            408,
+            300
+          ],
+          "opaque_control_probe_range_2x": [
+            42,
+            40,
+            390,
+            300
+          ],
+          "expected_opaque_b_shell_pixels_in_probe": 1817,
+          "transparent_pixels_in_right_shell_band": 0,
+          "transparent_pixels_in_body_control": 0,
+          "threshold": "alpha < 250",
+          "mask_basis": "only pixels opaque in candidate B shell source are counted; legal transparent bleed outside the card silhouette is ignored",
+          "sample_transparent_pixels": [],
+          "status": "pass"
+        },
+        "warning": {
+          "alpha_probe_range_2x": [
+            390,
+            40,
+            408,
+            300
+          ],
+          "opaque_control_probe_range_2x": [
+            42,
+            40,
+            390,
+            300
+          ],
+          "expected_opaque_b_shell_pixels_in_probe": 3113,
+          "transparent_pixels_in_right_shell_band": 0,
+          "transparent_pixels_in_body_control": 0,
+          "threshold": "alpha < 250",
+          "mask_basis": "only pixels opaque in candidate B shell source are counted; legal transparent bleed outside the card silhouette is ignored",
+          "sample_transparent_pixels": [],
+          "status": "pass"
+        },
+        "locked": {
+          "alpha_probe_range_2x": [
+            390,
+            40,
+            408,
+            300
+          ],
+          "opaque_control_probe_range_2x": [
+            42,
+            40,
+            390,
+            300
+          ],
+          "expected_opaque_b_shell_pixels_in_probe": 2334,
+          "transparent_pixels_in_right_shell_band": 0,
+          "transparent_pixels_in_body_control": 0,
+          "threshold": "alpha < 250",
+          "mask_basis": "only pixels opaque in candidate B shell source are counted; legal transparent bleed outside the card silhouette is ignored",
+          "sample_transparent_pixels": [],
+          "status": "pass"
+        }
+      }
+    },
+    "right_band_texture_variation": {
+      "status": "pass",
+      "basis": "x390..408 is rebuilt right lip material; it must not be alpha, source residue, or flat program color",
+      "stats": {
+        "selected": {
+          "range_2x": [
+            390,
+            48,
+            408,
+            176
+          ],
+          "unique_colors": 1299,
+          "sampled_luma_stddev": 37.803,
+          "status": "pass",
+          "basis": "right band must retain bitmap material variation; a flat program color strip fails"
+        },
+        "available": {
+          "range_2x": [
+            390,
+            48,
+            408,
+            176
+          ],
+          "unique_colors": 1230,
+          "sampled_luma_stddev": 30.927,
+          "status": "pass",
+          "basis": "right band must retain bitmap material variation; a flat program color strip fails"
+        },
+        "warning": {
+          "range_2x": [
+            390,
+            48,
+            408,
+            176
+          ],
+          "unique_colors": 1452,
+          "sampled_luma_stddev": 43.868,
+          "status": "pass",
+          "basis": "right band must retain bitmap material variation; a flat program color strip fails"
+        },
+        "locked": {
+          "range_2x": [
+            390,
+            48,
+            408,
+            176
+          ],
+          "unique_colors": 961,
+          "sampled_luma_stddev": 36.051,
+          "status": "pass",
+          "basis": "right band must retain bitmap material variation; a flat program color strip fails"
+        }
+      }
+    },
+    "chroma_residue_full_frame_all_states": {
+      "status": "pass",
+      "basis": "full 408x320 atlas-frame scan after construction; color-key/chroma residue is not allowed in any state",
+      "stats": {
+        "selected": {
+          "artifact_greenish_pixels_full_frame": 0,
+          "sample_pixels": [],
+          "range": "full 408x320 atlas frame after chroma-key alpha removal",
+          "definition": "alpha>8 and r<=90 and g>=120 and b<=105 and g-r>=35 and g-b>=30"
+        },
+        "available": {
+          "artifact_greenish_pixels_full_frame": 0,
+          "sample_pixels": [],
+          "range": "full 408x320 atlas frame after chroma-key alpha removal",
+          "definition": "alpha>8 and r<=90 and g>=120 and b<=105 and g-r>=35 and g-b>=30"
+        },
+        "warning": {
+          "artifact_greenish_pixels_full_frame": 0,
+          "sample_pixels": [],
+          "range": "full 408x320 atlas frame after chroma-key alpha removal",
+          "definition": "alpha>8 and r<=90 and g>=120 and b<=105 and g-r>=35 and g-b>=30"
+        },
+        "locked": {
+          "artifact_greenish_pixels_full_frame": 0,
+          "sample_pixels": [],
+          "range": "full 408x320 atlas frame after chroma-key alpha removal",
+          "definition": "alpha>8 and r<=90 and g>=120 and b<=105 and g-r>=35 and g-b>=30"
+        }
+      }
+    },
+    "single_icon_track": {
+      "status": "pass",
+      "basis": "B shell baked globe and state badges are kept once; no runtime warning-triangle overlay path"
+    },
+    "composite_cleanliness": {
+      "status": "fail_visual_shape_mask_and_frame_overlay_missing",
+      "basis": "machine checks pass for no duplicate icon, no source residue, no slot overflow, no alpha hole, and no flat color band; user visual review fails because the photo layer lacks the shaped window mask and independent frame overlay",
+      "checks": {
+        "selected": {
+          "duplicate_globe": "pass_b_shell_globe_restored_once_after_photo_paste",
+          "photo_layer_bounds": "pass_machine_photo_layer_constructed_inside_contract_slot_but_visual_shape_mask_missing",
+          "contract_photo_slot": "pass_photo_layer_constructed_inside_frozen_contract_photo_slot_x42..390",
+          "source_frame_residue": "pass_no_source_photo_frame_used_as_final_layer",
+          "right_frame_continuity": "pass_no_alpha_hole_or_source_photo_residue; x390..408 rebuilt as right lip from B-shell bitmap material",
+          "layer_order_integrity": "pass_frame_plate_photo_icon_are_independent_layers",
+          "card_body_opacity": "pass_alpha_probe_zero_transparent_pixels",
+          "right_band_photo_integrity": "pass_machine_texture_variation_from_photo_content_not_flat_program_band",
+          "manual_check_basis": "2026-07-09 user review of 445 failed: shaped mask/frame overlay missing; B2 is not production"
+        },
+        "available": {
+          "duplicate_globe": "pass_b_shell_globe_restored_once_after_photo_paste",
+          "photo_layer_bounds": "pass_machine_photo_layer_constructed_inside_contract_slot_but_visual_shape_mask_missing",
+          "contract_photo_slot": "pass_photo_layer_constructed_inside_frozen_contract_photo_slot_x42..390",
+          "source_frame_residue": "pass_no_source_photo_frame_used_as_final_layer",
+          "right_frame_continuity": "pass_no_alpha_hole_or_source_photo_residue; x390..408 rebuilt as right lip from B-shell bitmap material",
+          "layer_order_integrity": "pass_frame_plate_photo_icon_are_independent_layers",
+          "card_body_opacity": "pass_alpha_probe_zero_transparent_pixels",
+          "right_band_photo_integrity": "pass_machine_texture_variation_from_photo_content_not_flat_program_band",
+          "manual_check_basis": "2026-07-09 user review of 445 failed: shaped mask/frame overlay missing; B2 is not production"
+        },
+        "warning": {
+          "duplicate_globe": "pass_b_shell_globe_restored_once_after_photo_paste",
+          "photo_layer_bounds": "pass_machine_photo_layer_constructed_inside_contract_slot_but_visual_shape_mask_missing",
+          "contract_photo_slot": "pass_photo_layer_constructed_inside_frozen_contract_photo_slot_x42..390",
+          "source_frame_residue": "pass_no_source_photo_frame_used_as_final_layer",
+          "right_frame_continuity": "pass_no_alpha_hole_or_source_photo_residue; x390..408 rebuilt as right lip from B-shell bitmap material",
+          "layer_order_integrity": "pass_frame_plate_photo_icon_are_independent_layers",
+          "card_body_opacity": "pass_alpha_probe_zero_transparent_pixels",
+          "right_band_photo_integrity": "pass_machine_texture_variation_from_photo_content_not_flat_program_band",
+          "manual_check_basis": "2026-07-09 user review of 445 failed: shaped mask/frame overlay missing; B2 is not production"
+        },
+        "locked": {
+          "duplicate_globe": "pass_b_shell_globe_restored_once_after_photo_paste",
+          "photo_layer_bounds": "pass_machine_photo_layer_constructed_inside_contract_slot_but_visual_shape_mask_missing",
+          "contract_photo_slot": "pass_photo_layer_constructed_inside_frozen_contract_photo_slot_x42..390",
+          "source_frame_residue": "pass_no_source_photo_frame_used_as_final_layer",
+          "right_frame_continuity": "pass_no_alpha_hole_or_source_photo_residue; x390..408 rebuilt as right lip from B-shell bitmap material",
+          "layer_order_integrity": "pass_frame_plate_photo_icon_are_independent_layers",
+          "card_body_opacity": "pass_alpha_probe_zero_transparent_pixels",
+          "right_band_photo_integrity": "pass_machine_texture_variation_from_photo_content_not_flat_program_band",
+          "manual_check_basis": "2026-07-09 user review of 445 failed: shaped mask/frame overlay missing; B2 is not production"
+        }
+      }
+    },
+    "no_fake_text": {
+      "status": "pass",
+      "basis": "atlas contains no baked readable text; Chinese strings are runtime labels in Python/Godot captures"
+    },
+    "functional_faces_orthogonal": {
+      "status": "pass",
+      "basis": "all functional surfaces are constructed from contract-aligned rectangles"
+    },
+    "same_state_layout": {
+      "status": "pass",
+      "basis": "all four states use the same 204x160 contract frame and identical slots"
+    },
+    "godot_windowed_capture": {
+      "status": "pass",
+      "basis": "windowed opengl3 capture via scripts/run_wmw_godot_capture_v09.ps1 -SkipRepro; nonblack and color-diversity checks recorded",
+      "headless_used_for_ui_capture": false
+    }
+  },
+  "visual_repair_notes": [
+    "B2 is a failed visual pipeline trial, not a production freeze.",
+    "It replaces B1.x flattened-card pixel surgery with layer construction from B shell materials and B1 photo ingredients.",
+    "The photo layer stays inside the frozen contract photo_slot; x390..408 is rebuilt as a right lip from B-shell bitmap material.",
+    "Program logic performs composition, masking, tint preservation, QA, and atlas packaging only; it does not generate art from scratch.",
+    "User review shows shaped photo mask and independent frame overlay are missing; the next step is not ad hoc pixel patching."
+  ],
+  "image_content_checks": {
+    "ingredient_board": {
+      "size": [
+        1680,
+        1122
+      ],
+      "unique_colors": 141703,
+      "nonblack_pixels": 1881478
+    },
+    "candidate": {
+      "size": [
+        1072,
+        922
+      ],
+      "unique_colors": 102442,
+      "nonblack_pixels": 984531
+    },
+    "geometry_qa": {
+      "size": [
+        942,
+        918
+      ],
+      "unique_colors": 101387,
+      "nonblack_pixels": 860980
+    },
+    "atlas_2x": {
+      "size": [
+        1632,
+        320
+      ],
+      "unique_colors": 101985,
+      "nonblack_pixels": 470182
+    },
+    "runtime_fill_preview": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 77085,
+      "nonblack_pixels": 2071904
+    },
+    "runtime_fill_qa": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 75323,
+      "nonblack_pixels": 2071918
+    },
+    "edge_texture_qa": {
+      "size": [
+        1128,
+        870
+      ],
+      "unique_colors": 12074,
+      "nonblack_pixels": 979170
+    },
+    "b1_3_vs_b2_constructed_board": {
+      "size": [
+        1920,
+        1120
+      ],
+      "unique_colors": 70489,
+      "nonblack_pixels": 2146891
+    },
+    "godot_single_component": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 70062,
+      "nonblack_pixels": 2072146
+    },
+    "godot_single_component_qa": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 66105,
+      "nonblack_pixels": 2073600
+    }
+  }
+}

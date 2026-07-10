@@ -1,0 +1,1668 @@
+{
+  "schema_version": 1,
+  "asset_id": "world_map_wmw_left_region_card_b2_5_badge_fix",
+  "version": "v0.9.11",
+  "round": "B2.5",
+  "date": "2026-07-09",
+  "status": "b2_5_badge_fix_evidence_ready_pending_review",
+  "contract": "D:\\angos\\design\\ui-contracts\\world-map\\left_region_card.json",
+  "contract_frozen_fields_changed": false,
+  "pipeline": "available single master -> edge-expanded full-window cutout -> derived state skins with badge-core recolor -> shape-alpha badge glyph swap -> rectangular photo underlay -> independent globe patch -> runtime text",
+  "inputs": {
+    "candidate_b_original_atlas_2x": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\left_region_card_candidate_b_atlas_2x.png",
+    "candidate_b1_3_photo_atlas_2x": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\428-world-map-wmw-v0-9-5-left-card-candidate-b1-3-atlas-2x.png",
+    "previous_b2_2_overlay": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\458-world-map-wmw-v0-9-8-left-card-b2-2-window-measurement-qa.png",
+    "previous_b2_3_manifest": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\466-world-map-wmw-v0-9-9-left-card-b2-3-manifest.json",
+    "previous_b2_4_manifest": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\476-world-map-wmw-v0-9-10-left-card-b2-4-manifest.json"
+  },
+  "outputs": {
+    "derive_compare": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\479-world-map-wmw-v0-9-11-left-card-b2-5-badge-fix-compare.png",
+    "ingredients": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\480-world-map-wmw-v0-9-11-left-card-b2-5-ingredients.png",
+    "atlas_2x": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\481-world-map-wmw-v0-9-11-left-card-b2-5-atlas-2x.png",
+    "geometry_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\482-world-map-wmw-v0-9-11-left-card-b2-5-geometry-qa.png",
+    "runtime_fill_preview": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\483-world-map-wmw-v0-9-11-left-card-b2-5-runtime-fill.png",
+    "runtime_fill_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\484-world-map-wmw-v0-9-11-left-card-b2-5-runtime-fill-qa.png",
+    "visual_16point_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\485-world-map-wmw-v0-9-11-left-card-b2-5-16point-visual-qa.png",
+    "manifest": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\486-world-map-wmw-v0-9-11-left-card-b2-5-manifest.json",
+    "godot_single_component": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\487-world-map-wmw-v0-9-11-left-card-b2-5-godot-single-component.png",
+    "godot_single_component_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\488-world-map-wmw-v0-9-11-left-card-b2-5-godot-single-component-qa.png",
+    "godot_atlas_copy": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\left_region_card_b25_badge_fix_atlas_2x.png",
+    "godot_manifest_copy": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\left_region_card_b25_badge_fix_manifest.json",
+    "godot_ingredients_dir": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients"
+  },
+  "runtime_tokens": {
+    "label_title": {
+      "python_font_px": 19,
+      "godot_font_size": 25,
+      "color": "#121612"
+    },
+    "meta_status": {
+      "python_font_px": 11,
+      "godot_font_size": 14,
+      "color": "#421c14"
+    }
+  },
+  "measurement": {
+    "master_state": "available",
+    "measurement_rule_version": "wmw_hollow_shell_photo_pipeline_v1_1_single_master_b2_5_badge_fix",
+    "base_measured_window_rect_2x": [
+      38,
+      56,
+      366,
+      184
+    ],
+    "master_window_rect_2x": [
+      37,
+      56,
+      367,
+      192
+    ],
+    "master_adaptive_classifier_samples": {
+      "method": "adaptive nearest-color-set classifier",
+      "photo_sample_rect_2x": [
+        112,
+        80,
+        320,
+        144
+      ],
+      "photo_sample_count": 243,
+      "shell_sample_rows_2x": [
+        {
+          "y": 40,
+          "x1": 52,
+          "x2": 360
+        },
+        {
+          "y": 203,
+          "x1": 52,
+          "x2": 300
+        }
+      ],
+      "shell_sample_count": 71,
+      "sample_grid_step": 8,
+      "row_left_samples": [
+        37,
+        37,
+        38,
+        94
+      ],
+      "row_right_samples": [
+        366,
+        365,
+        352,
+        324
+      ],
+      "col_top_samples": [
+        56,
+        56,
+        56,
+        56
+      ],
+      "col_bottom_samples": [
+        183,
+        180,
+        185,
+        163
+      ]
+    },
+    "master_globe_disc": {
+      "center": [
+        57.0,
+        45.0
+      ],
+      "radius": 26.0,
+      "cream_bbox": [
+        34,
+        21,
+        81,
+        70
+      ],
+      "cream_pixels": 910,
+      "measurement_scope": "available_full_0_0_110_110"
+    },
+    "globe_layering": "independent warm-cream globe patch; window cutout has no globe protection zone",
+    "window_edge_residue_scan": {
+      "base_window_rect_2x": [
+        38,
+        56,
+        366,
+        184
+      ],
+      "expanded_window_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "max_expand_px_per_side": 8,
+      "old_photo_signature": "alpha>180 and b>g+8 and b>40, excluding warm cream globe/badge pixels",
+      "before": {
+        "top": 0,
+        "right": 74,
+        "bottom": 277,
+        "left": 105
+      },
+      "expansions_px": {
+        "top": 0,
+        "right": 1,
+        "bottom": 8,
+        "left": 1
+      },
+      "after": {
+        "top": {
+          "old_photo_signature_pixels": 0,
+          "sample_pixels": []
+        },
+        "right": {
+          "old_photo_signature_pixels": 0,
+          "sample_pixels": []
+        },
+        "bottom": {
+          "old_photo_signature_pixels": 0,
+          "sample_pixels": []
+        },
+        "left": {
+          "old_photo_signature_pixels": 0,
+          "sample_pixels": []
+        }
+      },
+      "status": "pass"
+    },
+    "gateE_same_state_layout": {
+      "status": "pass",
+      "basis": "all four derived states use the exact same master window rectangle; source per-frame windows are no longer production geometry input",
+      "diff_px": 0
+    }
+  },
+  "per_state": [
+    {
+      "state": "selected",
+      "source": "derived_from_available_master",
+      "base_measured_window_rect_2x": [
+        38,
+        56,
+        366,
+        184
+      ],
+      "master_window_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "photo_underlay_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "globe_disc": {
+        "center": [
+          57.0,
+          45.0
+        ],
+        "radius": 26.0,
+        "cream_bbox": [
+          34,
+          21,
+          81,
+          70
+        ],
+        "cream_pixels": 910,
+        "measurement_scope": "available_full_0_0_110_110"
+      },
+      "photo_shape_clipping": "forbidden_not_used",
+      "color_derivation": "available frame-family hue/lightness mapping",
+      "badge_icon_source": "candidate B original selected cream glyph only, 1px-inset shape alpha mask centered inside master badge ring",
+      "badge_glyph_alpha_mask": {
+        "status": "pass",
+        "raw_cream_glyph_pixels": 642,
+        "shape_alpha_pixels_after_1px_inset": 450,
+        "non_cream_opaque_pixels": 0,
+        "transparent_background_pixels": 1310,
+        "crop_bbox_2x": [
+          317,
+          223,
+          357,
+          267
+        ],
+        "method": "cream glyph components excluding master outer badge ring, then 1px inset alpha mask; no rectangular background pixels retained",
+        "rectangular_patch_used": false,
+        "paste_anchor": "badge center",
+        "pasted_size": [
+          40,
+          44
+        ]
+      },
+      "selected_glow_layer": "selected outer green glow extracted from original selected frame",
+      "z_order": "transparent base -> rectangular B1.3 photo underlay -> single-master derived hollow shell -> selected glow if selected -> independent globe patch -> runtime text",
+      "gates": {
+        "gateA_old_photo_residue": {
+          "core_inset_px": 3,
+          "opaque_pixels_in_cutout_core": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "old_content_leftover_scan": {
+          "status": "pass",
+          "scope": "hollow shell plus independent globe patch, full expanded window including coverage-element area; photo layer is excluded because it intentionally contains new content",
+          "old_photo_signature_pixels": 0,
+          "shell_hits": 0,
+          "globe_patch_hits": 0,
+          "sample_pixels": []
+        },
+        "window_edge_residue_scan": {
+          "base_window_rect_2x": [
+            38,
+            56,
+            366,
+            184
+          ],
+          "expanded_window_rect_2x": [
+            37,
+            56,
+            367,
+            192
+          ],
+          "max_expand_px_per_side": 8,
+          "old_photo_signature": "alpha>180 and b>g+8 and b>40, excluding warm cream globe/badge pixels",
+          "before": {
+            "top": 0,
+            "right": 74,
+            "bottom": 277,
+            "left": 105
+          },
+          "expansions_px": {
+            "top": 0,
+            "right": 1,
+            "bottom": 8,
+            "left": 1
+          },
+          "after": {
+            "top": {
+              "old_photo_signature_pixels": 0,
+              "sample_pixels": []
+            },
+            "right": {
+              "old_photo_signature_pixels": 0,
+              "sample_pixels": []
+            },
+            "bottom": {
+              "old_photo_signature_pixels": 0,
+              "sample_pixels": []
+            },
+            "left": {
+              "old_photo_signature_pixels": 0,
+              "sample_pixels": []
+            }
+          },
+          "status": "pass"
+        },
+        "gateB_border_integrity": {
+          "ring_px": 3,
+          "broken_opaque_pixels": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateC_window_alpha": {
+          "transparent_or_nonopaque_pixels_in_window": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateD_green_residue": {
+          "status": "skipped_selected_green_glow_semantic",
+          "green_signature_pixels_full_frame": null,
+          "basis": "selected state is intentionally exempt; selected green glow is state semantics"
+        },
+        "badge_state_color_consistency": {
+          "status": "pass",
+          "state": "selected",
+          "mode": "hue_compare",
+          "frame_family_summary": {
+            "count": 36298,
+            "hue": 0.1927,
+            "hue_degrees": 69.4,
+            "lightness": 0.2354,
+            "saturation": 0.4752,
+            "avg_rgb": [
+              78.1,
+              86.3,
+              33.7
+            ]
+          },
+          "badge_core_summary": {
+            "count": 4647,
+            "hue": 0.1894,
+            "hue_degrees": 68.2,
+            "lightness": 0.1853,
+            "saturation": 0.4913,
+            "avg_rgb": [
+              62.3,
+              68.9,
+              25.6
+            ]
+          },
+          "hue_delta": 0.0033,
+          "hue_tolerance": 0.08,
+          "low_saturation_threshold": 0.12,
+          "lightness_tolerance_when_low_saturation": 0.18,
+          "sample_scope": "frame family mask excluding action badge vs action badge inner core; both use multi-pixel samples, not single-point probes",
+          "sample_count_minimum": {
+            "frame": 100,
+            "badge": 80
+          },
+          "glyph_shape_alpha_mask": {
+            "status": "pass",
+            "raw_cream_glyph_pixels": 642,
+            "shape_alpha_pixels_after_1px_inset": 450,
+            "non_cream_opaque_pixels": 0,
+            "transparent_background_pixels": 1310,
+            "crop_bbox_2x": [
+              317,
+              223,
+              357,
+              267
+            ],
+            "method": "cream glyph components excluding master outer badge ring, then 1px inset alpha mask; no rectangular background pixels retained",
+            "rectangular_patch_used": false,
+            "paste_anchor": "badge center",
+            "pasted_size": [
+              40,
+              44
+            ]
+          }
+        },
+        "gateF_geometry": {
+          "size_2x": [
+            408,
+            320
+          ],
+          "size_1x": [
+            204,
+            160
+          ],
+          "ratio": 1.275,
+          "target_ratio": 1.275,
+          "ratio_delta": 0.0,
+          "status": "pass"
+        }
+      }
+    },
+    {
+      "state": "available",
+      "source": "single_master_available",
+      "base_measured_window_rect_2x": [
+        38,
+        56,
+        366,
+        184
+      ],
+      "master_window_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "photo_underlay_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "globe_disc": {
+        "center": [
+          57.0,
+          45.0
+        ],
+        "radius": 26.0,
+        "cream_bbox": [
+          34,
+          21,
+          81,
+          70
+        ],
+        "cream_pixels": 910,
+        "measurement_scope": "available_full_0_0_110_110"
+      },
+      "photo_shape_clipping": "forbidden_not_used",
+      "color_derivation": "master_no_recolor",
+      "badge_icon_source": "available master",
+      "badge_glyph_alpha_mask": {
+        "status": "pass",
+        "method": "available master keeps original target glyph; derived states replace glyph through shape alpha mask",
+        "rectangular_patch_used": false,
+        "non_cream_opaque_pixels": 0
+      },
+      "selected_glow_layer": "not_applied",
+      "z_order": "transparent base -> rectangular B1.3 photo underlay -> single-master derived hollow shell -> selected glow if selected -> independent globe patch -> runtime text",
+      "gates": {
+        "gateA_old_photo_residue": {
+          "core_inset_px": 3,
+          "opaque_pixels_in_cutout_core": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "old_content_leftover_scan": {
+          "status": "pass",
+          "scope": "hollow shell plus independent globe patch, full expanded window including coverage-element area; photo layer is excluded because it intentionally contains new content",
+          "old_photo_signature_pixels": 0,
+          "shell_hits": 0,
+          "globe_patch_hits": 0,
+          "sample_pixels": []
+        },
+        "window_edge_residue_scan": {
+          "base_window_rect_2x": [
+            38,
+            56,
+            366,
+            184
+          ],
+          "expanded_window_rect_2x": [
+            37,
+            56,
+            367,
+            192
+          ],
+          "max_expand_px_per_side": 8,
+          "old_photo_signature": "alpha>180 and b>g+8 and b>40, excluding warm cream globe/badge pixels",
+          "before": {
+            "top": 0,
+            "right": 74,
+            "bottom": 277,
+            "left": 105
+          },
+          "expansions_px": {
+            "top": 0,
+            "right": 1,
+            "bottom": 8,
+            "left": 1
+          },
+          "after": {
+            "top": {
+              "old_photo_signature_pixels": 0,
+              "sample_pixels": []
+            },
+            "right": {
+              "old_photo_signature_pixels": 0,
+              "sample_pixels": []
+            },
+            "bottom": {
+              "old_photo_signature_pixels": 0,
+              "sample_pixels": []
+            },
+            "left": {
+              "old_photo_signature_pixels": 0,
+              "sample_pixels": []
+            }
+          },
+          "status": "pass"
+        },
+        "gateB_border_integrity": {
+          "ring_px": 3,
+          "broken_opaque_pixels": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateC_window_alpha": {
+          "transparent_or_nonopaque_pixels_in_window": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateD_green_residue": {
+          "green_signature_pixels_full_frame": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "badge_state_color_consistency": {
+          "status": "pass",
+          "state": "available",
+          "mode": "hue_compare",
+          "frame_family_summary": {
+            "count": 37539,
+            "hue": 0.5058,
+            "hue_degrees": 182.1,
+            "lightness": 0.2293,
+            "saturation": 0.5958,
+            "avg_rgb": [
+              27.4,
+              86.9,
+              89.3
+            ]
+          },
+          "badge_core_summary": {
+            "count": 4001,
+            "hue": 0.4976,
+            "hue_degrees": 179.1,
+            "lightness": 0.1717,
+            "saturation": 0.6392,
+            "avg_rgb": [
+              20.3,
+              65.7,
+              66.9
+            ]
+          },
+          "hue_delta": 0.0082,
+          "hue_tolerance": 0.08,
+          "low_saturation_threshold": 0.12,
+          "lightness_tolerance_when_low_saturation": 0.18,
+          "sample_scope": "frame family mask excluding action badge vs action badge inner core; both use multi-pixel samples, not single-point probes",
+          "sample_count_minimum": {
+            "frame": 100,
+            "badge": 80
+          },
+          "glyph_shape_alpha_mask": {
+            "status": "pass",
+            "method": "available master keeps original target glyph; derived states replace glyph through shape alpha mask",
+            "rectangular_patch_used": false,
+            "non_cream_opaque_pixels": 0
+          }
+        },
+        "gateF_geometry": {
+          "size_2x": [
+            408,
+            320
+          ],
+          "size_1x": [
+            204,
+            160
+          ],
+          "ratio": 1.275,
+          "target_ratio": 1.275,
+          "ratio_delta": 0.0,
+          "status": "pass"
+        }
+      }
+    },
+    {
+      "state": "warning",
+      "source": "derived_from_available_master",
+      "base_measured_window_rect_2x": [
+        38,
+        56,
+        366,
+        184
+      ],
+      "master_window_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "photo_underlay_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "globe_disc": {
+        "center": [
+          57.0,
+          45.0
+        ],
+        "radius": 26.0,
+        "cream_bbox": [
+          34,
+          21,
+          81,
+          70
+        ],
+        "cream_pixels": 910,
+        "measurement_scope": "available_full_0_0_110_110"
+      },
+      "photo_shape_clipping": "forbidden_not_used",
+      "color_derivation": "available frame-family hue/lightness mapping",
+      "badge_icon_source": "candidate B original warning cream glyph only, 1px-inset shape alpha mask centered inside master badge ring",
+      "badge_glyph_alpha_mask": {
+        "status": "pass",
+        "raw_cream_glyph_pixels": 637,
+        "shape_alpha_pixels_after_1px_inset": 242,
+        "non_cream_opaque_pixels": 0,
+        "transparent_background_pixels": 1858,
+        "crop_bbox_2x": [
+          317,
+          219,
+          359,
+          269
+        ],
+        "method": "cream glyph components excluding master outer badge ring, then 1px inset alpha mask; no rectangular background pixels retained",
+        "rectangular_patch_used": false,
+        "paste_anchor": "badge center",
+        "pasted_size": [
+          42,
+          50
+        ]
+      },
+      "selected_glow_layer": "not_applied",
+      "z_order": "transparent base -> rectangular B1.3 photo underlay -> single-master derived hollow shell -> selected glow if selected -> independent globe patch -> runtime text",
+      "gates": {
+        "gateA_old_photo_residue": {
+          "core_inset_px": 3,
+          "opaque_pixels_in_cutout_core": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "old_content_leftover_scan": {
+          "status": "pass",
+          "scope": "hollow shell plus independent globe patch, full expanded window including coverage-element area; photo layer is excluded because it intentionally contains new content",
+          "old_photo_signature_pixels": 0,
+          "shell_hits": 0,
+          "globe_patch_hits": 0,
+          "sample_pixels": []
+        },
+        "window_edge_residue_scan": {
+          "base_window_rect_2x": [
+            38,
+            56,
+            366,
+            184
+          ],
+          "expanded_window_rect_2x": [
+            37,
+            56,
+            367,
+            192
+          ],
+          "max_expand_px_per_side": 8,
+          "old_photo_signature": "alpha>180 and b>g+8 and b>40, excluding warm cream globe/badge pixels",
+          "before": {
+            "top": 0,
+            "right": 74,
+            "bottom": 277,
+            "left": 105
+          },
+          "expansions_px": {
+            "top": 0,
+            "right": 1,
+            "bottom": 8,
+            "left": 1
+          },
+          "after": {
+            "top": {
+              "old_photo_signature_pixels": 0,
+              "sample_pixels": []
+            },
+            "right": {
+              "old_photo_signature_pixels": 0,
+              "sample_pixels": []
+            },
+            "bottom": {
+              "old_photo_signature_pixels": 0,
+              "sample_pixels": []
+            },
+            "left": {
+              "old_photo_signature_pixels": 0,
+              "sample_pixels": []
+            }
+          },
+          "status": "pass"
+        },
+        "gateB_border_integrity": {
+          "ring_px": 3,
+          "broken_opaque_pixels": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateC_window_alpha": {
+          "transparent_or_nonopaque_pixels_in_window": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateD_green_residue": {
+          "green_signature_pixels_full_frame": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "badge_state_color_consistency": {
+          "status": "pass",
+          "state": "warning",
+          "mode": "hue_compare",
+          "frame_family_summary": {
+            "count": 36038,
+            "hue": 0.1082,
+            "hue_degrees": 38.9,
+            "lightness": 0.3074,
+            "saturation": 0.8499,
+            "avg_rgb": [
+              139.9,
+              97.7,
+              16.9
+            ]
+          },
+          "badge_core_summary": {
+            "count": 4848,
+            "hue": 0.1078,
+            "hue_degrees": 38.8,
+            "lightness": 0.2411,
+            "saturation": 0.8344,
+            "avg_rgb": [
+              110.0,
+              76.7,
+              13.0
+            ]
+          },
+          "hue_delta": 0.0004,
+          "hue_tolerance": 0.08,
+          "low_saturation_threshold": 0.12,
+          "lightness_tolerance_when_low_saturation": 0.18,
+          "sample_scope": "frame family mask excluding action badge vs action badge inner core; both use multi-pixel samples, not single-point probes",
+          "sample_count_minimum": {
+            "frame": 100,
+            "badge": 80
+          },
+          "glyph_shape_alpha_mask": {
+            "status": "pass",
+            "raw_cream_glyph_pixels": 637,
+            "shape_alpha_pixels_after_1px_inset": 242,
+            "non_cream_opaque_pixels": 0,
+            "transparent_background_pixels": 1858,
+            "crop_bbox_2x": [
+              317,
+              219,
+              359,
+              269
+            ],
+            "method": "cream glyph components excluding master outer badge ring, then 1px inset alpha mask; no rectangular background pixels retained",
+            "rectangular_patch_used": false,
+            "paste_anchor": "badge center",
+            "pasted_size": [
+              42,
+              50
+            ]
+          }
+        },
+        "gateF_geometry": {
+          "size_2x": [
+            408,
+            320
+          ],
+          "size_1x": [
+            204,
+            160
+          ],
+          "ratio": 1.275,
+          "target_ratio": 1.275,
+          "ratio_delta": 0.0,
+          "status": "pass"
+        }
+      }
+    },
+    {
+      "state": "locked",
+      "source": "derived_from_available_master",
+      "base_measured_window_rect_2x": [
+        38,
+        56,
+        366,
+        184
+      ],
+      "master_window_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "photo_underlay_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "globe_disc": {
+        "center": [
+          57.0,
+          45.0
+        ],
+        "radius": 26.0,
+        "cream_bbox": [
+          34,
+          21,
+          81,
+          70
+        ],
+        "cream_pixels": 910,
+        "measurement_scope": "available_full_0_0_110_110"
+      },
+      "photo_shape_clipping": "forbidden_not_used",
+      "color_derivation": "available frame-family hue/lightness mapping",
+      "badge_icon_source": "candidate B original locked cream glyph only, 1px-inset shape alpha mask centered inside master badge ring",
+      "badge_glyph_alpha_mask": {
+        "status": "pass",
+        "raw_cream_glyph_pixels": 1336,
+        "shape_alpha_pixels_after_1px_inset": 996,
+        "non_cream_opaque_pixels": 0,
+        "transparent_background_pixels": 964,
+        "crop_bbox_2x": [
+          317,
+          217,
+          352,
+          273
+        ],
+        "method": "cream glyph components excluding master outer badge ring, then 1px inset alpha mask; no rectangular background pixels retained",
+        "rectangular_patch_used": false,
+        "paste_anchor": "badge center",
+        "pasted_size": [
+          35,
+          56
+        ]
+      },
+      "selected_glow_layer": "not_applied",
+      "z_order": "transparent base -> rectangular B1.3 photo underlay -> single-master derived hollow shell -> selected glow if selected -> independent globe patch -> runtime text",
+      "gates": {
+        "gateA_old_photo_residue": {
+          "core_inset_px": 3,
+          "opaque_pixels_in_cutout_core": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "old_content_leftover_scan": {
+          "status": "pass",
+          "scope": "hollow shell plus independent globe patch, full expanded window including coverage-element area; photo layer is excluded because it intentionally contains new content",
+          "old_photo_signature_pixels": 0,
+          "shell_hits": 0,
+          "globe_patch_hits": 0,
+          "sample_pixels": []
+        },
+        "window_edge_residue_scan": {
+          "base_window_rect_2x": [
+            38,
+            56,
+            366,
+            184
+          ],
+          "expanded_window_rect_2x": [
+            37,
+            56,
+            367,
+            192
+          ],
+          "max_expand_px_per_side": 8,
+          "old_photo_signature": "alpha>180 and b>g+8 and b>40, excluding warm cream globe/badge pixels",
+          "before": {
+            "top": 0,
+            "right": 74,
+            "bottom": 277,
+            "left": 105
+          },
+          "expansions_px": {
+            "top": 0,
+            "right": 1,
+            "bottom": 8,
+            "left": 1
+          },
+          "after": {
+            "top": {
+              "old_photo_signature_pixels": 0,
+              "sample_pixels": []
+            },
+            "right": {
+              "old_photo_signature_pixels": 0,
+              "sample_pixels": []
+            },
+            "bottom": {
+              "old_photo_signature_pixels": 0,
+              "sample_pixels": []
+            },
+            "left": {
+              "old_photo_signature_pixels": 0,
+              "sample_pixels": []
+            }
+          },
+          "status": "pass"
+        },
+        "gateB_border_integrity": {
+          "ring_px": 3,
+          "broken_opaque_pixels": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateC_window_alpha": {
+          "transparent_or_nonopaque_pixels_in_window": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateD_green_residue": {
+          "green_signature_pixels_full_frame": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "badge_state_color_consistency": {
+          "status": "pass",
+          "state": "locked",
+          "mode": "low_saturation_lightness_compare",
+          "frame_family_summary": {
+            "count": 37539,
+            "hue": 0.1793,
+            "hue_degrees": 64.6,
+            "lightness": 0.3513,
+            "saturation": 0.0628,
+            "avg_rgb": [
+              93.5,
+              94.5,
+              84.7
+            ]
+          },
+          "badge_core_summary": {
+            "count": 4164,
+            "hue": 0.1811,
+            "hue_degrees": 65.2,
+            "lightness": 0.2726,
+            "saturation": 0.0644,
+            "avg_rgb": [
+              72.8,
+              73.6,
+              65.4
+            ]
+          },
+          "hue_delta": 0.0018,
+          "hue_tolerance": 0.08,
+          "low_saturation_threshold": 0.12,
+          "lightness_tolerance_when_low_saturation": 0.18,
+          "sample_scope": "frame family mask excluding action badge vs action badge inner core; both use multi-pixel samples, not single-point probes",
+          "sample_count_minimum": {
+            "frame": 100,
+            "badge": 80
+          },
+          "glyph_shape_alpha_mask": {
+            "status": "pass",
+            "raw_cream_glyph_pixels": 1336,
+            "shape_alpha_pixels_after_1px_inset": 996,
+            "non_cream_opaque_pixels": 0,
+            "transparent_background_pixels": 964,
+            "crop_bbox_2x": [
+              317,
+              217,
+              352,
+              273
+            ],
+            "method": "cream glyph components excluding master outer badge ring, then 1px inset alpha mask; no rectangular background pixels retained",
+            "rectangular_patch_used": false,
+            "paste_anchor": "badge center",
+            "pasted_size": [
+              35,
+              56
+            ]
+          }
+        },
+        "gateF_geometry": {
+          "size_2x": [
+            408,
+            320
+          ],
+          "size_1x": [
+            204,
+            160
+          ],
+          "ratio": 1.275,
+          "target_ratio": 1.275,
+          "ratio_delta": 0.0,
+          "status": "pass"
+        }
+      }
+    }
+  ],
+  "geometry_metrics": [
+    {
+      "state": "selected",
+      "export_size_2x": [
+        408,
+        320
+      ],
+      "export_size_1x": [
+        204,
+        160
+      ],
+      "ratio": 1.275,
+      "ratio_target": 1.275,
+      "ratio_delta": 0.0,
+      "ratio_pass": true,
+      "master_window_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ]
+    },
+    {
+      "state": "available",
+      "export_size_2x": [
+        408,
+        320
+      ],
+      "export_size_1x": [
+        204,
+        160
+      ],
+      "ratio": 1.275,
+      "ratio_target": 1.275,
+      "ratio_delta": 0.0,
+      "ratio_pass": true,
+      "master_window_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ]
+    },
+    {
+      "state": "warning",
+      "export_size_2x": [
+        408,
+        320
+      ],
+      "export_size_1x": [
+        204,
+        160
+      ],
+      "ratio": 1.275,
+      "ratio_target": 1.275,
+      "ratio_delta": 0.0,
+      "ratio_pass": true,
+      "master_window_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ]
+    },
+    {
+      "state": "locked",
+      "export_size_2x": [
+        408,
+        320
+      ],
+      "export_size_1x": [
+        204,
+        160
+      ],
+      "ratio": 1.275,
+      "ratio_target": 1.275,
+      "ratio_delta": 0.0,
+      "ratio_pass": true,
+      "master_window_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ]
+    }
+  ],
+  "gates": {
+    "gateA_old_photo_residue_core": {
+      "status": "pass",
+      "basis": "single master hollow-shell cutout core contains zero opaque shell pixels"
+    },
+    "old_content_leftover_scan": {
+      "status": "pass",
+      "basis": "full expanded window scan on shell/globe-patch layers contains zero old source photo signature pixels"
+    },
+    "window_edge_residue_scan": {
+      "status": "pass",
+      "basis": "after edge expansion, all four sides outside the window contain zero old photo signature pixels",
+      "scan": {
+        "base_window_rect_2x": [
+          38,
+          56,
+          366,
+          184
+        ],
+        "expanded_window_rect_2x": [
+          37,
+          56,
+          367,
+          192
+        ],
+        "max_expand_px_per_side": 8,
+        "old_photo_signature": "alpha>180 and b>g+8 and b>40, excluding warm cream globe/badge pixels",
+        "before": {
+          "top": 0,
+          "right": 74,
+          "bottom": 277,
+          "left": 105
+        },
+        "expansions_px": {
+          "top": 0,
+          "right": 1,
+          "bottom": 8,
+          "left": 1
+        },
+        "after": {
+          "top": {
+            "old_photo_signature_pixels": 0,
+            "sample_pixels": []
+          },
+          "right": {
+            "old_photo_signature_pixels": 0,
+            "sample_pixels": []
+          },
+          "bottom": {
+            "old_photo_signature_pixels": 0,
+            "sample_pixels": []
+          },
+          "left": {
+            "old_photo_signature_pixels": 0,
+            "sample_pixels": []
+          }
+        },
+        "status": "pass"
+      }
+    },
+    "gateB_border_integrity_ring": {
+      "status": "pass",
+      "basis": "3px ring outside master window remains opaque wherever available master was opaque"
+    },
+    "gateC_window_alpha_after_composite": {
+      "status": "pass",
+      "basis": "photo underlay fills the master window; final alpha inside window is 255"
+    },
+    "gateD_green_residue_nonselected": {
+      "status": "pass",
+      "basis": "selected is exempt; available/warning/locked full-frame green signature must be zero"
+    },
+    "badge_state_color_consistency": {
+      "status": "pass",
+      "basis": "badge inner core belongs to frame-color family; hue/lightness comparison uses multi-pixel samples and glyph alpha-mask metrics",
+      "per_state": {
+        "selected": {
+          "status": "pass",
+          "state": "selected",
+          "mode": "hue_compare",
+          "frame_family_summary": {
+            "count": 36298,
+            "hue": 0.1927,
+            "hue_degrees": 69.4,
+            "lightness": 0.2354,
+            "saturation": 0.4752,
+            "avg_rgb": [
+              78.1,
+              86.3,
+              33.7
+            ]
+          },
+          "badge_core_summary": {
+            "count": 4647,
+            "hue": 0.1894,
+            "hue_degrees": 68.2,
+            "lightness": 0.1853,
+            "saturation": 0.4913,
+            "avg_rgb": [
+              62.3,
+              68.9,
+              25.6
+            ]
+          },
+          "hue_delta": 0.0033,
+          "hue_tolerance": 0.08,
+          "low_saturation_threshold": 0.12,
+          "lightness_tolerance_when_low_saturation": 0.18,
+          "sample_scope": "frame family mask excluding action badge vs action badge inner core; both use multi-pixel samples, not single-point probes",
+          "sample_count_minimum": {
+            "frame": 100,
+            "badge": 80
+          },
+          "glyph_shape_alpha_mask": {
+            "status": "pass",
+            "raw_cream_glyph_pixels": 642,
+            "shape_alpha_pixels_after_1px_inset": 450,
+            "non_cream_opaque_pixels": 0,
+            "transparent_background_pixels": 1310,
+            "crop_bbox_2x": [
+              317,
+              223,
+              357,
+              267
+            ],
+            "method": "cream glyph components excluding master outer badge ring, then 1px inset alpha mask; no rectangular background pixels retained",
+            "rectangular_patch_used": false,
+            "paste_anchor": "badge center",
+            "pasted_size": [
+              40,
+              44
+            ]
+          }
+        },
+        "available": {
+          "status": "pass",
+          "state": "available",
+          "mode": "hue_compare",
+          "frame_family_summary": {
+            "count": 37539,
+            "hue": 0.5058,
+            "hue_degrees": 182.1,
+            "lightness": 0.2293,
+            "saturation": 0.5958,
+            "avg_rgb": [
+              27.4,
+              86.9,
+              89.3
+            ]
+          },
+          "badge_core_summary": {
+            "count": 4001,
+            "hue": 0.4976,
+            "hue_degrees": 179.1,
+            "lightness": 0.1717,
+            "saturation": 0.6392,
+            "avg_rgb": [
+              20.3,
+              65.7,
+              66.9
+            ]
+          },
+          "hue_delta": 0.0082,
+          "hue_tolerance": 0.08,
+          "low_saturation_threshold": 0.12,
+          "lightness_tolerance_when_low_saturation": 0.18,
+          "sample_scope": "frame family mask excluding action badge vs action badge inner core; both use multi-pixel samples, not single-point probes",
+          "sample_count_minimum": {
+            "frame": 100,
+            "badge": 80
+          },
+          "glyph_shape_alpha_mask": {
+            "status": "pass",
+            "method": "available master keeps original target glyph; derived states replace glyph through shape alpha mask",
+            "rectangular_patch_used": false,
+            "non_cream_opaque_pixels": 0
+          }
+        },
+        "warning": {
+          "status": "pass",
+          "state": "warning",
+          "mode": "hue_compare",
+          "frame_family_summary": {
+            "count": 36038,
+            "hue": 0.1082,
+            "hue_degrees": 38.9,
+            "lightness": 0.3074,
+            "saturation": 0.8499,
+            "avg_rgb": [
+              139.9,
+              97.7,
+              16.9
+            ]
+          },
+          "badge_core_summary": {
+            "count": 4848,
+            "hue": 0.1078,
+            "hue_degrees": 38.8,
+            "lightness": 0.2411,
+            "saturation": 0.8344,
+            "avg_rgb": [
+              110.0,
+              76.7,
+              13.0
+            ]
+          },
+          "hue_delta": 0.0004,
+          "hue_tolerance": 0.08,
+          "low_saturation_threshold": 0.12,
+          "lightness_tolerance_when_low_saturation": 0.18,
+          "sample_scope": "frame family mask excluding action badge vs action badge inner core; both use multi-pixel samples, not single-point probes",
+          "sample_count_minimum": {
+            "frame": 100,
+            "badge": 80
+          },
+          "glyph_shape_alpha_mask": {
+            "status": "pass",
+            "raw_cream_glyph_pixels": 637,
+            "shape_alpha_pixels_after_1px_inset": 242,
+            "non_cream_opaque_pixels": 0,
+            "transparent_background_pixels": 1858,
+            "crop_bbox_2x": [
+              317,
+              219,
+              359,
+              269
+            ],
+            "method": "cream glyph components excluding master outer badge ring, then 1px inset alpha mask; no rectangular background pixels retained",
+            "rectangular_patch_used": false,
+            "paste_anchor": "badge center",
+            "pasted_size": [
+              42,
+              50
+            ]
+          }
+        },
+        "locked": {
+          "status": "pass",
+          "state": "locked",
+          "mode": "low_saturation_lightness_compare",
+          "frame_family_summary": {
+            "count": 37539,
+            "hue": 0.1793,
+            "hue_degrees": 64.6,
+            "lightness": 0.3513,
+            "saturation": 0.0628,
+            "avg_rgb": [
+              93.5,
+              94.5,
+              84.7
+            ]
+          },
+          "badge_core_summary": {
+            "count": 4164,
+            "hue": 0.1811,
+            "hue_degrees": 65.2,
+            "lightness": 0.2726,
+            "saturation": 0.0644,
+            "avg_rgb": [
+              72.8,
+              73.6,
+              65.4
+            ]
+          },
+          "hue_delta": 0.0018,
+          "hue_tolerance": 0.08,
+          "low_saturation_threshold": 0.12,
+          "lightness_tolerance_when_low_saturation": 0.18,
+          "sample_scope": "frame family mask excluding action badge vs action badge inner core; both use multi-pixel samples, not single-point probes",
+          "sample_count_minimum": {
+            "frame": 100,
+            "badge": 80
+          },
+          "glyph_shape_alpha_mask": {
+            "status": "pass",
+            "raw_cream_glyph_pixels": 1336,
+            "shape_alpha_pixels_after_1px_inset": 996,
+            "non_cream_opaque_pixels": 0,
+            "transparent_background_pixels": 964,
+            "crop_bbox_2x": [
+              317,
+              217,
+              352,
+              273
+            ],
+            "method": "cream glyph components excluding master outer badge ring, then 1px inset alpha mask; no rectangular background pixels retained",
+            "rectangular_patch_used": false,
+            "paste_anchor": "badge center",
+            "pasted_size": [
+              35,
+              56
+            ]
+          }
+        }
+      }
+    },
+    "gateE_same_state_window_layout": {
+      "status": "pass",
+      "basis": "all four derived states use the exact same master window rectangle; source per-frame windows are no longer production geometry input",
+      "diff_px": 0
+    },
+    "gateF_geometry_ratio": {
+      "status": "pass",
+      "basis": "all derived frames are 408x320; ratio 1.275 unchanged",
+      "target_ratio": 1.275,
+      "tolerance": 0.015
+    },
+    "manual_16point_visual_check": {
+      "status": "evidence_ready",
+      "basis": "inspect 485: four states x four checkpoints (globe arc/right edge/bottom edge/badge); execution output is evidence-ready only, reviewer/user owns PASS/FAIL",
+      "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\485-world-map-wmw-v0-9-11-left-card-b2-5-16point-visual-qa.png",
+      "checks": {
+        "selected": {
+          "globe_arc_underlay": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\485-world-map-wmw-v0-9-11-left-card-b2-5-16point-visual-qa.png",
+            "scale": "200%",
+            "review_owner": "reviewer_or_user",
+            "self_check_scope": "evidence prepared only; execution self-check is not final PASS"
+          },
+          "window_right_edge": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\485-world-map-wmw-v0-9-11-left-card-b2-5-16point-visual-qa.png",
+            "scale": "200%",
+            "review_owner": "reviewer_or_user",
+            "self_check_scope": "evidence prepared only; execution self-check is not final PASS"
+          },
+          "window_bottom_edge": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\485-world-map-wmw-v0-9-11-left-card-b2-5-16point-visual-qa.png",
+            "scale": "200%",
+            "review_owner": "reviewer_or_user",
+            "self_check_scope": "evidence prepared only; execution self-check is not final PASS"
+          },
+          "badge_area": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\485-world-map-wmw-v0-9-11-left-card-b2-5-16point-visual-qa.png",
+            "scale": "200%",
+            "review_owner": "reviewer_or_user",
+            "self_check_scope": "evidence prepared only; execution self-check is not final PASS"
+          }
+        },
+        "available": {
+          "globe_arc_underlay": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\485-world-map-wmw-v0-9-11-left-card-b2-5-16point-visual-qa.png",
+            "scale": "200%",
+            "review_owner": "reviewer_or_user",
+            "self_check_scope": "evidence prepared only; execution self-check is not final PASS"
+          },
+          "window_right_edge": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\485-world-map-wmw-v0-9-11-left-card-b2-5-16point-visual-qa.png",
+            "scale": "200%",
+            "review_owner": "reviewer_or_user",
+            "self_check_scope": "evidence prepared only; execution self-check is not final PASS"
+          },
+          "window_bottom_edge": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\485-world-map-wmw-v0-9-11-left-card-b2-5-16point-visual-qa.png",
+            "scale": "200%",
+            "review_owner": "reviewer_or_user",
+            "self_check_scope": "evidence prepared only; execution self-check is not final PASS"
+          },
+          "badge_area": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\485-world-map-wmw-v0-9-11-left-card-b2-5-16point-visual-qa.png",
+            "scale": "200%",
+            "review_owner": "reviewer_or_user",
+            "self_check_scope": "evidence prepared only; execution self-check is not final PASS"
+          }
+        },
+        "warning": {
+          "globe_arc_underlay": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\485-world-map-wmw-v0-9-11-left-card-b2-5-16point-visual-qa.png",
+            "scale": "200%",
+            "review_owner": "reviewer_or_user",
+            "self_check_scope": "evidence prepared only; execution self-check is not final PASS"
+          },
+          "window_right_edge": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\485-world-map-wmw-v0-9-11-left-card-b2-5-16point-visual-qa.png",
+            "scale": "200%",
+            "review_owner": "reviewer_or_user",
+            "self_check_scope": "evidence prepared only; execution self-check is not final PASS"
+          },
+          "window_bottom_edge": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\485-world-map-wmw-v0-9-11-left-card-b2-5-16point-visual-qa.png",
+            "scale": "200%",
+            "review_owner": "reviewer_or_user",
+            "self_check_scope": "evidence prepared only; execution self-check is not final PASS"
+          },
+          "badge_area": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\485-world-map-wmw-v0-9-11-left-card-b2-5-16point-visual-qa.png",
+            "scale": "200%",
+            "review_owner": "reviewer_or_user",
+            "self_check_scope": "evidence prepared only; execution self-check is not final PASS"
+          }
+        },
+        "locked": {
+          "globe_arc_underlay": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\485-world-map-wmw-v0-9-11-left-card-b2-5-16point-visual-qa.png",
+            "scale": "200%",
+            "review_owner": "reviewer_or_user",
+            "self_check_scope": "evidence prepared only; execution self-check is not final PASS"
+          },
+          "window_right_edge": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\485-world-map-wmw-v0-9-11-left-card-b2-5-16point-visual-qa.png",
+            "scale": "200%",
+            "review_owner": "reviewer_or_user",
+            "self_check_scope": "evidence prepared only; execution self-check is not final PASS"
+          },
+          "window_bottom_edge": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\485-world-map-wmw-v0-9-11-left-card-b2-5-16point-visual-qa.png",
+            "scale": "200%",
+            "review_owner": "reviewer_or_user",
+            "self_check_scope": "evidence prepared only; execution self-check is not final PASS"
+          },
+          "badge_area": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\485-world-map-wmw-v0-9-11-left-card-b2-5-16point-visual-qa.png",
+            "scale": "200%",
+            "review_owner": "reviewer_or_user",
+            "self_check_scope": "evidence prepared only; execution self-check is not final PASS"
+          }
+        }
+      }
+    },
+    "derived_art_quality_check": {
+      "status": "evidence_ready",
+      "basis": "inspect 479: derived status colors/material comparison is prepared for reviewer; execution self-check is not final PASS",
+      "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\479-world-map-wmw-v0-9-11-left-card-b2-5-badge-fix-compare.png"
+    },
+    "godot_windowed_capture": {
+      "status": "pass",
+      "basis": "windowed opengl3 capture via scripts/run_wmw_godot_capture_v09.ps1 -SkipRepro",
+      "headless_used_for_ui_capture": false
+    }
+  },
+  "image_content_checks": {
+    "derive_compare": {
+      "size": [
+        1780,
+        1040
+      ],
+      "unique_colors": 136732,
+      "nonblack_pixels": 1847613
+    },
+    "ingredients": {
+      "size": [
+        1920,
+        1060
+      ],
+      "unique_colors": 27027,
+      "nonblack_pixels": 2033843
+    },
+    "atlas_2x": {
+      "size": [
+        1632,
+        320
+      ],
+      "unique_colors": 69606,
+      "nonblack_pixels": 460453
+    },
+    "geometry_qa": {
+      "size": [
+        942,
+        918
+      ],
+      "unique_colors": 69103,
+      "nonblack_pixels": 861584
+    },
+    "runtime_fill_preview": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 67714,
+      "nonblack_pixels": 2071717
+    },
+    "runtime_fill_qa": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 66798,
+      "nonblack_pixels": 2071720
+    },
+    "visual_16point_qa": {
+      "size": [
+        1920,
+        1540
+      ],
+      "unique_colors": 74456,
+      "nonblack_pixels": 2951125
+    },
+    "godot_single_component": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 56901,
+      "nonblack_pixels": 2072459
+    },
+    "godot_single_component_qa": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 57138,
+      "nonblack_pixels": 2073600
+    }
+  },
+  "prohibitions_observed": {
+    "imagegen_called": false,
+    "photo_shape_clipping_used": false,
+    "per_state_window_sources_used": false,
+    "selected_green_cleanup_used": false,
+    "globe_protection_zone_used": false,
+    "source_frame_badge_slot_crop_used": false,
+    "badge_rectangular_patch_used": false,
+    "contract_frozen_fields_changed": false,
+    "other_classes_batch_produced": false,
+    "other_layers_modified": "badge layer and derived recolor only; B2.4 globe patch, edge scan, and photo layer logic retained"
+  }
+}

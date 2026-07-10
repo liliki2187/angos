@@ -1,0 +1,1588 @@
+{
+  "schema_version": 1,
+  "asset_id": "world_map_wmw_left_region_card_b2_7_contract_badge",
+  "version": "v0.9.13",
+  "round": "B2.7",
+  "date": "2026-07-10",
+  "status": "b2_7_evidence_ready_pending_user_visual_review",
+  "contract": "D:\\angos\\design\\ui-contracts\\world-map\\left_region_card.json",
+  "contract_frozen_fields_changed": false,
+  "failure_review": {
+    "repeated_failure_root_cause": "cleanup and gate shared the same connected-component classifier, so both preserved the old target crescent; legacy badge center also differed from the frozen action slot by about 23px",
+    "b26_old_visual_center_probe_2x": [
+      331,
+      246
+    ],
+    "contract_runtime_center_2x": [
+      354.0,
+      250.0
+    ],
+    "corrective_structure": "retire legacy badge footprint geometrically; rebuild neutral badge in frozen contract slot; runtime icon is the only state-semantic layer"
+  },
+  "pipeline": "B2.6 photo/globe layers unchanged -> geometric retirement of legacy badge footprint -> contract-aligned neutral low-poly badge base -> one-master state recolor -> runtime text and fitted runtime badge icon",
+  "inputs": {
+    "candidate_b_original_atlas_2x": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\left_region_card_candidate_b_atlas_2x.png",
+    "candidate_b1_3_photo_atlas_2x": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\428-world-map-wmw-v0-9-5-left-card-candidate-b1-3-atlas-2x.png",
+    "failed_b2_6_manifest": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\496-world-map-wmw-v0-9-12-left-card-b2-6-manifest.json"
+  },
+  "outputs": {
+    "empty_badge_base_400pct": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\499-world-map-wmw-v0-9-13-left-card-b2-7-empty-badge-base-400pct.png",
+    "badge_contract_alignment": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\500-world-map-wmw-v0-9-13-left-card-b2-7-badge-contract-alignment.png",
+    "atlas_2x": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\501-world-map-wmw-v0-9-13-left-card-b2-7-atlas-2x.png",
+    "geometry_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\502-world-map-wmw-v0-9-13-left-card-b2-7-geometry-qa.png",
+    "runtime_fill": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\503-world-map-wmw-v0-9-13-left-card-b2-7-runtime-fill.png",
+    "runtime_fill_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\504-world-map-wmw-v0-9-13-left-card-b2-7-runtime-fill-qa.png",
+    "visual_16point_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\505-world-map-wmw-v0-9-13-left-card-b2-7-16point-visual-qa.png",
+    "manifest": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\506-world-map-wmw-v0-9-13-left-card-b2-7-manifest.json",
+    "godot": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\507-world-map-wmw-v0-9-13-left-card-b2-7-godot-single-component.png",
+    "godot_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\508-world-map-wmw-v0-9-13-left-card-b2-7-godot-single-component-qa.png",
+    "godot_atlas": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\left_region_card_b27_contract_badge_atlas_2x.png",
+    "runtime_icons": {
+      "selected": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b27_runtime_icon_selected.png",
+      "available": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b27_runtime_icon_available.png",
+      "warning": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b27_runtime_icon_warning.png",
+      "locked": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b27_runtime_icon_locked.png"
+    }
+  },
+  "measurement": {
+    "window_rect_2x": [
+      37,
+      56,
+      367,
+      192
+    ],
+    "badge_rebuild": {
+      "legacy_badge_footprint": {
+        "method": "pure geometric whole-footprint retirement",
+        "polygon": [
+          [
+            307,
+            196
+          ],
+          [
+            360,
+            196
+          ],
+          [
+            382,
+            218
+          ],
+          [
+            382,
+            273
+          ],
+          [
+            360,
+            295
+          ],
+          [
+            306,
+            295
+          ],
+          [
+            284,
+            273
+          ],
+          [
+            284,
+            218
+          ]
+        ]
+      },
+      "badge_geometry_contract_alignment": {
+        "status": "pass",
+        "contract_action_badge_2x": [
+          316,
+          212,
+          392,
+          288
+        ],
+        "contract_center_2x": [
+          354.0,
+          250.0
+        ],
+        "outer_ring": {
+          "bbox": [
+            318,
+            214,
+            390,
+            286
+          ],
+          "centroid": [
+            353.5,
+            249.5
+          ],
+          "pixels": 2280
+        },
+        "expected_outer_bbox": [
+          318,
+          214,
+          390,
+          286
+        ],
+        "core": {
+          "bbox": [
+            331,
+            227,
+            377,
+            273
+          ],
+          "centroid": [
+            353.5,
+            249.5
+          ],
+          "pixels": 1972
+        },
+        "expected_core_bbox": [
+          331,
+          227,
+          377,
+          273
+        ],
+        "ring_center_delta_px": [
+          0.5,
+          0.5
+        ],
+        "tolerance_px": 1.0
+      },
+      "badge_clean_base_no_semantic_residue": {
+        "status": "pass",
+        "legacy_source_pixels_preserved_outside_rebuilt_badge": 0,
+        "cream_family_pixels_inside_neutral_core": 0,
+        "source_state_glyph_pixels_copied": 0,
+        "construction": "legacy badge footprint fully inpainted; new base contains only explicit octagonal ring, dark backing, and non-semantic low-poly core",
+        "visual_review": "evidence_ready",
+        "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\499-world-map-wmw-v0-9-13-left-card-b2-7-empty-badge-base-400pct.png"
+      }
+    },
+    "icon_gates": {
+      "selected": {
+        "status": "pass",
+        "source_size": [
+          43,
+          47
+        ],
+        "fitted_size": [
+          38,
+          42
+        ],
+        "placed_bbox_2x": [
+          335,
+          229,
+          373,
+          271
+        ],
+        "placed_center_2x": [
+          354.0,
+          250.0
+        ],
+        "contract_center_2x": [
+          354.0,
+          250.0
+        ],
+        "max_design_box_2x": [
+          331,
+          227,
+          377,
+          273
+        ],
+        "inside_neutral_core": true,
+        "aspect_ratio_preserved": true,
+        "purity": {
+          "status": "pass",
+          "ingredient": "b27_runtime_badge_icon_selected",
+          "target_family": "cream_icon",
+          "opaque_pixels": 491,
+          "non_target_pixels": 0,
+          "non_target_ratio": 0.0,
+          "ratio_tolerance": 0.0,
+          "sample_non_target_pixels": [],
+          "manual_400pct_review": "evidence_ready"
+        }
+      },
+      "available": {
+        "status": "pass",
+        "source_size": [
+          43,
+          56
+        ],
+        "fitted_size": [
+          32,
+          42
+        ],
+        "placed_bbox_2x": [
+          338,
+          229,
+          370,
+          271
+        ],
+        "placed_center_2x": [
+          354.0,
+          250.0
+        ],
+        "contract_center_2x": [
+          354.0,
+          250.0
+        ],
+        "max_design_box_2x": [
+          331,
+          227,
+          377,
+          273
+        ],
+        "inside_neutral_core": true,
+        "aspect_ratio_preserved": true,
+        "purity": {
+          "status": "pass",
+          "ingredient": "b27_runtime_badge_icon_available",
+          "target_family": "cream_icon",
+          "opaque_pixels": 542,
+          "non_target_pixels": 0,
+          "non_target_ratio": 0.0,
+          "ratio_tolerance": 0.0,
+          "sample_non_target_pixels": [],
+          "manual_400pct_review": "evidence_ready"
+        }
+      },
+      "warning": {
+        "status": "pass",
+        "source_size": [
+          44,
+          52
+        ],
+        "fitted_size": [
+          36,
+          42
+        ],
+        "placed_bbox_2x": [
+          336,
+          229,
+          372,
+          271
+        ],
+        "placed_center_2x": [
+          354.0,
+          250.0
+        ],
+        "contract_center_2x": [
+          354.0,
+          250.0
+        ],
+        "max_design_box_2x": [
+          331,
+          227,
+          377,
+          273
+        ],
+        "inside_neutral_core": true,
+        "aspect_ratio_preserved": true,
+        "purity": {
+          "status": "pass",
+          "ingredient": "b27_runtime_badge_icon_warning",
+          "target_family": "cream_icon",
+          "opaque_pixels": 375,
+          "non_target_pixels": 0,
+          "non_target_ratio": 0.0,
+          "ratio_tolerance": 0.0,
+          "sample_non_target_pixels": [],
+          "manual_400pct_review": "evidence_ready"
+        }
+      },
+      "locked": {
+        "status": "pass",
+        "source_size": [
+          37,
+          58
+        ],
+        "fitted_size": [
+          27,
+          42
+        ],
+        "placed_bbox_2x": [
+          340,
+          229,
+          367,
+          271
+        ],
+        "placed_center_2x": [
+          353.5,
+          250.0
+        ],
+        "contract_center_2x": [
+          354.0,
+          250.0
+        ],
+        "max_design_box_2x": [
+          331,
+          227,
+          377,
+          273
+        ],
+        "inside_neutral_core": true,
+        "aspect_ratio_preserved": true,
+        "purity": {
+          "status": "pass",
+          "ingredient": "b27_runtime_badge_icon_locked",
+          "target_family": "cream_icon",
+          "opaque_pixels": 666,
+          "non_target_pixels": 0,
+          "non_target_ratio": 0.0,
+          "ratio_tolerance": 0.0,
+          "sample_non_target_pixels": [],
+          "manual_400pct_review": "evidence_ready"
+        }
+      }
+    },
+    "gate_order": [
+      "source failure probe",
+      "empty neutral base",
+      "derived state base",
+      "runtime icon ingredient",
+      "Python composite",
+      "Godot composite"
+    ]
+  },
+  "per_state": [
+    {
+      "state": "selected",
+      "source": "derived from available clean badge master",
+      "master_window_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ],
+      "badge_center_2x": [
+        354.0,
+        250.0
+      ],
+      "badge_icon_layer": "runtime only; absent from atlas",
+      "z_order": "photo -> hollow shell -> selected glow if selected -> globe patch -> runtime text and state badge icon",
+      "gates": {
+        "gateA_old_photo_residue": {
+          "core_inset_px": 3,
+          "opaque_pixels_in_cutout_core": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateB_border_integrity": {
+          "ring_px": 3,
+          "broken_opaque_pixels": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateC_window_alpha": {
+          "transparent_or_nonopaque_pixels_in_window": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateD_green_residue": {
+          "status": "skipped_selected_green_glow_semantic",
+          "green_signature_pixels_full_frame": null,
+          "basis": "selected state is intentionally exempt; selected green glow is state semantics"
+        },
+        "gateF_geometry": {
+          "size_2x": [
+            408,
+            320
+          ],
+          "size_1x": [
+            204,
+            160
+          ],
+          "ratio": 1.275,
+          "target_ratio": 1.275,
+          "ratio_delta": 0.0,
+          "status": "pass"
+        },
+        "badge_state_color_consistency": {
+          "status": "pass",
+          "state": "selected",
+          "mode": "hue",
+          "core": {
+            "count": 1972,
+            "hue": 0.1894,
+            "hue_degrees": 68.2,
+            "lightness": 0.2415,
+            "saturation": 0.4955,
+            "avg_rgb": [
+              83.5,
+              91.8,
+              31.4
+            ]
+          },
+          "frame_band": {
+            "count": 2800,
+            "hue": 0.1894,
+            "hue_degrees": 68.2,
+            "lightness": 0.241,
+            "saturation": 0.51,
+            "avg_rgb": [
+              84.2,
+              92.7,
+              30.2
+            ]
+          },
+          "hue_delta": 0.0,
+          "lightness_delta": 0.0005,
+          "hue_tolerance": 0.08,
+          "lightness_tolerance": 0.2,
+          "sample_scope": "multi-pixel contract core polygon vs top frame-family band; no single-point sampling"
+        },
+        "runtime_icon": {
+          "status": "pass",
+          "source_size": [
+            43,
+            47
+          ],
+          "fitted_size": [
+            38,
+            42
+          ],
+          "placed_bbox_2x": [
+            335,
+            229,
+            373,
+            271
+          ],
+          "placed_center_2x": [
+            354.0,
+            250.0
+          ],
+          "contract_center_2x": [
+            354.0,
+            250.0
+          ],
+          "max_design_box_2x": [
+            331,
+            227,
+            377,
+            273
+          ],
+          "inside_neutral_core": true,
+          "aspect_ratio_preserved": true,
+          "purity": {
+            "status": "pass",
+            "ingredient": "b27_runtime_badge_icon_selected",
+            "target_family": "cream_icon",
+            "opaque_pixels": 491,
+            "non_target_pixels": 0,
+            "non_target_ratio": 0.0,
+            "ratio_tolerance": 0.0,
+            "sample_non_target_pixels": [],
+            "manual_400pct_review": "evidence_ready"
+          }
+        }
+      }
+    },
+    {
+      "state": "available",
+      "source": "available clean badge master",
+      "master_window_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ],
+      "badge_center_2x": [
+        354.0,
+        250.0
+      ],
+      "badge_icon_layer": "runtime only; absent from atlas",
+      "z_order": "photo -> hollow shell -> selected glow if selected -> globe patch -> runtime text and state badge icon",
+      "gates": {
+        "gateA_old_photo_residue": {
+          "core_inset_px": 3,
+          "opaque_pixels_in_cutout_core": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateB_border_integrity": {
+          "ring_px": 3,
+          "broken_opaque_pixels": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateC_window_alpha": {
+          "transparent_or_nonopaque_pixels_in_window": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateD_green_residue": {
+          "green_signature_pixels_full_frame": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateF_geometry": {
+          "size_2x": [
+            408,
+            320
+          ],
+          "size_1x": [
+            204,
+            160
+          ],
+          "ratio": 1.275,
+          "target_ratio": 1.275,
+          "ratio_delta": 0.0,
+          "status": "pass"
+        },
+        "badge_state_color_consistency": {
+          "status": "pass",
+          "state": "available",
+          "mode": "hue",
+          "core": {
+            "count": 1972,
+            "hue": 0.5051,
+            "hue_degrees": 181.8,
+            "lightness": 0.205,
+            "saturation": 0.6281,
+            "avg_rgb": [
+              19.8,
+              82.8,
+              84.8
+            ]
+          },
+          "frame_band": {
+            "count": 2800,
+            "hue": 0.5057,
+            "hue_degrees": 182.1,
+            "lightness": 0.2046,
+            "saturation": 0.646,
+            "avg_rgb": [
+              18.6,
+              83.4,
+              85.7
+            ]
+          },
+          "hue_delta": 0.0006,
+          "lightness_delta": 0.0004,
+          "hue_tolerance": 0.08,
+          "lightness_tolerance": 0.2,
+          "sample_scope": "multi-pixel contract core polygon vs top frame-family band; no single-point sampling"
+        },
+        "runtime_icon": {
+          "status": "pass",
+          "source_size": [
+            43,
+            56
+          ],
+          "fitted_size": [
+            32,
+            42
+          ],
+          "placed_bbox_2x": [
+            338,
+            229,
+            370,
+            271
+          ],
+          "placed_center_2x": [
+            354.0,
+            250.0
+          ],
+          "contract_center_2x": [
+            354.0,
+            250.0
+          ],
+          "max_design_box_2x": [
+            331,
+            227,
+            377,
+            273
+          ],
+          "inside_neutral_core": true,
+          "aspect_ratio_preserved": true,
+          "purity": {
+            "status": "pass",
+            "ingredient": "b27_runtime_badge_icon_available",
+            "target_family": "cream_icon",
+            "opaque_pixels": 542,
+            "non_target_pixels": 0,
+            "non_target_ratio": 0.0,
+            "ratio_tolerance": 0.0,
+            "sample_non_target_pixels": [],
+            "manual_400pct_review": "evidence_ready"
+          }
+        }
+      }
+    },
+    {
+      "state": "warning",
+      "source": "derived from available clean badge master",
+      "master_window_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ],
+      "badge_center_2x": [
+        354.0,
+        250.0
+      ],
+      "badge_icon_layer": "runtime only; absent from atlas",
+      "z_order": "photo -> hollow shell -> selected glow if selected -> globe patch -> runtime text and state badge icon",
+      "gates": {
+        "gateA_old_photo_residue": {
+          "core_inset_px": 3,
+          "opaque_pixels_in_cutout_core": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateB_border_integrity": {
+          "ring_px": 3,
+          "broken_opaque_pixels": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateC_window_alpha": {
+          "transparent_or_nonopaque_pixels_in_window": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateD_green_residue": {
+          "green_signature_pixels_full_frame": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateF_geometry": {
+          "size_2x": [
+            408,
+            320
+          ],
+          "size_1x": [
+            204,
+            160
+          ],
+          "ratio": 1.275,
+          "target_ratio": 1.275,
+          "ratio_delta": 0.0,
+          "status": "pass"
+        },
+        "badge_state_color_consistency": {
+          "status": "pass",
+          "state": "warning",
+          "mode": "hue",
+          "core": {
+            "count": 1972,
+            "hue": 0.1092,
+            "hue_degrees": 39.3,
+            "lightness": 0.3032,
+            "saturation": 0.8797,
+            "avg_rgb": [
+              144.7,
+              98.3,
+              9.9
+            ]
+          },
+          "frame_band": {
+            "count": 2800,
+            "hue": 0.1092,
+            "hue_degrees": 39.3,
+            "lightness": 0.3028,
+            "saturation": 0.9089,
+            "avg_rgb": [
+              147.1,
+              98.9,
+              7.3
+            ]
+          },
+          "hue_delta": 0.0,
+          "lightness_delta": 0.0004,
+          "hue_tolerance": 0.08,
+          "lightness_tolerance": 0.2,
+          "sample_scope": "multi-pixel contract core polygon vs top frame-family band; no single-point sampling"
+        },
+        "runtime_icon": {
+          "status": "pass",
+          "source_size": [
+            44,
+            52
+          ],
+          "fitted_size": [
+            36,
+            42
+          ],
+          "placed_bbox_2x": [
+            336,
+            229,
+            372,
+            271
+          ],
+          "placed_center_2x": [
+            354.0,
+            250.0
+          ],
+          "contract_center_2x": [
+            354.0,
+            250.0
+          ],
+          "max_design_box_2x": [
+            331,
+            227,
+            377,
+            273
+          ],
+          "inside_neutral_core": true,
+          "aspect_ratio_preserved": true,
+          "purity": {
+            "status": "pass",
+            "ingredient": "b27_runtime_badge_icon_warning",
+            "target_family": "cream_icon",
+            "opaque_pixels": 375,
+            "non_target_pixels": 0,
+            "non_target_ratio": 0.0,
+            "ratio_tolerance": 0.0,
+            "sample_non_target_pixels": [],
+            "manual_400pct_review": "evidence_ready"
+          }
+        }
+      }
+    },
+    {
+      "state": "locked",
+      "source": "derived from available clean badge master",
+      "master_window_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ],
+      "badge_center_2x": [
+        354.0,
+        250.0
+      ],
+      "badge_icon_layer": "runtime only; absent from atlas",
+      "z_order": "photo -> hollow shell -> selected glow if selected -> globe patch -> runtime text and state badge icon",
+      "gates": {
+        "gateA_old_photo_residue": {
+          "core_inset_px": 3,
+          "opaque_pixels_in_cutout_core": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateB_border_integrity": {
+          "ring_px": 3,
+          "broken_opaque_pixels": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateC_window_alpha": {
+          "transparent_or_nonopaque_pixels_in_window": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateD_green_residue": {
+          "green_signature_pixels_full_frame": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateF_geometry": {
+          "size_2x": [
+            408,
+            320
+          ],
+          "size_1x": [
+            204,
+            160
+          ],
+          "ratio": 1.275,
+          "target_ratio": 1.275,
+          "ratio_delta": 0.0,
+          "status": "pass"
+        },
+        "badge_state_color_consistency": {
+          "status": "pass",
+          "state": "locked",
+          "mode": "low_saturation_lightness",
+          "core": {
+            "count": 1972,
+            "hue": 0.1806,
+            "hue_degrees": 65.0,
+            "lightness": 0.3283,
+            "saturation": 0.0856,
+            "avg_rgb": [
+              89.6,
+              90.8,
+              76.6
+            ]
+          },
+          "frame_band": {
+            "count": 2800,
+            "hue": 0.1814,
+            "hue_degrees": 65.3,
+            "lightness": 0.3279,
+            "saturation": 0.0878,
+            "avg_rgb": [
+              89.6,
+              90.9,
+              76.3
+            ]
+          },
+          "hue_delta": 0.0008,
+          "lightness_delta": 0.0004,
+          "hue_tolerance": 0.08,
+          "lightness_tolerance": 0.2,
+          "sample_scope": "multi-pixel contract core polygon vs top frame-family band; no single-point sampling"
+        },
+        "runtime_icon": {
+          "status": "pass",
+          "source_size": [
+            37,
+            58
+          ],
+          "fitted_size": [
+            27,
+            42
+          ],
+          "placed_bbox_2x": [
+            340,
+            229,
+            367,
+            271
+          ],
+          "placed_center_2x": [
+            353.5,
+            250.0
+          ],
+          "contract_center_2x": [
+            354.0,
+            250.0
+          ],
+          "max_design_box_2x": [
+            331,
+            227,
+            377,
+            273
+          ],
+          "inside_neutral_core": true,
+          "aspect_ratio_preserved": true,
+          "purity": {
+            "status": "pass",
+            "ingredient": "b27_runtime_badge_icon_locked",
+            "target_family": "cream_icon",
+            "opaque_pixels": 666,
+            "non_target_pixels": 0,
+            "non_target_ratio": 0.0,
+            "ratio_tolerance": 0.0,
+            "sample_non_target_pixels": [],
+            "manual_400pct_review": "evidence_ready"
+          }
+        }
+      }
+    }
+  ],
+  "gates": {
+    "badge_clean_base_no_semantic_residue": {
+      "status": "pass",
+      "legacy_source_pixels_preserved_outside_rebuilt_badge": 0,
+      "cream_family_pixels_inside_neutral_core": 0,
+      "source_state_glyph_pixels_copied": 0,
+      "construction": "legacy badge footprint fully inpainted; new base contains only explicit octagonal ring, dark backing, and non-semantic low-poly core",
+      "visual_review": "evidence_ready",
+      "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\499-world-map-wmw-v0-9-13-left-card-b2-7-empty-badge-base-400pct.png"
+    },
+    "badge_geometry_contract_alignment": {
+      "status": "pass",
+      "contract_action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ],
+      "contract_center_2x": [
+        354.0,
+        250.0
+      ],
+      "outer_ring": {
+        "bbox": [
+          318,
+          214,
+          390,
+          286
+        ],
+        "centroid": [
+          353.5,
+          249.5
+        ],
+        "pixels": 2280
+      },
+      "expected_outer_bbox": [
+        318,
+        214,
+        390,
+        286
+      ],
+      "core": {
+        "bbox": [
+          331,
+          227,
+          377,
+          273
+        ],
+        "centroid": [
+          353.5,
+          249.5
+        ],
+        "pixels": 1972
+      },
+      "expected_core_bbox": [
+        331,
+        227,
+        377,
+        273
+      ],
+      "ring_center_delta_px": [
+        0.5,
+        0.5
+      ],
+      "tolerance_px": 1.0
+    },
+    "runtime_icon_ingredient_purity_and_bounds": {
+      "status": "pass",
+      "per_state": {
+        "selected": {
+          "status": "pass",
+          "source_size": [
+            43,
+            47
+          ],
+          "fitted_size": [
+            38,
+            42
+          ],
+          "placed_bbox_2x": [
+            335,
+            229,
+            373,
+            271
+          ],
+          "placed_center_2x": [
+            354.0,
+            250.0
+          ],
+          "contract_center_2x": [
+            354.0,
+            250.0
+          ],
+          "max_design_box_2x": [
+            331,
+            227,
+            377,
+            273
+          ],
+          "inside_neutral_core": true,
+          "aspect_ratio_preserved": true,
+          "purity": {
+            "status": "pass",
+            "ingredient": "b27_runtime_badge_icon_selected",
+            "target_family": "cream_icon",
+            "opaque_pixels": 491,
+            "non_target_pixels": 0,
+            "non_target_ratio": 0.0,
+            "ratio_tolerance": 0.0,
+            "sample_non_target_pixels": [],
+            "manual_400pct_review": "evidence_ready"
+          }
+        },
+        "available": {
+          "status": "pass",
+          "source_size": [
+            43,
+            56
+          ],
+          "fitted_size": [
+            32,
+            42
+          ],
+          "placed_bbox_2x": [
+            338,
+            229,
+            370,
+            271
+          ],
+          "placed_center_2x": [
+            354.0,
+            250.0
+          ],
+          "contract_center_2x": [
+            354.0,
+            250.0
+          ],
+          "max_design_box_2x": [
+            331,
+            227,
+            377,
+            273
+          ],
+          "inside_neutral_core": true,
+          "aspect_ratio_preserved": true,
+          "purity": {
+            "status": "pass",
+            "ingredient": "b27_runtime_badge_icon_available",
+            "target_family": "cream_icon",
+            "opaque_pixels": 542,
+            "non_target_pixels": 0,
+            "non_target_ratio": 0.0,
+            "ratio_tolerance": 0.0,
+            "sample_non_target_pixels": [],
+            "manual_400pct_review": "evidence_ready"
+          }
+        },
+        "warning": {
+          "status": "pass",
+          "source_size": [
+            44,
+            52
+          ],
+          "fitted_size": [
+            36,
+            42
+          ],
+          "placed_bbox_2x": [
+            336,
+            229,
+            372,
+            271
+          ],
+          "placed_center_2x": [
+            354.0,
+            250.0
+          ],
+          "contract_center_2x": [
+            354.0,
+            250.0
+          ],
+          "max_design_box_2x": [
+            331,
+            227,
+            377,
+            273
+          ],
+          "inside_neutral_core": true,
+          "aspect_ratio_preserved": true,
+          "purity": {
+            "status": "pass",
+            "ingredient": "b27_runtime_badge_icon_warning",
+            "target_family": "cream_icon",
+            "opaque_pixels": 375,
+            "non_target_pixels": 0,
+            "non_target_ratio": 0.0,
+            "ratio_tolerance": 0.0,
+            "sample_non_target_pixels": [],
+            "manual_400pct_review": "evidence_ready"
+          }
+        },
+        "locked": {
+          "status": "pass",
+          "source_size": [
+            37,
+            58
+          ],
+          "fitted_size": [
+            27,
+            42
+          ],
+          "placed_bbox_2x": [
+            340,
+            229,
+            367,
+            271
+          ],
+          "placed_center_2x": [
+            353.5,
+            250.0
+          ],
+          "contract_center_2x": [
+            354.0,
+            250.0
+          ],
+          "max_design_box_2x": [
+            331,
+            227,
+            377,
+            273
+          ],
+          "inside_neutral_core": true,
+          "aspect_ratio_preserved": true,
+          "purity": {
+            "status": "pass",
+            "ingredient": "b27_runtime_badge_icon_locked",
+            "target_family": "cream_icon",
+            "opaque_pixels": 666,
+            "non_target_pixels": 0,
+            "non_target_ratio": 0.0,
+            "ratio_tolerance": 0.0,
+            "sample_non_target_pixels": [],
+            "manual_400pct_review": "evidence_ready"
+          }
+        }
+      }
+    },
+    "gateA_old_photo_residue_core": {
+      "status": "pass"
+    },
+    "old_content_leftover_scan": {
+      "status": "pass",
+      "scope": "hollow shell plus independent globe patch, full expanded window including coverage-element area; photo layer is excluded because it intentionally contains new content",
+      "old_photo_signature_pixels": 0,
+      "shell_hits": 0,
+      "globe_patch_hits": 0,
+      "sample_pixels": []
+    },
+    "window_edge_residue_scan": {
+      "base_window_rect_2x": [
+        38,
+        56,
+        366,
+        184
+      ],
+      "expanded_window_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "max_expand_px_per_side": 8,
+      "old_photo_signature": "alpha>180 and b>g+8 and b>40, excluding warm cream globe/badge pixels",
+      "before": {
+        "top": 0,
+        "right": 74,
+        "bottom": 277,
+        "left": 105
+      },
+      "expansions_px": {
+        "top": 0,
+        "right": 1,
+        "bottom": 8,
+        "left": 1
+      },
+      "after": {
+        "top": {
+          "old_photo_signature_pixels": 0,
+          "sample_pixels": []
+        },
+        "right": {
+          "old_photo_signature_pixels": 0,
+          "sample_pixels": []
+        },
+        "bottom": {
+          "old_photo_signature_pixels": 0,
+          "sample_pixels": []
+        },
+        "left": {
+          "old_photo_signature_pixels": 0,
+          "sample_pixels": []
+        }
+      },
+      "status": "pass"
+    },
+    "gateB_border_integrity_ring": {
+      "status": "pass"
+    },
+    "gateC_window_alpha_after_composite": {
+      "status": "pass"
+    },
+    "gateD_green_residue_nonselected": {
+      "status": "pass"
+    },
+    "badge_state_color_consistency": {
+      "status": "pass",
+      "per_state": {
+        "selected": {
+          "status": "pass",
+          "state": "selected",
+          "mode": "hue",
+          "core": {
+            "count": 1972,
+            "hue": 0.1894,
+            "hue_degrees": 68.2,
+            "lightness": 0.2415,
+            "saturation": 0.4955,
+            "avg_rgb": [
+              83.5,
+              91.8,
+              31.4
+            ]
+          },
+          "frame_band": {
+            "count": 2800,
+            "hue": 0.1894,
+            "hue_degrees": 68.2,
+            "lightness": 0.241,
+            "saturation": 0.51,
+            "avg_rgb": [
+              84.2,
+              92.7,
+              30.2
+            ]
+          },
+          "hue_delta": 0.0,
+          "lightness_delta": 0.0005,
+          "hue_tolerance": 0.08,
+          "lightness_tolerance": 0.2,
+          "sample_scope": "multi-pixel contract core polygon vs top frame-family band; no single-point sampling"
+        },
+        "available": {
+          "status": "pass",
+          "state": "available",
+          "mode": "hue",
+          "core": {
+            "count": 1972,
+            "hue": 0.5051,
+            "hue_degrees": 181.8,
+            "lightness": 0.205,
+            "saturation": 0.6281,
+            "avg_rgb": [
+              19.8,
+              82.8,
+              84.8
+            ]
+          },
+          "frame_band": {
+            "count": 2800,
+            "hue": 0.5057,
+            "hue_degrees": 182.1,
+            "lightness": 0.2046,
+            "saturation": 0.646,
+            "avg_rgb": [
+              18.6,
+              83.4,
+              85.7
+            ]
+          },
+          "hue_delta": 0.0006,
+          "lightness_delta": 0.0004,
+          "hue_tolerance": 0.08,
+          "lightness_tolerance": 0.2,
+          "sample_scope": "multi-pixel contract core polygon vs top frame-family band; no single-point sampling"
+        },
+        "warning": {
+          "status": "pass",
+          "state": "warning",
+          "mode": "hue",
+          "core": {
+            "count": 1972,
+            "hue": 0.1092,
+            "hue_degrees": 39.3,
+            "lightness": 0.3032,
+            "saturation": 0.8797,
+            "avg_rgb": [
+              144.7,
+              98.3,
+              9.9
+            ]
+          },
+          "frame_band": {
+            "count": 2800,
+            "hue": 0.1092,
+            "hue_degrees": 39.3,
+            "lightness": 0.3028,
+            "saturation": 0.9089,
+            "avg_rgb": [
+              147.1,
+              98.9,
+              7.3
+            ]
+          },
+          "hue_delta": 0.0,
+          "lightness_delta": 0.0004,
+          "hue_tolerance": 0.08,
+          "lightness_tolerance": 0.2,
+          "sample_scope": "multi-pixel contract core polygon vs top frame-family band; no single-point sampling"
+        },
+        "locked": {
+          "status": "pass",
+          "state": "locked",
+          "mode": "low_saturation_lightness",
+          "core": {
+            "count": 1972,
+            "hue": 0.1806,
+            "hue_degrees": 65.0,
+            "lightness": 0.3283,
+            "saturation": 0.0856,
+            "avg_rgb": [
+              89.6,
+              90.8,
+              76.6
+            ]
+          },
+          "frame_band": {
+            "count": 2800,
+            "hue": 0.1814,
+            "hue_degrees": 65.3,
+            "lightness": 0.3279,
+            "saturation": 0.0878,
+            "avg_rgb": [
+              89.6,
+              90.9,
+              76.3
+            ]
+          },
+          "hue_delta": 0.0008,
+          "lightness_delta": 0.0004,
+          "hue_tolerance": 0.08,
+          "lightness_tolerance": 0.2,
+          "sample_scope": "multi-pixel contract core polygon vs top frame-family band; no single-point sampling"
+        }
+      }
+    },
+    "gateE_same_state_window_layout": {
+      "status": "pass",
+      "diff_px": 0,
+      "basis": "single available master and one contract badge geometry"
+    },
+    "gateF_geometry_ratio": {
+      "status": "pass",
+      "target": 1.275,
+      "tolerance": 0.015
+    },
+    "manual_16point_visual_check": {
+      "status": "evidence_ready",
+      "checks": {
+        "selected": {
+          "globe_arc_underlay": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\505-world-map-wmw-v0-9-13-left-card-b2-7-16point-visual-qa.png",
+            "scale": "200%-400%",
+            "review_owner": "reviewer_or_user",
+            "basis": "visual crop prepared; executor does not convert evidence_ready into final PASS"
+          },
+          "window_right_edge": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\505-world-map-wmw-v0-9-13-left-card-b2-7-16point-visual-qa.png",
+            "scale": "200%-400%",
+            "review_owner": "reviewer_or_user",
+            "basis": "visual crop prepared; executor does not convert evidence_ready into final PASS"
+          },
+          "window_bottom_edge": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\505-world-map-wmw-v0-9-13-left-card-b2-7-16point-visual-qa.png",
+            "scale": "200%-400%",
+            "review_owner": "reviewer_or_user",
+            "basis": "visual crop prepared; executor does not convert evidence_ready into final PASS"
+          },
+          "badge_area": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\505-world-map-wmw-v0-9-13-left-card-b2-7-16point-visual-qa.png",
+            "scale": "200%-400%",
+            "review_owner": "reviewer_or_user",
+            "basis": "visual crop prepared; executor does not convert evidence_ready into final PASS"
+          }
+        },
+        "available": {
+          "globe_arc_underlay": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\505-world-map-wmw-v0-9-13-left-card-b2-7-16point-visual-qa.png",
+            "scale": "200%-400%",
+            "review_owner": "reviewer_or_user",
+            "basis": "visual crop prepared; executor does not convert evidence_ready into final PASS"
+          },
+          "window_right_edge": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\505-world-map-wmw-v0-9-13-left-card-b2-7-16point-visual-qa.png",
+            "scale": "200%-400%",
+            "review_owner": "reviewer_or_user",
+            "basis": "visual crop prepared; executor does not convert evidence_ready into final PASS"
+          },
+          "window_bottom_edge": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\505-world-map-wmw-v0-9-13-left-card-b2-7-16point-visual-qa.png",
+            "scale": "200%-400%",
+            "review_owner": "reviewer_or_user",
+            "basis": "visual crop prepared; executor does not convert evidence_ready into final PASS"
+          },
+          "badge_area": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\505-world-map-wmw-v0-9-13-left-card-b2-7-16point-visual-qa.png",
+            "scale": "200%-400%",
+            "review_owner": "reviewer_or_user",
+            "basis": "visual crop prepared; executor does not convert evidence_ready into final PASS"
+          }
+        },
+        "warning": {
+          "globe_arc_underlay": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\505-world-map-wmw-v0-9-13-left-card-b2-7-16point-visual-qa.png",
+            "scale": "200%-400%",
+            "review_owner": "reviewer_or_user",
+            "basis": "visual crop prepared; executor does not convert evidence_ready into final PASS"
+          },
+          "window_right_edge": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\505-world-map-wmw-v0-9-13-left-card-b2-7-16point-visual-qa.png",
+            "scale": "200%-400%",
+            "review_owner": "reviewer_or_user",
+            "basis": "visual crop prepared; executor does not convert evidence_ready into final PASS"
+          },
+          "window_bottom_edge": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\505-world-map-wmw-v0-9-13-left-card-b2-7-16point-visual-qa.png",
+            "scale": "200%-400%",
+            "review_owner": "reviewer_or_user",
+            "basis": "visual crop prepared; executor does not convert evidence_ready into final PASS"
+          },
+          "badge_area": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\505-world-map-wmw-v0-9-13-left-card-b2-7-16point-visual-qa.png",
+            "scale": "200%-400%",
+            "review_owner": "reviewer_or_user",
+            "basis": "visual crop prepared; executor does not convert evidence_ready into final PASS"
+          }
+        },
+        "locked": {
+          "globe_arc_underlay": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\505-world-map-wmw-v0-9-13-left-card-b2-7-16point-visual-qa.png",
+            "scale": "200%-400%",
+            "review_owner": "reviewer_or_user",
+            "basis": "visual crop prepared; executor does not convert evidence_ready into final PASS"
+          },
+          "window_right_edge": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\505-world-map-wmw-v0-9-13-left-card-b2-7-16point-visual-qa.png",
+            "scale": "200%-400%",
+            "review_owner": "reviewer_or_user",
+            "basis": "visual crop prepared; executor does not convert evidence_ready into final PASS"
+          },
+          "window_bottom_edge": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\505-world-map-wmw-v0-9-13-left-card-b2-7-16point-visual-qa.png",
+            "scale": "200%-400%",
+            "review_owner": "reviewer_or_user",
+            "basis": "visual crop prepared; executor does not convert evidence_ready into final PASS"
+          },
+          "badge_area": {
+            "status": "evidence_ready",
+            "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\505-world-map-wmw-v0-9-13-left-card-b2-7-16point-visual-qa.png",
+            "scale": "200%-400%",
+            "review_owner": "reviewer_or_user",
+            "basis": "visual crop prepared; executor does not convert evidence_ready into final PASS"
+          }
+        }
+      },
+      "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\505-world-map-wmw-v0-9-13-left-card-b2-7-16point-visual-qa.png"
+    },
+    "empty_badge_base_visual_dependency": {
+      "status": "evidence_ready",
+      "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\499-world-map-wmw-v0-9-13-left-card-b2-7-empty-badge-base-400pct.png",
+      "required_before_runtime_overlay_review": true
+    },
+    "godot_windowed_capture": {
+      "status": "pass",
+      "headless_used_for_ui_capture": false,
+      "evidence": [
+        "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\507-world-map-wmw-v0-9-13-left-card-b2-7-godot-single-component.png",
+        "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\508-world-map-wmw-v0-9-13-left-card-b2-7-godot-single-component-qa.png"
+      ]
+    }
+  },
+  "image_content_checks": {
+    "empty_badge_base": {
+      "size": [
+        1920,
+        1160
+      ],
+      "unique_colors": 70873,
+      "nonblack_pixels": 2215472
+    },
+    "alignment": {
+      "size": [
+        1920,
+        1040
+      ],
+      "unique_colors": 10379,
+      "nonblack_pixels": 1985790
+    },
+    "atlas": {
+      "size": [
+        1632,
+        320
+      ],
+      "unique_colors": 65934,
+      "nonblack_pixels": 460641
+    },
+    "geometry": {
+      "size": [
+        1920,
+        920
+      ],
+      "unique_colors": 65035,
+      "nonblack_pixels": 1761032
+    },
+    "runtime": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 64920,
+      "nonblack_pixels": 2071664
+    },
+    "runtime_qa": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 63610,
+      "nonblack_pixels": 2071667
+    },
+    "visual_qa": {
+      "size": [
+        1920,
+        1540
+      ],
+      "unique_colors": 71031,
+      "nonblack_pixels": 2951833
+    },
+    "godot": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 54844,
+      "nonblack_pixels": 2072460
+    },
+    "godot_qa": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 54733,
+      "nonblack_pixels": 2073600
+    }
+  },
+  "prohibitions_observed": {
+    "imagegen_called": false,
+    "contract_frozen_fields_changed": false,
+    "other_classes_batch_produced": false,
+    "legacy_badge_color_component_cleanup_used": false,
+    "runtime_glyph_baked_into_atlas": false,
+    "single_point_color_gate_used": false,
+    "visual_evidence_self_promoted_to_pass": false,
+    "other_layers_modified": "none; B2.6 photo, globe, label, meta, and card geometry are retained"
+  }
+}

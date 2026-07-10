@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "contract_version": "0.8.4",
+  "status": "locked_candidate",
+  "page": "world_map",
+  "class_id": "right_dossier_page",
+  "role": "右侧选中地区详情纸（竖向 dossier 家族，比例目标 0.60-0.70）",
+  "reference_resolution": [1280, 720],
+  "runtime_resolution": [1920, 1080],
+  "export_scale": 2,
+  "frozen": {
+    "export_size": [320, 520],
+    "positions": [[932, 30]],
+    "hit_rect": [0, 0, 320, 520],
+    "slots": {
+      "header_icon": [24, 38, 36, 36],
+      "title_slot": [82, 42, 160, 34],
+      "status_stamp": [246, 34, 58, 58],
+      "photo_slot": [22, 98, 276, 176],
+      "meta_slot": [22, 288, 196, 22],
+      "action_stack": [16, 318, 284, 160]
+    }
+  },
+  "provisional": {
+    "title_slot_note": "压力态标题字号 21 已贴槽上限；最终字体或标题艺术字确定后可能需要回改 title_slot 或收紧标题文案长度（v0.8.4 结论）。",
+    "meta_slot_note": "压力态 meta 文本宽 183px，接近 196px 槽宽上限。",
+    "font_assumptions": "文字压力测试基于脚本字体渲染；最终 UI 字体确定后若更宽，必须重跑 text_capacity_stress 再进 atlas。"
+  },
+  "states": ["default", "warning", "locked"],
+  "state_may_change": ["纸面皮肤", "status_stamp 图案", "低多边形块面色调"],
+  "state_may_not_change": ["export_size", "photo_slot 比例与位置", "title_slot 位置", "action_stack 位置", "hit_rect"],
+  "notes": "装饰标签、夹子、背后叠纸、阴影不得移动 content 槽位；photo_slot 比例不得改动，除非重新制作图片内容（image_slot_contract_pass）。纸面倾斜而运行时文字水平即判失败。",
+  "evidence": {
+    "reviews": [
+      "docs/plans/world-map-benchmark-landing/2026-07-08-world-map-wmw-right-dossier-cta-contract-v0-8-3-review.md",
+      "docs/plans/world-map-benchmark-landing/2026-07-08-world-map-wmw-right-dossier-cta-text-stress-v0-8-4-review.md"
+    ],
+    "measurement_manifests": [
+      "docs/screenshots/2026-06-24-world-map-benchmark-landing/363-world-map-wmw-v0-8-3-right-dossier-cta-manifest.json",
+      "docs/screenshots/2026-06-24-world-map-benchmark-landing/367-world-map-wmw-v0-8-4-right-dossier-cta-text-stress-manifest.json"
+    ],
+    "scripts": [
+      "scripts/ui-contracts/wmw/wmw_v083_right_dossier_cta_contract.py",
+      "scripts/ui-contracts/wmw/wmw_v084_right_dossier_text_stress.py"
+    ]
+  }
+}

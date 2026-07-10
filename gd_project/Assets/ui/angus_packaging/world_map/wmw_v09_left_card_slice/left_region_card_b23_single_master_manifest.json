@@ -1,0 +1,679 @@
+{
+  "schema_version": 1,
+  "asset_id": "world_map_wmw_left_region_card_b2_3_single_master_hollow_shell",
+  "version": "v0.9.9",
+  "round": "B2.3",
+  "date": "2026-07-09",
+  "status": "b2_3_single_master_pass_pending_user_review",
+  "contract": "D:\\angos\\design\\ui-contracts\\world-map\\left_region_card.json",
+  "contract_frozen_fields_changed": false,
+  "pipeline": "available single master -> pure geometric hollow shell -> derived state skins -> rectangular photo underlay -> runtime text",
+  "inputs": {
+    "candidate_b_original_atlas_2x": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\left_region_card_candidate_b_atlas_2x.png",
+    "candidate_b1_3_photo_atlas_2x": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\428-world-map-wmw-v0-9-5-left-card-candidate-b1-3-atlas-2x.png",
+    "previous_b2_2_overlay": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\458-world-map-wmw-v0-9-8-left-card-b2-2-window-measurement-qa.png"
+  },
+  "outputs": {
+    "derive_compare": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\459-world-map-wmw-v0-9-9-left-card-b2-3-single-master-derive-compare.png",
+    "ingredients": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\460-world-map-wmw-v0-9-9-left-card-b2-3-single-master-ingredients.png",
+    "atlas_2x": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\461-world-map-wmw-v0-9-9-left-card-b2-3-atlas-2x.png",
+    "geometry_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\462-world-map-wmw-v0-9-9-left-card-b2-3-geometry-qa.png",
+    "runtime_fill_preview": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\463-world-map-wmw-v0-9-9-left-card-b2-3-runtime-fill.png",
+    "runtime_fill_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\464-world-map-wmw-v0-9-9-left-card-b2-3-runtime-fill-qa.png",
+    "fit_300pct_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\465-world-map-wmw-v0-9-9-left-card-b2-3-300pct-fit-qa.png",
+    "manifest": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\466-world-map-wmw-v0-9-9-left-card-b2-3-manifest.json",
+    "godot_single_component": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\467-world-map-wmw-v0-9-9-left-card-b2-3-godot-single-component.png",
+    "godot_single_component_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\468-world-map-wmw-v0-9-9-left-card-b2-3-godot-single-component-qa.png",
+    "godot_atlas_copy": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\left_region_card_b23_single_master_atlas_2x.png",
+    "godot_manifest_copy": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\left_region_card_b23_single_master_manifest.json",
+    "godot_ingredients_dir": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients"
+  },
+  "runtime_tokens": {
+    "label_title": {
+      "python_font_px": 19,
+      "godot_font_size": 25,
+      "color": "#121612"
+    },
+    "meta_status": {
+      "python_font_px": 11,
+      "godot_font_size": 14,
+      "color": "#421c14"
+    }
+  },
+  "measurement": {
+    "master_state": "available",
+    "measurement_rule_version": "wmw_hollow_shell_photo_pipeline_v1_1_single_master",
+    "master_window_rect_2x": [
+      38,
+      56,
+      366,
+      184
+    ],
+    "master_adaptive_classifier_samples": {
+      "method": "adaptive nearest-color-set classifier",
+      "photo_sample_rect_2x": [
+        112,
+        80,
+        320,
+        144
+      ],
+      "photo_sample_count": 243,
+      "shell_sample_rows_2x": [
+        {
+          "y": 40,
+          "x1": 52,
+          "x2": 360
+        },
+        {
+          "y": 203,
+          "x1": 52,
+          "x2": 300
+        }
+      ],
+      "shell_sample_count": 71,
+      "sample_grid_step": 8,
+      "row_left_samples": [
+        37,
+        37,
+        38,
+        94
+      ],
+      "row_right_samples": [
+        366,
+        365,
+        352,
+        324
+      ],
+      "col_top_samples": [
+        56,
+        56,
+        56,
+        56
+      ],
+      "col_bottom_samples": [
+        183,
+        180,
+        185,
+        163
+      ]
+    },
+    "master_globe_disc": {
+      "center": [
+        57.0,
+        45.0
+      ],
+      "radius": 26.0,
+      "cream_bbox": [
+        34,
+        21,
+        81,
+        70
+      ],
+      "cream_pixels": 910,
+      "measurement_scope": "available_full_0_0_110_110"
+    },
+    "gateE_same_state_layout": {
+      "status": "pass",
+      "basis": "all four derived states use the exact same master window rectangle; source per-frame windows are no longer production geometry input",
+      "diff_px": 0
+    }
+  },
+  "per_state": [
+    {
+      "state": "selected",
+      "source": "derived_from_available_master",
+      "master_window_rect_2x": [
+        38,
+        56,
+        366,
+        184
+      ],
+      "photo_underlay_rect_2x": [
+        38,
+        56,
+        366,
+        184
+      ],
+      "globe_disc": {
+        "center": [
+          57.0,
+          45.0
+        ],
+        "radius": 26.0,
+        "cream_bbox": [
+          34,
+          21,
+          81,
+          70
+        ],
+        "cream_pixels": 910,
+        "measurement_scope": "available_full_0_0_110_110"
+      },
+      "photo_shape_clipping": "forbidden_not_used",
+      "color_derivation": "available frame-family hue/lightness mapping",
+      "badge_icon_source": "candidate B original selected action_badge slot crop",
+      "selected_glow_layer": "selected outer green glow extracted from original selected frame",
+      "z_order": "transparent base -> rectangular B1.3 photo underlay -> single-master derived hollow shell -> runtime text",
+      "gates": {
+        "gateA_old_photo_residue": {
+          "core_inset_px": 3,
+          "opaque_pixels_in_cutout_core": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateB_border_integrity": {
+          "ring_px": 3,
+          "broken_opaque_pixels": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateC_window_alpha": {
+          "transparent_or_nonopaque_pixels_in_window": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateD_green_residue": {
+          "status": "skipped_selected_green_glow_semantic",
+          "green_signature_pixels_full_frame": null,
+          "basis": "selected state is intentionally exempt; selected green glow is state semantics"
+        },
+        "gateF_geometry": {
+          "size_2x": [
+            408,
+            320
+          ],
+          "size_1x": [
+            204,
+            160
+          ],
+          "ratio": 1.275,
+          "target_ratio": 1.275,
+          "ratio_delta": 0.0,
+          "status": "pass"
+        }
+      }
+    },
+    {
+      "state": "available",
+      "source": "single_master_available",
+      "master_window_rect_2x": [
+        38,
+        56,
+        366,
+        184
+      ],
+      "photo_underlay_rect_2x": [
+        38,
+        56,
+        366,
+        184
+      ],
+      "globe_disc": {
+        "center": [
+          57.0,
+          45.0
+        ],
+        "radius": 26.0,
+        "cream_bbox": [
+          34,
+          21,
+          81,
+          70
+        ],
+        "cream_pixels": 910,
+        "measurement_scope": "available_full_0_0_110_110"
+      },
+      "photo_shape_clipping": "forbidden_not_used",
+      "color_derivation": "master_no_recolor",
+      "badge_icon_source": "available master",
+      "selected_glow_layer": "not_applied",
+      "z_order": "transparent base -> rectangular B1.3 photo underlay -> single-master derived hollow shell -> runtime text",
+      "gates": {
+        "gateA_old_photo_residue": {
+          "core_inset_px": 3,
+          "opaque_pixels_in_cutout_core": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateB_border_integrity": {
+          "ring_px": 3,
+          "broken_opaque_pixels": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateC_window_alpha": {
+          "transparent_or_nonopaque_pixels_in_window": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateD_green_residue": {
+          "green_signature_pixels_full_frame": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateF_geometry": {
+          "size_2x": [
+            408,
+            320
+          ],
+          "size_1x": [
+            204,
+            160
+          ],
+          "ratio": 1.275,
+          "target_ratio": 1.275,
+          "ratio_delta": 0.0,
+          "status": "pass"
+        }
+      }
+    },
+    {
+      "state": "warning",
+      "source": "derived_from_available_master",
+      "master_window_rect_2x": [
+        38,
+        56,
+        366,
+        184
+      ],
+      "photo_underlay_rect_2x": [
+        38,
+        56,
+        366,
+        184
+      ],
+      "globe_disc": {
+        "center": [
+          57.0,
+          45.0
+        ],
+        "radius": 26.0,
+        "cream_bbox": [
+          34,
+          21,
+          81,
+          70
+        ],
+        "cream_pixels": 910,
+        "measurement_scope": "available_full_0_0_110_110"
+      },
+      "photo_shape_clipping": "forbidden_not_used",
+      "color_derivation": "available frame-family hue/lightness mapping",
+      "badge_icon_source": "candidate B original warning action_badge slot crop",
+      "selected_glow_layer": "not_applied",
+      "z_order": "transparent base -> rectangular B1.3 photo underlay -> single-master derived hollow shell -> runtime text",
+      "gates": {
+        "gateA_old_photo_residue": {
+          "core_inset_px": 3,
+          "opaque_pixels_in_cutout_core": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateB_border_integrity": {
+          "ring_px": 3,
+          "broken_opaque_pixels": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateC_window_alpha": {
+          "transparent_or_nonopaque_pixels_in_window": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateD_green_residue": {
+          "green_signature_pixels_full_frame": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateF_geometry": {
+          "size_2x": [
+            408,
+            320
+          ],
+          "size_1x": [
+            204,
+            160
+          ],
+          "ratio": 1.275,
+          "target_ratio": 1.275,
+          "ratio_delta": 0.0,
+          "status": "pass"
+        }
+      }
+    },
+    {
+      "state": "locked",
+      "source": "derived_from_available_master",
+      "master_window_rect_2x": [
+        38,
+        56,
+        366,
+        184
+      ],
+      "photo_underlay_rect_2x": [
+        38,
+        56,
+        366,
+        184
+      ],
+      "globe_disc": {
+        "center": [
+          57.0,
+          45.0
+        ],
+        "radius": 26.0,
+        "cream_bbox": [
+          34,
+          21,
+          81,
+          70
+        ],
+        "cream_pixels": 910,
+        "measurement_scope": "available_full_0_0_110_110"
+      },
+      "photo_shape_clipping": "forbidden_not_used",
+      "color_derivation": "available frame-family hue/lightness mapping",
+      "badge_icon_source": "candidate B original locked action_badge slot crop",
+      "selected_glow_layer": "not_applied",
+      "z_order": "transparent base -> rectangular B1.3 photo underlay -> single-master derived hollow shell -> runtime text",
+      "gates": {
+        "gateA_old_photo_residue": {
+          "core_inset_px": 3,
+          "opaque_pixels_in_cutout_core": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateB_border_integrity": {
+          "ring_px": 3,
+          "broken_opaque_pixels": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateC_window_alpha": {
+          "transparent_or_nonopaque_pixels_in_window": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateD_green_residue": {
+          "green_signature_pixels_full_frame": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateF_geometry": {
+          "size_2x": [
+            408,
+            320
+          ],
+          "size_1x": [
+            204,
+            160
+          ],
+          "ratio": 1.275,
+          "target_ratio": 1.275,
+          "ratio_delta": 0.0,
+          "status": "pass"
+        }
+      }
+    }
+  ],
+  "geometry_metrics": [
+    {
+      "state": "selected",
+      "export_size_2x": [
+        408,
+        320
+      ],
+      "export_size_1x": [
+        204,
+        160
+      ],
+      "ratio": 1.275,
+      "ratio_target": 1.275,
+      "ratio_delta": 0.0,
+      "ratio_pass": true,
+      "master_window_rect_2x": [
+        38,
+        56,
+        366,
+        184
+      ],
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ]
+    },
+    {
+      "state": "available",
+      "export_size_2x": [
+        408,
+        320
+      ],
+      "export_size_1x": [
+        204,
+        160
+      ],
+      "ratio": 1.275,
+      "ratio_target": 1.275,
+      "ratio_delta": 0.0,
+      "ratio_pass": true,
+      "master_window_rect_2x": [
+        38,
+        56,
+        366,
+        184
+      ],
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ]
+    },
+    {
+      "state": "warning",
+      "export_size_2x": [
+        408,
+        320
+      ],
+      "export_size_1x": [
+        204,
+        160
+      ],
+      "ratio": 1.275,
+      "ratio_target": 1.275,
+      "ratio_delta": 0.0,
+      "ratio_pass": true,
+      "master_window_rect_2x": [
+        38,
+        56,
+        366,
+        184
+      ],
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ]
+    },
+    {
+      "state": "locked",
+      "export_size_2x": [
+        408,
+        320
+      ],
+      "export_size_1x": [
+        204,
+        160
+      ],
+      "ratio": 1.275,
+      "ratio_target": 1.275,
+      "ratio_delta": 0.0,
+      "ratio_pass": true,
+      "master_window_rect_2x": [
+        38,
+        56,
+        366,
+        184
+      ],
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ]
+    }
+  ],
+  "gates": {
+    "gateA_old_photo_residue_core": {
+      "status": "pass",
+      "basis": "single master hollow-shell cutout core contains zero opaque shell pixels"
+    },
+    "gateB_border_integrity_ring": {
+      "status": "pass",
+      "basis": "3px ring outside master window remains opaque wherever available master was opaque"
+    },
+    "gateC_window_alpha_after_composite": {
+      "status": "pass",
+      "basis": "photo underlay fills the master window; final alpha inside window is 255"
+    },
+    "gateD_green_residue_nonselected": {
+      "status": "pass",
+      "basis": "selected is exempt; available/warning/locked full-frame green signature must be zero"
+    },
+    "gateE_same_state_window_layout": {
+      "status": "pass",
+      "basis": "all four derived states use the exact same master window rectangle; source per-frame windows are no longer production geometry input",
+      "diff_px": 0
+    },
+    "gateF_geometry_ratio": {
+      "status": "pass",
+      "basis": "all derived frames are 408x320; ratio 1.275 unchanged",
+      "target_ratio": 1.275,
+      "tolerance": 0.015
+    },
+    "manual_300pct_visual_check": {
+      "status": "pass",
+      "basis": "inspect 465: every state globe arc/right edge/bottom edge must be clean",
+      "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\465-world-map-wmw-v0-9-9-left-card-b2-3-300pct-fit-qa.png"
+    },
+    "derived_art_quality_check": {
+      "status": "pass",
+      "basis": "inspect 459: derived status colors/material should not be obviously worse than source B frames",
+      "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\459-world-map-wmw-v0-9-9-left-card-b2-3-single-master-derive-compare.png"
+    },
+    "godot_windowed_capture": {
+      "status": "pass",
+      "basis": "windowed opengl3 capture via scripts/run_wmw_godot_capture_v09.ps1 -SkipRepro",
+      "headless_used_for_ui_capture": false
+    }
+  },
+  "image_content_checks": {
+    "derive_compare": {
+      "size": [
+        1780,
+        1040
+      ],
+      "unique_colors": 135208,
+      "nonblack_pixels": 1847589
+    },
+    "ingredients": {
+      "size": [
+        1680,
+        1060
+      ],
+      "unique_colors": 31204,
+      "nonblack_pixels": 1779637
+    },
+    "atlas_2x": {
+      "size": [
+        1632,
+        320
+      ],
+      "unique_colors": 75226,
+      "nonblack_pixels": 460685
+    },
+    "geometry_qa": {
+      "size": [
+        942,
+        918
+      ],
+      "unique_colors": 74246,
+      "nonblack_pixels": 861596
+    },
+    "runtime_fill_preview": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 71309,
+      "nonblack_pixels": 2071741
+    },
+    "runtime_fill_qa": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 69951,
+      "nonblack_pixels": 2071747
+    },
+    "fit_300pct_qa": {
+      "size": [
+        1920,
+        1440
+      ],
+      "unique_colors": 74974,
+      "nonblack_pixels": 2759000
+    },
+    "godot_single_component": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 60067,
+      "nonblack_pixels": 2072440
+    },
+    "godot_single_component_qa": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 57927,
+      "nonblack_pixels": 2073600
+    }
+  },
+  "prohibitions_observed": {
+    "imagegen_called": false,
+    "photo_shape_clipping_used": false,
+    "per_state_window_sources_used": false,
+    "selected_green_cleanup_used": false,
+    "contract_frozen_fields_changed": false,
+    "other_classes_batch_produced": false
+  }
+}

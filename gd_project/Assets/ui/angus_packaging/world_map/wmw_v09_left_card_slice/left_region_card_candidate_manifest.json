@@ -1,0 +1,272 @@
+{
+  "artifact": "WMW v0.9 left_region_card vertical slice",
+  "date": "2026-07-08",
+  "status": "vertical_slice_candidate_partial; imagegen_geometry_failed; godot_capture_blocked",
+  "source_reference": "D:\\angos\\.codex-remote-attachments\\019ef3f7-be2f-70d3-ae57-7df7fa181048\\285fb7d4-37f0-4a98-86f4-c1652013a1d1\\1-Photo-1.jpg",
+  "contract": "D:\\angos\\design\\ui-contracts\\world-map\\left_region_card.json",
+  "imagegen_source": "C:\\Users\\gzfangyue\\.codex\\generated_images\\019ef3f7-be2f-70d3-ae57-7df7fa181048\\ig_051b13bf76701c50016a4df1f06e248191a349c4386bc88525.png",
+  "outputs": {
+    "wireframe_prompt_anchor": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\373-world-map-wmw-v0-9-left-card-wireframe-prompt-anchor.png",
+    "imagegen_candidate": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\374-world-map-wmw-v0-9-left-card-imagegen-candidate-a.png",
+    "geometry_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\375-world-map-wmw-v0-9-left-card-imagegen-candidate-a-geometry-qa.png",
+    "candidate_atlas_2x": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\376-world-map-wmw-v0-9-left-card-candidate-atlas-2x.png",
+    "runtime_fill": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\377-world-map-wmw-v0-9-left-card-vertical-slice-runtime-fill.png",
+    "runtime_fill_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\378-world-map-wmw-v0-9-left-card-vertical-slice-runtime-fill-qa.png",
+    "manifest": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\379-world-map-wmw-v0-9-left-card-vertical-slice-manifest.json",
+    "godot_atlas": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\left_region_card_candidate_atlas_2x.png",
+    "godot_manifest": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\left_region_card_candidate_manifest.json",
+    "godot_single_component": "not generated; blocked by Godot crash",
+    "godot_single_component_qa": "not generated; blocked by Godot crash"
+  },
+  "contract_summary": {
+    "class_id": "left_region_card",
+    "contract_version": "0.8.2",
+    "reference_resolution": [
+      1280,
+      720
+    ],
+    "runtime_resolution": [
+      1920,
+      1080
+    ],
+    "export_scale": 2,
+    "export_size": [
+      204,
+      160
+    ],
+    "slots": {
+      "photo_slot": [
+        21,
+        24,
+        174,
+        64
+      ],
+      "label_plate": [
+        22,
+        104,
+        114,
+        32
+      ],
+      "meta_line": [
+        22,
+        138,
+        96,
+        10
+      ],
+      "icon_badge": [
+        8,
+        8,
+        32,
+        32
+      ],
+      "action_badge": [
+        158,
+        106,
+        38,
+        38
+      ]
+    },
+    "positions": [
+      [
+        44,
+        24
+      ],
+      [
+        44,
+        196
+      ],
+      [
+        44,
+        368
+      ],
+      [
+        44,
+        540
+      ]
+    ]
+  },
+  "imagegen_geometry_rows": [
+    {
+      "state": "selected",
+      "detected_bbox": [
+        45,
+        63,
+        646,
+        473
+      ],
+      "detected_ratio": 1.3658,
+      "target_ratio": 1.275,
+      "ratio_delta": 0.0908,
+      "ratio_pass": false
+    },
+    {
+      "state": "available",
+      "detected_bbox": [
+        735,
+        62,
+        634,
+        474
+      ],
+      "detected_ratio": 1.3376,
+      "target_ratio": 1.275,
+      "ratio_delta": 0.0626,
+      "ratio_pass": false
+    },
+    {
+      "state": "warning",
+      "detected_bbox": [
+        45,
+        577,
+        646,
+        474
+      ],
+      "detected_ratio": 1.3629,
+      "target_ratio": 1.275,
+      "ratio_delta": 0.0879,
+      "ratio_pass": false
+    },
+    {
+      "state": "locked",
+      "detected_bbox": [
+        735,
+        577,
+        634,
+        474
+      ],
+      "detected_ratio": 1.3376,
+      "target_ratio": 1.275,
+      "ratio_delta": 0.0626,
+      "ratio_pass": false
+    }
+  ],
+  "atlas_frames": [
+    {
+      "state": "selected",
+      "frame": [
+        0,
+        0,
+        408,
+        320
+      ],
+      "source_size": [
+        662,
+        489
+      ],
+      "fit_size": [
+        408,
+        301
+      ],
+      "offset": [
+        0,
+        9
+      ],
+      "scale": 0.6163141993957704,
+      "letterbox": [
+        0,
+        19
+      ]
+    },
+    {
+      "state": "available",
+      "frame": [
+        408,
+        0,
+        408,
+        320
+      ],
+      "source_size": [
+        650,
+        490
+      ],
+      "fit_size": [
+        408,
+        308
+      ],
+      "offset": [
+        0,
+        6
+      ],
+      "scale": 0.6276923076923077,
+      "letterbox": [
+        0,
+        12
+      ]
+    },
+    {
+      "state": "warning",
+      "frame": [
+        816,
+        0,
+        408,
+        320
+      ],
+      "source_size": [
+        662,
+        490
+      ],
+      "fit_size": [
+        408,
+        302
+      ],
+      "offset": [
+        0,
+        9
+      ],
+      "scale": 0.6163141993957704,
+      "letterbox": [
+        0,
+        18
+      ]
+    },
+    {
+      "state": "locked",
+      "frame": [
+        1224,
+        0,
+        408,
+        320
+      ],
+      "source_size": [
+        650,
+        490
+      ],
+      "fit_size": [
+        408,
+        308
+      ],
+      "offset": [
+        0,
+        6
+      ],
+      "scale": 0.6276923076923077,
+      "letterbox": [
+        0,
+        12
+      ]
+    }
+  ],
+  "gates": {
+    "no_fake_text": "manual_check_pass_on_candidate_a",
+    "functional_faces_orthogonal": "manual_check_pass_on_candidate_a",
+    "same_state_layout": "manual_check_pass_on_candidate_a",
+    "contract_aspect_ratio": "fail",
+    "atlas_ready": false,
+    "runtime_text_fill_preview": "generated",
+    "godot_single_component": "blocked: Godot 4.6.2 signal 11 / timeout in current local capture environment; no 380/381 screenshot generated"
+  },
+  "decision": "Generated art is suitable for workflow review, but not final atlas if contract_aspect_ratio is fail. Do not squash/crop to hide the failure; regenerate/edit from the wireframe anchor or hand-fix art while preserving left_region_card.json.",
+  "godot_capture_attempts": [
+    {
+      "command": "Godot_v4.6.2-stable_win64_console.exe --headless --path D:/angos/gd_project -s res://tests/capture_world_map_wmw_left_card_runtime_v09.gd",
+      "result": "timeout, then signal 11 crash on verbose rerun"
+    },
+    {
+      "command": "Godot_v4.6.2-stable_win64_console.exe --path D:/angos/gd_project --resolution 1920x1080 --windowed --audio-driver Dummy --rendering-driver opengl3 -s res://tests/capture_world_map_wmw_left_card_runtime_v09.gd",
+      "result": "timeout, signal 11 crash"
+    },
+    {
+      "command": "Godot_v4.6.2-stable_win64_console.exe --headless --path D:/angos/gd_project -s res://tests/test_world_map_imagegen_v6_manifest.gd",
+      "result": "existing manifest test also timed out, suggesting local Godot capture environment issue rather than only v0.9 script"
+    }
+  ]
+}

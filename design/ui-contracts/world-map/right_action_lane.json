@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "contract_version": "0.8.4",
+  "status": "locked_candidate",
+  "page": "world_map",
+  "class_id": "right_action_lane",
+  "role": "右侧 CTA 行动条（长横条家族，比例目标 5.6-6.2）",
+  "parent_class": "right_dossier_page",
+  "reference_resolution": [1280, 720],
+  "runtime_resolution": [1920, 1080],
+  "export_scale": 2,
+  "frozen": {
+    "export_size": [284, 50],
+    "positions": [[948, 348], [948, 403], [948, 458]],
+    "lane_gap": 5,
+    "hit_rect": [0, 0, 284, 50],
+    "slots": {
+      "left_icon_zone": [12, 8, 34, 34],
+      "label_plate": [62, 9, 170, 32],
+      "right_action_badge": [238, 5, 42, 40]
+    }
+  },
+  "provisional": {
+    "label_plate_note": "CTA 第一行是最紧字段（压力态字号 13）；无字素材中 label_plate 必须保持安静底面，不得让低多边形尖角、折痕、贴纸边、阴影穿过；排版复审可调整字号层级但不得缩小 label_plate。",
+    "font_assumptions": "文字压力测试基于脚本字体渲染；最终 UI 字体确定后若更宽，必须重跑 text_capacity_stress 再进 atlas。"
+  },
+  "states": ["enter", "info", "warning"],
+  "state_may_change": ["颜色皮肤（绿 / 蓝 / 红）", "left_icon_zone 图案", "right_action_badge 图案"],
+  "state_may_not_change": ["export_size", "行高", "label_plate 尺寸与位置", "right_action_badge 位置", "hit_rect", "lane_gap"],
+  "notes": "位置为参考分辨率下的页面绝对坐标，位于 right_dossier_page 的 action_stack 槽内（父子关系已声明）。warning 行不得为容纳美术而收窄 label_plate；任一状态改变行高即整类判失败。",
+  "evidence": {
+    "reviews": [
+      "docs/plans/world-map-benchmark-landing/2026-07-08-world-map-wmw-right-dossier-cta-contract-v0-8-3-review.md",
+      "docs/plans/world-map-benchmark-landing/2026-07-08-world-map-wmw-right-dossier-cta-text-stress-v0-8-4-review.md"
+    ],
+    "measurement_manifests": [
+      "docs/screenshots/2026-06-24-world-map-benchmark-landing/363-world-map-wmw-v0-8-3-right-dossier-cta-manifest.json"
+    ],
+    "scripts": [
+      "scripts/ui-contracts/wmw/wmw_v083_right_dossier_cta_contract.py",
+      "scripts/ui-contracts/wmw/wmw_v084_right_dossier_text_stress.py"
+    ]
+  }
+}

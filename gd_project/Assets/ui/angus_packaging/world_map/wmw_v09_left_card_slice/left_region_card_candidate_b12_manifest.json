@@ -1,0 +1,1383 @@
+{
+  "schema_version": 1,
+  "asset_id": "world_map_wmw_left_region_card_candidate_b1_2",
+  "version": "v0.9.4",
+  "status": "candidate_b1_2_failed_user_review_right_frame_interrupted_and_layer_leakage",
+  "date": "2026-07-08",
+  "contract": "D:\\angos\\design\\ui-contracts\\world-map\\left_region_card.json",
+  "contract_frozen_fields_changed": false,
+  "inputs": {
+    "candidate_b_shell": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+    "candidate_b1_imagegen_photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+    "previous_b1_composite": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\397-world-map-wmw-v0-9-2-left-card-candidate-b1-composited-polish.png",
+    "previous_b1_godot": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\403-world-map-wmw-v0-9-2-left-card-candidate-b1-godot-single-component.png"
+  },
+  "outputs": {
+    "candidate_b1_2_composite": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\416-world-map-wmw-v0-9-4-left-card-candidate-b1-2-right-edge-clean.png",
+    "geometry_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\417-world-map-wmw-v0-9-4-left-card-candidate-b1-2-geometry-qa.png",
+    "atlas_2x": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\418-world-map-wmw-v0-9-4-left-card-candidate-b1-2-atlas-2x.png",
+    "runtime_fill_preview": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\419-world-map-wmw-v0-9-4-left-card-candidate-b1-2-runtime-fill.png",
+    "runtime_fill_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\420-world-map-wmw-v0-9-4-left-card-candidate-b1-2-runtime-fill-qa.png",
+    "right_edge_closeup_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\422-world-map-wmw-v0-9-4-left-card-candidate-b1-2-right-edge-closeup-qa.png",
+    "godot_single_component": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\423-world-map-wmw-v0-9-4-left-card-candidate-b1-2-godot-single-component.png",
+    "godot_single_component_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\424-world-map-wmw-v0-9-4-left-card-candidate-b1-2-godot-single-component-qa.png",
+    "b1_1_vs_b1_2_right_edge_fix_board": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\425-world-map-wmw-v0-9-4-left-card-b1-1-vs-b1-2-right-edge-fix-board.png",
+    "godot_atlas_copy": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\left_region_card_candidate_b12_atlas_2x.png",
+    "godot_manifest_copy": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\left_region_card_candidate_b12_manifest.json"
+  },
+  "runtime_tokens": {
+    "label_title": {
+      "python_font_px": 19,
+      "godot_font_size": 25,
+      "color": "#121612"
+    },
+    "meta_status": {
+      "python_font_px": 11,
+      "godot_font_size": 14,
+      "color": "#421c14"
+    }
+  },
+  "base_frame_sources": [
+    {
+      "state": "selected",
+      "box": [
+        65,
+        63,
+        690,
+        553
+      ],
+      "expanded_box": [
+        57,
+        55,
+        698,
+        561
+      ],
+      "fit": {
+        "source_size": [
+          641,
+          506
+        ],
+        "fit_size": [
+          405,
+          320
+        ],
+        "offset": [
+          1,
+          0
+        ],
+        "scale": 0.6324110671936759,
+        "letterbox": [
+          3,
+          0
+        ]
+      }
+    },
+    {
+      "state": "available",
+      "box": [
+        748,
+        63,
+        1362,
+        553
+      ],
+      "expanded_box": [
+        740,
+        55,
+        1370,
+        561
+      ],
+      "fit": {
+        "source_size": [
+          630,
+          506
+        ],
+        "fit_size": [
+          398,
+          320
+        ],
+        "offset": [
+          5,
+          0
+        ],
+        "scale": 0.6324110671936759,
+        "letterbox": [
+          10,
+          0
+        ]
+      }
+    },
+    {
+      "state": "warning",
+      "box": [
+        65,
+        576,
+        690,
+        1062
+      ],
+      "expanded_box": [
+        57,
+        568,
+        698,
+        1070
+      ],
+      "fit": {
+        "source_size": [
+          641,
+          502
+        ],
+        "fit_size": [
+          408,
+          320
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "scale": 0.6365054602184087,
+        "letterbox": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "state": "locked",
+      "box": [
+        748,
+        576,
+        1362,
+        1062
+      ],
+      "expanded_box": [
+        740,
+        568,
+        1370,
+        1070
+      ],
+      "fit": {
+        "source_size": [
+          630,
+          502
+        ],
+        "fit_size": [
+          402,
+          320
+        ],
+        "offset": [
+          3,
+          0
+        ],
+        "scale": 0.6374501992031872,
+        "letterbox": [
+          6,
+          0
+        ]
+      }
+    }
+  ],
+  "composition": [
+    {
+      "state": "selected",
+      "base_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+      "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+      "photo_source_box": [
+        0,
+        0,
+        704,
+        558
+      ],
+      "photo_rel_crop_b1_2": [
+        0.31,
+        0.09,
+        0.86,
+        0.59
+      ],
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "photo_right_edge_repair_px": 42,
+      "photo_outer_band_2x": [
+        390,
+        48,
+        408,
+        176
+      ],
+      "runtime_warning_triangle_overlay": "removed"
+    },
+    {
+      "state": "available",
+      "base_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+      "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+      "photo_source_box": [
+        704,
+        0,
+        1408,
+        558
+      ],
+      "photo_rel_crop_b1_2": [
+        0.31,
+        0.09,
+        0.8,
+        0.59
+      ],
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "photo_right_edge_repair_px": 42,
+      "photo_outer_band_2x": [
+        390,
+        48,
+        408,
+        176
+      ],
+      "runtime_warning_triangle_overlay": "removed"
+    },
+    {
+      "state": "warning",
+      "base_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+      "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+      "photo_source_box": [
+        0,
+        558,
+        704,
+        1117
+      ],
+      "photo_rel_crop_b1_2": [
+        0.29,
+        0.09,
+        0.84,
+        0.6
+      ],
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "photo_right_edge_repair_px": 42,
+      "photo_outer_band_2x": [
+        390,
+        48,
+        408,
+        176
+      ],
+      "runtime_warning_triangle_overlay": "removed"
+    },
+    {
+      "state": "locked",
+      "base_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+      "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+      "photo_source_box": [
+        704,
+        558,
+        1408,
+        1117
+      ],
+      "photo_rel_crop_b1_2": [
+        0.31,
+        0.09,
+        0.8,
+        0.6
+      ],
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "photo_right_edge_repair_px": 42,
+      "photo_outer_band_2x": [
+        390,
+        48,
+        408,
+        176
+      ],
+      "runtime_warning_triangle_overlay": "removed"
+    }
+  ],
+  "geometry_metrics": [
+    {
+      "state": "selected",
+      "export_size_2x": [
+        408,
+        320
+      ],
+      "export_size_1x": [
+        204,
+        160
+      ],
+      "ratio": 1.275,
+      "ratio_target": 1.275,
+      "ratio_delta": 0.0,
+      "ratio_pass": true,
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ],
+      "composition": {
+        "state": "selected",
+        "base_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+        "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+        "photo_source_box": [
+          0,
+          0,
+          704,
+          558
+        ],
+        "photo_rel_crop_b1_2": [
+          0.31,
+          0.09,
+          0.86,
+          0.59
+        ],
+        "photo_slot_2x": [
+          42,
+          48,
+          390,
+          176
+        ],
+        "photo_right_edge_repair_px": 42,
+        "photo_outer_band_2x": [
+          390,
+          48,
+          408,
+          176
+        ],
+        "runtime_warning_triangle_overlay": "removed"
+      }
+    },
+    {
+      "state": "available",
+      "export_size_2x": [
+        408,
+        320
+      ],
+      "export_size_1x": [
+        204,
+        160
+      ],
+      "ratio": 1.275,
+      "ratio_target": 1.275,
+      "ratio_delta": 0.0,
+      "ratio_pass": true,
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ],
+      "composition": {
+        "state": "available",
+        "base_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+        "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+        "photo_source_box": [
+          704,
+          0,
+          1408,
+          558
+        ],
+        "photo_rel_crop_b1_2": [
+          0.31,
+          0.09,
+          0.8,
+          0.59
+        ],
+        "photo_slot_2x": [
+          42,
+          48,
+          390,
+          176
+        ],
+        "photo_right_edge_repair_px": 42,
+        "photo_outer_band_2x": [
+          390,
+          48,
+          408,
+          176
+        ],
+        "runtime_warning_triangle_overlay": "removed"
+      }
+    },
+    {
+      "state": "warning",
+      "export_size_2x": [
+        408,
+        320
+      ],
+      "export_size_1x": [
+        204,
+        160
+      ],
+      "ratio": 1.275,
+      "ratio_target": 1.275,
+      "ratio_delta": 0.0,
+      "ratio_pass": true,
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ],
+      "composition": {
+        "state": "warning",
+        "base_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+        "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+        "photo_source_box": [
+          0,
+          558,
+          704,
+          1117
+        ],
+        "photo_rel_crop_b1_2": [
+          0.29,
+          0.09,
+          0.84,
+          0.6
+        ],
+        "photo_slot_2x": [
+          42,
+          48,
+          390,
+          176
+        ],
+        "photo_right_edge_repair_px": 42,
+        "photo_outer_band_2x": [
+          390,
+          48,
+          408,
+          176
+        ],
+        "runtime_warning_triangle_overlay": "removed"
+      }
+    },
+    {
+      "state": "locked",
+      "export_size_2x": [
+        408,
+        320
+      ],
+      "export_size_1x": [
+        204,
+        160
+      ],
+      "ratio": 1.275,
+      "ratio_target": 1.275,
+      "ratio_delta": 0.0,
+      "ratio_pass": true,
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ],
+      "composition": {
+        "state": "locked",
+        "base_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+        "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+        "photo_source_box": [
+          704,
+          558,
+          1408,
+          1117
+        ],
+        "photo_rel_crop_b1_2": [
+          0.31,
+          0.09,
+          0.8,
+          0.6
+        ],
+        "photo_slot_2x": [
+          42,
+          48,
+          390,
+          176
+        ],
+        "photo_right_edge_repair_px": 42,
+        "photo_outer_band_2x": [
+          390,
+          48,
+          408,
+          176
+        ],
+        "runtime_warning_triangle_overlay": "removed"
+      }
+    }
+  ],
+  "artifact_green_stats": {
+    "selected": {
+      "artifact_greenish_pixels_full_frame": 1005,
+      "sample_pixels": [
+        [
+          24,
+          5,
+          4,
+          172,
+          5,
+          176
+        ],
+        [
+          25,
+          5,
+          4,
+          130,
+          7,
+          232
+        ],
+        [
+          95,
+          5,
+          3,
+          143,
+          3,
+          199
+        ],
+        [
+          320,
+          5,
+          2,
+          155,
+          4,
+          113
+        ],
+        [
+          321,
+          5,
+          3,
+          148,
+          10,
+          234
+        ],
+        [
+          322,
+          5,
+          6,
+          144,
+          13,
+          231
+        ],
+        [
+          323,
+          5,
+          8,
+          148,
+          11,
+          234
+        ],
+        [
+          324,
+          5,
+          7,
+          148,
+          10,
+          234
+        ]
+      ],
+      "range": "full 408x320 atlas frame after chroma-key alpha removal",
+      "definition": "alpha>8 and r<=90 and g>=120 and b<=105 and g-r>=35 and g-b>=30"
+    },
+    "available": {
+      "artifact_greenish_pixels_full_frame": 0,
+      "sample_pixels": [],
+      "range": "full 408x320 atlas frame after chroma-key alpha removal",
+      "definition": "alpha>8 and r<=90 and g>=120 and b<=105 and g-r>=35 and g-b>=30"
+    },
+    "warning": {
+      "artifact_greenish_pixels_full_frame": 0,
+      "sample_pixels": [],
+      "range": "full 408x320 atlas frame after chroma-key alpha removal",
+      "definition": "alpha>8 and r<=90 and g>=120 and b<=105 and g-r>=35 and g-b>=30"
+    },
+    "locked": {
+      "artifact_greenish_pixels_full_frame": 0,
+      "sample_pixels": [],
+      "range": "full 408x320 atlas frame after chroma-key alpha removal",
+      "definition": "alpha>8 and r<=90 and g>=120 and b<=105 and g-r>=35 and g-b>=30"
+    }
+  },
+  "gates": {
+    "geometry_ratio_1_275": {
+      "status": "pass",
+      "target_ratio": 1.275,
+      "tolerance": 0.015,
+      "basis": "normalized 2x atlas frames are 408x320; no scale/crop-to-fit after compositing"
+    },
+    "photo_slot_mask": {
+      "status": "pass",
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "basis": "photo crops are fitted to the exact slot size and alpha-composited at the exact slot origin"
+    },
+    "single_icon_track": {
+      "status": "pass",
+      "basis": "B shell baked globe and B shell state badges are restored/kept; no runtime warning-triangle overlay remains"
+    },
+    "greenish_full_frame_nonselected": {
+      "status": "pass",
+      "basis": "full 408x320 atlas-frame scan after chroma-key alpha removal"
+    },
+    "composite_cleanliness": {
+      "status": "fail",
+      "basis": "B1.2 removed the visible source strip by erasing x393..408, but that band includes legitimate right-shell pixels; alpha probe confirms a transparent hole inside the card body",
+      "checks": {
+        "selected": {
+          "duplicate_globe": "pass_none_visible",
+          "source_frame_residue": "fail_gate_target_incomplete; right-edge stats did not protect shell continuity",
+          "photo_slot_overflow": "pass_none_visible; photo pixels clipped before paste to 2x slot",
+          "right_edge_strip": "fail_user_review: strip symptom hidden by over-erasing legitimate frame pixels",
+          "right_frame_continuity": "fail_user_review: right shell/frame is interrupted by a transparent hole",
+          "layer_order_integrity": "fail_user_review: the transparent hole reveals background/underlay and reads as covered image content",
+          "card_body_opacity": "fail_alpha_probe: x390..408,y40..300 contains transparent pixels inside the visible card body",
+          "manual_check_basis": "User review of 419 runtime fill screenshot on 2026-07-08; warning state is direct evidence and same repair path applies to all states"
+        },
+        "available": {
+          "duplicate_globe": "pass_none_visible",
+          "source_frame_residue": "fail_gate_target_incomplete; right-edge stats did not protect shell continuity",
+          "photo_slot_overflow": "pass_none_visible; photo pixels clipped before paste to 2x slot",
+          "right_edge_strip": "fail_user_review: strip symptom hidden by over-erasing legitimate frame pixels",
+          "right_frame_continuity": "fail_user_review: right shell/frame is interrupted by a transparent hole",
+          "layer_order_integrity": "fail_user_review: the transparent hole reveals background/underlay and reads as covered image content",
+          "card_body_opacity": "fail_alpha_probe: x390..408,y40..300 contains transparent pixels inside the visible card body",
+          "manual_check_basis": "User review of 419 runtime fill screenshot on 2026-07-08; warning state is direct evidence and same repair path applies to all states"
+        },
+        "warning": {
+          "duplicate_globe": "pass_none_visible",
+          "source_frame_residue": "fail_gate_target_incomplete; right-edge stats did not protect shell continuity",
+          "photo_slot_overflow": "pass_none_visible; photo pixels clipped before paste to 2x slot",
+          "right_edge_strip": "fail_user_review: strip symptom hidden by over-erasing legitimate frame pixels",
+          "right_frame_continuity": "fail_user_review: right shell/frame is interrupted by a transparent hole",
+          "layer_order_integrity": "fail_user_review: the transparent hole reveals background/underlay and reads as covered image content",
+          "card_body_opacity": "fail_alpha_probe: x390..408,y40..300 contains transparent pixels inside the visible card body",
+          "manual_check_basis": "User review of 419 runtime fill screenshot on 2026-07-08; warning state is direct evidence and same repair path applies to all states"
+        },
+        "locked": {
+          "duplicate_globe": "pass_none_visible",
+          "source_frame_residue": "fail_gate_target_incomplete; right-edge stats did not protect shell continuity",
+          "photo_slot_overflow": "pass_none_visible; photo pixels clipped before paste to 2x slot",
+          "right_edge_strip": "fail_user_review: strip symptom hidden by over-erasing legitimate frame pixels",
+          "right_frame_continuity": "fail_user_review: right shell/frame is interrupted by a transparent hole",
+          "layer_order_integrity": "fail_user_review: the transparent hole reveals background/underlay and reads as covered image content",
+          "card_body_opacity": "fail_alpha_probe: x390..408,y40..300 contains transparent pixels inside the visible card body",
+          "manual_check_basis": "User review of 419 runtime fill screenshot on 2026-07-08; warning state is direct evidence and same repair path applies to all states"
+        }
+      }
+    },
+    "no_fake_text": {
+      "status": "pass",
+      "basis": "atlas contains no baked readable text; Chinese strings are runtime labels in 409 and Godot capture"
+    },
+    "functional_faces_orthogonal": {
+      "status": "pass",
+      "basis": "B shell face remains orthogonal; B1.1 only replaces clipped photo-slot pixels and recolors baked warning triangle pixels"
+    },
+    "same_state_layout": {
+      "status": "pass",
+      "basis": "all four states use the same 204x160 contract frame, identical slots, and unchanged action/icon badge positions"
+    },
+    "right_edge_closeup": {
+      "status": "fail",
+      "basis": "422 only measured chroma/vertical jumps and missed frame continuity plus layer-order integrity; numeric stats are retained as non-authoritative diagnostics",
+      "stats": {
+        "selected": {
+          "range_2x": [
+            390,
+            48,
+            408,
+            176
+          ],
+          "high_chroma_green_pixels": 0,
+          "transparent_bleed_pixels": 1920,
+          "vertical_luminance_jumps_gt55": 1,
+          "status": "pass"
+        },
+        "available": {
+          "range_2x": [
+            390,
+            48,
+            408,
+            176
+          ],
+          "high_chroma_green_pixels": 0,
+          "transparent_bleed_pixels": 1920,
+          "vertical_luminance_jumps_gt55": 0,
+          "status": "pass"
+        },
+        "warning": {
+          "range_2x": [
+            390,
+            48,
+            408,
+            176
+          ],
+          "high_chroma_green_pixels": 0,
+          "transparent_bleed_pixels": 1920,
+          "vertical_luminance_jumps_gt55": 0,
+          "status": "pass"
+        },
+        "locked": {
+          "range_2x": [
+            390,
+            48,
+            408,
+            176
+          ],
+          "high_chroma_green_pixels": 0,
+          "transparent_bleed_pixels": 1920,
+          "vertical_luminance_jumps_gt55": 0,
+          "status": "pass"
+        }
+      }
+    },
+    "right_frame_continuity": {
+      "status": "fail",
+      "basis": "The right border must remain a continuous opaque shell layer above the photo slot; B1.2 over-erased that shell band."
+    },
+    "layer_order_integrity": {
+      "status": "fail",
+      "basis": "The photo layer must be clipped below a preserved shell/frame mask; B1.2 creates a transparent hole that reads as background/underlay leakage."
+    },
+    "card_body_opacity_probe": {
+      "status": "fail",
+      "basis": "Visible card-body pixels must be opaque; probe x390..408,y40..300 catches the B1.2 transparent vertical hole that dark backgrounds hide.",
+      "stats": {
+        "selected": {
+          "alpha_hole_probe_range_2x": [
+            390,
+            40,
+            408,
+            300
+          ],
+          "opaque_control_probe_range_2x": [
+            42,
+            40,
+            390,
+            300
+          ],
+          "transparent_pixels_in_right_shell_band": 3820,
+          "transparent_pixels_in_body_control": 0,
+          "threshold": "alpha < 250",
+          "sample_transparent_pixels": [
+            [
+              393,
+              40,
+              0
+            ],
+            [
+              394,
+              40,
+              0
+            ],
+            [
+              395,
+              40,
+              0
+            ],
+            [
+              396,
+              40,
+              0
+            ],
+            [
+              397,
+              40,
+              0
+            ],
+            [
+              398,
+              40,
+              0
+            ],
+            [
+              399,
+              40,
+              0
+            ],
+            [
+              400,
+              40,
+              0
+            ]
+          ],
+          "status": "fail"
+        },
+        "available": {
+          "alpha_hole_probe_range_2x": [
+            390,
+            40,
+            408,
+            300
+          ],
+          "opaque_control_probe_range_2x": [
+            42,
+            40,
+            390,
+            300
+          ],
+          "transparent_pixels_in_right_shell_band": 3859,
+          "transparent_pixels_in_body_control": 0,
+          "threshold": "alpha < 250",
+          "sample_transparent_pixels": [
+            [
+              393,
+              40,
+              0
+            ],
+            [
+              394,
+              40,
+              0
+            ],
+            [
+              395,
+              40,
+              0
+            ],
+            [
+              396,
+              40,
+              0
+            ],
+            [
+              397,
+              40,
+              0
+            ],
+            [
+              398,
+              40,
+              0
+            ],
+            [
+              399,
+              40,
+              0
+            ],
+            [
+              400,
+              40,
+              0
+            ]
+          ],
+          "status": "fail"
+        },
+        "warning": {
+          "alpha_hole_probe_range_2x": [
+            390,
+            40,
+            408,
+            300
+          ],
+          "opaque_control_probe_range_2x": [
+            42,
+            40,
+            390,
+            300
+          ],
+          "transparent_pixels_in_right_shell_band": 3802,
+          "transparent_pixels_in_body_control": 0,
+          "threshold": "alpha < 250",
+          "sample_transparent_pixels": [
+            [
+              393,
+              40,
+              0
+            ],
+            [
+              394,
+              40,
+              0
+            ],
+            [
+              395,
+              40,
+              0
+            ],
+            [
+              396,
+              40,
+              0
+            ],
+            [
+              397,
+              40,
+              0
+            ],
+            [
+              398,
+              40,
+              0
+            ],
+            [
+              399,
+              40,
+              0
+            ],
+            [
+              400,
+              40,
+              0
+            ]
+          ],
+          "status": "fail"
+        },
+        "locked": {
+          "alpha_hole_probe_range_2x": [
+            390,
+            40,
+            408,
+            300
+          ],
+          "opaque_control_probe_range_2x": [
+            42,
+            40,
+            390,
+            300
+          ],
+          "transparent_pixels_in_right_shell_band": 3835,
+          "transparent_pixels_in_body_control": 0,
+          "threshold": "alpha < 250",
+          "sample_transparent_pixels": [
+            [
+              393,
+              40,
+              0
+            ],
+            [
+              394,
+              40,
+              0
+            ],
+            [
+              395,
+              40,
+              0
+            ],
+            [
+              396,
+              40,
+              0
+            ],
+            [
+              397,
+              40,
+              0
+            ],
+            [
+              398,
+              40,
+              0
+            ],
+            [
+              399,
+              40,
+              0
+            ],
+            [
+              400,
+              40,
+              0
+            ]
+          ],
+          "status": "fail"
+        }
+      }
+    },
+    "godot_windowed_capture": {
+      "status": "pending",
+      "basis": "run scripts/run_wmw_godot_capture_v09.ps1 -SkipRepro after switching the capture script to the B1.2 atlas",
+      "headless_used_for_ui_capture": false
+    }
+  },
+  "visual_repair_notes": [
+    "B1.2 does not reroll imagegen and does not change the left_region_card contract.",
+    "B1.2 is rejected as failed evidence: it optimized for removing the visible right-edge strip by creating a transparent hole inside the card body.",
+    "Root cause: a flattened-card pixel scrub was used where a layered composite was required: photo clipped to slot below, shell/frame mask above, badge/icon above, runtime text above.",
+    "The right-edge close-up gate was incomplete because it checked green/chroma/jump stats but not card-body opacity, frame continuity, or hidden underlay visibility.",
+    "B1.1 and B1.2 remain archived as failed evidence; do not promote either to production."
+  ],
+  "right_edge_band_stats": {
+    "selected": {
+      "range_2x": [
+        390,
+        48,
+        408,
+        176
+      ],
+      "high_chroma_green_pixels": 0,
+      "transparent_bleed_pixels": 1920,
+      "vertical_luminance_jumps_gt55": 1,
+      "status": "pass"
+    },
+    "available": {
+      "range_2x": [
+        390,
+        48,
+        408,
+        176
+      ],
+      "high_chroma_green_pixels": 0,
+      "transparent_bleed_pixels": 1920,
+      "vertical_luminance_jumps_gt55": 0,
+      "status": "pass"
+    },
+    "warning": {
+      "range_2x": [
+        390,
+        48,
+        408,
+        176
+      ],
+      "high_chroma_green_pixels": 0,
+      "transparent_bleed_pixels": 1920,
+      "vertical_luminance_jumps_gt55": 0,
+      "status": "pass"
+    },
+    "locked": {
+      "range_2x": [
+        390,
+        48,
+        408,
+        176
+      ],
+      "high_chroma_green_pixels": 0,
+      "transparent_bleed_pixels": 1920,
+      "vertical_luminance_jumps_gt55": 0,
+      "status": "pass"
+    }
+  },
+  "alpha_hole_probe_stats": {
+    "selected": {
+      "alpha_hole_probe_range_2x": [
+        390,
+        40,
+        408,
+        300
+      ],
+      "opaque_control_probe_range_2x": [
+        42,
+        40,
+        390,
+        300
+      ],
+      "transparent_pixels_in_right_shell_band": 3820,
+      "transparent_pixels_in_body_control": 0,
+      "threshold": "alpha < 250",
+      "sample_transparent_pixels": [
+        [
+          393,
+          40,
+          0
+        ],
+        [
+          394,
+          40,
+          0
+        ],
+        [
+          395,
+          40,
+          0
+        ],
+        [
+          396,
+          40,
+          0
+        ],
+        [
+          397,
+          40,
+          0
+        ],
+        [
+          398,
+          40,
+          0
+        ],
+        [
+          399,
+          40,
+          0
+        ],
+        [
+          400,
+          40,
+          0
+        ]
+      ],
+      "status": "fail"
+    },
+    "available": {
+      "alpha_hole_probe_range_2x": [
+        390,
+        40,
+        408,
+        300
+      ],
+      "opaque_control_probe_range_2x": [
+        42,
+        40,
+        390,
+        300
+      ],
+      "transparent_pixels_in_right_shell_band": 3859,
+      "transparent_pixels_in_body_control": 0,
+      "threshold": "alpha < 250",
+      "sample_transparent_pixels": [
+        [
+          393,
+          40,
+          0
+        ],
+        [
+          394,
+          40,
+          0
+        ],
+        [
+          395,
+          40,
+          0
+        ],
+        [
+          396,
+          40,
+          0
+        ],
+        [
+          397,
+          40,
+          0
+        ],
+        [
+          398,
+          40,
+          0
+        ],
+        [
+          399,
+          40,
+          0
+        ],
+        [
+          400,
+          40,
+          0
+        ]
+      ],
+      "status": "fail"
+    },
+    "warning": {
+      "alpha_hole_probe_range_2x": [
+        390,
+        40,
+        408,
+        300
+      ],
+      "opaque_control_probe_range_2x": [
+        42,
+        40,
+        390,
+        300
+      ],
+      "transparent_pixels_in_right_shell_band": 3802,
+      "transparent_pixels_in_body_control": 0,
+      "threshold": "alpha < 250",
+      "sample_transparent_pixels": [
+        [
+          393,
+          40,
+          0
+        ],
+        [
+          394,
+          40,
+          0
+        ],
+        [
+          395,
+          40,
+          0
+        ],
+        [
+          396,
+          40,
+          0
+        ],
+        [
+          397,
+          40,
+          0
+        ],
+        [
+          398,
+          40,
+          0
+        ],
+        [
+          399,
+          40,
+          0
+        ],
+        [
+          400,
+          40,
+          0
+        ]
+      ],
+      "status": "fail"
+    },
+    "locked": {
+      "alpha_hole_probe_range_2x": [
+        390,
+        40,
+        408,
+        300
+      ],
+      "opaque_control_probe_range_2x": [
+        42,
+        40,
+        390,
+        300
+      ],
+      "transparent_pixels_in_right_shell_band": 3835,
+      "transparent_pixels_in_body_control": 0,
+      "threshold": "alpha < 250",
+      "sample_transparent_pixels": [
+        [
+          393,
+          40,
+          0
+        ],
+        [
+          394,
+          40,
+          0
+        ],
+        [
+          395,
+          40,
+          0
+        ],
+        [
+          396,
+          40,
+          0
+        ],
+        [
+          397,
+          40,
+          0
+        ],
+        [
+          398,
+          40,
+          0
+        ],
+        [
+          399,
+          40,
+          0
+        ],
+        [
+          400,
+          40,
+          0
+        ]
+      ],
+      "status": "fail"
+    }
+  },
+  "image_content_checks": {
+    "candidate": {
+      "size": [
+        982,
+        878
+      ],
+      "unique_colors": 102949,
+      "nonblack_pixels": 858576
+    },
+    "geometry_qa": {
+      "size": [
+        942,
+        918
+      ],
+      "unique_colors": 101176,
+      "nonblack_pixels": 861272
+    },
+    "atlas_2x": {
+      "size": [
+        1632,
+        320
+      ],
+      "unique_colors": 102472,
+      "nonblack_pixels": 465752
+    },
+    "runtime_fill_preview": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 75165,
+      "nonblack_pixels": 2072240
+    },
+    "runtime_fill_qa": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 73903,
+      "nonblack_pixels": 2072243
+    },
+    "right_edge_closeup_qa": {
+      "size": [
+        1862,
+        1166
+      ],
+      "unique_colors": 31433,
+      "nonblack_pixels": 2166060
+    },
+    "b1_1_vs_b1_2_right_edge_fix_board": {
+      "size": [
+        1958,
+        2148
+      ],
+      "unique_colors": 42644,
+      "nonblack_pixels": 4086139
+    }
+  }
+}

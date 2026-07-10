@@ -1,0 +1,1041 @@
+{
+  "schema_version": 1,
+  "asset_id": "world_map_wmw_left_region_card_b2_1_hollow_shell",
+  "version": "v0.9.7",
+  "status": "b2_1_hollow_shell_slice_pass_pending_user_review",
+  "date": "2026-07-09",
+  "contract": "D:\\angos\\design\\ui-contracts\\world-map\\left_region_card.json",
+  "contract_frozen_fields_changed": false,
+  "pipeline": "hollow shell z-order: dark base -> rectangular photo underlay -> hollow shell -> runtime text",
+  "inputs": {
+    "candidate_b_shell_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+    "candidate_b1_photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+    "previous_b2_manifest": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\442-world-map-wmw-v0-9-6-left-card-b2-manifest.json"
+  },
+  "outputs": {
+    "ingredient_board": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\447-world-map-wmw-v0-9-7-left-card-b2-1-hollow-shell-ingredients.png",
+    "cutout_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\448-world-map-wmw-v0-9-7-left-card-b2-1-window-cutout-qa.png",
+    "composite": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\449-world-map-wmw-v0-9-7-left-card-b2-1-hollow-shell-composite.png",
+    "geometry_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\450-world-map-wmw-v0-9-7-left-card-b2-1-geometry-qa.png",
+    "atlas_2x": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\451-world-map-wmw-v0-9-7-left-card-b2-1-atlas-2x.png",
+    "runtime_fill_preview": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\452-world-map-wmw-v0-9-7-left-card-b2-1-runtime-fill.png",
+    "runtime_fill_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\453-world-map-wmw-v0-9-7-left-card-b2-1-runtime-fill-qa.png",
+    "arc_edge_fit_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\454-world-map-wmw-v0-9-7-left-card-b2-1-arc-edge-fit-qa.png",
+    "manifest": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\455-world-map-wmw-v0-9-7-left-card-b2-1-manifest.json",
+    "godot_single_component": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\456-world-map-wmw-v0-9-7-left-card-b2-1-godot-single-component.png",
+    "godot_single_component_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\457-world-map-wmw-v0-9-7-left-card-b2-1-godot-single-component-qa.png",
+    "godot_atlas_copy": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\left_region_card_b21_hollow_shell_atlas_2x.png",
+    "godot_manifest_copy": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\left_region_card_b21_hollow_shell_manifest.json",
+    "godot_hollow_shell_ingredients_dir": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients"
+  },
+  "runtime_tokens": {
+    "label_title": {
+      "python_font_px": 19,
+      "godot_font_size": 25,
+      "color": "#121612"
+    },
+    "meta_status": {
+      "python_font_px": 11,
+      "godot_font_size": 14,
+      "color": "#421c14"
+    }
+  },
+  "base_frame_sources": [
+    {
+      "state": "selected",
+      "box": [
+        65,
+        63,
+        690,
+        553
+      ],
+      "expanded_box": [
+        57,
+        55,
+        698,
+        561
+      ],
+      "fit": {
+        "source_size": [
+          641,
+          506
+        ],
+        "fit_size": [
+          405,
+          320
+        ],
+        "offset": [
+          1,
+          0
+        ],
+        "scale": 0.6324110671936759,
+        "letterbox": [
+          3,
+          0
+        ]
+      }
+    },
+    {
+      "state": "available",
+      "box": [
+        748,
+        63,
+        1362,
+        553
+      ],
+      "expanded_box": [
+        740,
+        55,
+        1370,
+        561
+      ],
+      "fit": {
+        "source_size": [
+          630,
+          506
+        ],
+        "fit_size": [
+          398,
+          320
+        ],
+        "offset": [
+          5,
+          0
+        ],
+        "scale": 0.6324110671936759,
+        "letterbox": [
+          10,
+          0
+        ]
+      }
+    },
+    {
+      "state": "warning",
+      "box": [
+        65,
+        576,
+        690,
+        1062
+      ],
+      "expanded_box": [
+        57,
+        568,
+        698,
+        1070
+      ],
+      "fit": {
+        "source_size": [
+          641,
+          502
+        ],
+        "fit_size": [
+          408,
+          320
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "scale": 0.6365054602184087,
+        "letterbox": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "state": "locked",
+      "box": [
+        748,
+        576,
+        1362,
+        1062
+      ],
+      "expanded_box": [
+        740,
+        568,
+        1370,
+        1070
+      ],
+      "fit": {
+        "source_size": [
+          630,
+          502
+        ],
+        "fit_size": [
+          402,
+          320
+        ],
+        "offset": [
+          3,
+          0
+        ],
+        "scale": 0.6374501992031872,
+        "letterbox": [
+          6,
+          0
+        ]
+      }
+    }
+  ],
+  "composition": [
+    {
+      "state": "selected",
+      "z_order": "dark_body -> rectangular photo underlay covering cutout bbox -> hollow shell -> runtime text",
+      "base_shell_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+      "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+      "photo_source_box": [
+        0,
+        0,
+        704,
+        558
+      ],
+      "photo_rel_crop_b2_1": [
+        0.31,
+        0.09,
+        0.86,
+        0.59
+      ],
+      "photo_underlay_cover_bbox_2x": [
+        31,
+        43,
+        406,
+        181
+      ],
+      "photo_shape_clipping": "forbidden_not_used",
+      "hollow_shell": {
+        "state": "selected",
+        "hollow_shell_path": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b21_hollow_shell_selected.png",
+        "search_bbox_2x": [
+          32,
+          42,
+          408,
+          186
+        ],
+        "photo_cutout_mask_bbox_2x": [
+          39,
+          51,
+          398,
+          173
+        ],
+        "photo_underlay_cover_bbox_2x": [
+          31,
+          43,
+          406,
+          181
+        ],
+        "cutout_dilate_px": 2,
+        "cutout_pixels": 43156,
+        "method": "color-segment old photo pixels from B shell, dilate cutout, then set old photo pixels transparent"
+      },
+      "contract_photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ]
+    },
+    {
+      "state": "available",
+      "z_order": "dark_body -> rectangular photo underlay covering cutout bbox -> hollow shell -> runtime text",
+      "base_shell_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+      "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+      "photo_source_box": [
+        704,
+        0,
+        1408,
+        558
+      ],
+      "photo_rel_crop_b2_1": [
+        0.31,
+        0.09,
+        0.8,
+        0.59
+      ],
+      "photo_underlay_cover_bbox_2x": [
+        31,
+        43,
+        403,
+        181
+      ],
+      "photo_shape_clipping": "forbidden_not_used",
+      "hollow_shell": {
+        "state": "available",
+        "hollow_shell_path": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b21_hollow_shell_available.png",
+        "search_bbox_2x": [
+          32,
+          42,
+          408,
+          186
+        ],
+        "photo_cutout_mask_bbox_2x": [
+          39,
+          51,
+          395,
+          173
+        ],
+        "photo_underlay_cover_bbox_2x": [
+          31,
+          43,
+          403,
+          181
+        ],
+        "cutout_dilate_px": 2,
+        "cutout_pixels": 42726,
+        "method": "color-segment old photo pixels from B shell, dilate cutout, then set old photo pixels transparent"
+      },
+      "contract_photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ]
+    },
+    {
+      "state": "warning",
+      "z_order": "dark_body -> rectangular photo underlay covering cutout bbox -> hollow shell -> runtime text",
+      "base_shell_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+      "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+      "photo_source_box": [
+        0,
+        558,
+        704,
+        1117
+      ],
+      "photo_rel_crop_b2_1": [
+        0.29,
+        0.09,
+        0.84,
+        0.6
+      ],
+      "photo_underlay_cover_bbox_2x": [
+        31,
+        43,
+        408,
+        181
+      ],
+      "photo_shape_clipping": "forbidden_not_used",
+      "hollow_shell": {
+        "state": "warning",
+        "hollow_shell_path": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b21_hollow_shell_warning.png",
+        "search_bbox_2x": [
+          32,
+          42,
+          408,
+          186
+        ],
+        "photo_cutout_mask_bbox_2x": [
+          39,
+          51,
+          400,
+          173
+        ],
+        "photo_underlay_cover_bbox_2x": [
+          31,
+          43,
+          408,
+          181
+        ],
+        "cutout_dilate_px": 2,
+        "cutout_pixels": 43328,
+        "method": "color-segment old photo pixels from B shell, dilate cutout, then set old photo pixels transparent"
+      },
+      "contract_photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ]
+    },
+    {
+      "state": "locked",
+      "z_order": "dark_body -> rectangular photo underlay covering cutout bbox -> hollow shell -> runtime text",
+      "base_shell_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+      "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+      "photo_source_box": [
+        704,
+        558,
+        1408,
+        1117
+      ],
+      "photo_rel_crop_b2_1": [
+        0.31,
+        0.09,
+        0.8,
+        0.6
+      ],
+      "photo_underlay_cover_bbox_2x": [
+        31,
+        43,
+        405,
+        181
+      ],
+      "photo_shape_clipping": "forbidden_not_used",
+      "hollow_shell": {
+        "state": "locked",
+        "hollow_shell_path": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b21_hollow_shell_locked.png",
+        "search_bbox_2x": [
+          32,
+          42,
+          408,
+          186
+        ],
+        "photo_cutout_mask_bbox_2x": [
+          39,
+          51,
+          397,
+          173
+        ],
+        "photo_underlay_cover_bbox_2x": [
+          31,
+          43,
+          405,
+          181
+        ],
+        "cutout_dilate_px": 2,
+        "cutout_pixels": 42904,
+        "method": "color-segment old photo pixels from B shell, dilate cutout, then set old photo pixels transparent"
+      },
+      "contract_photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ]
+    }
+  ],
+  "geometry_metrics": [
+    {
+      "state": "selected",
+      "export_size_2x": [
+        408,
+        320
+      ],
+      "export_size_1x": [
+        204,
+        160
+      ],
+      "ratio": 1.275,
+      "ratio_target": 1.275,
+      "ratio_delta": 0.0,
+      "ratio_pass": true,
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ],
+      "composition": {
+        "state": "selected",
+        "z_order": "dark_body -> rectangular photo underlay covering cutout bbox -> hollow shell -> runtime text",
+        "base_shell_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+        "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+        "photo_source_box": [
+          0,
+          0,
+          704,
+          558
+        ],
+        "photo_rel_crop_b2_1": [
+          0.31,
+          0.09,
+          0.86,
+          0.59
+        ],
+        "photo_underlay_cover_bbox_2x": [
+          31,
+          43,
+          406,
+          181
+        ],
+        "photo_shape_clipping": "forbidden_not_used",
+        "hollow_shell": {
+          "state": "selected",
+          "hollow_shell_path": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b21_hollow_shell_selected.png",
+          "search_bbox_2x": [
+            32,
+            42,
+            408,
+            186
+          ],
+          "photo_cutout_mask_bbox_2x": [
+            39,
+            51,
+            398,
+            173
+          ],
+          "photo_underlay_cover_bbox_2x": [
+            31,
+            43,
+            406,
+            181
+          ],
+          "cutout_dilate_px": 2,
+          "cutout_pixels": 43156,
+          "method": "color-segment old photo pixels from B shell, dilate cutout, then set old photo pixels transparent"
+        },
+        "contract_photo_slot_2x": [
+          42,
+          48,
+          390,
+          176
+        ]
+      }
+    },
+    {
+      "state": "available",
+      "export_size_2x": [
+        408,
+        320
+      ],
+      "export_size_1x": [
+        204,
+        160
+      ],
+      "ratio": 1.275,
+      "ratio_target": 1.275,
+      "ratio_delta": 0.0,
+      "ratio_pass": true,
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ],
+      "composition": {
+        "state": "available",
+        "z_order": "dark_body -> rectangular photo underlay covering cutout bbox -> hollow shell -> runtime text",
+        "base_shell_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+        "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+        "photo_source_box": [
+          704,
+          0,
+          1408,
+          558
+        ],
+        "photo_rel_crop_b2_1": [
+          0.31,
+          0.09,
+          0.8,
+          0.59
+        ],
+        "photo_underlay_cover_bbox_2x": [
+          31,
+          43,
+          403,
+          181
+        ],
+        "photo_shape_clipping": "forbidden_not_used",
+        "hollow_shell": {
+          "state": "available",
+          "hollow_shell_path": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b21_hollow_shell_available.png",
+          "search_bbox_2x": [
+            32,
+            42,
+            408,
+            186
+          ],
+          "photo_cutout_mask_bbox_2x": [
+            39,
+            51,
+            395,
+            173
+          ],
+          "photo_underlay_cover_bbox_2x": [
+            31,
+            43,
+            403,
+            181
+          ],
+          "cutout_dilate_px": 2,
+          "cutout_pixels": 42726,
+          "method": "color-segment old photo pixels from B shell, dilate cutout, then set old photo pixels transparent"
+        },
+        "contract_photo_slot_2x": [
+          42,
+          48,
+          390,
+          176
+        ]
+      }
+    },
+    {
+      "state": "warning",
+      "export_size_2x": [
+        408,
+        320
+      ],
+      "export_size_1x": [
+        204,
+        160
+      ],
+      "ratio": 1.275,
+      "ratio_target": 1.275,
+      "ratio_delta": 0.0,
+      "ratio_pass": true,
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ],
+      "composition": {
+        "state": "warning",
+        "z_order": "dark_body -> rectangular photo underlay covering cutout bbox -> hollow shell -> runtime text",
+        "base_shell_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+        "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+        "photo_source_box": [
+          0,
+          558,
+          704,
+          1117
+        ],
+        "photo_rel_crop_b2_1": [
+          0.29,
+          0.09,
+          0.84,
+          0.6
+        ],
+        "photo_underlay_cover_bbox_2x": [
+          31,
+          43,
+          408,
+          181
+        ],
+        "photo_shape_clipping": "forbidden_not_used",
+        "hollow_shell": {
+          "state": "warning",
+          "hollow_shell_path": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b21_hollow_shell_warning.png",
+          "search_bbox_2x": [
+            32,
+            42,
+            408,
+            186
+          ],
+          "photo_cutout_mask_bbox_2x": [
+            39,
+            51,
+            400,
+            173
+          ],
+          "photo_underlay_cover_bbox_2x": [
+            31,
+            43,
+            408,
+            181
+          ],
+          "cutout_dilate_px": 2,
+          "cutout_pixels": 43328,
+          "method": "color-segment old photo pixels from B shell, dilate cutout, then set old photo pixels transparent"
+        },
+        "contract_photo_slot_2x": [
+          42,
+          48,
+          390,
+          176
+        ]
+      }
+    },
+    {
+      "state": "locked",
+      "export_size_2x": [
+        408,
+        320
+      ],
+      "export_size_1x": [
+        204,
+        160
+      ],
+      "ratio": 1.275,
+      "ratio_target": 1.275,
+      "ratio_delta": 0.0,
+      "ratio_pass": true,
+      "photo_slot_2x": [
+        42,
+        48,
+        390,
+        176
+      ],
+      "action_badge_2x": [
+        316,
+        212,
+        392,
+        288
+      ],
+      "composition": {
+        "state": "locked",
+        "z_order": "dark_body -> rectangular photo underlay covering cutout bbox -> hollow shell -> runtime text",
+        "base_shell_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\383-world-map-wmw-v0-9-1-left-card-imagegen-candidate-b.png",
+        "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+        "photo_source_box": [
+          704,
+          558,
+          1408,
+          1117
+        ],
+        "photo_rel_crop_b2_1": [
+          0.31,
+          0.09,
+          0.8,
+          0.6
+        ],
+        "photo_underlay_cover_bbox_2x": [
+          31,
+          43,
+          405,
+          181
+        ],
+        "photo_shape_clipping": "forbidden_not_used",
+        "hollow_shell": {
+          "state": "locked",
+          "hollow_shell_path": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b21_hollow_shell_locked.png",
+          "search_bbox_2x": [
+            32,
+            42,
+            408,
+            186
+          ],
+          "photo_cutout_mask_bbox_2x": [
+            39,
+            51,
+            397,
+            173
+          ],
+          "photo_underlay_cover_bbox_2x": [
+            31,
+            43,
+            405,
+            181
+          ],
+          "cutout_dilate_px": 2,
+          "cutout_pixels": 42904,
+          "method": "color-segment old photo pixels from B shell, dilate cutout, then set old photo pixels transparent"
+        },
+        "contract_photo_slot_2x": [
+          42,
+          48,
+          390,
+          176
+        ]
+      }
+    }
+  ],
+  "old_photo_residue_stats": {
+    "selected": {
+      "cutout_mask_bbox_2x": [
+        39,
+        51,
+        398,
+        173
+      ],
+      "opaque_pixels_inside_cutout_mask": 0,
+      "old_photo_signature_hits": 0,
+      "sample_pixels": [],
+      "status": "pass",
+      "basis": "after color segmentation and dilation, the hollow-shell cutout mask must contain zero opaque old-photo pixels"
+    },
+    "available": {
+      "cutout_mask_bbox_2x": [
+        39,
+        51,
+        395,
+        173
+      ],
+      "opaque_pixels_inside_cutout_mask": 0,
+      "old_photo_signature_hits": 0,
+      "sample_pixels": [],
+      "status": "pass",
+      "basis": "after color segmentation and dilation, the hollow-shell cutout mask must contain zero opaque old-photo pixels"
+    },
+    "warning": {
+      "cutout_mask_bbox_2x": [
+        39,
+        51,
+        400,
+        173
+      ],
+      "opaque_pixels_inside_cutout_mask": 0,
+      "old_photo_signature_hits": 0,
+      "sample_pixels": [],
+      "status": "pass",
+      "basis": "after color segmentation and dilation, the hollow-shell cutout mask must contain zero opaque old-photo pixels"
+    },
+    "locked": {
+      "cutout_mask_bbox_2x": [
+        39,
+        51,
+        397,
+        173
+      ],
+      "opaque_pixels_inside_cutout_mask": 0,
+      "old_photo_signature_hits": 0,
+      "sample_pixels": [],
+      "status": "pass",
+      "basis": "after color segmentation and dilation, the hollow-shell cutout mask must contain zero opaque old-photo pixels"
+    }
+  },
+  "card_body_opacity_stats": {
+    "selected": {
+      "mask_basis": "pixels opaque in candidate B shell source, excluding compressed green color-key background residue",
+      "expected_opaque_pixels": 118079,
+      "transparent_pixels_inside_card_body": 0,
+      "sample_transparent_pixels": [],
+      "threshold": "alpha < 250",
+      "status": "pass"
+    },
+    "available": {
+      "mask_basis": "pixels opaque in candidate B shell source, excluding compressed green color-key background residue",
+      "expected_opaque_pixels": 115984,
+      "transparent_pixels_inside_card_body": 0,
+      "sample_transparent_pixels": [],
+      "threshold": "alpha < 250",
+      "status": "pass"
+    },
+    "warning": {
+      "mask_basis": "pixels opaque in candidate B shell source, excluding compressed green color-key background residue",
+      "expected_opaque_pixels": 118751,
+      "transparent_pixels_inside_card_body": 0,
+      "sample_transparent_pixels": [],
+      "threshold": "alpha < 250",
+      "status": "pass"
+    },
+    "locked": {
+      "mask_basis": "pixels opaque in candidate B shell source, excluding compressed green color-key background residue",
+      "expected_opaque_pixels": 116963,
+      "transparent_pixels_inside_card_body": 0,
+      "sample_transparent_pixels": [],
+      "threshold": "alpha < 250",
+      "status": "pass"
+    }
+  },
+  "gates": {
+    "window_cutout_quality": {
+      "status": "pass",
+      "basis": "hollow shell cutout mask contains zero opaque old-photo pixels after color segmentation and dilation",
+      "stats": {
+        "selected": {
+          "cutout_mask_bbox_2x": [
+            39,
+            51,
+            398,
+            173
+          ],
+          "opaque_pixels_inside_cutout_mask": 0,
+          "old_photo_signature_hits": 0,
+          "sample_pixels": [],
+          "status": "pass",
+          "basis": "after color segmentation and dilation, the hollow-shell cutout mask must contain zero opaque old-photo pixels"
+        },
+        "available": {
+          "cutout_mask_bbox_2x": [
+            39,
+            51,
+            395,
+            173
+          ],
+          "opaque_pixels_inside_cutout_mask": 0,
+          "old_photo_signature_hits": 0,
+          "sample_pixels": [],
+          "status": "pass",
+          "basis": "after color segmentation and dilation, the hollow-shell cutout mask must contain zero opaque old-photo pixels"
+        },
+        "warning": {
+          "cutout_mask_bbox_2x": [
+            39,
+            51,
+            400,
+            173
+          ],
+          "opaque_pixels_inside_cutout_mask": 0,
+          "old_photo_signature_hits": 0,
+          "sample_pixels": [],
+          "status": "pass",
+          "basis": "after color segmentation and dilation, the hollow-shell cutout mask must contain zero opaque old-photo pixels"
+        },
+        "locked": {
+          "cutout_mask_bbox_2x": [
+            39,
+            51,
+            397,
+            173
+          ],
+          "opaque_pixels_inside_cutout_mask": 0,
+          "old_photo_signature_hits": 0,
+          "sample_pixels": [],
+          "status": "pass",
+          "basis": "after color segmentation and dilation, the hollow-shell cutout mask must contain zero opaque old-photo pixels"
+        }
+      }
+    },
+    "card_body_opacity_probe": {
+      "status": "pass",
+      "basis": "composited card body must be opaque wherever candidate B shell body was opaque",
+      "stats": {
+        "selected": {
+          "mask_basis": "pixels opaque in candidate B shell source, excluding compressed green color-key background residue",
+          "expected_opaque_pixels": 118079,
+          "transparent_pixels_inside_card_body": 0,
+          "sample_transparent_pixels": [],
+          "threshold": "alpha < 250",
+          "status": "pass"
+        },
+        "available": {
+          "mask_basis": "pixels opaque in candidate B shell source, excluding compressed green color-key background residue",
+          "expected_opaque_pixels": 115984,
+          "transparent_pixels_inside_card_body": 0,
+          "sample_transparent_pixels": [],
+          "threshold": "alpha < 250",
+          "status": "pass"
+        },
+        "warning": {
+          "mask_basis": "pixels opaque in candidate B shell source, excluding compressed green color-key background residue",
+          "expected_opaque_pixels": 118751,
+          "transparent_pixels_inside_card_body": 0,
+          "sample_transparent_pixels": [],
+          "threshold": "alpha < 250",
+          "status": "pass"
+        },
+        "locked": {
+          "mask_basis": "pixels opaque in candidate B shell source, excluding compressed green color-key background residue",
+          "expected_opaque_pixels": 116963,
+          "transparent_pixels_inside_card_body": 0,
+          "sample_transparent_pixels": [],
+          "threshold": "alpha < 250",
+          "status": "pass"
+        }
+      }
+    },
+    "geometry_ratio_1_275": {
+      "status": "pass",
+      "target_ratio": 1.275,
+      "tolerance": 0.015
+    },
+    "photo_shape_crop_forbidden": {
+      "status": "pass",
+      "basis": "photo ingredients are rectangular underlays fitted to cutout bounding boxes; no shape clipping is applied to photo layers"
+    },
+    "z_order_hollow_shell": {
+      "status": "pass",
+      "basis": "dark base -> rectangular photo underlay -> hollow shell; irregular window belongs to shell alpha"
+    },
+    "arc_and_edge_manual_visual_check": {
+      "status": "pass",
+      "basis": "Manual visual inspection of 454 at 200% plus Godot 456/457: globe arc, right edge, and bottom lip show the rectangular photo only through the hollow shell; no old-photo band, color band, gap, duplicate image, or ghosting observed.",
+      "evidence": [
+        "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\454-world-map-wmw-v0-9-7-left-card-b2-1-arc-edge-fit-qa.png",
+        "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\456-world-map-wmw-v0-9-7-left-card-b2-1-godot-single-component.png",
+        "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\457-world-map-wmw-v0-9-7-left-card-b2-1-godot-single-component-qa.png"
+      ]
+    },
+    "godot_windowed_capture": {
+      "status": "pass",
+      "basis": "windowed opengl3 capture via scripts/run_wmw_godot_capture_v09.ps1 -SkipRepro; nonblack and color-diversity checks recorded",
+      "headless_used_for_ui_capture": false
+    }
+  },
+  "manual_review_notes": [
+    "B2.1 deliberately does not cut photos into a window shape.",
+    "The irregular globe arc, bottom lip, right edge, and card silhouette are owned by the hollow shell alpha.",
+    "Manual review on 2026-07-09 passed on 454/456/457; B2.1 remains a slice proof pending user visual decision, not a production freeze."
+  ],
+  "image_content_checks": {
+    "ingredient_board": {
+      "size": [
+        1650,
+        1052
+      ],
+      "unique_colors": 80855,
+      "nonblack_pixels": 1732169
+    },
+    "cutout_qa": {
+      "size": [
+        1680,
+        940
+      ],
+      "unique_colors": 18113,
+      "nonblack_pixels": 1578744
+    },
+    "composite": {
+      "size": [
+        982,
+        914
+      ],
+      "unique_colors": 100648,
+      "nonblack_pixels": 893598
+    },
+    "geometry_qa": {
+      "size": [
+        942,
+        918
+      ],
+      "unique_colors": 99476,
+      "nonblack_pixels": 860883
+    },
+    "atlas_2x": {
+      "size": [
+        1632,
+        320
+      ],
+      "unique_colors": 100219,
+      "nonblack_pixels": 470368
+    },
+    "runtime_fill_preview": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 75575,
+      "nonblack_pixels": 2071747
+    },
+    "runtime_fill_qa": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 74651,
+      "nonblack_pixels": 2071763
+    },
+    "arc_edge_fit_qa": {
+      "size": [
+        1780,
+        1040
+      ],
+      "unique_colors": 62017,
+      "nonblack_pixels": 1849712
+    },
+    "godot_single_component": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 68479,
+      "nonblack_pixels": 2072049
+    },
+    "godot_single_component_qa": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 65946,
+      "nonblack_pixels": 2073600
+    }
+  }
+}
