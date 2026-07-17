@@ -44,6 +44,14 @@ const STAFF_POOL := [
 	]},
 ]
 
+const WORLD_MAP_UI_COPY := {
+	"mission_intel_collapsed": "任务情报",
+	"mission_intel_expanded": "任务情报",
+	"mission_intel_locked": "解锁后可查看",
+	"region_enter_enabled": "进入地区任务台",
+	"region_enter_disabled": "暂不可进入",
+}
+
 const REGION_DATA := [
 	{
 		"id": "us",

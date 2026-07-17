@@ -1,5 +1,7 @@
 # 地区任务台资产化返工生产规格
 
+> **2026-07-16 当前支线覆盖**：本文件 2026-06-15 / 06-17 的旧像素、重半调、红青 atlas 与整屏 `rt_artboard_full` 路线仅保留为历史 fallback。当前以两张标杆和 `clean low-poly weekly` 支线为真源；执行前先读取 [`2026-07-16-region-task-board-component-cutout-preflight-v2.md`](./region-task-board-imagegen/2026-07-16-region-task-board-component-cutout-preflight-v2.md) 与 [`component_cutout_inventory_v1.json`](../../design/ui-contracts/region-task-board/component_cutout_inventory_v1.json)。E2 只作组合气质参考，从 E2 直接裁切的正式组件数为 0；与本文件旧资产名、固定五热点、整屏图优先级、逐状态生图或宽泛“约 8 类外壳”口径冲突时，以 2026-07-16 的 18-class inventory 为准。
+
 > **状态**：2026-06-15 返工规格；2026-06-17 追加 v3 视觉锁定口径。`region-task-board-clean-pixel-v2.png` 只能作为已认可地图质感的风格源和失败链路样本；当前 v3 以 `gd_project/Assets/ui/angus_packaging/region_task/artboard_v3/rt-artboard-full.png` 作为用户认可整屏视觉锁定源和高保真恢复底图。  
 > **目标**：冻结用户认可的深蓝低多边形纸质地图质感、整体配色和视觉语言，只用资产化 UI 链路解决 HUD 挤压、文字出框、框体不配套、地图标签烘焙和按钮无状态等功能落地问题。  
 > **依据**：`docs/onboarding/assetized-ui-production-chain.md`、`docs/onboarding/ui-interaction-guidelines.md`、`docs/设计采纳记录.md` A51-A57、A67-A69、A82。
@@ -67,7 +69,7 @@
 
 - 当前地区地图。
 - 当前地区可选任务 / 线索列表。
-- 当前选中任务摘要。
+- 当前选中任务摘要；它是右侧详情纸的主要叙事正文区，默认承载 7–8 行介绍，以 9 行中文做容量压力验收。
 - 任务类型、耗时、风险、截稿 / 深度链等关键状态。
 - 主操作：进入派遣签批。
 - 当前地区的全局日程推进：`推进一天`，但必须作为底部日程条里的全局动作，不得贴近任务主 CTA。
@@ -319,6 +321,7 @@ gd_project/Assets/ui/angus_packaging/region_task/region_task_asset_manifest.json
 - 装饰只在 `no_text_rects` 中。
 - CTA 文案只允许出现在独立 CTA 组件的 `content_rects.label`；右详情纸不得再定义 `cta_label`，只能定义 `cta_mount` 和 `blocking_reason`。
 - 禁用原因不得挤进按钮 label；放到右详情阻断原因槽或 tooltip。
+- 右详情纸优先把任务标题与 CTA 之间的弹性高度分配给摘要正文；默认不显示框内滚动条、不缩字。地点 / 耗时、风险 / 链条保持为独立短事实块并稳定可见，摘要超过 9 行时另走 `展开全文` 阅读层。
 
 禁止：
 
@@ -401,7 +404,7 @@ gd_project/Assets/ui/angus_packaging/region_task/region_task_asset_manifest.json
 
 交付前按顺序复审：
 
-1. `angus_art_director`：地图质感是否保留，像素 / 半调是否像 Angus，是否滑向旧报纸或高清摄影噪点。
+1. 当前 `clean low-poly weekly` 支线按 A180 临时例外，直接用两张标杆、支线风格规范、纸面 / 色彩合同和失败样本逐项复审；不自动调用旧像素坐标系的 `angus_art_director`。其他 Angus 像素 / 半调支线以及用户显式点名不受影响。
 2. `ui_designer`：布局和组件清单是否能承载 1920x1080 桌面 UI。
 3. `ux_laoge`：玩家是否能理解任务选择、选中反馈、返回层级和进入派遣主操作。
 
@@ -410,6 +413,18 @@ gd_project/Assets/ui/angus_packaging/region_task/region_task_asset_manifest.json
 ## 12. 返工执行顺序
 
 建议分三步，不再一次性做整屏大图：
+
+### Step 0：落地前全组件评估与纵向切片准入（2026-07-15 新增）
+
+在任何新一轮裁切、批量生图或 Godot 全量接入前，必须先完成：
+
+1. 以冻结的 1920×1080 黑白功能框为几何真源，不从完整风格稿反推坐标。
+2. 为 HUD、左任务索引、地图图钉、dossier、派遣 CTA、推进一天和日程条分别登记功能、状态、visual / layout / clip / hit rect 与文本安全区。
+3. 将每个组件归入“复用原图 / Godot 原生构造 / 生图无字母版 / 退役旧资产”四类，不允许把整屏风格稿直接挖成 atlas。
+4. 建立 `region_task_asset_manifest_v2.json` 与 `design/ui-contracts/region-task-board/`；旧固定五热点 manifest 不得沿用。
+5. 先跑“地图 + 0–N 事件图钉 + dossier 真实摘要 + 固定底部 CTA”纵向切片。切片未通过，不得批量生成任务卡、按钮状态或同类实例。
+
+完整坐标、组件清单、生产难度与放行证据见 2026-07-15 落地前评估报告。
 
 ### Step 1：资产规格与干净地图
 
@@ -457,3 +472,51 @@ gd_project/Assets/ui/angus_packaging/region_task/region_task_asset_manifest.json
 - Godot 控件通过、视觉安全区通过、交互状态通过三者同时满足。
 
 未满足以上标准时，只能称为临时止血版或风格草图，不能称为生产级地区任务台。
+
+---
+
+## 14. 2026-07-15 clean low-poly 支线生产覆盖
+
+### 14.1 资产路线
+
+- 地图：复用 2026-07-14 已选“地标节奏”原图，不重新生成简化地图，也不从整屏 mock 裁切。
+- HUD、动态文字、数字、路线、分隔线、日程摘要与命中反馈：Godot 原生构造。
+- 左栏壳、任务卡、图钉、短签、dossier 壳、状态章、派遣 CTA、推进一天和日程信息板：只生产无字母版；一类一母版，状态由运行时派生。
+- 当前完整风格稿：只作为组合气质与默认选中态参考，不是生产位图或几何真源。
+- 旧 `assetized/` 红青像素 / 半调资源与 prompt bundle v1：保留审计，不作为本支线生产输入。
+
+### 14.2 运行时阻断
+
+- `WeeklyRunExplorePhase.gd` 当前优先应用 `rt_artboard_full` 并提前返回；接入纵向切片时必须移除这条对新资产链的遮蔽。
+- `WeeklyRunUiStyle.gd` 当前按旧多状态 atlas 与旧 asset_id 读取；manifest v2 必须支持单母版、运行时状态层与动态 0–N 图钉。
+- 旧 manifest 的五个固定 `hotspots` 与 A204 冲突，不能只改坐标继续使用。
+- `assetized/.gdignore` 对当前 `Image.load_from_file` 自定义加载器不是直接阻断；只有迁移到 Godot 导入资源 / Texture2D / tscn 路线时才同步处理。
+
+### 14.3 放行边界
+
+在 2026-07-15 评估报告列出的 manifest v2、`task_id` 一致性、7 / 8 / 9 行文本压力、0 / 1 / N / 密集图钉、CTA 底部锚定和状态矩阵证据完成前，结论一律保持“允许纵向切片，不允许批量生产”。
+
+---
+
+## 15. 2026-07-15 v2 运行纵向切片落地结果
+
+### 15.1 已落地
+
+- 新增 `region_task_asset_manifest_v2.json` 与 `design/ui-contracts/region-task-board/`，旧五热点表不再参与新切片。
+- 地图直接复用已选 clean-lowpoly 原图，只承担地区地貌与静态地标；任务卡、图钉、短签、摘要与 CTA 全部由 `payload.nodes` / 当前任务 payload 动态生成。
+- 左侧任务卡与地图图钉共享 `task_id`；已通过 0 / 1 / N、同坐标密集五点避让和“只保留一个常驻选中标签”测试。
+- 右侧摘要使用独立可滚动正文区，已通过 7 / 8 / 9 行文本压力；地点 / 耗时、风险 / 链条与底部派遣 CTA 不被正文挤占。
+- 右侧 CTA 已接回现有派遣流程；未选中时禁用，选中后可进入原派遣页。
+- 1920×1080 与 1600×900 已完成真实 Godot 运行截图；几何叠线证明五大区与冻结合同一致。
+
+### 15.2 有意未接入
+
+- `推进一天` 仍停留在左下冻结位置并保持禁用。原因不是 UI 未做，而是当前玩法层没有独立“推进一天”命令；不得用结束探索或无效果按钮冒充。启用前必须先补玩法语义、确认态、后果预览与 GDD 同步。
+- 当前任务卡、图钉、dossier 和 CTA 是 Godot 原生运行骨架，用于验证数据、位置和交互，不是最终无字美术母版，也不是 production candidate。
+- `1366×768`、键盘全链、最终 hover / pressed 动效、最终一类一母版与 atlas 仍在下一阶段验收范围。
+
+### 15.3 当前放行判断
+
+- 原 Step 0 阻断项中的 manifest v2、动态 `task_id`、0 / 1 / N / 密集点位、7 / 8 / 9 行摘要、CTA 底边锚定与旧 `rt_artboard_full` 遮蔽已解除。
+- 放行“按组件制作无字母版并逐类替换运行骨架”，仍不放行整屏裁切、同类批量生图、全量 atlas 或生产候选命名。
+- 运行纵向切片的 Router Card 与 Delivery Manifest 位于 `docs/plans/region-task-board-imagegen/`；真实截图位于 `docs/screenshots/2026-07-15-region-task-board-runtime-v2/`。

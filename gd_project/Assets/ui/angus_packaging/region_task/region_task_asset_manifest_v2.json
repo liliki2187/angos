@@ -1,0 +1,143 @@
+{
+  "id": "region_task_board_clean_lowpoly_v2",
+  "version": 4,
+  "status": "pin_slice_c_hybrid_v3_runtime_candidate",
+  "target": "desktop_16_9",
+  "reference_resolution": [1920, 1080],
+  "runtime_resolutions": [[1920, 1080], [1600, 900], [1366, 768]],
+  "export_scale": 2,
+  "page_contract": "design/ui-contracts/region-task-board/page_contract.json",
+  "component_contracts": {
+    "event_card": "design/ui-contracts/region-task-board/event_card_contract.json",
+    "event_pin": "design/ui-contracts/region-task-board/event_pin_contract.json",
+    "dossier": "design/ui-contracts/region-task-board/dossier_contract.json",
+    "schedule": "design/ui-contracts/region-task-board/schedule_contract.json",
+    "component_cutout_inventory": "design/ui-contracts/region-task-board/component_cutout_inventory_v1.json"
+  },
+  "data_binding": {
+    "event_collection": "payload.nodes",
+    "event_id_field": "id",
+    "event_position_field": "map_pos",
+    "event_count": "0..N",
+    "selected_event_field": "payload.selected_node_id",
+    "fixed_hotspots": false,
+    "card_pin_shared_id": true
+  },
+  "page_regions": {
+    "hud": [0, 0, 1920, 72],
+    "event_index": [24, 96, 380, 804],
+    "map_stage": [420, 96, 1040, 804],
+    "dossier": [1484, 96, 412, 960],
+    "schedule": [24, 916, 1436, 140]
+  },
+  "assets": [
+    {
+      "id": "rt2_map_base_clean",
+      "role": "map_stage.background",
+      "implementation": "raster_texture",
+      "status": "approved_reference_reuse",
+      "final_path": "gd_project/Assets/ui/angus_packaging/region_task/v2/region_map_clean_lowpoly_selected_v1.png",
+      "source_path": "image_gen/2026-07-14/20260714-153016_wmw-region-map-landmark-rhythm-selected-v1-original.png",
+      "pixel_size": [1426, 1103],
+      "runtime_rect": [420, 96, 1040, 804],
+      "interactive": false,
+      "contains_task_pins": false,
+      "contains_runtime_text": false
+    },
+    {
+      "id": "rt2_task_pin_shell_v2",
+      "role": "map_stage.event_pin.shell",
+      "implementation": "fixed_alpha_texture",
+      "status": "runtime_candidate_c_hybrid_v3",
+      "design_direction": "C cut-wedge primary + B quiet content face + A single side spine",
+      "final_path": "gd_project/Assets/ui/angus_packaging/region_task/v2/pin_slice/rt-task-pin-shell-c-hybrid-v3-3x.png",
+      "source_path": "image_gen/2026-07-17/region-task-production-slice-v3/prepared/rt-task-pin-shell-c-hybrid-v3-3x.png",
+      "pixel_size": [192, 240],
+      "runtime_size": [64, 80],
+      "hit_size": [72, 80],
+      "visual_offset": [4, 0],
+      "anchor_in_hit_control": [36, 76],
+      "contains_runtime_text": false,
+      "contains_external_shadow": false
+    },
+    {
+      "id": "rt2_task_pin_label_v2",
+      "role": "map_stage.event_pin.short_label",
+      "implementation": "fixed_alpha_texture",
+      "status": "runtime_candidate_c_hybrid_v3_fixed_size",
+      "design_direction": "C cut-wedge primary + B quiet content face + A single side spine",
+      "final_path": "gd_project/Assets/ui/angus_packaging/region_task/v2/pin_slice/rt-task-pin-label-c-hybrid-v3-2x.png",
+      "source_path": "image_gen/2026-07-17/region-task-production-slice-v3/prepared/rt-task-pin-label-c-hybrid-v3-2x.png",
+      "pixel_size": [400, 144],
+      "runtime_size": [200, 72],
+      "content_rect": [14, 8, 166, 56],
+      "nine_patch": false,
+      "contains_runtime_text": false,
+      "contains_external_shadow": false
+    },
+    {
+      "id": "rt2_task_pin_kind_icons_v3",
+      "role": "map_stage.event_pin.kind_icons",
+      "implementation": "fixed_alpha_atlas",
+      "status": "runtime_candidate_c_hybrid_v3",
+      "design_direction": "heavy navy editorial symbols matched to the C-hybrid paper shell",
+      "final_path": "gd_project/Assets/ui/angus_packaging/region_task/v2/pin_slice/rt-task-pin-kind-icons-c-hybrid-v3-atlas-3x.png",
+      "source_path": "image_gen/2026-07-17/region-task-production-slice-v3/prepared/rt-task-pin-kind-icons-c-hybrid-v3-atlas-3x.png",
+      "pixel_size": [336, 84],
+      "runtime_frame_size": [28, 28],
+      "source_frame_size": [84, 84],
+      "frame_order": ["permanent", "chain", "hidden", "temp"],
+      "contains_runtime_text": false,
+      "contains_external_shadow": false
+    },
+    {
+      "id": "rt2_event_cards",
+      "role": "event_index.cards",
+      "implementation": "godot_native",
+      "status": "runtime_skeleton",
+      "contract": "design/ui-contracts/region-task-board/event_card_contract.json"
+    },
+    {
+      "id": "rt2_event_pins",
+      "role": "map_stage.event_pins",
+      "implementation": "assetized_shell_label_and_icon_atlas_plus_godot_state",
+      "status": "c_hybrid_v3_runtime_candidate",
+      "contract": "design/ui-contracts/region-task-board/event_pin_contract.json"
+    },
+    {
+      "id": "rt2_dossier",
+      "role": "dossier.dynamic_content",
+      "implementation": "godot_native",
+      "status": "runtime_skeleton",
+      "contract": "design/ui-contracts/region-task-board/dossier_contract.json"
+    },
+    {
+      "id": "rt2_schedule",
+      "role": "schedule.dynamic_content",
+      "implementation": "godot_native",
+      "status": "geometry_only_logic_deferred",
+      "contract": "design/ui-contracts/region-task-board/schedule_contract.json"
+    }
+  ],
+  "static_landmarks": {
+    "source": "rt2_map_base_clean",
+    "interactive": false,
+    "purpose": "geographic_identity_only"
+  },
+  "state_matrix": {
+    "event_count": [0, 1, 4, 5],
+    "selection": ["none", "selected"],
+    "event_pin": ["available", "hover", "selected", "disabled", "assigned", "urgent", "locked", "focus", "cluster"],
+    "dossier": ["empty", "ready", "disabled"],
+    "schedule": ["logic_deferred"]
+  },
+  "forbidden": [
+    "fixed_hotspots",
+    "transparent_buttons_over_baked_pins",
+    "runtime_text_in_raster",
+    "clickable_static_landmarks",
+    "single_fullscreen_artboard_as_runtime_ui",
+    "direct_crop_from_filled_state_mock",
+    "baked_external_shadow_on_interactive_asset"
+  ]
+}

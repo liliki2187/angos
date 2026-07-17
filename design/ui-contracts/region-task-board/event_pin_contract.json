@@ -1,0 +1,66 @@
+{
+  "id": "region_task_event_pin_v2",
+  "version": 5,
+  "runtime_rect": [420, 96, 1040, 804],
+  "event_count": "0..N",
+  "position_source": "payload.nodes[*].map_pos",
+  "binding": {
+    "runtime_meta_key": "task_id",
+    "source": "payload.nodes[*].id",
+    "same_id_as_event_card": true
+  },
+  "asset_class": "rt_task_pin_shell_mother",
+  "implementation": "fixed_alpha_shell_label_and_icon_atlas_plus_runtime_backplate_partial_arc_and_state_carrier",
+  "export_scale": 3,
+  "visual_asset_size": [64, 80],
+  "visual_offset_in_hit_control": [4, 0],
+  "hit_box": [0, 0, 72, 80],
+  "anchor_in_asset": [32, 76],
+  "anchor_in_hit_control": [36, 76],
+  "icon_slot_in_asset": [18, 14, 28, 28],
+  "label_anchor_right_in_hit_control": [78, 4],
+  "label_anchor_left_in_hit_control": [-208, 4],
+  "states": ["available", "hover", "selected", "disabled", "assigned", "urgent", "locked", "focus"],
+  "state_ownership": "Godot selection paper backplate, partial print arc, attached status carrier, label accent spine, disabled slash and focus; bitmap geometry and anchor are identical in every state.",
+  "shadow_ownership": "Godot; no external shadow baked into alpha.",
+  "label_policy": {
+    "asset_mode": "fixed_transparent_bitmap_200x72",
+    "nine_patch": false,
+    "content_rect": [14, 8, 166, 56],
+    "mouse_filter": "ignore",
+    "persistent_labels": "selected_only",
+    "hover_label": true,
+    "clamp_inside_map": true,
+    "collision_policy": "selected_label_has_priority"
+  },
+  "dense_position_policy": {
+    "minimum_hit_target_distance": 72,
+    "runtime_displacement_radius_max": 164,
+    "preserve_original_anchor_in_meta": true,
+    "fallback": "replace_dense_group_with_runtime_cluster_marker"
+  },
+  "cluster": {
+    "implementation": "Godot native",
+    "runtime_size": [72, 72],
+    "states": ["default", "hover", "expanded", "focus"],
+    "shape_language": "asymmetric cut-corner paper index seal; perfect concentric circle and minus-only expanded state are forbidden",
+    "expanded_feedback": "keep dynamic count visible and change paper fill plus accent border",
+    "fixed_number_rasters_forbidden": true
+  },
+  "background_landmarks": {
+    "interactive": false,
+    "task_id": null,
+    "purpose": "geographic_identity_only"
+  },
+  "forbidden": [
+    "baked_task_pins_in_map_raster",
+    "fixed_hotspot_manifest",
+    "landmark_as_task_button",
+    "pin_without_task_id",
+    "event_icon_baked_into_pin_shell",
+    "detached_full_concentric_selection_ring",
+    "naked_unicode_kind_or_state_symbol",
+    "external_shadow_in_alpha",
+    "direct_crop_from_fullscreen_mock"
+  ]
+}

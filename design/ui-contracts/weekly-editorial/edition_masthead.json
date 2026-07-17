@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "contract_version": "1.0.0",
+  "status": "locked_candidate",
+  "page": "weekly_editorial",
+  "class_id": "edition_masthead",
+  "role": "双版常显态杂志身份刊头；纯装饰、无运行状态",
+  "reference_resolution": [1920, 1080],
+  "runtime_resolution": [1920, 1080],
+  "export_scale": 2,
+  "frozen": {
+    "export_size": [1010, 56],
+    "positions": [[435, 112]],
+    "hit_rect": [0, 0, 0, 0],
+    "slots": {
+      "globe_mark": [16, 14, 28, 28],
+      "publication_title": [56, 7, 300, 42],
+      "english_title": [380, 18, 194, 20],
+      "rule": [596, 27, 224, 2],
+      "color_swatches": [844, 20, 58, 16],
+      "monogram": [928, 14, 66, 28]
+    },
+    "no_text_rects": {
+      "outer_edge": [0, 0, 6, 56],
+      "baseline": [0, 53, 1010, 3]
+    }
+  },
+  "states": ["static"],
+  "notes": "不得绑定当前拿稿、来源、风险、期号或取消操作；mouse_filter=IGNORE，且不得出现 hover、pressed、focus、tooltip 或按钮热区。"
+}

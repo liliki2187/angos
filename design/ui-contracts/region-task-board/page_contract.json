@@ -1,0 +1,70 @@
+{
+  "id": "region_task_board_page_v2",
+  "version": 2,
+  "status": "runtime_skeleton_frozen_geometry",
+  "target": "desktop_16_9",
+  "reference_resolution": [1920, 1080],
+  "runtime_resolutions": [[1920, 1080], [1600, 900], [1366, 768]],
+  "scale_policy": "uniform_fit_and_center",
+  "regions": {
+    "hud": [0, 0, 1920, 72],
+    "event_index": [24, 96, 380, 804],
+    "map_stage": [420, 96, 1040, 804],
+    "dossier": [1484, 96, 412, 960],
+    "schedule": [24, 916, 1436, 140]
+  },
+  "primary_flow": [
+    "select_event_from_card_or_pin",
+    "read_dossier",
+    "open_dispatch"
+  ],
+  "data_contract": {
+    "event_collection": "payload.nodes",
+    "event_id_field": "id",
+    "event_position_field": "map_pos",
+    "selected_event_field": "payload.selected_node_id",
+    "allowed_event_count": "0..N",
+    "card_and_pin_must_share_event_id": true,
+    "fixed_hotspots_forbidden": true,
+    "static_landmarks_are_interactive": false
+  },
+  "implementation_split": {
+    "raster_base": ["map_stage.background"],
+    "isolated_alpha_master": [
+      "event_index.shell",
+      "event_index.card_shell",
+      "map_stage.pin_shell",
+      "dossier.shell",
+      "dossier.primary_cta_shell",
+      "schedule.advance_day_shell"
+    ],
+    "rectangular_nine_patch": [
+      "hud.strip_and_back_button",
+      "event_index.running_receipt",
+      "map_stage.event_label",
+      "dossier.section_plate",
+      "schedule.info_plate"
+    ],
+    "godot_native": [
+      "all_runtime_text_and_ids",
+      "event_index.dynamic_list",
+      "map_stage.event_pins_labels_routes_hit_and_cluster_logic",
+      "dossier.dynamic_text_state_and_cta_feedback",
+      "schedule.dynamic_text_state_and_advance_logic"
+    ]
+  },
+  "safe_zones": {
+    "map_event_layer": [420, 96, 1040, 804],
+    "dossier_summary": [1508, 244, 364, 304],
+    "dossier_cta": [1512, 916, 356, 112]
+  },
+  "forbidden": [
+    "single_fullscreen_raster_with_runtime_text",
+    "transparent_hotspots_over_baked_pins",
+    "one_region_equals_one_event",
+    "clickable_background_landmarks",
+    "mobile_breakpoints",
+    "direct_crop_from_filled_state_mock",
+    "baked_external_shadow_on_interactive_asset"
+  ]
+}

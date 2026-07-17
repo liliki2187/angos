@@ -2,7 +2,7 @@
 
 > **用途**：规定父级 Codex 如何和 `game_producer`、`game_sys_architect`、`game_numerical`、`game_logic_check`、`ux_laoge`、`ui_designer`、`angus_art_director`、`angus_character_pixel_director`、`steam_indie_appraiser` 等项目级 subagent 协作，并把实战经验沉淀成可复用知识，而不是把核心文档越写越臃肿。
 > **定位**：这是项目级协作规则，不是某个 subagent 的自身 prompt。
-> **最后更新**：2026-07-08（新增 §8 冷备冻结与解冻提醒）
+> **最后更新**：2026-07-13（新增 clean low-poly weekly 支线的美术指导临时路由例外）
 
 ---
 
@@ -42,11 +42,12 @@ subagent 成长只允许按层沉淀，不把普通案例直接塞进核心规�
 7. **已有 UI / 截图 / 原型改进**：先调用 `ux_laoge`，确认操作链、信息层级、遮挡、状态噪音和玩家误读。
 8. **UI 方案落地前**：让 `ui_designer` 与 `ux_laoge` 接力校验；新稿先 UI 后 UX，现有页先 UX 后 UI。拟物 / 资产化 UI 必须在接力中交接视觉可使用区域：UI Designer 给出文字安全区表和 `content_rects / no_text_rects` 假设，UX 老哥检查控件盒通过但视觉安全区失败的情况，父级落地时把关键安全区变成截图裁切或测试断言。若 UI 任务的主要问题是视觉风格、像素 / 半调 / 印刷材质、参考转译或 prompt 跑偏，再让 `angus_art_director` 做风格守门；它不替代 UI 布局和 UX 可读性。`game_producer` 不插入每次 UI 设计，除非该 UI 背后代表重大功能扩张、项目方向变化或里程碑风险；`game_sys_architect` 只在 UI 背后代表系统边界、资源流或状态接口变化时提供结构输入；`game_numerical` 只在数字呈现依赖明确阈值、概率或参数区间时提供输入；`game_logic_check` 只在 UI 承载状态机或规则流程时检查逻辑，不审布局。
     - 资产化 UI 的阶段判断必须先于下一步建议：如果当前产物只是 `visual_style_reference` / `color-locked style draft` / 无字风格方向稿，且尚无通过复审的 `filled-state text mock`，父级不得把组件拆分、atlas、manifest 或切图说成当前下一步。此时必须先组织轻量内容合同，再做真实内容填充预览稿，并交给 UI / UX / 像素艺术复审。
+    - **`clean low-poly weekly` 临时例外（2026-07-13）**：当任务明确以 `design/art-direction/references/clean-lowpoly-weekly-branch/benchmark-board-01.png` 与 `benchmark-board-02.png` 为视觉真值时，不自动调用 `angus_art_director`，也不把它的像素颗粒、重半调或套印结构判断作为放行条件。该 agent 的启动壳和技能仍以旧像素 / 半调坐标系为默认，容易把“大块低多边形明度面 + 干净现代周刊 + 轻纸品”拉回旧方向。支线临时改由父级直接执行标杆对照，强制读取 `clean-lowpoly-weekly-branch-style-guide.md`、纸张材质合同与 Color Contract；`ui_designer`、`ux_laoge` 继续负责布局、容量、可读性和交互。用户显式点名 `@像素艺术` 时仍可调用，但其意见仅作非阻断对照。恢复自动路由前，必须先完成该 agent 的支线专用真值源 / 失败样本校准，并由用户确认重新接入。
 9. **美术资源 / 界面视觉风格 / 参考图 / prompt 审查**：用户输入 `@像素艺术`、`@美术指导`，或明确要求 Angus 美术资源、界面视觉风格、美术风格守门时，调用 `angus_art_director`。它根据 `design/art-direction/angus-visual-style-guide.md` 判断是否像 Angus，输出风格风险、可转译手法、负面约束和交接对象。
 10. **像素美术 / 四人标杆图一致性 / 角色 prompt**：用户输入 `@像素美术`、`@像素角色`、`@角色美术`、`@角色风格守门`、`@角色设计风格`，或任务对象是眼镜记者、末日时钟、伪人、外星少女、新角色、角色头像/立绘/群像/表情时，调用 `angus_character_pixel_director`。它根据 `角色设计风格规范-AI包` 和四人标杆图判断角色是否过线，输出真值源、参考图角色、负面约束、prompt 和验收清单。
-11. **视觉资产生成前**：如果目标是 Steam 首屏、头图、宣传片或 demo 吸引力，SIA 先确认第一眼吸引力和可截图产物，再由 `angus_art_director` 审风格和 prompt；如果目标是普通 UI 贴片、材质、场景概念或全局视觉实验，由 `angus_art_director` 写 / 审 prompt；如果目标是角色头像、角色立绘、角色群像或新角色，先由 `angus_character_pixel_director` 写 / 审 prompt；最后再交 `openrouter-image-gen` 或父级执行生成。
+11. **视觉资产生成前**：如果目标是 Steam 首屏、头图、宣传片或 demo 吸引力，SIA 先确认第一眼吸引力和可截图产物，再由 `angus_art_director` 审风格和 prompt；如果目标是普通 UI 贴片、材质、场景概念或全局视觉实验，由 `angus_art_director` 写 / 审 prompt；如果目标是角色头像、角色立绘、角色群像或新角色，先由 `angus_character_pixel_director` 写 / 审 prompt；最后再交 `openrouter-image-gen` 或父级执行生成。`clean low-poly weekly` 两标杆支线按第 8 条临时例外执行，不经过 `angus_art_director`。
     - 若生成前或返工要求涉及色彩调整、去黄、提亮、压暗、冷暖、纸色或“更接近参考图”，父级和 `angus_art_director` 必须先按 `docs/onboarding/imagegen-color-contract-gate.md` 建立 `Color Contract v1`：唯一参考图、固定 ROI、`hex / RGB / Lab`、逐 token 阈值、整图均亮度、纸面 / 暗部比例和失败边界；没有合同不得继续写调色 prompt。候选图生成后必须同 ROI 复采样，颜色硬闸门未过时，`angus_art_director` 不得继续给“风格通过 / 生产标杆候选”的判断。
-12. **视觉资产生成后复审**：生成出的 UI 风格稿、美术资源包、界面元素风格稿或生图结果，只有经过 `@像素艺术` 复审后，才能称为生产标杆、资源标杆或真源候选。复审必须显式检查像素颗粒度、颗粒密度、半调 / 套印是否成为结构语言、是否继承当前标杆图、动态文字安全区是否可落地，以及是否滑向旧报纸、旧档案、泛黄纸噪点或高清摄影噪声。未通过时只能归档为偏差案例或灵感草稿。
+12. **视觉资产生成后复审**：除 `clean low-poly weekly` 两标杆支线临时例外外，生成出的 UI 风格稿、美术资源包、界面元素风格稿或生图结果，只有经过 `@像素艺术` 复审后，才能称为生产标杆、资源标杆或真源候选。复审必须显式检查像素颗粒度、颗粒密度、半调 / 套印是否成为结构语言、是否继承当前标杆图、动态文字安全区是否可落地，以及是否滑向旧报纸、旧档案、泛黄纸噪点或高清摄影噪声。`clean low-poly weekly` 支线由父级对两张标杆做逐项对照，并联合 UI / UX、Color Contract、纸张材质合同和真实内容回填证据放行；缺任一项仍只能归档为风格草稿或偏差案例。
 13. **交付前**：父级用真实桌面截图复核，并说明采纳、未采纳或待确认项。
 
 ## 4. 实战案例记录格式

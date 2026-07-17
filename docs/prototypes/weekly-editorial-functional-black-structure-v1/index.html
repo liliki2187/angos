@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1920, initial-scale=1">
+  <title>发刊编辑界面｜功能黑色结构稿 v1</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --black: #050505;
+      --panel: #090909;
+      --raised: #111111;
+      --occupied: #171717;
+      --line: #5f5f5f;
+      --line-strong: #b9b9b9;
+      --ink: #efefef;
+      --muted: #9a9a9a;
+      --faint: #5d5d5d;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      width: 1920px;
+      height: 1080px;
+      margin: 0;
+      overflow: hidden;
+      background: var(--black);
+      color: var(--ink);
+      font-family: "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
+    }
+
+    button { font: inherit; }
+
+    .stage {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      background: var(--black);
+    }
+
+    .top-strip {
+      position: absolute;
+      left: 80px;
+      top: 24px;
+      width: 1760px;
+      height: 52px;
+      border: 1px solid var(--line-strong);
+      background: #080808;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 16px;
+      letter-spacing: .04em;
+    }
+
+    .top-strip__title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .top-strip__state,
+    .top-strip__kind {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .top-strip__kind { margin-left: auto; }
+
+    .workspace {
+      position: absolute;
+      left: 80px;
+      top: 96px;
+      width: 1760px;
+      height: 920px;
+      display: grid;
+      grid-template-columns: 320px 1040px 360px;
+      column-gap: 20px;
+    }
+
+    .panel {
+      position: relative;
+      height: 920px;
+      background: var(--panel);
+      border: 1px solid var(--line-strong);
+      overflow: hidden;
+    }
+
+    .panel-heading {
+      position: absolute;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel-heading h2 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .panel-heading__meta {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .candidate-panel.is-return-target {
+      outline: 3px solid var(--ink);
+      outline-offset: -4px;
+    }
+
+    .candidate-panel .panel-heading {
+      left: 16px;
+      top: 16px;
+      width: 288px;
+    }
+
+    .candidate-viewport {
+      position: absolute;
+      left: 16px;
+      top: 80px;
+      width: 288px;
+      height: 612px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      scrollbar-width: none;
+      scroll-snap-type: y mandatory;
+      overscroll-behavior: contain;
+    }
+
+    .candidate-viewport::-webkit-scrollbar { display: none; }
+
+    .candidate-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 288px;
+      min-height: 820px;
+    }
+
+    .candidate-card {
+      position: relative;
+      flex: 0 0 92px;
+      width: 288px;
+      height: 92px;
+      padding: 0;
+      color: var(--ink);
+      text-align: left;
+      background: var(--raised);
+      border: 1px solid var(--line);
+      border-radius: 0;
+      cursor: pointer;
+      scroll-snap-align: start;
+    }
+
+    .candidate-card:hover,
+    .candidate-card:focus-visible { border-color: var(--line-strong); }
+
+    .candidate-card.is-selected {
+      border-color: var(--ink);
+      outline: 1px solid var(--ink);
+      outline-offset: -4px;
+    }
+
+    .candidate-card.is-selected::before,
+    .candidate-card.is-selected::after {
+      content: "";
+      position: absolute;
+      left: -1px;
+      width: 8px;
+      height: 20px;
+      border-left: 3px solid var(--ink);
+    }
+
+    .candidate-card.is-selected::before {
+      top: 10px;
+      border-top: 3px solid var(--ink);
+    }
+
+    .candidate-card.is-selected::after {
+      bottom: 10px;
+      border-bottom: 3px solid var(--ink);
+    }
+
+    .candidate-thumb {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      width: 72px;
+      height: 72px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, transparent 49%, #363636 50%, transparent 51%),
+        linear-gradient(45deg, transparent 49%, #242424 50%, transparent 51%),
+        #0c0c0c;
+    }
+
+    .candidate-id {
+      position: absolute;
+      left: 94px;
+      top: 10px;
+      width: 54px;
+      height: 22px;
+      color: var(--muted);
+      font: 700 12px/22px ui-monospace, Consolas, monospace;
+      letter-spacing: .03em;
+    }
+
+    .candidate-title {
+      position: absolute;
+      left: 94px;
+      top: 34px;
+      width: 178px;
+      height: 40px;
+      overflow: hidden;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 700;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .candidate-status {
+      position: absolute;
+      left: 218px;
+      top: 70px;
+      width: 54px;
+      height: 16px;
+      border: 1px solid var(--faint);
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 14px;
+      text-align: center;
+      background: #0a0a0a;
+    }
+
+    .candidate-card.is-selected .candidate-status {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .candidate-scrollbar {
+      position: absolute;
+      left: 308px;
+      top: 80px;
+      width: 4px;
+      height: 612px;
+      background: #1d1d1d;
+    }
+
+    .candidate-scrollbar__thumb {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 4px;
+      height: 456px;
+      background: #9c9c9c;
+    }
+
+    .candidate-panel__legend {
+      position: absolute;
+      left: 16px;
+      top: 716px;
+      width: 288px;
+      min-height: 168px;
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .candidate-panel__legend strong { color: var(--ink); }
+
+    .center-panel .panel-heading {
+      left: 15px;
+      top: 16px;
+      width: 1010px;
+    }
+
+    .issue-page {
+      position: absolute;
+      top: 88px;
+      width: 490px;
+      height: 800px;
+      background: #070707;
+      border: 1px solid var(--line-strong);
+    }
+
+    .issue-page--left { left: 14px; }
+    .issue-page--right { left: 534px; }
+
+    .slot {
+      position: absolute;
+      color: var(--muted);
+      background: #080808;
+      border: 1px dashed var(--line);
+      padding: 10px;
+      cursor: default;
+    }
+
+    .slot[draggable="true"] { cursor: grab; }
+    .slot[draggable="true"]:active { cursor: grabbing; }
+
+    .slot.is-occupied {
+      color: var(--ink);
+      background: var(--occupied);
+      border-style: solid;
+      border-color: var(--line-strong);
+    }
+
+    .slot.is-legal-target {
+      border-style: solid;
+      border-color: var(--ink);
+      outline: 1px solid var(--ink);
+      outline-offset: -5px;
+    }
+
+    .slot__role {
+      color: var(--muted);
+      font: 700 11px/1.2 ui-monospace, Consolas, monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .slot__article-id {
+      margin-top: 10px;
+      color: var(--muted);
+      font: 700 12px/1.2 ui-monospace, Consolas, monospace;
+    }
+
+    .slot__title {
+      margin-top: 8px;
+      max-width: 90%;
+      font-size: 16px;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    .slot__empty {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      color: #6e6e6e;
+      font-size: 11px;
+    }
+
+    .page-header-slot { left: 24px; top: 24px; width: 442px; height: 52px; }
+    .main-slot { left: 24px; top: 92px; width: 442px; height: 374px; }
+    .feature-one { left: 24px; top: 486px; width: 213px; height: 282px; }
+    .feature-two { left: 253px; top: 486px; width: 213px; height: 282px; }
+    .secondary-slot { left: 24px; top: 92px; width: 442px; height: 342px; }
+    .inner-one { left: 24px; top: 454px; width: 213px; height: 314px; }
+    .inner-two { left: 253px; top: 454px; width: 213px; height: 314px; }
+
+    .page-header-slot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      border-style: solid;
+    }
+
+    .page-header-slot span:last-child {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .signoff-panel__content {
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      width: 328px;
+      height: 888px;
+    }
+
+    .signoff-slot {
+      position: absolute;
+      left: 0;
+      width: 328px;
+      border: 1px solid var(--line);
+      background: #0a0a0a;
+      padding: 14px;
+    }
+
+    .signoff-slot h2,
+    .signoff-slot h3,
+    .signoff-slot p { margin: 0; }
+
+    .issue-header {
+      top: 0;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      border-color: var(--line-strong);
+    }
+
+    .issue-header h2 { font-size: 18px; }
+    .issue-header span { color: var(--muted); font-size: 12px; }
+
+    .headline-summary { top: 64px; height: 126px; }
+    .outcome { top: 206px; height: 104px; }
+    .risk { top: 326px; height: 132px; }
+    .flex-space { top: 474px; height: 318px; }
+
+    .signoff-slot h3 {
+      color: var(--muted);
+      font: 700 11px/1.2 ui-monospace, Consolas, monospace;
+      letter-spacing: .05em;
+    }
+
+    .signoff-value {
+      margin-top: 12px !important;
+      font-size: 18px;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    .signoff-subvalue {
+      margin-top: 8px !important;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .change-list {
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 2;
+    }
+
+    .change-list li {
+      border-bottom: 1px solid #252525;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .primary-cta {
+      position: absolute;
+      left: 0;
+      top: 808px;
+      width: 328px;
+      height: 72px;
+      border: 1px solid #555;
+      border-radius: 0;
+      color: #777;
+      background: #151515;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: not-allowed;
+    }
+
+    .structure-tag {
+      position: absolute;
+      left: 80px;
+      bottom: 18px;
+      color: #707070;
+      font: 11px/1 ui-monospace, Consolas, monospace;
+      letter-spacing: .08em;
+    }
+  </style>
+</head>
+<body>
+  <main class="stage" data-artifact="structure_wireframe">
+    <header class="top-strip">
+      <div class="top-strip__title">发刊编辑台</div>
+      <div class="top-strip__state">本周第 18 期 · 编辑中 · 3/6 已上版</div>
+      <div class="top-strip__kind">BLACK STRUCTURE / DESKTOP 16:9 / NOT VISUAL STYLE</div>
+    </header>
+
+    <section class="workspace" aria-label="发刊编辑三栏工作区">
+      <aside class="panel candidate-panel" aria-labelledby="candidate-title">
+        <div class="panel-heading">
+          <h2 id="candidate-title">候选报道</h2>
+          <span class="panel-heading__meta"><strong id="candidate-count">8</strong> 篇 · 常显 6</span>
+        </div>
+        <div class="candidate-viewport" id="candidate-viewport" aria-label="候选报道滚动列表">
+          <div class="candidate-list" id="candidate-list"></div>
+        </div>
+        <div class="candidate-scrollbar" aria-hidden="true">
+          <div class="candidate-scrollbar__thumb" id="candidate-scroll-thumb"></div>
+        </div>
+        <div class="candidate-panel__legend">
+          <div><strong>当前来源：</strong><span id="source-state">A04 · 已选稿</span></div>
+          <div>滚动列表可访问剩余 2 篇</div>
+          <div>拖回已上版稿时，本栏整体成为回收目标</div>
+          <div>候选在选择 / 取消时保持原位置</div>
+        </div>
+      </aside>
+
+      <section class="panel center-panel" aria-labelledby="layout-title">
+        <div class="panel-heading">
+          <h2 id="layout-title">本期双版工作区</h2>
+          <span class="panel-heading__meta"><strong id="placed-count">3</strong>/6 已上版 · 3 空位</span>
+        </div>
+
+        <article class="issue-page issue-page--left" aria-label="主版">
+          <div class="slot page-header-slot"><strong>主版 / FRONT</strong><span>490×800</span></div>
+          <div class="slot main-slot is-occupied" data-slot-id="front-main" data-role="头版主稿" data-article-id="1001" draggable="true"></div>
+          <div class="slot feature-one is-occupied" data-slot-id="feature-1" data-role="边栏 A" data-article-id="1002" draggable="true"></div>
+          <div class="slot feature-two" data-slot-id="feature-2" data-role="边栏 B"></div>
+        </article>
+
+        <article class="issue-page issue-page--right" aria-label="副版">
+          <div class="slot page-header-slot"><strong>副版 / INSIDE</strong><span>490×800</span></div>
+          <div class="slot secondary-slot is-occupied" data-slot-id="secondary" data-role="副头版" data-article-id="1003" draggable="true"></div>
+          <div class="slot inner-one" data-slot-id="inner-1" data-role="内页位 A"></div>
+          <div class="slot inner-two is-legal-target" data-slot-id="inner-2" data-role="内页位 B"></div>
+        </article>
+      </section>
+
+      <aside class="panel signoff-panel" aria-labelledby="signoff-title">
+        <div class="signoff-panel__content">
+          <div class="signoff-slot issue-header">
+            <h2 id="signoff-title">发刊复核</h2>
+            <span id="issue-completeness">3/6</span>
+          </div>
+          <section class="signoff-slot headline-summary">
+            <h3>HEADLINE_SUMMARY</h3>
+            <p class="signoff-value">主版头条已占用</p>
+            <p class="signoff-subvalue">当前候选来源：<span id="summary-source">A04</span></p>
+          </section>
+          <section class="signoff-slot outcome">
+            <h3>OUTCOME</h3>
+            <p class="signoff-value">发行预览：待重算</p>
+          </section>
+          <section class="signoff-slot risk">
+            <h3>RISK</h3>
+            <p class="signoff-value" id="risk-empty">空位 3</p>
+            <p class="signoff-subvalue">本次版面变更尚未计算公开取向与同题疲劳。</p>
+          </section>
+          <section class="signoff-slot flex-space">
+            <h3>CHANGE_SUMMARY</h3>
+            <ul class="change-list">
+              <li><span>候选池</span><span id="change-candidates">8 篇</span></li>
+              <li><span>已上版</span><span id="change-placed">3 篇</span></li>
+              <li><span>预览状态</span><span>待重算</span></li>
+              <li><span>送印状态</span><span>阻断</span></li>
+            </ul>
+          </section>
+          <button class="primary-cta" type="button" disabled>签批送印</button>
+        </div>
+      </aside>
+    </section>
+    <div class="structure-tag">STRUCTURE_WIREFRAME · CAPACITY / MAPPING / BLOCKING ONLY</div>
+  </main>
+
+  <script>
+    const articles = new Map([
+      [1001, { code: "A01", title: "M330 末班车在不存在的站台停了三秒" }],
+      [1002, { code: "A02", title: "51 区夜班货车携带会呼吸的路牌" }],
+      [1003, { code: "A03", title: "港口广播连续七晚播报明天的潮汐" }],
+      [1004, { code: "A04", title: "罗斯威尔档案第十四页拒绝被复印" }],
+      [1005, { code: "A05", title: "市政厅新增了一个不存在的影子部门" }],
+      [1006, { code: "A06", title: "街区猫群一致拒绝经过蓝色电话亭" }],
+      [1007, { code: "A07", title: "北岸气象塔整夜接收来自地下的闪电" }],
+      [1008, { code: "A08", title: "旧城区每一面停摆时钟同时快了四分钟" }],
+      [1009, { code: "A09", title: "无人值守照相馆洗出明天的团体合影" }],
+      [1010, { code: "A10", title: "档案室新抽屉只收纳尚未发生的投诉" }],
+      [1011, { code: "A11", title: "郊区广播塔请求听众不要回答最后一题" }]
+    ]);
+
+    let candidateIds = [1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011];
+    let selectedId = 1004;
+    let dragged = null;
+
+    const viewport = document.getElementById("candidate-viewport");
+    const list = document.getElementById("candidate-list");
+    const scrollThumb = document.getElementById("candidate-scroll-thumb");
+    const candidatePanel = document.querySelector(".candidate-panel");
+    const slots = [...document.querySelectorAll(".slot[data-slot-id]")];
+
+    function renderCandidateList() {
+      list.replaceChildren(...candidateIds.map((id) => {
+        const article = articles.get(id);
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = "candidate-card" + (id === selectedId ? " is-selected" : "");
+        card.dataset.articleId = String(id);
+        card.draggable = true;
+        card.innerHTML = `
+          <span class="candidate-thumb" aria-hidden="true"></span>
+          <span class="candidate-id">${article.code}</span>
+          <span class="candidate-title">${article.title}</span>
+          <span class="candidate-status">${id === selectedId ? "已选稿" : "候选"}</span>`;
+        card.addEventListener("click", () => {
+          selectedId = selectedId === id ? null : id;
+          renderCandidateList();
+          refreshSelectionState();
+        });
+        card.addEventListener("dragstart", (event) => {
+          selectedId = id;
+          dragged = { kind: "candidate", articleId: id };
+          event.dataTransfer.setData("text/plain", `candidate:${id}`);
+          renderCandidateList();
+          refreshSelectionState();
+        });
+        return card;
+      }));
+      refreshCounts();
+    }
+
+    function renderSlot(slot) {
+      const id = Number(slot.dataset.articleId || 0);
+      const article = articles.get(id);
+      slot.classList.toggle("is-occupied", Boolean(article));
+      slot.draggable = Boolean(article);
+      if (article) {
+        slot.innerHTML = `
+          <div class="slot__role">${slot.dataset.role}</div>
+          <div class="slot__article-id">${article.code}</div>
+          <div class="slot__title">${article.title}</div>`;
+      } else {
+        slot.innerHTML = `
+          <div class="slot__role">${slot.dataset.role}</div>
+          <div class="slot__empty">空版位</div>`;
+      }
+    }
+
+    function refreshSelectionState() {
+      const source = selectedId ? articles.get(selectedId) : null;
+      document.getElementById("source-state").textContent = source ? `${source.code} · 已选稿` : "未选择";
+      document.getElementById("summary-source").textContent = source ? source.code : "无";
+      slots.forEach((slot) => {
+        slot.classList.toggle("is-legal-target", Boolean(selectedId) && slot.dataset.slotId === "inner-2");
+      });
+    }
+
+    function refreshCounts() {
+      const placed = slots.filter((slot) => slot.dataset.articleId).length;
+      const empty = 6 - placed;
+      document.getElementById("candidate-count").textContent = String(candidateIds.length);
+      document.getElementById("placed-count").textContent = String(placed);
+      document.querySelector(".center-panel .panel-heading__meta").innerHTML = `<strong id="placed-count">${placed}</strong>/6 已上版 · ${empty} 空位`;
+      document.getElementById("issue-completeness").textContent = `${placed}/6`;
+      document.getElementById("risk-empty").textContent = `空位 ${empty}`;
+      document.getElementById("change-candidates").textContent = `${candidateIds.length} 篇`;
+      document.getElementById("change-placed").textContent = `${placed} 篇`;
+    }
+
+    function placeCandidate(slot, articleId) {
+      const replacedId = Number(slot.dataset.articleId || 0);
+      candidateIds = candidateIds.filter((id) => id !== articleId);
+      if (replacedId && !candidateIds.includes(replacedId)) candidateIds.push(replacedId);
+      slot.dataset.articleId = String(articleId);
+      selectedId = null;
+      renderSlot(slot);
+      renderCandidateList();
+      refreshSelectionState();
+      viewport.scrollTo({ top: 0, behavior: "instant" });
+    }
+
+    function movePlacedToSlot(sourceSlot, targetSlot) {
+      if (sourceSlot === targetSlot) return;
+      const sourceId = Number(sourceSlot.dataset.articleId || 0);
+      const targetId = Number(targetSlot.dataset.articleId || 0);
+      if (!sourceId) return;
+      if (targetId) sourceSlot.dataset.articleId = String(targetId);
+      else delete sourceSlot.dataset.articleId;
+      targetSlot.dataset.articleId = String(sourceId);
+      renderSlot(sourceSlot);
+      renderSlot(targetSlot);
+      refreshCounts();
+      refreshSelectionState();
+    }
+
+    slots.forEach((slot) => {
+      renderSlot(slot);
+      slot.addEventListener("click", () => {
+        if (selectedId) placeCandidate(slot, selectedId);
+      });
+      slot.addEventListener("dragstart", (event) => {
+        const id = Number(slot.dataset.articleId || 0);
+        if (!id) return;
+        dragged = { kind: "slot", articleId: id, sourceSlot: slot };
+        event.dataTransfer.setData("text/plain", `slot:${slot.dataset.slotId}:${id}`);
+      });
+      slot.addEventListener("dragover", (event) => event.preventDefault());
+      slot.addEventListener("drop", (event) => {
+        event.preventDefault();
+        if (!dragged) return;
+        if (dragged.kind === "candidate") placeCandidate(slot, dragged.articleId);
+        if (dragged.kind === "slot") movePlacedToSlot(dragged.sourceSlot, slot);
+        dragged = null;
+      });
+    });
+
+    candidatePanel.addEventListener("dragover", (event) => {
+      if (dragged?.kind !== "slot") return;
+      event.preventDefault();
+      candidatePanel.classList.add("is-return-target");
+    });
+
+    candidatePanel.addEventListener("dragleave", (event) => {
+      if (!candidatePanel.contains(event.relatedTarget)) candidatePanel.classList.remove("is-return-target");
+    });
+
+    candidatePanel.addEventListener("drop", (event) => {
+      event.preventDefault();
+      candidatePanel.classList.remove("is-return-target");
+      if (dragged?.kind !== "slot") return;
+      const id = dragged.articleId;
+      if (!candidateIds.includes(id)) candidateIds.push(id);
+      delete dragged.sourceSlot.dataset.articleId;
+      renderSlot(dragged.sourceSlot);
+      selectedId = null;
+      renderCandidateList();
+      refreshSelectionState();
+      dragged = null;
+    });
+
+    viewport.addEventListener("scroll", () => {
+      const max = viewport.scrollHeight - viewport.clientHeight;
+      const travel = viewport.clientHeight - scrollThumb.offsetHeight;
+      scrollThumb.style.transform = `translateY(${max ? viewport.scrollTop / max * travel : 0}px)`;
+    });
+
+    renderCandidateList();
+    refreshSelectionState();
+  </script>
+</body>
+</html>

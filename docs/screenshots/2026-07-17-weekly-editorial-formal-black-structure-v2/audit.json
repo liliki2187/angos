@@ -1,0 +1,200 @@
+{
+  "artifact_type": "formal_ui_structure_wireframe",
+  "image": "docs/screenshots/2026-07-17-weekly-editorial-formal-black-structure-v2/01-weekly-editorial-formal-black-structure-v2.png",
+  "candidate_contract": {
+    "current": "candidate_card v1.2.0",
+    "proposal": "candidate_card v1.3.0",
+    "changed_frozen_fields": {
+      "screen_positions_added": [
+        [
+          96,
+          800
+        ],
+        [
+          96,
+          904
+        ]
+      ]
+    },
+    "unchanged": [
+      "export_size 288x92",
+      "hit_rect",
+      "thumbnail",
+      "article_id",
+      "title",
+      "status"
+    ],
+    "production_contract_modified": false
+  },
+  "geometry": {
+    "canvas": [
+      0,
+      0,
+      1920,
+      1080
+    ],
+    "workspace": [
+      80,
+      96,
+      1760,
+      920
+    ],
+    "columns": {
+      "candidate_pool": [
+        80,
+        96,
+        320,
+        920
+      ],
+      "layout": [
+        420,
+        96,
+        1040,
+        920
+      ],
+      "signoff": [
+        1480,
+        96,
+        360,
+        920
+      ]
+    },
+    "candidate_viewport": [
+      96,
+      176,
+      296,
+      820
+    ],
+    "candidate_cards": [
+      [
+        96,
+        176,
+        288,
+        92
+      ],
+      [
+        96,
+        280,
+        288,
+        92
+      ],
+      [
+        96,
+        384,
+        288,
+        92
+      ],
+      [
+        96,
+        488,
+        288,
+        92
+      ],
+      [
+        96,
+        592,
+        288,
+        92
+      ],
+      [
+        96,
+        696,
+        288,
+        92
+      ],
+      [
+        96,
+        800,
+        288,
+        92
+      ],
+      [
+        96,
+        904,
+        288,
+        92
+      ]
+    ],
+    "pages": [
+      [
+        435,
+        184,
+        490,
+        800
+      ],
+      [
+        955,
+        184,
+        490,
+        800
+      ]
+    ],
+    "slots": {
+      "front-main": [
+        459,
+        276,
+        442,
+        374
+      ],
+      "feature-1": [
+        459,
+        670,
+        213,
+        282
+      ],
+      "feature-2": [
+        688,
+        670,
+        213,
+        282
+      ],
+      "secondary": [
+        979,
+        276,
+        442,
+        342
+      ],
+      "inner-1": [
+        979,
+        638,
+        213,
+        314
+      ],
+      "inner-2": [
+        1208,
+        638,
+        213,
+        314
+      ]
+    },
+    "primary_cta": [
+      1496,
+      920,
+      328,
+      72
+    ]
+  },
+  "checks": {
+    "canvas_is_1920x1080": true,
+    "workspace_is_1760x920_at_80_96": true,
+    "columns_are_320_1040_360_with_20_gaps": true,
+    "candidate_total_is_8": true,
+    "all_8_candidate_cards_are_visible": true,
+    "candidate_cards_are_288x92": true,
+    "candidate_cards_do_not_overlap": true,
+    "eighth_card_ends_at_996": true,
+    "eight_item_state_has_no_scrollbar": true,
+    "selected_card_count_is_1": true,
+    "normal_cards_have_no_candidate_status_badge": true,
+    "two_pages_are_490x800": true,
+    "six_layout_slots_exist": true,
+    "occupied_slots_are_3": true,
+    "empty_slots_are_3": true,
+    "legal_target_count_is_1": true,
+    "primary_cta_count_is_1": true,
+    "primary_cta_is_disabled_in_current_state": true,
+    "no_development_labels_are_rendered": true,
+    "raster_is_strict_grayscale": true
+  },
+  "passed": true
+}

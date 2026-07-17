@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "scale": 2,
+  "size": [
+    640,
+    1228
+  ],
+  "entries": {
+    "right_dossier_page": [
+      0,
+      0,
+      640,
+      1040
+    ],
+    "right_mission_intel_button": [
+      36,
+      1040,
+      568,
+      88
+    ],
+    "right_action_lane": [
+      36,
+      1128,
+      568,
+      100
+    ]
+  }
+}

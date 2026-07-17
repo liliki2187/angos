@@ -1,0 +1,246 @@
+{
+  "id": "weekly_editorial_vertical_slice_v1",
+  "version": 7,
+  "status": "four_standard_story_assets_user_accepted_in_unpackaged_programmatic_structure_host_visual_packaging_not_started",
+  "target_view": "weekly_run.editorial",
+  "canvas_size": [1920, 1080],
+  "contract_root": "design/ui-contracts/weekly-editorial",
+  "integration_rules": {
+    "no_baked_dynamic_text": true,
+    "no_baked_numbers": true,
+    "no_baked_buttons": true,
+    "state_geometry_identity": true,
+    "image_fit": "cover",
+    "layout_mode": "dual_page_only",
+    "signoff_visible_only_in": "dual_page",
+    "runtime_owns": [
+      "标题",
+      "元信息",
+      "版位状态",
+      "唯一局部换稿按钮",
+      "拖拽投放、交换与退回候选",
+      "命中区",
+      "签批与确认"
+    ]
+  },
+  "assets": [
+    {
+      "id": "editorial_main_head_slot_base",
+      "kind": "runtime_asset",
+      "asset_type": "component_shell",
+      "asset_tier": "S",
+      "background": "opaque",
+      "final_size": [884, 748],
+      "export_scale": 2,
+      "final_path": "gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/editorial-main-head-slot-base-v1.png",
+      "source_path": "image_gen/2026-07-14/20260714-weekly-editorial-main-head-shell-v2-original.png",
+      "class_contract": "design/ui-contracts/weekly-editorial/main_head_slot.json",
+      "godot_node": "TextureRect",
+      "runtime_rect": [459, 276, 442, 374],
+      "content_rects": [
+        {"id": "headline", "rect": [16, 14, 410, 68]},
+        {"id": "photo", "rect": [16, 92, 410, 218]},
+        {"id": "meta", "rect": [16, 318, 360, 42]},
+        {"id": "local_replace_action", "rect": [390, 322, 44, 44]}
+      ],
+      "no_text_rects": [
+        {"id": "top_edge", "rect": [0, 0, 442, 8]},
+        {"id": "bottom_edge", "rect": [0, 366, 442, 8]},
+        {"id": "left_edge", "rect": [0, 0, 8, 374]},
+        {"id": "right_edge", "rect": [434, 0, 8, 374]}
+      ],
+      "states": ["occupied", "empty", "drop_target", "replace_target", "blocked"]
+    },
+    {
+      "id": "editorial_story_m330_last_train",
+      "kind": "runtime_asset",
+      "asset_type": "story_art",
+      "asset_tier": "S",
+      "background": "opaque",
+      "article_id": 1001,
+      "final_size": [1640, 872],
+      "export_scale": 4,
+      "final_path": "gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/editorial-story-m330-last-train-v1.png",
+      "source_path": "image_gen/2026-07-16/20260716-weekly-editorial-m330-coarse-editorial-v2-original.png",
+      "godot_node": "TextureRect",
+      "runtime_rect": [475, 368, 410, 218],
+      "image_fit": "cover",
+      "composition_safe_area": [246, 131, 1148, 610],
+      "content_rects": [],
+      "no_text_rects": [
+        {"id": "whole_story_art", "rect": [0, 0, 1640, 872], "rules": ["无烘焙文字", "无 UI 框", "运行时只作为报道图"]}
+      ]
+    },
+    {
+      "id": "editorial_secondary_head_slot_base",
+      "kind": "runtime_asset",
+      "asset_type": "component_shell",
+      "asset_tier": "A",
+      "background": "opaque",
+      "final_size": [884, 684],
+      "export_scale": 2,
+      "final_path": "gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/editorial-secondary-head-slot-base-v2.png",
+      "source_path": "image_gen/2026-07-15/20260715-weekly-editorial-secondary-head-same-paper-v2-original.png",
+      "class_contract": "design/ui-contracts/weekly-editorial/secondary_head_slot.json",
+      "godot_node": "TextureRect",
+      "runtime_rect": [979, 276, 442, 342],
+      "content_rects": [
+        {"id": "headline", "rect": [16, 14, 410, 54], "inner_safe": [24, 14, 394, 54]},
+        {"id": "photo", "rect": [16, 78, 410, 210]},
+        {"id": "meta", "rect": [16, 300, 360, 30], "inner_safe": [24, 300, 344, 30]},
+        {"id": "local_replace_action", "rect": [390, 290, 44, 44]}
+      ],
+      "no_text_rects": [
+        {"id": "top_edge", "rect": [0, 0, 442, 8]},
+        {"id": "bottom_edge", "rect": [0, 334, 442, 8]},
+        {"id": "left_edge", "rect": [0, 0, 8, 342]},
+        {"id": "right_edge", "rect": [434, 0, 8, 342]}
+      ],
+      "states": ["occupied", "empty", "held_source", "drop_target", "replace_target", "blocked", "disabled"]
+    },
+    {
+      "id": "editorial_story_area51_breathing_sign",
+      "kind": "runtime_asset",
+      "asset_type": "story_art",
+      "asset_tier": "A",
+      "background": "opaque",
+      "article_id": 1002,
+      "final_size": [1640, 840],
+      "export_scale": 4,
+      "final_path": "gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/editorial-story-area51-breathing-sign-v1.png",
+      "source_path": "image_gen/2026-07-16/20260716-weekly-editorial-area51-coarse-editorial-v2-original.png",
+      "godot_node": "TextureRect",
+      "runtime_rect": [995, 354, 410, 210],
+      "image_fit": "cover",
+      "composition_safe_area": [164, 84, 1312, 672],
+      "content_rects": [],
+      "no_text_rects": [
+        {"id": "whole_story_art", "rect": [0, 0, 1640, 840], "rules": ["无烘焙文字", "无 UI 框", "运行时只作为 A02 报道图"]}
+      ]
+    },
+    {
+      "id": "editorial_story_harbor_tomorrow_tide",
+      "kind": "runtime_asset",
+      "asset_type": "story_art",
+      "asset_tier": "B",
+      "background": "opaque",
+      "article_id": 1003,
+      "allowed_roles": ["compact", "tall"],
+      "final_size": [756, 696],
+      "export_scale": 4,
+      "final_path": "gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/editorial-story-harbor-tomorrow-tide-v1.png",
+      "source_path": "image_gen/2026-07-16/20260716-weekly-editorial-harbor-coarse-editorial-v3-original.png",
+      "class_contracts": [
+        "design/ui-contracts/weekly-editorial/standard_story_slot_compact.json",
+        "design/ui-contracts/weekly-editorial/standard_story_slot_tall.json"
+      ],
+      "godot_node": "TextureRect",
+      "runtime_rects": [
+        {"slot_id": "feature-1", "rect": [471, 734, 189, 170]},
+        {"slot_id": "feature-2", "rect": [700, 734, 189, 170]},
+        {"slot_id": "inner-1", "rect": [991, 712, 189, 174]},
+        {"slot_id": "inner-2", "rect": [1220, 712, 189, 174]}
+      ],
+      "image_fit": "cover",
+      "composition_safe_area": [40, 24, 676, 640],
+      "critical_subject_safe_area": [96, 72, 528, 528],
+      "content_rects": [],
+      "no_text_rects": [
+        {"id": "whole_story_art", "rect": [0, 0, 756, 696], "rules": ["无烘焙文字", "无 UI 框", "仅作为普通版位报道图"]}
+      ]
+    },
+    {
+      "id": "editorial_story_roswell_copy_refusal",
+      "kind": "runtime_asset",
+      "asset_type": "story_art",
+      "asset_tier": "B",
+      "background": "opaque",
+      "article_id": 1004,
+      "allowed_roles": ["compact", "tall"],
+      "final_size": [756, 696],
+      "export_scale": 4,
+      "final_path": "gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/editorial-story-roswell-copy-refusal-v1.png",
+      "source_path": "image_gen/2026-07-16/20260716-weekly-editorial-roswell-copy-refusal-coarse-editorial-v1-original.png",
+      "class_contracts": [
+        "design/ui-contracts/weekly-editorial/standard_story_slot_compact.json",
+        "design/ui-contracts/weekly-editorial/standard_story_slot_tall.json"
+      ],
+      "godot_node": "TextureRect",
+      "runtime_rects": [
+        {"slot_id": "feature-1", "rect": [471, 734, 189, 170]},
+        {"slot_id": "feature-2", "rect": [700, 734, 189, 170]},
+        {"slot_id": "inner-1", "rect": [991, 712, 189, 174]},
+        {"slot_id": "inner-2", "rect": [1220, 712, 189, 174]}
+      ],
+      "image_fit": "cover",
+      "composition_safe_area": [40, 24, 676, 640],
+      "critical_subject_safe_area": [96, 72, 528, 528],
+      "content_rects": [],
+      "no_text_rects": [
+        {"id": "whole_story_art", "rect": [0, 0, 756, 696], "rules": ["无烘焙文字", "无 UI 框", "仅作为普通版位报道图"]}
+      ]
+    },
+    {
+      "id": "editorial_story_city_hall_shadow_department",
+      "kind": "runtime_asset",
+      "asset_type": "story_art",
+      "asset_tier": "B",
+      "background": "opaque",
+      "article_id": 1005,
+      "allowed_roles": ["compact", "tall"],
+      "final_size": [756, 696],
+      "export_scale": 4,
+      "final_path": "gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/editorial-story-city-hall-shadow-department-v1.png",
+      "source_path": "image_gen/2026-07-16/20260716-weekly-editorial-city-hall-shadow-department-coarse-editorial-v1-original.png",
+      "class_contracts": [
+        "design/ui-contracts/weekly-editorial/standard_story_slot_compact.json",
+        "design/ui-contracts/weekly-editorial/standard_story_slot_tall.json"
+      ],
+      "godot_node": "TextureRect",
+      "runtime_rects": [
+        {"slot_id": "feature-1", "rect": [471, 734, 189, 170]},
+        {"slot_id": "feature-2", "rect": [700, 734, 189, 170]},
+        {"slot_id": "inner-1", "rect": [991, 712, 189, 174]},
+        {"slot_id": "inner-2", "rect": [1220, 712, 189, 174]}
+      ],
+      "image_fit": "cover",
+      "composition_safe_area": [40, 24, 676, 640],
+      "critical_subject_safe_area": [96, 72, 528, 528],
+      "content_rects": [],
+      "no_text_rects": [
+        {"id": "whole_story_art", "rect": [0, 0, 756, 696], "rules": ["无烘焙文字", "无 UI 框", "仅作为普通版位报道图"]}
+      ]
+    },
+    {
+      "id": "editorial_story_cats_refuse_blue_phone_booth",
+      "kind": "runtime_asset",
+      "asset_type": "story_art",
+      "asset_tier": "B",
+      "background": "opaque",
+      "article_id": 1006,
+      "allowed_roles": ["compact", "tall"],
+      "final_size": [756, 696],
+      "export_scale": 4,
+      "final_path": "gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/editorial-story-cats-refuse-blue-phone-booth-v1.png",
+      "source_path": "image_gen/2026-07-16/20260716-weekly-editorial-cats-refuse-blue-phone-booth-coarse-editorial-v1-original.png",
+      "class_contracts": [
+        "design/ui-contracts/weekly-editorial/standard_story_slot_compact.json",
+        "design/ui-contracts/weekly-editorial/standard_story_slot_tall.json"
+      ],
+      "godot_node": "TextureRect",
+      "runtime_rects": [
+        {"slot_id": "feature-1", "rect": [471, 734, 189, 170]},
+        {"slot_id": "feature-2", "rect": [700, 734, 189, 170]},
+        {"slot_id": "inner-1", "rect": [991, 712, 189, 174]},
+        {"slot_id": "inner-2", "rect": [1220, 712, 189, 174]}
+      ],
+      "image_fit": "cover",
+      "composition_safe_area": [40, 24, 676, 640],
+      "critical_subject_safe_area": [96, 72, 528, 528],
+      "content_rects": [],
+      "no_text_rects": [
+        {"id": "whole_story_art", "rect": [0, 0, 756, 696], "rules": ["无烘焙文字", "无 UI 框", "仅作为普通版位报道图"]}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2231 @@
+{
+  "scope": "newspaper_interface_history_corrected",
+  "definition": "画面主体承担报纸组版、周刊校样、版位编辑、发刊签批或送印",
+  "representative_sheets": [
+    {
+      "output": "01-2026-05-27-to-06-07-functional-and-reorg.png",
+      "title": "报刊组版功能原型与 report-reorg 起线（2026-05-27 ～ 06-07）",
+      "entries": [
+        {
+          "source": "docs/screenshots/2026-05-27-full-chain-redundancy-audit/09-paper-editorial.png",
+          "label": "05-27 最早完整组版页",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-05-27-paper-editorial-cleanup/01-paper-editorial-cleanup.png",
+          "label": "05-27 组版清理版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-06-report-board-concept/01-report-board-concept-v2.png",
+          "label": "06-06 报道板概念 v2",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-06-report-board-formal/01-report-board-formal-v1.png",
+          "label": "06-06 报道板正式 v1",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-06-report-board-formal/02-report-board-formal-v2.png",
+          "label": "06-06 报道板正式 v2",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-06-report-reorg-modern/01-headline-publication-desk.png",
+          "label": "06-06 头版送印桌",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-06-report-reorg-modern/02-headline-filled.png",
+          "label": "06-06 头版满稿态",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-06-report-reorg-workbench/01-report-workbench-empty.png",
+          "label": "06-06 工作台空版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-06-report-reorg-workbench/02-report-workbench-filled.png",
+          "label": "06-06 工作台满版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-07-report-reorg-american-style-pass/02-report-workbench-filled.png",
+          "label": "06-07 美式报刊分支",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-07-report-reorg-film-rail/02-report-workbench-filled.png",
+          "label": "06-07 胶片轨分支",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-07-report-reorg-magazine-appeal/02-report-workbench-filled.png",
+          "label": "06-07 杂志吸引力分支",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-07-report-reorg-magazine-spread/02-report-workbench-filled.png",
+          "label": "06-07 杂志跨页分支",
+          "status": "included"
+        }
+      ]
+    },
+    {
+      "output": "02-2026-06-07-to-06-08-style-and-assetization.png",
+      "title": "报刊跨页风格与资产化分支（2026-06-07 ～ 06-08）",
+      "entries": [
+        {
+          "source": "docs/screenshots/2026-06-07-report-reorg-paper-texture/01-report-workbench-empty.png",
+          "label": "纸张纹理：空版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-07-report-reorg-paper-texture/02-report-workbench-filled.png",
+          "label": "纸张纹理：满版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-07-report-reorg-ux-state-pass/01-report-workbench-empty.png",
+          "label": "UX 状态：空版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-07-report-reorg-ux-state-pass/02-report-workbench-filled.png",
+          "label": "UX 状态：满版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-07-report-reorg-interface-style-master/01-full-interface-abstract-pixel-anomaly-style.png",
+          "label": "整屏像素异常风格",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-07-report-reorg-style-master/01-style-master-board-balanced.png",
+          "label": "均衡风格母板",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-07-report-reorg-magazine-style-master/01-pure-magazine-q-black-humor.png",
+          "label": "杂志母板：Q 黑色幽默",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-07-report-reorg-magazine-style-master/02-simplified-pixel-magazine-style.png",
+          "label": "杂志母板：简化像素",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-07-report-reorg-magazine-style-master/03-abstract-pixel-anomaly-magazine.png",
+          "label": "杂志母板：抽象异常",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-08-report-reorg-assetized-p0/01-report-workbench-empty.png",
+          "label": "资产化 P0：空版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-08-report-reorg-assetized-p0/02-report-workbench-filled.png",
+          "label": "资产化 P0：满版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-08-report-reorg-assetized-p0-cleanup/01-report-workbench-empty.png",
+          "label": "资产化清理：空版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-08-report-reorg-assetized-p0-cleanup/02-report-workbench-filled.png",
+          "label": "资产化清理：满版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-08-report-reorg-global-channel-style-pass/02-report-workbench-filled.png",
+          "label": "全局频道风格回填",
+          "status": "included"
+        }
+      ]
+    },
+    {
+      "output": "03-2026-06-08-to-06-09-html-hardening.png",
+      "title": "HTML 报刊工作台可读性与资产收束（2026-06-08 ～ 06-09）",
+      "entries": [
+        {
+          "source": "docs/screenshots/2026-06-08-report-reorg-global-channel-style-pass/01-report-workbench-empty.png",
+          "label": "全局频道：空版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-08-report-reorg-rollback-stable/01-report-workbench-empty.png",
+          "label": "稳定回滚：空版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-08-report-reorg-rollback-stable/02-report-workbench-filled.png",
+          "label": "稳定回滚：满版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-08-report-reorg-ux-p0-clean/01-report-workbench-empty.png",
+          "label": "UX P0 清理：空版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-08-report-reorg-ux-p0-clean/02-report-workbench-filled.png",
+          "label": "UX P0 清理：满版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-safe-zone-fix/2026-06-09-report-reorg-safe-zone-empty-1600.png",
+          "label": "安全区修复：空版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-safe-zone-fix/2026-06-09-report-reorg-safe-zone-filled-1600.png",
+          "label": "安全区修复：满版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-asset-pass-safe/2026-06-09-report-reorg-asset-pass-empty.png",
+          "label": "安全资产：空版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-asset-pass-safe/2026-06-09-report-reorg-asset-pass-filled.png",
+          "label": "安全资产：满版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/02-pixel-object-filled-1600.png",
+          "label": "像素物件 P0：初版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/05-pixel-object-filled-1600-v2.png",
+          "label": "像素物件 P0：v2",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/08-pixel-object-filled-1600-final.png",
+          "label": "像素物件 P0：final",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/17-pixel-object-filled-1600-delivery.png",
+          "label": "像素物件 P0：交付版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-editor-desk-style-pass/02-editor-desk-filled-1600.png",
+          "label": "编辑桌风格：满版",
+          "status": "included"
+        }
+      ]
+    },
+    {
+      "output": "04-2026-06-09-signoff-and-detail-states.png",
+      "title": "HTML 报刊签批、多分辨率与局部状态（2026-06-09）",
+      "entries": [
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-approval-signoff-fix/02-approval-signoff-filled-1600.png",
+          "label": "签批修复：1600",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-approval-signoff-fix/03-approval-signoff-filled-1366.png",
+          "label": "签批修复：1366",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-approval-signoff-fix/04-approval-signoff-filled-1920.png",
+          "label": "签批修复：1920",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-signoff-readable-fields/01-signoff-readable-filled-1600.png",
+          "label": "签批字段：1600",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-signoff-readable-fields/02-signoff-readable-filled-1366.png",
+          "label": "签批字段：1366",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-signoff-readable-fields/03-signoff-readable-filled-1920.png",
+          "label": "签批字段：1920",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-editor-desk-style-pass/01-editor-desk-empty-1600.png",
+          "label": "编辑桌：空版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-editor-desk-style-pass/04-editor-desk-filled-1920.png",
+          "label": "编辑桌：1920 满版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-editor-desk-style-pass/03-editor-desk-filled-1366.png",
+          "label": "编辑桌：1366 满版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/16-pixel-object-empty-1600-delivery.png",
+          "label": "交付版：空版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/17-pixel-object-filled-1600-delivery.png",
+          "label": "交付版：1600 满版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/18-pixel-object-filled-1366-delivery.png",
+          "label": "交付版：1366 满版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-editor-desk-style-board/01-editor-desk-ui-style-board.png",
+          "label": "编辑桌 UI 风格板",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-06-09-report-reorg-editor-desk-style-board/02-story-art-visual-formula-board.png",
+          "label": "报道图视觉公式板",
+          "status": "included"
+        }
+      ]
+    },
+    {
+      "output": "05-2026-07-14-mocks-html-and-godot-branches.png",
+      "title": "整屏过程 Mock、HTML 骨架与 Godot 分支（2026-07-14）",
+      "entries": [
+        {
+          "source": "image_gen/2026-07-14/20260714-110214_weekly_editorial_filled_style_01.png",
+          "label": "整屏填充风格稿 01",
+          "status": "included"
+        },
+        {
+          "source": "image_gen/2026-07-14/20260714-114433_weekly_editorial_atmosphere_v2_01.png",
+          "label": "整屏氛围稿 v2",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-14-weekly-editorial-functional-skeleton/01-held-and-drop-target.png",
+          "label": "HTML 骨架：持稿",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-14-weekly-editorial-functional-skeleton/02-placed-full-review.png",
+          "label": "HTML 骨架：满版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-14-weekly-editorial-functional-skeleton/03-signoff-confirmation.png",
+          "label": "HTML 骨架：确认",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-14-weekly-editorial-dual-page-focus-skeleton/01-dual-page-overview-held.png",
+          "label": "HTML 聚焦支线：总览",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-14-weekly-editorial-dual-page-focus-skeleton/02-single-page-focus-held.png",
+          "label": "HTML 聚焦支线：单版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-14-weekly-editorial-dual-page-focus-skeleton/03-dual-page-signoff-confirmation.png",
+          "label": "HTML 聚焦支线：确认",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-14-weekly-editorial-assetized-vertical-slice/01-godot-dual-page-overview-held.png",
+          "label": "Godot 切片：双版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-14-weekly-editorial-assetized-vertical-slice/02-godot-focus-left-held.png",
+          "label": "Godot 切片：左版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-14-weekly-editorial-assetized-vertical-slice/02-godot-focus-right-held.png",
+          "label": "Godot 切片：右版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-14-weekly-editorial-assetized-vertical-slice/03-godot-dual-page-confirmation.png",
+          "label": "Godot 切片：确认",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-14-weekly-editorial-dual-page-only/01-godot-dual-page-held.png",
+          "label": "Godot 双版常显：持稿",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-14-weekly-editorial-dual-page-only/02-godot-dual-page-full.png",
+          "label": "Godot 双版常显：满版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-14-weekly-editorial-dual-page-only/03-godot-dual-page-confirmation.png",
+          "label": "Godot 双版常显：确认",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-14-weekly-editorial-benchmark-landing/01-editorial-current-runtime.png",
+          "label": "Godot 07-14 运行基线",
+          "status": "included"
+        }
+      ]
+    },
+    {
+      "output": "06-2026-07-15-godot-interaction-refinement.png",
+      "title": "Godot 双版报刊交互与资产细化（2026-07-15）",
+      "entries": [
+        {
+          "source": "docs/screenshots/2026-07-15-weekly-editorial-masthead/01-godot-masthead-held.png",
+          "label": "刊头：持稿",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-15-weekly-editorial-masthead/02-godot-masthead-full.png",
+          "label": "刊头：满版",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-15-weekly-editorial-masthead/03-godot-masthead-confirmation.png",
+          "label": "刊头：确认",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-15-weekly-editorial-headline-alignment/01-godot-headline-alignment-full.png",
+          "label": "标题对齐",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-15-weekly-editorial-headline-autofit/01-godot-headline-autofit-mixed-full.png",
+          "label": "标题自适应",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/01-godot-same-paper-default.png",
+          "label": "同纸色：默认",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/02-godot-single-local-replace.png",
+          "label": "同纸色：局部换稿",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/03-godot-drag-hover.png",
+          "label": "同纸色：拖拽目标",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-15-weekly-editorial-secondary-head-assetized/01-godot-secondary-head-occupied.png",
+          "label": "副头版：占用",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-15-weekly-editorial-secondary-head-assetized/02-godot-secondary-head-source.png",
+          "label": "副头版：来源",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-15-weekly-editorial-secondary-head-assetized/03-godot-secondary-head-targets.png",
+          "label": "副头版：目标",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-15-weekly-editorial-standard-story-b-slice/01-godot-standard-story-default.png",
+          "label": "普通报道：默认",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-15-weekly-editorial-standard-story-b-slice/02-godot-standard-story-local-replace.png",
+          "label": "普通报道：局部换稿",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-15-weekly-editorial-standard-story-b-slice/03-godot-standard-story-drag-hover.png",
+          "label": "普通报道：拖拽目标",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/dynamic-frames/frame_04_candidate_selected.png",
+          "label": "交互帧：候选已选",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/dynamic-frames/frame_08_candidate_replaced.png",
+          "label": "交互帧：完成替换",
+          "status": "included"
+        }
+      ]
+    },
+    {
+      "output": "07-2026-07-16-to-07-17-godot-capacity-and-new-structures.png",
+      "title": "Godot 报道图、容量回归与后续结构提案（2026-07-16 ～ 07-17）",
+      "entries": [
+        {
+          "source": "docs/screenshots/2026-07-16-weekly-editorial-story-art-restyle/01-godot-three-restyled-story-images-default.png",
+          "label": "报道图重绘基线",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-16-weekly-editorial-roswell-b-slice/01-godot-two-standard-story-images-default.png",
+          "label": "罗斯威尔图接入",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-16-weekly-editorial-shadow-department-b-slice/01-godot-three-standard-story-images-default.png",
+          "label": "影子部门图接入",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-16-weekly-editorial-blue-phone-booth-b-slice/01-godot-four-standard-story-images-default.png",
+          "label": "蓝色电话亭图接入",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-17-weekly-editorial-ordinary-story-closeout/00-capacity-closeout-contact-sheet.png",
+          "label": "容量回归汇总",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-17-weekly-editorial-ordinary-story-closeout/01-godot-capacity-0-of-6.png",
+          "label": "Godot 容量 0/6",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-17-weekly-editorial-ordinary-story-closeout/02-godot-capacity-3-of-6.png",
+          "label": "Godot 容量 3/6",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-17-weekly-editorial-ordinary-story-closeout/03-godot-capacity-5-of-6.png",
+          "label": "Godot 容量 5/6",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-17-weekly-editorial-ordinary-story-closeout/04-godot-capacity-6-of-6.png",
+          "label": "Godot 容量 6/6",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-17-weekly-editorial-packaging-mock-v1/01-weekly-editorial-packaging-mock-v1.png",
+          "label": "包装 Mock v1（已否决）",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-17-weekly-editorial-functional-black-structure-v1/01-weekly-editorial-functional-black-structure-v1.png",
+          "label": "黑色结构 v1（已替代）",
+          "status": "included"
+        },
+        {
+          "source": "docs/screenshots/2026-07-17-weekly-editorial-formal-black-structure-v2/01-weekly-editorial-formal-black-structure-v2.png",
+          "label": "黑白结构 v2（待确认）",
+          "status": "included"
+        }
+      ]
+    }
+  ],
+  "inventory_count": 167,
+  "classification_counts": {
+    "excluded_or_adjacent": 29,
+    "html_runtime_or_functional_prototype": 69,
+    "process_mock": 9,
+    "godot_runtime_evidence": 49,
+    "process_mock_or_html_prototype": 11
+  },
+  "source_endpoints": [
+    "design/prototypes/html/full-chain-demo/world-mysteries-full-chain.html",
+    "paperlab-demo/world-mysteries-full-chain.html",
+    "paperlab-demo-test/world-mysteries-full-chain.html",
+    "docs/prototypes/weekly-editorial-functional-skeleton/index.html",
+    "gd_project/scenes/gameplay/weekly_run/phases/WeeklyRunEditorialPhase.tscn",
+    "gd_project/scenes/gameplay/weekly_run/phases/WeeklyRunEditorialPhase.gd"
+  ],
+  "inventory": [
+    {
+      "path": "design/art-direction/references/clean-lowpoly-weekly-branch/benchmark-board-01.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "不是报刊组版/校样/签批主体",
+      "size": [
+        2560,
+        1440
+      ],
+      "bytes": 5960214
+    },
+    {
+      "path": "design/art-direction/references/clean-lowpoly-weekly-branch/benchmark-board-02.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "不是报刊组版/校样/签批主体",
+      "size": [
+        2560,
+        1440
+      ],
+      "bytes": 5973620
+    },
+    {
+      "path": "design/references/settlement-reference/2026-03-18/output/01-cover-desk-settlement-reference.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "不是报刊组版/校样/签批主体",
+      "size": [
+        1600,
+        1000
+      ],
+      "bytes": 724607
+    },
+    {
+      "path": "design/references/settlement-reference/2026-03-18/output/02-sealed-briefing-settlement-reference.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "不是报刊组版/校样/签批主体",
+      "size": [
+        1600,
+        1000
+      ],
+      "bytes": 713737
+    },
+    {
+      "path": "design/references/settlement-reference/2026-03-18/output/03-faction-pressure-settlement-reference.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "不是报刊组版/校样/签批主体",
+      "size": [
+        1600,
+        1000
+      ],
+      "bytes": 810919
+    },
+    {
+      "path": "design/references/settlement-reference/2026-03-18/output/04-astral-bleed-settlement-reference.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "不是报刊组版/校样/签批主体",
+      "size": [
+        1600,
+        1000
+      ],
+      "bytes": 861991
+    },
+    {
+      "path": "design/references/settlement-reference/2026-03-18/output/05-cartography-echo-settlement-reference.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "不是报刊组版/校样/签批主体",
+      "size": [
+        1600,
+        1000
+      ],
+      "bytes": 977680
+    },
+    {
+      "path": "design/references/settlement-reference/2026-03-18/output/06-mystery-broadsheet-reference.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "不是报刊组版/校样/签批主体",
+      "size": [
+        1240,
+        2520
+      ],
+      "bytes": 1353177
+    },
+    {
+      "path": "docs/screenshots/2026-05-27-full-chain-redundancy-audit/09-paper-editorial.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1440,
+        1400
+      ],
+      "bytes": 323237
+    },
+    {
+      "path": "docs/screenshots/2026-05-27-full-chain-redundancy-audit/10-paper-summary.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "不是报刊组版/校样/签批主体",
+      "size": [
+        1440,
+        1400
+      ],
+      "bytes": 184815
+    },
+    {
+      "path": "docs/screenshots/2026-05-27-paper-editorial-cleanup/01-paper-editorial-cleanup.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1440,
+        920
+      ],
+      "bytes": 272414
+    },
+    {
+      "path": "docs/screenshots/2026-06-01-publication-echo/05-publication-echo-summary-radar.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "不是报刊组版/校样/签批主体",
+      "size": [
+        1440,
+        1100
+      ],
+      "bytes": 225980
+    },
+    {
+      "path": "docs/screenshots/2026-06-01-publication-echo/06-next-week-echo-node-radar.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "不是报刊组版/校样/签批主体",
+      "size": [
+        1440,
+        1100
+      ],
+      "bytes": 696534
+    },
+    {
+      "path": "docs/screenshots/2026-06-06-report-board-concept/01-report-board-concept-v2.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1672,
+        941
+      ],
+      "bytes": 2912588
+    },
+    {
+      "path": "docs/screenshots/2026-06-06-report-board-formal/01-report-board-formal-v1.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1672,
+        941
+      ],
+      "bytes": 2830317
+    },
+    {
+      "path": "docs/screenshots/2026-06-06-report-board-formal/02-report-board-formal-v2.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1672,
+        941
+      ],
+      "bytes": 2724481
+    },
+    {
+      "path": "docs/screenshots/2026-06-06-report-reorg-modern/01-headline-publication-desk.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 638353
+    },
+    {
+      "path": "docs/screenshots/2026-06-06-report-reorg-modern/02-headline-filled.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 676383
+    },
+    {
+      "path": "docs/screenshots/2026-06-06-report-reorg-modern/03-publication-echo-wall.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "发刊后的回响/摘要，不是报刊组版主体",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 355554
+    },
+    {
+      "path": "docs/screenshots/2026-06-06-report-reorg-workbench/01-report-workbench-empty.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 946789
+    },
+    {
+      "path": "docs/screenshots/2026-06-06-report-reorg-workbench/02-report-workbench-filled.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 993513
+    },
+    {
+      "path": "docs/screenshots/2026-06-06-report-reorg-workbench/03-publication-echo-wall.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "发刊后的回响/摘要，不是报刊组版主体",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 356217
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-american-style-pass/01-report-workbench-empty.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 980685
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-american-style-pass/02-report-workbench-filled.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 1076868
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-american-style-pass/03-publication-echo-wall.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "发刊后的回响/摘要，不是报刊组版主体",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 356041
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-film-rail/01-report-workbench-empty.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 1024943
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-film-rail/02-report-workbench-filled.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 1114039
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-film-rail/03-publication-echo-wall.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "发刊后的回响/摘要，不是报刊组版主体",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 356217
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-interface-style-master/01-full-interface-abstract-pixel-anomaly-style.png",
+      "classification": "process_mock",
+      "reason": "",
+      "size": [
+        1672,
+        941
+      ],
+      "bytes": 2248649
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-magazine-appeal/01-report-workbench-empty.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 985297
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-magazine-appeal/02-report-workbench-filled.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 1050471
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-magazine-appeal/03-publication-echo-wall.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "发刊后的回响/摘要，不是报刊组版主体",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 356217
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-magazine-spread/01-report-workbench-empty.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 946789
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-magazine-spread/02-report-workbench-filled.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 993513
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-magazine-spread/03-publication-echo-wall.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "发刊后的回响/摘要，不是报刊组版主体",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 356217
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-magazine-style-master/01-pure-magazine-q-black-humor.png",
+      "classification": "process_mock",
+      "reason": "",
+      "size": [
+        1672,
+        941
+      ],
+      "bytes": 2818664
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-magazine-style-master/02-simplified-pixel-magazine-style.png",
+      "classification": "process_mock",
+      "reason": "",
+      "size": [
+        1672,
+        941
+      ],
+      "bytes": 2438467
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-magazine-style-master/03-abstract-pixel-anomaly-magazine.png",
+      "classification": "process_mock",
+      "reason": "",
+      "size": [
+        1672,
+        941
+      ],
+      "bytes": 2416633
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-paper-texture/01-report-workbench-empty.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 1021094
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-paper-texture/02-report-workbench-filled.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 1073303
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-paper-texture/03-publication-echo-wall.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "发刊后的回响/摘要，不是报刊组版主体",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 356217
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-style-master/01-style-master-board-balanced.png",
+      "classification": "process_mock",
+      "reason": "",
+      "size": [
+        1672,
+        941
+      ],
+      "bytes": 2212809
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-ux-state-pass/01-report-workbench-empty.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 1031080
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-ux-state-pass/02-report-workbench-filled.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 1120409
+    },
+    {
+      "path": "docs/screenshots/2026-06-07-report-reorg-ux-state-pass/03-publication-echo-wall.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "发刊后的回响/摘要，不是报刊组版主体",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 356041
+    },
+    {
+      "path": "docs/screenshots/2026-06-08-report-reorg-assetized-p0-cleanup/01-report-workbench-empty.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 907466
+    },
+    {
+      "path": "docs/screenshots/2026-06-08-report-reorg-assetized-p0-cleanup/02-report-workbench-filled.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 986542
+    },
+    {
+      "path": "docs/screenshots/2026-06-08-report-reorg-assetized-p0-cleanup/03-publication-echo-wall.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "发刊后的回响/摘要，不是报刊组版主体",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 356041
+    },
+    {
+      "path": "docs/screenshots/2026-06-08-report-reorg-assetized-p0/01-report-workbench-empty.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 967706
+    },
+    {
+      "path": "docs/screenshots/2026-06-08-report-reorg-assetized-p0/02-report-workbench-filled.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 1020377
+    },
+    {
+      "path": "docs/screenshots/2026-06-08-report-reorg-assetized-p0/03-publication-echo-wall.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "发刊后的回响/摘要，不是报刊组版主体",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 356041
+    },
+    {
+      "path": "docs/screenshots/2026-06-08-report-reorg-global-channel-style-pass/01-report-workbench-empty.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 1025033
+    },
+    {
+      "path": "docs/screenshots/2026-06-08-report-reorg-global-channel-style-pass/02-report-workbench-filled.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 1105642
+    },
+    {
+      "path": "docs/screenshots/2026-06-08-report-reorg-global-channel-style-pass/03-publication-echo-wall.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "发刊后的回响/摘要，不是报刊组版主体",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 356041
+    },
+    {
+      "path": "docs/screenshots/2026-06-08-report-reorg-rollback-stable/01-report-workbench-empty.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 830231
+    },
+    {
+      "path": "docs/screenshots/2026-06-08-report-reorg-rollback-stable/02-report-workbench-filled.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 995318
+    },
+    {
+      "path": "docs/screenshots/2026-06-08-report-reorg-rollback-stable/03-publication-echo-wall.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "发刊后的回响/摘要，不是报刊组版主体",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 355199
+    },
+    {
+      "path": "docs/screenshots/2026-06-08-report-reorg-ux-p0-clean/01-report-workbench-empty.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 828904
+    },
+    {
+      "path": "docs/screenshots/2026-06-08-report-reorg-ux-p0-clean/02-report-workbench-filled.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 887569
+    },
+    {
+      "path": "docs/screenshots/2026-06-08-report-reorg-ux-p0-clean/03-publication-echo-wall.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "发刊后的回响/摘要，不是报刊组版主体",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 356041
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-approval-signoff-fix/01-approval-signoff-empty-1600.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 797779
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-approval-signoff-fix/02-approval-signoff-filled-1600.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 934608
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-approval-signoff-fix/03-approval-signoff-filled-1366.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1366,
+        768
+      ],
+      "bytes": 747351
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-approval-signoff-fix/04-approval-signoff-filled-1920.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 991106
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-approval-signoff-fix/05-signoff-crop-filled-1600.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        349,
+        721
+      ],
+      "bytes": 91476
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-approval-signoff-fix/06-signoff-crop-filled-1366.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        292,
+        589
+      ],
+      "bytes": 70650
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-asset-pass-safe/2026-06-09-report-reorg-asset-pass-empty.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 881879
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-asset-pass-safe/2026-06-09-report-reorg-asset-pass-filled.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 1055652
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-asset-pass-safe/2026-06-09-report-reorg-asset-pass-summary.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "发刊后的回响/摘要，不是报刊组版主体",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 355199
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-editor-desk-style-board/01-editor-desk-ui-style-board.png",
+      "classification": "process_mock",
+      "reason": "",
+      "size": [
+        1672,
+        941
+      ],
+      "bytes": 2318380
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-editor-desk-style-board/02-story-art-visual-formula-board.png",
+      "classification": "process_mock",
+      "reason": "",
+      "size": [
+        1672,
+        941
+      ],
+      "bytes": 2974050
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-editor-desk-style-pass/01-editor-desk-empty-1600.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 946541
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-editor-desk-style-pass/02-editor-desk-filled-1600.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 1088654
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-editor-desk-style-pass/03-editor-desk-filled-1366.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1366,
+        768
+      ],
+      "bytes": 841418
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-editor-desk-style-pass/04-editor-desk-filled-1920.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1142563
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-editor-desk-style-pass/05-signoff-crop-empty-1600.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        300,
+        721
+      ],
+      "bytes": 95146
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-editor-desk-style-pass/06-signoff-crop-filled-1600.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        300,
+        721
+      ],
+      "bytes": 99692
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-editor-desk-style-pass/07-signoff-crop-filled-1366.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        257,
+        589
+      ],
+      "bytes": 75886
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/01-pixel-object-empty-1600.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 812539
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/02-pixel-object-filled-1600.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 951946
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/03-pixel-object-filled-1366.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1366,
+        768
+      ],
+      "bytes": 765298
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/04-pixel-object-empty-1600-v2.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 809313
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/05-pixel-object-filled-1600-v2.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 949284
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/06-pixel-object-filled-1366-v2.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1366,
+        768
+      ],
+      "bytes": 758323
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/07-pixel-object-empty-1600-final.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 789524
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/08-pixel-object-filled-1600-final.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 926017
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/09-pixel-object-filled-1366-final.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1366,
+        768
+      ],
+      "bytes": 747933
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/10-pixel-object-empty-1600-final.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 789524
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/11-pixel-object-filled-1600-final.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 926017
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/12-pixel-object-filled-1366-final.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1366,
+        768
+      ],
+      "bytes": 745511
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/16-pixel-object-empty-1600-delivery.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 792190
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/17-pixel-object-filled-1600-delivery.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 926163
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-pixel-object-p0/18-pixel-object-filled-1366-delivery.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1366,
+        768
+      ],
+      "bytes": 741646
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-safe-zone-fix/2026-06-09-report-reorg-safe-zone-empty-1600.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 830231
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-safe-zone-fix/2026-06-09-report-reorg-safe-zone-filled-1366.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1366,
+        768
+      ],
+      "bytes": 805906
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-safe-zone-fix/2026-06-09-report-reorg-safe-zone-filled-1600.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 995318
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-safe-zone-fix/2026-06-09-report-reorg-safe-zone-summary-1600.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "发刊后的回响/摘要，不是报刊组版主体",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 355199
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-signoff-readable-fields/01-signoff-readable-filled-1600.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1600,
+        900
+      ],
+      "bytes": 925691
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-signoff-readable-fields/02-signoff-readable-filled-1366.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1366,
+        768
+      ],
+      "bytes": 738367
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-signoff-readable-fields/03-signoff-readable-filled-1920.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 979806
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-signoff-readable-fields/04-signoff-readable-crop-1600.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        349,
+        721
+      ],
+      "bytes": 81101
+    },
+    {
+      "path": "docs/screenshots/2026-06-09-report-reorg-signoff-readable-fields/05-signoff-readable-crop-1366.png",
+      "classification": "html_runtime_or_functional_prototype",
+      "reason": "",
+      "size": [
+        292,
+        589
+      ],
+      "bytes": 62153
+    },
+    {
+      "path": "docs/screenshots/2026-07-07-ending-meme-special/special-loop-recursive-newspaper-v1-imagegen.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "不是报刊组版/校样/签批主体",
+      "size": [
+        1774,
+        887
+      ],
+      "bytes": 3428656
+    },
+    {
+      "path": "docs/screenshots/2026-07-07-ending-meme-special/special-loop-recursive-newspaper-v2-cardfit-imagegen.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "不是报刊组版/校样/签批主体",
+      "size": [
+        1254,
+        1254
+      ],
+      "bytes": 2922709
+    },
+    {
+      "path": "docs/screenshots/2026-07-07-ending-meme-special/special-loop-recursive-newspaper-v3-cardpanel-imagegen.png",
+      "classification": "excluded_or_adjacent",
+      "reason": "不是报刊组版/校样/签批主体",
+      "size": [
+        1358,
+        1158
+      ],
+      "bytes": 3097995
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-assetized-vertical-slice/01-godot-dual-page-overview-held.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 442346
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-assetized-vertical-slice/02-godot-focus-left-held.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 437346
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-assetized-vertical-slice/02-godot-focus-right-held.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 195380
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-assetized-vertical-slice/03-godot-dual-page-confirmation.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 475056
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-assetized-vertical-slice/04-godot-focus-transition.webp",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        960,
+        540
+      ],
+      "bytes": 31910
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-assetized-vertical-slice/05-overview-annotated.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 383972
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-benchmark-landing/01-editorial-current-runtime.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 366348
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-dual-page-focus-skeleton/01-dual-page-overview-held.png",
+      "classification": "process_mock_or_html_prototype",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 152940
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-dual-page-focus-skeleton/02-single-page-focus-held.png",
+      "classification": "process_mock_or_html_prototype",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 160260
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-dual-page-focus-skeleton/03-dual-page-signoff-confirmation.png",
+      "classification": "process_mock_or_html_prototype",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 160518
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-dual-page-focus-skeleton/04-dual-page-focus-flow.webp",
+      "classification": "process_mock_or_html_prototype",
+      "reason": "",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 143126
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-dual-page-only/01-godot-dual-page-held.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 427458
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-dual-page-only/02-godot-dual-page-full.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 412139
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-dual-page-only/03-godot-dual-page-confirmation.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 440253
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-functional-skeleton/01-held-and-drop-target.png",
+      "classification": "process_mock_or_html_prototype",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 166211
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-functional-skeleton/02-placed-full-review.png",
+      "classification": "process_mock_or_html_prototype",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 158606
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-functional-skeleton/03-signoff-confirmation.png",
+      "classification": "process_mock_or_html_prototype",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 166794
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-functional-skeleton/04-editorial-functional-flow.webp",
+      "classification": "process_mock_or_html_prototype",
+      "reason": "",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 128494
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-headline-alignment/01-godot-headline-alignment-full.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 582210
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-headline-alignment/02-godot-headline-alignment-crop.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1060,
+        555
+      ],
+      "bytes": 471918
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-headline-autofit/01-godot-headline-autofit-mixed-full.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 563269
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-headline-autofit/02-godot-headline-autofit-mixed-crop.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1060,
+        555
+      ],
+      "bytes": 461020
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-headline-autofit/03-godot-headline-autofit-extreme-crop.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        540,
+        455
+      ],
+      "bytes": 227637
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-masthead/00-godot-masthead-detail.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1040,
+        88
+      ],
+      "bytes": 10825
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-masthead/01-godot-masthead-held.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 421016
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-masthead/02-godot-masthead-full.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 415152
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-masthead/03-godot-masthead-confirmation.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 443307
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/01-godot-same-paper-default.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 563733
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/02-godot-single-local-replace.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 561101
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/03-godot-drag-hover.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 561558
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/dynamic-frames/frame_01_default.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 563733
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/dynamic-frames/frame_02_slot_focused.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 561101
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/dynamic-frames/frame_03_replace_armed.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 562125
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/dynamic-frames/frame_04_candidate_selected.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 563231
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/dynamic-frames/frame_05_replace_pending.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 560419
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/dynamic-frames/frame_06_drag_started.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 563185
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/dynamic-frames/frame_07_drag_hover.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 561558
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/dynamic-frames/frame_08_candidate_replaced.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 448585
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/dynamic-frames/frame_09_drag_to_candidate_pool.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 448616
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/dynamic-frames/frame_10_returned_to_candidates.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 425915
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/weekly-editorial-same-paper-local-replace.webp",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        960,
+        540
+      ],
+      "bytes": 71966
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-secondary-head-assetized/01-godot-secondary-head-occupied.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 612532
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-secondary-head-assetized/02-godot-secondary-head-source.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 605911
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-secondary-head-assetized/03-godot-secondary-head-targets.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 605194
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-secondary-head-assetized/04-secondary-head-state-flow.webp",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        960,
+        540
+      ],
+      "bytes": 34258
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-standard-story-b-slice/01-godot-standard-story-default.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 628781
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-standard-story-b-slice/02-godot-standard-story-local-replace.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 629739
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-standard-story-b-slice/03-godot-standard-story-drag-hover.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 629098
+    },
+    {
+      "path": "docs/screenshots/2026-07-16-weekly-editorial-blue-phone-booth-b-slice/01-godot-four-standard-story-images-default.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 793713
+    },
+    {
+      "path": "docs/screenshots/2026-07-16-weekly-editorial-roswell-b-slice/01-godot-two-standard-story-images-default.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 707170
+    },
+    {
+      "path": "docs/screenshots/2026-07-16-weekly-editorial-shadow-department-b-slice/01-godot-three-standard-story-images-default.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 759253
+    },
+    {
+      "path": "docs/screenshots/2026-07-16-weekly-editorial-story-art-restyle/01-godot-three-restyled-story-images-default.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 651451
+    },
+    {
+      "path": "docs/screenshots/2026-07-17-weekly-editorial-formal-black-structure-v2/01-weekly-editorial-formal-black-structure-v2.png",
+      "classification": "process_mock_or_html_prototype",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 124749
+    },
+    {
+      "path": "docs/screenshots/2026-07-17-weekly-editorial-functional-black-structure-v1/01-weekly-editorial-functional-black-structure-v1.png",
+      "classification": "process_mock_or_html_prototype",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 133771
+    },
+    {
+      "path": "docs/screenshots/2026-07-17-weekly-editorial-ordinary-story-closeout/00-capacity-closeout-contact-sheet.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 478226
+    },
+    {
+      "path": "docs/screenshots/2026-07-17-weekly-editorial-ordinary-story-closeout/01-godot-capacity-0-of-6.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 538640
+    },
+    {
+      "path": "docs/screenshots/2026-07-17-weekly-editorial-ordinary-story-closeout/02-godot-capacity-3-of-6.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 666570
+    },
+    {
+      "path": "docs/screenshots/2026-07-17-weekly-editorial-ordinary-story-closeout/03-godot-capacity-5-of-6.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 759253
+    },
+    {
+      "path": "docs/screenshots/2026-07-17-weekly-editorial-ordinary-story-closeout/04-godot-capacity-6-of-6.png",
+      "classification": "godot_runtime_evidence",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 793713
+    },
+    {
+      "path": "docs/screenshots/2026-07-17-weekly-editorial-packaging-mock-v1/01-weekly-editorial-packaging-mock-v1.png",
+      "classification": "process_mock_or_html_prototype",
+      "reason": "",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 742694
+    },
+    {
+      "path": "image_gen/2026-07-14/20260714-110214_weekly_editorial_filled_style_01.png",
+      "classification": "process_mock",
+      "reason": "",
+      "size": [
+        1672,
+        941
+      ],
+      "bytes": 2309730
+    },
+    {
+      "path": "image_gen/2026-07-14/20260714-114433_weekly_editorial_atmosphere_v2_01.png",
+      "classification": "process_mock",
+      "reason": "",
+      "size": [
+        1672,
+        941
+      ],
+      "bytes": 2102858
+    }
+  ]
+}

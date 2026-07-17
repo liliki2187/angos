@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "contract_version": "1.2.0",
+  "status": "locked_candidate",
+  "page": "weekly_editorial",
+  "class_id": "secondary_head_slot",
+  "parent_class": "secondary_page_shell",
+  "role": "A 级副头版版位",
+  "reference_resolution": [1920, 1080],
+  "runtime_resolution": [1920, 1080],
+  "export_scale": 2,
+  "frozen": {
+    "export_size": [442, 342],
+    "positions": [[979, 276]],
+    "hit_rect": [0, 0, 442, 342],
+    "slots": {
+      "headline": [16, 14, 410, 54],
+      "photo": [16, 78, 410, 210],
+      "meta": [16, 300, 360, 30],
+      "local_replace_action": [390, 290, 44, 44]
+    },
+    "no_text_rects": {
+      "top_edge": [0, 0, 442, 8],
+      "bottom_edge": [0, 334, 442, 8],
+      "left_edge": [0, 0, 8, 342],
+      "right_edge": [434, 0, 8, 342]
+    }
+  },
+  "states": ["idle", "slot_focused", "replace_armed", "replace_pending", "dragging", "drag_hover", "confirmation_frozen"],
+  "notes": "与 main_head_slot 共享暖纸材质，但保持较小图片槽和标题权重。默认与拖拽态不显示按钮；点击占用版位后才在 local_replace_action 显示唯一换稿按钮。"
+}

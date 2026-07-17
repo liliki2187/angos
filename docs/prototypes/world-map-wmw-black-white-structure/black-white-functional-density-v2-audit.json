@@ -1,0 +1,118 @@
+{
+  "artifact_type": "structure_wireframe",
+  "version": "functional_density_v2",
+  "viewport": [
+    1920,
+    1080
+  ],
+  "columns": {
+    "left": [
+      36,
+      24,
+      342,
+      1032
+    ],
+    "center": [
+      402,
+      24,
+      972,
+      1032
+    ],
+    "right": [
+      1398,
+      24,
+      480,
+      1032
+    ]
+  },
+  "region_cards_frozen": [
+    [
+      66,
+      36,
+      306,
+      240
+    ],
+    [
+      66,
+      294,
+      306,
+      240
+    ],
+    [
+      66,
+      552,
+      306,
+      240
+    ]
+  ],
+  "time_gate_compact": [
+    36,
+    810,
+    342,
+    182
+  ],
+  "time_gate_unframed_bottom_breath": [
+    36,
+    992,
+    342,
+    64
+  ],
+  "map_stage": [
+    426,
+    96,
+    924,
+    822
+  ],
+  "receipt_strips": [
+    [
+      426,
+      942,
+      450,
+      90
+    ],
+    [
+      900,
+      942,
+      450,
+      90
+    ]
+  ],
+  "receipt_strip_gap": 24,
+  "a51_frozen": [
+    1398,
+    45,
+    480,
+    780
+  ],
+  "a51_cta_frozen": [
+    1425,
+    711,
+    426,
+    75
+  ],
+  "shallow_pocket": [
+    1398,
+    825,
+    480,
+    62
+  ],
+  "right_unframed_background": [
+    1398,
+    887,
+    480,
+    169
+  ],
+  "assertions": {
+    "b212_unchanged": true,
+    "a51_unchanged": true,
+    "bottom_receipt_card_not_scaled": true,
+    "new_bottom_receipt_strip_class_required": true,
+    "receipt_strips_readonly": true,
+    "receipt_strip_has_no_footnote": true,
+    "third_receipt_absent": true,
+    "full_height_right_product_frame_absent": true,
+    "right_pocket_noninteractive": true,
+    "advance_day_and_enter_region_separated": true,
+    "runtime_advance_day_command_implemented": false
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "id": "region_task_event_card_v2",
+  "version": 3,
+  "reference_rect": [46, 222, 336, 104],
+  "repeat_axis": "vertical_scroll",
+  "gap": 10,
+  "event_count": "0..N",
+  "data_fields": ["id", "name", "type", "difficulty", "days", "selected", "enabled"],
+  "binding": {
+    "runtime_meta_key": "task_id",
+    "source": "payload.nodes[*].id",
+    "same_id_as_map_pin": true
+  },
+  "asset_class": "rt_event_card_mother",
+  "implementation": "fixed_alpha_master_plus_runtime_content_and_state",
+  "export_scale": 2,
+  "asset_canvas": [336, 104],
+  "alpha_padding": [6, 6, 6, 6],
+  "content_rects": {
+    "icon": [14, 14, 56, 56],
+    "title": [82, 12, 190, 42],
+    "meta": [82, 58, 190, 28],
+    "status": [282, 12, 40, 40]
+  },
+  "no_text_rects": {
+    "paper_edge": [0, 0, 336, 8],
+    "icon_slot": [10, 10, 64, 64],
+    "status_slot": [278, 8, 50, 50],
+    "bottom_edge": [0, 94, 336, 10]
+  },
+  "hit_rect": [0, 0, 336, 104],
+  "states": ["available", "hover", "selected", "disabled", "assigned", "urgent", "locked", "focus"],
+  "state_ownership": "Godot tint, accent, outline, offset and badges; bitmap geometry is identical in every state.",
+  "shadow_ownership": "Godot sibling shadow; no external contact shadow baked into alpha.",
+  "text_policy": {
+    "title_max_lines": 2,
+    "meta_max_lines": 1,
+    "overflow": "ellipsis",
+    "runtime_text_baked_into_raster": false
+  },
+  "interaction": {
+    "click": "select_event",
+    "hover": "highlight_matching_pin",
+    "keyboard_focus_visible": true
+  },
+  "forbidden": [
+    "runtime_text_in_raster",
+    "event_icon_baked_into_shell",
+    "selected_or_urgent_color_baked_into_shell",
+    "external_shadow_in_alpha",
+    "direct_crop_from_fullscreen_mock"
+  ]
+}

@@ -283,6 +283,47 @@
 - **落地位置**：执行真源为 [`skills/git-cloud-submit/SKILL.md`](../../skills/git-cloud-submit/SKILL.md) 与其 [`handoff-completeness.md`](../../skills/git-cloud-submit/references/handoff-completeness.md)；机器可读 gate 为 [`docs/workflows/workflow-gates.yml`](../workflows/workflow-gates.yml) 的 `hard_gates.handoff_completeness`；只读审计脚本支持 handoff manifest 与多远端快进检查。
 - **状态**：已采纳并落地（2026-07-10，trial；按一条完整提交线或两周后复核转正 / 收窄）。
 
+### A180. clean low-poly weekly 支线暂时剔除旧像素坐标系的美术指导自动路由
+
+- **来源**：2026-07-13 区域任务台新风格稿讨论。用户确认本次两张标杆为 `benchmark-board-01.png`、`benchmark-board-02.png`，随后指出 `angus_art_director` 由此前像素风图片训练，要求判断其是否适合指导以新标杆为主的生产；若不适合，暂时从工作流剔除。
+- **判断**：当前不适合担任该支线的主风格指导或阻断式复审者。启动壳将它定义为 Pixel Art / Art Director，技能默认把像素颗粒、半调和套印是否成为结构语言列为硬检查；而 clean low-poly weekly 支线明确以大块低多边形明度面、干净现代周刊、轻纸品、低微细节为主，且特意与旧像素 / 重半调方向分离。两套坐标系存在稳定的反向牵引风险。
+- **机制**：仅对以两张新标杆为真值的 `clean low-poly weekly` 支线暂停 `angus_art_director` 自动路由，包括生成前 prompt 指导和生成后放行。父级直接读取两张标杆、支线风格规范、纸张材质合同与 Color Contract；`ui_designer` 与 `ux_laoge` 继续负责布局、容量、交互和可读性；父级按原图做逐项视觉对照。其他 Angus 像素 / 半调方向与用户显式点名 `@像素艺术` 的调用不受影响，显式调用在本支线只作非阻断对照。
+- **恢复条件**：不得静默恢复。只有在 `angus_art_director` 完成 clean low-poly 支线专用真值源、失败样本和评审坐标校准，并经用户明确确认后，才能重新加入该支线自动工作流。
+- **落地位置**：`AGENTS.md`、`docs/onboarding/subagent-collaboration-improvement.md`、`docs/onboarding/assetized-ui-production-chain.md` 与 `design/art-direction/clean-lowpoly-weekly-branch-style-guide.md`；本次路由误判另记 Loop Log。
+- **状态**：已采纳并落地（2026-07-13）。
+
+
+### A212. 区域任务台完整风格稿先过全组件生产可行性评估
+
+- **来源**：2026-07-15 区域任务台完整风格稿进入落地前。用户明确要求新增一环评估，吸取世界地图组件难挖图、难裁切以及本可用更简单方式实现却错误资产化的经验，先整理所有功能组件并检查功能、位置、交互、裁切与生图可行性。
+- **核心规则**：完整风格稿只证明视觉组合，不自动取得生产母版资格。进入区域任务台资产生产前，必须逐组件登记功能、位置、状态、文字安全区、命中区、锚点、裁切污染和推荐实现方式；每项明确归入“复用原图 / Godot 原生构造 / 生图无字母版 / 退役旧资产”。带动态文字、数字、路线、图标状态或相邻遮挡的整屏内容禁止直接挖图。
+- **生产路线**：复用已选地图原图；HUD、文本、路线、分隔结构与大部分状态反馈由 Godot 构造；任务卡、图钉、短签、dossier、CTA 和日程板只生产无字母版，并执行 A169“一类一母版”。先做“地图 + 0–N 事件图钉 + dossier + CTA”纵向切片，通过后才可批量生产。
+- **阻断条件**：manifest v2 与 `design/ui-contracts/region-task-board/` 未建立、旧五热点未改为共享 `task_id` 的动态 0–N 事件坐标、7 / 8 / 9 行摘要未实测、CTA 未按冻结底边锚定、运行时仍由 `rt_artboard_full` 提前返回时，批量生产一律 NO-GO。
+- **跨读保护**：继续执行 A162、A167、A169 的资产化链路；交互与几何读取 A204、A208、A210；clean low-poly 支线复审仍执行 A180，不恢复旧像素 `angus_art_director` 自动路由。
+- **落地位置**：[`2026-07-15-region-task-board-prelanding-component-evaluation.md`](../plans/region-task-board-imagegen/2026-07-15-region-task-board-prelanding-component-evaluation.md) 与 [`region-task-board-assetized-production-spec.md`](../plans/region-task-board-assetized-production-spec.md) Step 0 / §14。
+- **状态**：已采纳并落地为本页正式生产准入规则（2026-07-15）。同日后续已完成 manifest v2、区域任务台组件合同、共享 `task_id` 的 0 / 1 / N 与密集点位测试、7 / 8 / 9 行摘要压力、CTA 底边锚定及真实派遣回调；旧 `rt_artboard_full` 不再遮蔽新区域切片。当前放行按组件制作无字母版并逐类替换运行骨架，仍不放行整屏裁切、同类批量生图、全量 atlas 或 production candidate。`推进一天` 因缺少独立玩法命令保持禁用，不得以假交互跨过该阻断。
+- **2026-07-16 裁切准入修订**：用户进一步要求所有需要裁切的功能组件必须在生图前逐项确定，不能只写“约 8 类外壳”或事后从整屏补抠。页面现冻结 18 个唯一 class；首条切片实测后路线修订为 10 类独立透明母版、5 类矩形 NinePatch、2 类不透明底图 / tile、1 类程序组件，短签固定 200×72，不使用未经拉伸证明的 NinePatch；E2 直接裁切正式资产的允许数量为 0。每个 class 必须在 `component_cutout_inventory_v1.json` 中登记尺寸状态、倍率、alpha padding、阴影所有权、允许 / 禁止烘焙内容、状态派生和生产授权；未登记或 `production_authorized=false` 的资产不得进入 prompt。第一条生产纵向切片收窄为 pin + 短签，未通过透明边缘、3x 缩小、anchor、0 / 1 / N、状态矩阵和真实 Godot 回插前不扩产。
+- **2026-07-16 首条切片放行**：pin + 固定尺寸短签已完成真实 Godot 接入，覆盖 0 / 1 / N、五点密集、8 点 cluster、右边缘 clamp、八态矩阵、中文容量与 hover → selected 动态证据。首轮双复核发现 selected 短签遮挡相邻 pin，修订为 selected label rect 以 8px 净距参与其它 pin displacement；`07-five-dense-selected-label-clearance.png` 复核后 `ui_designer` 与 `ux_laoge` 均最终 GO，P0 / P1 清零。现只解锁下一类 `rt_event_card_mother` 单类验证，整屏挖图、其它组件和批量生成仍不放行。
+- **2026-07-17 美术 Gate 重开**：用户明确指出当前生成的组件美术资源没有此前美术效果稿美观。2026-07-16 的 GO 现限定为技术、裁切、运行时和 UI / UX 功能通过，不再代表 benchmark 视觉通过；`rt_event_card_mother` 解锁撤回。新对话必须先直接对照 benchmark 01 / 02、E2、alpha master 与真实运行态，关闭 pin / label 的美术落差并取得用户视觉确认，才能恢复下一组件。
+- **2026-07-16 落地位置**：[`2026-07-16-region-task-board-component-cutout-preflight-v2.md`](../plans/region-task-board-imagegen/2026-07-16-region-task-board-component-cutout-preflight-v2.md)、[`component_cutout_inventory_v1.json`](../../design/ui-contracts/region-task-board/component_cutout_inventory_v1.json) 与 [`STATUS.md`](../plans/region-task-board-imagegen/STATUS.md)。
+
+### A216. normal 以上任务开工先说明隐含补全与同批必要性；可见预览和生产升格分阶段，验证按失效范围增量执行
+
+- **来源**：2026-07-15 A214 耗时复盘。用户确认完整拖拽、跨版交换、候选池退稿、点击路径、取消与确认冻结大部分都有必要，但明确指出：这些隐含功能应在任务开始前或刚开始时被告知，并说明是否有必要一次做完；验证和生成不应每轮全量执行。
+- **前置说明**：normal 以上任务的第一条进度更新必须用自然语言区分“用户明示需求 / 为闭环或正确性必须补完 / 可延期生产化 / 本轮推荐范围”，并给出首次可见结果的大致时间级别。它不是审批表；只有新增语义、额外延迟超过约 30 分钟、批量正式生图 / 生产升格或存在重大方案分歧时才停下请用户裁决。
+- **两阶段执行**：连续看图、UI 纠偏和局部交互默认先交 `runtime_state_preview`，目标是在 30–45 分钟内给第一个真实可见检查点；方向确认后才做完整边界状态、正式资产、manifest、合同、全量 QA 与文档升格。会造成数据丢失、重复状态、确认分叉或核心流程卡死的正确性保护不能延期。
+- **增量验证**：视觉改动只验证受影响状态和直接消费者；交互预览先跑 6–12 项核心断言、短动态和基础 smoke；单资产只重生并检查该 class；未被改动且依赖未失效的证据直接引用最近一次通过结果。全量状态矩阵、长文案、定量美术 QA、全量回归和长期文档同步只在生产升格、跨系统外溢、真源冻结或发布前触发。
+- **落地位置**：执行真源为 [`docs/workflows/angus-workflow-harness.md`](../workflows/angus-workflow-harness.md) §2.1；本条只记录用户采纳，不复制详细矩阵。该规则属于人类可读范围与节奏控制，不新增 `workflow-gates.yml` hard gate。
+- **状态**：已采纳并落地（2026-07-15）；先在后续 3–5 个可见 UI / 交互任务中试行，再评估是否需要机器检查。
+
+### A231. 无字候选图必须附带可理解的选型说明
+
+- **来源**：2026-07-17 区域任务组件 A/B/C 母版 v3 首次交付。助手只展示了图片，用户随即询问“这是几版让我选吗”，并明确要求“下次不要只贴图，要给必要的介绍和文本”。
+- **机制**：无字母版、透明 clean master 和不烘焙文字的资产合同只约束图像内容，不约束对话交付。后续交付任何候选图、组件母版、风格稿或 A/B/C 选型板时，必须用简短文字写明：产物用途与方案数量、方位到方案的映射、当前推荐与核心理由、用户需要确认的事项，以及确认前仍冻结的生产动作。只有用户在当前回合明确要求“只发图”时才可省略。
+- **禁止误用**：不得把图片 alt、文件名、无字画面或先前进度消息当作最终交付说明；不得要求用户从视觉差异自行猜测哪一列对应哪一方案，也不得在只贴图后等待用户追问当前 Gate。
+- **落地位置**：`docs/onboarding/assetized-ui-production-chain.md` §9、区域任务生图线 STATUS 与 `2026-07-17-region-task-motherboard-image-only-handoff-loop-log.md`。
+- **状态**：已采纳并立即生效。
+
 
 ### D3. Steam 独游小爆款研究以 10 万份作为成功样本门槛
 - **来源**：2026-05-31 Steam 独立游戏鉴赏师 subagent 讨论。

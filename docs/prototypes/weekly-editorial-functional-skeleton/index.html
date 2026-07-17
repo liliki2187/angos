@@ -1,0 +1,947 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>发刊编辑双版功能骨架 v0.2</title>
+  <style>
+    :root {
+      --bg: #171717;
+      --paper: #f5f5f1;
+      --paper-2: #e6e6e1;
+      --ink: #171717;
+      --muted: #666;
+      --line: #6a6a66;
+      --white: #fff;
+      --shadow: 5px 5px 0 #000;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+    }
+
+    button { font: inherit; }
+
+    button:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 4px solid #000;
+      outline-offset: 3px;
+    }
+
+    .app {
+      width: 1920px;
+      height: 1080px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-rows: 68px 1fr 48px;
+      background: var(--bg);
+    }
+
+    .topbar,
+    .footbar {
+      width: 1760px;
+      margin: 0 auto;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .topbar { border-bottom: 1px solid #777; }
+    .footbar { border-top: 1px solid #777; font-size: 13px; }
+    .titleline { display: flex; align-items: baseline; gap: 14px; }
+    .titleline h1 { margin: 0; font-size: 22px; letter-spacing: .04em; }
+    .titleline span, .topmeta { color: #bdbdbd; font-size: 13px; }
+
+    .workspace {
+      width: 1760px;
+      height: calc(100% - 28px);
+      margin: 14px auto;
+      display: grid;
+      grid-template-columns: 320px 1040px 360px;
+      gap: 20px;
+    }
+
+    .panel {
+      min-height: 0;
+      background: var(--paper);
+      border: 2px solid #000;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      height: 64px;
+      padding: 9px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border-bottom: 2px solid #000;
+      background: var(--paper-2);
+    }
+
+    .panel-head h2 { margin: 0; font-size: 18px; }
+    .panel-head p { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+
+    .count-badge,
+    .state-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 25px;
+      padding: 3px 8px;
+      border: 1.5px solid #000;
+      background: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .candidate-list {
+      height: calc(100% - 64px);
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      overflow: hidden;
+    }
+
+    .candidate-card {
+      width: 100%;
+      min-height: 76px;
+      padding: 9px 10px;
+      text-align: left;
+      color: var(--ink);
+      background: #fff;
+      border: 1.5px solid var(--line);
+      cursor: pointer;
+      transition: transform 100ms ease;
+    }
+
+    .candidate-card:hover { transform: translate(-2px, -2px); }
+    .candidate-card.held {
+      min-height: 120px;
+      border: 4px double #000;
+      box-shadow: 4px 4px 0 #000;
+      transform: translate(-2px, -2px);
+    }
+    .candidate-card.placed { background: var(--paper-2); }
+    .candidate-card.moving { border: 3px solid #000; box-shadow: inset 0 0 0 3px #fff; }
+    .candidate-top { display: flex; justify-content: space-between; gap: 8px; }
+    .candidate-id { color: var(--muted); font: 700 11px/1.2 Consolas, monospace; }
+    .candidate-status { font-size: 11px; font-weight: 800; }
+    .candidate-card h3 { margin: 5px 0 0; font-size: 14px; line-height: 1.35; }
+    .candidate-card.held h3 { font-size: 16px; }
+    .candidate-detail {
+      display: none;
+      margin-top: 8px;
+      padding-top: 7px;
+      border-top: 1px solid #999;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .candidate-card.held .candidate-detail { display: flex; justify-content: space-between; }
+
+    .spread-panel { display: grid; grid-template-rows: 64px 1fr 58px; }
+    .spread-toolbar { min-width: 0; flex: 1; display: flex; align-items: center; gap: 10px; }
+    .spread-title { min-width: 112px; }
+    .held-strip {
+      width: 286px;
+      padding: 6px 9px;
+      border: 2px solid #000;
+      background: #fff;
+      font-size: 11px;
+      overflow: hidden;
+    }
+    .held-strip strong {
+      display: block;
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mode-switch { display: flex; gap: 6px; margin-left: auto; }
+    .mode-btn,
+    .cancel-btn,
+    .mini-btn,
+    .secondary-btn,
+    .primary-btn,
+    .page-focus-btn,
+    .context-switch {
+      border: 2px solid #000;
+      background: #fff;
+      color: #000;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .mode-btn { padding: 6px 8px; font-size: 11px; }
+    .mode-btn.active { background: #000; color: #fff; }
+    .cancel-btn { padding: 6px 8px; font-size: 11px; }
+    .cancel-btn:disabled { opacity: .35; cursor: not-allowed; }
+
+    .spread-stage {
+      min-height: 0;
+      padding: 12px;
+      background: #d2d2cd;
+      overflow: hidden;
+    }
+
+    .overview-spread {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .book-spine {
+      width: 12px;
+      height: 660px;
+      margin: 0 -7px;
+      z-index: 2;
+      background: #222;
+      border: 2px solid #000;
+      box-shadow: inset 3px 0 0 #aaa, inset -3px 0 0 #666;
+    }
+
+    .magazine-page {
+      position: relative;
+      width: 456px;
+      height: 670px;
+      padding: 10px;
+      display: grid;
+      grid-template-rows: 39px 1fr;
+      background: #fff;
+      border: 3px solid #000;
+      box-shadow: 4px 4px 0 #555;
+      overflow: hidden;
+    }
+
+    .magazine-page.left { border-right-width: 1px; }
+    .magazine-page.right { border-left-width: 1px; }
+    .magazine-page.focused {
+      width: 560px;
+      height: 724px;
+      border-width: 4px;
+      box-shadow: 7px 7px 0 #555;
+    }
+
+    .page-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 0 2px 7px;
+      border-bottom: 2px solid #000;
+    }
+
+    .page-name { font-size: 15px; font-weight: 900; letter-spacing: .08em; }
+    .page-role { color: var(--muted); font-size: 11px; }
+    .page-focus-btn { padding: 5px 8px; font-size: 11px; }
+
+    .page-grid {
+      min-height: 0;
+      padding-top: 9px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1.7fr .9fr;
+      gap: 9px;
+    }
+
+    .magazine-page.focused .page-grid {
+      gap: 12px;
+      padding-top: 12px;
+    }
+
+    .slot {
+      position: relative;
+      min-width: 0;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: #fff;
+      border: 2px solid #000;
+      overflow: hidden;
+    }
+
+    .slot.hero { grid-column: 1 / 3; }
+    .slot.drop-target {
+      border: 4px dashed #000;
+      cursor: pointer;
+      animation: target-pulse 1.4s steps(2, end) infinite;
+    }
+    .slot.replace-target { cursor: pointer; box-shadow: inset 0 0 0 3px #c6c6c2; }
+    .slot.moving-source { border: 4px double #000; opacity: .72; }
+    .slot.empty { border-style: dotted; color: var(--muted); }
+    .slot.blocked {
+      background: repeating-linear-gradient(45deg, #fff 0 10px, #c8c8c5 10px 12px);
+      cursor: not-allowed;
+    }
+
+    @keyframes target-pulse { 50% { background: #deded9; } }
+
+    .slot-kicker { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+    .slot-role { font-size: 11px; font-weight: 900; letter-spacing: .1em; }
+    .slot h3 { margin: 7px 0 4px; font-size: 15px; line-height: 1.24; }
+    .slot.hero h3 { margin-top: 12px; font-size: 26px; line-height: 1.13; }
+    .magazine-page.focused .slot.hero h3 { font-size: 31px; }
+    .magazine-page.focused .slot:not(.hero) h3 { font-size: 18px; }
+    .slot-summary { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.4; }
+    .slot.hero .slot-summary { font-size: 12px; }
+
+    .drop-copy { margin: auto; text-align: center; }
+    .drop-copy strong { display: block; color: #000; font-size: 16px; }
+    .drop-copy span { display: block; margin-top: 5px; font-size: 10px; }
+    .slot-actions { display: flex; gap: 6px; margin-top: 7px; }
+    .mini-btn { padding: 4px 7px; font-size: 10px; }
+    .mini-btn.remove { background: #e2e2de; }
+
+    .focus-layout {
+      height: 100%;
+      display: grid;
+      grid-template-columns: 560px 210px;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+    }
+
+    .context-rail {
+      min-height: 520px;
+      padding: 12px;
+      border: 2px solid #000;
+      background: var(--paper-2);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+    }
+
+    .context-rail h3 { margin: 0; font-size: 15px; }
+    .context-rail p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.4; }
+    .context-page {
+      width: 176px;
+      height: 252px;
+      padding: 7px;
+      display: grid;
+      grid-template-rows: 26px 1.6fr .8fr;
+      gap: 5px;
+      align-self: center;
+      border: 2px solid #000;
+      background: #fff;
+    }
+
+    .context-page strong { font-size: 11px; }
+    .context-mini-row { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+    .context-slot {
+      min-width: 0;
+      padding: 4px;
+      border: 1.5px solid #000;
+      background: #fff;
+      text-align: left;
+      font-size: 8px;
+      overflow: hidden;
+    }
+    .context-slot.hero { background: #ddd; }
+    .context-slot.target { border: 2px dashed #000; cursor: pointer; }
+    .context-slot span { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .context-switch { min-height: 42px; font-size: 12px; }
+    .context-warning { padding: 8px; border: 1px solid #000; background: #fff; font-size: 10px; line-height: 1.4; }
+
+    .state-legend {
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      border-top: 2px solid #000;
+      background: var(--paper-2);
+    }
+    .state-legend strong { margin-right: 4px; font-size: 12px; }
+    .legend-chip { padding: 4px 7px; border: 1.5px solid #000; background: #fff; font-size: 10px; }
+    .legend-chip.held { border: 3px double #000; }
+    .legend-chip.target { border: 2px dashed #000; }
+    .legend-chip.empty { border-style: dotted; }
+    .legend-chip.blocked { background: repeating-linear-gradient(45deg, #fff 0 5px, #aaa 5px 6px); }
+
+    .review-body {
+      height: calc(100% - 64px);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .review-block { padding: 11px; border: 1.5px solid #000; background: #fff; }
+    .review-label { margin: 0 0 6px; color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .08em; }
+    .headline-pair { display: grid; gap: 8px; }
+    .headline-row { display: grid; grid-template-columns: 66px 1fr; gap: 8px; align-items: start; }
+    .headline-row span { padding: 3px 5px; border: 1px solid #000; font-size: 10px; font-weight: 800; text-align: center; }
+    .headline-row strong { font-size: 13px; line-height: 1.35; }
+    .headline-row.main strong { font-size: 15px; }
+    .metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .metric-grid .review-block { min-height: 88px; }
+    .metric-number { font: 900 23px/1 Consolas, monospace; }
+    .metric-note { margin-top: 6px; color: var(--muted); font-size: 10px; }
+    .risk-block { min-height: 122px; }
+    .risk-line { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.45; }
+    .risk-mark {
+      flex: 0 0 auto;
+      width: 20px;
+      height: 20px;
+      display: inline-grid;
+      place-items: center;
+      border: 2px solid #000;
+      font-size: 11px;
+      font-weight: 900;
+    }
+    .slot-list { margin-top: 9px; color: var(--muted); font: 10px/1.55 Consolas, monospace; }
+    .view-note { padding: 9px; border: 1px solid #000; background: var(--paper-2); font-size: 11px; line-height: 1.45; }
+    .review-spacer { flex: 1; }
+    .primary-btn { width: 100%; min-height: 64px; background: #000; color: #fff; font-size: 20px; letter-spacing: .08em; }
+    .primary-btn:hover:not(:disabled) { background: #333; }
+    .primary-btn:disabled { background: #888; cursor: not-allowed; }
+    .secondary-btn { width: 100%; min-height: 58px; font-size: 16px; }
+    .signoff-note { min-height: 32px; margin: 0; color: var(--muted); text-align: center; font-size: 11px; line-height: 1.45; }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: rgba(0, 0, 0, .72);
+      z-index: 50;
+    }
+    .modal-backdrop[hidden] { display: none; }
+    .modal {
+      width: 700px;
+      padding: 22px;
+      border: 4px solid #000;
+      background: var(--paper);
+      box-shadow: 12px 12px 0 #000;
+    }
+    .modal-kicker { margin: 0 0 7px; color: var(--muted); font-size: 12px; font-weight: 900; letter-spacing: .15em; }
+    .modal h2 { margin: 0 0 15px; font-size: 28px; }
+    .confirm-layout { display: grid; grid-template-columns: 1fr 1.15fr; gap: 14px; }
+    .confirm-pages { padding: 10px; border: 2px solid #000; background: #ddd; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .confirm-page { height: 208px; padding: 8px; border: 2px solid #000; background: #fff; }
+    .confirm-page h3 { margin: 0 0 8px; font-size: 12px; }
+    .confirm-page ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+    .confirm-page li { padding: 6px; border: 1px solid #777; font-size: 9px; line-height: 1.3; }
+    .confirm-page li:first-child { min-height: 65px; background: #e1e1dd; font-weight: 800; }
+    .confirm-sheet { padding: 11px; border: 2px solid #000; background: #fff; }
+    .confirm-row { display: grid; grid-template-columns: 88px 1fr; gap: 10px; padding: 7px 0; border-bottom: 1px solid #aaa; }
+    .confirm-row:last-child { border: 0; }
+    .confirm-row span { color: var(--muted); font-size: 11px; }
+    .confirm-row strong { font-size: 12px; line-height: 1.35; }
+    .modal-warning { margin: 14px 0; font-size: 12px; }
+    .modal-actions { display: grid; grid-template-columns: 1fr 1.4fr; gap: 12px; }
+    .modal .secondary-btn, .modal .primary-btn { min-height: 48px; font-size: 15px; }
+  </style>
+</head>
+<body>
+  <main class="app" aria-label="发刊编辑双版功能骨架">
+    <header class="topbar">
+      <div class="titleline">
+        <h1>发刊编辑双版功能骨架 v0.2</h1>
+        <span>双版总览＋单版聚焦；只验收结构、状态和操作链</span>
+      </div>
+      <div class="topmeta">第 17 周 · 第 042 期 · 桌面 1920×1080</div>
+    </header>
+
+    <section class="workspace">
+      <aside class="panel" aria-label="候选报道池">
+        <div class="panel-head">
+          <div><h2>候选报道</h2><p>点击拿稿；已上版稿仍可移位</p></div>
+          <span class="count-badge">6 篇</span>
+        </div>
+        <div class="candidate-list" id="candidate-list"></div>
+      </aside>
+
+      <section class="panel spread-panel" aria-label="本期双版周刊">
+        <div class="panel-head">
+          <div class="spread-toolbar">
+            <div class="spread-title"><h2>本期双版</h2><p id="mode-copy">整期总览 · 六版同屏</p></div>
+            <div class="held-strip" id="held-strip"></div>
+            <div class="mode-switch">
+              <button class="mode-btn active" id="overview-mode" type="button">整期总览</button>
+              <button class="mode-btn" id="focus-mode" type="button" disabled>点击页面聚焦</button>
+            </div>
+          </div>
+          <button class="cancel-btn" id="cancel-held" type="button">取消拿起</button>
+        </div>
+        <div class="spread-stage" id="spread-stage"></div>
+        <div class="state-legend" aria-label="六种交互状态">
+          <strong>状态验收</strong>
+          <span class="legend-chip">未选择</span>
+          <span class="legend-chip held">已拿起</span>
+          <span class="legend-chip target">投放目标</span>
+          <span class="legend-chip">已占用</span>
+          <span class="legend-chip empty">空版位</span>
+          <span class="legend-chip blocked">硬阻断</span>
+        </div>
+      </section>
+
+      <aside class="panel" aria-label="发刊复核">
+        <div class="panel-head">
+          <div><h2>发刊复核</h2><p>主副头版与结果实时更新</p></div>
+          <span class="count-badge" id="fill-count">5 / 6</span>
+        </div>
+        <div class="review-body">
+          <section class="review-block">
+            <p class="review-label">双头版定稿</p>
+            <div class="headline-pair">
+              <div class="headline-row main"><span>主头版</span><strong id="review-main-headline"></strong></div>
+              <div class="headline-row"><span>副头版</span><strong id="review-secondary-headline"></strong></div>
+            </div>
+          </section>
+          <div class="metric-grid">
+            <section class="review-block">
+              <p class="review-label">预计触达</p>
+              <div class="metric-number" id="review-reach"></div>
+              <div class="metric-note">骨架演示值</div>
+            </section>
+            <section class="review-block">
+              <p class="review-label">预计净利</p>
+              <div class="metric-number" id="review-profit"></div>
+              <div class="metric-note">骨架演示值</div>
+            </section>
+          </div>
+          <section class="review-block risk-block">
+            <p class="review-label">风险 / 阻断</p>
+            <div class="risk-line"><span class="risk-mark" id="risk-mark">!</span><span id="risk-copy"></span></div>
+            <div class="slot-list" id="slot-list"></div>
+          </section>
+          <div class="view-note" id="view-note"></div>
+          <div class="review-spacer"></div>
+          <button class="primary-btn" id="signoff" data-testid="signoff" type="button">签批送印</button>
+          <button class="secondary-btn" id="return-overview" data-testid="return-overview" type="button" hidden>返回整期总览</button>
+          <p class="signoff-note" id="signoff-note"></p>
+        </div>
+      </aside>
+    </section>
+
+    <footer class="footbar">
+      <span>验证链路：双版总览 → 单版聚焦 → 跨页换稿 → 返回总览 → 双版签批</span>
+      <span>黑白确定性骨架 · 总览与聚焦共用同一份六槽数据</span>
+    </footer>
+  </main>
+
+  <div class="modal-backdrop" id="signoff-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <section class="modal">
+      <p class="modal-kicker">整期发刊前确认</p>
+      <h2 id="modal-title">本期双版已具备送印条件</h2>
+      <div class="confirm-layout">
+        <div class="confirm-pages" id="confirm-pages"></div>
+        <div class="confirm-sheet">
+          <div class="confirm-row"><span>主头版</span><strong id="confirm-main"></strong></div>
+          <div class="confirm-row"><span>副头版</span><strong id="confirm-secondary"></strong></div>
+          <div class="confirm-row"><span>已填版位</span><strong id="confirm-filled"></strong></div>
+          <div class="confirm-row"><span>预计结果</span><strong id="confirm-metrics"></strong></div>
+          <div class="confirm-row"><span>当前风险</span><strong id="confirm-risk"></strong></div>
+        </div>
+      </div>
+      <p class="modal-warning">确认后冻结整期双版并进入发刊结算。此功能骨架只验证签批链路，不执行真实结算。</p>
+      <div class="modal-actions">
+        <button class="secondary-btn" id="back-to-layout" type="button">返回排版</button>
+        <button class="primary-btn" id="confirm-signoff" type="button">确认送印</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const articles = [
+      { id: "A01", title: "M330 末班车在不存在的站台停了三秒", desk: "夜班线", reach: 18, profit: 8 },
+      { id: "A02", title: "51 区夜班货车携带会呼吸的路牌", desk: "调查线", reach: 15, profit: 12 },
+      { id: "A03", title: "港口广播连续七晚播报明天的潮汐", desk: "沿岸线", reach: 13, profit: 9 },
+      { id: "A04", title: "罗斯威尔档案第十四页拒绝被复印", desk: "档案线", reach: 12, profit: 10 },
+      { id: "A05", title: "市政厅新增了一个不存在的影子部门", desk: "市政线", reach: 11, profit: 11 },
+      { id: "A06", title: "街区猫群一致拒绝经过蓝色电话亭", desk: "街区线", reach: 9, profit: 7 }
+    ];
+
+    const pageDefs = [
+      { id: "left", label: "第一版", role: "主头版页", slots: ["front-main", "feature-1", "feature-2"] },
+      { id: "right", label: "第二版", role: "副头版页", slots: ["secondary-head", "inner-1", "inner-2"] }
+    ];
+
+    const slotDefs = [
+      { id: "front-main", label: "主头版", short: "主头版", page: "left", kind: "hero", multiplier: 2.2 },
+      { id: "feature-1", label: "专题 A", short: "专题 A", page: "left", kind: "support", multiplier: 1.15 },
+      { id: "feature-2", label: "专题 B", short: "专题 B", page: "left", kind: "support", multiplier: 1.05 },
+      { id: "secondary-head", label: "副头版", short: "副头版", page: "right", kind: "hero", multiplier: 1.55 },
+      { id: "inner-1", label: "内页 A", short: "内页 A", page: "right", kind: "support", multiplier: 0.9 },
+      { id: "inner-2", label: "内页 B", short: "内页 B", page: "right", kind: "support", multiplier: 0.85 }
+    ];
+
+    const state = {
+      assignments: {
+        "front-main": "A01",
+        "feature-1": "A03",
+        "feature-2": "A04",
+        "secondary-head": "A02",
+        "inner-1": "A05",
+        "inner-2": null
+      },
+      heldArticleId: "A06",
+      movingFromSlot: null,
+      viewMode: "overview",
+      focusPage: null,
+      signed: false
+    };
+
+    const byId = function(id) { return articles.find(function(article) { return article.id === id; }); };
+    const slotById = function(id) { return slotDefs.find(function(slot) { return slot.id === id; }); };
+    const pageById = function(id) { return pageDefs.find(function(page) { return page.id === id; }); };
+    const slotForArticle = function(articleId) {
+      return Object.keys(state.assignments).find(function(slotId) { return state.assignments[slotId] === articleId; }) || null;
+    };
+    const occupiedSlots = function() {
+      return slotDefs.filter(function(slot) { return state.assignments[slot.id]; });
+    };
+
+    function selectArticle(articleId) {
+      const placedSlot = slotForArticle(articleId);
+      state.heldArticleId = articleId;
+      state.movingFromSlot = placedSlot;
+      state.signed = false;
+      render();
+    }
+
+    function cancelHeld() {
+      state.heldArticleId = null;
+      state.movingFromSlot = null;
+      render();
+    }
+
+    function enterFocus(pageId) {
+      state.viewMode = "focus";
+      state.focusPage = pageId;
+      render();
+    }
+
+    function returnToOverview() {
+      state.viewMode = "overview";
+      state.focusPage = null;
+      render();
+    }
+
+    function placeHeld(targetSlotId) {
+      if (!state.heldArticleId) return;
+      if (state.movingFromSlot === targetSlotId) {
+        cancelHeld();
+        return;
+      }
+      const targetArticle = state.assignments[targetSlotId];
+      const sourceSlot = state.movingFromSlot;
+      if (sourceSlot) state.assignments[sourceSlot] = targetArticle || null;
+      state.assignments[targetSlotId] = state.heldArticleId;
+      state.heldArticleId = null;
+      state.movingFromSlot = null;
+      state.signed = false;
+      render();
+    }
+
+    function removeFromSlot(slotId) {
+      state.assignments[slotId] = null;
+      if (state.movingFromSlot === slotId) {
+        state.heldArticleId = null;
+        state.movingFromSlot = null;
+      }
+      state.signed = false;
+      render();
+    }
+
+    function metrics() {
+      return occupiedSlots().reduce(function(total, slot) {
+        const article = byId(state.assignments[slot.id]);
+        total.reach += Math.round(article.reach * slot.multiplier);
+        total.profit += Math.round(article.profit * slot.multiplier);
+        return total;
+      }, { reach: 0, profit: 0 });
+    }
+
+    function renderCandidates() {
+      const list = document.getElementById("candidate-list");
+      list.innerHTML = articles.map(function(article) {
+        const placedSlot = slotForArticle(article.id);
+        const held = state.heldArticleId === article.id;
+        const moving = held && state.movingFromSlot;
+        const status = held ? (moving ? "移动中" : "已拿起") : placedSlot ? "已上版 · " + slotById(placedSlot).short : "未选择";
+        return '<button type="button" class="candidate-card ' + (held ? 'held ' : '') + (placedSlot ? 'placed ' : '') + (moving ? 'moving' : '') +
+          '" data-article-id="' + article.id + '" data-testid="candidate-' + article.id + '">' +
+          '<span class="candidate-top"><span class="candidate-id">' + article.id + ' · ' + article.desk + '</span><span class="candidate-status">' + status + '</span></span>' +
+          '<h3>' + article.title + '</h3>' +
+          '<span class="candidate-detail"><span>预计触达 +' + article.reach + '</span><span>预计净利 +' + article.profit + '</span></span>' +
+          '</button>';
+      }).join("");
+      list.querySelectorAll("[data-article-id]").forEach(function(button) {
+        button.addEventListener("click", function() { selectArticle(button.dataset.articleId); });
+      });
+    }
+
+    function renderHeldStrip() {
+      const article = byId(state.heldArticleId);
+      const strip = document.getElementById("held-strip");
+      const cancel = document.getElementById("cancel-held");
+      if (!article) {
+        strip.innerHTML = '当前未拿稿<strong>从左侧选择一篇报道</strong>';
+        cancel.disabled = true;
+        return;
+      }
+      strip.innerHTML = (state.movingFromSlot ? '正在移动' : '当前拿起') + '<strong>' + article.title + '</strong>';
+      cancel.disabled = false;
+    }
+
+    function slotMarkup(slot, compact) {
+      const articleId = state.assignments[slot.id];
+      const article = byId(articleId);
+      const isSource = state.movingFromSlot === slot.id;
+      const canReceive = Boolean(state.heldArticleId) && !isSource;
+      const classes = ["slot", slot.kind === "hero" ? "hero" : "support", article ? "occupied" : "empty"];
+      if (isSource) classes.push("moving-source");
+      if (canReceive && !article) classes.push("drop-target");
+      if (canReceive && article) classes.push("replace-target");
+      const badge = isSource ? "移动来源" : canReceive ? (article ? "可互换" : "可投放") : article ? "已占用" : "空版位";
+      let content = "";
+      if (!article) {
+        content = '<div class="slot-kicker"><span class="slot-role">' + slot.label + '</span><span class="state-badge">' + badge + '</span></div>' +
+          '<div class="drop-copy"><strong>' + (canReceive ? '↓ 投放到这里' : '空版位') + '</strong><span>' +
+          (canReceive ? '点击完成上版' : '请先从左侧拿起报道') + '</span></div>';
+      } else {
+        content = '<div><div class="slot-kicker"><span class="slot-role">' + slot.label + '</span><span class="state-badge">' + badge + '</span></div>' +
+          '<h3>' + article.title + '</h3><p class="slot-summary">' + article.id + ' · ' + article.desk +
+          (compact ? '' : ' · 版位系数 ' + slot.multiplier.toFixed(2)) + '</p></div>' +
+          '<div class="slot-actions"><button type="button" class="mini-btn move" data-move-slot="' + slot.id + '">换稿 / 移位</button>' +
+          '<button type="button" class="mini-btn remove" data-remove-slot="' + slot.id + '">退稿</button></div>';
+      }
+      return '<article class="' + classes.join(" ") + '" data-slot="' + slot.id + '" data-testid="slot-' + slot.id +
+        '" tabindex="' + (canReceive ? '0' : '-1') + '">' + content + '</article>';
+    }
+
+    function pageMarkup(pageId, focused) {
+      const page = pageById(pageId);
+      const slots = page.slots.map(slotById);
+      return '<section class="magazine-page ' + pageId + (focused ? ' focused' : '') + '" data-page="' + pageId + '">' +
+        '<header class="page-head"><div><span class="page-name">' + page.label + '</span> <span class="page-role">' + page.role + '</span></div>' +
+        (focused ? '<span class="state-badge">正在编辑本版</span>' :
+          '<button type="button" class="page-focus-btn" data-focus-page="' + pageId + '" data-testid="focus-' + pageId + '">编辑本版</button>') +
+        '</header><div class="page-grid">' + slots.map(function(slot) { return slotMarkup(slot, !focused); }).join("") + '</div></section>';
+    }
+
+    function contextPageMarkup(pageId) {
+      const page = pageById(pageId);
+      const slots = page.slots.map(slotById);
+      const hero = slots[0];
+      const supports = slots.slice(1);
+      function mini(slot) {
+        const article = byId(state.assignments[slot.id]);
+        const target = state.heldArticleId && state.movingFromSlot !== slot.id;
+        return '<button type="button" class="context-slot ' + (slot.kind === 'hero' ? 'hero ' : '') + (target ? 'target' : '') +
+          '" data-context-slot="' + slot.id + '" data-testid="context-slot-' + slot.id + '" ' + (target ? '' : 'disabled') + '>' +
+          '<span><strong>' + slot.short + '</strong></span><span>' + (article ? article.id + ' · ' + article.title : 'EMPTY') + '</span></button>';
+      }
+      return '<div class="context-page"><strong>' + page.label + ' · ' + page.role + '</strong>' + mini(hero) +
+        '<div class="context-mini-row">' + supports.map(mini).join("") + '</div></div>';
+    }
+
+    function bindSpreadEvents() {
+      const stage = document.getElementById("spread-stage");
+      stage.querySelectorAll("[data-focus-page]").forEach(function(button) {
+        button.addEventListener("click", function() { enterFocus(button.dataset.focusPage); });
+      });
+      stage.querySelectorAll("[data-switch-page]").forEach(function(button) {
+        button.addEventListener("click", function() { enterFocus(button.dataset.switchPage); });
+      });
+      stage.querySelectorAll(".slot").forEach(function(slotEl) {
+        const target = function() {
+          if (state.heldArticleId && state.movingFromSlot !== slotEl.dataset.slot) placeHeld(slotEl.dataset.slot);
+        };
+        slotEl.addEventListener("click", function(event) {
+          if (!event.target.closest("button")) target();
+        });
+        slotEl.addEventListener("keydown", function(event) {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            target();
+          }
+        });
+      });
+      stage.querySelectorAll("[data-context-slot]").forEach(function(button) {
+        button.addEventListener("click", function() { placeHeld(button.dataset.contextSlot); });
+      });
+      stage.querySelectorAll("[data-move-slot]").forEach(function(button) {
+        button.addEventListener("click", function() { selectArticle(state.assignments[button.dataset.moveSlot]); });
+      });
+      stage.querySelectorAll("[data-remove-slot]").forEach(function(button) {
+        button.addEventListener("click", function() { removeFromSlot(button.dataset.removeSlot); });
+      });
+    }
+
+    function renderSpread() {
+      const stage = document.getElementById("spread-stage");
+      const overviewButton = document.getElementById("overview-mode");
+      const focusButton = document.getElementById("focus-mode");
+      const modeCopy = document.getElementById("mode-copy");
+      if (state.viewMode === "overview") {
+        stage.innerHTML = '<div class="overview-spread">' + pageMarkup("left", false) + '<div class="book-spine" aria-hidden="true"></div>' +
+          pageMarkup("right", false) + '</div>';
+        overviewButton.classList.add("active");
+        focusButton.classList.remove("active");
+        focusButton.disabled = true;
+        focusButton.textContent = "点击页面聚焦";
+        modeCopy.textContent = "整期总览 · 六版同屏";
+      } else {
+        const otherPage = state.focusPage === "left" ? "right" : "left";
+        const current = pageById(state.focusPage);
+        stage.innerHTML = '<div class="focus-layout">' + pageMarkup(state.focusPage, true) +
+          '<aside class="context-rail"><h3>另一页上下文</h3><p>状态与投放目标继续可见；总览和聚焦共用同一份排版数据。</p>' +
+          contextPageMarkup(otherPage) + '<button type="button" class="context-switch" data-switch-page="' + otherPage +
+          '" data-testid="switch-page">切换到' + pageById(otherPage).label + '</button>' +
+          '<div class="context-warning">聚焦态不可签批。完成本版编辑后，请返回整期总览核对主、副头版。</div></aside></div>';
+        overviewButton.classList.remove("active");
+        focusButton.classList.add("active");
+        focusButton.disabled = true;
+        focusButton.textContent = "编辑本版 · " + current.label;
+        modeCopy.textContent = "单版聚焦 · " + current.role;
+      }
+      bindSpreadEvents();
+    }
+
+    function reviewSnapshot() {
+      const filled = occupiedSlots().length;
+      const empty = slotDefs.filter(function(slot) { return !state.assignments[slot.id]; });
+      const main = byId(state.assignments["front-main"]);
+      const secondary = byId(state.assignments["secondary-head"]);
+      const totals = metrics();
+      const blocked = !main;
+      let risk = "";
+      if (blocked) risk = "骨架硬阻断：主头版未填，不能送印";
+      else if (!secondary) risk = "警告：副头版未填；骨架暂允许带风险送印";
+      else if (empty.length) risk = "可送印但有 " + empty.length + " 个空版位：" + empty.map(function(slot) { return slot.short; }).join("、");
+      else risk = "双版六槽已填满，可以送印";
+      return { filled: filled, empty: empty, main: main, secondary: secondary, totals: totals, blocked: blocked, risk: risk };
+    }
+
+    function renderReview() {
+      const review = reviewSnapshot();
+      document.getElementById("fill-count").textContent = review.filled + " / 6";
+      document.getElementById("review-main-headline").textContent = review.main ? review.main.title : "尚未指定";
+      document.getElementById("review-secondary-headline").textContent = review.secondary ? review.secondary.title : "尚未指定";
+      document.getElementById("review-reach").textContent = review.totals.reach.toLocaleString("zh-CN");
+      document.getElementById("review-profit").textContent = "¤ " + review.totals.profit.toLocaleString("zh-CN");
+      document.getElementById("risk-mark").textContent = review.blocked ? "×" : review.empty.length ? "!" : "✓";
+      document.getElementById("risk-copy").textContent = review.risk;
+      document.getElementById("slot-list").textContent = pageDefs.map(function(page) {
+        return page.label + " [" + page.slots.map(function(slotId) { return slotById(slotId).short + ":" + (state.assignments[slotId] || "EMPTY"); }).join(" / ") + "]";
+      }).join("  ");
+      document.getElementById("view-note").textContent = state.viewMode === "overview"
+        ? "当前处于整期总览：可比较两个头版，并执行最终签批。"
+        : "当前处于单版聚焦：可继续投放、换稿和退稿；签批入口已收起。";
+      const signoff = document.getElementById("signoff");
+      const returnButton = document.getElementById("return-overview");
+      if (state.viewMode === "overview") {
+        signoff.hidden = false;
+        returnButton.hidden = true;
+        signoff.disabled = review.blocked;
+      } else {
+        signoff.hidden = true;
+        returnButton.hidden = false;
+      }
+      document.getElementById("signoff-note").textContent = state.signed
+        ? "签批链路已验证；未写入游戏状态"
+        : state.viewMode === "focus"
+          ? "必须回到双版总览后才能签批送印"
+          : review.blocked
+            ? "补齐主头版后方可签批"
+            : review.empty.length
+              ? "允许带空版送印；确认页将同时展示两版"
+              : "双版完整；可进入整期签批确认";
+    }
+
+    function render() {
+      renderCandidates();
+      renderHeldStrip();
+      renderSpread();
+      renderReview();
+    }
+
+    function confirmPageMarkup(page) {
+      return '<section class="confirm-page"><h3>' + page.label + ' · ' + page.role + '</h3><ul>' +
+        page.slots.map(function(slotId) {
+          const slot = slotById(slotId);
+          const article = byId(state.assignments[slotId]);
+          return '<li><strong>' + slot.short + '</strong><br>' + (article ? article.title : '空版位') + '</li>';
+        }).join("") + '</ul></section>';
+    }
+
+    function openSignoff() {
+      if (state.viewMode !== "overview") return;
+      const review = reviewSnapshot();
+      if (review.blocked) return;
+      document.getElementById("confirm-main").textContent = review.main ? review.main.title : "未填";
+      document.getElementById("confirm-secondary").textContent = review.secondary ? review.secondary.title : "未填";
+      document.getElementById("confirm-filled").textContent = review.filled + " / 6";
+      document.getElementById("confirm-metrics").textContent = "触达 " + review.totals.reach + " · 净利 ¤ " + review.totals.profit;
+      document.getElementById("confirm-risk").textContent = review.risk;
+      document.getElementById("confirm-pages").innerHTML = pageDefs.map(confirmPageMarkup).join("");
+      document.getElementById("modal-title").textContent = review.empty.length ? "本期双版可带空位送印" : "本期双版已具备送印条件";
+      document.getElementById("signoff-modal").hidden = false;
+      document.getElementById("back-to-layout").focus();
+    }
+
+    function closeSignoff() {
+      document.getElementById("signoff-modal").hidden = true;
+      document.getElementById("signoff").focus();
+    }
+
+    document.getElementById("cancel-held").addEventListener("click", cancelHeld);
+    document.getElementById("overview-mode").addEventListener("click", returnToOverview);
+    document.getElementById("return-overview").addEventListener("click", returnToOverview);
+    document.getElementById("signoff").addEventListener("click", openSignoff);
+    document.getElementById("back-to-layout").addEventListener("click", closeSignoff);
+    document.getElementById("confirm-signoff").addEventListener("click", function() {
+      state.signed = true;
+      closeSignoff();
+      renderReview();
+    });
+    document.getElementById("signoff-modal").addEventListener("click", function(event) {
+      if (event.target.id === "signoff-modal") closeSignoff();
+    });
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape" && !document.getElementById("signoff-modal").hidden) closeSignoff();
+    });
+
+    window.__editorialSkeletonAudit = function() {
+      const review = reviewSnapshot();
+      return {
+        assignments: Object.assign({}, state.assignments),
+        heldArticleId: state.heldArticleId,
+        movingFromSlot: state.movingFromSlot,
+        viewMode: state.viewMode,
+        focusPage: state.focusPage,
+        filledCount: review.filled,
+        mainHeadline: review.main ? review.main.id : null,
+        secondaryHeadline: review.secondary ? review.secondary.id : null,
+        blocked: review.blocked,
+        emptySlots: review.empty.map(function(slot) { return slot.id; }),
+        signoffVisible: !document.getElementById("signoff").hidden,
+        signoffEnabled: !document.getElementById("signoff").hidden && !document.getElementById("signoff").disabled,
+        returnOverviewVisible: !document.getElementById("return-overview").hidden,
+        modalVisible: !document.getElementById("signoff-modal").hidden
+      };
+    };
+
+    render();
+  </script>
+</body>
+</html>

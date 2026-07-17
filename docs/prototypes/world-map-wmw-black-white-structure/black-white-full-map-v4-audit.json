@@ -1,0 +1,92 @@
+{
+  "artifact_type": "structure_wireframe_state_pair",
+  "version": "full_map_feedback_v4",
+  "viewport": [
+    1920,
+    1080
+  ],
+  "default": {
+    "map_stage": [
+      426,
+      96,
+      924,
+      936
+    ],
+    "bottom_receipt_strips": [],
+    "bottom_safe_margin": [
+      402,
+      1032,
+      972,
+      24
+    ],
+    "event_overlay_present": false
+  },
+  "conditional_world_change": {
+    "map_stage": [
+      426,
+      96,
+      924,
+      936
+    ],
+    "overlay": [
+      450,
+      942,
+      876,
+      90
+    ],
+    "icon": [
+      462,
+      956,
+      40,
+      40
+    ],
+    "title": [
+      518,
+      950,
+      180,
+      24
+    ],
+    "main_delta": [
+      518,
+      978,
+      518,
+      30
+    ],
+    "affected_object": [
+      1056,
+      950,
+      246,
+      24
+    ],
+    "value_delta": [
+      1056,
+      978,
+      246,
+      30
+    ],
+    "interactive": false,
+    "requires_event_id": true,
+    "requires_cause": true,
+    "requires_before_after": true,
+    "current_runtime_support": false
+  },
+  "map_interaction_safe_zone": [
+    450,
+    120,
+    876,
+    798
+  ],
+  "assertions": {
+    "default_receipts_absent": true,
+    "default_map_reaches_y1032": true,
+    "map_rect_stable_across_states": true,
+    "overlay_inside_map": true,
+    "overlay_is_conditional": true,
+    "overlay_has_no_hit_rect": true,
+    "current_world_receipts_not_promoted_to_event_delta": true,
+    "legend_absent": true,
+    "fourth_region_absent": true,
+    "v3_left_and_right_columns_unchanged": true,
+    "runtime_contract_changed": false
+  }
+}

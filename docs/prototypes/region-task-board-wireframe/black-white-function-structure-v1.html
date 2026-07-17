@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>区域任务台 · 黑白功能结构框 v1.2 · 摘要扩展</title>
+  <style>
+    :root {
+      --ink: #111;
+      --paper: #fff;
+      --wash: #f1f1ed;
+      --wash-2: #e2e2dc;
+      --muted: #6b6b66;
+      --line: 3px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif;
+    }
+
+    #wireframe {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      background:
+        linear-gradient(90deg, transparent 23px, #ddd 24px, transparent 25px),
+        linear-gradient(transparent 71px, #ddd 72px, transparent 73px),
+        var(--paper);
+    }
+
+    .panel {
+      position: absolute;
+      border: var(--line) solid var(--ink);
+      background: var(--paper);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 54px;
+      padding: 0 20px;
+      border-bottom: 2px solid var(--ink);
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: .02em;
+    }
+
+    .hud {
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: 72px;
+      border-width: 0 0 3px 0;
+      display: grid;
+      grid-template-columns: 300px 1fr 390px;
+      align-items: center;
+      padding: 0 24px;
+      background: var(--wash);
+    }
+
+    .hud .back {
+      width: 238px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--ink);
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .hud .title {
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: .05em;
+    }
+
+    .hud .time {
+      justify-self: end;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .index-panel {
+      left: 24px;
+      top: 96px;
+      width: 380px;
+      height: 804px;
+    }
+
+    .index-body {
+      padding: 18px;
+    }
+
+    .group-label {
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .event-row {
+      position: relative;
+      height: 112px;
+      margin-bottom: 12px;
+      padding: 16px 54px 14px 18px;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+    }
+
+    .event-row.selected {
+      border-width: 5px;
+      padding: 13px 51px 11px 15px;
+      background: var(--wash);
+    }
+
+    .event-row .name {
+      margin-bottom: 10px;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .event-row .meta {
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    .event-row .marker {
+      position: absolute;
+      right: 14px;
+      top: 15px;
+      width: 30px;
+      height: 30px;
+      border: 2px solid var(--ink);
+      transform: rotate(45deg);
+    }
+
+    .progress-fold {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      height: 98px;
+      padding: 15px 18px;
+      border: 2px dashed var(--ink);
+      background: var(--wash);
+    }
+
+    .progress-fold strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .map-panel {
+      left: 420px;
+      top: 96px;
+      width: 1040px;
+      height: 804px;
+      overflow: hidden;
+      background: #fafafa;
+    }
+
+    .map-panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(0,0,0,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,.08) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .map-label {
+      position: absolute;
+      z-index: 5;
+      left: 18px;
+      top: 16px;
+      padding: 8px 12px;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .map-sub {
+      position: absolute;
+      z-index: 5;
+      right: 18px;
+      top: 18px;
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .land {
+      position: absolute;
+      z-index: 1;
+      background: var(--wash-2);
+      border: 3px solid var(--ink);
+      opacity: .78;
+    }
+
+    .land.a {
+      left: 66px;
+      top: 94px;
+      width: 440px;
+      height: 330px;
+      clip-path: polygon(0 15%, 28% 0, 72% 8%, 100% 34%, 83% 68%, 55% 100%, 14% 88%);
+    }
+
+    .land.b {
+      right: 56px;
+      top: 70px;
+      width: 420px;
+      height: 430px;
+      clip-path: polygon(18% 0, 80% 4%, 100% 29%, 86% 71%, 61% 100%, 19% 89%, 0 46%);
+    }
+
+    .land.c {
+      left: 122px;
+      bottom: 56px;
+      width: 360px;
+      height: 260px;
+      clip-path: polygon(12% 0, 77% 8%, 100% 52%, 73% 100%, 18% 88%, 0 48%);
+    }
+
+    .land.d {
+      right: 94px;
+      bottom: 44px;
+      width: 354px;
+      height: 236px;
+      clip-path: polygon(0 24%, 41% 0, 86% 13%, 100% 65%, 62% 100%, 14% 82%);
+    }
+
+    .river {
+      position: absolute;
+      z-index: 2;
+      left: 496px;
+      top: -50px;
+      width: 86px;
+      height: 930px;
+      border-left: 3px solid var(--ink);
+      border-right: 3px solid var(--ink);
+      background: var(--paper);
+      transform: rotate(3deg);
+    }
+
+    .pin {
+      position: absolute;
+      z-index: 6;
+      width: 42px;
+      height: 42px;
+      margin: -21px 0 0 -21px;
+      border: 4px solid var(--ink);
+      border-radius: 50%;
+      background: var(--paper);
+    }
+
+    .pin::after {
+      content: "";
+      position: absolute;
+      left: 14px;
+      bottom: -18px;
+      width: 8px;
+      height: 20px;
+      border-left: 3px solid var(--ink);
+      transform: rotate(10deg);
+    }
+
+    .pin.selected {
+      width: 68px;
+      height: 68px;
+      margin: -34px 0 0 -34px;
+      border-width: 7px;
+      box-shadow: 0 0 0 10px var(--paper), 0 0 0 13px var(--ink);
+    }
+
+    .pin.cluster::before {
+      content: "2";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .pin.p1 { left: 278px; top: 236px; }
+    .pin.p2 { left: 650px; top: 358px; }
+    .pin.p3 { left: 854px; top: 212px; }
+    .pin.p4 { left: 824px; top: 592px; }
+    .pin.p5 { left: 272px; top: 632px; }
+    .pin.p6 { left: 648px; top: 690px; }
+
+    .selected-callout {
+      position: absolute;
+      z-index: 7;
+      left: 700px;
+      top: 382px;
+      width: 220px;
+      height: 70px;
+      padding: 12px 16px;
+      border: 3px solid var(--ink);
+      background: var(--paper);
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .selected-callout span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .dossier {
+      left: 1484px;
+      top: 96px;
+      width: 412px;
+      height: 960px;
+      padding: 20px;
+      background: var(--wash);
+    }
+
+    .dossier:target {
+      left: 0;
+      top: 0;
+      z-index: 100;
+    }
+
+    .dossier .head {
+      height: 112px;
+      padding: 18px;
+      border: 3px solid var(--ink);
+      background: var(--paper);
+    }
+
+    .dossier .head small {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .dossier .head strong {
+      font-size: 25px;
+    }
+
+    .detail-block {
+      margin-top: 16px;
+      padding: 16px;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+    }
+
+    .detail-block.summary {
+      height: 316px;
+      overflow: hidden;
+    }
+    .detail-block.meta { height: 148px; }
+    .detail-block.risk { height: 128px; }
+
+    .detail-block strong {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 17px;
+    }
+
+    .text-line {
+      height: 2px;
+      margin: 15px 0;
+      background: #777;
+    }
+
+    .text-line.short { width: 62%; }
+
+    .dispatch-cta {
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 28px;
+      height: 112px;
+      display: grid;
+      place-items: center;
+      border: 5px solid var(--ink);
+      background: var(--paper);
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .schedule {
+      left: 24px;
+      top: 916px;
+      width: 1436px;
+      height: 140px;
+      display: grid;
+      grid-template-columns: 320px 456px 516px;
+      column-gap: 32px;
+      align-items: center;
+      padding: 18px 24px;
+      background: var(--wash);
+    }
+
+    .schedule-summary,
+    .schedule-consequence {
+      height: 100px;
+      padding: 12px 18px;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+    }
+
+    .schedule-summary strong,
+    .schedule-consequence strong {
+      display: block;
+      margin-bottom: 9px;
+      font-size: 18px;
+    }
+
+    .schedule-summary span,
+    .schedule-consequence span {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .advance-gate {
+      height: 100px;
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      padding: 0;
+      overflow: hidden;
+      border: 3px solid var(--ink);
+      background: var(--paper);
+      color: var(--ink);
+      font: inherit;
+      text-align: left;
+    }
+
+    .advance-gate .calendar-face {
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      height: 100%;
+      border-right: 3px solid var(--ink);
+      background: var(--wash);
+    }
+
+    .advance-gate .calendar-face b {
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .advance-gate .calendar-face small {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+    }
+
+    .advance-gate .gate-copy {
+      display: grid;
+      align-content: center;
+      min-width: 0;
+      padding: 0 18px;
+    }
+
+    .advance-gate .gate-copy small,
+    .advance-gate .gate-copy span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .advance-gate .gate-copy strong {
+      margin: 5px 0 6px;
+      font-size: 23px;
+      line-height: 1;
+    }
+
+    .measure {
+      position: absolute;
+      z-index: 20;
+      color: var(--muted);
+      font-family: Consolas, monospace;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .measure.map-size { left: 1240px; top: 878px; }
+    .measure.schedule-size { left: 1280px; top: 1038px; }
+    .measure.dossier-size { right: 34px; top: 1034px; }
+  </style>
+</head>
+<body>
+  <main id="wireframe" aria-label="区域任务台黑白功能结构框">
+    <header class="panel hud" data-role="top-hud">
+      <div class="back">← 返回世界地图</div>
+      <div class="title">区域任务台 · 海岸区</div>
+      <div class="time">第 1 周 · 剩余 4 天</div>
+    </header>
+
+    <section class="panel index-panel" data-role="event-index">
+      <div class="section-title"><span>事件索引</span><span class="hint">0–N</span></div>
+      <div class="index-body">
+        <div class="group-label">可选事件</div>
+        <article class="event-row">
+          <div class="name">卫星静默</div>
+          <div class="meta">信号异常 · 普通</div>
+          <div class="marker"></div>
+        </article>
+        <article class="event-row selected">
+          <div class="name">潮汐异常</div>
+          <div class="meta">海岸线 · 已选中</div>
+          <div class="marker"></div>
+        </article>
+        <article class="event-row">
+          <div class="name">山坡停电</div>
+          <div class="meta">限时 · 高风险</div>
+          <div class="marker"></div>
+        </article>
+        <article class="event-row">
+          <div class="name">陌生广播</div>
+          <div class="meta">连续追踪 · 当前环</div>
+          <div class="marker"></div>
+        </article>
+      </div>
+      <aside class="progress-fold">
+        <strong>执行中 1</strong>
+        失踪勘测队 · 2 人已派遣
+      </aside>
+    </section>
+
+    <section class="panel map-panel" data-role="regional-map">
+      <div class="map-label">区域地图</div>
+      <div class="map-sub">动态图钉层 · 事件真实坐标</div>
+      <div class="land a"></div>
+      <div class="land b"></div>
+      <div class="land c"></div>
+      <div class="land d"></div>
+      <div class="river"></div>
+      <div class="pin p1"></div>
+      <div class="pin selected p2"></div>
+      <div class="pin p3"></div>
+      <div class="pin p4"></div>
+      <div class="pin cluster p5"></div>
+      <div class="pin p6"></div>
+      <div class="selected-callout">潮汐异常<span>当前选中事件</span></div>
+    </section>
+
+    <aside id="dossier" class="panel dossier" data-role="selected-event-dossier">
+      <div class="head">
+        <small>当前任务</small>
+        <strong>潮汐异常</strong>
+      </div>
+      <section class="detail-block summary">
+        <strong>摘要</strong>
+        <div class="text-line"></div>
+        <div class="text-line"></div>
+        <div class="text-line"></div>
+        <div class="text-line"></div>
+        <div class="text-line"></div>
+        <div class="text-line"></div>
+        <div class="text-line"></div>
+        <div class="text-line short"></div>
+      </section>
+      <section class="detail-block meta">
+        <strong>地点 / 耗时</strong>
+        <div class="text-line"></div>
+        <div class="text-line short"></div>
+      </section>
+      <section class="detail-block risk">
+        <strong>风险 / 链条</strong>
+        <div class="text-line"></div>
+        <div class="text-line short"></div>
+      </section>
+      <div class="dispatch-cta" data-role="dispatch-cta">进入派遣签批 →</div>
+    </aside>
+
+    <footer class="panel schedule" data-role="global-schedule">
+      <button class="advance-gate" type="button" data-role="advance-day" aria-label="推进一天，当前第1天，剩余4天">
+        <span class="calendar-face"><b>01</b><small>DAY</small></span>
+        <span class="gate-copy">
+          <small>全局日程</small>
+          <strong>推进一天 →</strong>
+          <span>当前第 1 天 · 剩余 4 天</span>
+        </span>
+      </button>
+      <section class="schedule-summary">
+        <strong>本周执行与到期</strong>
+        <span>进行中 2　·　明日到期 1</span>
+        <span>全局状态摘要</span>
+      </section>
+      <section class="schedule-consequence">
+        <strong>推进后果预览</strong>
+        <span>推进后结算 1 项</span>
+        <span>截稿倒计时 -1 天</span>
+      </section>
+    </footer>
+
+    <div class="measure map-size">1040 × 804</div>
+    <div class="measure schedule-size">1436 × 140</div>
+    <div class="measure dossier-size">412 × 960</div>
+  </main>
+</body>
+</html>

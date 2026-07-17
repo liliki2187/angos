@@ -34,24 +34,31 @@ func _run() -> void:
 	await process_frame
 	await process_frame
 	var explore_phase := scene.get_node("RootMargin/RootVBox/PhaseHost/ExplorePhase") as Control
-	_assert_true(explore_phase.get_node("RootVBox/WorldView").visible, "进入探索后默认应显示世界取材地图。")
-	_assert_visible_inside(explore_phase.get_node("RootVBox/WorldView/WorldMapPanel") as Control, explore_phase, "world_map")
-	_assert_world_map_safe_zones(explore_phase, "world_map_default")
+	var world_map_assembly := explore_phase.call("get_world_map_assembly") as Control
+	_assert_true(world_map_assembly != null, "进入探索后应挂载独立 WMW 世界地图总装。")
+	_assert_visible_inside(world_map_assembly, scene, "world_map_assembly")
+	_assert_true(not explore_phase.get_node("RootVBox").visible, "独立世界地图总装启用后应隐藏旧 GLOBAL CHANNEL 宿主。")
+	var world_snapshot: Dictionary = world_map_assembly.call("get_state_snapshot")
+	_assert_true(str(world_snapshot.get("selected_region_id", "")) == "us", "世界地图总装默认应选择北美区域。")
 	scene._on_region_pressed("east_asia")
 	await process_frame
 	await process_frame
-	_assert_world_map_safe_zones(explore_phase, "world_map_locked_region")
+	world_snapshot = world_map_assembly.call("get_state_snapshot")
+	_assert_true(str(world_snapshot.get("selected_region_id", "")) == "east_asia", "锁定区域选择仍应同步到世界地图总装。")
 	scene._on_region_pressed("us")
 	await process_frame
 	await process_frame
 	scene._on_enter_region_requested()
 	await process_frame
 	await process_frame
-	_assert_true(explore_phase.get_node("RootVBox/RegionView").visible, "进入区域后应显示区域节点地图。")
-	scene._on_node_pressed("n51")
+	var region_board := explore_phase.get_node_or_null("RegionTaskBoardV2") as Control
+	_assert_true(region_board != null, "进入区域后应挂载资产化区域任务台。")
+	_assert_visible_inside(region_board, scene, "region_task_board")
+	_assert_true(not explore_phase.get_node("RootVBox").visible, "资产化区域任务台启用后应隐藏旧区域节点布局。")
+	scene._on_node_pressed("m330")
 	await process_frame
 	await process_frame
-	_assert_visible_inside(explore_phase.get_node("RootVBox/RegionView/RegionHBox/RegionTaskPanel") as Control, explore_phase, "region_task_panel")
+	_assert_true(bool(region_board.call("is_dispatch_enabled")), "选择区域任务后应启用派遣入口。")
 	scene._on_open_dispatch_requested()
 	await process_frame
 	await process_frame
@@ -71,6 +78,15 @@ func _run() -> void:
 	inventory.ingest_material(material)
 	state.new_material_ids.append("layout_probe_material")
 	scene._enter_editorial_phase()
+	await process_frame
+	await process_frame
+	var editorial_phase := scene.get_node("RootMargin/RootVBox/PhaseHost/EditorialPhase") as Control
+	_assert_true(editorial_phase.visible, "进入编辑阶段后应显示资产化双页排版台。")
+	var editorial_status := editorial_phase.find_child("EditorialStatusBar", true, false) as Control
+	_assert_true(editorial_status.visible and editorial_status.size.x > 80.0 and editorial_status.size.y > 40.0, "编辑状态栏应可见并保持稳定尺寸。")
+	_assert_visible_inside(editorial_phase.find_child("CandidatePool", true, false) as Control, editorial_phase, "editorial_candidates")
+	_assert_visible_inside(editorial_phase.find_child("EditionWorkspace", true, false) as Control, editorial_phase, "editorial_edition")
+	_assert_visible_inside(editorial_phase.find_child("SignoffPanel", true, false) as Control, editorial_phase, "editorial_signoff")
 
 	var slot_assignment := {}
 	var article_index := 0
@@ -85,7 +101,9 @@ func _run() -> void:
 	scene._refresh_all()
 	await process_frame
 	await process_frame
-	_assert_scroll_text_width(scene.get_node("RootMargin/RootVBox/PhaseHost/EditorialPhase/RootVBox/EditorialColumns/StatsPanel/StatsVBox/StatsScroll") as Control, scene.get_node("RootMargin/RootVBox/PhaseHost/EditorialPhase/RootVBox/EditorialColumns/StatsPanel/StatsVBox/StatsScroll/Body") as Control, "stats")
+	var summary_phase := scene.get_node("RootMargin/RootVBox/PhaseHost/SummaryPhase") as Control
+	_assert_true(summary_phase.visible, "发刊结算后应显示本周总结阶段。")
+	_assert_scroll_text_width(summary_phase.get_node("RootVBox/SummaryPanel/SummaryVBox/SummaryScroll") as Control, summary_phase.get_node("RootVBox/SummaryPanel/SummaryVBox/SummaryScroll/Body") as Control, "summary")
 	scene._next_week()
 
 	await process_frame

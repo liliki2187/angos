@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>世界未解之谜周刊 · 发刊编辑包装 Mock v1</title>
+  <style>
+    :root {
+      --board: #041925;
+      --board-2: #081f2b;
+      --board-3: #102c36;
+      --ink: #10191d;
+      --ivory: #d3b37c;
+      --paper: #aa916b;
+      --paper-hi: #c8aa78;
+      --paper-low: #8f7959;
+      --olive: #7e8a48;
+      --olive-mid: #636936;
+      --cobalt: #263951;
+      --teal: #455b69;
+      --rust: #886b42;
+      --muted: #96a0a0;
+      --shadow: #020b10;
+      --line: rgba(211,179,124,.64);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--board);
+      color: var(--ivory);
+      font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .23;
+      background:
+        linear-gradient(90deg, transparent 0 79px, rgba(126,138,72,.24) 80px, transparent 81px),
+        linear-gradient(0deg, transparent 0 79px, rgba(69,91,105,.18) 80px, transparent 81px),
+        radial-gradient(circle at 50% 48%, rgba(69,91,105,.14), transparent 54%);
+      background-size: 320px 100%, 100% 180px, 100% 100%;
+    }
+
+    button { font: inherit; }
+
+    .app {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      margin: 0 auto;
+      overflow: hidden;
+      background:
+        linear-gradient(148deg, transparent 0 66%, rgba(38,57,81,.13) 66% 76%, transparent 76%),
+        var(--board);
+    }
+
+    .app::after {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px solid rgba(211,179,124,.16);
+      clip-path: polygon(0 0, 100% 0, 100% 97%, 98% 100%, 0 100%);
+      pointer-events: none;
+    }
+
+    .issue-strip {
+      position: absolute;
+      left: 80px;
+      top: 24px;
+      width: 1760px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .issue-ticket {
+      position: relative;
+      min-width: 344px;
+      height: 52px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      color: #e0c795;
+      background: var(--cobalt);
+      border: 1px solid rgba(211,179,124,.72);
+      box-shadow: 5px 5px 0 var(--shadow);
+      clip-path: polygon(0 0, 96% 0, 100% 50%, 96% 100%, 0 100%);
+      letter-spacing: .04em;
+    }
+
+    .issue-ticket strong { font-size: 21px; }
+    .issue-ticket span { font-size: 13px; color: #aeb49f; }
+    .issue-line { height: 1px; flex: 1; background: linear-gradient(90deg, var(--olive), rgba(126,138,72,0)); }
+    .issue-deadline { font-size: 13px; color: #a8af9e; letter-spacing: .12em; }
+
+    .workspace {
+      position: absolute;
+      left: 80px;
+      top: 96px;
+      width: 1760px;
+      height: 920px;
+      display: grid;
+      grid-template-columns: 320px 1040px 360px;
+      gap: 20px;
+    }
+
+    .object-title {
+      margin: 0;
+      color: #e0c795;
+      font-size: 23px;
+      line-height: 1.2;
+      letter-spacing: .04em;
+    }
+
+    .object-kicker {
+      color: #91a0a1;
+      font-size: 12px;
+      letter-spacing: .16em;
+    }
+
+    .candidate-case {
+      position: relative;
+      height: 920px;
+      padding: 70px 20px 20px;
+      background:
+        linear-gradient(151deg, rgba(69,91,105,.28) 0 18%, transparent 18%),
+        linear-gradient(28deg, transparent 0 70%, rgba(99,105,54,.33) 70%),
+        var(--cobalt);
+      border: 1px solid rgba(211,179,124,.54);
+      box-shadow: 8px 9px 0 var(--shadow);
+      clip-path: polygon(0 34px, 38px 34px, 53px 8px, 176px 8px, 190px 34px, 100% 34px, 100% 100%, 0 100%);
+    }
+
+    .candidate-case::before,
+    .candidate-case::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .candidate-case::before {
+      left: 15px;
+      right: 13px;
+      top: 18px;
+      height: 62px;
+      z-index: -1;
+      background: var(--olive-mid);
+      border: 1px solid rgba(211,179,124,.48);
+      transform: rotate(-.65deg);
+      box-shadow: 4px 5px 0 var(--shadow);
+    }
+
+    .candidate-case::after {
+      left: 22px;
+      right: 22px;
+      bottom: 28px;
+      height: 408px;
+      border: 2px solid rgba(211,179,124,.22);
+      border-top: 0;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 4% 100%, 0 96%);
+    }
+
+    .case-head {
+      position: relative;
+      height: 62px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(211,179,124,.42);
+    }
+
+    .count-tag {
+      padding: 5px 9px 4px;
+      color: #112026;
+      background: var(--olive);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      clip-path: polygon(0 0, 94% 0, 100% 36%, 95% 100%, 0 100%);
+    }
+
+    .candidate-card {
+      position: relative;
+      width: 280px;
+      height: 264px;
+      margin-top: 18px;
+      padding: 18px 16px 14px;
+      color: var(--ink);
+      background:
+        linear-gradient(154deg, rgba(211,179,124,.42) 0 21%, transparent 21%),
+        linear-gradient(24deg, transparent 0 72%, rgba(126,138,72,.18) 72%),
+        #bba171;
+      border: 2px solid var(--ivory);
+      box-shadow: 7px 8px 0 var(--shadow);
+      transform: translateY(-6px) rotate(-.45deg);
+      clip-path: polygon(0 0, 96% 0, 100% 5%, 100% 100%, 4% 100%, 0 96%);
+      z-index: 2;
+    }
+
+    .candidate-card::before {
+      content: "";
+      position: absolute;
+      left: 114px;
+      top: -17px;
+      width: 52px;
+      height: 30px;
+      border: 4px solid #202628;
+      border-bottom: 0;
+      border-radius: 3px 3px 0 0;
+      box-shadow: inset 0 0 0 2px #7f816e;
+    }
+
+    .selected-stamp {
+      position: absolute;
+      right: 11px;
+      top: 10px;
+      padding: 4px 8px;
+      color: #d8c18f;
+      background: var(--cobalt);
+      border: 1px solid #627189;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      transform: rotate(1deg);
+    }
+
+    .candidate-code { color: #3c4932; font: 900 12px/1.2 Consolas, monospace; letter-spacing: .08em; }
+    .candidate-card h3 { width: 208px; margin: 7px 0 10px; font-size: 18px; line-height: 1.33; }
+    .candidate-image {
+      width: 248px;
+      height: 116px;
+      background: url("../../../gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/editorial-story-cats-refuse-blue-phone-booth-v1.png") center / cover no-repeat;
+      border: 1px solid rgba(16,25,29,.62);
+      box-shadow: 3px 3px 0 rgba(16,25,29,.32);
+    }
+    .candidate-meta { margin-top: 9px; font-size: 12px; font-weight: 800; letter-spacing: .04em; }
+
+    .tray-stack {
+      position: absolute;
+      left: 40px;
+      bottom: 88px;
+      width: 240px;
+      height: 260px;
+      opacity: .65;
+    }
+    .tray-stack span { position: absolute; inset: 0; border: 1px solid rgba(211,179,124,.28); background: rgba(4,25,37,.28); }
+    .tray-stack span:nth-child(1) { transform: translate(10px, 10px); }
+    .tray-stack span:nth-child(2) { transform: translate(5px, 5px); }
+    .tray-stack span:nth-child(3) { box-shadow: inset 0 -12px 0 rgba(126,138,72,.12); }
+    .return-mark { position: absolute; left: 36px; bottom: 48px; color: #829095; font-size: 11px; letter-spacing: .18em; }
+
+    .edition-board {
+      position: relative;
+      width: 1040px;
+      height: 920px;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, transparent 0 49.7%, rgba(126,138,72,.08) 49.7% 50.3%, transparent 50.3%),
+        linear-gradient(140deg, rgba(69,91,105,.12), transparent 42%),
+        #071c26;
+      border-top: 1px solid rgba(211,179,124,.23);
+      border-bottom: 1px solid rgba(69,91,105,.36);
+    }
+
+    .edition-board::before {
+      content: "";
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 14px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--olive-mid), transparent);
+    }
+
+    .masthead {
+      position: absolute;
+      left: 15px;
+      top: 16px;
+      width: 1010px;
+      height: 56px;
+      display: grid;
+      grid-template-columns: 44px 320px 1fr 126px;
+      align-items: center;
+      padding: 0 16px;
+      color: #e1c995;
+      background: var(--board-2);
+      border: 1px solid rgba(126,138,72,.72);
+      box-shadow: 5px 5px 0 var(--shadow);
+      clip-path: polygon(0 0, 98.5% 0, 100% 27%, 100% 100%, 0 100%);
+    }
+    .globe-mark { font-size: 31px; color: #9cae52; line-height: 1; }
+    .masthead h1 { margin: 0; font-size: 24px; letter-spacing: .035em; }
+    .masthead-rule { height: 2px; margin: 0 24px; background: linear-gradient(90deg, var(--olive), rgba(126,138,72,.08)); }
+    .masthead-code { color: #aeb49e; font: 800 12px/1 Consolas, monospace; letter-spacing: .16em; text-align: right; }
+
+    .page {
+      position: absolute;
+      top: 88px;
+      width: 490px;
+      height: 800px;
+      padding: 16px;
+      color: var(--ink);
+      background:
+        linear-gradient(145deg, rgba(211,179,124,.34) 0 16%, transparent 16%),
+        linear-gradient(30deg, transparent 0 76%, rgba(99,105,54,.12) 76%),
+        var(--paper);
+      border: 2px solid var(--ivory);
+      box-shadow: 7px 8px 0 var(--shadow);
+      overflow: hidden;
+    }
+    .page.left { left: 15px; border-right-color: #725f47; }
+    .page.right { left: 535px; border-left-color: #725f47; }
+    .page.left::after, .page.right::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 12px;
+      pointer-events: none;
+      background: linear-gradient(90deg, rgba(16,25,29,.26), transparent);
+    }
+    .page.left::after { right: 0; transform: scaleX(-1); }
+    .page.right::before { left: 0; }
+
+    .page-label {
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
+      color: #dbc28e;
+      background: var(--paper-low);
+      border-bottom: 2px solid #6d593f;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: .08em;
+    }
+    .page-label small { color: #544936; font-size: 10px; letter-spacing: .15em; }
+
+    .head-slot {
+      position: relative;
+      width: 442px;
+      margin-top: 12px;
+      padding: 13px 14px 12px;
+      background:
+        linear-gradient(158deg, rgba(211,179,124,.38), transparent 32%),
+        linear-gradient(20deg, transparent 0 72%, rgba(126,138,72,.14) 72%),
+        #b69b6d;
+      border: 2px solid #55603c;
+      box-shadow: 3px 3px 0 rgba(16,25,29,.36);
+    }
+    .head-slot.main { height: 374px; }
+    .head-slot.secondary { height: 342px; }
+    .head-slot h2 { margin: 0; font-size: 21px; line-height: 1.28; letter-spacing: -.02em; }
+    .head-slot.main h2 { height: 57px; }
+    .head-slot.secondary h2 { height: 48px; font-size: 19px; }
+    .head-image { width: 410px; border: 1px solid #5f543e; background-position: center; background-size: cover; }
+    .head-slot.main .head-image { height: 218px; background-image: url("../../../gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/editorial-story-m330-last-train-v1.png"); }
+    .head-slot.secondary .head-image { height: 210px; background-image: url("../../../gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/editorial-story-area51-breathing-sign-v1.png"); }
+    .slot-meta { display: flex; align-items: center; justify-content: space-between; height: 36px; font-size: 11px; font-weight: 800; }
+    .slot-rank { padding: 3px 6px; background: rgba(99,105,54,.3); }
+
+    .story-row {
+      display: grid;
+      grid-template-columns: 212px 212px;
+      gap: 18px;
+      margin-top: 12px;
+    }
+    .story-card {
+      position: relative;
+      height: 314px;
+      padding: 12px 10px 10px;
+      background:
+        linear-gradient(152deg, rgba(211,179,124,.28), transparent 28%),
+        #b09868;
+      border: 1px solid #6c6046;
+      overflow: hidden;
+    }
+    .story-card h3 { height: 56px; margin: 0; font-size: 14px; line-height: 1.36; }
+    .story-thumb { width: 190px; height: 174px; background-position: center; background-size: cover; border: 1px solid #6b5f45; }
+    .story-card.harbor .story-thumb { background-image: url("../../../gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/editorial-story-harbor-tomorrow-tide-v1.png"); }
+    .story-card.roswell .story-thumb { background-image: url("../../../gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/editorial-story-roswell-copy-refusal-v1.png"); }
+    .story-card.city .story-thumb { background-image: url("../../../gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/editorial-story-city-hall-shadow-department-v1.png"); }
+    .story-foot { position: absolute; left: 10px; right: 10px; bottom: 10px; display: flex; justify-content: space-between; color: #2c332c; font-size: 10px; font-weight: 800; }
+
+    .right .story-row { margin-top: 42px; }
+    .drop-target {
+      background:
+        linear-gradient(155deg, rgba(38,57,81,.18), transparent 46%),
+        rgba(211,179,124,.17);
+      border: 2px solid rgba(38,57,81,.78);
+      box-shadow: inset 0 0 0 4px rgba(211,179,124,.34), inset 0 0 0 6px rgba(38,57,81,.64);
+    }
+    .drop-target::before,
+    .drop-target::after {
+      content: "";
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-color: var(--teal);
+      border-style: solid;
+      opacity: .95;
+    }
+    .drop-target::before { left: 14px; top: 14px; border-width: 3px 0 0 3px; }
+    .drop-target::after { right: 14px; bottom: 14px; border-width: 0 3px 3px 0; }
+    .drop-target .slot-name { position: absolute; left: 16px; top: 16px; color: #394553; font-size: 12px; font-weight: 900; letter-spacing: .08em; }
+    .drop-target .ghost-paper {
+      position: absolute;
+      left: 32px;
+      top: 88px;
+      width: 148px;
+      height: 126px;
+      border: 1px solid rgba(38,57,81,.28);
+      background: rgba(38,57,81,.08);
+      transform: rotate(-.4deg);
+    }
+
+    .signoff-case {
+      position: relative;
+      height: 920px;
+      padding: 54px 16px 16px;
+      background:
+        linear-gradient(150deg, rgba(126,138,72,.26) 0 19%, transparent 19%),
+        linear-gradient(28deg, transparent 0 72%, rgba(38,57,81,.25) 72%),
+        var(--olive-mid);
+      border: 1px solid rgba(211,179,124,.63);
+      box-shadow: 8px 9px 0 var(--shadow);
+      clip-path: polygon(0 20px, 38% 20px, 43% 0, 72% 0, 76% 20px, 100% 20px, 100% 100%, 0 100%);
+    }
+    .signoff-clip {
+      position: absolute;
+      left: 133px;
+      top: 7px;
+      width: 94px;
+      height: 44px;
+      z-index: 3;
+      background: #252a29;
+      border: 2px solid #8a8d79;
+      box-shadow: 4px 4px 0 rgba(2,11,16,.55);
+      clip-path: polygon(16% 0, 84% 0, 100% 42%, 88% 100%, 12% 100%, 0 42%);
+    }
+    .signoff-paper {
+      position: relative;
+      width: 328px;
+      height: 838px;
+      padding: 24px 20px 18px;
+      color: var(--ink);
+      background:
+        linear-gradient(145deg, rgba(211,179,124,.45) 0 18%, transparent 18%),
+        linear-gradient(28deg, transparent 0 74%, rgba(136,107,66,.14) 74%),
+        #b9a071;
+      border: 2px solid var(--ivory);
+      box-shadow: 5px 6px 0 rgba(2,11,16,.55);
+      clip-path: polygon(0 0, 97% 0, 100% 3%, 100% 100%, 3% 100%, 0 97%);
+    }
+    .signoff-head { padding-bottom: 14px; border-bottom: 2px solid #6f6248; }
+    .signoff-head h2 { margin: 0 0 4px; font-size: 25px; letter-spacing: .04em; }
+    .signoff-head p { margin: 0; color: #4b5044; font-size: 12px; font-weight: 800; }
+
+    .issue-summary {
+      margin-top: 18px;
+      padding: 13px 14px;
+      color: #d7c390;
+      background: var(--cobalt);
+      border-left: 7px solid var(--olive);
+      box-shadow: 3px 3px 0 rgba(16,25,29,.34);
+    }
+    .summary-top { display: flex; align-items: end; justify-content: space-between; }
+    .summary-top strong { font-size: 34px; line-height: 1; }
+    .summary-top span { color: #9ba5a5; font-size: 11px; letter-spacing: .12em; }
+    .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+    .summary-value { color: #eed49c; font-size: 17px; font-weight: 900; }
+    .summary-label { color: #9da9a9; font-size: 10px; letter-spacing: .08em; }
+
+    .check-block { margin-top: 16px; }
+    .check-title { margin: 0 0 8px; color: #4a4b3d; font-size: 12px; letter-spacing: .14em; }
+    .check-row {
+      min-height: 48px;
+      margin-bottom: 8px;
+      padding: 9px 10px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 12px;
+      background: rgba(211,179,124,.22);
+      border-left: 4px solid #5f6252;
+    }
+    .check-row strong { display: block; font-size: 13px; }
+    .check-row small { color: #4f5144; font-size: 10px; }
+    .check-row.risk { border-left-color: var(--rust); background: rgba(136,107,66,.22); }
+    .check-row.unknown { border: 1px dashed var(--cobalt); border-left-width: 4px; }
+    .check-state { padding: 3px 6px; color: #d9c38e; background: var(--cobalt); font-size: 11px; font-weight: 900; white-space: nowrap; }
+    .check-row.risk .check-state { background: var(--rust); }
+
+    .action-stack { position: absolute; left: 20px; right: 20px; bottom: 22px; }
+    .action {
+      width: 100%;
+      border: 0;
+      text-align: center;
+      font-weight: 900;
+      letter-spacing: .06em;
+      clip-path: polygon(0 0, 97% 0, 100% 25%, 100% 100%, 3% 100%, 0 75%);
+    }
+    .preview-action {
+      height: 56px;
+      color: #10191d;
+      background: var(--olive);
+      box-shadow: 4px 4px 0 rgba(16,25,29,.52);
+      cursor: pointer;
+      font-size: 17px;
+    }
+    .preview-action:hover { transform: translate(-1px,-1px); }
+    .send-action {
+      height: 72px;
+      margin-top: 10px;
+      color: rgba(16,25,29,.55);
+      background: #8b795d;
+      border: 2px solid rgba(16,25,29,.26);
+      font-size: 20px;
+      cursor: not-allowed;
+      filter: saturate(.58);
+    }
+    .action-reason { margin: 7px 0 0; color: #5f5c4e; text-align: center; font-size: 11px; font-weight: 800; }
+    .freeze-note { margin: 6px 0 0; padding-top: 7px; border-top: 1px solid rgba(16,25,29,.22); color: #47483e; font-size: 10px; line-height: 1.35; text-align: center; }
+
+    .screen-caption {
+      position: absolute;
+      left: 84px;
+      bottom: 26px;
+      color: #708089;
+      font-size: 11px;
+      letter-spacing: .16em;
+    }
+  </style>
+</head>
+<body>
+  <main class="app" aria-label="发刊编辑界面包装稿">
+    <header class="issue-strip">
+      <div class="issue-ticket">
+        <strong>第 01 期 · 发刊排版</strong>
+        <span>星期日 23:40</span>
+      </div>
+      <div class="issue-line"></div>
+      <div class="issue-deadline">本期状态 / 待完成发行预览</div>
+    </header>
+
+    <section class="workspace">
+      <aside class="candidate-case" aria-label="候选报道稿夹">
+        <div class="case-head">
+          <div>
+            <h2 class="object-title">候选报道</h2>
+            <div class="object-kicker">EDITORIAL CLIPS</div>
+          </div>
+          <span class="count-tag">候选 1</span>
+        </div>
+        <article class="candidate-card" aria-label="已拿起的候选报道">
+          <span class="selected-stamp">已拿起</span>
+          <div class="candidate-code">A06 · BRONZE</div>
+          <h3>街区猫群一致拒绝经过蓝色电话亭</h3>
+          <div class="candidate-image" role="img" aria-label="蓝色电话亭与猫群报道图"></div>
+          <div class="candidate-meta">宠物 / 猎奇 · 本期候选</div>
+        </article>
+        <div class="tray-stack" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="return-mark">稿件归处 / DRAG RETURN</div>
+      </aside>
+
+      <section class="edition-board" aria-label="打开的世界未解之谜周刊">
+        <header class="masthead">
+          <span class="globe-mark">◎</span>
+          <h1>世界未解之谜周刊</h1>
+          <div class="masthead-rule"></div>
+          <div class="masthead-code">WMW / ISSUE 001</div>
+        </header>
+
+        <article class="page left" aria-label="主头版页">
+          <div class="page-label"><span>第 1 版 · 主头版页</span><small>MAIN EDITION</small></div>
+          <section class="head-slot main">
+            <h2>M330 末班车在不存在的站台停了三秒</h2>
+            <div class="head-image" role="img" aria-label="M330末班车报道图"></div>
+            <div class="slot-meta"><span>猎奇 / 幽默</span><span class="slot-rank">金奖稿</span></div>
+          </section>
+          <div class="story-row">
+            <section class="story-card harbor">
+              <h3>港口广播连续七晚播报明天的潮汐</h3>
+              <div class="story-thumb" role="img" aria-label="港口广播报道图"></div>
+              <div class="story-foot"><span>专题 A</span><span>银奖稿</span></div>
+            </section>
+            <section class="story-card roswell">
+              <h3>罗斯威尔档案第十四页拒绝被复印</h3>
+              <div class="story-thumb" role="img" aria-label="罗斯威尔复印机报道图"></div>
+              <div class="story-foot"><span>专题 B</span><span>银奖稿</span></div>
+            </section>
+          </div>
+        </article>
+
+        <article class="page right" aria-label="副头版页">
+          <div class="page-label"><span>第 2 版 · 副头版页</span><small>SECONDARY</small></div>
+          <section class="head-slot secondary">
+            <h2>51 区夜班货车携带会呼吸的路牌</h2>
+            <div class="head-image" role="img" aria-label="51区会呼吸路牌报道图"></div>
+            <div class="slot-meta"><span>军事 / 经济</span><span class="slot-rank">金奖稿</span></div>
+          </section>
+          <div class="story-row">
+            <section class="story-card city">
+              <h3>市政厅新增了一个不存在的影子部门</h3>
+              <div class="story-thumb" role="img" aria-label="市政厅影子部门报道图"></div>
+              <div class="story-foot"><span>内页 1</span><span>铜奖稿</span></div>
+            </section>
+            <section class="story-card drop-target" aria-label="内页2空位，合法投放目标">
+              <span class="slot-name">内页 2 / 空位</span>
+              <span class="ghost-paper" aria-hidden="true"></span>
+            </section>
+          </div>
+        </article>
+      </section>
+
+      <aside class="signoff-case" aria-label="发刊签批夹">
+        <div class="signoff-clip" aria-hidden="true"></div>
+        <section class="signoff-paper">
+          <header class="signoff-head">
+            <h2>本期签批</h2>
+            <p>送印前复核 · 当前方案尚待重算</p>
+          </header>
+
+          <section class="issue-summary">
+            <div class="summary-top"><strong>5 / 6</strong><span>当前完整度</span></div>
+            <div class="summary-grid">
+              <div><div class="summary-value">4,200</div><div class="summary-label">预计传播</div></div>
+              <div><div class="summary-value">+210</div><div class="summary-label">预计净收益</div></div>
+            </div>
+          </section>
+
+          <section class="check-block">
+            <h3 class="check-title">当前校验 / PARTIAL CHECK</h3>
+            <div class="check-row">
+              <div><strong>当前已知硬阻断</strong><small>仅统计已接通规则</small></div>
+              <span class="check-state">0</span>
+            </div>
+            <div class="check-row risk">
+              <div><strong>空位 1</strong><small>完整度与收益将受罚</small></div>
+              <span class="check-state">有风险</span>
+            </div>
+            <div class="check-row unknown">
+              <div><strong>公开取向</strong><small>需要重新计算本期立场</small></div>
+              <span class="check-state">? 尚未计算</span>
+            </div>
+            <div class="check-row unknown">
+              <div><strong>同题疲劳</strong><small>需要重新核对有效传播</small></div>
+              <span class="check-state">? 尚未计算</span>
+            </div>
+          </section>
+
+          <div class="action-stack">
+            <button class="action preview-action" type="button">计算发行预览</button>
+            <button class="action send-action" type="button" disabled>签批送印</button>
+            <p class="action-reason">完成发行预览后启用</p>
+            <p class="freeze-note">送印后冻结两页与全部版位，不可继续换稿；随后进入本期结算。</p>
+          </div>
+        </section>
+      </aside>
+    </section>
+
+    <footer class="screen-caption">FILLED-STATE TEXT MOCK · 1920×1080 · NOT GODOT RUNTIME</footer>
+  </main>
+</body>
+</html>

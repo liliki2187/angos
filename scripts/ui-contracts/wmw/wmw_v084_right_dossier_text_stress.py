@@ -4,6 +4,8 @@ from pathlib import Path
 import json
 from PIL import Image, ImageDraw, ImageFont
 
+from wmw_text_layout_metrics import draw_text_by_raster_bbox, fit_font_by_raster, raster_text_size
+
 
 BASE = Path(r"D:\angos\docs\screenshots\2026-06-24-world-map-benchmark-landing")
 REF = Path(r"D:\angos\.codex-remote-attachments\019ef3f7-be2f-70d3-ae57-7df7fa181048\285fb7d4-37f0-4a98-86f4-c1652013a1d1\1-Photo-1.jpg")
@@ -93,19 +95,12 @@ FS = font(FONT_REGULAR, 11)
 
 
 def text_size(draw: ImageDraw.ImageDraw, text: str, fnt) -> tuple[int, int]:
-    bbox = draw.textbbox((0, 0), text, font=fnt)
-    return bbox[2] - bbox[0], bbox[3] - bbox[1]
+    return raster_text_size(text, fnt)
 
 
 def fit_font(draw: ImageDraw.ImageDraw, text: str, paths: list[str], max_size: int, min_size: int, box: tuple[int, int]) -> tuple[ImageFont.ImageFont, int, bool, tuple[int, int]]:
-    for size in range(max_size, min_size - 1, -1):
-        fnt = font(paths, size)
-        tw, th = text_size(draw, text, fnt)
-        if tw <= box[0] and th <= box[1]:
-            return fnt, size, True, (tw, th)
-    fnt = font(paths, min_size)
-    tw, th = text_size(draw, text, fnt)
-    return fnt, min_size, False, (tw, th)
+    fnt, size, fits, metrics = fit_font_by_raster(text, lambda candidate: font(paths, candidate), max_size, min_size, box)
+    return fnt, size, fits, tuple(metrics["raster_size"])
 
 
 def abs_rect(origin: tuple[int, int], local: list[int]) -> tuple[int, int, int, int]:
@@ -113,19 +108,13 @@ def abs_rect(origin: tuple[int, int], local: list[int]) -> tuple[int, int, int, 
 
 
 def draw_centered(draw: ImageDraw.ImageDraw, rect: tuple[int, int, int, int], text: str, fnt, fill) -> tuple[int, int, int, int]:
-    tw, th = text_size(draw, text, fnt)
-    x = rect[0] + ((rect[2] - rect[0]) - tw) // 2
-    y = rect[1] + ((rect[3] - rect[1]) - th) // 2 - 1
-    draw.text((x, y), text, font=fnt, fill=fill)
-    return (x, y, x + tw, y + th)
+    report = draw_text_by_raster_bbox(draw, rect, text, fnt, fill, align="center")
+    return tuple(report["raster_glyph_bbox"])
 
 
 def draw_left(draw: ImageDraw.ImageDraw, rect: tuple[int, int, int, int], text: str, fnt, fill, pad_x=8) -> tuple[int, int, int, int]:
-    tw, th = text_size(draw, text, fnt)
-    x = rect[0] + pad_x
-    y = rect[1] + ((rect[3] - rect[1]) - th) // 2 - 1
-    draw.text((x, y), text, font=fnt, fill=fill)
-    return (x, y, x + tw, y + th)
+    report = draw_text_by_raster_bbox(draw, rect, text, fnt, fill, align="left", pad_x=pad_x)
+    return tuple(report["raster_glyph_bbox"])
 
 
 def draw_dossier(draw: ImageDraw.ImageDraw, origin: tuple[int, int], scenario: dict, qa: bool = False) -> list[dict]:

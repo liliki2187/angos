@@ -238,11 +238,31 @@ artifact_types:
       - class_fits_full_page_layout
       - no_overlap_with_reserved_zones
     cannot_claim:
+      - page_structure_source_of_truth
+      - functional_necessity
       - visual_acceptance
       - production_candidate
+  screen_structure_target:
+    proves:
+      - functional_partition
+      - column_and_band_ownership
+      - primary_action_location
+    cannot_claim:
+      - component_runtime_pass
+      - final_asset_quality
+  component_reinsert_review_board:
+    proves:
+      - component_scale_relationship
+      - local_alignment
+      - component_inventory_visibility
+    cannot_claim:
+      - page_structure_source_of_truth
+      - functional_necessity
+      - runtime_host_identity
   text_capacity_stress:
     proves:
       - fields_fit_normal_and_stress_copy
+      - visible_carrier_contains_runtime_text_slot
     cannot_claim:
       - final_typography
       - final_font_metrics
@@ -382,9 +402,75 @@ stage_transitions:
       - rollback_to_content_rects
 
 hard_gates:
+  screen_identity:
+    status: trial
+    introduced: 2026-07-16
+    auto_required_when:
+      - component_preview_is_integrated_into_full_runtime_page
+      - response_claims_target_ui_landed
+    required:
+      - target_scene_or_page_path
+      - current_full_screen_source_of_truth
+      - target_reference_artifact_type
+      - positive_identity_anchors
+      - forbidden_legacy_anchors
+      - functional_partition_matches_structure_source
+      - first_runtime_screenshot_side_by_side_with_target
+      - explicit_screen_identity_pass_or_fail
+    blockers:
+      - component_passes_inside_wrong_host
+      - component_reinsert_board_claimed_as_page_structure
+      - decorative_icon_inventory_presented_as_runtime_function
+      - auxiliary_module_enters_exclusive_decision_column
+      - legacy_page_anchor_visible_in_target_capture
+      - old_shell_hidden_by_backdrop_without_host_decision
+      - subagent_review_prompt_assumes_unconfirmed_host
+  scope_invariant:
+    status: trial
+    introduced: 2026-07-14
+    auto_required_when:
+      - task_contains_local_visual_correction_or_image_edit
+      - request_or_prompt_declares_preserve_existing_composition
+    required:
+      - editable_roi_definition
+      - immutable_region_or_invariant_list
+      - before_after_full_frame_comparison
+      - outside_roi_drift_check
+      - explicit_scope_pass_or_fail
+    blockers:
+      - full_frame_resampling_claimed_as_local_edit
+      - immutable_land_silhouette_or_layout_changed
+      - outside_roi_changes_unclassified
+      - second_same_scope_failure_without_stop_loss
+  visible_field_semantic_necessity:
+    status: trial
+    introduced: 2026-07-14
+    auto_required_when:
+      - assetized_ui_runtime_preview_or_production_candidate
+      - user_review_screenshot_contains_dynamic_text_or_numbers
+    required:
+      - visible_component_expected_ids
+      - visible_component_audit
+      - visible_field_semantics
+      - player_question_and_decision_value_per_field
+      - unique_owner_scope_and_production_data_source_per_field
+      - production_runtime_fixture_shared_by_preview_and_engine
+      - removed_fixture_fields_record
+      - validate_visible_field_semantics_pass
+    blockers:
+      - stress_fixture_visible_in_user_review_screenshot
+      - placeholder_number_claimed_as_runtime_value
+      - field_has_no_stable_data_source
+      - downstream_decision_field_shown_on_upstream_page
+      - same_fact_has_multiple_primary_owners
+      - only_user_named_field_checked_without_full_visible_component_audit
+    validator: scripts/ui-contracts/validate_visible_field_semantics.py
   assetized_ui:
     required:
+      - screen_identity
       - functional_partition_table
+      - accepted_decision_cross_read_and_exact_structure_wireframe_before_filled_state_mock
+      - visible_field_semantic_necessity
       - information_capacity_table
       - longest_copy_cases
       - component_aspect_taxonomy
@@ -396,18 +482,29 @@ hard_gates:
       - no_text_rects
       - hit_rects
       - ui_geometry_gate
+      - text_carrier_capacity
       - filled_state_mock_or_layered_refill_preview
       - ui_ux_art_review
       - runtime_target_comparison
       - status_md_updated_each_round
     blockers:
       - logic_smoke_claimed_as_visual_acceptance
+      - filled_state_mock_generated_before_real_function_inventory_and_exact_structure_wireframe
+      - accepted_interaction_or_layout_decision_omitted_from_imagegen_brief
+      - runtime_command_gap_presented_as_already_implemented_interaction
+      - readonly_short_state_claims_full_card_volume_without_decision_value
+      - noninteractive_closure_material_reads_as_secondary_panel
+      - frozen_class_reused_when_role_requires_new_density_variant
+      - component_removal_exposes_equivalent_unowned_void_in_bounded_column
+      - status_strip_repeats_schedule_and_dossier_without_unique_player_question
       - safe_zone_claimed_as_formal_ui_quality
       - no_text_draft_claimed_as_text_integration
       - default_label_feel_in_filled_state_mock
       - information_bearing_surface_tilted
       - cta_or_text_slot_skewed
       - orthogonal_claim_without_local_crops_or_guides
+      - glyph_fits_ideal_slot_but_visible_carrier_is_too_small
+      - retired_carrier_text_hidden_but_contract_slot_runtime_node_or_visible_shell_remains
       - square_component_defining_non_badge_roles
       - per_component_serial_contract_rounds_instead_of_page_board
       - contract_frozen_without_full_screen_reinsert
@@ -417,16 +514,41 @@ hard_gates:
       - evidence_script_referenced_from_tmp
       - review_doc_not_in_chinese
   image_color:
+    auto_required_when:
+      - task_contains_any_of:
+          - color correction
+          - color mood exploration
+          - palette exploration
+          - 调色
+          - 去黄
+          - 去绿
+          - 提亮
+          - 压暗
+          - 色调
+          - 氛围
+          - 更接近标杆配色
+      - prompt_contains_any_of:
+          - globally darken
+          - globally desaturate
+          - compressed palette
+          - charcoal navy
+          - cool gray paper
+          - reduce green
+          - reduce yellow
     required:
       - unique_reference_image
       - fixed_roi
       - color_tokens
       - failure_boundaries
       - post_check_same_roi
+      - semantic_region_luminance_distribution
+      - no_global_regrade_when_local_palette_fix
     blockers:
       - no_sampling_table
       - broad_pass_without_token_results
       - user_says_color_differs_and_no_contract_revision
+      - local_hue_fix_causes_global_l_drop_over_3
+      - active_map_or_paper_regions_darkened_by_global_grade
   ui_geometry:
     auto_required_when:
       - artifact_type_in:
@@ -511,6 +633,85 @@ hard_gates:
       - perspective_paper_carrying_dynamic_text
       - decorative_tilt_inside_content_rects
       - whole_screen_only_no_core_surface_crops
+  text_carrier_capacity:
+    auto_required_when:
+      - visible_dynamic_text_carrier_present
+      - text_slot_or_font_token_changed
+      - response_claims_text_fit_or_runtime_visual_pass
+    required:
+      - visible_color_module_rect
+      - carrier_rect
+      - inner_rect
+      - runtime_glyph_bbox
+      - font_left_top_bearing_preserved
+      - raster_alpha_glyph_bbox
+      - replayable_font_source
+      - overlay_bbox_matches_raster_bbox
+      - actual_glyph_bbox_inside_inner_rect
+      - no_synthetic_bbox_from_draw_origin_plus_size
+      - normal_and_longest_copy_fit_without_wrap_or_compression
+      - target_engine_font_and_scale_evidence
+      - carrier_texture_continuity_after_resize_or_rebuild
+    evidence_required:
+      - carrier_closeup
+      - exact_scale_text_slot_stress
+      - bbox_probe_per_font_size_and_copy
+      - text_bbox_evidence_validator_pass
+      - independent_font_raster_replay_pass
+      - target_engine_runtime_screenshot
+    blockers:
+      - ideal_safe_zone_not_contained_by_visible_carrier
+      - proxy_font_claimed_as_final_font_metrics
+      - text_squeezed_by_font_shrink_or_manual_y_offset
+      - font_metric_offset_discarded
+      - qa_overlay_uses_synthetic_bbox
+      - fit_only_compares_width_height_without_absolute_containment
+      - manual_y_offset_used_to_fake_centering
+      - resized_carrier_has_seam_smear_or_flat_color_band
+  retired_carrier_absence:
+    auto_required_when:
+      - visible_text_carrier_or_information_lane_retired
+      - contract_text_slot_removed
+      - runtime_text_node_removed
+    required:
+      - contract_slot_absent_without_zero_sized_dead_slot
+      - runtime_node_absent
+      - visible_carrier_absent
+      - retired_footprint_old_carrier_pixels_eq_0
+      - retired_footprint_alpha_holes_eq_0
+      - full_substrate_rebuild_from_traceable_master
+      - retired_footprint_spans_at_least_3_explicit_facets
+      - retired_footprint_max_single_facet_share_le_45_percent
+      - nonperiodic_grain_coverage_ge_7_5_percent
+      - old_rectangle_boundary_has_no_visible_seam
+      - retained_overlays_and_pixels_outside_rebuild_unchanged
+      - target_engine_runtime_screenshot
+    evidence_required:
+      - before_after_full_card_comparison
+      - retired_footprint_200_to_300pct_closeup
+      - target_engine_runtime_screenshot
+    blockers:
+      - text_hidden_but_empty_carrier_remains
+      - zero_sized_dead_contract_slot_remains
+      - runtime_node_remains_hidden_or_empty
+      - local_rectangular_cover_patch_used
+      - inpaint_blur_diffusion_or_flat_color_band_used
+      - old_carrier_outline_shadow_or_second_seam_still_locatable
+  badge_core_facet_symmetry:
+    auto_required_when:
+      - programmatic_symmetric_badge_core_facets_present
+    required:
+      - facets_derived_from_shared_bbox_and_center
+      - mirrored_vertex_error_le_1px_at_2x
+      - center_convergence_error_le_0_5px
+      - left_right_structural_area_delta_le_1_percent
+      - structural_mirror_iou_ge_0_985
+      - empty_base_400pct_evidence
+      - runtime_overlay_evidence
+    blockers:
+      - independently_handwritten_non_mirrored_facet_endpoints
+      - periodic_per_pixel_noise_used_as_material
+      - runtime_icon_hides_unreviewed_empty_base
   godot_agent_smoke:
     auto_required_when:
       - changed_files_match_any_of:

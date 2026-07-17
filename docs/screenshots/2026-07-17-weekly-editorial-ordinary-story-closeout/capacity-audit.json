@@ -1,0 +1,78 @@
+{
+  "canvas_size": [
+    1920,
+    1080
+  ],
+  "manifest_version": 7,
+  "passed": true,
+  "states": {
+    "0_of_6": {
+      "assignments": {
+        "feature-1": -1,
+        "feature-2": -1,
+        "front-main": -1,
+        "front-side": -1,
+        "inner-1": -1,
+        "inner-2": -1
+      },
+      "candidate_count": 6,
+      "dual_page_geometry_stable": true,
+      "filled_count": 0,
+      "passed": true,
+      "replace_button_visible": false,
+      "screenshot": "01-godot-capacity-0-of-6.png",
+      "visible_story_texture_count": 0
+    },
+    "3_of_6": {
+      "assignments": {
+        "feature-1": 1003,
+        "feature-2": -1,
+        "front-main": 1001,
+        "front-side": 1002,
+        "inner-1": -1,
+        "inner-2": -1
+      },
+      "candidate_count": 3,
+      "dual_page_geometry_stable": true,
+      "filled_count": 3,
+      "passed": true,
+      "replace_button_visible": false,
+      "screenshot": "02-godot-capacity-3-of-6.png",
+      "visible_story_texture_count": 3
+    },
+    "5_of_6": {
+      "assignments": {
+        "feature-1": 1003,
+        "feature-2": 1004,
+        "front-main": 1001,
+        "front-side": 1002,
+        "inner-1": 1005,
+        "inner-2": -1
+      },
+      "candidate_count": 1,
+      "dual_page_geometry_stable": true,
+      "filled_count": 5,
+      "passed": true,
+      "replace_button_visible": false,
+      "screenshot": "03-godot-capacity-5-of-6.png",
+      "visible_story_texture_count": 5
+    },
+    "6_of_6": {
+      "assignments": {
+        "feature-1": 1003,
+        "feature-2": 1004,
+        "front-main": 1001,
+        "front-side": 1002,
+        "inner-1": 1005,
+        "inner-2": 1006
+      },
+      "candidate_count": 0,
+      "dual_page_geometry_stable": true,
+      "filled_count": 6,
+      "passed": true,
+      "replace_button_visible": false,
+      "screenshot": "04-godot-capacity-6-of-6.png",
+      "visible_story_texture_count": 6
+    }
+  }
+}

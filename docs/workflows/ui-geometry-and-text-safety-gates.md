@@ -2,7 +2,7 @@
 
 > **用途**：UI 资产化链路（`docs/onboarding/assetized-ui-production-chain.md`）与美术 / 动效资产链路（`docs/workflows/art-motion-asset-landing-workflow.md`）共用的几何、正交与文字安全规则。两条链路只引用本文件，不得各自维护措辞不同的副本。
 > **机器可读对应**：`docs/workflows/workflow-gates.yml` 的 `hard_gates.ui_geometry`。阈值或触发条件变更时，两处必须同步。
-> **最后更新**：2026-07-10（补状态徽章标杆留白、运行时字形完整性与照片配料来源纯度 gate；合同对齐不得替代标杆视觉校准）
+> **最后更新**：2026-07-14（收紧 `text_carrier_capacity`：排版、粉色 QA 框与 manifest 必须共用实际光栅 alpha 字形 bbox，不得用绘制原点加宽高合成假 bbox）
 
 ## 1. 几何不变量 Gate（切图 / 贴图前）
 
@@ -76,9 +76,13 @@
 | `runtime_icon_shape_completeness` | 状态字形必须先在不受目标槽约束的源区域提取完整形状，再等比装入透明画布；manifest 记录完整源 bbox、相对旧裁界追回宽度、四边 padding 与 border touch。最小 padding 由 class 写明，任何非透明像素触边直接失败 | 程序 gate + 400% 配料目检 | B2.7 四个源字形 bbox 左边都恰好等于旧合同 `x=316`，purity 只能证明被截残片干净，无法证明形状完整 |
 | `photo_ingredient_overlay_contamination` | 照片配料必须来自纯场景源，不得从含框体 / globe / badge 的压平 atlas 回采；裁源 bbox 必须完全位于实测照片内部、避开源覆盖元素，并扫描边缘长直框线、色键绿与其它 UI 签名。来源文件、裁源 bbox 与阈值必须写入 manifest | 来源断言 + 程序 gate + 配料目检 | B2.7 从 428 压平 atlas 裁照片夹带旧地球月牙；B2.8 首轮虽改用 396，历史裁源右界仍跨进三张源卡框 |
 | `retired_footprint_texture_continuity` | 旧组件足迹退役后，最终可见区域必须由显式底板 / 边框配料重建；harmonic inpaint、扩散、模糊、纯色带等程序修补像素在最终成品中的暴露数必须为 0，并放大检查纹理方向与周边连续 | 构造性断言 + 程序 gate + 目检 | B2.8 旧 badge 足迹扩散到 `x382`，新 badge 只覆盖到约 `x374`；裸露 inpaint 在四状态形成纵向涂抹，但旧像素复用、几何和颜色 gate 全部通过 |
+| `badge_core_facet_symmetry` | 程序化 badge 中性内芯的分面必须由同一 bbox 与中心参数化生成；镜像端点误差 `<=1px@2x`、中心汇聚误差 `<=0.5px`、左右结构面积差 `<=1%`、镜像 IoU `>=0.985`。结构层与稀疏颗粒层分开检测；空底盘 400% 和运行态分别目检 | 构造性断言 + 程序 gate + 双证据目检 | B2.9 外环保留与颜色 gate 均通过，但内芯 top / right / bottom / left 使用不成对端点，产生明显歪 X；执行方只盯外部涂抹而漏检内芯造型 |
+| `text_carrier_capacity` | 仅适用于产品仍决定保留的文字载体。按 `visible_color_module_rect -> carrier_rect -> inner_rect -> actual raster alpha glyph_bbox` 验证：可见载体必须完整包住合同文字槽；排版必须保留字体 left/top bearing；布局结果、粉色 QA 框与 manifest 必须引用同一份实际光栅 bbox，并以绝对坐标断言真实字形完全位于 `inner_rect`。禁止把 `draw_origin + width/height` 合成 bbox、只比较宽高、用手调 y 偏移伪造居中。manifest 必须记录可重放的字体文件、字号、文案和 draw origin；独立校验器不得调用生产侧 bbox helper，必须自行重光栅并逐项比对相对 / 绝对 bbox。正常与最长文案不得换行、裁切或自动压缩；字体代理只作预检，最终仍需目标引擎真实字体与缩放复核。扩展载体还需检查纹理无拉伸、硬接缝、涂抹或纯色色带 | 程序 gate + `scripts/ui-contracts/validate_text_bbox_evidence.py` + 载体近照 + 真实运行截图 | B2.10/B2.11 暴露可见载体容量问题；563-566 又丢弃字体 bearing，粉色框与真实文字错位却误报 `8/8 fit`，已由 567-570 的 raster bbox 证据替代 |
+| `retired_carrier_absence` | 信息载体退役时，必须同步删除合同槽（不得留零尺寸死槽）、运行时节点和可见 carrier；原足迹由完整底板配料重建，旧纸张像素与 alpha 洞为 0，至少跨 3 个显式分面、最大单分面占比 `<=45%`、非周期颗粒覆盖率 `>=7.5%`，旧矩形边界无可见接缝；重建区外和被保留覆盖物像素变化为 0。禁止只隐藏文字、保留空条，或用局部矩形/inpaint/模糊/色带遮盖 | 构造性断言 + 程序 gate + 100%/200%-300% 退役足迹近照 + 真实运行截图 | A184 / B2.12 退役左卡 meta：B2.11 carrier 技术上可用但信息架构被用户否决；删除必须同时发生在合同、atlas 和 Godot/Python 层 |
 
 配套规则：
 
+- **文字 bbox 单一真源**：每种 `字体 + 字号 + 文案` 都必须先真实光栅化，再从 alpha 非透明像素取 bbox；排版、overlay 和 manifest 只能消费这一结果。即使使用代理字体，也必须对代理字体逐项生成真实 bbox，不得用字体 metric 高度、绘制原点或经验性基线偏移代替。提交前运行 `scripts/ui-contracts/validate_text_bbox_evidence.py`，由它根据记录的字体文件独立重放光栅结果；目标引擎接入后，用同一口径对 Godot 实际字形重新取证。
 - **残留扫描的执行时机**：`old_content_leftover_scan` 等颜色签名类扫描必须在**状态换色之前**执行；换色会改变残留像素的颜色签名使扫描失效（B2.5 案例）。换色后的检查只能用结构性对比（分层重建断言、配料纯度），不能用颜色签名。
 - **修复判定与验证判定必须独立**：禁止用同一个颜色阈值、连通组件分类器或“保护区”同时决定“保留什么”与“是否已清干净”。二者共享判定式时会共享盲区；至少一个 gate 必须基于独立结构事实（合同 bbox / 中心、图层 provenance、源像素复用、空底盘截图）。B2.6 的清理器和 `atlas_baked_state_glyph_pixels` 共用 `is_badge_outer_ring_component`，因此同时漏掉旧靶心圆弧。
 - **证据依赖顺序固定**：源失败探针 → 未叠图标的空底盘 → 状态换色底盘 → runtime 图标配料 → Python 合成 → Godot 合成。前一层未通过不得用后一层合成图遮掩；文件生成与截图非黑只证明证据可读。
@@ -102,6 +106,8 @@
 - [ ] 同类组件横向对比：无肉眼可辨的几何 / 质感不一致；
 - [ ] 合成质感：无"补丁感"（色带、突兀渐变、纹理断裂）；
 - [ ] 文字与底面：像同一系统，不像默认 Label 贴图；
+- [ ] **文字载体容量**：先看可见纸条 / 色块是否真的包住合同槽，再看真实运行时字形四边留白；禁止只凭理想 safe-zone、字体代理 bbox 或缩字宣称通过；
+- [ ] **退役载体不可定位**：在 100% 整卡与 200%-300% 原足迹近照中，旧 carrier 的矩形、纸边、阴影和第二道接缝均不可被定位；同时核对合同槽和运行时节点确已删除，不能把“无文字”误当成“已退役”；
 - [ ] 状态语义独占性：强调色（如 selected 绿）只出现在对应状态。
 
 **目检判读口径（2026-07-09 起硬规则）**：目检结论必须**逐帧、逐检查点**写 PASS / FAIL 进 manifest，禁止写整批 "pass"。来源案例：B2.3 的 466 manifest 写"300% 目检 pass"，而三处缺陷（圆盘旧图叠层、底边残留带、badge 双环）在其自己贴出的 465 QA 板上清晰可见——目检图做了，判读却批量盖章。贴出目检截图 ≠ 目检判读正确。

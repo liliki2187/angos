@@ -1,0 +1,160 @@
+{
+  "artifact_type": "structure_wireframe",
+  "version": "functional_closure_v3",
+  "viewport": [
+    1920,
+    1080
+  ],
+  "columns": {
+    "left": [
+      36,
+      24,
+      342,
+      1032
+    ],
+    "center": [
+      402,
+      24,
+      972,
+      1032
+    ],
+    "right": [
+      1398,
+      24,
+      480,
+      1032
+    ]
+  },
+  "region_cards_frozen": [
+    [
+      66,
+      36,
+      306,
+      240
+    ],
+    [
+      66,
+      294,
+      306,
+      240
+    ],
+    [
+      66,
+      552,
+      306,
+      240
+    ]
+  ],
+  "schedule_gate_full": [
+    36,
+    810,
+    342,
+    246
+  ],
+  "schedule_default_action": [
+    48,
+    884,
+    318,
+    100
+  ],
+  "schedule_consequence": [
+    52,
+    992,
+    310,
+    24
+  ],
+  "schedule_due_hint": [
+    52,
+    1020,
+    310,
+    24
+  ],
+  "map_stage": [
+    426,
+    96,
+    924,
+    822
+  ],
+  "receipt_strips": [
+    [
+      426,
+      942,
+      450,
+      90
+    ],
+    [
+      900,
+      942,
+      450,
+      90
+    ]
+  ],
+  "receipt_strip_gap": 24,
+  "a51h_full_height_derivative": [
+    1398,
+    24,
+    480,
+    1032
+  ],
+  "mission_intel_header": [
+    1425,
+    609,
+    426,
+    66
+  ],
+  "mission_intel_content": [
+    1431,
+    681,
+    414,
+    248
+  ],
+  "mission_rows_expanded": [
+    [
+      1431,
+      681,
+      414,
+      56
+    ],
+    [
+      1431,
+      745,
+      414,
+      56
+    ],
+    [
+      1431,
+      809,
+      414,
+      56
+    ],
+    [
+      1431,
+      873,
+      414,
+      56
+    ]
+  ],
+  "a51h_cta_bottom_anchored": [
+    1425,
+    957,
+    426,
+    75
+  ],
+  "a51h_bottom_safe_margin": 24,
+  "assertions": {
+    "b212_unchanged": true,
+    "compact_a51_contract_untouched": true,
+    "new_a51h_derivative_required": true,
+    "schedule_reaches_column_bottom": true,
+    "left_unframed_void_absent": true,
+    "right_pocket_absent": true,
+    "right_unframed_void_absent": true,
+    "right_column_ends_in_real_decision": true,
+    "mission_intel_expanded_is_main_delivery_state": true,
+    "collapsed_summary_must_keep_equal_height": true,
+    "cta_position_stable_across_intel_states": true,
+    "bottom_receipt_strip_class_required": true,
+    "third_receipt_absent": true,
+    "runtime_contract_changed": false
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "contract_version": "0.8.8",
+  "status": "locked_candidate",
+  "page": "world_map",
+  "class_id": "right_mission_intel_button",
+  "role": "右侧 dossier 的任务摘要式 disclosure；同一行显示任务情报、任务结构与展开状态",
+  "parent_class": "right_dossier_page",
+  "reference_resolution": [1280, 720],
+  "runtime_resolution": [1920, 1080],
+  "export_scale": 2,
+  "frozen": {
+    "export_size": [284, 44],
+    "positions": [[950, 420]],
+    "hit_rect": [0, 0, 284, 44],
+    "slots": {
+      "left_icon_zone": [10, 5, 28, 34],
+      "title_label": [42, 6, 56, 32],
+      "facts_label": [102, 6, 142, 32],
+      "chevron_zone": [252, 4, 20, 36]
+    }
+  },
+  "provisional": {
+    "summary_row_note": "A211：collapsed 在同一行显示任务情报、限时 / 线索 / 深链摘要和 `＋`；expanded 保持该行原位，把 facts_label 改为“已显示 2 / 共 N 条”，状态符号改为 `－`。整行只有一个 hit_rect / 焦点 / 回调；文档位于 left_icon_zone，章节名与摘要分别进入 title_label / facts_label，状态符号只进入兼容保留的 chevron_zone。使用加减号是为了避免内容在摘要行上方出现时与上下箭头产生空间方向冲突。",
+    "locked_behavior_note": "locked 使用查看解锁条件还是查看已知任务情报尚待用户裁决；只改运行时文案 / 回调，不改变几何。",
+    "in_place_scope_note": "A211 最终裁决：点击本行只在父页 region_body inner 内原位切换两条只读任务预览，不进入任务选择、派遣、员工或骰池。任务行没有独立 hit rect、焦点、hover、按钮底色或端部箭头；不得新增外部抽屉、popover、内嵌滚动或第二组按钮。完整列表只由橄榄主 CTA 进入。",
+    "font_assumptions": "573-577 使用实际 raster alpha glyph bbox；最终 UI 字体变化后必须用同一 bbox gate 重跑 default / warning / locked 压力。",
+    "visible_alignment_note": "A211：284x44、父页中心 x=160 与整行 hit rect 继续冻结；文档 / 标题 / 摘要 / chevron 横向铺满可用宽度，但可见层仍不形成封闭按钮轮廓。底部分隔线为 [10,42,264,1]。",
+    "state_color_note": "A209 + A211：默认态背景完全透明；标题 / 文档 / chevron 使用低饱和青绿 #3F6663，摘要使用较弱灰绿 #5C665C，底部分隔线使用青绿 28% alpha。禁止满宽色洗、封闭外框、bevel、纸厚、投影、左右圆托与独立 action badge。"
+  },
+  "states": ["default", "hover", "pressed", "expanded", "locked"],
+  "state_may_change": ["标题 / 摘要 / 图标 / 状态符号的轻量颜色反馈", "局部 focus 下划线", "＋ / － 展开状态", "固定信息区内 collapsed / expanded 内容模式", "运行时回调"],
+  "state_may_not_change": ["export_size", "内部四槽尺寸与位置", "hit_rect", "父页 region_body / primary_enter_cta 几何"],
+  "notes": "A189 新增，A196 冻结 284x44 热区；A209 起 class id 仅为兼容保留，A211 起运行时角色是任务摘要式 disclosure，不是视觉按钮。独立 decision_facts 已退役，摘要与情报入口共享一行；expanded 只在父页描述区原位显示两条只读任务，不得产生第二个主动作。",
+  "evidence": {
+    "reviews": [
+      "docs/plans/world-map-benchmark-landing/2026-07-13-world-map-wmw-right-dossier-a184-capacity-review.md",
+      "docs/plans/world-map-benchmark-landing/2026-07-14-world-map-wmw-right-dossier-clean-sprite-brief-v0-8-6.md",
+      "docs/plans/world-map-benchmark-landing/2026-07-15-world-map-wmw-right-dossier-candidate-a5-merged-summary-review.md",
+      "docs/plans/world-map-benchmark-landing/2026-07-15-world-map-wmw-right-dossier-candidate-a5-1-in-place-mission-preview-review.md"
+    ],
+    "measurement_manifests": [
+      "docs/screenshots/2026-06-24-world-map-benchmark-landing/570-world-map-wmw-v0-8-5-right-dossier-b-raster-bbox-manifest.json",
+      "docs/screenshots/2026-06-24-world-map-benchmark-landing/577-world-map-wmw-v0-8-6-right-dossier-alignment-manifest.json",
+      "docs/screenshots/2026-06-24-world-map-benchmark-landing/628-world-map-wmw-v0-9-5-right-dossier-candidate-a5-manifest.json",
+      "docs/screenshots/2026-06-24-world-map-benchmark-landing/638-world-map-wmw-v0-9-6-right-dossier-candidate-a5-1-manifest.json"
+    ],
+    "scripts": [
+      "scripts/ui-contracts/wmw/wmw_v085_right_dossier_b_contract.py",
+      "scripts/ui-contracts/wmw/wmw_v086_right_dossier_alignment.py",
+      "scripts/ui-contracts/wmw/wmw_v095_right_dossier_candidate_a5_pipeline.py",
+      "scripts/ui-contracts/wmw/wmw_v096_right_dossier_candidate_a51_pipeline.py"
+    ]
+  }
+}

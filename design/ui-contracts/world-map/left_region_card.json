@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "contract_version": "0.8.3",
+  "contract_version": "0.8.5",
   "status": "locked_candidate",
   "page": "world_map",
   "class_id": "left_region_card",
@@ -17,24 +17,25 @@
     "slots": {
       "photo_slot": [21, 24, 174, 64],
       "label_plate": [22, 104, 114, 32],
-      "meta_line": [22, 138, 96, 10],
       "icon_badge": [8, 8, 32, 32],
       "action_badge": [144, 101, 44, 44]
     }
   },
   "provisional": {
-    "font_assumptions": "文字压力测试基于脚本字体渲染；最终 UI 字体确定后若更宽，必须重跑 text_capacity_stress 再进 atlas。",
-    "meta_line_note": "meta_line 高度 10px 偏紧，排版复审可在不改 export_size 前提下与 label_plate 重新分配纵向空间。"
+    "font_assumptions": "地区标题压力测试基于脚本字体渲染；最终 UI 字体确定后若更宽，必须重跑 title text_capacity_stress 再进 atlas。",
+    "retired_meta_note": "A184 已显式退役 meta_line 与可见纸条 carrier；状态只由 action_badge 承担，风险、目标、推荐与解锁缺口下沉 right_dossier_page。不得重新利用原纸条区域承载文字或装饰。"
   },
   "states": ["selected", "available", "warning", "locked"],
   "state_may_change": ["颜色皮肤", "低多边形块面色调", "lock / warning / target / check 符号", "selected 发光", "bleed 内纸影透明度"],
   "state_may_not_change": ["export_size", "photo_slot 尺寸与 y 位置", "label_plate 尺寸与 y 位置", "action_badge 位置", "hit_rect", "堆叠间距", "图片等比处理"],
-  "notes": "选中态如需更大体量，必须新建 class（如 left_region_card_expanded）并重排左列，不得混入本 class 状态矩阵。透明 bleed 6px 不计入布局尺寸。",
+  "notes": "选中态如需更大体量，必须新建 class（如 left_region_card_expanded）并重排左列，不得混入本 class 状态矩阵。透明 bleed 6px 不计入布局尺寸。A184 起左卡仅保留地区标题与状态徽章；原 meta 区域是无信息的干净底板呼吸区。",
   "evidence": {
     "reviews": [
       "docs/plans/world-map-benchmark-landing/2026-07-07-world-map-wmw-left-region-card-class-contract-v0-8-1-review.md",
       "docs/plans/world-map-benchmark-landing/2026-07-07-world-map-wmw-left-card-uniform-reinsert-v0-8-2-review.md",
-      "docs/plans/world-map-benchmark-landing/2026-07-10-world-map-wmw-left-card-b2-8-state-badge-and-globe-review.md"
+      "docs/plans/world-map-benchmark-landing/2026-07-10-world-map-wmw-left-card-b2-8-state-badge-and-globe-review.md",
+      "docs/plans/world-map-benchmark-landing/2026-07-13-world-map-wmw-left-card-b2-11-meta-carrier-review.md",
+      "docs/plans/world-map-benchmark-landing/2026-07-13-world-map-wmw-left-card-b2-12-meta-retirement-review.md"
     ],
     "measurement_manifests": [
       "docs/screenshots/2026-06-24-world-map-benchmark-landing/350-world-map-wmw-v0-8-1-left-card-class-contract-manifest.json",
@@ -43,7 +44,8 @@
     "scripts": [
       "scripts/ui-contracts/wmw/wmw_v081_left_region_card_contract.py",
       "scripts/ui-contracts/wmw/wmw_v082_left_region_card_reinsert.py",
-      "scripts/ui-contracts/wmw/wmw_v082_left_region_card_size_compare.py"
+      "scripts/ui-contracts/wmw/wmw_v082_left_region_card_size_compare.py",
+      "scripts/ui-contracts/wmw/wmw_v0918_left_card_b212_meta_retirement_pipeline.py"
     ]
   }
 }

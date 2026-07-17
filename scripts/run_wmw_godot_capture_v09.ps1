@@ -16,29 +16,16 @@ function Resolve-GodotPath {
     param([string]$RequestedPath)
 
     if ($RequestedPath) {
-        return (Resolve-Path -LiteralPath $RequestedPath).Path
+        $resolved = (Resolve-Path -LiteralPath $RequestedPath).Path
+        if ($resolved -notlike '*4.6.2-stable*') {
+            throw "WMW UI capture is pinned to Godot 4.6.2-stable, got: $resolved"
+        }
+        return $resolved
     }
     if (Test-Path -LiteralPath $defaultGodot) {
         return (Resolve-Path -LiteralPath $defaultGodot).Path
     }
-
-    $localConsoles = Get-ChildItem -Path (Join-Path $repoRoot 'tools\godot') -Recurse -File -Filter 'Godot*_console.exe' -ErrorAction SilentlyContinue
-    if ($localConsoles) {
-        $preferred = $localConsoles | Where-Object { $_.FullName -like '*4.6.2-stable*' } | Select-Object -First 1
-        if ($preferred) {
-            return $preferred.FullName
-        }
-        return ($localConsoles | Sort-Object LastWriteTimeUtc -Descending | Select-Object -First 1).FullName
-    }
-
-    foreach ($candidate in @('godot4', 'godot')) {
-        $command = Get-Command $candidate -ErrorAction SilentlyContinue
-        if ($command) {
-            return $command.Source
-        }
-    }
-
-    throw 'Godot executable not found. Pass -GodotPath or install tools/godot/4.6.2-stable/.'
+    throw 'Pinned Godot 4.6.2-stable executable not found. Install tools/godot/4.6.2-stable/ or pass that exact version with -GodotPath.'
 }
 
 $godot = Resolve-GodotPath -RequestedPath $GodotPath
@@ -58,15 +45,15 @@ if (-not $SkipRepro) {
     }
 }
 
-Write-Host 'Running v0.9.14 B2.8 left-card capture (windowed opengl3)...'
+Write-Host 'Running v0.9.18 B2.12 left-card capture (windowed opengl3)...'
 & $godot --path $projectPath --resolution 1920x1080 --windowed --audio-driver Dummy --rendering-driver opengl3 -s $captureScript
 if ($LASTEXITCODE -ne 0) {
-    throw 'v0.9.14 B2.8 left-card Godot capture failed.'
+    throw 'v0.9.18 B2.12 left-card Godot capture failed.'
 }
 
 $expected = @(
-    '517-world-map-wmw-v0-9-14-left-card-b2-8-godot-single-component.png',
-    '518-world-map-wmw-v0-9-14-left-card-b2-8-godot-single-component-qa.png'
+    '557-world-map-wmw-v0-9-18-left-card-b2-12-godot-single-component.png',
+    '558-world-map-wmw-v0-9-18-left-card-b2-12-godot-single-component-qa.png'
 )
 foreach ($name in $expected) {
     $path = Join-Path $outDir $name
@@ -75,4 +62,4 @@ foreach ($name in $expected) {
     }
 }
 
-Write-Host 'WMW v0.9.14 B2.8 Godot capture passed.'
+Write-Host 'WMW v0.9.18 B2.12 Godot capture passed.'

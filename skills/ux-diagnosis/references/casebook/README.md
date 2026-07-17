@@ -13,3 +13,4 @@
 
 - `2026-06-02-title-screen-homepage.md`：标题页 A/B 首屏、按钮遮挡、背景缩放与遮罩强度。
 - `2026-06-09-global-channel-right-panel.md`：全球频道右侧面板的容器审计、文字金字塔、语义色预算和 CTA 锚定。
+- `2026-07-17-wmw-short-state-oversized-container.md`：短只读状态误用完整大卡、纯装饰收口误读为第二功能面板，以及 compact variant 判定。

@@ -1,4 +1,10 @@
-# 状态：暂停中
+# 状态：组件裁切准入评估中
 
-> 2026-07-08 治理轮补建（A166）。本目录是地区任务台生图线（最后活动 2026-06-15 前后）。相关规格真源在 `docs/plans/region-task-board-assetized-production-spec.md`（v3 系列文档在 `docs/plans/` 根目录）；视觉锁定源与验收要求见采纳记录 A55、A59-A61、A82、A86、A88。
-> 当前项目重心在世界地图 WMW 支线。恢复本线时按资产化 UI 工作流 v2（`docs/onboarding/assetized-ui-production-chain.md`）重新路由当前阶段，并建立 STATUS 状态页。
+> 2026-07-16 已恢复本线。当前不做整屏或批量生图，先冻结全部功能组件的生产路线、alpha / NinePatch / 程序归属与裁切合同。
+
+- 当前状态页：[`STATUS.md`](./STATUS.md)
+- 当前裁切评估：[`2026-07-16-region-task-board-component-cutout-preflight-v2.md`](./2026-07-16-region-task-board-component-cutout-preflight-v2.md)
+- 正式生产规格：[`../region-task-board-assetized-production-spec.md`](../region-task-board-assetized-production-spec.md)
+- 机器合同：[`../../../design/ui-contracts/region-task-board/component_cutout_inventory_v1.json`](../../../design/ui-contracts/region-task-board/component_cutout_inventory_v1.json)
+
+当前 E2 整屏仅为组合气质参考，从 E2 直接裁切正式组件的允许数量为 0。下一步只放行 pin + 短签单点纵向切片。

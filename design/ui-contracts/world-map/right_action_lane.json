@@ -1,18 +1,17 @@
 {
   "schema_version": 1,
-  "contract_version": "0.8.4",
+  "contract_version": "0.8.6",
   "status": "locked_candidate",
   "page": "world_map",
   "class_id": "right_action_lane",
-  "role": "右侧 CTA 行动条（长横条家族，比例目标 5.6-6.2）",
+  "role": "右侧 dossier 底部唯一主 CTA（保留旧 class id，A189 起只允许单实例）",
   "parent_class": "right_dossier_page",
   "reference_resolution": [1280, 720],
   "runtime_resolution": [1920, 1080],
   "export_scale": 2,
   "frozen": {
     "export_size": [284, 50],
-    "positions": [[948, 348], [948, 403], [948, 458]],
-    "lane_gap": 5,
+    "positions": [[950, 474]],
     "hit_rect": [0, 0, 284, 50],
     "slots": {
       "left_icon_zone": [12, 8, 34, 34],
@@ -21,24 +20,36 @@
     }
   },
   "provisional": {
-    "label_plate_note": "CTA 第一行是最紧字段（压力态字号 13）；无字素材中 label_plate 必须保持安静底面，不得让低多边形尖角、折痕、贴纸边、阴影穿过；排版复审可调整字号层级但不得缩小 label_plate。",
-    "font_assumptions": "文字压力测试基于脚本字体渲染；最终 UI 字体确定后若更宽，必须重跑 text_capacity_stress 再进 atlas。"
+    "label_plate_note": "A207：主文案固定为进入地区任务台 / 暂不可进入，不拼地区名，也不绑定天数。整行是唯一跨层主导航；左侧不重复地球图标，右侧只保留进入箭头。label_plate 必须保持安静底面。",
+    "locked_behavior_note": "locked_disabled 去除进入邀请感并禁止点击；warning 是否二次确认属于 runtime provisional，不改变本合同几何。",
+    "font_assumptions": "573-577 使用实际 raster alpha glyph bbox；最终 UI 字体变化后必须用同一 bbox gate 重跑 default / warning / locked_disabled 压力。",
+    "visible_alignment_note": "A196 + A209 + A211：本主 CTA 可见主轮廓保持 284px 并以父页 x=160 共轴；任务摘要 disclosure 只保留同宽 hit_rect，不拥有同宽可见实体。展开抽屉不得移动、覆盖或削弱本按钮。shadow bbox 独立，不得改变本按钮主体边界。",
+    "state_color_note": "A199 + A207：default / hover / pressed 使用橄榄绿实体主 CTA 色族和连续按钮底面，不使用左右圆形托底或中央纸签；locked_disabled 使用低饱和中性灰。warning 锈红不得成为常态 CTA 底色。"
   },
-  "states": ["enter", "info", "warning"],
-  "state_may_change": ["颜色皮肤（绿 / 蓝 / 红）", "left_icon_zone 图案", "right_action_badge 图案"],
-  "state_may_not_change": ["export_size", "行高", "label_plate 尺寸与位置", "right_action_badge 位置", "hit_rect", "lane_gap"],
-  "notes": "位置为参考分辨率下的页面绝对坐标，位于 right_dossier_page 的 action_stack 槽内（父子关系已声明）。warning 行不得为容纳美术而收窄 label_plate；任一状态改变行高即整类判失败。",
+  "states": ["default", "hover", "pressed", "locked_disabled"],
+  "state_may_change": ["颜色皮肤", "left_icon_zone 图案", "right_action_badge 图案", "启用 / 禁用反馈"],
+  "state_may_not_change": ["export_size", "行高", "label_plate 尺寸与位置", "right_action_badge 位置", "hit_rect"],
+  "notes": "A189 起旧 enter / info / warning 三实例结构退役；A196 起与任务情报热区统一为 284px 外部动作栈，A209 / A211 起本 class 成为其中唯一可见实体按钮。本 class id 只保留为 primary_enter_cta 的单实例生产合同。任务摘要使用透明 disclosure；风险与缺口进入只读正文或展开抽屉。",
   "evidence": {
     "reviews": [
       "docs/plans/world-map-benchmark-landing/2026-07-08-world-map-wmw-right-dossier-cta-contract-v0-8-3-review.md",
-      "docs/plans/world-map-benchmark-landing/2026-07-08-world-map-wmw-right-dossier-cta-text-stress-v0-8-4-review.md"
+      "docs/plans/world-map-benchmark-landing/2026-07-08-world-map-wmw-right-dossier-cta-text-stress-v0-8-4-review.md",
+      "docs/plans/world-map-benchmark-landing/2026-07-13-world-map-wmw-right-dossier-a184-capacity-review.md",
+      "docs/plans/world-map-benchmark-landing/2026-07-14-world-map-wmw-right-dossier-clean-sprite-brief-v0-8-6.md",
+      "docs/plans/world-map-benchmark-landing/2026-07-15-world-map-wmw-right-dossier-candidate-a5-merged-summary-review.md"
     ],
     "measurement_manifests": [
-      "docs/screenshots/2026-06-24-world-map-benchmark-landing/363-world-map-wmw-v0-8-3-right-dossier-cta-manifest.json"
+      "docs/screenshots/2026-06-24-world-map-benchmark-landing/363-world-map-wmw-v0-8-3-right-dossier-cta-manifest.json",
+      "docs/screenshots/2026-06-24-world-map-benchmark-landing/570-world-map-wmw-v0-8-5-right-dossier-b-raster-bbox-manifest.json",
+      "docs/screenshots/2026-06-24-world-map-benchmark-landing/577-world-map-wmw-v0-8-6-right-dossier-alignment-manifest.json",
+      "docs/screenshots/2026-06-24-world-map-benchmark-landing/628-world-map-wmw-v0-9-5-right-dossier-candidate-a5-manifest.json"
     ],
     "scripts": [
       "scripts/ui-contracts/wmw/wmw_v083_right_dossier_cta_contract.py",
-      "scripts/ui-contracts/wmw/wmw_v084_right_dossier_text_stress.py"
+      "scripts/ui-contracts/wmw/wmw_v084_right_dossier_text_stress.py",
+      "scripts/ui-contracts/wmw/wmw_v085_right_dossier_b_contract.py",
+      "scripts/ui-contracts/wmw/wmw_v086_right_dossier_alignment.py",
+      "scripts/ui-contracts/wmw/wmw_v095_right_dossier_candidate_a5_pipeline.py"
     ]
   }
 }

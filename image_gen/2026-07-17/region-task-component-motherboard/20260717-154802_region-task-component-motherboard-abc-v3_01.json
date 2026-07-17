@@ -1,0 +1,51 @@
+{
+  "original_user_request": "继续（承接上一轮：先做 A/B/C 同语法组件形态与材质母版，不直接重生正式 pin/label，不推进事件卡）",
+  "normalized_asset_type": "ui-screen / game UI component morphology and material motherboard",
+  "background_mode": "opaque",
+  "chosen_model": "built-in imagegen",
+  "model_selection_reason": "母版是非透明的桌面 16:9 UI 视觉比较板，按项目 openrouter-image-gen 路由规则使用内置 imagegen。",
+  "requested_size": "desktop 16:9 landscape",
+  "normalized_size": "由内置 imagegen 决定；构图按 16:9 横向母版执行",
+  "count": 1,
+  "execution_mode": "built-in-imagegen-opaque",
+  "routing_reason": "不要求透明生产切图，本轮只生成不透明的组件选型母版。",
+  "final_prompt": "以 v2 母版为编辑目标，保留左侧侧脊型、中部错层型、右侧切角楔面型和底部深/彩/浅 3x3 缩略矩阵；只做一轮共享修正：将报告、连续链、隐藏线索、临时紧急四类自定义 pictogram 真正装入 pin；删除越界长状态条，改为不突破既有边界的角签/侧脊；将独立闭合虚线环改为纸背板或不闭合印刷弧；降低压纹、等距双框和厚阴影；保持 C 的切角身份、B 的安静内容面与 A 的单侧结构色；禁止文字、Unicode、第四方向、事件卡、dossier、旧档案、半调、像素、厚纸板、浮雕、玻璃、塑料、重阴影与密集三角。",
+  "negative_constraints": [
+    "no readable text, letters, numbers or Unicode",
+    "no fourth visual direction",
+    "no event card, dossier or full game screen",
+    "no generic cream pill, SaaS control or RPG nameplate",
+    "no perfect circle, perfect concentric ring or floating status bar",
+    "no equal double-line border, heavy texture or thick soft shadow",
+    "no vintage dossier, yellowed paper, stains or old newspaper",
+    "no halftone, pixel art, dense triangulation, micro-lines or photographic grain"
+  ],
+  "reference_images": [
+    {
+      "path": "D:/angos/image_gen/2026-07-17/region-task-component-motherboard/20260717-154005_region-task-component-motherboard-abc-v2_01.png",
+      "role": "edit target; preserve layout, three variants and 3x3 background matrix"
+    },
+    {
+      "path": "D:/angos/design/art-direction/references/clean-lowpoly-weekly-branch/benchmark-board-01.png",
+      "role": "primary modern clean-lowpoly weekly style anchor"
+    },
+    {
+      "path": "D:/angos/design/art-direction/references/clean-lowpoly-weekly-branch/benchmark-board-02.png",
+      "role": "primary palette, material and shape-economy anchor"
+    },
+    {
+      "path": "D:/angos/image_gen/2026-07-16/20260716_region-task-color-mood-E2-local-calibration-v1.png",
+      "role": "regional-task palette and game-use context"
+    }
+  ],
+  "built_in_source_image": "C:/Users/gzfangyue/.codex/generated_images/019f6ed6-aac8-77f1-b9f3-6a1743a34e46/exec-633909ce-cf97-41ae-a87f-a69717ef3882.png",
+  "output_paths": [
+    "D:/angos/image_gen/2026-07-17/region-task-component-motherboard/20260717-154802_region-task-component-motherboard-abc-v3_01.png"
+  ],
+  "warnings_assumptions_fallbacks": [
+    "当前仅为用户选型母版，不是透明生产切图、runtime atlas 或 Godot production candidate。",
+    "用户尚未选择 A/B/C；生成后 UI/UX 实证倾向右侧 C，并建议吸收 B 的安静内容面与 A 的单侧纸脊。",
+    "选中反馈仍需在正式生产前单独证明其确实附着于 pin，而不是落在 cluster/独立 seal 周围。",
+    "rt_event_card_mother 继续冻结。"
+  ]
+}

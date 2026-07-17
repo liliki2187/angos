@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "candidate": "right_dossier_candidate_a5_1_v0.9.6",
+  "provenance": "production_runtime_export",
+  "generated_from_production_data": true,
+  "source_files": [
+    "gd_project/scenes/gameplay/weekly_run/content/WeeklyRunContent.gd",
+    "gd_project/scenes/gameplay/weekly_run/systems/WeeklyRunSystems.gd",
+    "gd_project/scenes/gameplay/weekly_run/state/WeeklyRunState.gd"
+  ],
+  "region_id": "us",
+  "region_title": "北美禁区带",
+  "region_unlocked": true,
+  "remaining_days": 7,
+  "counts": {
+    "visible": 4,
+    "deadline": 1,
+    "chain": 1,
+    "clue": 2
+  },
+  "status_primary": "红线升温",
+  "status_display_text": "红线升温",
+  "region_body_text": "都市传说与军事封锁交叠。\n本周剩余 7 天，红线稿应优先处理。",
+  "mission_intel_title": "任务情报",
+  "mission_intel_facts": "限时 1 · 线索 2 · 深链 1",
+  "mission_preview": [
+    {
+      "id": "n51",
+      "name": "51 区外围公路",
+      "kind": "permanent",
+      "kind_label": "线索",
+      "days": 2
+    },
+    {
+      "id": "skin",
+      "name": "罗斯威尔档案残页",
+      "kind": "permanent",
+      "kind_label": "线索",
+      "days": 1
+    },
+    {
+      "id": "temp_ufo",
+      "name": "突发：雷达异常光点",
+      "kind": "temp",
+      "kind_label": "限时",
+      "days": 2
+    }
+  ],
+  "mission_preview_total": 4,
+  "mission_preview_limit": 2,
+  "mission_preview_display": {
+    "row_1_name": "51 区外围公路",
+    "row_1_meta": "线索 · 耗时2天",
+    "row_2_name": "罗斯威尔档案残页",
+    "row_2_meta": "线索 · 耗时1天",
+    "count": "已显示 2 / 共 4 条"
+  },
+  "primary_enter_label": "进入地区任务台"
+}

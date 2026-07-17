@@ -1,0 +1,112 @@
+{
+  "artifact_type": "formal_ui_structure_wireframe_v3",
+  "canvas": [1920, 1080],
+  "screenshots": {
+    "targeting": "01-targeting-replace-preview.png",
+    "recalculating": "02-recalculating-after-replace.png"
+  },
+  "geometry": {
+    "top_strip": [80, 24, 1760, 52],
+    "columns": {
+      "candidate_pool": [80, 96, 320, 920],
+      "layout": [420, 96, 1040, 920],
+      "signoff": [1480, 96, 360, 920]
+    },
+    "pages": [
+      [435, 185, 490, 800],
+      [955, 185, 490, 800]
+    ],
+    "candidate_cards": {
+      "size": [288, 92],
+      "step_y": 100,
+      "count_in_default_state": 8,
+      "eighth_card_bottom": 969,
+      "viewport_bottom": 997,
+      "bottom_breathing_room": 28
+    },
+    "signoff": {
+      "evidence_viewport": [1497, 177, 328, 624],
+      "fixed_blocker": [1497, 817, 328, 88],
+      "primary_cta": [1497, 921, 328, 72]
+    }
+  },
+  "state_audit": {
+    "targeting": {
+      "candidate_count": 8,
+      "selected_count": 1,
+      "legal_target_count": 6,
+      "hover_target_count": 1,
+      "replace_button_count": 1,
+      "primary_cta_count": 1,
+      "primary_cta_disabled": true
+    },
+    "recalculating": {
+      "selected_count": 0,
+      "legal_target_count": 0,
+      "hover_target_count": 0,
+      "replace_button_count": 0,
+      "signoff_state": "正在重算",
+      "old_result_marked_invalid": true,
+      "primary_cta_disabled": true
+    },
+    "candidate_capacity_12": {
+      "candidate_count": 12,
+      "viewport_height": 820,
+      "scroll_height": 1220,
+      "scrollable": true,
+      "observed_scroll_top": 400
+    },
+    "confirmation": {
+      "page_count": 2,
+      "center_frozen": true,
+      "selected_count": 0,
+      "legal_target_count": 0,
+      "replace_button_count": 0,
+      "primary_cta_label": "确认送印",
+      "return_edit_visible": true
+    }
+  },
+  "contract_proposals": {
+    "candidate_card": {
+      "from": "v1.2.0",
+      "to": "v1.3.0",
+      "changes": [
+        "增加第7/8张屏幕位置",
+        "卡间距调整为8px",
+        "增加10/12篇真实滚动合同"
+      ],
+      "unchanged": [
+        "288x92卡片尺寸",
+        "命中区",
+        "选中不放大不重排"
+      ]
+    },
+    "signoff_panel": {
+      "from": "v1.1.0",
+      "to": "v1.2.0",
+      "changes": [
+        "连续签批证据链滚动区",
+        "固定硬性阻断区",
+        "固定唯一CTA",
+        "targeting/recalculating/confirmation状态"
+      ]
+    }
+  },
+  "checks": {
+    "screenshots_are_1920x1080": true,
+    "eight_candidates_fully_visible": true,
+    "twelve_candidates_scroll": true,
+    "two_490x800_pages_remain_visible": true,
+    "targeting_and_recalculating_are_not_mixed": true,
+    "replace_button_obeys_0_1_0": true,
+    "hard_blocker_and_primary_cta_are_fixed": true,
+    "confirmation_does_not_hide_pages": true,
+    "browser_console_has_no_errors_or_warnings": true,
+    "passed": true
+  },
+  "limits": [
+    "本产物只证明结构、容量和状态合同",
+    "不证明最终美术包装、资产安全区或Godot运行时已经完成",
+    "合同升版仍需用户确认后再修改生产真源"
+  ]
+}

@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920, initial-scale=1" />
+  <title>WMW 世界地图 · 1920×1080 黑白功能结构稿 v1</title>
+  <style>
+    :root {
+      --bg: #f4f4f0;
+      --paper: #ffffff;
+      --soft: #e4e4df;
+      --mid: #777772;
+      --ink: #111111;
+      --gap: #bdbdb7;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 1920px;
+      height: 1080px;
+      margin: 0;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif;
+    }
+
+    #wireframe {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(0,0,0,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,.025) 1px, transparent 1px),
+        var(--bg);
+      background-size: 24px 24px;
+    }
+
+    .column-outline {
+      position: absolute;
+      border: 1px dashed var(--gap);
+      pointer-events: none;
+    }
+
+    .left-column { left: 36px; top: 24px; width: 342px; height: 1032px; }
+    .center-column { left: 402px; top: 24px; width: 972px; height: 1032px; }
+    .right-column { left: 1398px; top: 24px; width: 480px; height: 1032px; }
+
+    .artifact-label {
+      position: absolute;
+      left: 36px;
+      top: 4px;
+      z-index: 100;
+      color: var(--mid);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: .11em;
+    }
+
+    .region-card {
+      position: absolute;
+      width: 306px;
+      height: 240px;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+    }
+
+    .region-card.selected { border-width: 4px; }
+    .region-card.locked { color: #555550; background: #ecece8; }
+    #card-us { left: 66px; top: 36px; }
+    #card-east { left: 66px; top: 294px; }
+    #card-pacific { left: 66px; top: 552px; }
+
+    .photo-slot {
+      position: absolute;
+      left: 32px;
+      top: 36px;
+      width: 261px;
+      height: 96px;
+      border: 1.5px solid var(--ink);
+      background:
+        linear-gradient(135deg, transparent 0 34%, rgba(0,0,0,.08) 34% 52%, transparent 52%),
+        linear-gradient(30deg, rgba(0,0,0,.08) 0 30%, transparent 30%),
+        var(--soft);
+      display: grid;
+      place-items: center;
+      color: var(--mid);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .title-plate {
+      position: absolute;
+      left: 33px;
+      top: 156px;
+      width: 171px;
+      height: 48px;
+      border: 1.5px solid var(--ink);
+      display: grid;
+      place-items: center;
+      background: var(--paper);
+      font-size: 18px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .state-badge {
+      position: absolute;
+      left: 216px;
+      top: 152px;
+      width: 66px;
+      height: 66px;
+      border: 2px solid var(--ink);
+      clip-path: polygon(28% 0, 72% 0, 100% 28%, 100% 72%, 72% 100%, 28% 100%, 0 72%, 0 28%);
+      display: grid;
+      place-items: center;
+      background: var(--paper);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .globe-slot {
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      width: 48px;
+      height: 48px;
+      border: 1.5px solid var(--ink);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+    }
+
+    .time-gate {
+      position: absolute;
+      left: 36px;
+      top: 810px;
+      width: 342px;
+      height: 246px;
+      border: 2px solid var(--ink);
+      background: #dadad5;
+    }
+
+    .time-summary {
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      width: 310px;
+      height: 48px;
+      border-bottom: 1.5px solid var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .time-action {
+      position: absolute;
+      left: 12px;
+      top: 74px;
+      width: 318px;
+      height: 100px;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+      display: grid;
+      grid-template-columns: 82px 1fr;
+    }
+
+    .calendar-face {
+      border-right: 2px solid var(--ink);
+      display: grid;
+      place-items: center;
+      align-content: center;
+      background: var(--soft);
+    }
+
+    .calendar-face b { font-size: 32px; line-height: 1; }
+    .calendar-face small { margin-top: 8px; color: var(--mid); font-size: 11px; font-weight: 900; letter-spacing: .12em; }
+    .time-action-copy { display: grid; place-items: center; align-content: center; }
+    .time-action-copy strong { font-size: 23px; line-height: 1.1; }
+    .time-action-copy span { margin-top: 9px; color: var(--mid); font-size: 13px; font-weight: 700; }
+
+    .consequence {
+      position: absolute;
+      left: 16px;
+      top: 186px;
+      width: 310px;
+      height: 44px;
+      border-top: 1px solid var(--ink);
+      display: grid;
+      align-content: center;
+      padding: 0 10px;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .masthead {
+      position: absolute;
+      left: 426px;
+      top: 36px;
+      width: 480px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: .035em;
+    }
+
+    .issue-meta {
+      position: absolute;
+      left: 1040px;
+      top: 39px;
+      width: 310px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      color: var(--mid);
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+
+    .map-stage {
+      position: absolute;
+      left: 426px;
+      top: 96px;
+      width: 924px;
+      height: 696px;
+      overflow: hidden;
+      border: 2px solid var(--ink);
+      background: #ededE9;
+    }
+
+    .map-stage::before {
+      content: "世界地图主舞台 · 地区选择";
+      position: absolute;
+      left: 18px;
+      top: 14px;
+      z-index: 5;
+      padding: 6px 10px;
+      border: 1px solid var(--ink);
+      background: rgba(255,255,255,.9);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .map-stage svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .continent { fill: #d3d3ce; stroke: var(--ink); stroke-width: 2.2; }
+    .route { fill: none; stroke: var(--mid); stroke-width: 2; stroke-dasharray: 10 9; }
+    .pin { fill: var(--paper); stroke: var(--ink); stroke-width: 3; }
+    .pin.selected { fill: var(--ink); }
+    .pin-label { font-size: 18px; font-weight: 900; fill: var(--ink); paint-order: stroke; stroke: #ededE9; stroke-width: 6; stroke-linejoin: round; }
+
+    .receipt {
+      position: absolute;
+      top: 837px;
+      width: 369px;
+      height: 207px;
+      border: 1.5px solid var(--ink);
+      background: var(--paper);
+    }
+    #receipt-redline { left: 432px; }
+    #receipt-chain { left: 836px; }
+
+    .receipt-icon {
+      position: absolute;
+      left: 36px;
+      top: 42px;
+      width: 78px;
+      height: 78px;
+      border: 1.5px solid var(--ink);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 26px;
+      font-weight: 900;
+      background: var(--soft);
+    }
+
+    .receipt-title {
+      position: absolute;
+      left: 138px;
+      top: 35px;
+      width: 180px;
+      height: 42px;
+      border-bottom: 1px solid var(--ink);
+      display: flex;
+      align-items: center;
+      font-size: 19px;
+      font-weight: 900;
+    }
+
+    .receipt-value {
+      position: absolute;
+      left: 138px;
+      top: 86px;
+      width: 192px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .meter {
+      position: absolute;
+      left: 42px;
+      top: 152px;
+      width: 249px;
+      height: 36px;
+      border: 1px solid var(--ink);
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+      padding: 4px;
+    }
+    .meter i { display: block; background: #ccccC7; }
+    .meter i.on { background: #666662; }
+
+    .receipt-notch {
+      position: absolute;
+      right: 12px;
+      top: 30px;
+      width: 21px;
+      height: 144px;
+      border-left: 1px dashed var(--mid);
+      background: repeating-linear-gradient(0deg, transparent 0 10px, #ddddD8 10px 15px);
+    }
+
+    .center-negative-space {
+      position: absolute;
+      left: 1205px;
+      top: 837px;
+      width: 169px;
+      height: 207px;
+      border: 1px dashed var(--gap);
+      display: grid;
+      place-items: center;
+      color: #989892;
+      font-size: 13px;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .right-carrier {
+      position: absolute;
+      left: 1398px;
+      top: 24px;
+      width: 480px;
+      height: 1032px;
+      border: 1px solid var(--ink);
+      background: #d1d1cc;
+    }
+
+    .rear-page {
+      position: absolute;
+      left: 10px;
+      top: 801px;
+      width: 460px;
+      height: 75px;
+      border: 1px solid var(--mid);
+      background: #e7e7e3;
+    }
+
+    .folder-face {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 480px;
+      height: 156px;
+      border-top: 2px solid var(--ink);
+      background: #bcbcb6;
+    }
+
+    .folder-face::before {
+      content: "NO TEXT / NO HIT";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      color: #7d7d78;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .08em;
+    }
+
+    .dossier {
+      position: absolute;
+      left: 1398px;
+      top: 45px;
+      width: 480px;
+      height: 780px;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+    }
+
+    .dossier .header-icon {
+      position: absolute;
+      left: 36px;
+      top: 57px;
+      width: 54px;
+      height: 54px;
+      border: 1.5px solid var(--ink);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+    }
+
+    .dossier .region-title {
+      position: absolute;
+      left: 123px;
+      top: 63px;
+      width: 240px;
+      height: 51px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 27px;
+      font-weight: 900;
+    }
+
+    .status-stamp {
+      position: absolute;
+      left: 369px;
+      top: 51px;
+      width: 87px;
+      height: 87px;
+      border: 2px solid var(--ink);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 17px;
+      font-weight: 900;
+      line-height: 1.2;
+      background: var(--soft);
+    }
+
+    .dossier-photo {
+      position: absolute;
+      left: 33px;
+      top: 147px;
+      width: 414px;
+      height: 264px;
+      border: 1.5px solid var(--ink);
+      background:
+        linear-gradient(135deg, transparent 0 35%, rgba(0,0,0,.09) 35% 55%, transparent 55%),
+        linear-gradient(30deg, rgba(0,0,0,.08) 0 28%, transparent 28%),
+        var(--soft);
+      display: grid;
+      place-items: center;
+      color: var(--mid);
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .region-body {
+      position: absolute;
+      left: 33px;
+      top: 432px;
+      width: 414px;
+      height: 135px;
+      border-left: 4px solid var(--ink);
+      padding: 14px 18px;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.75;
+    }
+
+    .mission-disclosure {
+      position: absolute;
+      left: 27px;
+      top: 585px;
+      width: 426px;
+      height: 66px;
+      border-bottom: 1.5px solid var(--ink);
+      display: grid;
+      grid-template-columns: 118px 1fr 34px;
+      align-items: center;
+      padding: 0 12px;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .mission-disclosure strong { font-size: 17px; }
+    .mission-disclosure b { justify-self: end; font-size: 22px; }
+
+    .primary-cta {
+      position: absolute;
+      left: 27px;
+      top: 666px;
+      width: 426px;
+      height: 75px;
+      border: 3px solid var(--ink);
+      background: var(--ink);
+      color: var(--paper);
+      display: grid;
+      place-items: center;
+      font-size: 23px;
+      font-weight: 900;
+      letter-spacing: .06em;
+    }
+
+    .dimension {
+      position: absolute;
+      z-index: 110;
+      padding: 3px 7px;
+      border: 1px solid var(--gap);
+      background: rgba(244,244,240,.94);
+      color: var(--mid);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+    .dim-left { left: 38px; top: 1060px; }
+    .dim-center { left: 404px; top: 1060px; }
+    .dim-right { left: 1400px; top: 1060px; }
+  </style>
+</head>
+<body>
+  <main id="wireframe" data-artifact-type="structure_wireframe" data-resolution="1920x1080">
+    <div class="artifact-label">LOW-FIDELITY · FUNCTION / POSITION / SIZE ONLY · NOT ART</div>
+    <div class="column-outline left-column"></div>
+    <div class="column-outline center-column"></div>
+    <div class="column-outline right-column"></div>
+
+    <section class="region-card selected" id="card-us" data-role="region-card" data-state="selected">
+      <div class="globe-slot">◎</div>
+      <div class="photo-slot">地区照片</div>
+      <div class="title-plate">北美禁区带</div>
+      <div class="state-badge">选中</div>
+    </section>
+
+    <section class="region-card" id="card-east" data-role="region-card" data-state="available">
+      <div class="globe-slot">◎</div>
+      <div class="photo-slot">地区照片</div>
+      <div class="title-plate">东亚神秘地带</div>
+      <div class="state-badge">可用</div>
+    </section>
+
+    <section class="region-card locked" id="card-pacific" data-role="region-card" data-state="locked">
+      <div class="globe-slot">◎</div>
+      <div class="photo-slot">地区照片</div>
+      <div class="title-plate">太平洋失航带</div>
+      <div class="state-badge">锁定</div>
+    </section>
+
+    <section class="time-gate" data-role="global-time-gate" data-state="default">
+      <div class="time-summary"><span>当前第 1 天</span><span>剩余 7 天</span></div>
+      <div class="time-action" data-role="advance-day">
+        <div class="calendar-face"><b>01</b><small>DAY</small></div>
+        <div class="time-action-copy"><strong>推进到下一天</strong><span>首次点击进入确认态</span></div>
+      </div>
+      <div class="consequence">推进后：剩余 6 天 · 红线截止同步推进 · 到期任务 0</div>
+    </section>
+
+    <header class="masthead">WORLD MYSTERIES WEEKLY</header>
+    <div class="issue-meta">ISSUE 001 / WEEK 01</div>
+
+    <section class="map-stage" data-role="world-map-stage">
+      <svg viewBox="0 0 924 696" aria-hidden="true">
+        <path class="continent" d="M82 176 L150 98 L245 88 L323 136 L355 205 L313 258 L252 282 L211 352 L158 322 L137 257 L93 230 Z" />
+        <path class="continent" d="M228 330 L293 321 L326 374 L302 450 L278 541 L235 601 L204 530 L210 446 L187 380 Z" />
+        <path class="continent" d="M405 176 L461 116 L569 106 L646 131 L733 118 L820 151 L849 206 L804 249 L713 252 L647 286 L573 259 L493 271 L439 236 Z" />
+        <path class="continent" d="M503 274 L586 273 L622 335 L600 418 L553 512 L500 479 L476 390 L449 329 Z" />
+        <path class="continent" d="M733 468 L799 453 L856 493 L838 546 L777 560 L721 526 Z" />
+        <path class="route" d="M195 217 C 355 118, 610 152, 744 224" />
+        <path class="route" d="M195 217 C 395 310, 566 430, 782 500" />
+        <path class="route" d="M744 224 C 785 322, 810 411, 782 500" />
+        <circle class="pin selected" cx="195" cy="217" r="14" />
+        <circle class="pin" cx="744" cy="224" r="12" />
+        <circle class="pin" cx="782" cy="500" r="12" />
+        <text class="pin-label" x="220" y="224">北美禁区带</text>
+        <text class="pin-label" x="586" y="220">东亚神秘地带</text>
+        <text class="pin-label" x="606" y="512">太平洋失航带</text>
+      </svg>
+    </section>
+
+    <section class="receipt" id="receipt-redline" data-role="world-receipt" data-state="readonly">
+      <div class="receipt-icon">!</div>
+      <div class="receipt-title">红线预警</div>
+      <div class="receipt-value">红线稿剩 7 天</div>
+      <div class="meter"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="receipt-notch"></div>
+    </section>
+
+    <section class="receipt" id="receipt-chain" data-role="world-receipt" data-state="readonly">
+      <div class="receipt-icon">◎</div>
+      <div class="receipt-title">深链动向</div>
+      <div class="receipt-value">青线将推进缺口</div>
+      <div class="meter"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="receipt-notch"></div>
+    </section>
+
+    <div class="center-negative-space">有意负空间<br />NO THIRD RECEIPT</div>
+
+    <div class="right-carrier" data-role="dossier-carrier" aria-hidden="true">
+      <div class="rear-page"></div>
+      <div class="folder-face"></div>
+    </div>
+
+    <aside class="dossier" data-role="a51-dossier" data-state="collapsed">
+      <div class="header-icon">◎</div>
+      <div class="region-title">北美禁区带</div>
+      <div class="status-stamp">红线<br />升温</div>
+      <div class="dossier-photo">69:44 地区照片</div>
+      <div class="region-body">都市传说与军事封锁交叠。<br />红线稿需在 7 天内处理。</div>
+      <div class="mission-disclosure"><strong>任务情报</strong><span>限时 1 · 线索 2 · 深链 1</span><b>＋</b></div>
+      <div class="primary-cta" data-role="enter-region">进入地区任务台</div>
+    </aside>
+
+    <div class="dimension dim-left">LEFT 342 × 1032</div>
+    <div class="dimension dim-center">CENTER 972 × 1032 · MAP 924 × 696 · RECEIPTS 369 × 207</div>
+    <div class="dimension dim-right">RIGHT 480 × 1032 · A5.1 480 × 780</div>
+  </main>
+</body>
+</html>

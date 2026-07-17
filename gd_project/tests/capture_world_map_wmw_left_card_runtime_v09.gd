@@ -1,12 +1,12 @@
 extends SceneTree
 
 const OUT_DIR := "res://../docs/screenshots/2026-06-24-world-map-benchmark-landing"
-const ATLAS_PATH := "res://Assets/ui/angus_packaging/world_map/wmw_v09_left_card_slice/left_region_card_b28_state_badge_globe_fix_atlas_2x.png"
+const ATLAS_PATH := "res://Assets/ui/angus_packaging/world_map/wmw_v09_left_card_slice/left_region_card_b212_meta_retired_atlas_2x.png"
 const ICON_PATHS := [
-	"res://Assets/ui/angus_packaging/world_map/wmw_v09_left_card_slice/ingredients/left_region_card_b28_runtime_icon_selected.png",
-	"res://Assets/ui/angus_packaging/world_map/wmw_v09_left_card_slice/ingredients/left_region_card_b28_runtime_icon_available.png",
-	"res://Assets/ui/angus_packaging/world_map/wmw_v09_left_card_slice/ingredients/left_region_card_b28_runtime_icon_warning.png",
-	"res://Assets/ui/angus_packaging/world_map/wmw_v09_left_card_slice/ingredients/left_region_card_b28_runtime_icon_locked.png",
+	"res://Assets/ui/angus_packaging/world_map/wmw_v09_left_card_slice/ingredients/left_region_card_b210_runtime_icon_selected.png",
+	"res://Assets/ui/angus_packaging/world_map/wmw_v09_left_card_slice/ingredients/left_region_card_b210_runtime_icon_available.png",
+	"res://Assets/ui/angus_packaging/world_map/wmw_v09_left_card_slice/ingredients/left_region_card_b210_runtime_icon_warning.png",
+	"res://Assets/ui/angus_packaging/world_map/wmw_v09_left_card_slice/ingredients/left_region_card_b210_runtime_icon_locked.png",
 ]
 
 const RUNTIME_SIZE := Vector2i(1920, 1080)
@@ -20,19 +20,16 @@ const POSITIONS := [
 	Vector2(44.0, 540.0) * DISPLAY_SCALE,
 ]
 const LABEL_PLATE := Rect2(Vector2(22.0, 104.0) * DISPLAY_SCALE, Vector2(114.0, 32.0) * DISPLAY_SCALE)
-const META_LINE := Rect2(Vector2(22.0, 138.0) * DISPLAY_SCALE, Vector2(96.0, 10.0) * DISPLAY_SCALE)
 const PHOTO_SLOT := Rect2(Vector2(21.0, 24.0) * DISPLAY_SCALE, Vector2(174.0, 64.0) * DISPLAY_SCALE)
 const ACTION_BADGE := Rect2(Vector2(144.0, 101.0) * DISPLAY_SCALE, Vector2(44.0, 44.0) * DISPLAY_SCALE)
 const LABEL_TITLE_FONT_SIZE := 25
 const LABEL_TITLE_COLOR := Color("#121612")
-const META_STATUS_FONT_SIZE := 14
-const META_STATUS_COLOR := Color("#421c14")
 
 const COPY := [
-	{"title": "北美禁区带", "meta": "红线升温  推荐2"},
-	{"title": "欧洲灰域", "meta": "可派遣  线报2"},
-	{"title": "非洲禁区带", "meta": "异常升温  高危"},
-	{"title": "南美禁区带", "meta": "锁定  需3线报"},
+	{"title": "北美禁区带"},
+	{"title": "欧洲灰域"},
+	{"title": "非洲禁区带"},
+	{"title": "南美禁区带"},
 ]
 
 var _viewport: SubViewport
@@ -60,10 +57,10 @@ func _run() -> void:
 		_icon_textures.append(ImageTexture.create_from_image(icon_image))
 
 	var ok := true
-	ok = await _capture(false, "517-world-map-wmw-v0-9-14-left-card-b2-8-godot-single-component.png") and ok
-	ok = await _capture(true, "518-world-map-wmw-v0-9-14-left-card-b2-8-godot-single-component-qa.png") and ok
+	ok = await _capture(false, "557-world-map-wmw-v0-9-18-left-card-b2-12-godot-single-component.png") and ok
+	ok = await _capture(true, "558-world-map-wmw-v0-9-18-left-card-b2-12-godot-single-component-qa.png") and ok
 	if not ok:
-		push_error("Godot v0.9.14 B2.8 left-card capture failed to save one or more screenshots.")
+		push_error("Godot v0.9.18 B2.12 left-card capture failed to save one or more screenshots.")
 		quit(1)
 		return
 	print("capture_world_map_wmw_left_card_runtime_v09.gd OK")
@@ -152,7 +149,7 @@ func _build_scene() -> void:
 		_add_card(i, POSITIONS[i])
 
 	var note := Label.new()
-	note.text = "Godot v0.9.14 B2.8 left_region_card state badge + clean globe/photo"
+	note.text = "Godot v0.9.18 B2.12 left_region_card retired meta carrier"
 	note.position = Vector2(450, 34)
 	note.size = Vector2(1100, 40)
 	note.add_theme_font_size_override("font_size", 28)
@@ -160,7 +157,7 @@ func _build_scene() -> void:
 	_root_control.add_child(note)
 
 	var sub := Label.new()
-	sub.text = "Badge position follows the accepted benchmark rhythm; clean globe/photo ingredients and complete state icon are separate layers."
+	sub.text = "The card keeps the photo, region title and state badge; risk and dispatch details move to the right dossier."
 	sub.position = Vector2(450, 76)
 	sub.size = Vector2(1200, 42)
 	sub.add_theme_font_size_override("font_size", 18)
@@ -186,14 +183,6 @@ func _add_card(index: int, pos: Vector2) -> void:
 	title.add_theme_color_override("font_color", LABEL_TITLE_COLOR)
 	_root_control.add_child(title)
 
-	var meta := Label.new()
-	meta.text = COPY[index]["meta"]
-	meta.position = pos + META_LINE.position + Vector2(5, -2)
-	meta.size = META_LINE.size
-	meta.add_theme_font_size_override("font_size", META_STATUS_FONT_SIZE)
-	meta.add_theme_color_override("font_color", META_STATUS_COLOR)
-	_root_control.add_child(meta)
-
 	_add_runtime_icon(index, pos)
 
 
@@ -202,7 +191,6 @@ func _add_qa_overlays() -> void:
 		_add_rect(pos, CARD_SIZE, Color("#65ff8a"), "export")
 		_add_rect(pos + PHOTO_SLOT.position, PHOTO_SLOT.size, Color("#58e9ff"), "photo")
 		_add_rect(pos + LABEL_PLATE.position, LABEL_PLATE.size, Color("#ffe55d"), "label")
-		_add_rect(pos + META_LINE.position, META_LINE.size, Color("#ff9f52"), "meta")
 		_add_rect(pos + ACTION_BADGE.position, ACTION_BADGE.size, Color("#ff6969"), "action")
 
 func _add_runtime_icon(index: int, pos: Vector2) -> void:

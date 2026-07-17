@@ -1,0 +1,1524 @@
+{
+  "schema_version": 1,
+  "artifact_type": "vertical_slice_proof / left_region_card / four-state evidence / not frozen production resource",
+  "asset_id": "world_map_wmw_left_region_card_b2_9_no_inpaint_badge",
+  "version": "v0.9.15",
+  "round": "B2.9",
+  "date": "2026-07-10",
+  "status": "b2_9_evidence_ready_pending_user_visual_review",
+  "contract": "D:\\angos\\design\\ui-contracts\\world-map\\left_region_card.json",
+  "contract_version": "0.8.3",
+  "contract_change": {
+    "this_round": "none",
+    "inherited_authorized_revision": "A174 action_badge [144,101,44,44]",
+    "all_frozen_fields_changed_this_round": false
+  },
+  "state_badge_semantics": {
+    "role": "region state indicator, not an independent button",
+    "hit_target": "full left_region_card hit_rect",
+    "selected": "current region shown in right dossier",
+    "available": "selectable candidate",
+    "warning": "selectable with risk",
+    "locked": "not enterable; may expose lock reason",
+    "enter_action_owner": "right dossier primary CTA"
+  },
+  "pipeline": "396 clean photo -> hollow shell retaining approved candidate-B badge exterior -> pure geometric inner-opening replacement -> selected glow -> independent globe linework -> runtime text + complete padded state glyph",
+  "inputs": {
+    "candidate_b_shell_and_glyph_source": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\left_region_card_candidate_b_atlas_2x.png",
+    "clean_regional_photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+    "failed_flattened_photo_source_retired": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\428-world-map-wmw-v0-9-5-left-card-candidate-b1-3-atlas-2x.png",
+    "failed_b2_8_manifest": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\516-world-map-wmw-v0-9-14-left-card-b2-8-manifest.json"
+  },
+  "outputs": {
+    "style_position_compare": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\519-world-map-wmw-v0-9-15-left-card-b2-9-no-inpaint-compare.png",
+    "clean_ingredients_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\520-world-map-wmw-v0-9-15-left-card-b2-9-ingredients-qa.png",
+    "atlas_2x": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\521-world-map-wmw-v0-9-15-left-card-b2-9-atlas-2x.png",
+    "geometry_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\522-world-map-wmw-v0-9-15-left-card-b2-9-geometry-qa.png",
+    "runtime_fill": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\523-world-map-wmw-v0-9-15-left-card-b2-9-runtime-fill.png",
+    "runtime_fill_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\524-world-map-wmw-v0-9-15-left-card-b2-9-runtime-fill-qa.png",
+    "visual_16point_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\525-world-map-wmw-v0-9-15-left-card-b2-9-16point-visual-qa.png",
+    "manifest": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\526-world-map-wmw-v0-9-15-left-card-b2-9-manifest.json",
+    "godot": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\527-world-map-wmw-v0-9-15-left-card-b2-9-godot-single-component.png",
+    "godot_qa": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\528-world-map-wmw-v0-9-15-left-card-b2-9-godot-single-component-qa.png",
+    "godot_atlas": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\left_region_card_b29_no_inpaint_badge_atlas_2x.png",
+    "runtime_icons": {
+      "selected": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b29_runtime_icon_selected.png",
+      "available": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b29_runtime_icon_available.png",
+      "warning": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b29_runtime_icon_warning.png",
+      "locked": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b29_runtime_icon_locked.png"
+    },
+    "clean_photos": {
+      "selected": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b29_clean_photo_selected.png",
+      "available": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b29_clean_photo_available.png",
+      "warning": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b29_clean_photo_warning.png",
+      "locked": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b29_clean_photo_locked.png"
+    },
+    "globe_linework": "D:\\angos\\gd_project\\Assets\\ui\\angus_packaging\\world_map\\wmw_v09_left_card_slice\\ingredients\\left_region_card_b29_globe_linework.png"
+  },
+  "per_state": [
+    {
+      "state": "selected",
+      "master_window_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "action_badge_2x": [
+        288,
+        202,
+        376,
+        290
+      ],
+      "state_badge_center_2x": [
+        332.0,
+        246.0
+      ],
+      "state_badge_role": "non-interactive status indicator; full card hit_rect selects region; right dossier CTA enters region",
+      "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+      "flattened_photo_atlas_used": false,
+      "z_order": "clean rectangular regional photo -> hollow shell with neutral state-badge base -> selected glow if selected -> independent globe linework -> runtime text + complete state glyph",
+      "gates": {
+        "gateA_old_photo_residue": {
+          "core_inset_px": 3,
+          "opaque_pixels_in_cutout_core": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateB_border_integrity": {
+          "ring_px": 3,
+          "broken_opaque_pixels": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateC_window_alpha": {
+          "transparent_or_nonopaque_pixels_in_window": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateD_green_residue": {
+          "status": "skipped_selected_green_glow_semantic",
+          "green_signature_pixels_full_frame": null,
+          "basis": "selected state is intentionally exempt; selected green glow is state semantics"
+        },
+        "gateF_geometry": {
+          "size_2x": [
+            408,
+            320
+          ],
+          "size_1x": [
+            204,
+            160
+          ],
+          "ratio": 1.275,
+          "target_ratio": 1.275,
+          "ratio_delta": 0.0,
+          "status": "pass"
+        },
+        "badge_state_color_consistency": {
+          "status": "pass",
+          "state": "selected",
+          "mode": "hue",
+          "core": {
+            "count": 3532,
+            "hue": 0.1936,
+            "hue_degrees": 69.7,
+            "lightness": 0.1759,
+            "saturation": 0.4884,
+            "avg_rgb": [
+              59.5,
+              66.5,
+              23.2
+            ]
+          },
+          "frame_band": {
+            "count": 2800,
+            "hue": 0.1935,
+            "hue_degrees": 69.7,
+            "lightness": 0.2248,
+            "saturation": 0.51,
+            "avg_rgb": [
+              77.1,
+              86.5,
+              28.2
+            ]
+          },
+          "hue_delta": 0.0001,
+          "lightness_delta": 0.0489
+        },
+        "runtime_icon_shape_completeness": {
+          "status": "pass",
+          "state": "selected",
+          "source_full_glyph_bbox_2x": [
+            307,
+            222,
+            359,
+            269
+          ],
+          "previous_failed_crop_left_2x": 316,
+          "recovered_left_width_px": 9,
+          "raw_size": [
+            52,
+            47
+          ],
+          "canvas_size": [
+            44,
+            44
+          ],
+          "opaque_bbox": [
+            4,
+            5,
+            40,
+            37
+          ],
+          "opaque_margins": {
+            "left": 4,
+            "top": 5,
+            "right": 4,
+            "bottom": 7
+          },
+          "minimum_padding_px": 4,
+          "opaque_border_touch_pixels": 0,
+          "purity": {
+            "status": "pass",
+            "ingredient": "b29_runtime_icon_selected",
+            "target_family": "cream_icon",
+            "opaque_pixels": 334,
+            "non_target_pixels": 0,
+            "non_target_ratio": 0.0,
+            "ratio_tolerance": 0.0,
+            "sample_non_target_pixels": [],
+            "manual_400pct_review": "evidence_ready"
+          },
+          "shape_source": "candidate B full badge glyph zone around measured benchmark center; extraction is independent of action_badge contract bounds"
+        },
+        "photo_ingredient_overlay_contamination": {
+          "status": "pass",
+          "source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+          "source_crop_box": [
+            218,
+            104,
+            641,
+            390
+          ],
+          "measured_source_photo_interior": [
+            103,
+            101,
+            661,
+            394
+          ],
+          "measured_source_globe_bbox": [
+            98,
+            87,
+            191,
+            184
+          ],
+          "crop_inside_photo_interior": true,
+          "crop_begins_after_globe_bbox": true,
+          "edge_frame_like_max_vertical_run": {
+            "length": 1,
+            "x": 20,
+            "start_y": 45,
+            "end_y": 45
+          },
+          "edge_frame_like_run_limit_px": 24,
+          "chroma_green_pixels": 0,
+          "flattened_atlas_used": false,
+          "source_globe_or_frame_overlap_allowed": false,
+          "output_size": [
+            348,
+            128
+          ]
+        }
+      }
+    },
+    {
+      "state": "available",
+      "master_window_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "action_badge_2x": [
+        288,
+        202,
+        376,
+        290
+      ],
+      "state_badge_center_2x": [
+        332.0,
+        246.0
+      ],
+      "state_badge_role": "non-interactive status indicator; full card hit_rect selects region; right dossier CTA enters region",
+      "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+      "flattened_photo_atlas_used": false,
+      "z_order": "clean rectangular regional photo -> hollow shell with neutral state-badge base -> selected glow if selected -> independent globe linework -> runtime text + complete state glyph",
+      "gates": {
+        "gateA_old_photo_residue": {
+          "core_inset_px": 3,
+          "opaque_pixels_in_cutout_core": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateB_border_integrity": {
+          "ring_px": 3,
+          "broken_opaque_pixels": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateC_window_alpha": {
+          "transparent_or_nonopaque_pixels_in_window": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateD_green_residue": {
+          "green_signature_pixels_full_frame": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateF_geometry": {
+          "size_2x": [
+            408,
+            320
+          ],
+          "size_1x": [
+            204,
+            160
+          ],
+          "ratio": 1.275,
+          "target_ratio": 1.275,
+          "ratio_delta": 0.0,
+          "status": "pass"
+        },
+        "badge_state_color_consistency": {
+          "status": "pass",
+          "state": "available",
+          "mode": "hue",
+          "core": {
+            "count": 3532,
+            "hue": 0.5033,
+            "hue_degrees": 181.2,
+            "lightness": 0.1599,
+            "saturation": 0.6195,
+            "avg_rgb": [
+              15.8,
+              64.8,
+              65.8
+            ]
+          },
+          "frame_band": {
+            "count": 2800,
+            "hue": 0.5057,
+            "hue_degrees": 182.1,
+            "lightness": 0.2046,
+            "saturation": 0.646,
+            "avg_rgb": [
+              18.6,
+              83.4,
+              85.7
+            ]
+          },
+          "hue_delta": 0.0024,
+          "lightness_delta": 0.0447
+        },
+        "runtime_icon_shape_completeness": {
+          "status": "pass",
+          "state": "available",
+          "source_full_glyph_bbox_2x": [
+            305,
+            218,
+            359,
+            274
+          ],
+          "previous_failed_crop_left_2x": 316,
+          "recovered_left_width_px": 11,
+          "raw_size": [
+            54,
+            56
+          ],
+          "canvas_size": [
+            44,
+            44
+          ],
+          "opaque_bbox": [
+            4,
+            4,
+            39,
+            40
+          ],
+          "opaque_margins": {
+            "left": 4,
+            "top": 4,
+            "right": 5,
+            "bottom": 4
+          },
+          "minimum_padding_px": 4,
+          "opaque_border_touch_pixels": 0,
+          "purity": {
+            "status": "pass",
+            "ingredient": "b29_runtime_icon_available",
+            "target_family": "cream_icon",
+            "opaque_pixels": 505,
+            "non_target_pixels": 0,
+            "non_target_ratio": 0.0,
+            "ratio_tolerance": 0.0,
+            "sample_non_target_pixels": [],
+            "manual_400pct_review": "evidence_ready"
+          },
+          "shape_source": "candidate B full badge glyph zone around measured benchmark center; extraction is independent of action_badge contract bounds"
+        },
+        "photo_ingredient_overlay_contamination": {
+          "status": "pass",
+          "source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+          "source_crop_box": [
+            922,
+            104,
+            1281,
+            390
+          ],
+          "measured_source_photo_interior": [
+            743,
+            101,
+            1294,
+            394
+          ],
+          "measured_source_globe_bbox": [
+            737,
+            87,
+            831,
+            184
+          ],
+          "crop_inside_photo_interior": true,
+          "crop_begins_after_globe_bbox": true,
+          "edge_frame_like_max_vertical_run": {
+            "length": 5,
+            "x": 14,
+            "start_y": 71,
+            "end_y": 75
+          },
+          "edge_frame_like_run_limit_px": 24,
+          "chroma_green_pixels": 0,
+          "flattened_atlas_used": false,
+          "source_globe_or_frame_overlap_allowed": false,
+          "output_size": [
+            348,
+            128
+          ]
+        }
+      }
+    },
+    {
+      "state": "warning",
+      "master_window_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "action_badge_2x": [
+        288,
+        202,
+        376,
+        290
+      ],
+      "state_badge_center_2x": [
+        332.0,
+        246.0
+      ],
+      "state_badge_role": "non-interactive status indicator; full card hit_rect selects region; right dossier CTA enters region",
+      "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+      "flattened_photo_atlas_used": false,
+      "z_order": "clean rectangular regional photo -> hollow shell with neutral state-badge base -> selected glow if selected -> independent globe linework -> runtime text + complete state glyph",
+      "gates": {
+        "gateA_old_photo_residue": {
+          "core_inset_px": 3,
+          "opaque_pixels_in_cutout_core": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateB_border_integrity": {
+          "ring_px": 3,
+          "broken_opaque_pixels": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateC_window_alpha": {
+          "transparent_or_nonopaque_pixels_in_window": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateD_green_residue": {
+          "green_signature_pixels_full_frame": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateF_geometry": {
+          "size_2x": [
+            408,
+            320
+          ],
+          "size_1x": [
+            204,
+            160
+          ],
+          "ratio": 1.275,
+          "target_ratio": 1.275,
+          "ratio_delta": 0.0,
+          "status": "pass"
+        },
+        "badge_state_color_consistency": {
+          "status": "pass",
+          "state": "warning",
+          "mode": "hue",
+          "core": {
+            "count": 3532,
+            "hue": 0.1096,
+            "hue_degrees": 39.5,
+            "lightness": 0.2282,
+            "saturation": 0.8809,
+            "avg_rgb": [
+              109.0,
+              74.2,
+              7.4
+            ]
+          },
+          "frame_band": {
+            "count": 2800,
+            "hue": 0.1094,
+            "hue_degrees": 39.4,
+            "lightness": 0.2922,
+            "saturation": 0.9233,
+            "avg_rgb": [
+              143.1,
+              96.0,
+              6.0
+            ]
+          },
+          "hue_delta": 0.0002,
+          "lightness_delta": 0.064
+        },
+        "runtime_icon_shape_completeness": {
+          "status": "pass",
+          "state": "warning",
+          "source_full_glyph_bbox_2x": [
+            306,
+            218,
+            360,
+            270
+          ],
+          "previous_failed_crop_left_2x": 316,
+          "recovered_left_width_px": 10,
+          "raw_size": [
+            54,
+            52
+          ],
+          "canvas_size": [
+            44,
+            44
+          ],
+          "opaque_bbox": [
+            4,
+            4,
+            40,
+            39
+          ],
+          "opaque_margins": {
+            "left": 4,
+            "top": 4,
+            "right": 4,
+            "bottom": 5
+          },
+          "minimum_padding_px": 4,
+          "opaque_border_touch_pixels": 0,
+          "purity": {
+            "status": "pass",
+            "ingredient": "b29_runtime_icon_warning",
+            "target_family": "cream_icon",
+            "opaque_pixels": 273,
+            "non_target_pixels": 0,
+            "non_target_ratio": 0.0,
+            "ratio_tolerance": 0.0,
+            "sample_non_target_pixels": [],
+            "manual_400pct_review": "evidence_ready"
+          },
+          "shape_source": "candidate B full badge glyph zone around measured benchmark center; extraction is independent of action_badge contract bounds"
+        },
+        "photo_ingredient_overlay_contamination": {
+          "status": "pass",
+          "source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+          "source_crop_box": [
+            204,
+            607,
+            641,
+            876
+          ],
+          "measured_source_photo_interior": [
+            103,
+            603,
+            661,
+            880
+          ],
+          "measured_source_globe_bbox": [
+            98,
+            589,
+            191,
+            685
+          ],
+          "crop_inside_photo_interior": true,
+          "crop_begins_after_globe_bbox": true,
+          "edge_frame_like_max_vertical_run": {
+            "length": 0,
+            "x": null,
+            "start_y": null,
+            "end_y": null
+          },
+          "edge_frame_like_run_limit_px": 24,
+          "chroma_green_pixels": 0,
+          "flattened_atlas_used": false,
+          "source_globe_or_frame_overlap_allowed": false,
+          "output_size": [
+            348,
+            128
+          ]
+        }
+      }
+    },
+    {
+      "state": "locked",
+      "master_window_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "action_badge_2x": [
+        288,
+        202,
+        376,
+        290
+      ],
+      "state_badge_center_2x": [
+        332.0,
+        246.0
+      ],
+      "state_badge_role": "non-interactive status indicator; full card hit_rect selects region; right dossier CTA enters region",
+      "photo_source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+      "flattened_photo_atlas_used": false,
+      "z_order": "clean rectangular regional photo -> hollow shell with neutral state-badge base -> selected glow if selected -> independent globe linework -> runtime text + complete state glyph",
+      "gates": {
+        "gateA_old_photo_residue": {
+          "core_inset_px": 3,
+          "opaque_pixels_in_cutout_core": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateB_border_integrity": {
+          "ring_px": 3,
+          "broken_opaque_pixels": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateC_window_alpha": {
+          "transparent_or_nonopaque_pixels_in_window": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateD_green_residue": {
+          "green_signature_pixels_full_frame": 0,
+          "sample_pixels": [],
+          "status": "pass"
+        },
+        "gateF_geometry": {
+          "size_2x": [
+            408,
+            320
+          ],
+          "size_1x": [
+            204,
+            160
+          ],
+          "ratio": 1.275,
+          "target_ratio": 1.275,
+          "ratio_delta": 0.0,
+          "status": "pass"
+        },
+        "badge_state_color_consistency": {
+          "status": "pass",
+          "state": "locked",
+          "mode": "low_saturation_lightness",
+          "core": {
+            "count": 3532,
+            "hue": 0.1839,
+            "hue_degrees": 66.2,
+            "lightness": 0.2517,
+            "saturation": 0.0734,
+            "avg_rgb": [
+              67.9,
+              68.8,
+              59.5
+            ]
+          },
+          "frame_band": {
+            "count": 2800,
+            "hue": 0.1841,
+            "hue_degrees": 66.3,
+            "lightness": 0.3222,
+            "saturation": 0.0762,
+            "avg_rgb": [
+              87.1,
+              88.4,
+              75.9
+            ]
+          },
+          "hue_delta": 0.0002,
+          "lightness_delta": 0.0705
+        },
+        "runtime_icon_shape_completeness": {
+          "status": "pass",
+          "state": "locked",
+          "source_full_glyph_bbox_2x": [
+            312,
+            216,
+            353,
+            274
+          ],
+          "previous_failed_crop_left_2x": 316,
+          "recovered_left_width_px": 4,
+          "raw_size": [
+            41,
+            58
+          ],
+          "canvas_size": [
+            44,
+            44
+          ],
+          "opaque_bbox": [
+            9,
+            4,
+            34,
+            40
+          ],
+          "opaque_margins": {
+            "left": 9,
+            "top": 4,
+            "right": 10,
+            "bottom": 4
+          },
+          "minimum_padding_px": 4,
+          "opaque_border_touch_pixels": 0,
+          "purity": {
+            "status": "pass",
+            "ingredient": "b29_runtime_icon_locked",
+            "target_family": "cream_icon",
+            "opaque_pixels": 529,
+            "non_target_pixels": 0,
+            "non_target_ratio": 0.0,
+            "ratio_tolerance": 0.0,
+            "sample_non_target_pixels": [],
+            "manual_400pct_review": "evidence_ready"
+          },
+          "shape_source": "candidate B full badge glyph zone around measured benchmark center; extraction is independent of action_badge contract bounds"
+        },
+        "photo_ingredient_overlay_contamination": {
+          "status": "pass",
+          "source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+          "source_crop_box": [
+            922,
+            607,
+            1281,
+            876
+          ],
+          "measured_source_photo_interior": [
+            743,
+            603,
+            1294,
+            880
+          ],
+          "measured_source_globe_bbox": [
+            737,
+            589,
+            832,
+            685
+          ],
+          "crop_inside_photo_interior": true,
+          "crop_begins_after_globe_bbox": true,
+          "edge_frame_like_max_vertical_run": {
+            "length": 0,
+            "x": null,
+            "start_y": null,
+            "end_y": null
+          },
+          "edge_frame_like_run_limit_px": 24,
+          "chroma_green_pixels": 0,
+          "flattened_atlas_used": false,
+          "source_globe_or_frame_overlap_allowed": false,
+          "output_size": [
+            348,
+            128
+          ]
+        }
+      }
+    }
+  ],
+  "gates": {
+    "state_badge_contract_and_style_alignment": {
+      "status": "pass",
+      "contract_action_badge_1x": [
+        144,
+        101,
+        44,
+        44
+      ],
+      "contract_action_badge_2x": [
+        288,
+        202,
+        376,
+        290
+      ],
+      "contract_center_2x": [
+        332.0,
+        246.0
+      ],
+      "benchmark_center_2x": [
+        332.0,
+        246.0
+      ],
+      "outer_ring": {
+        "bbox": [
+          288,
+          201,
+          376,
+          291
+        ],
+        "centroid": [
+          330.529,
+          245.74
+        ],
+        "pixels": 1983
+      },
+      "outer_ring_bbox_center": [
+        332.0,
+        246.0
+      ],
+      "core": {
+        "bbox": [
+          302,
+          216,
+          362,
+          277
+        ],
+        "centroid": [
+          331.618,
+          246.0
+        ],
+        "pixels": 3532
+      },
+      "ring_center_delta_px": [
+        0.0,
+        0.0
+      ],
+      "right_visual_gap_2x": 32,
+      "right_visual_gap_1x": 16.0,
+      "minimum_right_visual_gap_2x": 32,
+      "cream_semantic_pixels_inside_neutral_core": 0,
+      "source_semantic_exact_pixels_after_core_rebuild": 0,
+      "approved_candidate_b_outer_ring_preserved": true,
+      "retired_footprint_texture_continuity": {
+        "status": "pass",
+        "harmonic_inpaint_called": false,
+        "blur_or_diffusion_called": false,
+        "operation_scope": "pure geometric CORE_MASK only; approved exterior ring and surrounding frame excluded",
+        "changed_pixels_outside_semantic_core": 0,
+        "changed_pixels_outside_inner_opening": 0,
+        "changed_pixels_in_right_corridor_outside_inner_opening": 0,
+        "exposed_inpaint_pixels": 0,
+        "approved_outer_ring_pixels_preserved": 1983,
+        "approved_outer_ring_pixels_total": 1983
+      }
+    },
+    "retired_footprint_texture_continuity": {
+      "status": "pass",
+      "harmonic_inpaint_called": false,
+      "blur_or_diffusion_called": false,
+      "operation_scope": "pure geometric CORE_MASK only; approved exterior ring and surrounding frame excluded",
+      "changed_pixels_outside_semantic_core": 0,
+      "changed_pixels_outside_inner_opening": 0,
+      "changed_pixels_in_right_corridor_outside_inner_opening": 0,
+      "exposed_inpaint_pixels": 0,
+      "approved_outer_ring_pixels_preserved": 1983,
+      "approved_outer_ring_pixels_total": 1983
+    },
+    "runtime_icon_shape_completeness": {
+      "status": "pass",
+      "per_state": {
+        "selected": {
+          "status": "pass",
+          "state": "selected",
+          "source_full_glyph_bbox_2x": [
+            307,
+            222,
+            359,
+            269
+          ],
+          "previous_failed_crop_left_2x": 316,
+          "recovered_left_width_px": 9,
+          "raw_size": [
+            52,
+            47
+          ],
+          "canvas_size": [
+            44,
+            44
+          ],
+          "opaque_bbox": [
+            4,
+            5,
+            40,
+            37
+          ],
+          "opaque_margins": {
+            "left": 4,
+            "top": 5,
+            "right": 4,
+            "bottom": 7
+          },
+          "minimum_padding_px": 4,
+          "opaque_border_touch_pixels": 0,
+          "purity": {
+            "status": "pass",
+            "ingredient": "b29_runtime_icon_selected",
+            "target_family": "cream_icon",
+            "opaque_pixels": 334,
+            "non_target_pixels": 0,
+            "non_target_ratio": 0.0,
+            "ratio_tolerance": 0.0,
+            "sample_non_target_pixels": [],
+            "manual_400pct_review": "evidence_ready"
+          },
+          "shape_source": "candidate B full badge glyph zone around measured benchmark center; extraction is independent of action_badge contract bounds"
+        },
+        "available": {
+          "status": "pass",
+          "state": "available",
+          "source_full_glyph_bbox_2x": [
+            305,
+            218,
+            359,
+            274
+          ],
+          "previous_failed_crop_left_2x": 316,
+          "recovered_left_width_px": 11,
+          "raw_size": [
+            54,
+            56
+          ],
+          "canvas_size": [
+            44,
+            44
+          ],
+          "opaque_bbox": [
+            4,
+            4,
+            39,
+            40
+          ],
+          "opaque_margins": {
+            "left": 4,
+            "top": 4,
+            "right": 5,
+            "bottom": 4
+          },
+          "minimum_padding_px": 4,
+          "opaque_border_touch_pixels": 0,
+          "purity": {
+            "status": "pass",
+            "ingredient": "b29_runtime_icon_available",
+            "target_family": "cream_icon",
+            "opaque_pixels": 505,
+            "non_target_pixels": 0,
+            "non_target_ratio": 0.0,
+            "ratio_tolerance": 0.0,
+            "sample_non_target_pixels": [],
+            "manual_400pct_review": "evidence_ready"
+          },
+          "shape_source": "candidate B full badge glyph zone around measured benchmark center; extraction is independent of action_badge contract bounds"
+        },
+        "warning": {
+          "status": "pass",
+          "state": "warning",
+          "source_full_glyph_bbox_2x": [
+            306,
+            218,
+            360,
+            270
+          ],
+          "previous_failed_crop_left_2x": 316,
+          "recovered_left_width_px": 10,
+          "raw_size": [
+            54,
+            52
+          ],
+          "canvas_size": [
+            44,
+            44
+          ],
+          "opaque_bbox": [
+            4,
+            4,
+            40,
+            39
+          ],
+          "opaque_margins": {
+            "left": 4,
+            "top": 4,
+            "right": 4,
+            "bottom": 5
+          },
+          "minimum_padding_px": 4,
+          "opaque_border_touch_pixels": 0,
+          "purity": {
+            "status": "pass",
+            "ingredient": "b29_runtime_icon_warning",
+            "target_family": "cream_icon",
+            "opaque_pixels": 273,
+            "non_target_pixels": 0,
+            "non_target_ratio": 0.0,
+            "ratio_tolerance": 0.0,
+            "sample_non_target_pixels": [],
+            "manual_400pct_review": "evidence_ready"
+          },
+          "shape_source": "candidate B full badge glyph zone around measured benchmark center; extraction is independent of action_badge contract bounds"
+        },
+        "locked": {
+          "status": "pass",
+          "state": "locked",
+          "source_full_glyph_bbox_2x": [
+            312,
+            216,
+            353,
+            274
+          ],
+          "previous_failed_crop_left_2x": 316,
+          "recovered_left_width_px": 4,
+          "raw_size": [
+            41,
+            58
+          ],
+          "canvas_size": [
+            44,
+            44
+          ],
+          "opaque_bbox": [
+            9,
+            4,
+            34,
+            40
+          ],
+          "opaque_margins": {
+            "left": 9,
+            "top": 4,
+            "right": 10,
+            "bottom": 4
+          },
+          "minimum_padding_px": 4,
+          "opaque_border_touch_pixels": 0,
+          "purity": {
+            "status": "pass",
+            "ingredient": "b29_runtime_icon_locked",
+            "target_family": "cream_icon",
+            "opaque_pixels": 529,
+            "non_target_pixels": 0,
+            "non_target_ratio": 0.0,
+            "ratio_tolerance": 0.0,
+            "sample_non_target_pixels": [],
+            "manual_400pct_review": "evidence_ready"
+          },
+          "shape_source": "candidate B full badge glyph zone around measured benchmark center; extraction is independent of action_badge contract bounds"
+        }
+      }
+    },
+    "photo_ingredient_overlay_contamination": {
+      "status": "pass",
+      "method": "use source-measured absolute rectangular scene crops from 396; each crop begins after the source globe and ends inside the photo before the source frame; never crop 428 flattened atlas",
+      "per_state": {
+        "selected": {
+          "status": "pass",
+          "source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+          "source_crop_box": [
+            218,
+            104,
+            641,
+            390
+          ],
+          "measured_source_photo_interior": [
+            103,
+            101,
+            661,
+            394
+          ],
+          "measured_source_globe_bbox": [
+            98,
+            87,
+            191,
+            184
+          ],
+          "crop_inside_photo_interior": true,
+          "crop_begins_after_globe_bbox": true,
+          "edge_frame_like_max_vertical_run": {
+            "length": 1,
+            "x": 20,
+            "start_y": 45,
+            "end_y": 45
+          },
+          "edge_frame_like_run_limit_px": 24,
+          "chroma_green_pixels": 0,
+          "flattened_atlas_used": false,
+          "source_globe_or_frame_overlap_allowed": false,
+          "output_size": [
+            348,
+            128
+          ]
+        },
+        "available": {
+          "status": "pass",
+          "source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+          "source_crop_box": [
+            922,
+            104,
+            1281,
+            390
+          ],
+          "measured_source_photo_interior": [
+            743,
+            101,
+            1294,
+            394
+          ],
+          "measured_source_globe_bbox": [
+            737,
+            87,
+            831,
+            184
+          ],
+          "crop_inside_photo_interior": true,
+          "crop_begins_after_globe_bbox": true,
+          "edge_frame_like_max_vertical_run": {
+            "length": 5,
+            "x": 14,
+            "start_y": 71,
+            "end_y": 75
+          },
+          "edge_frame_like_run_limit_px": 24,
+          "chroma_green_pixels": 0,
+          "flattened_atlas_used": false,
+          "source_globe_or_frame_overlap_allowed": false,
+          "output_size": [
+            348,
+            128
+          ]
+        },
+        "warning": {
+          "status": "pass",
+          "source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+          "source_crop_box": [
+            204,
+            607,
+            641,
+            876
+          ],
+          "measured_source_photo_interior": [
+            103,
+            603,
+            661,
+            880
+          ],
+          "measured_source_globe_bbox": [
+            98,
+            589,
+            191,
+            685
+          ],
+          "crop_inside_photo_interior": true,
+          "crop_begins_after_globe_bbox": true,
+          "edge_frame_like_max_vertical_run": {
+            "length": 0,
+            "x": null,
+            "start_y": null,
+            "end_y": null
+          },
+          "edge_frame_like_run_limit_px": 24,
+          "chroma_green_pixels": 0,
+          "flattened_atlas_used": false,
+          "source_globe_or_frame_overlap_allowed": false,
+          "output_size": [
+            348,
+            128
+          ]
+        },
+        "locked": {
+          "status": "pass",
+          "source": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\396-world-map-wmw-v0-9-2-left-card-imagegen-candidate-b1-r4-wide-failed.png",
+          "source_crop_box": [
+            922,
+            607,
+            1281,
+            876
+          ],
+          "measured_source_photo_interior": [
+            743,
+            603,
+            1294,
+            880
+          ],
+          "measured_source_globe_bbox": [
+            737,
+            589,
+            832,
+            685
+          ],
+          "crop_inside_photo_interior": true,
+          "crop_begins_after_globe_bbox": true,
+          "edge_frame_like_max_vertical_run": {
+            "length": 0,
+            "x": null,
+            "start_y": null,
+            "end_y": null
+          },
+          "edge_frame_like_run_limit_px": 24,
+          "chroma_green_pixels": 0,
+          "flattened_atlas_used": false,
+          "source_globe_or_frame_overlap_allowed": false,
+          "output_size": [
+            348,
+            128
+          ]
+        }
+      },
+      "manual_400pct_review": "evidence_ready",
+      "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\520-world-map-wmw-v0-9-15-left-card-b2-9-ingredients-qa.png"
+    },
+    "globe_linework_ingredient_purity": {
+      "status": "pass",
+      "ingredient": "b29_globe_linework",
+      "target_family": "warm_globe",
+      "opaque_pixels": 1017,
+      "non_target_pixels": 0,
+      "non_target_ratio": 0.0,
+      "ratio_tolerance": 0.0,
+      "sample_non_target_pixels": [],
+      "manual_400pct_review": "evidence_ready"
+    },
+    "gateA_old_photo_residue_core": {
+      "status": "pass"
+    },
+    "window_edge_residue_scan": {
+      "base_window_rect_2x": [
+        38,
+        56,
+        366,
+        184
+      ],
+      "expanded_window_rect_2x": [
+        37,
+        56,
+        367,
+        192
+      ],
+      "max_expand_px_per_side": 8,
+      "old_photo_signature": "alpha>180 and b>g+8 and b>40, excluding warm cream globe/badge pixels",
+      "before": {
+        "top": 0,
+        "right": 74,
+        "bottom": 277,
+        "left": 105
+      },
+      "expansions_px": {
+        "top": 0,
+        "right": 1,
+        "bottom": 8,
+        "left": 1
+      },
+      "after": {
+        "top": {
+          "old_photo_signature_pixels": 0,
+          "sample_pixels": []
+        },
+        "right": {
+          "old_photo_signature_pixels": 0,
+          "sample_pixels": []
+        },
+        "bottom": {
+          "old_photo_signature_pixels": 0,
+          "sample_pixels": []
+        },
+        "left": {
+          "old_photo_signature_pixels": 0,
+          "sample_pixels": []
+        }
+      },
+      "status": "pass"
+    },
+    "gateB_border_integrity_ring": {
+      "status": "pass"
+    },
+    "gateC_window_alpha_after_composite": {
+      "status": "pass"
+    },
+    "gateD_green_residue_nonselected": {
+      "status": "pass"
+    },
+    "badge_state_color_consistency": {
+      "status": "pass",
+      "per_state": {
+        "selected": {
+          "status": "pass",
+          "state": "selected",
+          "mode": "hue",
+          "core": {
+            "count": 3532,
+            "hue": 0.1936,
+            "hue_degrees": 69.7,
+            "lightness": 0.1759,
+            "saturation": 0.4884,
+            "avg_rgb": [
+              59.5,
+              66.5,
+              23.2
+            ]
+          },
+          "frame_band": {
+            "count": 2800,
+            "hue": 0.1935,
+            "hue_degrees": 69.7,
+            "lightness": 0.2248,
+            "saturation": 0.51,
+            "avg_rgb": [
+              77.1,
+              86.5,
+              28.2
+            ]
+          },
+          "hue_delta": 0.0001,
+          "lightness_delta": 0.0489
+        },
+        "available": {
+          "status": "pass",
+          "state": "available",
+          "mode": "hue",
+          "core": {
+            "count": 3532,
+            "hue": 0.5033,
+            "hue_degrees": 181.2,
+            "lightness": 0.1599,
+            "saturation": 0.6195,
+            "avg_rgb": [
+              15.8,
+              64.8,
+              65.8
+            ]
+          },
+          "frame_band": {
+            "count": 2800,
+            "hue": 0.5057,
+            "hue_degrees": 182.1,
+            "lightness": 0.2046,
+            "saturation": 0.646,
+            "avg_rgb": [
+              18.6,
+              83.4,
+              85.7
+            ]
+          },
+          "hue_delta": 0.0024,
+          "lightness_delta": 0.0447
+        },
+        "warning": {
+          "status": "pass",
+          "state": "warning",
+          "mode": "hue",
+          "core": {
+            "count": 3532,
+            "hue": 0.1096,
+            "hue_degrees": 39.5,
+            "lightness": 0.2282,
+            "saturation": 0.8809,
+            "avg_rgb": [
+              109.0,
+              74.2,
+              7.4
+            ]
+          },
+          "frame_band": {
+            "count": 2800,
+            "hue": 0.1094,
+            "hue_degrees": 39.4,
+            "lightness": 0.2922,
+            "saturation": 0.9233,
+            "avg_rgb": [
+              143.1,
+              96.0,
+              6.0
+            ]
+          },
+          "hue_delta": 0.0002,
+          "lightness_delta": 0.064
+        },
+        "locked": {
+          "status": "pass",
+          "state": "locked",
+          "mode": "low_saturation_lightness",
+          "core": {
+            "count": 3532,
+            "hue": 0.1839,
+            "hue_degrees": 66.2,
+            "lightness": 0.2517,
+            "saturation": 0.0734,
+            "avg_rgb": [
+              67.9,
+              68.8,
+              59.5
+            ]
+          },
+          "frame_band": {
+            "count": 2800,
+            "hue": 0.1841,
+            "hue_degrees": 66.3,
+            "lightness": 0.3222,
+            "saturation": 0.0762,
+            "avg_rgb": [
+              87.1,
+              88.4,
+              75.9
+            ]
+          },
+          "hue_delta": 0.0002,
+          "lightness_delta": 0.0705
+        }
+      }
+    },
+    "gateE_same_state_layout": {
+      "status": "pass",
+      "diff_px": 0,
+      "basis": "single master, single revised state-badge geometry"
+    },
+    "gateF_geometry_ratio": {
+      "status": "pass",
+      "target": 1.275
+    },
+    "manual_16point_visual_check": {
+      "status": "evidence_ready",
+      "evidence": "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\525-world-map-wmw-v0-9-15-left-card-b2-9-16point-visual-qa.png",
+      "review_owner": "reviewer_or_user"
+    },
+    "ingredient_dependency_review": {
+      "status": "evidence_ready",
+      "evidence": [
+        "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\519-world-map-wmw-v0-9-15-left-card-b2-9-no-inpaint-compare.png",
+        "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\520-world-map-wmw-v0-9-15-left-card-b2-9-ingredients-qa.png"
+      ],
+      "required_before_atlas": true
+    },
+    "godot_windowed_capture": {
+      "status": "pass",
+      "headless_used_for_ui_capture": false,
+      "partial_frame_baseline_probe": {
+        "status": "pass",
+        "missing_sampled_baseline_pixels": 0,
+        "threshold": 20,
+        "stride_px": 4,
+        "basis": "QA capture may add overlays but must not lose visible pixels from the stable non-QA baseline"
+      },
+      "evidence": [
+        "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\527-world-map-wmw-v0-9-15-left-card-b2-9-godot-single-component.png",
+        "D:\\angos\\docs\\screenshots\\2026-06-24-world-map-benchmark-landing\\528-world-map-wmw-v0-9-15-left-card-b2-9-godot-single-component-qa.png"
+      ]
+    }
+  },
+  "image_content_checks": {
+    "compare": {
+      "size": [
+        1920,
+        1330
+      ],
+      "unique_colors": 28497,
+      "nonblack_pixels": 2541054
+    },
+    "ingredients": {
+      "size": [
+        1920,
+        1380
+      ],
+      "unique_colors": 72162,
+      "nonblack_pixels": 2644485
+    },
+    "atlas": {
+      "size": [
+        1632,
+        320
+      ],
+      "unique_colors": 77956,
+      "nonblack_pixels": 460234
+    },
+    "geometry": {
+      "size": [
+        1920,
+        910
+      ],
+      "unique_colors": 77122,
+      "nonblack_pixels": 1738991
+    },
+    "runtime": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 74259,
+      "nonblack_pixels": 2071626
+    },
+    "runtime_qa": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 72995,
+      "nonblack_pixels": 2071632
+    },
+    "visual_qa": {
+      "size": [
+        1920,
+        1540
+      ],
+      "unique_colors": 79797,
+      "nonblack_pixels": 2950344
+    },
+    "godot": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 62721,
+      "nonblack_pixels": 2072383
+    },
+    "godot_qa": {
+      "size": [
+        1920,
+        1080
+      ],
+      "unique_colors": 61598,
+      "nonblack_pixels": 2073600
+    }
+  },
+  "prohibitions_observed": {
+    "imagegen_called": false,
+    "flattened_428_photo_source_used": false,
+    "source_glyph_cropped_by_contract_rect": false,
+    "runtime_glyph_baked_into_atlas": false,
+    "other_classes_batch_produced": false,
+    "card_size_changed": false,
+    "non_action_badge_frozen_fields_changed": false,
+    "harmonic_inpaint_called": false,
+    "blur_or_diffusion_called": false,
+    "program_fill_exposed_outside_inner_opening": false
+  }
+}

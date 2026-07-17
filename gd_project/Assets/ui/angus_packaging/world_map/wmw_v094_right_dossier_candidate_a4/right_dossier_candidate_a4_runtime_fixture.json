@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "candidate": "right_dossier_candidate_a4_v0.9.4",
+  "provenance": "production_runtime_export",
+  "generated_from_production_data": true,
+  "source_files": [
+    "gd_project/scenes/gameplay/weekly_run/content/WeeklyRunContent.gd",
+    "gd_project/scenes/gameplay/weekly_run/systems/WeeklyRunSystems.gd",
+    "gd_project/scenes/gameplay/weekly_run/state/WeeklyRunState.gd"
+  ],
+  "region_id": "us",
+  "region_title": "北美禁区带",
+  "region_unlocked": true,
+  "remaining_days": 7,
+  "counts": {
+    "visible": 4,
+    "deadline": 1,
+    "chain": 1,
+    "clue": 2
+  },
+  "status_primary": "红线升温",
+  "status_display_text": "红线升温",
+  "region_body_text": "都市传说与军事封锁交叠。\n本周剩余 7 天，红线稿应优先处理。",
+  "decision_facts": "任务构成 · 限时 1 · 线索 2 · 深链 1",
+  "mission_intel_label": "任务情报",
+  "mission_intel_expanded_label": "任务情报",
+  "primary_enter_label": "进入地区任务台"
+}

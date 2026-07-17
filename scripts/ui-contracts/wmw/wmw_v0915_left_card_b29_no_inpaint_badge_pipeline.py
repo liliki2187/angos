@@ -184,9 +184,8 @@ def component_mask(component: dict) -> Image.Image:
 def rebuild_badge(master_shell: Image.Image, source: Image.Image) -> tuple[Image.Image, dict]:
     before = master_shell.copy().convert("RGBA")
     rebuilt = before.copy()
-    family = b27._average_rgb(before, (246, 202, 282, 286))
-    inner_border = tuple(max(0, min(255, round(c * 0.58))) for c in family)
-    b27._fill_with_mask(rebuilt, Image.new("RGBA", FRAME_SIZE, (*inner_border, 255)), INNER_OPENING_MASK)
+    # The candidate-B exterior is already approved. Rebuild only the measured
+    # semantic core; CORE_MASK has zero overlap with the exterior ring component.
     b27._fill_with_mask(rebuilt, neutral_core_texture(rebuilt), CORE_MASK)
 
     components = source_badge_components(source)
@@ -207,23 +206,27 @@ def rebuild_badge(master_shell: Image.Image, source: Image.Image) -> tuple[Image
     )
     before_px = before.load()
     rebuilt_px = rebuilt.load()
+    outside_core_changed = 0
     outside_inner_changed = 0
     right_corridor_changed = 0
     for y in range(FRAME_SIZE[1]):
         for x in range(FRAME_SIZE[0]):
+            if not CORE_MASK.getpixel((x, y)) and before_px[x, y] != rebuilt_px[x, y]:
+                outside_core_changed += 1
             if not INNER_OPENING_MASK.getpixel((x, y)) and before_px[x, y] != rebuilt_px[x, y]:
                 outside_inner_changed += 1
-                if 369 <= x < 383 and 196 <= y < 296:
-                    right_corridor_changed += 1
+            if 369 <= x < 383 and 196 <= y < 296 and before_px[x, y] != rebuilt_px[x, y]:
+                right_corridor_changed += 1
     source_px = source.convert("RGBA").load()
     ring_preserved = sum(1 for x, y in ring_component["pixels"] if source_px[x, y] == rebuilt_px[x, y])
     semantic_pixels = [pixel for item in components if item is not ring_component for pixel in item["pixels"]]
     source_semantic_exact = sum(1 for x, y in semantic_pixels if source_px[x, y] == rebuilt_px[x, y])
     continuity = {
-        "status": "pass" if outside_inner_changed == 0 and right_corridor_changed == 0 else "fail",
+        "status": "pass" if outside_core_changed == 0 and outside_inner_changed == 0 and right_corridor_changed == 0 else "fail",
         "harmonic_inpaint_called": False,
         "blur_or_diffusion_called": False,
-        "operation_scope": "pure geometric INNER_OPENING_MASK only",
+        "operation_scope": "pure geometric CORE_MASK only; approved exterior ring and surrounding frame excluded",
+        "changed_pixels_outside_semantic_core": outside_core_changed,
         "changed_pixels_outside_inner_opening": outside_inner_changed,
         "changed_pixels_in_right_corridor_outside_inner_opening": right_corridor_changed,
         "exposed_inpaint_pixels": 0,
@@ -444,7 +447,7 @@ def compose() -> dict:
     window = tuple(measurement["master_window_rect_2x"])
     raw_master_shell, _, _ = b26.make_master_hollow_shell(source_frames[MASTER_INDEX], window, globe_patch)
     master_shell, badge_gate = rebuild_badge(raw_master_shell, source_frames[MASTER_INDEX])
-    family_mask = ImageChops.lighter(b26.make_frame_family_mask(master_shell), INNER_OPENING_MASK)
+    family_mask = ImageChops.lighter(b26.make_frame_family_mask(master_shell), CORE_MASK)
     glow = b26.selected_glow_layer(source_frames[STATE_ORDER.index("selected")])
     photos, photo_gate = clean_photo_ingredients()
     globe_gate = b26.ingredient_purity_gate(globe_patch, "warm_globe", "b29_globe_linework")
@@ -767,6 +770,7 @@ def make_manifest(data: dict, checks: dict, godot_pass: bool, partial_frame_prob
     passed = all(gates[name]["status"] == "pass" for name in required)
     return {
         "schema_version": 1,
+        "artifact_type": "vertical_slice_proof / left_region_card / four-state evidence / not frozen production resource",
         "asset_id": ASSET_ID,
         "version": VERSION,
         "round": ROUND_ID,

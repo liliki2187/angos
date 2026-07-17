@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "contract_version": "1.1.0",
+  "status": "locked_candidate",
+  "page": "weekly_editorial",
+  "class_id": "main_page_shell",
+  "role": "左侧主头版页正交纸壳",
+  "reference_resolution": [1920, 1080],
+  "runtime_resolution": [1920, 1080],
+  "export_scale": 2,
+  "frozen": {
+    "export_size": [490, 800],
+    "positions": [[435, 184]],
+    "hit_rect": [0, 0, 490, 800],
+    "slots": {
+      "content": [24, 24, 442, 744],
+      "page_header": [24, 24, 442, 52],
+      "main_head": [24, 92, 442, 374],
+      "feature_1": [24, 486, 213, 282],
+      "feature_2": [253, 486, 213, 282]
+    },
+    "no_text_rects": {
+      "top_edge": [0, 0, 490, 14],
+      "bottom_edge": [0, 786, 490, 14],
+      "left_edge": [0, 0, 14, 800],
+      "right_edge": [476, 0, 14, 800],
+      "inner_gutter": [466, 0, 24, 800],
+      "optional_clip": [197, 0, 96, 32]
+    }
+  },
+  "states": ["dual_page", "confirmation_frozen"],
+  "notes": "功能正面 0°；当前运行时只有双版常显，不提供单版聚焦。主头版 S 级资产保持 442×374 原比例。"
+}

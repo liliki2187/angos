@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "contract_version": "0.8.4",
+  "contract_version": "0.8.8",
   "status": "locked_candidate",
   "page": "world_map",
   "class_id": "right_dossier_page",
@@ -17,31 +17,54 @@
       "title_slot": [82, 42, 160, 34],
       "status_stamp": [246, 34, 58, 58],
       "photo_slot": [22, 98, 276, 176],
-      "meta_slot": [22, 288, 196, 22],
-      "action_stack": [16, 318, 284, 160]
+      "region_body": [22, 288, 276, 90],
+      "mission_intel_button": [18, 390, 284, 44],
+      "primary_enter_cta": [18, 444, 284, 50]
     }
   },
   "provisional": {
-    "title_slot_note": "压力态标题字号 21 已贴槽上限；最终字体或标题艺术字确定后可能需要回改 title_slot 或收紧标题文案长度（v0.8.4 结论）。",
-    "meta_slot_note": "压力态 meta 文本宽 183px，接近 196px 槽宽上限。",
-    "font_assumptions": "文字压力测试基于脚本字体渲染；最终 UI 字体确定后若更宽，必须重跑 text_capacity_stress 再进 atlas。"
+    "title_slot_note": "最长 8 个汉字、单行；最终字体变化后重跑 text_capacity_stress，不得移动 title_slot 或侵入 status_stamp。",
+    "region_body_note": "A211：连续描述 carrier 扩为 90px。collapsed 容纳 3-4 行、约 52-64 个汉字；expanded 时同一区域切换为两条只读任务预览，地区描述暂时隐藏。default 写地区特征 / 本周异变，warning / locked 的末行可改为风险或阻断原因；超长内容进入地区页，不继续缩字。",
+    "retired_decision_facts_note": "A211：独立 decision_facts 槽与灰色 carrier 已退役；限时 / 线索 / 深链摘要进入同一 mission_intel_button disclosure，禁止保留空槽、重复显示或把旧灰条当正文分段。",
+    "locked_secondary_action_note": "locked 的次级动作是查看解锁条件还是查看已知任务情报尚待用户裁决；两者共用同一 mission_intel_button 几何。",
+    "entry_cost_term_note": "A184 的进入代价与现行进入区域不扣天数规则冲突；本合同暂用地区任务耗时预览，不把天数绑定到进入 CTA。",
+    "font_assumptions": "573-577 文字压力沿用实际光栅 alpha glyph bbox（含字体 left/top bearing）校验；最终 UI 字体确定后必须用同一 bbox gate 重跑 text_capacity_stress 再进 atlas。",
+    "action_stack_alignment_note": "A196：两条功能条的可见主轮廓必须同宽、共中心 x=160、左右双边齐；shadow bbox 单独记录，不参与主体对齐。",
+    "action_stack_color_note": "A199：primary 常态橄榄绿、secondary 青蓝、warning 锈红、disabled 中性灰；颜色只归对应 child / 状态层，不得整页染色。",
+    "header_optical_alignment_note": "A201：frozen carrier 不动；运行时以参考分辨率 y=59 为实际 ink 光学轴，header icon +3px、title 0px、status 两行组 -4px。验收实际 ink bbox，不以节点 rect 或 QA 彩框代替。",
+    "region_body_inner_note": "A201 + A211：visible module=[22,288,276,90]，no_text_rect=[22,288,4,90]，runtime inner_rect=[34,292,252,82]；左右 12px、上下 4px，3-4 行左缘一致并与青色索引线右缘至少相隔 8px。",
+    "photo_asset_contract_note": "A201：photo_slot 继续为 [22,98,276,176]；正式 source=1104x704、ingredient=552x352、1920x1080 runtime=414x264，均为精确 69:44。只允许等比缩小 / KEEP_ASPECT_COVERED；比例偏差>0.5%、任一轴总裁切>10%、上采样或非等比缩放直接失败。",
+    "in_place_expansion_note": "A211 最终裁决：summary 行固定在 [18,390,284,44]；expanded 只把 region_body inner [34,292,252,82] 切成 row_1=[34,292,252,41]、row_2=[34,333,252,41]。两行只读、无独立 hit rect / hover / 箭头；meta 必须写明 `耗时N天`，不得只裸露 `N天`。摘要状态使用 `＋/－`，不使用与向上展开方向冲突的下箭头。不得出现外部 drawer、popover、内嵌滚动或第三条硬塞。照片、CTA、纸面总高和所有 frozen 槽零位移。",
+    "runtime_field_semantics_note": "A205 + A209 + A211：status_stamp 只显示当前地区状态，不承载推荐人数；推荐人数属于具体任务 / 派遣签批。region_body 与 mission_intel_button 只读取正式 region payload；容量压力 fixture 不得进入运行截图。任务情报、限时 / 线索 / 深链摘要与 `＋/－` 状态指示合为一个 disclosure；expanded 在纸面既有信息区原位预览 2 条只读任务，摘要行改为“已显示 2 / 共 N 条”。底部橄榄条仍是唯一进入地区任务台的跨层主导航。当前首周北美示例由 WeeklyRunContent + WeeklyRunSystems 导出：红线升温、可见目标4、限时1、线索2、深链1。"
   },
   "states": ["default", "warning", "locked"],
-  "state_may_change": ["纸面皮肤", "status_stamp 图案", "低多边形块面色调"],
-  "state_may_not_change": ["export_size", "photo_slot 比例与位置", "title_slot 位置", "action_stack 位置", "hit_rect"],
-  "notes": "装饰标签、夹子、背后叠纸、阴影不得移动 content 槽位；photo_slot 比例不得改动，除非重新制作图片内容（image_slot_contract_pass）。纸面倾斜而运行时文字水平即判失败。",
+  "state_may_change": ["纸面皮肤", "status_stamp 图案", "低多边形块面色调", "region_body 文案", "任务摘要文案", "披露展开状态", "主 CTA 的启用状态"],
+  "state_may_not_change": ["export_size", "photo_slot 比例与位置", "title_slot 位置", "region_body / mission_intel_button / primary_enter_cta 几何", "hit_rect"],
+  "notes": "A189 方案 B + A196 外部动作栈几何 + A209 去按钮化 + A211 信息合并 / 原位展开：装饰标签、夹子、背后叠纸、阴影不得移动 content 槽位；region_body 在 collapsed 显示描述、expanded 显示两条只读任务。任务摘要与任务情报共用同一透明 disclosure hit rect；禁止外部抽屉。橄榄 primary_enter_cta 是唯一完整实体按钮，photo_slot 比例不得改动。纸面倾斜而运行时文字水平即判失败。",
   "evidence": {
     "reviews": [
       "docs/plans/world-map-benchmark-landing/2026-07-08-world-map-wmw-right-dossier-cta-contract-v0-8-3-review.md",
-      "docs/plans/world-map-benchmark-landing/2026-07-08-world-map-wmw-right-dossier-cta-text-stress-v0-8-4-review.md"
+      "docs/plans/world-map-benchmark-landing/2026-07-08-world-map-wmw-right-dossier-cta-text-stress-v0-8-4-review.md",
+      "docs/plans/world-map-benchmark-landing/2026-07-13-world-map-wmw-right-dossier-a184-capacity-review.md",
+      "docs/plans/world-map-benchmark-landing/2026-07-14-world-map-wmw-right-dossier-clean-sprite-brief-v0-8-6.md",
+      "docs/plans/world-map-benchmark-landing/2026-07-15-world-map-wmw-right-dossier-candidate-a5-merged-summary-review.md",
+      "docs/plans/world-map-benchmark-landing/2026-07-15-world-map-wmw-right-dossier-candidate-a5-1-in-place-mission-preview-review.md"
     ],
     "measurement_manifests": [
       "docs/screenshots/2026-06-24-world-map-benchmark-landing/363-world-map-wmw-v0-8-3-right-dossier-cta-manifest.json",
-      "docs/screenshots/2026-06-24-world-map-benchmark-landing/367-world-map-wmw-v0-8-4-right-dossier-cta-text-stress-manifest.json"
+      "docs/screenshots/2026-06-24-world-map-benchmark-landing/367-world-map-wmw-v0-8-4-right-dossier-cta-text-stress-manifest.json",
+      "docs/screenshots/2026-06-24-world-map-benchmark-landing/570-world-map-wmw-v0-8-5-right-dossier-b-raster-bbox-manifest.json",
+      "docs/screenshots/2026-06-24-world-map-benchmark-landing/577-world-map-wmw-v0-8-6-right-dossier-alignment-manifest.json",
+      "docs/screenshots/2026-06-24-world-map-benchmark-landing/628-world-map-wmw-v0-9-5-right-dossier-candidate-a5-manifest.json",
+      "docs/screenshots/2026-06-24-world-map-benchmark-landing/638-world-map-wmw-v0-9-6-right-dossier-candidate-a5-1-manifest.json"
     ],
     "scripts": [
       "scripts/ui-contracts/wmw/wmw_v083_right_dossier_cta_contract.py",
-      "scripts/ui-contracts/wmw/wmw_v084_right_dossier_text_stress.py"
+      "scripts/ui-contracts/wmw/wmw_v084_right_dossier_text_stress.py",
+      "scripts/ui-contracts/wmw/wmw_v085_right_dossier_b_contract.py",
+      "scripts/ui-contracts/wmw/wmw_v086_right_dossier_alignment.py",
+      "scripts/ui-contracts/wmw/wmw_v095_right_dossier_candidate_a5_pipeline.py",
+      "scripts/ui-contracts/wmw/wmw_v096_right_dossier_candidate_a51_pipeline.py"
     ]
   }
 }

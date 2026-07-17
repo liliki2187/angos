@@ -14,6 +14,9 @@ signal execute_requested
 
 const ActionItemScene = preload("res://scenes/gameplay/weekly_run/components/WeeklyRunActionItem.tscn")
 const UiStyle = preload("res://scenes/gameplay/weekly_run/components/WeeklyRunUiStyle.gd")
+const RegionTaskManifestV2 = preload("res://scenes/gameplay/weekly_run/components/WeeklyRunRegionTaskManifestV2.gd")
+const RegionTaskBoardV2 = preload("res://scenes/gameplay/weekly_run/components/WeeklyRunRegionTaskBoardV2.gd")
+const WorldMapAssemblyScene = preload("res://scenes/gameplay/weekly_run/components/WeeklyRunWorldMapAssembly.tscn")
 
 var _use_world_imagegen_v5 := false
 var _world_imagegen_bg_texture: Texture2D = null
@@ -24,7 +27,11 @@ var _region_task_bg_texture: Texture2D = null
 var _region_task_map_texture: Texture2D = null
 var _region_task_route_texture: Texture2D = null
 var _current_view_mode := "world"
+var _use_region_task_runtime_slice_v2 := false
+var _region_task_board_v2: Control = null
+var _world_map_assembly: Control = null
 
+@onready var root_vbox: VBoxContainer = $RootVBox
 @onready var stage_panel: PanelContainer = $RootVBox/StagePanel
 @onready var stage_kicker: Label = $RootVBox/StagePanel/StageHBox/StageTitleBox/StageKicker
 @onready var stage_title: Label = $RootVBox/StagePanel/StageHBox/StageTitleBox/StageTitle
@@ -43,6 +50,7 @@ var _current_view_mode := "world"
 @onready var world_pin_layer: Control = $RootVBox/WorldView/WorldMapPanel/WorldMapStack/WorldPinLayer
 @onready var world_editor_sticker: TextureRect = $RootVBox/WorldView/WorldMapPanel/WorldMapStack/WorldEditorSticker
 @onready var world_detail_panel: PanelContainer = $RootVBox/WorldView/WorldDetailPanel
+@onready var world_detail_vbox: VBoxContainer = $RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox
 @onready var world_detail_kicker: Label = $RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox/WorldDetailKicker
 @onready var region_detail_title: Label = $RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox/RegionDetailTitle
 @onready var world_story_preview: TextureRect = $RootVBox/WorldView/WorldDetailPanel/WorldDetailVBox/WorldStoryPreview
@@ -111,6 +119,8 @@ func _ready() -> void:
 	_use_world_imagegen_v5 = UiStyle.has_world_imagegen_v5_runtime_assets()
 	_apply_world_runtime_art()
 	_apply_region_task_runtime_art()
+	_mount_world_map_assembly()
+	_mount_region_task_runtime_slice_v2()
 
 	var panels: Array[Control] = [
 		stage_panel, world_index_panel, world_map_panel, world_detail_panel, world_proof_strip,
@@ -188,6 +198,55 @@ func _ready() -> void:
 	btn_filter_pop.pressed.connect(func() -> void:
 		filter_toggled.emit("pop")
 	)
+
+func _mount_world_map_assembly() -> void:
+	if not WorldMapAssemblyScene.can_instantiate():
+		push_error("WMW world-map assembly scene cannot be instantiated; legacy world map remains as fallback.")
+		return
+	_world_map_assembly = WorldMapAssemblyScene.instantiate()
+	_world_map_assembly.name = "WorldMapAssembly"
+	_world_map_assembly.visible = false
+	add_child(_world_map_assembly)
+	_world_map_assembly.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_world_map_assembly.connect("region_selected", func(region_id: String) -> void:
+		region_selected.emit(region_id)
+	)
+	_world_map_assembly.connect("enter_region_requested", func() -> void:
+		enter_region_requested.emit()
+	)
+
+func has_world_map_assembly() -> bool:
+	return is_instance_valid(_world_map_assembly) and bool(_world_map_assembly.call("has_independent_host"))
+
+func get_world_map_assembly() -> Control:
+	return _world_map_assembly
+
+func _mount_region_task_runtime_slice_v2() -> void:
+	_use_region_task_runtime_slice_v2 = RegionTaskManifestV2.has_runtime_slice_assets()
+	if not _use_region_task_runtime_slice_v2:
+		return
+	_region_task_board_v2 = RegionTaskBoardV2.new()
+	_region_task_board_v2.name = "RegionTaskBoardV2"
+	_region_task_board_v2.visible = false
+	add_child(_region_task_board_v2)
+	_region_task_board_v2.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_region_task_board_v2.offset_left = 0.0
+	_region_task_board_v2.offset_top = 0.0
+	_region_task_board_v2.offset_right = 0.0
+	_region_task_board_v2.offset_bottom = 0.0
+	_region_task_board_v2.connect("back_to_world_requested", func() -> void:
+		back_to_world_requested.emit()
+	)
+	_region_task_board_v2.connect("node_selected", func(node_id: String) -> void:
+		node_selected.emit(node_id)
+	)
+	_region_task_board_v2.connect("open_dispatch_requested", func() -> void:
+		open_dispatch_requested.emit()
+	)
+	_region_task_bg_texture = null
+	_region_task_map_texture = null
+	_region_task_route_texture = null
+	queue_redraw()
 
 func _connect_selected_slot_button(button: Button) -> void:
 	button.pressed.connect(func() -> void:
@@ -299,12 +358,24 @@ func render(payload: Dictionary) -> void:
 	_current_view_mode = view_mode
 	var selected_region := str(payload.get("selected_region_id", ""))
 	var selected_node := str(payload.get("selected_node_id", ""))
+	var show_world_assembly := view_mode == "world" and has_world_map_assembly()
+	var show_region_slice_v2 := view_mode == "region" and _use_region_task_runtime_slice_v2 and is_instance_valid(_region_task_board_v2)
+	var phase_margin := 0 if show_region_slice_v2 or show_world_assembly else 2
+	add_theme_constant_override("margin_left", phase_margin)
+	add_theme_constant_override("margin_top", phase_margin)
+	add_theme_constant_override("margin_right", phase_margin)
+	add_theme_constant_override("margin_bottom", phase_margin)
 
-	world_view.visible = view_mode == "world"
-	world_proof_strip.visible = view_mode == "world"
-	region_view.visible = view_mode == "region"
-	dispatch_view.visible = view_mode == "dispatch"
-	stage_panel.visible = view_mode == "dispatch"
+	root_vbox.visible = not show_region_slice_v2 and not show_world_assembly
+	if is_instance_valid(_world_map_assembly):
+		_world_map_assembly.visible = show_world_assembly
+	if is_instance_valid(_region_task_board_v2):
+		_region_task_board_v2.visible = show_region_slice_v2
+	world_view.visible = view_mode == "world" and not show_region_slice_v2
+	world_proof_strip.visible = view_mode == "world" and not show_region_slice_v2
+	region_view.visible = view_mode == "region" and not show_region_slice_v2
+	dispatch_view.visible = view_mode == "dispatch" and not show_region_slice_v2
+	stage_panel.visible = view_mode == "dispatch" and not show_region_slice_v2
 	stage_status.text = "第 %d 周 · 剩余 %d 天 · 新素材 %d" % [
 		int(payload.get("week", 1)),
 		int(payload.get("remaining_days", 0)),
@@ -314,9 +385,12 @@ func render(payload: Dictionary) -> void:
 
 	match view_mode:
 		"world":
-			stage_title.text = "全球频道 · 本周取材地图"
-			stage_note.text = "监听城市异常与读者线索，先锁定取材区域；进入区域后才审任务，不消耗天数。"
-			_render_world(payload, selected_region)
+			if show_world_assembly:
+				_world_map_assembly.call("render", payload)
+			else:
+				stage_title.text = "全球频道 · 本周取材地图"
+				stage_note.text = "监听城市异常与读者线索，先锁定取材区域；进入区域后才审任务，不消耗天数。"
+				_render_world(payload, selected_region)
 		"dispatch":
 			stage_title.text = "编辑部派遣签批台"
 			stage_note.text = "把任务从地图上拿到桌面，配置本次骰池，再签批外勤。"
@@ -324,7 +398,10 @@ func render(payload: Dictionary) -> void:
 		_:
 			stage_title.text = "%s · 区域任务台" % str(payload.get("region_title", "北美禁区带"))
 			stage_note.text = "选择任务档案，送至签批台配置本次骰池。"
-			_render_region(payload, selected_node)
+			if show_region_slice_v2:
+				_region_task_board_v2.call("render", payload)
+			else:
+				_render_region(payload, selected_node)
 
 func _render_world(payload: Dictionary, selected_region: String) -> void:
 	world_index_panel.visible = true
@@ -336,15 +413,15 @@ func _render_world(payload: Dictionary, selected_region: String) -> void:
 	_update_world_story_preview(payload)
 	_render_world_story_tickets(payload)
 	region_detail_text.text = _build_world_detail_text(payload)
-	_render_world_proof_strip(payload)
-	var can_enter := bool(payload.get("region_enter_enabled", false))
-	_style_world_detail_body(can_enter)
-	_render_world_cta_hint(payload, can_enter)
-	enter_region_btn.text = str(payload.get("region_enter_text", "进入选定地区" if can_enter else "暂不可进入"))
+	var can_enter_fallback := bool(payload.get("region_enter_enabled", false))
+	_style_world_detail_body(can_enter_fallback)
+	_render_world_cta_hint(payload, can_enter_fallback)
+	enter_region_btn.text = str(payload.get("region_enter_text", "进入地区任务台" if can_enter_fallback else "暂不可进入"))
 	if _use_world_imagegen_v5:
-		UiStyle.apply_world_imagegen_v5_cta_button(enter_region_btn, can_enter)
+		UiStyle.apply_world_imagegen_v5_cta_button(enter_region_btn, can_enter_fallback)
 	else:
-		UiStyle.apply_world_cta_button(enter_region_btn, can_enter)
+		UiStyle.apply_world_cta_button(enter_region_btn, can_enter_fallback)
+	_render_world_proof_strip(payload)
 
 func _update_world_story_preview(payload: Dictionary) -> void:
 	if not _use_world_imagegen_v5:

@@ -1,0 +1,116 @@
+{
+  "artifact_type": "structure_wireframe",
+  "viewport": [
+    1920,
+    1080
+  ],
+  "columns": {
+    "left": [
+      36,
+      24,
+      342,
+      1032
+    ],
+    "center": [
+      402,
+      24,
+      972,
+      1032
+    ],
+    "right": [
+      1398,
+      24,
+      480,
+      1032
+    ]
+  },
+  "region_cards": [
+    [
+      66,
+      36,
+      306,
+      240
+    ],
+    [
+      66,
+      294,
+      306,
+      240
+    ],
+    [
+      66,
+      552,
+      306,
+      240
+    ]
+  ],
+  "time_gate": [
+    36,
+    810,
+    342,
+    246
+  ],
+  "map_stage": [
+    426,
+    96,
+    924,
+    696
+  ],
+  "receipts": [
+    [
+      432,
+      837,
+      369,
+      207
+    ],
+    [
+      836,
+      837,
+      369,
+      207
+    ]
+  ],
+  "right_carrier": [
+    1398,
+    24,
+    480,
+    1032
+  ],
+  "a51_dossier": [
+    1398,
+    45,
+    480,
+    780
+  ],
+  "a51_photo": [
+    1431,
+    192,
+    414,
+    264
+  ],
+  "a51_disclosure": [
+    1425,
+    630,
+    426,
+    66
+  ],
+  "a51_cta": [
+    1425,
+    711,
+    426,
+    75
+  ],
+  "states": {
+    "time_gate": "default_to_confirming_on_first_click",
+    "dossier": "collapsed"
+  },
+  "assertions": {
+    "single_day_owner": true,
+    "advance_day_present": true,
+    "consequence_preview_present": true,
+    "enter_region_present": true,
+    "third_receipt_absent": true,
+    "right_folder_noninteractive": true,
+    "runtime_command_implemented": false
+  }
+}

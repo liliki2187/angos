@@ -1,0 +1,833 @@
+{
+  "scope": "weekly_editorial_history",
+  "representative_sheets": [
+    {
+      "output": "01-early-editorial-office-experiments.png",
+      "title": "早期报刊工作空间 / 编辑部大厅实验（2026-05-27 ～ 06-04）",
+      "entries": [
+        {
+          "source": "2026-05-27-paper-editorial-cleanup/01-paper-editorial-cleanup.png",
+          "label": "05-27 报刊编辑清理版",
+          "status": "included"
+        },
+        {
+          "source": "2026-06-03-editorial-office-art-assets/01-editorial-office-assets-v1.png",
+          "label": "06-03 编辑部大厅资产 v1",
+          "status": "included"
+        },
+        {
+          "source": "2026-06-03-editorial-office-art-assets/04-editorial-office-assets-1366-v3.png",
+          "label": "06-03 1366 布局 v3",
+          "status": "included"
+        },
+        {
+          "source": "2026-06-03-editorial-office-pixel-variants/01-editorial-office-pixel-v2-1920.png",
+          "label": "06-03 像素变体 v2",
+          "status": "included"
+        },
+        {
+          "source": "2026-06-03-editorial-office-pixel-variants/02-editorial-office-pixel-v3-1920.png",
+          "label": "06-03 像素变体 v3",
+          "status": "included"
+        },
+        {
+          "source": "2026-06-03-editorial-office-v2-clean-prop/01-v2-prop-board-window-1920.png",
+          "label": "06-03 清洁物件版",
+          "status": "included"
+        },
+        {
+          "source": "2026-06-03-editorial-office-world-echo/01-world-echo-astral-1920.png",
+          "label": "06-03 世界回响：星界",
+          "status": "included"
+        },
+        {
+          "source": "2026-06-03-editorial-office-world-echo/02-world-echo-transit-1920.png",
+          "label": "06-03 世界回响：交通裂隙",
+          "status": "included"
+        },
+        {
+          "source": "2026-06-03-editorial-office-world-echo/03-world-echo-signal-1920.png",
+          "label": "06-03 世界回响：信号中断",
+          "status": "included"
+        },
+        {
+          "source": "2026-06-04-editorial-office-interactions/01-main-1920.png",
+          "label": "06-04 编辑部主界面",
+          "status": "included"
+        },
+        {
+          "source": "2026-06-04-editorial-office-interactions/02-science-dialogue-1920.png",
+          "label": "06-04 科学联络人弹层",
+          "status": "included"
+        },
+        {
+          "source": "2026-06-04-editorial-office-interactions/03-reader-letter-1920.png",
+          "label": "06-04 读者来信弹层",
+          "status": "included"
+        },
+        {
+          "source": "2026-06-04-editorial-office-interactions/04-tv-broadcast-1920.png",
+          "label": "06-04 电视广播弹层",
+          "status": "included"
+        }
+      ]
+    },
+    {
+      "output": "02-july14-godot-structure-branches.png",
+      "title": "Godot 发刊功能结构与分支收束（2026-07-14）",
+      "entries": [
+        {
+          "source": "2026-07-14-weekly-editorial-functional-skeleton/01-held-and-drop-target.png",
+          "label": "功能骨架：持稿与目标",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-14-weekly-editorial-functional-skeleton/02-placed-full-review.png",
+          "label": "功能骨架：上版复核",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-14-weekly-editorial-functional-skeleton/03-signoff-confirmation.png",
+          "label": "功能骨架：签批确认",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-14-weekly-editorial-dual-page-focus-skeleton/01-dual-page-overview-held.png",
+          "label": "双版聚焦支线：总览",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-14-weekly-editorial-dual-page-focus-skeleton/02-single-page-focus-held.png",
+          "label": "双版聚焦支线：单版放大",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-14-weekly-editorial-dual-page-focus-skeleton/03-dual-page-signoff-confirmation.png",
+          "label": "双版聚焦支线：确认",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-14-weekly-editorial-assetized-vertical-slice/01-godot-dual-page-overview-held.png",
+          "label": "资产化切片：双版总览",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-14-weekly-editorial-assetized-vertical-slice/02-godot-focus-left-held.png",
+          "label": "资产化切片：左版聚焦",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-14-weekly-editorial-assetized-vertical-slice/02-godot-focus-right-held.png",
+          "label": "资产化切片：右版聚焦",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-14-weekly-editorial-assetized-vertical-slice/03-godot-dual-page-confirmation.png",
+          "label": "资产化切片：签批确认",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-14-weekly-editorial-dual-page-only/01-godot-dual-page-held.png",
+          "label": "双版常显：持稿",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-14-weekly-editorial-dual-page-only/02-godot-dual-page-full.png",
+          "label": "双版常显：全版",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-14-weekly-editorial-dual-page-only/03-godot-dual-page-confirmation.png",
+          "label": "双版常显：确认",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-14-weekly-editorial-benchmark-landing/01-editorial-current-runtime.png",
+          "label": "07-14 当时运行时基线",
+          "status": "included"
+        }
+      ]
+    },
+    {
+      "output": "03-july15-godot-mainline-refinement.png",
+      "title": "Godot 发刊主线细化（2026-07-15）",
+      "entries": [
+        {
+          "source": "2026-07-15-weekly-editorial-masthead/01-godot-masthead-held.png",
+          "label": "刊头接入：持稿",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-15-weekly-editorial-masthead/02-godot-masthead-full.png",
+          "label": "刊头接入：全版",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-15-weekly-editorial-masthead/03-godot-masthead-confirmation.png",
+          "label": "刊头接入：确认",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-15-weekly-editorial-headline-alignment/01-godot-headline-alignment-full.png",
+          "label": "标题对齐",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-15-weekly-editorial-headline-autofit/01-godot-headline-autofit-mixed-full.png",
+          "label": "标题自适应",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-15-weekly-editorial-same-paper-local-replace/01-godot-same-paper-default.png",
+          "label": "同纸色：默认",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-15-weekly-editorial-same-paper-local-replace/02-godot-single-local-replace.png",
+          "label": "同纸色：局部换稿",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-15-weekly-editorial-same-paper-local-replace/03-godot-drag-hover.png",
+          "label": "同纸色：拖拽目标",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-15-weekly-editorial-secondary-head-assetized/01-godot-secondary-head-occupied.png",
+          "label": "副头版资产：占用",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-15-weekly-editorial-secondary-head-assetized/02-godot-secondary-head-source.png",
+          "label": "副头版资产：来源",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-15-weekly-editorial-secondary-head-assetized/03-godot-secondary-head-targets.png",
+          "label": "副头版资产：目标",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-15-weekly-editorial-standard-story-b-slice/01-godot-standard-story-default.png",
+          "label": "普通报道图：默认",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-15-weekly-editorial-standard-story-b-slice/02-godot-standard-story-local-replace.png",
+          "label": "普通报道图：局部换稿",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-15-weekly-editorial-standard-story-b-slice/03-godot-standard-story-drag-hover.png",
+          "label": "普通报道图：拖拽目标",
+          "status": "included"
+        }
+      ]
+    },
+    {
+      "output": "04-july16-17-assets-capacity-and-wireframes.png",
+      "title": "报道图接入、容量回归与整屏结构提案（2026-07-16 ～ 07-17）",
+      "entries": [
+        {
+          "source": "2026-07-16-weekly-editorial-story-art-restyle/01-godot-three-restyled-story-images-default.png",
+          "label": "三张报道图重绘",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-16-weekly-editorial-roswell-b-slice/01-godot-two-standard-story-images-default.png",
+          "label": "罗斯威尔报道图接入",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-16-weekly-editorial-shadow-department-b-slice/01-godot-three-standard-story-images-default.png",
+          "label": "影子部门报道图接入",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-16-weekly-editorial-blue-phone-booth-b-slice/01-godot-four-standard-story-images-default.png",
+          "label": "蓝色电话亭报道图接入",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-17-weekly-editorial-ordinary-story-closeout/00-capacity-closeout-contact-sheet.png",
+          "label": "容量回归汇总",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-17-weekly-editorial-ordinary-story-closeout/01-godot-capacity-0-of-6.png",
+          "label": "Godot 容量 0/6",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-17-weekly-editorial-ordinary-story-closeout/02-godot-capacity-3-of-6.png",
+          "label": "Godot 容量 3/6",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-17-weekly-editorial-ordinary-story-closeout/03-godot-capacity-5-of-6.png",
+          "label": "Godot 容量 5/6",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-17-weekly-editorial-ordinary-story-closeout/04-godot-capacity-6-of-6.png",
+          "label": "Godot 容量 6/6",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-17-weekly-editorial-packaging-mock-v1/01-weekly-editorial-packaging-mock-v1.png",
+          "label": "整屏包装 Mock v1（已否决）",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-17-weekly-editorial-functional-black-structure-v1/01-weekly-editorial-functional-black-structure-v1.png",
+          "label": "功能黑色结构 v1（已替代）",
+          "status": "included"
+        },
+        {
+          "source": "2026-07-17-weekly-editorial-formal-black-structure-v2/01-weekly-editorial-formal-black-structure-v2.png",
+          "label": "正式黑白结构 v2（待确认）",
+          "status": "included"
+        }
+      ]
+    }
+  ],
+  "inventory_count": 67,
+  "inventory": [
+    {
+      "path": "docs/screenshots/2026-05-27-paper-editorial-cleanup/01-paper-editorial-cleanup.png",
+      "size": [
+        1440,
+        920
+      ],
+      "bytes": 272414
+    },
+    {
+      "path": "docs/screenshots/2026-06-03-editorial-office-art-assets/01-editorial-office-assets-v1.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 718508
+    },
+    {
+      "path": "docs/screenshots/2026-06-03-editorial-office-art-assets/02-editorial-office-assets-1366-v1.png",
+      "size": [
+        1366,
+        768
+      ],
+      "bytes": 535192
+    },
+    {
+      "path": "docs/screenshots/2026-06-03-editorial-office-art-assets/03-editorial-office-assets-1366-v2.png",
+      "size": [
+        1366,
+        768
+      ],
+      "bytes": 524827
+    },
+    {
+      "path": "docs/screenshots/2026-06-03-editorial-office-art-assets/04-editorial-office-assets-1366-v3.png",
+      "size": [
+        1366,
+        768
+      ],
+      "bytes": 507621
+    },
+    {
+      "path": "docs/screenshots/2026-06-03-editorial-office-art-assets/05-editorial-office-assets-1920-v2.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 718508
+    },
+    {
+      "path": "docs/screenshots/2026-06-03-editorial-office-pixel-variants/01-editorial-office-pixel-v2-1920.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1526900
+    },
+    {
+      "path": "docs/screenshots/2026-06-03-editorial-office-pixel-variants/02-editorial-office-pixel-v3-1920.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1426242
+    },
+    {
+      "path": "docs/screenshots/2026-06-03-editorial-office-v2-clean-prop/01-v2-prop-board-window-1920.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1108918
+    },
+    {
+      "path": "docs/screenshots/2026-06-03-editorial-office-world-echo/01-world-echo-astral-1920.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1609465
+    },
+    {
+      "path": "docs/screenshots/2026-06-03-editorial-office-world-echo/02-world-echo-transit-1920.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1630341
+    },
+    {
+      "path": "docs/screenshots/2026-06-03-editorial-office-world-echo/03-world-echo-signal-1920.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1611318
+    },
+    {
+      "path": "docs/screenshots/2026-06-03-editorial-office-world-echo/04-world-echo-astral-1366.png",
+      "size": [
+        1366,
+        768
+      ],
+      "bytes": 978979
+    },
+    {
+      "path": "docs/screenshots/2026-06-04-editorial-office-interactions/01-main-1920.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 1087771
+    },
+    {
+      "path": "docs/screenshots/2026-06-04-editorial-office-interactions/02-science-dialogue-1920.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 442617
+    },
+    {
+      "path": "docs/screenshots/2026-06-04-editorial-office-interactions/03-reader-letter-1920.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 509597
+    },
+    {
+      "path": "docs/screenshots/2026-06-04-editorial-office-interactions/04-tv-broadcast-1920.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 615814
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-assetized-vertical-slice/01-godot-dual-page-overview-held.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 442346
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-assetized-vertical-slice/02-godot-focus-left-held.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 437346
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-assetized-vertical-slice/02-godot-focus-right-held.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 195380
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-assetized-vertical-slice/03-godot-dual-page-confirmation.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 475056
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-assetized-vertical-slice/04-godot-focus-transition.webp",
+      "size": [
+        960,
+        540
+      ],
+      "bytes": 31910
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-assetized-vertical-slice/05-overview-annotated.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 383972
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-benchmark-landing/01-editorial-current-runtime.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 366348
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-dual-page-focus-skeleton/01-dual-page-overview-held.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 152940
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-dual-page-focus-skeleton/02-single-page-focus-held.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 160260
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-dual-page-focus-skeleton/03-dual-page-signoff-confirmation.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 160518
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-dual-page-focus-skeleton/04-dual-page-focus-flow.webp",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 143126
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-dual-page-only/01-godot-dual-page-held.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 427458
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-dual-page-only/02-godot-dual-page-full.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 412139
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-dual-page-only/03-godot-dual-page-confirmation.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 440253
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-functional-skeleton/01-held-and-drop-target.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 166211
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-functional-skeleton/02-placed-full-review.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 158606
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-functional-skeleton/03-signoff-confirmation.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 166794
+    },
+    {
+      "path": "docs/screenshots/2026-07-14-weekly-editorial-functional-skeleton/04-editorial-functional-flow.webp",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 128494
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-headline-alignment/01-godot-headline-alignment-full.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 582210
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-headline-alignment/02-godot-headline-alignment-crop.png",
+      "size": [
+        1060,
+        555
+      ],
+      "bytes": 471918
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-headline-autofit/01-godot-headline-autofit-mixed-full.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 563269
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-headline-autofit/02-godot-headline-autofit-mixed-crop.png",
+      "size": [
+        1060,
+        555
+      ],
+      "bytes": 461020
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-headline-autofit/03-godot-headline-autofit-extreme-crop.png",
+      "size": [
+        540,
+        455
+      ],
+      "bytes": 227637
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-masthead/00-godot-masthead-detail.png",
+      "size": [
+        1040,
+        88
+      ],
+      "bytes": 10825
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-masthead/01-godot-masthead-held.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 421016
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-masthead/02-godot-masthead-full.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 415152
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-masthead/03-godot-masthead-confirmation.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 443307
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/01-godot-same-paper-default.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 563733
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/02-godot-single-local-replace.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 561101
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/03-godot-drag-hover.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 561558
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-same-paper-local-replace/weekly-editorial-same-paper-local-replace.webp",
+      "size": [
+        960,
+        540
+      ],
+      "bytes": 71966
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-secondary-head-assetized/01-godot-secondary-head-occupied.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 612532
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-secondary-head-assetized/02-godot-secondary-head-source.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 605911
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-secondary-head-assetized/03-godot-secondary-head-targets.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 605194
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-secondary-head-assetized/04-secondary-head-state-flow.webp",
+      "size": [
+        960,
+        540
+      ],
+      "bytes": 34258
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-standard-story-b-slice/01-godot-standard-story-default.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 628781
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-standard-story-b-slice/02-godot-standard-story-local-replace.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 629739
+    },
+    {
+      "path": "docs/screenshots/2026-07-15-weekly-editorial-standard-story-b-slice/03-godot-standard-story-drag-hover.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 629098
+    },
+    {
+      "path": "docs/screenshots/2026-07-16-weekly-editorial-blue-phone-booth-b-slice/01-godot-four-standard-story-images-default.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 793713
+    },
+    {
+      "path": "docs/screenshots/2026-07-16-weekly-editorial-roswell-b-slice/01-godot-two-standard-story-images-default.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 707170
+    },
+    {
+      "path": "docs/screenshots/2026-07-16-weekly-editorial-shadow-department-b-slice/01-godot-three-standard-story-images-default.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 759253
+    },
+    {
+      "path": "docs/screenshots/2026-07-16-weekly-editorial-story-art-restyle/01-godot-three-restyled-story-images-default.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 651451
+    },
+    {
+      "path": "docs/screenshots/2026-07-17-weekly-editorial-formal-black-structure-v2/01-weekly-editorial-formal-black-structure-v2.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 124749
+    },
+    {
+      "path": "docs/screenshots/2026-07-17-weekly-editorial-functional-black-structure-v1/01-weekly-editorial-functional-black-structure-v1.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 133771
+    },
+    {
+      "path": "docs/screenshots/2026-07-17-weekly-editorial-ordinary-story-closeout/00-capacity-closeout-contact-sheet.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 478226
+    },
+    {
+      "path": "docs/screenshots/2026-07-17-weekly-editorial-ordinary-story-closeout/01-godot-capacity-0-of-6.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 538640
+    },
+    {
+      "path": "docs/screenshots/2026-07-17-weekly-editorial-ordinary-story-closeout/02-godot-capacity-3-of-6.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 666570
+    },
+    {
+      "path": "docs/screenshots/2026-07-17-weekly-editorial-ordinary-story-closeout/03-godot-capacity-5-of-6.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 759253
+    },
+    {
+      "path": "docs/screenshots/2026-07-17-weekly-editorial-ordinary-story-closeout/04-godot-capacity-6-of-6.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 793713
+    },
+    {
+      "path": "docs/screenshots/2026-07-17-weekly-editorial-packaging-mock-v1/01-weekly-editorial-packaging-mock-v1.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "bytes": 742694
+    }
+  ]
+}

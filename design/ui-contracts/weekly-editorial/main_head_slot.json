@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "contract_version": "1.2.0",
+  "status": "locked_candidate",
+  "page": "weekly_editorial",
+  "class_id": "main_head_slot",
+  "parent_class": "main_page_shell",
+  "role": "S 级主头版版位；首个 vertical slice",
+  "reference_resolution": [1920, 1080],
+  "runtime_resolution": [1920, 1080],
+  "export_scale": 2,
+  "frozen": {
+    "export_size": [442, 374],
+    "positions": [[459, 276]],
+    "hit_rect": [0, 0, 442, 374],
+    "slots": {
+      "headline": [16, 14, 410, 68],
+      "photo": [16, 92, 410, 218],
+      "meta": [16, 318, 360, 42],
+      "local_replace_action": [390, 322, 44, 44]
+    },
+    "no_text_rects": {
+      "top_edge": [0, 0, 442, 8],
+      "bottom_edge": [0, 366, 442, 8],
+      "left_edge": [0, 0, 8, 374],
+      "right_edge": [434, 0, 8, 374],
+      "local_action_corner": [382, 314, 60, 60]
+    }
+  },
+  "states": ["idle", "slot_focused", "replace_armed", "replace_pending", "dragging", "drag_hover", "confirmation_frozen"],
+  "per_state_overrides": {
+    "idle": {},
+    "slot_focused": {},
+    "replace_armed": {},
+    "replace_pending": {},
+    "dragging": {},
+    "drag_hover": {},
+    "confirmation_frozen": {}
+  },
+  "provisional": {
+    "headline_pressure": "M330 末班车在不存在的站台停了三秒；双版常显 28px、两行、不得低于 22px。",
+    "photo_fit": "cover；主体焦点避开书脊、标题与状态角标。"
+  },
+  "notes": "纸壳与报道图分层；标题、数值、按钮、页码和状态不得烘焙。默认与拖拽态不显示按钮；点击占用版位后才在 local_replace_action 显示唯一换稿按钮。"
+}

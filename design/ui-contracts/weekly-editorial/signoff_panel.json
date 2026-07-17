@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "contract_version": "1.1.0",
+  "status": "locked_candidate",
+  "page": "weekly_editorial",
+  "class_id": "signoff_panel",
+  "role": "整期发刊复核与唯一送印入口",
+  "reference_resolution": [1920, 1080],
+  "runtime_resolution": [1920, 1080],
+  "export_scale": 2,
+  "frozen": {
+    "export_size": [360, 920],
+    "positions": [[1480, 96]],
+    "hit_rect": [0, 0, 360, 920],
+    "slots": {
+      "content": [16, 16, 328, 888],
+      "issue_header": [16, 16, 328, 48],
+      "headline_summary": [16, 80, 328, 126],
+      "outcome": [16, 222, 328, 104],
+      "risk": [16, 342, 328, 132],
+      "flex_space": [16, 490, 328, 318],
+      "primary_cta": [16, 824, 328, 72]
+    },
+    "no_text_rects": {
+      "top_edge": [0, 0, 360, 12],
+      "bottom_edge": [0, 908, 360, 12],
+      "left_edge": [0, 0, 12, 920],
+      "right_edge": [348, 0, 12, 920]
+    }
+  },
+  "states": ["dual_page_ready", "dual_page_warning", "dual_page_blocked", "confirmation"]
+}

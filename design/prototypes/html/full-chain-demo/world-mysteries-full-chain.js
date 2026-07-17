@@ -2,6 +2,10 @@
   "use strict";
 
   const DIFFICULTY_P = { easy: 0.6, normal: 0.5, hard: 1 / 3 };
+  const REVIEW_POINTS_PER_WEEK = 2;
+  const EXPOSURE_INVALID_FACES_PER_POINT = 2;
+  const EXPOSURE_ECHO_THRESHOLD = 2;
+  const EXPOSURE_CLEAN_BONUS_MARGIN = 2;
   const macro = { 公信: 42, 诡名: 38, 声望: 45, 守序: 48, 狂性: 22 };
 
   const state = {
@@ -70,6 +74,9 @@
     whiteInvestigationLog: {},
     calamityMeter: 0,
     pushBudgetWeekly: 1,
+    reviewPoints: REVIEW_POINTS_PER_WEEK,
+    regionExposure: {},
+    exposureEchoes: [],
     selectedToolDiceIds: [],
     pendingDiceSelection: null,
     toolDiceInventory: [
@@ -1225,6 +1232,34 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
     return rolls;
   }
 
+  function rerollEligibleIds(mission, rolls, selectedIds) {
+    if (!mission || mission.noReroll || mission.isBlackDiceTask) return [];
+    const selected = new Set(selectedIds || []);
+    return (rolls || [])
+      .filter((r) => {
+        if (!r || selected.has(r.id) || r.locked || r.black || (r.face && r.face.black)) return false;
+        return (r.kind === "staff" || r.kind === "tempStaff") && !!findStaff(r.staffId);
+      })
+      .map((r) => r.id);
+  }
+
+  function rerollRollsByIds(rolls, targetIds) {
+    const targets = new Set(targetIds || []);
+    const rerolledIds = [];
+    (rolls || []).forEach((r) => {
+      if (!r || !targets.has(r.id)) return;
+      const staff = findStaff(r.staffId);
+      if (!staff || (r.kind !== "staff" && r.kind !== "tempStaff")) return;
+      const faces = diceFacesForStaff(staff);
+      const idx = Math.floor(Math.random() * Math.max(1, faces.length));
+      r.faceIndex = idx;
+      r.face = faces[idx] || blankFace();
+      r.locked = !!(r.face && r.face.noReroll);
+      rerolledIds.push(r.id);
+    });
+    return rerolledIds;
+  }
+
   function makeBlackFace(label, effect) {
     return { black: true, label, effect };
   }
@@ -1339,6 +1374,143 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
 
   function contributionTotalForNeed(need, sum) {
     return Object.keys(need || {}).reduce((acc, key) => acc + Math.max(0, (sum && sum[key]) || 0), 0);
+  }
+
+  function missionHasExposureAxis(mission) {
+    return !!mission
+      && mission.riskTier === "high"
+      && !mission.isBlackDiceTask
+      && mission.missionType !== "leadInvestigation";
+  }
+
+  function invalidStaffFacesForExposure(mission, rolls) {
+    const need = (mission && mission.need) || {};
+    return (rolls || []).filter((roll) => {
+      if (!roll || (roll.kind !== "staff" && roll.kind !== "tempStaff")) return false;
+      const face = roll.face || {};
+      return !!face.blank || !face.attr || need[face.attr] == null;
+    }).length;
+  }
+
+  function exposureGainFromRolls(mission, rolls) {
+    if (!missionHasExposureAxis(mission)) return 0;
+    return Math.floor(invalidStaffFacesForExposure(mission, rolls) / EXPOSURE_INVALID_FACES_PER_POINT);
+  }
+
+  function registeredExposureRegion(regionId) {
+    return REGIONS.find((region) => region.id === regionId) || null;
+  }
+
+  function updateExposureAxisAudit(key, value) {
+    window.exposureAxisAudit = {
+      ...(window.exposureAxisAudit || {}),
+      constants: {
+        invalidFacesPerPoint: EXPOSURE_INVALID_FACES_PER_POINT,
+        echoThreshold: EXPOSURE_ECHO_THRESHOLD,
+        cleanBonusMargin: EXPOSURE_CLEAN_BONUS_MARGIN,
+      },
+      [key]: value,
+      regionExposure: { ...state.regionExposure },
+      exposureEchoes: (state.exposureEchoes || []).map((echo) => ({ ...echo })),
+    };
+  }
+
+  function exposurePreviewHtml(mission, rolls, sum, options) {
+    if (!missionHasExposureAxis(mission)) return "";
+    const rerolling = !!(options && options.rerolling);
+    if (rerolling) {
+      updateExposureAxisAudit("preview", { state: "rolling", invalid: null, gain: null, cleanReady: null });
+      return `<section class="dice-exposure-preview is-rolling" data-exposure-state="rolling" aria-label="暴露压力" aria-live="polite" aria-busy="true">
+        <div class="dice-exposure-head"><strong>暴露压力</strong><span>危险任务</span></div>
+        <div class="dice-exposure-wait"><strong>重投中 · 待停骰</strong><span>新的无效面与“干净利落”进度将在停骰后更新。</span></div>
+      </section>`;
+    }
+    const invalid = invalidStaffFacesForExposure(mission, rolls);
+    const gain = Math.floor(invalid / EXPOSURE_INVALID_FACES_PER_POINT);
+    const effectiveTotal = contributionTotalForNeed(mission.need || {}, sum || {});
+    const cleanTarget = needTargetValue(mission.need || {}) + EXPOSURE_CLEAN_BONUS_MARGIN;
+    const cleanReady = gain === 0 && effectiveTotal >= cleanTarget;
+    const visualState = gain > 0 ? "warning" : cleanReady ? "clean" : "safe";
+    const exposureText = gain > 0 ? `提交后暴露 +${gain}` : "目前不产生暴露";
+    const cleanText = gain > 0
+      ? "干净利落：已被本次暴露阻断"
+      : cleanReady
+        ? "干净利落：条件已满足 · 附赠 Tier 2 线索"
+        : `干净利落：有效点 ${effectiveTotal}/${cleanTarget} · 还差 ${Math.max(0, cleanTarget - effectiveTotal)} 点`;
+    updateExposureAxisAudit("preview", { state: visualState, invalid, gain, cleanReady, effectiveTotal, cleanTarget });
+    return `<section class="dice-exposure-preview is-${visualState}" data-exposure-state="${visualState}" data-invalid="${invalid}" data-gain="${gain}" data-clean-ready="${cleanReady ? "1" : "0"}" aria-label="暴露压力" aria-live="polite">
+      <div class="dice-exposure-head"><strong>暴露压力</strong><span>危险任务</span></div>
+      <div class="dice-exposure-reading"><span>当前无效面 <b>${invalid}</b> 个</span><strong>${escapeHtml(exposureText)}</strong></div>
+      <div class="dice-exposure-rule">无效面每 ${EXPOSURE_INVALID_FACES_PER_POINT} 个 → 暴露 +1；计入选择不改变它，道具骰不计。</div>
+      <div class="dice-exposure-clean ${cleanReady ? "is-ready" : gain > 0 ? "is-blocked" : ""}">${escapeHtml(cleanText)}</div>
+    </section>`;
+  }
+
+  function applyExposureOutcome(mission, rolls, selection, rewards) {
+    if (!missionHasExposureAxis(mission)) return null;
+    const invalid = invalidStaffFacesForExposure(mission, rolls);
+    const gain = exposureGainFromRolls(mission, rolls);
+    const effectiveTotal = contributionTotalForNeed(mission.need || {}, (selection && selection.sum) || {});
+    const cleanTarget = needTargetValue(mission.need || {}) + EXPOSURE_CLEAN_BONUS_MARGIN;
+    const macroBefore = { ...macro };
+    let outcome = { kind: "none", invalid, gain: 0, effectiveTotal, cleanTarget };
+    if (gain > 0) {
+      const region = registeredExposureRegion(mission.regionId);
+      if (region) {
+        state.regionExposure[region.id] = (state.regionExposure[region.id] || 0) + gain;
+        log(`暴露副轴：${region.name} 本周暴露 +${gain}。`);
+      } else {
+        log(`暴露副轴：本次暴露 +${gain}；区域未登记，不计入周累计。`);
+      }
+      outcome = { kind: "exposed", invalid, gain, effectiveTotal, cleanTarget, regionId: region && region.id, regionName: region && region.name };
+    } else if (selection && selection.success && effectiveTotal >= cleanTarget) {
+      addMissionClue(
+        mission,
+        "干净利落的独家",
+        2,
+        rewards,
+        "危险任务零暴露且超额达标：附赠 Tier 2 线索。",
+        "干净利落的独家",
+      );
+      outcome = { kind: "clean", invalid, gain: 0, effectiveTotal, cleanTarget };
+      log("暴露副轴：零暴露超额达标，获得「干净利落的独家」。");
+    }
+    updateExposureAxisAudit("lastSettlement", { ...outcome, macroBefore, macroAfter: { ...macro }, macroUnchanged: JSON.stringify(macroBefore) === JSON.stringify(macro) });
+    return outcome;
+  }
+
+  function exposureOutcomeReceiptHtml(outcome) {
+    if (!outcome || outcome.kind === "none") return "";
+    if (outcome.kind === "exposed") {
+      return `<div class="result-axis-line is-exposure" data-exposure-result="exposed">暴露 +${outcome.gain} · 现场留下了痕迹，有人注意到了你们的走访。</div>`;
+    }
+    return `<div class="result-axis-line is-clean" data-exposure-result="clean">干净利落 · 无人察觉的超额收获。</div>`;
+  }
+
+  function settleExposureEchoesForNextWeek() {
+    const previous = { ...state.regionExposure };
+    state.exposureEchoes = Object.entries(previous)
+      .map(([regionId, amount]) => ({ region: registeredExposureRegion(regionId), amount }))
+      .filter((entry) => entry.region && entry.amount >= EXPOSURE_ECHO_THRESHOLD)
+      .map(({ region }) => ({
+        regionId: region.id,
+        regionName: region.name,
+        text: `${region.name}的线人来电：最近有人在打听你们记者的行踪。`,
+      }));
+    state.regionExposure = {};
+    if (state.exposureEchoes.length) log(`上周外勤回声：${state.exposureEchoes.map((echo) => echo.regionName).join("、")}出现追查动静。`);
+    updateExposureAxisAudit("weeklySettlement", { previous, echoCount: state.exposureEchoes.length, reset: Object.keys(state.regionExposure).length === 0 });
+  }
+
+  function exposureEchoesHtml(echoes) {
+    const items = (echoes || []).filter((echo) => echo && registeredExposureRegion(echo.regionId));
+    if (!items.length) return "";
+    return `<div class="briefing-exposure-notes" aria-label="上周外勤回声">
+      ${items.map((echo) => `<div class="briefing-exposure-note">
+        <div class="briefing-exposure-source">上周外勤回声 · ${escapeHtml(echo.regionName)}</div>
+        <p>${escapeHtml(echo.text)}</p>
+      </div>`).join("")}
+    </div>`;
   }
 
   function needMetByContribution(need, sum) {
@@ -2647,7 +2819,7 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
       ? `<div style="margin-top:0.25rem;color:#fecaca;">红色截稿：成功、失败或过期后都会关闭并从地图消失。</div>`
       : "";
     const high = m.riskTier === "high"
-      ? `<div style="margin-top:0.25rem;color:#fde68a;">危险标识：需求更高，失败可能带来 debuff；不等于黑骰任务类型。</div>`
+      ? `<div style="margin-top:0.25rem;color:#fde68a;">危险标识：需求更高，失败可能带来 debuff；不等于黑骰任务类型。${missionHasExposureAxis(m) ? " 行动会留下暴露痕迹：无效骰面越多越显眼。" : ""}</div>`
       : "";
     const inner = `<div><strong>${escapeHtml(missionTypeTitle(m))}</strong> ${missionTypeBadgesHtml(m)}</div>
       <div style="margin-top:0.25rem;">${escapeHtml(missionTypeDesc(m))}</div>
@@ -2863,6 +3035,7 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
     const eventBlock = state.weekEvent.type === "choice"
       ? renderWeekEventChoices(state.weekEvent, showExactEffects)
       : `<div class="briefing-passive-note">${state.weekEventResolved ? "本周来件已经处理，结果已写入右侧影响栏。" : "这是一条自动生效类来件，确认后会写入本周状态。"}</div>`;
+    const exposureEchoBlock = exposureEchoesHtml(state.exposureEchoes);
     const debugBlock = debugMode
       ? `<label class="evt-debug briefing-debug"><input type="checkbox" id="evtDebugToggle" ${state.debugShowEventEffects ? "checked" : ""}/> 调试：显示精确选项后果</label>`
       : "";
@@ -2888,6 +3061,7 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
           <div class="briefing-event-title">${escapeHtml(state.weekEvent.title)}</div>
           <p class="briefing-event-body">${escapeHtml(state.weekEvent.body)}</p>
           ${eventBlock}
+          ${exposureEchoBlock}
           <div class="briefing-actions">${actionBlock}</div>
         </section>
         ${renderWeekEventImpact(state.weekEvent)}
@@ -5776,12 +5950,14 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
   function renderCharacterRollsHtml(rolls, selectedIds, need, options) {
     const opts = options || {};
     const selected = new Set(selectedIds || []);
+    const rollingIds = new Set(opts.rollingIds || []);
     const stage = opts.stage || "select";
     const revealCount = opts.revealCount == null ? (rolls || []).length : opts.revealCount;
     const readOnly = !!opts.readOnly;
     return `<div class="character-roll-grid${stage === "rolling" ? " is-rolling-stage" : ""}">${(rolls || []).map((r, idx) => {
       const revealed = stage !== "rolling" || idx < revealCount;
-      const isRolling = !revealed;
+      const isRerolling = rollingIds.has(r.id);
+      const isRolling = !revealed || isRerolling;
       const isLanding = stage === "rolling" && revealed && idx === revealCount - 1;
       const selectedCls = selected.has(r.id) ? " selected" : "";
       const relevant = r.face && r.face.attr && need && need[r.face.attr] != null ? " relevant" : "";
@@ -5794,7 +5970,15 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
       const faceCls = isRolling ? "face-rolling" : faceClass(r.face);
       const selectedNow = selected.has(r.id);
       const stateText = isRolling
-        ? "摇骰中"
+        ? (isRerolling ? "重投中" : "摇骰中")
+        : opts.rerollEnabled && selectedNow
+          ? "已计入 · 保留"
+          : opts.rerollEnabled && r.kind === "tool"
+            ? "道具骰 · 不参与重投"
+            : opts.rerollEnabled && r.locked
+              ? "锁定面 · 不参与重投"
+              : opts.rerollEnabled
+                ? "未计入 · 可重投"
         : r.black
           ? (selectedNow ? "黑骰计入" : "黑骰压力")
           : !r.face || r.face.blank
@@ -5882,12 +6066,17 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
     const ctx = context || {};
     const baseRolls = ctx.baseRolls && ctx.baseRolls.length ? ctx.baseRolls : rolls;
     const hasBlackIntervention = !!((ctx.blackDice && ctx.blackDice.length) || (ctx.blackNotes && ctx.blackNotes.length));
-    const auto = autoSelectRollsForNeed(rolls, mission.need || {});
     let selectedIds = [];
     let stage = "rolling";
     let revealCount = 0;
     let resolved = false;
     let focusRollId = null;
+    let freeRerollUsed = false;
+    let rerolling = false;
+    let rerollingIds = [];
+    let rerollReceipt = "";
+    let rerollReceiptTimer = null;
+    let restoreActionFocus = false;
     return new Promise((resolve) => {
       const wrap = document.getElementById("confirmPopup");
       const body = document.getElementById("confirmPopupBody");
@@ -5908,21 +6097,60 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
         const okNow = needMetByContribution(mission.need || {}, sum);
         const finalReady = stage !== "rolling";
         const selectReady = stage === "select";
+        const interactionReady = selectReady && !rerolling;
+        const rerollEnabled = selectReady && !mission.isBlackDiceTask;
+        const eligibleIds = rerollEligibleIds(mission, rolls, selectedIds);
+        const allRerollableIds = rerollEligibleIds(mission, rolls, []);
+        const paidReroll = freeRerollUsed;
+        const noReviewPoints = paidReroll && state.reviewPoints <= 0;
+        const rerollDisabled = rerolling || !eligibleIds.length || noReviewPoints;
+        const rerollCount = rerolling ? rerollingIds.length : eligibleIds.length;
+        const rerollButtonText = rerolling
+          ? `正在重投 ${rerollCount} 颗…`
+          : eligibleIds.length
+            ? paidReroll
+              ? noReviewPoints
+                ? `重投 ${eligibleIds.length} 颗 · 需要 1 复核点`
+                : `重投 ${eligibleIds.length} 颗 · 消耗 1 复核点`
+              : `重投 ${eligibleIds.length} 颗 · 本次免费`
+            : "无可重投骰面";
+        const rerollRuleText = rerolling
+          ? "本轮操作已锁定，请等待停骰。"
+          : mission.noReroll
+            ? "本任务禁止重投。"
+            : noReviewPoints
+              ? "复核点已用完；仍可调整计入骰面并提交。"
+              : !eligibleIds.length && allRerollableIds.length
+                ? "已计入全部可重投骰；先移出至少 1 颗。"
+                : !eligibleIds.length
+                  ? "剩余骰均为锁定面或道具骰。"
+                  : rerollReceipt || "已计入骰面保留；其余可重投骰面的旧点数作废。";
+        const rerollBalanceText = paidReroll
+          ? noReviewPoints
+            ? `本周复核点 0/${REVIEW_POINTS_PER_WEEK} · 下周重置`
+            : `本周复核点 ${state.reviewPoints}/${REVIEW_POINTS_PER_WEEK} · 完成后 ${Math.max(0, state.reviewPoints - 1)}/${REVIEW_POINTS_PER_WEEK}`
+          : `本周复核点 ${state.reviewPoints}/${REVIEW_POINTS_PER_WEEK} · 本次不消耗`;
         const stageText = stage === "rolling"
           ? `基础骰摇骰中 · ${revealCount}/${baseRolls.length}`
           : stage === "black"
             ? "黑骰介入 · 骰池被改写"
-            : "停骰完成 · 选择计入判定的骰面";
+            : rerolling
+              ? `批量重投 · ${rerollingIds.length} 颗旧点数作废`
+              : "停骰完成 · 选择计入判定的骰面";
         const helperText = stage === "rolling"
           ? "每名参判角色正在生成本轮骰面。"
           : stage === "black"
             ? "异常正在改写本轮骰池。"
-            : "点击骰子计入或移出。";
+            : rerolling
+              ? "正在重投未计入骰面，已计入与锁定骰保持不变。"
+              : "点击骰子计入或移出。";
         const stageBadge = stage === "rolling"
           ? "摇骰中"
           : stage === "black"
             ? "黑骰介入"
-            : "选择阶段";
+            : rerolling
+              ? "重投中"
+              : "选择阶段";
         body.innerHTML = `<div class="dice-select-shell">
           <div class="dice-select-head">
             <div>
@@ -5935,11 +6163,19 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
           <div class="dice-select-layout">
             <section class="dice-workbench-panel" aria-label="本轮骰面">
               <div class="dice-section-head"><strong>本轮骰面</strong><span>${escapeHtml(diceSelectCountText(currentRolls, selectedIds, selectReady, revealCount))}</span></div>
-              ${renderCharacterRollsHtml(currentRolls, selectedIds, mission.need || {}, { stage: stage === "rolling" ? "rolling" : "select", revealCount, readOnly: stage === "black", blackActive: stage === "black" })}
+              ${renderCharacterRollsHtml(currentRolls, selectedIds, mission.need || {}, { stage: stage === "rolling" ? "rolling" : "select", revealCount, readOnly: stage === "black" || rerolling, blackActive: stage === "black", rerollEnabled, rollingIds: rerollingIds })}
+              ${rerollEnabled ? `<div class="dice-reroll-bar${rerolling ? " is-rolling" : ""}${noReviewPoints ? " is-exhausted" : ""}" data-state="${rerolling ? "rolling" : noReviewPoints ? "exhausted" : eligibleIds.length ? paidReroll ? "paid" : "free" : "empty"}" aria-live="polite">
+                <button type="button" id="diceRerollBtn" class="dice-reroll-button" ${rerollDisabled ? "disabled" : ""}>${escapeHtml(rerollButtonText)}</button>
+                <div class="dice-reroll-meta">
+                  <span class="dice-reroll-rule">${escapeHtml(rerollRuleText)}</span>
+                  <span class="dice-reroll-balance">${escapeHtml(rerollBalanceText)}</span>
+                </div>
+              </div>` : ""}
             </section>
             <aside class="dice-side-stack" aria-label="判定摘要与提交后果">
               ${diceSelectSummaryHtml(sum, mission.need || {}, selectReady)}
               ${stage === "black" || selectReady ? blackDiceInterventionHtml({ ...ctx, active: stage === "black" }) : ""}
+              ${selectReady ? exposurePreviewHtml(mission, rolls, sum, { rerolling }) : ""}
               ${diceSubmitPreviewHtml(okNow, selectReady)}
             </aside>
           </div>
@@ -5948,12 +6184,11 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
         body.querySelectorAll("[data-roll-id]").forEach((btn) => {
           const id = btn.getAttribute("data-roll-id");
           btn.onfocus = () => {
-            if (!selectReady) return;
+            if (!interactionReady) return;
             focusRollId = id;
-            render();
           };
           btn.onclick = () => {
-            if (!selectReady) return;
+            if (!interactionReady) return;
             focusRollId = id;
             if (selectedIds.includes(id)) {
               selectedIds = selectedIds.filter((x) => x !== id);
@@ -5964,13 +6199,53 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
             render();
           };
         });
-        ok.disabled = !selectReady;
-        cancel.disabled = !selectReady;
+        const rerollBtn = body.querySelector("#diceRerollBtn");
+        if (rerollBtn) {
+          rerollBtn.onclick = async () => {
+            if (rerolling || stage !== "select") return;
+            const targetIds = rerollEligibleIds(mission, rolls, selectedIds);
+            if (!targetIds.length) return;
+            const costsReviewPoint = freeRerollUsed;
+            if (costsReviewPoint && state.reviewPoints <= 0) return;
+            rerolling = true;
+            rerollingIds = targetIds.slice();
+            rerollReceipt = "";
+            render();
+            await sleep(720);
+            if (resolved) return;
+            const completedIds = rerollRollsByIds(rolls, targetIds);
+            if (completedIds.length) {
+              if (costsReviewPoint) state.reviewPoints = Math.max(0, state.reviewPoints - 1);
+              else freeRerollUsed = true;
+              rerollReceipt = `已重投 ${completedIds.length} 颗 · ${costsReviewPoint ? `消耗 1 复核点，余 ${state.reviewPoints} 点` : "免费次数已用"}`;
+              log(`角色骰重投：${completedIds.length} 颗未计入骰面已重投${costsReviewPoint ? `，消耗 1 复核点（余 ${state.reviewPoints}）` : "（本次免费）"}。`);
+            }
+            rerolling = false;
+            rerollingIds = [];
+            restoreActionFocus = true;
+            render();
+            window.clearTimeout(rerollReceiptTimer);
+            rerollReceiptTimer = window.setTimeout(() => {
+              if (resolved || !rerollReceipt) return;
+              rerollReceipt = "";
+              render();
+            }, 1800);
+          };
+        }
+        ok.disabled = !interactionReady;
+        cancel.disabled = !interactionReady;
         ok.textContent = "确认计入";
-        cancel.textContent = selectReady ? "采用推荐" : "等待停骰";
+        cancel.textContent = selectReady ? "按推荐结果提交" : "等待停骰";
+        if (restoreActionFocus) {
+          restoreActionFocus = false;
+          window.requestAnimationFrame(() => {
+            if (ok && typeof ok.focus === "function") ok.focus();
+          });
+        }
       };
       const cleanup = (result) => {
         resolved = true;
+        window.clearTimeout(rerollReceiptTimer);
         wrap.classList.add("hidden");
         wrap.classList.remove("dice-select-modal");
         ok.disabled = false;
@@ -5980,18 +6255,18 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
         resolve(result);
       };
       const onOk = () => {
-        if (stage !== "select") return;
+        if (stage !== "select" || rerolling) return;
         const sum = rollContribution(rolls, selectedIds);
         cleanup({ selectedIds: selectedIds.slice(), sum, success: needMetByContribution(mission.need || {}, sum) });
       };
       const onCancel = () => {
-        if (stage !== "select") return;
+        if (stage !== "select" || rerolling) return;
         selectedIds = autoSelectRollsForNeed(rolls, mission.need || {});
         const sum = rollContribution(rolls, selectedIds);
         cleanup({ selectedIds: selectedIds.slice(), sum, success: needMetByContribution(mission.need || {}, sum) });
       };
       ok.textContent = "确认计入";
-      cancel.textContent = "采用推荐";
+      cancel.textContent = "按推荐结果提交";
       ok.addEventListener("click", onOk);
       cancel.addEventListener("click", onCancel);
       wrap.classList.remove("hidden");
@@ -6013,7 +6288,7 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
           if (resolved) return;
         }
         stage = "select";
-        selectedIds = auto.slice();
+        selectedIds = autoSelectRollsForNeed(rolls, mission.need || {});
         focusRollId = selectedIds[0] || (rolls[0] && rolls[0].id) || null;
         render();
       })();
@@ -6250,6 +6525,7 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
     const highTier = mapHighRiskTier(m, tier);
     const lines = [];
     const rewards = [];
+    let exposureOutcome = null;
     if (m.missionType === "leadInvestigation") {
       const lead = (state.regionLeadEvents[m.regionId] || []).find((x) => x.id === m.leadId);
       if (lead && !lead.investigated) {
@@ -6293,6 +6569,7 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
     } else {
       applyStandardOutcome(m, tier, lines, rewards);
     }
+    if (check.characterDice) exposureOutcome = applyExposureOutcome(m, check.rolls || [], diceSelection, rewards);
     if (m.missionType !== "leadInvestigation") {
       recordWhiteInvestigation(m, lines);
       advanceDeepChain(m, lines, rewards);
@@ -6312,6 +6589,7 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
       <div class="result-banner" id="tierBanner">判定中...</div>
       ${showDice ? `<div id="diceAnim"><div class="dice-rolling-hint"><span class="dice-spinner"></span><span>摇骰中...</span></div></div>`
         : `<div class="prob-box" id="diceAnim">计算中...</div>`}
+      ${exposureOutcomeReceiptHtml(exposureOutcome)}
       <p class="result-story-lines">${lines.map(escapeHtml).join("<br/>")}</p>
       <div id="bonusOutcome"></div>
       <p>剩余 <strong>${state.day}</strong> 日</p>
@@ -8379,6 +8657,7 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
   }
 
   function nextWeek() {
+    settleExposureEchoesForNextWeek();
     state.tutorialSoftW1 = {};
     state.week += 1;
     state.day = 7;
@@ -8395,6 +8674,7 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
     state.pendingReports = [];
     state.topicSynthOrder = {};
     state.pushBudgetWeekly = 1;
+    state.reviewPoints = REVIEW_POINTS_PER_WEEK;
     state.tempStaffIds = [];
     state.tempHireUsed = false;
     state.selectedToolDiceIds = [];
@@ -8651,6 +8931,84 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
     return true;
   }
 
+  function createDirectDebugExposureMission() {
+    return {
+      id: "debug_exposure_axis",
+      kind: "temp",
+      name: "三号码头异常监听",
+      days: 1,
+      need: { 洞察: 2, 人脉: 2, 理性: 2 },
+      tags: ["sci", "occult"],
+      difficulty: "hard",
+      enemyAttr: 3,
+      checkType: "white",
+      riskTier: "high",
+      useCharacterDice: true,
+      maxStaffOverride: 3,
+      regionId: "us",
+      taskTypeTitle: "危险调查 · 三号码头异常监听",
+      taskTypeDesc: "调试入口：用最终停骰验证无效面暴露、重投刷新与零暴露超额奖励。",
+      story: {
+        brief: "码头监听员交出一盘夜间录音；港务局的人也在追查谁复制过这盘带子。",
+        objective: "比对监听时间、线人口供和电台空白段，抢在封锁前带走可信记录。",
+        stakes: "危险任务。无效骰面会留下暴露痕迹，干净超额完成则能多带回一条独家。",
+        fieldIntro: "潮水拍在仓库墙外，值班员把录音带推过桌面，又立刻关掉了灯。",
+        outcomes: {
+          小成功: { line: "成功：三份记录互相印证，异常监听带可以进入编辑部复核。", clueTitle: "三号码头监听带", clueDesc: "可用素材。监听时间与夜班口供已经对齐。" },
+          失败: { line: "失败：监听带缺失关键一分钟，只能带回一份模糊的值班口供。", clueTitle: "夜班值守口供", clueDesc: "弱线索。仍可支撑后续追踪。" },
+        },
+      },
+    };
+  }
+
+  function maybeEnterDebugExposureMode() {
+    const p = new URLSearchParams(window.location.search || "");
+    const mode = p.get("debugExposure");
+    if (!mode) return false;
+    state.debugSkipTutorials = true;
+    if (mode === "briefing" || mode === "briefing-low") {
+      state.regionExposure = { us: mode === "briefing" ? EXPOSURE_ECHO_THRESHOLD : EXPOSURE_ECHO_THRESHOLD - 1 };
+      nextWeek();
+      return true;
+    }
+    if (mode !== "roll") return false;
+    if (state.tutorialSoftW1) {
+      Object.keys(state.tutorialSoftW1).forEach((key) => { state.tutorialSoftW1[key] = true; });
+    }
+    state.phase = "explore";
+    state.regionId = "us";
+    state.mission = createDirectDebugExposureMission();
+    state.selectedStaffIds = ["s5", "s7", "s2"];
+    state.selectedToolDiceIds = [];
+    state.dayResolutionInfo = { current: 1, total: 1 };
+    state.processingDayTick = true;
+    updateExposureAxisAudit("debugScope", {
+      dangerousMission: missionHasExposureAxis(state.mission),
+      leadExcluded: !missionHasExposureAxis(createDirectDebugDispatchMission()),
+      blackExcluded: !missionHasExposureAxis(createDirectDebugBlackDiceMission()),
+    });
+    renderRegion();
+    setView("region");
+    updateNextDayButton();
+    requestAnimationFrame(() => {
+      runMission(() => {
+        state.processingDayTick = false;
+        state.dayResolutionInfo = null;
+        state.mission = null;
+        state.selectedStaffIds = [];
+        state.selectedToolDiceIds = [];
+        renderRegion();
+        setView("region");
+        updateNextDayButton();
+      }).catch((err) => {
+        console.error(err);
+        state.processingDayTick = false;
+        updateNextDayButton();
+      });
+    });
+    return true;
+  }
+
   function createDirectDebugDispatchMission() {
     return {
       id: "debug_dispatch_ux",
@@ -8723,6 +9081,7 @@ const PAPER_DEMO_SOURCE_INNER_HTML = `<div class="nm-story-title">示例报道�
     bindSynthDemoLabUi();
     log("本周编辑部简报已送达。");
     if (!maybeEnterPaperLabMode()) {
+      if (maybeEnterDebugExposureMode()) return;
       if (maybeEnterDebugBlackDiceMode()) return;
       if (maybeEnterDebugDispatchSetupMode()) return;
       renderWeekStart();

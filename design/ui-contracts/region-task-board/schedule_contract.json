@@ -1,0 +1,39 @@
+{
+  "id": "region_task_schedule_v2",
+  "version": 2,
+  "status": "geometry_frozen_logic_deferred",
+  "runtime_rect": [24, 916, 1436, 140],
+  "advance_action_rect": [52, 938, 318, 100],
+  "schedule_summary_rect": [396, 938, 480, 100],
+  "consequence_preview_rect": [902, 938, 530, 100],
+  "asset_classes": {
+    "advance_day_gate": "rt_advance_day_gate_mother",
+    "info_plate": "rt_schedule_info_plate"
+  },
+  "asset_policy": {
+    "advance_day_implementation": "fixed_alpha_master_plus_runtime_content_and_state",
+    "advance_day_export_scale": 2,
+    "advance_day_alpha_padding": [8, 8, 8, 8],
+    "info_plate_implementation": "shared_horizontal_nine_patch",
+    "external_shadow_owner": "Godot",
+    "runtime_text_baked_into_raster": false
+  },
+  "states": ["disabled_until_time_logic_exists", "ready", "hover", "pressed", "confirming", "processing", "focus"],
+  "current_slice_behavior": {
+    "advance_action_enabled": false,
+    "reason": "现有玩法层没有独立的推进一天命令，本轮不得把结束探索或假按钮冒充该功能。",
+    "visual_label": "推进一天 · 待接入"
+  },
+  "future_requirements": [
+    "one_click_cannot_commit_without_confirmation",
+    "preview_expiring_tasks_and_days_before_commit",
+    "must_update_gdd_before_enabling"
+  ],
+  "forbidden": [
+    "advance_day_text_or_offline_baked_into_shell",
+    "strong_right_arrow_shared_with_dispatch_cta",
+    "ready_or_confirming_state_before_gameplay_command_exists",
+    "external_shadow_in_interactive_alpha",
+    "direct_crop_from_fullscreen_mock"
+  ]
+}

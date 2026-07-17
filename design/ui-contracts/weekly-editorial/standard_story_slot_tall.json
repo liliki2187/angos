@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "contract_version": "1.2.0",
+  "status": "locked_candidate",
+  "page": "weekly_editorial",
+  "class_id": "standard_story_slot_tall",
+  "parent_class": "secondary_page_shell",
+  "role": "B 级右页内页槽",
+  "reference_resolution": [1920, 1080],
+  "runtime_resolution": [1920, 1080],
+  "export_scale": 2,
+  "frozen": {
+    "export_size": [213, 314],
+    "positions": [[979, 638], [1208, 638]],
+    "hit_rect": [0, 0, 213, 314],
+    "slots": {
+      "headline": [12, 8, 189, 50],
+      "photo": [12, 74, 189, 174],
+      "meta": [12, 260, 137, 26],
+      "local_replace_action": [161, 262, 44, 44]
+    },
+    "no_text_rects": {
+      "outer_edge": [0, 0, 8, 314]
+    }
+  },
+  "states": ["idle", "slot_focused", "replace_armed", "replace_pending", "dragging", "drag_hover", "confirmation_frozen"]
+}

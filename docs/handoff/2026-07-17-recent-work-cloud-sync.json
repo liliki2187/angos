@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "allow_active": false,
+  "active_authorization": "",
+  "target_remotes": [
+    {
+      "name": "origin",
+      "branch": "main"
+    }
+  ],
+  "entries": [
+    {
+      "pattern": "docs/screenshots/2026-07-17-region-task-pin-slice-v3/frames/**",
+      "classification": "REPRODUCIBLE",
+      "reason": "逐帧 PNG 只用于生成最终 GIF，不是项目真源。",
+      "evidence": "Godot 4.6.3 + gd_project/tests/capture_region_task_pin_slice_v3.gd"
+    },
+    {
+      "pattern": "image_gen/2026-07-17/region-task-production-slice-v3/prepared/**",
+      "classification": "REPRODUCIBLE",
+      "reason": "prepared 副本可由已提交 alpha 源和准备脚本确定性重建；生产副本已进入 Godot 资产目录。",
+      "evidence": "Python/Pillow + scripts/ui-contracts/region-task-board/prepare_pin_slice_v3_assets.py"
+    },
+    {
+      "pattern": "image_gen/2026-07-17/region-task-production-slice-v3/*-chroma.png",
+      "classification": "DISPOSABLE",
+      "reason": "洋红底中间图已由最终透明 alpha 源取代，不参与运行时或后续合同。",
+      "evidence": "最终 alpha 源与 Godot 生产资产已纳入本次提交"
+    },
+    {
+      "pattern": "image_gen/2026-07-17/region-task-component-motherboard/*-v1_01.png",
+      "classification": "DISPOSABLE",
+      "reason": "母版第一轮过程稿，仅保留本机用于错误复盘；v3 为正式引用证据。",
+      "evidence": "docs/plans/region-task-board-imagegen/2026-07-17-region-task-component-motherboard-v3-delivery-manifest.md"
+    },
+    {
+      "pattern": "image_gen/2026-07-17/region-task-component-motherboard/*-v2_01.png",
+      "classification": "DISPOSABLE",
+      "reason": "母版第二轮过程稿，仅保留本机用于错误复盘；v3 为正式引用证据。",
+      "evidence": "docs/plans/region-task-board-imagegen/2026-07-17-region-task-component-motherboard-v3-delivery-manifest.md"
+    },
+    {
+      "pattern": "tmp/**",
+      "classification": "DISPOSABLE",
+      "reason": "本机临时运行目录，不是构建、设计或交接真源。",
+      "evidence": ".gitignore"
+    }
+  ]
+}

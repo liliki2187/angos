@@ -511,6 +511,27 @@
       font-size: 13px;
       line-height: 1.5;
     }
+    .briefing-exposure-notes {
+      display:grid;
+      gap:6px;
+    }
+    .briefing-exposure-note {
+      border-left:3px solid rgba(190,80,60,0.55);
+      background:rgba(90,30,20,0.1);
+      padding:6px 10px;
+    }
+    .briefing-exposure-source {
+      color:#e2b8ae;
+      font-size:11px;
+      font-weight:800;
+      line-height:1.35;
+    }
+    .briefing-exposure-note p {
+      margin:2px 0 0;
+      color:#d8c5c1;
+      font-size:13px;
+      line-height:1.5;
+    }
     .briefing-impact {
       border: 1px solid rgba(96,165,250,0.32);
       border-radius: 8px;
@@ -2033,6 +2054,90 @@
     .dice-submit-preview { display:grid; gap:6px; }
     .dice-submit-preview strong { color:#fde68a; font-size:12px; }
     .dice-submit-preview div { color:#cbd5e1; font-size:12px; line-height:1.45; }
+    .dice-exposure-preview {
+      display:grid;
+      gap:5px;
+      padding:8px 10px !important;
+      border-left-width:3px !important;
+      border-color:rgba(190,80,60,0.34) !important;
+      background:rgba(90,30,20,0.14) !important;
+    }
+    .dice-exposure-head,
+    .dice-exposure-reading {
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      gap:8px;
+    }
+    .dice-exposure-head strong { color:#fca5a5; font-size:12px; }
+    .dice-exposure-head span,
+    .dice-exposure-rule { color:#94a3b8; font-size:11px; line-height:1.4; }
+    .dice-exposure-reading { color:#cbd5e1; font-size:12px; }
+    .dice-exposure-reading b { color:#f8fafc; }
+    .dice-exposure-reading > strong { color:#fecaca; font-size:12px; text-align:right; }
+    .dice-exposure-clean {
+      padding-top:4px;
+      border-top:1px solid rgba(148,163,184,0.16);
+      color:#cbd5e1;
+      font-size:12px;
+      line-height:1.4;
+    }
+    .dice-exposure-clean.is-ready { color:#86efac; }
+    .dice-exposure-clean.is-blocked { color:#e2b8ae; }
+    .dice-exposure-preview.is-safe {
+      border-color:rgba(148,163,184,0.28) !important;
+      border-left-color:rgba(190,80,60,0.48) !important;
+      background:rgba(15,23,42,0.68) !important;
+    }
+    .dice-exposure-preview.is-clean {
+      border-color:rgba(212,168,83,0.4) !important;
+      border-left-color:rgba(52,211,153,0.62) !important;
+      background:rgba(6,78,59,0.1) !important;
+    }
+    .dice-exposure-preview.is-rolling {
+      border-color:rgba(96,165,250,0.34) !important;
+      border-left-color:rgba(96,165,250,0.54) !important;
+      background:rgba(30,58,138,0.1) !important;
+    }
+    .dice-exposure-wait { display:grid; gap:3px; }
+    .dice-exposure-wait strong { color:#bfdbfe; font-size:13px; }
+    .dice-exposure-wait span { color:#94a3b8; font-size:11px; line-height:1.4; }
+    .dice-reroll-bar {
+      display:grid;
+      grid-template-columns:max-content minmax(0,1fr);
+      align-items:center;
+      gap:12px;
+      min-height:52px;
+      padding:9px 10px;
+      border-top:1px solid rgba(212,168,83,0.26);
+      border-radius:8px;
+      background:linear-gradient(90deg, rgba(74,55,22,0.2), rgba(15,23,42,0.46));
+    }
+    .dice-reroll-button {
+      min-width:232px;
+      min-height:40px;
+      padding:8px 13px;
+      border:1px solid rgba(212,168,83,0.66);
+      border-radius:8px;
+      background:rgba(74,55,22,0.22);
+      color:#fde68a;
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .dice-reroll-button:not(:disabled):hover {
+      border-color:#fde68a;
+      background:rgba(74,55,22,0.38);
+      color:#fff7d6;
+    }
+    .dice-reroll-button:disabled { cursor:default; opacity:0.54; }
+    .dice-reroll-meta { min-width:0; display:grid; gap:3px; }
+    .dice-reroll-meta span { font-size:12px; line-height:1.4; }
+    .dice-reroll-rule { color:#cbd5e1; }
+    .dice-reroll-balance { color:#fde68a; font-weight:800; }
+    .dice-reroll-bar.is-rolling { border-color:rgba(96,165,250,0.4); background:rgba(30,58,138,0.12); }
+    .dice-reroll-bar.is-rolling .dice-reroll-balance { color:#bfdbfe; }
+    .dice-reroll-bar.is-exhausted { border-color:rgba(148,163,184,0.24); background:rgba(15,23,42,0.42); }
+    .dice-reroll-bar.is-exhausted .dice-reroll-balance { color:#94a3b8; }
     .dice-workbench-panel .character-roll-grid { grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:8px; }
     .dice-workbench-panel .character-roll { min-height:134px; }
     .dice-need-panel {
@@ -2197,6 +2302,8 @@
       background:linear-gradient(180deg, rgba(74,55,22,0.46), rgba(15,23,42,0.86));
       box-shadow:0 0 0 1px rgba(212,168,83,0.38), 0 0 18px rgba(212,168,83,0.16);
     }
+    .character-roll:not(.selected):not(.locked) .roll-state { color:#7dd3fc; }
+    .character-roll.locked:not(.selected) .roll-state { color:#94a3b8; }
     .character-roll.is-select-pulse .roll-die:not(.model-die),
     .character-roll.selected .roll-die:not(.model-die) { animation:diceSelectPulse 0.34s ease-out; }
     .character-roll.relevant .roll-die:not(.model-die) { box-shadow:0 0 0 1px rgba(212,168,83,0.36), 0 0 14px rgba(212,168,83,0.18); }
@@ -2989,6 +3096,25 @@
     .result-field-note strong { color:#bfdbfe; font-size:12px; }
     .result-field-note span { color:#e2e8f0; font-size:13px; line-height:1.45; }
     .result-story-lines { font-size:0.9rem; color:#cbd5e1; line-height:1.55; }
+    .result-axis-line {
+      display:block;
+      margin:8px 0 4px;
+      padding:5px 8px;
+      border-left:3px solid rgba(148,163,184,0.42);
+      background:rgba(15,23,42,0.34);
+      font-size:13px;
+      line-height:1.45;
+    }
+    .result-axis-line.is-exposure {
+      border-left-color:rgba(190,80,60,0.62);
+      color:#e2b8ae;
+      background:rgba(90,30,20,0.1);
+    }
+    .result-axis-line.is-clean {
+      border-left-color:rgba(212,168,83,0.62);
+      color:#fde68a;
+      background:rgba(74,55,22,0.1);
+    }
     .day-flavor-tag {
       display:inline-flex;
       margin-bottom:8px;
@@ -13208,6 +13334,6 @@
 })();
 
   </script>
-  <script src="world-mysteries-full-chain.js?v=20260608-report-rollback-stable"></script>
+  <script src="world-mysteries-full-chain.js?v=20260714-exposure-axis-v1"></script>
 </body>
 </html>

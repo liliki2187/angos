@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "contract_version": "1.2.0",
+  "status": "locked_candidate",
+  "page": "weekly_editorial",
+  "class_id": "secondary_page_shell",
+  "role": "右侧副头版页正交纸壳",
+  "reference_resolution": [1920, 1080],
+  "runtime_resolution": [1920, 1080],
+  "export_scale": 2,
+  "frozen": {
+    "export_size": [490, 800],
+    "positions": [[955, 184]],
+    "hit_rect": [0, 0, 490, 800],
+    "slots": {
+      "content": [24, 24, 442, 744],
+      "page_header": [24, 24, 442, 52],
+      "secondary_head": [24, 92, 442, 342],
+      "inner_1": [24, 454, 213, 314],
+      "inner_2": [253, 454, 213, 314]
+    },
+    "no_text_rects": {
+      "top_edge": [0, 0, 490, 14],
+      "bottom_edge": [0, 786, 490, 14],
+      "left_edge": [0, 0, 14, 800],
+      "right_edge": [476, 0, 14, 800],
+      "inner_gutter": [0, 0, 24, 800]
+    }
+  },
+  "states": ["dual_page", "confirmation_frozen"],
+  "notes": "与 main_page_shell 共享 #AA916B 基础纸色、纸张材质、墨色和印刷边线体系；副头版以较小标题、较短头版和较轻栏线保持第二权重。当前运行时只有双版常显。"
+}

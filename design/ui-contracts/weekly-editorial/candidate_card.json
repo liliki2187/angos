@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "contract_version": "1.2.0",
+  "status": "locked_candidate",
+  "page": "weekly_editorial",
+  "class_id": "candidate_card",
+  "role": "候选报道紧凑卡",
+  "reference_resolution": [1920, 1080],
+  "runtime_resolution": [1920, 1080],
+  "export_scale": 2,
+  "frozen": {
+    "export_size": [288, 92],
+    "positions": [[96, 176], [96, 280], [96, 384], [96, 488], [96, 592], [96, 696]],
+    "hit_rect": [0, 0, 288, 92],
+    "slots": {
+      "thumbnail": [10, 10, 72, 72],
+      "article_id": [94, 10, 54, 22],
+      "title": [94, 34, 178, 40],
+      "status": [218, 70, 54, 16]
+    },
+    "no_text_rects": {
+      "outer_edge": [0, 0, 8, 92]
+    }
+  },
+  "states": ["unselected", "selected", "dragging", "disabled"],
+  "notes": "动态文字与状态章不得烘焙。候选卡承担点击选择与拖拽来源；再次点击同一卡片取消选择。已上版稿不在候选池重复显示。"
+}

@@ -13,6 +13,7 @@ const WeeklyRunState = preload("res://scenes/gameplay/weekly_run/state/WeeklyRun
 
 const DISPATCH_MAX_STAFF := 3
 
+@onready var root_margin: MarginContainer = $RootMargin
 @onready var header_panel: PanelContainer = $RootMargin/RootVBox/HeaderPanel
 @onready var world_shell_art: TextureRect = $WorldShellArt
 @onready var channel_mark: Label = $RootMargin/RootVBox/HeaderPanel/HeaderHBox/ChannelMark
@@ -205,6 +206,9 @@ func _connect_shell_signals() -> void:
 	explore_phase.connect("execute_requested", Callable(self, "_on_execute_pressed"))
 	editorial_phase.connect("article_selected", Callable(self, "_on_article_selected"))
 	editorial_phase.connect("slot_selected", Callable(self, "_place_article_in_slot"))
+	editorial_phase.connect("slot_cleared", Callable(self, "_clear_editorial_slot"))
+	editorial_phase.connect("transfer_requested", Callable(self, "_apply_editorial_transfer"))
+	editorial_phase.connect("held_article_cancelled", Callable(self, "_cancel_editorial_selection"))
 	editorial_phase.connect("clear_layout_requested", Callable(self, "_clear_layout"))
 	editorial_phase.connect("settle_requested", Callable(self, "_settle_issue"))
 	summary_phase.connect("next_week_requested", Callable(self, "_next_week"))
@@ -248,12 +252,22 @@ func _refresh_all() -> void:
 func _sync_shell_chrome() -> void:
 	var is_world_map := run_state.current_phase == "explore" and explore_view_mode == "world"
 	var is_deep_explore := run_state.current_phase == "explore" and explore_view_mode in ["region", "dispatch"]
-	header_panel.visible = not is_deep_explore
-	world_shell_art.visible = is_world_map
-	macro_bar.visible = not is_world_map and not is_deep_explore
-	week_bar.visible = not is_world_map and not is_deep_explore
-	channel_mark.visible = is_world_map
-	world_header_meta.visible = is_world_map
+	var is_region_task_board := run_state.current_phase == "explore" and explore_view_mode == "region"
+	var is_editorial := run_state.current_phase == "editorial"
+	var uses_wmw_assembly: bool = is_world_map and is_instance_valid(explore_phase) and explore_phase.has_method("has_world_map_assembly") and bool(explore_phase.call("has_world_map_assembly"))
+	var uses_full_screen_host: bool = is_region_task_board or uses_wmw_assembly
+	root_margin.offset_left = 0.0 if uses_full_screen_host else 24.0
+	root_margin.offset_top = 0.0 if uses_full_screen_host else 20.0
+	root_margin.offset_right = 0.0 if uses_full_screen_host else -24.0
+	root_margin.offset_bottom = 0.0 if uses_full_screen_host else -20.0
+	header_panel.visible = not is_deep_explore and not is_editorial and not uses_wmw_assembly
+	world_shell_art.visible = is_world_map and not uses_wmw_assembly
+	macro_bar.visible = not is_world_map and not is_deep_explore and not is_editorial
+	week_bar.visible = not is_world_map and not is_deep_explore and not is_editorial
+	channel_mark.visible = is_world_map and not uses_wmw_assembly
+	world_header_meta.visible = is_world_map and not uses_wmw_assembly
+	if uses_wmw_assembly:
+		return
 	if is_deep_explore:
 		return
 	_apply_header_panel_style(is_world_map)
@@ -500,6 +514,7 @@ func _build_explore_payload() -> Dictionary:
 	var region_status_primary := "未选择"
 	var region_status_secondary := "待选"
 	var region_preview_rows: Array = []
+	var region_mission_preview: Array = []
 	var world_receipts: Array = []
 	if not region.is_empty():
 		region_unlocked = Systems.is_region_unlocked(run_state, region)
@@ -515,6 +530,7 @@ func _build_explore_payload() -> Dictionary:
 		region_status_primary = _build_region_status_primary(selected_region_counts, region_unlocked)
 		region_status_secondary = "可进入" if region_unlocked else "暂不可进入"
 		region_preview_rows = _build_region_preview_rows(region, selected_region_counts, region_unlocked)
+		region_mission_preview = _build_region_mission_preview(region, region_unlocked)
 		world_receipts = _build_world_region_receipts(region, selected_region_counts, region_unlocked)
 		region_detail_text = _build_region_detail_text(region, region_unlocked)
 		if region_unlocked:
@@ -636,9 +652,22 @@ func _build_explore_payload() -> Dictionary:
 		"region_status_primary": region_status_primary,
 		"region_status_secondary": region_status_secondary,
 		"region_preview_rows": region_preview_rows,
+		"region_dossier_body_text": "%s\n%s" % [region_brief, region_warning_text],
+		"region_mission_intel_title": str(Content.WORLD_MAP_UI_COPY["mission_intel_collapsed"]),
+		"region_mission_intel_facts": "限时 %d · 线索 %d · 深链 %d" % [
+			int(selected_region_counts.get("deadline", 0)),
+			int(selected_region_counts.get("clue", 0)),
+			int(selected_region_counts.get("chain", 0)),
+		],
+		"region_mission_intel_available": region_unlocked and not region_mission_preview.is_empty(),
+		"region_mission_intel_locked_text": str(Content.WORLD_MAP_UI_COPY["mission_intel_locked"]),
+		"region_mission_preview": region_mission_preview,
+		"region_mission_preview_total": region_mission_preview.size(),
+		"region_mission_preview_limit": 2,
 		"world_receipts": world_receipts,
 		"region_enter_enabled": region_unlocked,
-		"region_enter_text": "进入选定地区" if region_unlocked else "暂不可进入",
+		"region_mission_intel_text": str(Content.WORLD_MAP_UI_COPY["mission_intel_collapsed"]),
+		"region_enter_text": str(Content.WORLD_MAP_UI_COPY["region_enter_enabled"] if region_unlocked else Content.WORLD_MAP_UI_COPY["region_enter_disabled"]),
 		"dispatch_open_enabled": selected_node_id != "",
 		"dispatch_open_text": "送至签批台" if selected_node_id != "" else "先选择任务",
 		"nodes": nodes,
@@ -754,6 +783,33 @@ func _build_region_preview_rows(region: Dictionary, counts: Dictionary, unlocked
 		rows.append({"tone": "locked", "text": "缺口：%s" % _compact_unlock_gap(str(region.get("unlock_gap", "缺少线索许可")))})
 		rows.append({"tone": "selected", "text": "先在已开封地区补齐前置证据。"})
 	return rows
+
+func _build_region_mission_preview(region: Dictionary, unlocked: bool) -> Array:
+	var rows: Array = []
+	if not unlocked:
+		return rows
+	for node in region.get("nodes", []):
+		if not Systems.is_node_visible(run_state, node):
+			continue
+		rows.append({
+			"id": str(node.get("id", "")),
+			"name": str(node.get("name", "未命名任务")),
+			"kind": str(node.get("kind", "permanent")),
+			"kind_label": _world_mission_kind_label(node),
+			"days": int(node.get("days", 0)),
+		})
+	return rows
+
+func _world_mission_kind_label(node: Dictionary) -> String:
+	match str(node.get("kind", "permanent")):
+		"temp":
+			return "限时"
+		"chain":
+			return "深链"
+		"hidden":
+			return "异常"
+		_:
+			return "线索"
 
 func _build_world_region_receipts(region: Dictionary, counts: Dictionary, unlocked: bool) -> Array:
 	var receipts: Array = []
@@ -1118,8 +1174,22 @@ func _build_editorial_payload() -> Dictionary:
 	var articles: Array = []
 	for article in run_state.article_candidates:
 		var article_id := int(article.id)
+		var placed_slot_id := ""
+		var placed_slot_name := ""
+		for slot in Content.SLOT_DATA:
+			if int(run_state.slot_assignment.get(str(slot.id), -1)) == article_id:
+				placed_slot_id = str(slot.id)
+				placed_slot_name = str(slot.name)
+				break
 		articles.append({
 			"id": article_id,
+			"code": "A%02d" % (article_id % 100),
+			"title": str(article.title),
+			"tags": article.tags.duplicate(),
+			"quality": str(article.quality),
+			"base_value": int(article.base_value),
+			"placed_slot": placed_slot_id,
+			"placed_slot_name": placed_slot_name,
 			"text": "%s\n%s · %s · base %d" % [
 				str(article.title),
 				_join_strings(article.tags, " / "),
@@ -1134,6 +1204,7 @@ func _build_editorial_payload() -> Dictionary:
 	var slots: Array = []
 	for slot in Content.SLOT_DATA:
 		var article := _get_article_by_id(int(run_state.slot_assignment.get(str(slot.id), -1)))
+		var article_id := int(article.get("id", -1)) if not article.is_empty() else -1
 		var slot_text := ""
 		if article.is_empty():
 			slot_text = "%s · x%.2f\n%s\n点击这里放置当前选中的稿件" % [str(slot.name), float(slot.weight), str(slot.desc)]
@@ -1141,6 +1212,15 @@ func _build_editorial_payload() -> Dictionary:
 			slot_text = "%s · x%.2f\n%s\n%s · %s" % [str(slot.name), float(slot.weight), str(article.title), str(article.quality), _join_strings(article.tags, " / ")]
 		slots.append({
 			"id": str(slot.id),
+			"name": str(slot.name),
+			"weight": float(slot.weight),
+			"description": str(slot.desc),
+			"page_id": "left" if str(slot.id) in ["front-main", "feature-1", "feature-2"] else "right",
+			"role": "main_head" if str(slot.id) == "front-main" else "secondary_head" if str(slot.id) == "front-side" else "standard_story",
+			"article_id": article_id,
+			"article_title": str(article.get("title", "")),
+			"quality": str(article.get("quality", "")),
+			"tags": article.get("tags", []).duplicate(),
 			"text": slot_text,
 			"selected": selected_article_id != -1,
 			"enabled": true,
@@ -1150,9 +1230,13 @@ func _build_editorial_payload() -> Dictionary:
 	var stats := Systems.build_settlement_preview(run_state, run_state.slot_assignment)
 	run_state.settlement_preview = stats.duplicate(true)
 	return {
+		"issue": run_state.week,
 		"subtitle": "本周新增素材 %d 条，可转化候选稿件 %d 篇。正式切片只暴露候选稿与版面映射。" % [run_state.new_material_ids.size(), run_state.article_candidates.size()],
 		"articles": articles,
 		"slots": slots,
+		"held_article_id": selected_article_id,
+		"assignments": run_state.slot_assignment.duplicate(true),
+		"stats": stats.duplicate(true),
 		"stats_text": _build_live_stats_text(stats),
 	}
 
@@ -1336,7 +1420,7 @@ func _on_open_dispatch_requested() -> void:
 	_refresh_all()
 
 func _on_article_selected(article_id: int) -> void:
-	selected_article_id = article_id
+	selected_article_id = -1 if selected_article_id == article_id else article_id
 	_refresh_all()
 
 func _toggle_staff(staff_id: String) -> void:
@@ -1427,16 +1511,78 @@ func _enter_editorial_phase() -> void:
 func _place_article_in_slot(slot_id: String) -> void:
 	if selected_article_id == -1:
 		return
-	for key in run_state.slot_assignment.keys():
-		if int(run_state.slot_assignment[key]) == selected_article_id:
-			run_state.slot_assignment[key] = -1
-	run_state.slot_assignment[slot_id] = selected_article_id
+	_apply_editorial_transfer("candidate", selected_article_id, "", "slot", slot_id)
+
+
+func _apply_editorial_transfer(source_kind: String, article_id: int, source_slot_id: String, destination_kind: String, destination_slot_id: String) -> void:
+	if run_state.current_phase != "editorial" or article_id == -1:
+		return
+	if source_kind not in ["candidate", "slot"] or destination_kind not in ["slot", "candidate_pool"]:
+		return
+	var valid_slot_ids: Array[String] = []
+	for slot in Content.SLOT_DATA:
+		valid_slot_ids.append(str(slot.id))
+	if source_kind == "slot":
+		if source_slot_id not in valid_slot_ids or int(run_state.slot_assignment.get(source_slot_id, -1)) != article_id:
+			return
+	elif _is_article_placed(article_id):
+		return
+	if destination_kind == "candidate_pool":
+		if source_kind != "slot":
+			return
+		var removed_assignment: Dictionary = run_state.slot_assignment.duplicate(true)
+		removed_assignment[source_slot_id] = -1
+		if not _editorial_assignment_is_unique(removed_assignment):
+			return
+		run_state.slot_assignment = removed_assignment
+		selected_article_id = -1
+		_refresh_all()
+		return
+	if destination_slot_id not in valid_slot_ids:
+		return
+	if source_kind == "slot" and source_slot_id == destination_slot_id:
+		selected_article_id = -1
+		_refresh_all()
+		return
+	var next_assignment: Dictionary = run_state.slot_assignment.duplicate(true)
+	var target_article_id := int(next_assignment.get(destination_slot_id, -1))
+	if source_kind == "candidate":
+		next_assignment[destination_slot_id] = article_id
+	else:
+		next_assignment[source_slot_id] = target_article_id
+		next_assignment[destination_slot_id] = article_id
+	if not _editorial_assignment_is_unique(next_assignment):
+		return
+	run_state.slot_assignment = next_assignment
 	selected_article_id = -1
 	_refresh_all()
+
+
+func _editorial_assignment_is_unique(assignments: Dictionary) -> bool:
+	var seen: Dictionary = {}
+	for value in assignments.values():
+		var assigned_article_id := int(value)
+		if assigned_article_id == -1:
+			continue
+		if seen.has(assigned_article_id):
+			return false
+		seen[assigned_article_id] = true
+	return true
 
 func _clear_layout() -> void:
 	for slot in Content.SLOT_DATA:
 		run_state.slot_assignment[str(slot.id)] = -1
+	selected_article_id = -1
+	_refresh_all()
+
+func _clear_editorial_slot(slot_id: String) -> void:
+	if not run_state.slot_assignment.has(slot_id):
+		return
+	run_state.slot_assignment[slot_id] = -1
+	selected_article_id = -1
+	_refresh_all()
+
+func _cancel_editorial_selection() -> void:
 	selected_article_id = -1
 	_refresh_all()
 
