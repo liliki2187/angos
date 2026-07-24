@@ -1,0 +1,228 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <style>
+      text { font-family: "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; fill: #111; }
+      .title { font-size: 34px; font-weight: 800; }
+      .subtitle { font-size: 16px; fill: #62625e; }
+      .panel-title { font-size: 23px; font-weight: 800; }
+      .body { font-size: 14px; }
+      .small { font-size: 12px; }
+      .tiny { font-size: 10px; }
+      .muted { fill: #6b6b66; }
+      .mono { font-family: Consolas, monospace; }
+      .bold { font-weight: 800; }
+      .white { fill: #fff; }
+      .paper { fill: #f3f3f0; }
+      .soft { fill: #e7e7e2; }
+      .disabled { fill: #deded9; }
+      .ink { fill: #111; }
+      .inverse { fill: #fff; }
+      .line { stroke: #111; stroke-width: 2; fill: none; }
+      .thin { stroke: #666; stroke-width: 1.25; fill: none; }
+      .dash { stroke: #777; stroke-width: 1.25; stroke-dasharray: 6 5; fill: none; }
+    </style>
+
+    <g id="thumb-v1">
+      <rect width="46" height="46" class="soft" stroke="#666"/>
+      <path d="M0 0 L46 46 M46 0 L0 46" class="thin"/>
+    </g>
+
+    <g id="card-v1-a04">
+      <rect width="274" height="62" class="white" stroke="#111" stroke-width="2.5"/>
+      <use href="#thumb-v1" x="8" y="8"/>
+      <text x="64" y="16" class="tiny mono muted bold">A04 · 等级 高</text>
+      <text x="64" y="34" class="small bold">罗斯威尔档案第十四页拒绝被复印</text>
+      <text x="64" y="51" class="tiny muted">档案 · 怀疑 · 430</text>
+      <rect x="225" y="43" width="40" height="14" class="white" stroke="#111"/>
+      <text x="245" y="53" class="tiny bold" text-anchor="middle">选中</text>
+    </g>
+
+    <g id="card-v1-a07">
+      <rect width="274" height="62" class="white" stroke="#666" stroke-width="1.25"/>
+      <use href="#thumb-v1" x="8" y="8"/>
+      <text x="64" y="16" class="tiny mono muted bold">A07 · 等级 中</text>
+      <text x="64" y="34" class="small bold">北岸气象塔整夜接收来自地下的闪电</text>
+      <text x="64" y="51" class="tiny muted">科学 · 怀疑 · 360</text>
+    </g>
+
+    <g id="card-v1-a08">
+      <rect width="274" height="62" class="white" stroke="#666" stroke-width="1.25"/>
+      <use href="#thumb-v1" x="8" y="8"/>
+      <text x="64" y="16" class="tiny mono muted bold">A08 · 等级 低</text>
+      <text x="64" y="34" class="small bold">旧城区每一面停摆时钟同时快了四分钟</text>
+      <text x="64" y="51" class="tiny muted">目击 · 中立 · 350</text>
+    </g>
+
+    <g id="check-dot">
+      <circle r="12" class="ink"/>
+      <text y="5" text-anchor="middle" class="small inverse bold">✓</text>
+    </g>
+  </defs>
+
+  <rect width="1600" height="900" class="paper"/>
+  <line x1="52" y1="0" x2="52" y2="900" stroke="#c7c7c1"/>
+
+  <text x="52" y="61" class="title">候选报道筛选与排序｜用户纠偏版</text>
+  <text x="52" y="91" class="subtitle">删除名称搜索 · 只保留类型筛选与等级 / 获得时间排序</text>
+  <rect x="1254" y="43" width="294" height="46" class="ink"/>
+  <text x="1401" y="72" text-anchor="middle" class="body inverse bold">v1 · 搜索已移除</text>
+  <line x1="52" y1="112" x2="1548" y2="112" stroke="#111" stroke-width="4"/>
+
+  <!-- 默认态 -->
+  <g transform="translate(52 138)">
+    <rect width="480" height="600" class="white" stroke="#111" stroke-width="2"/>
+    <text x="24" y="42" class="panel-title">01｜默认栏头</text>
+    <text x="456" y="39" text-anchor="end" class="small mono muted bold">NO SEARCH</text>
+
+    <g transform="translate(80 68)">
+      <rect width="320" height="340" class="paper" stroke="#111" stroke-width="2"/>
+      <g transform="translate(15 15)">
+        <rect width="288" height="48" class="white"/>
+        <line x1="0" y1="48" x2="288" y2="48" stroke="#111" stroke-width="2"/>
+        <text x="4" y="30" class="body bold">候选报道</text>
+        <text x="96" y="30" class="small muted">20篇</text>
+        <rect x="196" y="2" width="44" height="44" class="soft" stroke="#111"/>
+        <rect x="244" y="2" width="44" height="44" class="soft" stroke="#111"/>
+        <text x="218" y="30" text-anchor="middle" class="small bold">筛</text>
+        <text x="266" y="30" text-anchor="middle" class="small bold">序</text>
+      </g>
+      <use href="#card-v1-a04" x="15" y="79"/>
+      <use href="#card-v1-a07" x="15" y="149"/>
+      <use href="#card-v1-a08" x="15" y="219"/>
+      <text x="160" y="313" text-anchor="middle" class="body mono muted bold">···</text>
+    </g>
+
+    <use href="#check-dot" x="35" y="449"/>
+    <text x="59" y="445" class="body bold">栏头只保留“筛选、排序”两个入口</text>
+    <text x="59" y="468" class="small muted">每个真实热区 44×44px，不再出现键盘输入。</text>
+    <use href="#check-dot" x="35" y="511"/>
+    <text x="59" y="507" class="body bold">列表起点与卡片尺寸不变</text>
+    <text x="59" y="530" class="small muted">1080p 默认仍完整显示 8 张候选报道。</text>
+    <rect x="24" y="556" width="432" height="28" class="soft"/>
+    <text x="240" y="575" text-anchor="middle" class="small bold">候选报道 20篇　　[筛]　[序]</text>
+  </g>
+
+  <!-- 筛选态 -->
+  <g transform="translate(560 138)">
+    <rect width="480" height="600" class="white" stroke="#111" stroke-width="2"/>
+    <text x="24" y="42" class="panel-title">02｜报道类型筛选</text>
+    <text x="456" y="39" text-anchor="end" class="small mono muted bold">MULTI-SELECT</text>
+
+    <g transform="translate(80 68)">
+      <rect width="320" height="340" class="paper" stroke="#111" stroke-width="2"/>
+      <g transform="translate(15 15)">
+        <rect width="288" height="48" class="white"/>
+        <line x1="0" y1="48" x2="288" y2="48" stroke="#111" stroke-width="2"/>
+        <text x="4" y="30" class="body bold">候选报道</text>
+        <text x="96" y="30" class="small muted">6/20</text>
+        <rect x="196" y="2" width="44" height="44" class="ink"/>
+        <rect x="244" y="2" width="44" height="44" class="soft" stroke="#111"/>
+        <text x="218" y="30" text-anchor="middle" class="small inverse bold">筛</text>
+        <text x="266" y="30" text-anchor="middle" class="small bold">序</text>
+        <circle cx="234" cy="8" r="8" class="ink"/>
+        <text x="234" y="12" text-anchor="middle" class="tiny inverse bold">2</text>
+      </g>
+
+      <use href="#card-v1-a07" x="15" y="79" opacity=".4"/>
+      <use href="#card-v1-a08" x="15" y="149" opacity=".4"/>
+
+      <g transform="translate(15 62)">
+        <rect width="288" height="234" class="white" stroke="#111" stroke-width="3"/>
+        <rect x="7" y="7" width="288" height="234" fill="none" stroke="#aaa" stroke-width="5" opacity=".55"/>
+        <text x="14" y="29" class="body bold">报道类型 · 即时生效</text>
+        <text x="270" y="30" text-anchor="middle" class="panel-title">×</text>
+        <line x1="14" y1="41" x2="274" y2="41" stroke="#111" stroke-width="2"/>
+
+        <rect x="14" y="57" width="260" height="32" class="soft" stroke="#666"/>
+        <text x="29" y="78" class="small bold">✓ 全部</text>
+
+        <rect x="14" y="103" width="124" height="34" class="soft" stroke="#666"/>
+        <rect x="150" y="103" width="124" height="34" class="ink"/>
+        <rect x="14" y="149" width="124" height="34" class="soft" stroke="#666"/>
+        <rect x="150" y="149" width="124" height="34" class="ink"/>
+        <text x="76" y="125" text-anchor="middle" class="small">抢先快讯</text>
+        <text x="212" y="125" text-anchor="middle" class="small inverse bold">✓ 深度报道</text>
+        <text x="76" y="171" text-anchor="middle" class="small">个人专栏</text>
+        <text x="212" y="171" text-anchor="middle" class="small inverse bold">✓ 爆炸性新闻</text>
+
+        <line x1="14" y1="199" x2="274" y2="199" stroke="#aaa"/>
+        <text x="14" y="219" class="tiny muted">取消最后一个类型时，自动恢复“全部”</text>
+      </g>
+    </g>
+
+    <use href="#check-dot" x="35" y="449"/>
+    <text x="59" y="445" class="body bold">只筛选四种正式报道类型</text>
+    <text x="59" y="468" class="small muted">不加入取向、主题、数值或名称搜索。</text>
+    <use href="#check-dot" x="35" y="511"/>
+    <text x="59" y="507" class="body bold">“全部”与具体类型互斥</text>
+    <text x="59" y="530" class="small muted">具体类型允许多选，并保留明确复位路径。</text>
+    <rect x="24" y="556" width="432" height="28" class="soft"/>
+    <text x="240" y="575" text-anchor="middle" class="small bold">全部｜抢先快讯｜深度报道｜个人专栏｜爆炸性新闻</text>
+  </g>
+
+  <!-- 排序态 -->
+  <g transform="translate(1068 138)">
+    <rect width="480" height="600" class="white" stroke="#111" stroke-width="2"/>
+    <text x="24" y="42" class="panel-title">03｜排序菜单</text>
+    <text x="456" y="39" text-anchor="end" class="small mono muted bold">HONEST DATA</text>
+
+    <g transform="translate(80 68)">
+      <rect width="320" height="340" class="paper" stroke="#111" stroke-width="2"/>
+      <g transform="translate(15 15)">
+        <rect width="288" height="48" class="white"/>
+        <line x1="0" y1="48" x2="288" y2="48" stroke="#111" stroke-width="2"/>
+        <text x="4" y="30" class="body bold">候选报道</text>
+        <text x="96" y="30" class="small muted">20篇</text>
+        <rect x="196" y="2" width="44" height="44" class="soft" stroke="#111"/>
+        <rect x="244" y="2" width="44" height="44" class="ink"/>
+        <text x="218" y="30" text-anchor="middle" class="small bold">筛</text>
+        <text x="266" y="30" text-anchor="middle" class="small inverse bold">序</text>
+      </g>
+
+      <use href="#card-v1-a04" x="15" y="79" opacity=".45"/>
+      <use href="#card-v1-a07" x="15" y="149" opacity=".45"/>
+
+      <g transform="translate(89 62)">
+        <rect width="214" height="222" class="white" stroke="#111" stroke-width="3"/>
+        <rect x="7" y="7" width="214" height="222" fill="none" stroke="#aaa" stroke-width="5" opacity=".55"/>
+        <rect width="214" height="45" class="soft"/>
+        <text x="14" y="28" class="body bold">等级　高 → 低</text>
+        <text x="196" y="28" text-anchor="middle" class="body bold">✓</text>
+        <line x1="0" y1="45" x2="214" y2="45" stroke="#aaa"/>
+        <text x="14" y="74" class="body">等级　低 → 高</text>
+        <line x1="0" y1="92" x2="214" y2="92" stroke="#aaa"/>
+
+        <rect x="0" y="93" width="214" height="48" class="disabled"/>
+        <text x="14" y="116" class="body muted">获得时间　新 → 旧</text>
+        <text x="200" y="116" text-anchor="end" class="tiny muted">待接字段</text>
+        <line x1="0" y1="141" x2="214" y2="141" stroke="#aaa"/>
+        <rect x="0" y="142" width="214" height="48" class="disabled"/>
+        <text x="14" y="165" class="body muted">获得时间　旧 → 新</text>
+        <text x="200" y="165" text-anchor="end" class="tiny muted">待接字段</text>
+        <line x1="0" y1="190" x2="214" y2="190" stroke="#aaa"/>
+        <text x="14" y="211" class="tiny muted">当前默认：等级高 → 低</text>
+      </g>
+    </g>
+
+    <use href="#check-dot" x="35" y="449"/>
+    <text x="59" y="445" class="body bold">等级直接映射 quality</text>
+    <text x="59" y="468" class="small muted">进入等级排序时默认高到低，也可反向。</text>
+    <use href="#check-dot" x="35" y="511"/>
+    <text x="59" y="507" class="body bold">获得时间暂时完整禁用</text>
+    <text x="59" y="530" class="small muted">候选契约尚无 acquired_at，不能伪造时间顺序。</text>
+    <rect x="24" y="556" width="432" height="28" class="soft"/>
+    <text x="240" y="575" text-anchor="middle" class="small bold">字段接入后：获得时间默认新 → 旧</text>
+  </g>
+
+  <g transform="translate(52 760)">
+    <rect width="1496" height="106" class="ink"/>
+    <text x="24" y="36" class="panel-title inverse">本轮冻结范围</text>
+    <text x="24" y="65" class="small inverse">已按用户反馈删除搜索；以下规则等待你看图确认。</text>
+    <text x="336" y="34" class="body inverse bold">✓ 筛选 / 排序浮层互斥</text>
+    <text x="336" y="66" class="body inverse bold">✓ 不取消当前选中来源</text>
+    <text x="705" y="34" class="body inverse bold">✓ 筛选 / 排序不触发推演重算</text>
+    <text x="705" y="66" class="body inverse bold">✓ 显式排序才改变候选位置</text>
+    <text x="1128" y="34" class="body inverse bold">✓ 8 条全显</text>
+    <text x="1128" y="66" class="body inverse bold">✓ 12 / 20+ 仅左栏滚动</text>
+  </g>
+</svg>

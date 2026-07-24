@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1920, initial-scale=1">
+  <title>发刊报道图片两规格合同｜黑白结构审阅板 v1</title>
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: #0d0d0d;
+      --raised: #171717;
+      --paper: #dedede;
+      --paper-2: #c9c9c9;
+      --ink: #f3f3f3;
+      --paper-ink: #101010;
+      --muted: #a8a8a8;
+      --line: #777;
+      --strong: #f0f0f0;
+      --dim: #444;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      width: 1920px;
+      height: 1080px;
+      margin: 0;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
+    }
+
+    body {
+      background:
+        linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px),
+        var(--bg);
+      background-size: 32px 32px;
+    }
+
+    .stage {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      padding: 28px 52px 34px;
+    }
+
+    .topbar {
+      height: 70px;
+      border: 1px solid var(--strong);
+      border-left: 8px solid var(--strong);
+      display: flex;
+      align-items: center;
+      padding: 0 22px;
+      background: #090909;
+    }
+
+    .topbar h1 {
+      margin: 0;
+      font-size: 25px;
+      line-height: 1;
+      letter-spacing: .04em;
+    }
+
+    .topbar p {
+      margin: 7px 0 0 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .topbar__tag {
+      margin-left: auto;
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      color: #ddd;
+      font: 700 12px/1 ui-monospace, Consolas, monospace;
+      letter-spacing: .08em;
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: 420px 900px 440px;
+      gap: 18px;
+      margin-top: 18px;
+      height: 912px;
+    }
+
+    .panel {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: rgba(13,13,13,.97);
+      padding: 18px;
+    }
+
+    .panel__head {
+      height: 50px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .step {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--strong);
+      display: grid;
+      place-items: center;
+      margin-right: 12px;
+      font: 800 13px/1 ui-monospace, Consolas, monospace;
+    }
+
+    .panel__head h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .panel__head small {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font: 700 11px/1.2 ui-monospace, Consolas, monospace;
+      letter-spacing: .08em;
+    }
+
+    .copy {
+      margin: 7px 0 0;
+      color: #cfcfcf;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .rule {
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      background: var(--raised);
+      padding: 12px;
+    }
+
+    .rule strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .rule span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .master-wrap {
+      position: relative;
+      height: 300px;
+      margin-top: 14px;
+    }
+
+    .master {
+      position: absolute;
+      left: 50px;
+      top: 4px;
+      width: 250px;
+      height: 250px;
+      border: 2px solid var(--strong);
+      background:
+        linear-gradient(155deg, transparent 0 34%, #2f2f2f 34% 56%, transparent 56%),
+        linear-gradient(22deg, #111 0 42%, #252525 42% 74%, #121212 74%);
+    }
+
+    .master::before {
+      content: "核心主体";
+      position: absolute;
+      left: 76px;
+      top: 76px;
+      width: 96px;
+      height: 96px;
+      border: 2px solid #fff;
+      background: #090909;
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .master::after {
+      content: "1024 × 1024\A构图真源";
+      white-space: pre;
+      position: absolute;
+      left: 9px;
+      bottom: 8px;
+      font: 700 11px/1.4 ui-monospace, Consolas, monospace;
+    }
+
+    .safe-note {
+      position: absolute;
+      left: 0;
+      bottom: 1px;
+      width: 100%;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .reuse-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 20px;
+      height: 153px;
+      margin-top: 10px;
+      padding: 10px 12px 12px;
+      border: 1px dashed var(--line);
+    }
+
+    .reuse-item { text-align: center; }
+
+    .reuse-square {
+      margin: 0 auto 8px;
+      border: 2px solid var(--strong);
+      background:
+        linear-gradient(155deg, transparent 0 34%, #444 34% 56%, transparent 56%),
+        linear-gradient(22deg, #111 0 42%, #292929 42% 74%, #111 74%);
+    }
+
+    .reuse-square--64 { width: 64px; height: 64px; }
+    .reuse-square--normal { width: 92px; height: 92px; }
+    .reuse-square--secondary { width: 112px; height: 112px; }
+
+    .reuse-item b { display: block; font-size: 12px; }
+    .reuse-item span { color: var(--muted); font-size: 10px; }
+
+    .wide-demo {
+      position: relative;
+      height: 176px;
+      margin-top: 14px;
+      border: 2px solid var(--strong);
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, #1d1d1d 0 23.33%, transparent 23.33% 76.67%, #1d1d1d 76.67%),
+        linear-gradient(155deg, transparent 0 34%, #3d3d3d 34% 56%, transparent 56%),
+        linear-gradient(22deg, #111 0 42%, #292929 42% 74%, #111 74%);
+    }
+
+    .wide-demo__core {
+      position: absolute;
+      left: 88px;
+      top: 0;
+      width: 176px;
+      height: 176px;
+      border-left: 2px dashed #fff;
+      border-right: 2px dashed #fff;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .wide-demo__wing {
+      position: absolute;
+      top: 10px;
+      color: #c9c9c9;
+      font-size: 10px;
+    }
+
+    .wide-demo__wing--left { left: 12px; }
+    .wide-demo__wing--right { right: 12px; }
+
+    .wide-caption {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 7px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .wide-caption strong { color: var(--ink); }
+
+    .pages-area {
+      position: relative;
+      height: 807px;
+      margin-top: 12px;
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .page {
+      position: relative;
+      width: 410px;
+      height: 670px;
+      margin-top: 14px;
+      border: 2px solid #fff;
+      background: var(--paper);
+      color: var(--paper-ink);
+      padding: 18px;
+    }
+
+    .page__head {
+      height: 42px;
+      border: 2px solid #111;
+      display: flex;
+      align-items: center;
+      padding: 0 11px;
+      background: #1b1b1b;
+      color: #eee;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .slot {
+      position: relative;
+      border: 2px solid #111;
+      background: #cecece;
+      overflow: hidden;
+    }
+
+    .slot__label {
+      position: absolute;
+      left: 8px;
+      top: 6px;
+      z-index: 3;
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .headline-slot {
+      height: 296px;
+      margin-top: 14px;
+      padding: 29px 10px 10px;
+    }
+
+    .headline-title {
+      height: 48px;
+      padding: 6px 4px;
+      font-size: 14px;
+      line-height: 1.35;
+      font-weight: 800;
+    }
+
+    .headline-image {
+      position: relative;
+      height: 180px;
+      border: 2px solid #111;
+      background:
+        linear-gradient(90deg, #858585 0 23.3%, transparent 23.3% 76.7%, #858585 76.7%),
+        linear-gradient(155deg, transparent 0 34%, #777 34% 56%, transparent 56%),
+        #a5a5a5;
+    }
+
+    .headline-image::after {
+      content: "15:8 · 410 × 219";
+      position: absolute;
+      right: 7px;
+      bottom: 6px;
+      padding: 3px 6px;
+      background: #111;
+      color: #fff;
+      font: 700 9px/1 ui-monospace, Consolas, monospace;
+    }
+
+    .meta-line {
+      height: 16px;
+      padding-top: 5px;
+      font-size: 8px;
+    }
+
+    .ordinary-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .ordinary-slot {
+      height: 264px;
+      padding: 26px 8px 8px;
+    }
+
+    .ordinary-title {
+      height: 38px;
+      font-size: 10px;
+      line-height: 1.35;
+      font-weight: 800;
+    }
+
+    .ordinary-image {
+      width: 157px;
+      height: 157px;
+      border: 2px solid #111;
+      background:
+        linear-gradient(155deg, transparent 0 34%, #777 34% 56%, transparent 56%),
+        #a0a0a0;
+      display: grid;
+      place-items: end center;
+      padding-bottom: 6px;
+      font: 800 9px/1 ui-monospace, Consolas, monospace;
+    }
+
+    .secondary-slot {
+      height: 280px;
+      margin-top: 14px;
+      padding: 31px 10px 10px;
+    }
+
+    .secondary-body {
+      display: grid;
+      grid-template-columns: 196px 1fr;
+      gap: 11px;
+      height: 196px;
+    }
+
+    .secondary-image {
+      width: 196px;
+      height: 196px;
+      border: 2px solid #111;
+      background:
+        linear-gradient(155deg, transparent 0 34%, #777 34% 56%, transparent 56%),
+        #9c9c9c;
+      display: grid;
+      place-items: end center;
+      padding-bottom: 7px;
+      font: 800 9px/1 ui-monospace, Consolas, monospace;
+    }
+
+    .secondary-copy {
+      border-left: 1px solid #777;
+      padding-left: 10px;
+    }
+
+    .secondary-copy h3 {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.42;
+    }
+
+    .secondary-copy p {
+      margin: 11px 0 0;
+      color: #4b4b4b;
+      font-size: 10px;
+      line-height: 1.55;
+    }
+
+    .secondary-copy .data-only {
+      margin-top: 13px;
+      border-top: 1px solid #777;
+      padding-top: 8px;
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .right-page .ordinary-row { margin-top: 14px; }
+    .right-page .ordinary-slot { height: 280px; }
+
+    .geometry-note {
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      bottom: 0;
+      height: 100px;
+      border: 1px dashed var(--line);
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: center;
+      gap: 8px;
+      padding: 10px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .geometry-note b {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+      font-size: 12px;
+    }
+
+    .ratio-card {
+      margin-top: 15px;
+      border: 1px solid var(--line);
+      padding: 12px;
+      background: var(--raised);
+    }
+
+    .ratio-card.is-recommended {
+      border: 2px solid var(--strong);
+      padding: 11px;
+    }
+
+    .ratio-card__top {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .ratio-card__top strong { font-size: 17px; }
+
+    .badge {
+      margin-left: auto;
+      padding: 4px 7px;
+      border: 1px solid var(--strong);
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .ratio-shape {
+      position: relative;
+      width: 100%;
+      border: 2px solid #eee;
+      background:
+        linear-gradient(90deg, #2c2c2c 0 23.33%, transparent 23.33% 76.67%, #2c2c2c 76.67%),
+        #555;
+    }
+
+    .ratio-shape--15 { height: 170px; }
+    .ratio-shape--16 { height: 181px; opacity: .72; }
+
+    .ratio-shape__core {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      aspect-ratio: 1;
+      transform: translateX(-50%);
+      border-left: 2px dashed #fff;
+      border-right: 2px dashed #fff;
+      display: grid;
+      place-items: center;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .ratio-spec {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      color: var(--muted);
+      font: 700 10px/1.4 ui-monospace, Consolas, monospace;
+    }
+
+    .ratio-reason {
+      margin: 8px 0 0;
+      color: #ddd;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .decision {
+      margin-top: 10px;
+      border: 1px solid var(--strong);
+      padding: 10px 13px;
+      background: #0a0a0a;
+    }
+
+    .decision h3 {
+      margin: 0 0 6px;
+      font-size: 15px;
+    }
+
+    .decision-row {
+      position: relative;
+      min-height: 34px;
+      border-top: 1px solid var(--dim);
+      padding: 6px 0 3px 25px;
+      color: #ddd;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .decision-row::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 6px;
+      width: 16px;
+      height: 16px;
+      border: 1px solid var(--strong);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 11px;
+    }
+
+    .decision-row b { color: #fff; }
+
+    .footer-note {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 10px;
+      min-height: 26px;
+      padding-top: 6px;
+      border-top: 1px solid var(--dim);
+      background: #0d0d0d;
+      color: #8f8f8f;
+      font-size: 10px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <main class="stage" data-artifact="weekly_editorial_two_spec_image_contract_review_v1">
+    <header class="topbar">
+      <h1>报道图片两规格合同｜黑白结构审阅板</h1>
+      <p>一套视觉身份、两个导出物；本轮只裁决图片框与页内排布，不改发刊工作流</p>
+      <span class="topbar__tag">DESKTOP 1920×1080 · REVIEW ONLY</span>
+    </header>
+
+    <section class="columns">
+      <article class="panel source-panel">
+        <header class="panel__head">
+          <span class="step">01</span>
+          <h2>先固定图片真源</h2>
+          <small>一篇报道 = 一套身份</small>
+        </header>
+
+        <section class="rule">
+          <strong>方形母图是构图真源</strong>
+          <span>关键人物、物件和异常线索必须在 1:1 内独立成立，不能依赖横图两翼。</span>
+        </section>
+
+        <div class="master-wrap">
+          <div class="master"></div>
+          <div class="safe-note">主体、姿态、光照与叙事焦点全部锁在方形安全区</div>
+        </div>
+
+        <div class="eyebrow">SQUARE 直接复用｜禁止从横图反裁</div>
+        <div class="reuse-row">
+          <div class="reuse-item">
+            <div class="reuse-square reuse-square--64"></div>
+            <b>候选缩略图</b>
+            <span>64 × 64</span>
+          </div>
+          <div class="reuse-item">
+            <div class="reuse-square reuse-square--normal"></div>
+            <b>普通版位</b>
+            <span>189 × 189</span>
+          </div>
+          <div class="reuse-item">
+            <div class="reuse-square reuse-square--secondary"></div>
+            <b>副头版</b>
+            <span>210 × 210</span>
+          </div>
+        </div>
+
+        <div class="eyebrow" style="margin-top:14px">HEADLINER 只向左右扩图</div>
+        <div class="wide-demo">
+          <span class="wide-demo__wing wide-demo__wing--left">扩展环境</span>
+          <div class="wide-demo__core">原方形核心</div>
+          <span class="wide-demo__wing wide-demo__wing--right">扩展环境</span>
+        </div>
+        <div class="wide-caption">
+          <span>左翼 <strong>448px</strong></span>
+          <span><strong>1920 × 1024</strong></span>
+          <span>右翼 <strong>448px</strong></span>
+        </div>
+      </article>
+
+      <article class="panel layout-panel">
+        <header class="panel__head">
+          <span class="step">02</span>
+          <h2>双页只改图文关系，不改外框</h2>
+          <small>490×800 × 2 始终完整可见</small>
+        </header>
+
+        <div class="pages-area">
+          <section class="page left-page" aria-label="主版结构">
+            <div class="page__head">第1版 · 主版</div>
+            <div class="slot headline-slot">
+              <span class="slot__label">主头版｜唯一横图</span>
+              <div class="headline-title">M330末班车在不存在的站台停了三秒</div>
+              <div class="headline-image"></div>
+              <div class="meta-line">深度 · 金级 · 基值620</div>
+            </div>
+            <div class="ordinary-row">
+              <div class="slot ordinary-slot">
+                <span class="slot__label">重点专题1</span>
+                <div class="ordinary-title">51区夜班货车携带会呼吸的路牌</div>
+                <div class="ordinary-image">189 × 189</div>
+                <div class="meta-line">爆炸 · 金级</div>
+              </div>
+              <div class="slot ordinary-slot">
+                <span class="slot__label">重点专题2</span>
+                <div class="ordinary-title">市政厅新增一个不存在的影子部门</div>
+                <div class="ordinary-image">189 × 189</div>
+                <div class="meta-line">专栏 · 银级</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="page right-page" aria-label="副版结构">
+            <div class="page__head">第2版 · 副版</div>
+            <div class="slot secondary-slot">
+              <span class="slot__label">副头版｜方图 + 文字栏</span>
+              <div class="secondary-body">
+                <div class="secondary-image">210 × 210</div>
+                <div class="secondary-copy">
+                  <h3>港口广播连续七晚播报明天的潮汐</h3>
+                  <p style="border:1px dashed #888;padding:8px">强制留白<br>不新增摘要字段</p>
+                  <div class="data-only">快讯 · 银级 · 基值450</div>
+                </div>
+              </div>
+            </div>
+            <div class="ordinary-row">
+              <div class="slot ordinary-slot">
+                <span class="slot__label">内页1</span>
+                <div class="ordinary-title">街区猫群一致拒绝经过蓝色电话亭</div>
+                <div class="ordinary-image">189 × 189</div>
+                <div class="meta-line">快讯 · 银级</div>
+              </div>
+              <div class="slot ordinary-slot">
+                <span class="slot__label">内页2</span>
+                <div class="ordinary-title">空版位示例：图片框仍按方形预留</div>
+                <div class="ordinary-image" style="background:#bdbdbd;border-style:dashed">1 : 1</div>
+                <div class="meta-line">空版位</div>
+              </div>
+            </div>
+          </section>
+
+          <aside class="geometry-note">
+            <div><b>外层冻结</b>三栏、双页、六槽位置和高度不变。</div>
+            <div><b>副头版重排</b>210 方图 + 12 间距 + 188 文字栏。</div>
+            <div><b>普通位方化</b>只压缩内部空隙，不增加槽高。</div>
+          </aside>
+        </div>
+      </article>
+
+      <article class="panel ratio-panel">
+        <header class="panel__head">
+          <span class="step">03</span>
+          <h2>主头版比例裁决</h2>
+          <small>推荐只保留一种</small>
+        </header>
+
+        <section class="ratio-card is-recommended">
+          <div class="ratio-card__top">
+            <strong>15 : 8</strong>
+            <span class="badge">推荐冻结</span>
+          </div>
+          <div class="ratio-shape ratio-shape--15">
+            <div class="ratio-shape__core">1024 方形核心</div>
+          </div>
+          <div class="ratio-spec"><span>源 1920×1024</span><span>显示 410×219</span></div>
+          <p class="ratio-reason">与当前 410×218 几乎等高；标题、图片和 meta 无需争抢额外高度。</p>
+        </section>
+
+        <section class="ratio-card">
+          <div class="ratio-card__top">
+            <strong>16 : 9</strong>
+            <span class="badge" style="border-color:#777;color:#aaa">不推荐</span>
+          </div>
+          <div class="ratio-shape ratio-shape--16">
+            <div class="ratio-shape__core">方形核心</div>
+          </div>
+          <div class="ratio-spec"><span>源约 1820×1024</span><span>显示 410×231</span></div>
+          <p class="ratio-reason">多占约 12px 纵向空间，会挤压主头版标题或底部元数据，收益很小。</p>
+        </section>
+
+        <section class="decision">
+          <h3>建议这次一起冻结</h3>
+          <div class="decision-row"><b>主头版 15:8</b><br>1024 方图左右各扩 448px。</div>
+          <div class="decision-row"><b>副头版 210 方图</b><br>224 方案会进一步压缩右侧标题栏。</div>
+          <div class="decision-row"><b>不虚构摘要字段</b><br>无数据时使用标题、meta 与留白。</div>
+        </section>
+
+        <p class="footer-note">本板是图片合同与页内排布候选，不是最终视觉 UI；未修改 Godot、组件合同或 GDD。</p>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

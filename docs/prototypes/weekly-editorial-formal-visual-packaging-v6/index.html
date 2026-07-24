@@ -1,0 +1,1500 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1920, initial-scale=1">
+  <title>发刊编辑界面｜正式视觉包装候选 v6</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #030303;
+      --panel: #080808;
+      --page: #0c0c0c;
+      --raised: #121212;
+      --occupied: #181818;
+      --line-dim: #3b3b3b;
+      --line: #666;
+      --line-strong: #b8b8b8;
+      --ink: #f0f0f0;
+      --muted: #a0a0a0;
+      --faint: #6d6d6d;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      width: 1920px;
+      height: 1080px;
+      margin: 0;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
+    }
+
+    button { font: inherit; }
+
+    .stage {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      background: var(--bg);
+    }
+
+    .top-strip {
+      position: absolute;
+      left: 80px;
+      top: 24px;
+      width: 1760px;
+      height: 52px;
+      border: 1px solid var(--line-strong);
+      background: #070707;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 0 16px;
+    }
+
+    .top-strip__title { font-size: 18px; font-weight: 700; }
+    .top-strip__state { color: var(--muted); font-size: 13px; }
+    .top-strip__issue { margin-left: auto; color: var(--muted); font-size: 13px; }
+
+    .workspace {
+      position: absolute;
+      left: 80px;
+      top: 96px;
+      width: 1760px;
+      height: 920px;
+      display: grid;
+      grid-template-columns: 320px 1040px 360px;
+      column-gap: 20px;
+    }
+
+    .panel {
+      position: relative;
+      height: 920px;
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      background: var(--panel);
+    }
+
+    .panel-heading {
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      height: 48px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      z-index: 3;
+    }
+
+    .panel-heading h2 { margin: 0; font-size: 18px; line-height: 1; }
+    .panel-heading__meta { margin-left: auto; color: var(--muted); font-size: 13px; }
+
+    /* 左栏：8张卡在820px视口内完整常显，10/12篇才出现真实滚动。 */
+    .candidate-panel .panel-heading {
+      width: 288px;
+      z-index: 30;
+    }
+
+    .candidate-heading__summary {
+      width: 192px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .candidate-heading__summary h2 { flex: 0 0 auto; }
+
+    .candidate-heading__summary .panel-heading__meta {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .candidate-heading__reveal {
+      width: 192px;
+      height: 44px;
+      border: 0;
+      padding: 0 4px;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      text-align: left;
+      font-size: 11px;
+      line-height: 16px;
+      font-weight: 700;
+    }
+
+    .candidate-heading__reveal span {
+      display: block;
+      color: var(--muted);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .candidate-heading__gap {
+      flex: 0 0 4px;
+      width: 4px;
+      height: 44px;
+    }
+
+    .candidate-tool {
+      position: relative;
+      flex: 0 0 44px;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      padding: 0;
+      background: #111;
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 13px;
+      line-height: 42px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .candidate-tool:hover,
+    .candidate-tool:focus-visible,
+    .candidate-tool[aria-expanded="true"] {
+      border-color: var(--ink);
+      outline: none;
+      background: #1c1c1c;
+    }
+
+    .candidate-tool:disabled {
+      cursor: default;
+      border-color: var(--line-dim);
+      color: var(--faint);
+      background: #0a0a0a;
+    }
+
+    .candidate-tool__badge {
+      position: absolute;
+      right: 2px;
+      top: 2px;
+      min-width: 15px;
+      height: 15px;
+      padding: 0 3px;
+      border-radius: 8px;
+      background: var(--ink);
+      color: #080808;
+      font: 700 10px/15px ui-monospace, Consolas, monospace;
+    }
+
+    .candidate-popover {
+      position: absolute;
+      z-index: 26;
+      top: 68px;
+      border: 2px solid var(--ink);
+      background: #0d0d0d;
+      box-shadow: 7px 7px 0 #303030;
+      color: var(--ink);
+    }
+
+    .candidate-popover--filter {
+      left: 16px;
+      width: 288px;
+      padding: 12px;
+    }
+
+    .candidate-popover--sort {
+      left: 104px;
+      width: 200px;
+      padding: 8px;
+    }
+
+    .candidate-popover__heading {
+      height: 32px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .candidate-popover__close {
+      width: 28px;
+      height: 28px;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 19px;
+      line-height: 24px;
+    }
+
+    .candidate-filter-grid {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .candidate-filter-option,
+    .candidate-sort-option {
+      border: 1px solid var(--line);
+      background: #151515;
+      color: var(--ink);
+      cursor: pointer;
+      text-align: left;
+      font-size: 11px;
+    }
+
+    .candidate-filter-option {
+      min-height: 38px;
+      padding: 0 9px;
+    }
+
+    .candidate-filter-option--all {
+      grid-column: 1 / -1;
+    }
+
+    .candidate-filter-option[aria-pressed="true"],
+    .candidate-sort-option[aria-checked="true"] {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: #080808;
+      font-weight: 700;
+    }
+
+    .candidate-sort-option {
+      position: relative;
+      display: block;
+      width: 100%;
+      min-height: 40px;
+      padding: 0 30px 0 10px;
+      border-bottom: 0;
+    }
+
+    .candidate-sort-option:last-child { border-bottom: 1px solid var(--line); }
+
+    .candidate-sort-option[aria-checked="true"]::after {
+      content: "✓";
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-weight: 700;
+    }
+
+    .candidate-empty__clear {
+      margin-top: 10px;
+      min-width: 112px;
+      height: 36px;
+      border: 1px solid var(--line-strong);
+      background: #111;
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 11px;
+    }
+
+    .candidate-viewport {
+      position: absolute;
+      left: 16px;
+      top: 80px;
+      width: 296px;
+      height: 820px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-color: var(--line-strong) #1b1b1b;
+      scrollbar-width: thin;
+    }
+
+    .candidate-viewport::-webkit-scrollbar { width: 4px; }
+    .candidate-viewport::-webkit-scrollbar-track { background: #1b1b1b; }
+    .candidate-viewport::-webkit-scrollbar-thumb { background: var(--line-strong); }
+
+    .candidate-list {
+      width: 288px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 0 0 28px;
+    }
+
+    .candidate-card {
+      position: relative;
+      flex: 0 0 92px;
+      width: 288px;
+      height: 92px;
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: 0;
+      background: var(--raised);
+      color: var(--ink);
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .candidate-card:hover,
+    .candidate-card:focus-visible { border-color: var(--line-strong); outline: none; }
+
+    .candidate-card.is-selected {
+      border-color: var(--ink);
+      outline: 1px solid var(--ink);
+      outline-offset: -4px;
+    }
+
+    .candidate-card.is-selected::before,
+    .candidate-card.is-selected::after {
+      content: "";
+      position: absolute;
+      left: -1px;
+      width: 9px;
+      height: 20px;
+      border-left: 3px solid var(--ink);
+    }
+
+    .candidate-card.is-selected::before { top: 9px; border-top: 3px solid var(--ink); }
+    .candidate-card.is-selected::after { bottom: 9px; border-bottom: 3px solid var(--ink); }
+
+    .candidate-thumb {
+      position: absolute;
+      left: 12px;
+      top: 14px;
+      width: 64px;
+      height: 64px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, transparent 48%, #343434 49%, transparent 51%),
+        linear-gradient(45deg, transparent 48%, #252525 49%, transparent 51%),
+        #0a0a0a;
+    }
+
+    .candidate-id {
+      position: absolute;
+      left: 88px;
+      top: 9px;
+      color: var(--muted);
+      font: 700 11px/18px ui-monospace, Consolas, monospace;
+    }
+
+    .candidate-title {
+      position: absolute;
+      left: 88px;
+      top: 29px;
+      width: 184px;
+      height: 40px;
+      overflow: hidden;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 700;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .candidate-meta {
+      position: absolute;
+      left: 88px;
+      bottom: 7px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 14px;
+    }
+
+    .candidate-status {
+      position: absolute;
+      right: 10px;
+      bottom: 6px;
+      min-width: 44px;
+      height: 17px;
+      border: 1px solid var(--ink);
+      background: #090909;
+      color: var(--ink);
+      font-size: 10px;
+      line-height: 15px;
+      text-align: center;
+    }
+
+    .candidate-empty {
+      height: 820px;
+      border: 1px dashed var(--line);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .candidate-panel.is-return-target {
+      outline: 3px double var(--ink);
+      outline-offset: -5px;
+    }
+
+    .candidate-panel.is-empty .candidate-list { display: none; }
+    .candidate-panel.is-empty .candidate-empty { display: flex; }
+
+    /* 中央：双页及六槽继续使用冻结几何。 */
+    .center-panel .panel-heading { left: 15px; width: 1010px; }
+
+    .clear-layout {
+      margin-left: 18px;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      padding: 2px 0;
+      background: transparent;
+      color: var(--faint);
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .clear-layout:hover { color: var(--ink); border-color: var(--ink); }
+
+    .issue-page {
+      position: absolute;
+      top: 88px;
+      width: 490px;
+      height: 800px;
+      border: 1px solid var(--line-strong);
+      background: var(--page);
+    }
+
+    .issue-page--left { left: 14px; }
+    .issue-page--right { left: 534px; }
+
+    .page-spine {
+      position: absolute;
+      left: 517px;
+      top: 88px;
+      width: 2px;
+      height: 800px;
+      background: var(--line-dim);
+    }
+
+    .page-header-slot {
+      position: absolute;
+      left: 24px;
+      top: 24px;
+      width: 442px;
+      height: 52px;
+      border: 1px solid var(--line-strong);
+      background: #080808;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .slot {
+      position: absolute;
+      padding: 10px;
+      border: 1px dashed var(--line);
+      background: #080808;
+      color: var(--muted);
+      cursor: default;
+    }
+
+    .slot.is-occupied {
+      border-style: solid;
+      border-color: var(--line-strong);
+      background: var(--occupied);
+      color: var(--ink);
+      cursor: grab;
+    }
+
+    .slot.is-legal-target::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      border: 1px solid #777;
+      pointer-events: none;
+    }
+
+    .slot.is-hover-target {
+      border: 2px solid var(--ink);
+      padding: 9px;
+      z-index: 2;
+    }
+
+    .slot.is-hover-target::after {
+      inset: 4px;
+      border: 1px solid var(--ink);
+    }
+
+    .slot__role { color: var(--muted); font-size: 11px; line-height: 16px; }
+    .slot__article-id { margin-top: 9px; color: var(--muted); font: 700 12px/16px ui-monospace, Consolas, monospace; }
+    .slot__title { margin-top: 8px; width: calc(100% - 12px); font-size: 16px; line-height: 1.4; font-weight: 700; }
+    .slot__meta { position: absolute; left: 10px; bottom: 10px; color: var(--muted); font-size: 10px; }
+    .slot__empty { position: absolute; left: 10px; bottom: 10px; color: var(--faint); font-size: 11px; }
+
+    .replace-action {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 1px solid var(--ink);
+      border-radius: 0;
+      background: #050505;
+      color: var(--ink);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      z-index: 4;
+    }
+
+    .main-slot { left: 24px; top: 92px; width: 442px; height: 374px; }
+    .feature-one { left: 24px; top: 486px; width: 213px; height: 282px; }
+    .feature-two { left: 253px; top: 486px; width: 213px; height: 282px; }
+    .secondary-slot { left: 24px; top: 92px; width: 442px; height: 342px; }
+    .inner-one { left: 24px; top: 454px; width: 213px; height: 314px; }
+    .inner-two { left: 253px; top: 454px; width: 213px; height: 314px; }
+
+    .center-panel.is-frozen .issue-page,
+    .center-panel.is-frozen .clear-layout { pointer-events: none; }
+
+    .center-panel.is-frozen .issue-page::after {
+      content: "版面已冻结";
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      background: #080808;
+      color: var(--muted);
+      font-size: 11px;
+      z-index: 8;
+    }
+
+    /* 右栏：连续证据链 + 固定阻断区 + 唯一CTA。 */
+    .signoff-heading {
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      width: 328px;
+      height: 48px;
+      border: 1px solid var(--line-strong);
+      background: #0a0a0a;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+    }
+
+    .signoff-heading h2 { margin: 0; font-size: 18px; }
+    .signoff-heading span { margin-left: auto; color: var(--muted); font-size: 12px; }
+
+    .evidence-viewport {
+      position: absolute;
+      left: 16px;
+      top: 80px;
+      width: 328px;
+      height: 624px;
+      overflow-y: auto;
+      border: 1px solid var(--line);
+      background: #0a0a0a;
+      scrollbar-color: var(--line-strong) #1b1b1b;
+      scrollbar-width: thin;
+    }
+
+    .evidence-viewport::-webkit-scrollbar { width: 4px; }
+    .evidence-viewport::-webkit-scrollbar-track { background: #1b1b1b; }
+    .evidence-viewport::-webkit-scrollbar-thumb { background: var(--line-strong); }
+
+    .evidence-sheet { min-height: 700px; padding: 0 14px 24px; }
+
+    .evidence-section {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line-dim);
+    }
+
+    .evidence-section:last-child { border-bottom: 0; }
+    .evidence-label { color: var(--muted); font-size: 11px; line-height: 16px; }
+    .evidence-value { margin-top: 7px; font-size: 16px; line-height: 1.45; font-weight: 700; }
+    .evidence-copy { margin-top: 6px; color: var(--muted); font-size: 12px; line-height: 1.55; }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 14px;
+      margin-top: 10px;
+    }
+
+    .metric { border-left: 2px solid var(--line); padding-left: 8px; }
+    .metric span { display: block; color: var(--muted); font-size: 10px; }
+    .metric strong { display: block; margin-top: 3px; font-size: 15px; }
+
+    .preview-route {
+      margin-top: 9px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 8px;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    .preview-route span:first-child,
+    .preview-route span:last-child { border: 1px solid var(--line); padding: 7px 8px; }
+    .preview-route b { color: var(--muted); font-weight: 400; }
+
+    .blocker-fixed {
+      position: absolute;
+      left: 16px;
+      top: 720px;
+      width: 328px;
+      height: 88px;
+      border: 1px solid var(--line-strong);
+      background: #101010;
+      padding: 12px 14px;
+    }
+
+    .blocker-fixed__label { color: var(--muted); font-size: 11px; }
+    .blocker-fixed__value { margin-top: 7px; font-size: 16px; font-weight: 700; }
+    .blocker-fixed__copy { margin-top: 4px; color: var(--muted); font-size: 11px; }
+
+    .primary-cta {
+      position: absolute;
+      left: 16px;
+      top: 824px;
+      width: 328px;
+      height: 72px;
+      border: 1px solid var(--line-strong);
+      border-radius: 0;
+      background: #171717;
+      color: var(--ink);
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .primary-cta:disabled {
+      border-color: #505050;
+      color: #6c6c6c;
+      cursor: not-allowed;
+    }
+
+    .return-edit {
+      margin-top: 12px;
+      padding: 0;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .return-edit:hover { color: var(--ink); }
+
+    .recalc-bar {
+      height: 8px;
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      background: repeating-linear-gradient(90deg, #707070 0 28px, #111 28px 42px);
+    }
+  </style>
+  <link rel="stylesheet" href="./visual.css?v=6">
+</head>
+<body>
+  <main class="stage" data-artifact="formal_ui_structure_wireframe_v4" data-state="targeting">
+    <header class="top-strip">
+      <div class="top-strip__title">发刊编辑台</div>
+      <div class="top-strip__state">第18期 · 排版中</div>
+      <div class="top-strip__issue">本期周刊 #018</div>
+    </header>
+
+    <section class="workspace" aria-label="发刊编辑三栏工作区">
+      <aside class="panel candidate-panel" aria-labelledby="candidate-title">
+        <div class="panel-heading candidate-heading">
+          <div class="candidate-heading__summary">
+            <h2 id="candidate-title">候选报道</h2>
+            <span class="panel-heading__meta"><strong id="candidate-count">8</strong>篇</span>
+            <button class="candidate-heading__reveal" id="candidate-reveal-selected" type="button" hidden>已选报道被隐藏<span>显示并定位</span></button>
+          </div>
+          <span class="candidate-heading__gap" aria-hidden="true"></span>
+          <button class="candidate-tool" id="candidate-filter-button" type="button" aria-label="按报道类型筛选" aria-expanded="false">筛<span class="candidate-tool__badge" id="candidate-filter-badge" hidden>0</span></button>
+          <span class="candidate-heading__gap" aria-hidden="true"></span>
+          <button class="candidate-tool" id="candidate-sort-button" type="button" aria-label="候选报道排序" aria-expanded="false">序</button>
+        </div>
+        <section class="candidate-popover candidate-popover--filter" id="candidate-filter-popover" aria-label="报道类型筛选" hidden>
+          <div class="candidate-popover__heading"><span>报道类型 · 即时生效</span><button class="candidate-popover__close" id="candidate-filter-close" type="button" aria-label="关闭筛选">×</button></div>
+          <div class="candidate-filter-grid" role="group" aria-label="选择报道类型">
+            <button class="candidate-filter-option candidate-filter-option--all" type="button" data-filter-type="all" aria-pressed="true">✓ 全部</button>
+            <button class="candidate-filter-option" type="button" data-filter-type="r1" data-label="抢先快讯" aria-pressed="false">抢先快讯</button>
+            <button class="candidate-filter-option" type="button" data-filter-type="r2" data-label="深度报道" aria-pressed="false">深度报道</button>
+            <button class="candidate-filter-option" type="button" data-filter-type="r3" data-label="个人专栏" aria-pressed="false">个人专栏</button>
+            <button class="candidate-filter-option" type="button" data-filter-type="r4" data-label="爆炸性新闻" aria-pressed="false">爆炸性新闻</button>
+          </div>
+        </section>
+        <section class="candidate-popover candidate-popover--sort" id="candidate-sort-popover" aria-label="候选报道排序" hidden>
+          <button class="candidate-sort-option" type="button" role="radio" data-sort-mode="quality_desc" aria-checked="false">等级　高 → 低</button>
+          <button class="candidate-sort-option" type="button" role="radio" data-sort-mode="quality_asc" aria-checked="false">等级　低 → 高</button>
+          <button class="candidate-sort-option" type="button" role="radio" data-sort-mode="acquired_desc" aria-checked="true">获得时间　新 → 旧</button>
+          <button class="candidate-sort-option" type="button" role="radio" data-sort-mode="acquired_asc" aria-checked="false">获得时间　旧 → 新</button>
+        </section>
+        <div class="candidate-viewport" id="candidate-viewport">
+          <div class="candidate-list" id="candidate-list"></div>
+          <div class="candidate-empty">
+            <strong id="candidate-empty-title">候选池暂空</strong>
+            <span id="candidate-empty-copy">可从本期版面拖回报道</span>
+            <button class="candidate-empty__clear" id="candidate-clear-filters" type="button" hidden>显示全部类型</button>
+          </div>
+        </div>
+      </aside>
+
+      <section class="panel center-panel" aria-labelledby="layout-title">
+        <div class="panel-heading">
+          <h2 id="layout-title">本期双版</h2>
+          <span class="panel-heading__meta" id="layout-count">已上版5/6 · 空位1</span>
+          <span class="targeting-guidance" id="layout-status" role="status" aria-live="polite" hidden>
+            <strong class="targeting-guidance__lead"></strong><span class="targeting-guidance__copy"></span>
+          </span>
+          <button class="clear-layout" id="clear-layout" type="button">清空双版</button>
+        </div>
+        <div class="page-spine" aria-hidden="true"></div>
+
+        <article class="issue-page issue-page--left" aria-label="第1版主版">
+          <div class="page-header-slot">第1版 · 主版</div>
+          <div class="slot main-slot" data-slot-id="front-main" data-role="头版主稿"></div>
+          <div class="slot feature-one" data-slot-id="feature-1" data-role="重点专题1"></div>
+          <div class="slot feature-two" data-slot-id="feature-2" data-role="重点专题2"></div>
+        </article>
+
+        <article class="issue-page issue-page--right" aria-label="第2版副版">
+          <div class="page-header-slot">第2版 · 副版</div>
+          <div class="slot secondary-slot" data-slot-id="secondary" data-role="副头版"></div>
+          <div class="slot inner-one" data-slot-id="inner-1" data-role="内页1"></div>
+          <div class="slot inner-two" data-slot-id="inner-2" data-role="内页2"></div>
+        </article>
+      </section>
+
+      <aside class="panel signoff-panel" aria-labelledby="signoff-title">
+        <div class="signoff-heading">
+          <h2 id="signoff-title">发刊复核</h2>
+          <span id="signoff-state">落位预览</span>
+        </div>
+        <div class="evidence-viewport" id="evidence-viewport">
+          <div class="evidence-sheet" id="evidence-sheet"></div>
+        </div>
+        <section class="blocker-fixed" id="blocker-fixed"></section>
+        <button class="primary-cta" id="primary-cta" type="button" disabled>签批送印</button>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const ARTICLES = new Map([
+      [1001, { code: "A01", title: "M330末班车在不存在的站台停了三秒", recipeType: "r2", recipeLabel: "深度报道", recipeShort: "深度", quality: "Gold", qualityLabel: "金级", qualityRank: 3, acquiredOrder: 1, meta: "深度 · 金级 · 620" }],
+      [1002, { code: "A02", title: "51区夜班货车携带会呼吸的路牌", recipeType: "r4", recipeLabel: "爆炸性新闻", recipeShort: "爆炸", quality: "Gold", qualityLabel: "金级", qualityRank: 3, acquiredOrder: 2, meta: "爆炸 · 金级 · 500" }],
+      [1003, { code: "A03", title: "港口广播连续七晚播报明天的潮汐", recipeType: "r1", recipeLabel: "抢先快讯", recipeShort: "快讯", quality: "Silver", qualityLabel: "银级", qualityRank: 2, acquiredOrder: 3, meta: "快讯 · 银级 · 450" }],
+      [1004, { code: "A04", title: "罗斯威尔档案第十四页拒绝被复印", recipeType: "r2", recipeLabel: "深度报道", recipeShort: "深度", quality: "Silver", qualityLabel: "银级", qualityRank: 2, acquiredOrder: 4, meta: "深度 · 银级 · 430" }],
+      [1005, { code: "A05", title: "市政厅新增了一个不存在的影子部门", recipeType: "r3", recipeLabel: "个人专栏", recipeShort: "专栏", quality: "Bronze", qualityLabel: "铜级", qualityRank: 1, acquiredOrder: 5, meta: "专栏 · 铜级 · 410" }],
+      [1006, { code: "A06", title: "街区猫群一致拒绝经过蓝色电话亭", recipeType: "r1", recipeLabel: "抢先快讯", recipeShort: "快讯", quality: "Bronze", qualityLabel: "铜级", qualityRank: 1, acquiredOrder: 6, meta: "快讯 · 铜级 · 380" }],
+      [1007, { code: "A07", title: "北岸气象塔整夜接收来自地下的闪电", recipeType: "r2", recipeLabel: "深度报道", recipeShort: "深度", quality: "Silver", qualityLabel: "银级", qualityRank: 2, acquiredOrder: 7, meta: "深度 · 银级 · 360" }],
+      [1008, { code: "A08", title: "旧城区每一面停摆时钟同时快了四分钟", recipeType: "r1", recipeLabel: "抢先快讯", recipeShort: "快讯", quality: "Silver", qualityLabel: "银级", qualityRank: 2, acquiredOrder: 8, meta: "快讯 · 银级 · 350" }],
+      [1009, { code: "A09", title: "无人值守照相馆洗出明天的团体合影", recipeType: "r3", recipeLabel: "个人专栏", recipeShort: "专栏", quality: "Bronze", qualityLabel: "铜级", qualityRank: 1, acquiredOrder: 9, meta: "专栏 · 铜级 · 340" }],
+      [1010, { code: "A10", title: "档案室新抽屉只收纳尚未发生的投诉", recipeType: "r3", recipeLabel: "个人专栏", recipeShort: "专栏", quality: "Bronze", qualityLabel: "铜级", qualityRank: 1, acquiredOrder: 10, meta: "专栏 · 铜级 · 320" }],
+      [1011, { code: "A11", title: "郊区广播塔请求听众不要回答最后一题", recipeType: "r1", recipeLabel: "抢先快讯", recipeShort: "快讯", quality: "Bronze", qualityLabel: "铜级", qualityRank: 1, acquiredOrder: 11, meta: "快讯 · 铜级 · 310" }],
+      [1012, { code: "A12", title: "海边酒店每晚把同一间空房登记给不同客人", recipeType: "r2", recipeLabel: "深度报道", recipeShort: "深度", quality: "Bronze", qualityLabel: "铜级", qualityRank: 1, acquiredOrder: 12, meta: "深度 · 铜级 · 300" }],
+      [1013, { code: "A13", title: "废弃天文台收到署名为下周的观测记录", recipeType: "r4", recipeLabel: "爆炸性新闻", recipeShort: "爆炸", quality: "Silver", qualityLabel: "银级", qualityRank: 2, acquiredOrder: 13, meta: "爆炸 · 银级 · 290" }]
+    ]);
+
+    const INITIAL_SLOTS = {
+      "front-main": 1001,
+      "feature-1": 1002,
+      "feature-2": 1005,
+      "secondary": 1003,
+      "inner-1": 1006,
+      "inner-2": null
+    };
+
+    const state = {
+      mode: "targeting",
+      selectedId: 1004,
+      hoverSlotId: "secondary",
+      focusedSlotId: null,
+      candidateIds: [1004, 1007, 1008, 1009, 1010, 1011, 1012, 1013],
+      typeFilters: [],
+      sortMode: "acquired_desc",
+      candidateMenu: null,
+      revealSelected: false,
+      candidateScrollRequest: null,
+      slots: { ...INITIAL_SLOTS },
+      lastTransaction: null
+    };
+
+    const stage = document.querySelector(".stage");
+    const candidatePanel = document.querySelector(".candidate-panel");
+    const candidateViewport = document.getElementById("candidate-viewport");
+    const candidateList = document.getElementById("candidate-list");
+    const candidateTitle = document.getElementById("candidate-title");
+    const candidateCount = document.getElementById("candidate-count");
+    const candidateRevealSelected = document.getElementById("candidate-reveal-selected");
+    const candidateFilterButton = document.getElementById("candidate-filter-button");
+    const candidateSortButton = document.getElementById("candidate-sort-button");
+    const candidateFilterBadge = document.getElementById("candidate-filter-badge");
+    const candidateFilterPopover = document.getElementById("candidate-filter-popover");
+    const candidateSortPopover = document.getElementById("candidate-sort-popover");
+    const candidateEmptyTitle = document.getElementById("candidate-empty-title");
+    const candidateEmptyCopy = document.getElementById("candidate-empty-copy");
+    const candidateClearFilters = document.getElementById("candidate-clear-filters");
+    const centerPanel = document.querySelector(".center-panel");
+    const evidenceSheet = document.getElementById("evidence-sheet");
+    const evidenceViewport = document.getElementById("evidence-viewport");
+    const blockerFixed = document.getElementById("blocker-fixed");
+    const primaryCta = document.getElementById("primary-cta");
+    const slotElements = [...document.querySelectorAll(".slot[data-slot-id]")];
+    let dragged = null;
+
+    function articleMarkup(article) {
+      return `
+        <div class="slot__role"></div>
+        <div class="slot__article-id">${article.code}</div>
+        <div class="slot__title">${article.title}</div>
+        <div class="slot__meta">${article.meta}</div>`;
+    }
+
+    function classifyMainHeadline(slot) {
+      if (!slot?.classList.contains("main-slot")) return;
+      const title = slot.querySelector(".slot__title");
+      if (!title) {
+        slot.removeAttribute("data-headline-overflow");
+        return;
+      }
+
+      title.classList.remove("is-single-line", "is-double-line", "is-measuring");
+      title.classList.add("is-measuring");
+      const needsTwoLines = title.scrollWidth > title.clientWidth + 0.5;
+
+      title.classList.remove("is-measuring");
+      title.classList.add(needsTwoLines ? "is-double-line" : "is-single-line");
+      const exceedsTwoLines = needsTwoLines && title.scrollHeight > title.clientHeight + 0.5;
+      slot.toggleAttribute("data-headline-overflow", exceedsTwoLines);
+      title.dataset.lineMode = needsTwoLines ? "double" : "single";
+    }
+
+    function candidateMatchesFilters(id) {
+      if (state.typeFilters.length === 0) return true;
+      return state.typeFilters.includes(ARTICLES.get(id).recipeType);
+    }
+
+    function getVisibleCandidateIds() {
+      const originalIndex = new Map(state.candidateIds.map((id, index) => [id, index]));
+      const visible = state.candidateIds.filter(candidateMatchesFilters);
+      if (state.revealSelected && state.selectedId && state.candidateIds.includes(state.selectedId) && !visible.includes(state.selectedId)) {
+        visible.push(state.selectedId);
+      }
+
+      const direction = state.sortMode.endsWith("_asc") ? 1 : -1;
+      const valueFor = (id) => state.sortMode.startsWith("quality") ? ARTICLES.get(id).qualityRank : ARTICLES.get(id).acquiredOrder;
+      visible.sort((a, b) => {
+        const primary = (valueFor(a) - valueFor(b)) * direction;
+        if (primary !== 0) return primary;
+        const original = originalIndex.get(a) - originalIndex.get(b);
+        if (original !== 0) return original;
+        return a - b;
+      });
+      return visible;
+    }
+
+    function renderCandidateToolbar(visibleIds) {
+      const selectedHidden = Boolean(
+        state.selectedId &&
+        state.candidateIds.includes(state.selectedId) &&
+        !candidateMatchesFilters(state.selectedId) &&
+        !state.revealSelected
+      );
+      const locked = state.mode === "recalculating" || state.mode === "confirmation";
+      if (locked) state.candidateMenu = null;
+
+      candidateTitle.hidden = selectedHidden;
+      candidateTitle.nextElementSibling.hidden = selectedHidden;
+      candidateRevealSelected.hidden = !selectedHidden;
+      candidateCount.textContent = state.typeFilters.length > 0 ? `${visibleIds.length}/${state.candidateIds.length}` : String(state.candidateIds.length);
+
+      candidateFilterButton.disabled = locked;
+      candidateSortButton.disabled = locked;
+      candidateFilterButton.setAttribute("aria-expanded", String(state.candidateMenu === "filter"));
+      candidateSortButton.setAttribute("aria-expanded", String(state.candidateMenu === "sort"));
+      candidateFilterPopover.hidden = state.candidateMenu !== "filter";
+      candidateSortPopover.hidden = state.candidateMenu !== "sort";
+
+      candidateFilterBadge.hidden = state.typeFilters.length === 0;
+      candidateFilterBadge.textContent = String(state.typeFilters.length);
+
+      document.querySelectorAll("[data-filter-type]").forEach((button) => {
+        const type = button.dataset.filterType;
+        const pressed = type === "all" ? state.typeFilters.length === 0 : state.typeFilters.includes(type);
+        button.setAttribute("aria-pressed", String(pressed));
+        if (type === "all") button.textContent = `${pressed ? "✓ " : ""}全部`;
+        else button.textContent = `${pressed ? "✓ " : ""}${button.dataset.label}`;
+      });
+
+      document.querySelectorAll("[data-sort-mode]").forEach((button) => {
+        button.setAttribute("aria-checked", String(button.dataset.sortMode === state.sortMode));
+      });
+    }
+
+    function renderCandidates() {
+      const savedScroll = candidateViewport.scrollTop;
+      const visibleIds = getVisibleCandidateIds();
+      candidateList.replaceChildren(...visibleIds.map((id) => {
+        const article = ARTICLES.get(id);
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = "candidate-card" + (id === state.selectedId ? " is-selected" : "");
+        card.dataset.articleId = String(id);
+        card.draggable = state.mode !== "recalculating" && state.mode !== "confirmation";
+        card.innerHTML = `
+          <span class="candidate-thumb" aria-hidden="true"></span>
+          <span class="candidate-id">${article.code}</span>
+          <span class="candidate-title">${article.title}</span>
+          <span class="candidate-meta">${article.meta}</span>
+          ${id === state.selectedId ? '<span class="candidate-status">选中</span>' : ""}`;
+        card.addEventListener("click", () => selectCandidate(id));
+        card.addEventListener("dragstart", (event) => beginCandidateDrag(event, id));
+        return card;
+      }));
+      renderCandidateToolbar(visibleIds);
+
+      const filteredEmpty = state.candidateIds.length > 0 && visibleIds.length === 0;
+      candidatePanel.classList.toggle("is-empty", visibleIds.length === 0);
+      candidateEmptyTitle.textContent = filteredEmpty ? "没有匹配的报道" : "候选池暂空";
+      candidateEmptyCopy.textContent = filteredEmpty ? "调整报道类型筛选后再选择" : "可从本期版面拖回报道";
+      candidateClearFilters.hidden = !filteredEmpty;
+
+      requestAnimationFrame(() => {
+        if (state.candidateScrollRequest === "top") candidateViewport.scrollTop = 0;
+        else if (state.candidateScrollRequest === "selected") {
+          const selected = candidateList.querySelector(".candidate-card.is-selected");
+          if (selected) selected.scrollIntoView({ block: "nearest" });
+        } else candidateViewport.scrollTop = savedScroll;
+        state.candidateScrollRequest = null;
+      });
+    }
+
+    function renderLayoutHeading() {
+      const placed = Object.values(state.slots).filter(Boolean).length;
+      const empty = 6 - placed;
+      const hasSelectedSource = state.mode === "targeting" && Boolean(state.selectedId);
+      const status = document.getElementById("layout-status");
+      const statusLead = status.querySelector(".targeting-guidance__lead");
+      const statusCopy = status.querySelector(".targeting-guidance__copy");
+      const clear = document.getElementById("clear-layout");
+
+      document.getElementById("layout-count").textContent = `已上版${placed}/6 · 空位${empty}`;
+
+      const hasLegalTarget = Boolean(document.querySelector(".slot.is-legal-target"));
+      let statusLeadText = "";
+      let statusCopyText = "";
+      if (hasSelectedSource && hasLegalTarget) {
+        statusLeadText = "下一步：";
+        statusCopyText = "点击报纸中高亮的版位";
+      } else if (state.mode === "recalculating") statusCopyText = "版面已更新 · 正在重算";
+      else if (state.mode === "confirmation") statusCopyText = "版面已冻结";
+
+      statusLead.textContent = statusLeadText;
+      statusCopy.textContent = statusCopyText;
+      status.hidden = statusLeadText === "" && statusCopyText === "";
+      status.dataset.tone = state.mode;
+
+      const canClear = placed > 0 && !hasSelectedSource && state.mode !== "recalculating" && state.mode !== "confirmation";
+      clear.hidden = !canClear;
+      clear.disabled = !canClear;
+      clear.tabIndex = canClear ? 0 : -1;
+    }
+
+    function renderSlots() {
+      const canTarget = state.mode === "targeting" && Boolean(state.selectedId);
+      slotElements.forEach((slot) => {
+        const slotId = slot.dataset.slotId;
+        const id = state.slots[slotId];
+        const article = id ? ARTICLES.get(id) : null;
+        slot.className = `slot ${slot.classList.contains("main-slot") ? "main-slot" : ""}${slot.classList.contains("feature-one") ? " feature-one" : ""}${slot.classList.contains("feature-two") ? " feature-two" : ""}${slot.classList.contains("secondary-slot") ? " secondary-slot" : ""}${slot.classList.contains("inner-one") ? " inner-one" : ""}${slot.classList.contains("inner-two") ? " inner-two" : ""}`;
+        slot.innerHTML = article ? articleMarkup(article) : '<div class="slot__role"></div><div class="slot__empty">空版位</div>';
+        slot.querySelector(".slot__role")?.replaceChildren(document.createTextNode(slot.dataset.role));
+        slot.classList.toggle("is-occupied", Boolean(article));
+        slot.classList.toggle("is-legal-target", canTarget);
+        slot.classList.toggle("is-hover-target", canTarget && slotId === state.hoverSlotId);
+        classifyMainHeadline(slot);
+        slot.draggable = Boolean(article) && state.mode !== "recalculating" && state.mode !== "confirmation";
+
+        const shouldShowReplace = Boolean(article) && (
+          (canTarget && slotId === state.hoverSlotId) ||
+          (state.mode === "slot-focused" && slotId === state.focusedSlotId)
+        );
+        if (shouldShowReplace) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "replace-action";
+          button.textContent = "换稿";
+          button.addEventListener("click", (event) => {
+            event.stopPropagation();
+            commitCandidateToSlot(slotId);
+          });
+          slot.appendChild(button);
+        }
+      });
+
+      renderLayoutHeading();
+      centerPanel.classList.toggle("is-frozen", state.mode === "confirmation");
+    }
+
+    function renderEvidence() {
+      const placed = Object.values(state.slots).filter(Boolean).length;
+      const empty = 6 - placed;
+      const headliner = ARTICLES.get(state.slots["front-main"]);
+      const headlinerTitle = headliner?.title ?? "尚未设置头版";
+      const replaced = state.lastTransaction?.replacedId ? ARTICLES.get(state.lastTransaction.replacedId) : ARTICLES.get(1003);
+      const incoming = state.lastTransaction?.incomingId ? ARTICLES.get(state.lastTransaction.incomingId) : ARTICLES.get(1004);
+      const previewTarget = state.hoverSlotId ? document.querySelector(`[data-slot-id="${state.hoverSlotId}"]`)?.dataset.role : "副头版";
+
+      if (state.mode === "confirmation") {
+        document.getElementById("signoff-state").textContent = "确认送印";
+        evidenceSheet.innerHTML = `
+          <section class="evidence-section"><div class="evidence-label">本期头版</div><div class="evidence-value">${headlinerTitle}</div></section>
+          <section class="evidence-section"><div class="evidence-label">版面快照</div><div class="evidence-value">双版 6/6 · 已冻结</div><div class="evidence-copy">送印后不能再换稿、移动或退稿。</div></section>
+          <section class="evidence-section"><div class="evidence-label">最终预览</div><div class="metric-grid"><div class="metric"><span>预计传播</span><strong>15,800</strong></div><div class="metric"><span>预计净收益</span><strong>+164</strong></div></div></section>
+          <section class="evidence-section"><div class="evidence-label">风险确认</div><div class="evidence-value">公开取向无冲突</div><div class="evidence-copy">同题疲劳已计入最终预览。</div><button class="return-edit" type="button" onclick="editorialWireframe.showState('ready')">返回修改</button></section>`;
+        blockerFixed.innerHTML = '<div class="blocker-fixed__label">送印后果</div><div class="blocker-fixed__value">本期内容将永久冻结</div><div class="blocker-fixed__copy">确认后进入发刊结算</div>';
+        primaryCta.textContent = "确认送印";
+        primaryCta.disabled = false;
+        return;
+      }
+
+      if (state.mode === "recalculating") {
+        document.getElementById("signoff-state").textContent = "正在重算";
+        evidenceSheet.innerHTML = `
+          <section class="evidence-section"><div class="evidence-label">本期头版</div><div class="evidence-value">${headlinerTitle}</div></section>
+          <section class="evidence-section"><div class="evidence-label">发行预览</div><div class="evidence-value">正在计算新结果</div><div class="recalc-bar" aria-hidden="true"></div><div class="evidence-copy">旧传播、收益和订阅数据已失效。</div></section>
+          <section class="evidence-section"><div class="evidence-label">已提交落位</div><div class="preview-route"><span>${incoming.code} → ${previewTarget}</span><b>替换</b><span>${replaced.code} → 候选栏</span></div></section>
+          <section class="evidence-section"><div class="evidence-label">公开取向</div><div class="evidence-value">校验中</div></section>
+          <section class="evidence-section"><div class="evidence-label">同题疲劳</div><div class="evidence-value">校验中</div></section>`;
+        blockerFixed.innerHTML = '<div class="blocker-fixed__label">硬性阻断</div><div class="blocker-fixed__value">校验中</div><div class="blocker-fixed__copy">结果返回前暂不可送印</div>';
+        primaryCta.textContent = "签批送印";
+        primaryCta.disabled = true;
+        return;
+      }
+
+      document.getElementById("signoff-state").textContent = state.mode === "ready" ? "结果有效" : "落位预览";
+      evidenceSheet.innerHTML = `
+        <section class="evidence-section"><div class="evidence-label">本期头版</div><div class="evidence-value">${headlinerTitle}</div><div class="evidence-copy">主版 · 头版主稿 · ${headliner?.code ?? "未设置"}</div></section>
+        <section class="evidence-section"><div class="evidence-label">当前有效结果</div><div class="metric-grid"><div class="metric"><span>预计传播</span><strong>15,380</strong></div><div class="metric"><span>预计净收益</span><strong>+182</strong></div><div class="metric"><span>预计订阅</span><strong>+210</strong></div><div class="metric"><span>版面完整度</span><strong>${placed}/6</strong></div></div></section>
+        <section class="evidence-section"><div class="evidence-label">此次落位预览</div><div class="preview-route"><span>${incoming.code} → ${previewTarget}</span><b>替换</b><span>${replaced.code} → 候选栏</span></div><div class="evidence-copy">预计传播 +420 · 净收益 -18；投放后将重新计算。</div></section>
+        <section class="evidence-section"><div class="evidence-label">公开取向</div><div class="evidence-value">未发现冲突</div><div class="evidence-copy">当前来源：主头版 / 副头版 / 重点专题</div></section>
+        <section class="evidence-section"><div class="evidence-label">同题疲劳</div><div class="evidence-value">神秘学题材 ×2 · -8%</div><div class="evidence-copy">来源版位：重点专题1、内页1</div></section>
+        <section class="evidence-section"><div class="evidence-label">结果来源版位</div><div class="evidence-copy">传播增量：副头版；疲劳扣减：重点专题1 / 内页1。</div></section>`;
+      blockerFixed.innerHTML = `<div class="blocker-fixed__label">硬性阻断</div><div class="blocker-fixed__value">${empty ? `空位${empty} · 暂不可送印` : "0项 · 可送印"}</div><div class="blocker-fixed__copy">${empty ? "补齐版位后重新校验" : "所有送印检查已完成"}</div>`;
+      primaryCta.textContent = "签批送印";
+      primaryCta.disabled = empty > 0 || state.mode !== "ready";
+    }
+
+    function renderAll() {
+      stage.dataset.state = state.mode;
+      renderCandidates();
+      renderSlots();
+      renderEvidence();
+    }
+
+    function toggleCandidateMenu(menu) {
+      if (state.mode === "recalculating" || state.mode === "confirmation") return;
+      state.candidateMenu = state.candidateMenu === menu ? null : menu;
+      renderCandidates();
+    }
+
+    function clearCandidateFilters() {
+      state.typeFilters = [];
+      state.revealSelected = false;
+      state.candidateScrollRequest = "top";
+      renderCandidates();
+    }
+
+    candidateFilterButton.addEventListener("click", () => toggleCandidateMenu("filter"));
+    candidateSortButton.addEventListener("click", () => toggleCandidateMenu("sort"));
+    document.getElementById("candidate-filter-close").addEventListener("click", () => {
+      state.candidateMenu = null;
+      renderCandidates();
+      candidateFilterButton.focus();
+    });
+
+    document.querySelectorAll("[data-filter-type]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const type = button.dataset.filterType;
+        if (type === "all") state.typeFilters = [];
+        else if (state.typeFilters.includes(type)) {
+          state.typeFilters = state.typeFilters.filter((item) => item !== type);
+        } else state.typeFilters = [...state.typeFilters, type];
+        state.revealSelected = false;
+        state.candidateScrollRequest = "top";
+        renderCandidates();
+      });
+    });
+
+    document.querySelectorAll("[data-sort-mode]").forEach((button) => {
+      button.addEventListener("click", () => {
+        state.sortMode = button.dataset.sortMode;
+        state.candidateMenu = null;
+        state.candidateScrollRequest = state.selectedId && candidateMatchesFilters(state.selectedId) ? "selected" : "top";
+        renderCandidates();
+        candidateSortButton.focus();
+      });
+    });
+
+    candidateRevealSelected.addEventListener("click", () => {
+      state.revealSelected = true;
+      state.candidateMenu = null;
+      state.candidateScrollRequest = "selected";
+      renderCandidates();
+    });
+
+    candidateClearFilters.addEventListener("click", clearCandidateFilters);
+
+    document.addEventListener("click", (event) => {
+      if (!state.candidateMenu) return;
+      const insideFilter = candidateFilterPopover.contains(event.target) || candidateFilterButton.contains(event.target);
+      const insideSort = candidateSortPopover.contains(event.target) || candidateSortButton.contains(event.target);
+      if ((state.candidateMenu === "filter" && insideFilter) || (state.candidateMenu === "sort" && insideSort)) return;
+      state.candidateMenu = null;
+      renderCandidates();
+    });
+
+    function selectCandidate(id) {
+      if (state.mode === "recalculating" || state.mode === "confirmation") return;
+      state.candidateMenu = null;
+      state.revealSelected = false;
+      state.selectedId = state.selectedId === id ? null : id;
+      state.mode = state.selectedId ? "targeting" : "idle";
+      state.hoverSlotId = state.selectedId ? "secondary" : null;
+      state.focusedSlotId = null;
+      renderAll();
+    }
+
+    function beginCandidateDrag(event, id) {
+      if (state.mode === "recalculating" || state.mode === "confirmation") return;
+      state.candidateMenu = null;
+      state.revealSelected = false;
+      state.selectedId = id;
+      state.mode = "targeting";
+      state.hoverSlotId = null;
+      dragged = { kind: "candidate", articleId: id };
+      event.dataTransfer.setData("text/plain", `candidate:${id}`);
+      renderAll();
+    }
+
+    function commitCandidateToSlot(slotId) {
+      if (!state.selectedId) return;
+      const incomingId = state.selectedId;
+      const replacedId = state.slots[slotId];
+      const oldIndex = state.candidateIds.indexOf(incomingId);
+      state.candidateIds = state.candidateIds.filter((id) => id !== incomingId);
+      if (replacedId) state.candidateIds.splice(Math.max(0, oldIndex), 0, replacedId);
+      state.slots[slotId] = incomingId;
+      state.lastTransaction = { incomingId, replacedId, slotId };
+      state.selectedId = null;
+      state.hoverSlotId = null;
+      state.focusedSlotId = null;
+      state.candidateMenu = null;
+      state.revealSelected = false;
+      state.mode = "recalculating";
+      dragged = null;
+      renderAll();
+    }
+
+    function moveSlotToSlot(sourceId, targetId) {
+      if (sourceId === targetId) return;
+      const sourceArticle = state.slots[sourceId];
+      const targetArticle = state.slots[targetId];
+      if (!sourceArticle) return;
+      state.slots[targetId] = sourceArticle;
+      state.slots[sourceId] = targetArticle || null;
+      state.lastTransaction = { incomingId: sourceArticle, replacedId: targetArticle, slotId: targetId };
+      state.selectedId = null;
+      state.hoverSlotId = null;
+      state.candidateMenu = null;
+      state.revealSelected = false;
+      state.mode = "recalculating";
+      renderAll();
+    }
+
+    slotElements.forEach((slot) => {
+      const slotId = slot.dataset.slotId;
+      slot.addEventListener("mouseenter", () => {
+        if (state.mode === "targeting" && state.selectedId) {
+          state.hoverSlotId = slotId;
+          renderSlots();
+          renderEvidence();
+        }
+      });
+      slot.addEventListener("click", () => {
+        if (state.mode === "targeting" && state.selectedId) commitCandidateToSlot(slotId);
+        else if (state.slots[slotId] && state.mode !== "recalculating" && state.mode !== "confirmation") {
+          state.focusedSlotId = slotId;
+          state.hoverSlotId = slotId;
+          state.mode = "slot-focused";
+          renderAll();
+        }
+      });
+      slot.addEventListener("dragstart", (event) => {
+        const articleId = state.slots[slotId];
+        if (!articleId) return;
+        dragged = { kind: "slot", articleId, sourceSlotId: slotId };
+        event.dataTransfer.setData("text/plain", `slot:${slotId}:${articleId}`);
+      });
+      slot.addEventListener("dragover", (event) => event.preventDefault());
+      slot.addEventListener("drop", (event) => {
+        event.preventDefault();
+        if (dragged?.kind === "candidate") commitCandidateToSlot(slotId);
+        if (dragged?.kind === "slot") moveSlotToSlot(dragged.sourceSlotId, slotId);
+        dragged = null;
+      });
+    });
+
+    candidatePanel.addEventListener("dragover", (event) => {
+      if (dragged?.kind !== "slot") return;
+      event.preventDefault();
+      candidatePanel.classList.add("is-return-target");
+    });
+
+    candidatePanel.addEventListener("dragleave", (event) => {
+      if (!candidatePanel.contains(event.relatedTarget)) candidatePanel.classList.remove("is-return-target");
+    });
+
+    candidatePanel.addEventListener("drop", (event) => {
+      event.preventDefault();
+      candidatePanel.classList.remove("is-return-target");
+      if (dragged?.kind !== "slot") return;
+      const { articleId, sourceSlotId } = dragged;
+      if (!state.candidateIds.includes(articleId)) state.candidateIds.push(articleId);
+      state.slots[sourceSlotId] = null;
+      state.lastTransaction = { incomingId: articleId, replacedId: null, slotId: "candidate-pool" };
+      state.selectedId = null;
+      state.hoverSlotId = null;
+      state.candidateMenu = null;
+      state.revealSelected = false;
+      state.mode = "recalculating";
+      dragged = null;
+      renderAll();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      if (state.candidateMenu) {
+        const returnFocus = state.candidateMenu === "filter" ? candidateFilterButton : candidateSortButton;
+        state.candidateMenu = null;
+        renderCandidates();
+        returnFocus.focus();
+        return;
+      }
+      if (state.mode === "confirmation") {
+        state.mode = "ready";
+      } else if (state.mode !== "recalculating") {
+        state.selectedId = null;
+        state.hoverSlotId = null;
+        state.focusedSlotId = null;
+        state.mode = "idle";
+      }
+      renderAll();
+    });
+
+    document.getElementById("clear-layout").addEventListener("click", () => {
+      if (!window.confirm("确认清空本期双版？所有已上版报道将返回候选栏。")) return;
+      Object.values(state.slots).filter(Boolean).forEach((id) => {
+        if (!state.candidateIds.includes(id)) state.candidateIds.push(id);
+      });
+      Object.keys(state.slots).forEach((slotId) => { state.slots[slotId] = null; });
+      state.selectedId = null;
+      state.hoverSlotId = null;
+      state.candidateMenu = null;
+      state.revealSelected = false;
+      state.mode = "recalculating";
+      state.lastTransaction = { incomingId: 0, replacedId: 0, slotId: "clear" };
+      renderAll();
+    });
+
+    primaryCta.addEventListener("click", () => {
+      if (primaryCta.disabled) return;
+      if (state.mode === "confirmation") return;
+      state.mode = "confirmation";
+      state.selectedId = null;
+      state.hoverSlotId = null;
+      state.candidateMenu = null;
+      state.revealSelected = false;
+      renderAll();
+    });
+
+    window.editorialWireframe = {
+      showState(mode) {
+        state.candidateMenu = null;
+        state.revealSelected = false;
+        if (mode === "targeting") {
+          state.mode = "targeting";
+          state.selectedId = state.candidateIds.includes(1004) ? 1004 : state.candidateIds[0];
+          state.hoverSlotId = "secondary";
+        } else if (mode === "recalculating") {
+          state.mode = "recalculating";
+          state.selectedId = null;
+          state.hoverSlotId = null;
+        } else if (mode === "ready") {
+          state.mode = "ready";
+          state.selectedId = null;
+          state.hoverSlotId = null;
+        } else if (mode === "confirmation") {
+          state.mode = "confirmation";
+          state.selectedId = null;
+          state.hoverSlotId = null;
+        }
+        renderAll();
+      },
+      completeRecalculation() {
+        state.mode = "ready";
+        renderAll();
+      },
+      setCandidateCount(count) {
+        const pool = [1004, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1003, 1005, 1006, 1002];
+        state.candidateIds = pool.slice(0, Math.max(0, Math.min(12, count)));
+        if (!state.candidateIds.includes(state.selectedId)) state.selectedId = null;
+        renderAll();
+      },
+      setTypeFilters(types) {
+        const allowed = ["r1", "r2", "r3", "r4"];
+        state.typeFilters = [...new Set((types || []).filter((type) => allowed.includes(type)))];
+        state.revealSelected = false;
+        state.candidateScrollRequest = "top";
+        renderCandidates();
+      },
+      setSortMode(mode) {
+        const allowed = ["quality_desc", "quality_asc", "acquired_desc", "acquired_asc"];
+        if (!allowed.includes(mode)) return;
+        state.sortMode = mode;
+        state.candidateMenu = null;
+        state.candidateScrollRequest = state.selectedId && candidateMatchesFilters(state.selectedId) ? "selected" : "top";
+        renderCandidates();
+      },
+      openCandidateMenu(menu) {
+        state.candidateMenu = menu === "filter" || menu === "sort" ? menu : null;
+        renderCandidates();
+      },
+      showSelectedCandidate() {
+        if (!state.selectedId) return;
+        state.revealSelected = true;
+        state.candidateMenu = null;
+        state.candidateScrollRequest = "selected";
+        renderCandidates();
+      },
+      getAuditState() {
+        const rect = (element) => {
+          const r = element.getBoundingClientRect();
+          return [Math.round(r.x), Math.round(r.y), Math.round(r.width), Math.round(r.height)];
+        };
+        return {
+          mode: state.mode,
+          candidateCount: state.candidateIds.length,
+          visibleCandidateCount: getVisibleCandidateIds().length,
+          visibleCandidateIds: getVisibleCandidateIds(),
+          visibleCandidateCodes: getVisibleCandidateIds().map((id) => ARTICLES.get(id).code),
+          activeTypeFilters: [...state.typeFilters],
+          sortMode: state.sortMode,
+          candidateMenu: state.candidateMenu,
+          candidateFilterButtonCount: document.querySelectorAll("#candidate-filter-button").length,
+          candidateSortButtonCount: document.querySelectorAll("#candidate-sort-button").length,
+          candidateFilterOptionCount: document.querySelectorAll("[data-filter-type]").length,
+          candidateSortOptionCount: document.querySelectorAll("[data-sort-mode]").length,
+          candidateSearchControlCount: document.querySelectorAll("[type='search'], .candidate-search, #candidate-search").length,
+          candidatePopoverCount: document.querySelectorAll(".candidate-popover:not([hidden])").length,
+          selectedHidden: Boolean(state.selectedId && state.candidateIds.includes(state.selectedId) && !candidateMatchesFilters(state.selectedId) && !state.revealSelected),
+          selectedCount: document.querySelectorAll(".candidate-card.is-selected").length,
+          legalTargetCount: document.querySelectorAll(".slot.is-legal-target").length,
+          hoverTargetCount: document.querySelectorAll(".slot.is-hover-target").length,
+          replaceButtonCount: document.querySelectorAll(".replace-action").length,
+          primaryCtaCount: document.querySelectorAll(".primary-cta").length,
+          primaryCtaDisabled: primaryCta.disabled,
+          mainHeadline: (() => {
+            const slot = document.querySelector(".main-slot");
+            const title = slot?.querySelector(".slot__title");
+            return title ? {
+              text: title.textContent,
+              lineMode: title.dataset.lineMode,
+              overflow: slot.hasAttribute("data-headline-overflow"),
+              clientWidth: title.clientWidth,
+              scrollWidth: title.scrollWidth,
+              clientHeight: title.clientHeight,
+              scrollHeight: title.scrollHeight,
+              rect: rect(title),
+              fontSize: getComputedStyle(title).fontSize,
+              lineHeight: getComputedStyle(title).lineHeight,
+              fontWeight: getComputedStyle(title).fontWeight
+            } : null;
+          })(),
+          layoutHeading: (() => {
+            const status = document.getElementById("layout-status");
+            const clear = document.getElementById("clear-layout");
+            const rectOrNull = (element) => element.hidden ? null : rect(element);
+            return {
+              countText: document.getElementById("layout-count").textContent,
+              statusText: status.textContent,
+              statusVisible: !status.hidden,
+              statusRect: rectOrNull(status),
+              clearVisible: !clear.hidden,
+              clearDisabled: clear.disabled,
+              clearTabIndex: clear.tabIndex,
+              clearRect: rectOrNull(clear)
+            };
+          })(),
+          pageRects: [...document.querySelectorAll(".issue-page")].map(rect),
+          candidateRects: [...document.querySelectorAll(".candidate-card")].map(rect),
+          candidateToolbarRects: {
+            heading: rect(document.querySelector(".candidate-heading")),
+            filter: rect(candidateFilterButton),
+            sort: rect(candidateSortButton),
+            openPopover: state.candidateMenu ? rect(state.candidateMenu === "filter" ? candidateFilterPopover : candidateSortPopover) : null
+          },
+          signoffRects: {
+            detail: rect(evidenceViewport),
+            blocker: rect(blockerFixed),
+            cta: rect(primaryCta)
+          }
+        };
+      }
+    };
+
+    const previewParams = new URLSearchParams(window.location.search);
+    const previewCandidateCount = Number(previewParams.get("candidates") || 0);
+    if (previewCandidateCount >= 1 && previewCandidateCount <= 12) {
+      const previewPool = [1004, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1003, 1005, 1006, 1002];
+      state.candidateIds = previewPool.slice(0, previewCandidateCount);
+    }
+    const previewFilters = (previewParams.get("filter") || "")
+      .split(",")
+      .filter((type) => ["r1", "r2", "r3", "r4"].includes(type));
+    state.typeFilters = [...new Set(previewFilters)];
+    const previewSort = previewParams.get("sort");
+    if (["quality_desc", "quality_asc", "acquired_desc", "acquired_asc"].includes(previewSort)) {
+      state.sortMode = previewSort;
+    }
+    const previewMenu = previewParams.get("candidateMenu");
+    if (previewMenu === "filter" || previewMenu === "sort") state.candidateMenu = previewMenu;
+    state.revealSelected = previewParams.get("showSelected") === "1";
+    const previewState = previewParams.get("state");
+    if (previewState === "recalculating") {
+      state.mode = "recalculating";
+      state.selectedId = null;
+      state.hoverSlotId = null;
+      state.lastTransaction = { incomingId: 1004, replacedId: 1003, slotId: "secondary" };
+    }
+    if (previewState === "ready" || previewState === "confirmation") {
+      state.slots["inner-2"] = 1007;
+      state.candidateIds = state.candidateIds.filter((id) => id !== 1007);
+      state.mode = previewState;
+      state.selectedId = null;
+      state.hoverSlotId = null;
+    }
+
+    renderAll();
+    document.fonts?.ready.then(() => {
+      document.querySelectorAll(".main-slot").forEach(classifyMainHeadline);
+    });
+  </script>
+  <script src="./visual.js?v=6"></script>
+</body>
+</html>

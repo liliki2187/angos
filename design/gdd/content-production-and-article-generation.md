@@ -166,6 +166,7 @@ public_stance =
 | `recipe_type` | enum | 是 | `r1 / r2 / r3 / r4`，对应四类公开稿件 |
 | `tags` | array[string] | 是 | 供排版与结算消费的题材标签 |
 | `quality` | string | 是 | 质量档位 |
+| `acquired_order` | int | 是 | 本周候选池内单调递增的获得序号；越大表示越晚进入候选池，用于“获得时间”先后排序，不作为现实时间戳显示 |
 | `intrinsic_base_value` | int | 是 | 稿内原始基础值 |
 | `effective_base_value` | int/float | 是 | 吃过同题疲劳后的基础值 |
 | `public_stance` | enum/null | 是 | `sci / occult / pop / null`，其中 `抢先快讯` 为 `null` |

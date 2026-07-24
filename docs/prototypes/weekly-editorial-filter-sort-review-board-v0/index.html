@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>候选报道筛选与排序｜局部功能解说图</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #101010;
+      --paper: #f3f3f0;
+      --white: #ffffff;
+      --mid: #d6d6d1;
+      --soft: #e8e8e4;
+      --muted: #666660;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    }
+
+    body { display: flex; justify-content: center; }
+
+    .board {
+      width: 1600px;
+      min-height: 1000px;
+      padding: 42px 52px 38px;
+      background:
+        linear-gradient(90deg, transparent 0 51px, #c8c8c2 51px 52px, transparent 52px),
+        var(--paper);
+    }
+
+    .board-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-bottom: 4px solid var(--ink);
+      padding-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.1;
+      letter-spacing: .02em;
+    }
+
+    .subtitle {
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .freeze-tag {
+      border: 2px solid var(--ink);
+      padding: 8px 13px;
+      font-size: 14px;
+      font-weight: 700;
+      background: var(--white);
+    }
+
+    .states {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .state {
+      height: 382px;
+      border: 2px solid var(--ink);
+      background: var(--white);
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 338px 1fr;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .state-label {
+      position: absolute;
+      right: 16px;
+      top: 14px;
+      color: #8a8a84;
+      font: 700 12px/1 Consolas, monospace;
+      letter-spacing: .08em;
+    }
+
+    .mock {
+      width: 320px;
+      height: 344px;
+      border: 2px solid var(--ink);
+      background: #fafafa;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .toolbar {
+      position: absolute;
+      left: 15px;
+      top: 15px;
+      width: 288px;
+      height: 48px;
+      border-bottom: 2px solid var(--ink);
+      display: flex;
+      align-items: center;
+      background: #fff;
+      z-index: 5;
+    }
+
+    .toolbar-title {
+      width: 152px;
+      padding-left: 3px;
+      font-size: 16px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .toolbar-title small {
+      font-size: 12px;
+      color: var(--muted);
+      margin-left: 5px;
+    }
+
+    .tool-gap { width: 4px; height: 44px; }
+
+    .tool {
+      width: 44px;
+      height: 44px;
+      border: 1.5px solid var(--ink);
+      display: grid;
+      place-items: center;
+      background: #f5f5f2;
+      font-size: 13px;
+      font-weight: 800;
+      position: relative;
+      margin: 0;
+    }
+
+    .tool + .tool { border-left: 0; }
+
+    .badge {
+      position: absolute;
+      right: 1px;
+      top: 1px;
+      min-width: 15px;
+      height: 15px;
+      padding: 0 3px;
+      border-radius: 9px;
+      background: var(--ink);
+      color: white;
+      font: 700 10px/15px Consolas, monospace;
+    }
+
+    .list {
+      position: absolute;
+      left: 15px;
+      top: 78px;
+      width: 296px;
+      height: 250px;
+      overflow: hidden;
+    }
+
+    .card {
+      width: 288px;
+      height: 70px;
+      border: 1.5px solid #555;
+      background: #fff;
+      margin-bottom: 8px;
+      position: relative;
+      padding: 9px 9px 8px 69px;
+    }
+
+    .card.selected {
+      border: 3px solid var(--ink);
+      padding: 7px 7px 6px 67px;
+    }
+
+    .thumb {
+      position: absolute;
+      left: 9px;
+      top: 9px;
+      width: 50px;
+      height: 50px;
+      border: 1px solid #777;
+      background:
+        linear-gradient(135deg, transparent 49%, #777 49% 51%, transparent 51%),
+        linear-gradient(45deg, transparent 49%, #aaa 49% 51%, transparent 51%),
+        #eee;
+    }
+
+    .selected .thumb { left: 7px; top: 7px; }
+
+    .card-id { color: #777; font: 700 10px/1 Consolas, monospace; }
+    .card-title { margin-top: 4px; font-size: 12px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .card-meta { margin-top: 5px; color: #666; font-size: 10px; }
+    .chosen { position: absolute; right: 6px; bottom: 5px; border: 1px solid #111; padding: 1px 5px; font-size: 9px; }
+
+    .fade {
+      position: absolute;
+      left: 15px;
+      right: 9px;
+      bottom: 0;
+      height: 38px;
+      background: linear-gradient(transparent, #fafafa 78%);
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      padding-bottom: 2px;
+      font: 700 12px/1 Consolas, monospace;
+      letter-spacing: 6px;
+    }
+
+    .notes {
+      align-self: center;
+      padding-right: 2px;
+    }
+
+    .notes h2 {
+      margin: 0 0 14px;
+      padding-right: 56px;
+      font-size: 21px;
+      line-height: 1.25;
+    }
+
+    .note {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 9px;
+      margin: 11px 0;
+      color: #363632;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .num {
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--ink);
+      background: var(--ink);
+      color: white;
+      font: 800 13px/1 Consolas, monospace;
+    }
+
+    .rule {
+      margin-top: 14px;
+      border-top: 1px solid #aaa;
+      padding-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .search-box {
+      width: 244px;
+      height: 48px;
+      border: 2px solid var(--ink);
+      display: grid;
+      grid-template-columns: 32px 1fr 46px;
+      align-items: center;
+      padding: 0 7px;
+      font-size: 13px;
+      background: white;
+    }
+
+    .search-result { color: #666; text-align: right; font: 700 11px/1 Consolas, monospace; }
+    .close-search { width: 44px; height: 44px; border: 1.5px solid var(--ink); display: grid; place-items: center; margin-left: auto; font-size: 20px; }
+
+    .filter-pop {
+      position: absolute;
+      left: 15px;
+      top: 66px;
+      width: 288px;
+      height: 258px;
+      border: 3px solid var(--ink);
+      background: white;
+      z-index: 10;
+      padding: 13px 14px;
+      box-shadow: 7px 7px 0 #bcbcb6;
+    }
+
+    .filter-head { display: flex; justify-content: space-between; font-size: 15px; font-weight: 900; border-bottom: 2px solid var(--ink); padding-bottom: 8px; }
+    .filter-head span:last-child { font-size: 20px; line-height: 14px; }
+    .filter-row { margin-top: 11px; }
+    .filter-label { font-size: 11px; font-weight: 800; margin-bottom: 5px; }
+    .chips { display: flex; gap: 5px; flex-wrap: wrap; }
+    .chip { border: 1px solid #555; background: #eee; padding: 4px 7px; font-size: 10px; }
+    .chip.on { border: 2px solid #111; background: #111; color: white; padding: 3px 6px; }
+    .more { margin-top: 11px; border-top: 1px solid #999; padding-top: 8px; display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; }
+    .clear { margin-top: 8px; color: #555; font-size: 10px; text-decoration: underline; }
+
+    .hidden-title {
+      width: 156px;
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.25;
+      padding-left: 2px;
+    }
+
+    .hidden-title u { text-underline-offset: 2px; }
+
+    .sort-pop {
+      position: absolute;
+      right: 15px;
+      top: 66px;
+      width: 174px;
+      border: 3px solid var(--ink);
+      background: #fff;
+      z-index: 12;
+      box-shadow: 6px 6px 0 #bcbcb6;
+      padding: 7px 0;
+    }
+
+    .sort-item { height: 36px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; font-size: 11px; border-bottom: 1px solid #ccc; }
+    .sort-item:last-child { border-bottom: 0; }
+    .sort-item.active { font-weight: 900; background: #eee; }
+
+    .footer {
+      margin-top: 24px;
+      min-height: 102px;
+      border: 2px solid var(--ink);
+      background: var(--ink);
+      color: white;
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .footer-title { font-size: 20px; font-weight: 900; }
+    .footer ul { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 22px; }
+    .footer li { font-size: 13px; line-height: 1.35; }
+    .footer li::before { content: "✓"; margin-right: 8px; font-weight: 900; }
+  </style>
+</head>
+<body>
+  <main class="board">
+    <header class="board-head">
+      <div>
+        <h1>候选报道筛选与排序｜局部功能解说图</h1>
+        <p class="subtitle">黑白结构稿 v0 · 只说明功能与状态，不代表最终美术包装</p>
+      </div>
+      <div class="freeze-tag">审阅目标：是否冻结进 v4</div>
+    </header>
+
+    <section class="states">
+      <article class="state">
+        <span class="state-label">STATE 01</span>
+        <div class="mock">
+          <div class="toolbar">
+            <div class="toolbar-title">候选报道 <small>20篇</small></div>
+            <div class="tool-gap"></div>
+            <div class="tool">搜</div>
+            <div class="tool">筛<span class="badge">2</span></div>
+            <div class="tool">序</div>
+          </div>
+          <div class="list">
+            <div class="card selected"><span class="thumb"></span><div class="card-id">A04</div><div class="card-title">罗斯威尔档案第十四页拒绝被复印</div><div class="card-meta">档案 · 怀疑 · 430</div><span class="chosen">选中</span></div>
+            <div class="card"><span class="thumb"></span><div class="card-id">A07</div><div class="card-title">北岸气象塔整夜接收来自地下的闪电</div><div class="card-meta">科学 · 怀疑 · 360</div></div>
+            <div class="card"><span class="thumb"></span><div class="card-id">A08</div><div class="card-title">旧城区每一面停摆时钟同时快了四分钟</div><div class="card-meta">目击 · 中立 · 350</div></div>
+            <div class="card"><span class="thumb"></span><div class="card-id">A09</div><div class="card-title">无人值守照相馆洗出明天的团体合影</div><div class="card-meta">档案 · 猎奇 · 340</div></div>
+          </div>
+          <div class="fade">···</div>
+        </div>
+        <div class="notes">
+          <h2>默认态：把入口压进原栏头</h2>
+          <div class="note"><span class="num">1</span><span>标题右侧增加搜索、筛选、排序三个入口；每个使用 <b>44×44px</b> 热区。</span></div>
+          <div class="note"><span class="num">2</span><span>“20篇”显示总量；生效条件直接显示在筛选角标中。</span></div>
+          <div class="rule">列表仍从原来的 y=80 开始，候选卡尺寸不变；默认状态依然完整容纳 8 张卡。</div>
+        </div>
+      </article>
+
+      <article class="state">
+        <span class="state-label">STATE 02</span>
+        <div class="mock">
+          <div class="toolbar">
+            <div class="search-box"><b>⌕</b><span>档案</span><span class="search-result">3/20</span></div>
+            <div class="close-search">×</div>
+          </div>
+          <div class="list">
+            <div class="card selected"><span class="thumb"></span><div class="card-id">A04</div><div class="card-title">罗斯威尔档案第十四页拒绝被复印</div><div class="card-meta">档案 · 怀疑 · 430</div><span class="chosen">选中</span></div>
+            <div class="card"><span class="thumb"></span><div class="card-id">A09</div><div class="card-title">无人值守照相馆洗出明天的团体合影</div><div class="card-meta">档案 · 猎奇 · 340</div></div>
+            <div class="card"><span class="thumb"></span><div class="card-id">A10</div><div class="card-title">档案室新抽屉只收纳尚未发生的投诉</div><div class="card-meta">档案 · 中立 · 320</div></div>
+          </div>
+        </div>
+        <div class="notes">
+          <h2>搜索态：栏头原位变成输入框</h2>
+          <div class="note"><span class="num">3</span><span>只搜索<b>标题和题材标签</b>；右侧实时显示“命中数 / 总数”。</span></div>
+          <div class="note"><span class="num">4</span><span>关闭搜索后恢复原栏头，不增加第二行，也不挤压列表。</span></div>
+          <div class="rule">搜索、筛选只改变左栏可见集合，不触发签发推演重算。</div>
+        </div>
+      </article>
+
+      <article class="state">
+        <span class="state-label">STATE 03</span>
+        <div class="mock">
+          <div class="toolbar">
+            <div class="toolbar-title">候选报道 <small>6/20</small></div>
+            <div class="tool-gap"></div>
+            <div class="tool">搜</div>
+            <div class="tool">筛<span class="badge">2</span></div>
+            <div class="tool">序</div>
+          </div>
+          <div class="list">
+            <div class="card"><span class="thumb"></span><div class="card-id">A07</div><div class="card-title">北岸气象塔整夜接收来自地下的闪电</div><div class="card-meta">科学 · 怀疑 · 360</div></div>
+            <div class="card"><span class="thumb"></span><div class="card-id">A08</div><div class="card-title">旧城区每一面停摆时钟同时快了四分钟</div><div class="card-meta">目击 · 中立 · 350</div></div>
+          </div>
+          <div class="filter-pop">
+            <div class="filter-head"><span>筛选 · 即时生效</span><span>×</span></div>
+            <div class="filter-row"><div class="filter-label">稿型</div><div class="chips"><span class="chip">抢先快讯</span><span class="chip on">深度报道</span><span class="chip">个人专栏</span><span class="chip">爆炸新闻</span></div></div>
+            <div class="filter-row"><div class="filter-label">公开取向</div><div class="chips"><span class="chip">科学纪实</span><span class="chip on">神秘玄学</span><span class="chip">世俗流量</span><span class="chip">无公开取向</span></div></div>
+            <div class="filter-row"><div class="filter-label">主题</div><div class="chips"><span class="chip">全部主题⌄</span></div></div>
+            <div class="more"><span>更多条件</span><span>质量 · 有效值⌄</span></div>
+            <div class="clear">清除全部筛选</div>
+          </div>
+        </div>
+        <div class="notes">
+          <h2>筛选态：浮层覆盖，不推动列表</h2>
+          <div class="note"><span class="num">5</span><span>首层只放<b>稿型、公开取向、主题</b>；避免 288px 浮层变成后台表单。</span></div>
+          <div class="note"><span class="num">6</span><span>质量与有效值收进“更多条件”；即时生效，不再增加“应用”按钮。</span></div>
+          <div class="rule">浮层与排序菜单互斥；×、Esc、点击外部均可关闭。</div>
+        </div>
+      </article>
+
+      <article class="state">
+        <span class="state-label">STATE 04</span>
+        <div class="mock">
+          <div class="toolbar">
+            <div class="hidden-title">已选 A04 被隐藏<br><u>显示并定位</u></div>
+            <div class="tool-gap"></div>
+            <div class="tool">搜</div>
+            <div class="tool">筛<span class="badge">2</span></div>
+            <div class="tool">序</div>
+          </div>
+          <div class="list">
+            <div class="card"><span class="thumb"></span><div class="card-id">A07</div><div class="card-title">北岸气象塔整夜接收来自地下的闪电</div><div class="card-meta">科学 · 怀疑 · 360</div></div>
+            <div class="card"><span class="thumb"></span><div class="card-id">A08</div><div class="card-title">旧城区每一面停摆时钟同时快了四分钟</div><div class="card-meta">目击 · 中立 · 350</div></div>
+            <div class="card"><span class="thumb"></span><div class="card-id">A11</div><div class="card-title">郊区广播塔请求听众不要回答最后一题</div><div class="card-meta">目击 · 怀疑 · 310</div></div>
+          </div>
+          <div class="sort-pop">
+            <div class="sort-item active"><span>默认顺序</span><b>✓</b></div>
+            <div class="sort-item"><span>有效值高到低</span><span>↓</span></div>
+            <div class="sort-item"><span>质量高到低</span><span>↓</span></div>
+            <div class="sort-item"><span>标题顺序</span><span>A</span></div>
+          </div>
+        </div>
+        <div class="notes">
+          <h2>状态保护：选择不会静默丢失</h2>
+          <div class="note"><span class="num">7</span><span>选中项被过滤时继续保留选择，栏头明确报告并提供“显示并定位”。</span></div>
+          <div class="note"><span class="num">8</span><span>只有玩家显式选择排序时才重排；默认保持候选池原始顺序。</span></div>
+          <div class="rule">临时显示期间若再次修改条件，立即退出临时态并以最新条件为准。</div>
+        </div>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-title">建议冻结进 v4</div>
+      <ul>
+        <li>不增加左栏常驻高度，8 张卡仍完整可见</li>
+        <li>搜索 / 筛选不触发重算，替换后才重算</li>
+        <li>8 条全显；12 / 20+ 条继续仅左栏滚动</li>
+        <li>不改中间双页、右侧签发链和唯一送印 CTA</li>
+      </ul>
+    </footer>
+  </main>
+</body>
+</html>

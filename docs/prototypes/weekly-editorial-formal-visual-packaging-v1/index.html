@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1920, initial-scale=1">
+  <title>发刊编辑界面｜正式视觉包装候选 v1</title>
+  <style>
+    html, body {
+      width: 1920px;
+      height: 1080px;
+      margin: 0;
+      overflow: hidden;
+      background: #06131c;
+    }
+
+    #app {
+      display: block;
+      width: 1920px;
+      height: 1080px;
+      border: 0;
+      background: #06131c;
+    }
+  </style>
+</head>
+<body id="top">
+  <iframe id="app" title="发刊编辑正式视觉包装候选"></iframe>
+  <script>
+    const frame = document.getElementById("app");
+    const baseUrl = new URL("../weekly-editorial-formal-black-structure-v4/index.html", location.href);
+    baseUrl.search = location.search;
+    frame.src = baseUrl.href;
+
+    const imageByCode = {
+      A01: "editorial-story-m330-last-train-v1.png",
+      A02: "editorial-story-area51-breathing-sign-v1.png",
+      A03: "editorial-story-harbor-tomorrow-tide-v1.png",
+      A04: "editorial-story-roswell-copy-refusal-v1.png",
+      A05: "editorial-story-city-hall-shadow-department-v1.png",
+      A06: "editorial-story-cats-refuse-blue-phone-booth-v1.png"
+    };
+
+    const recipeByLabel = {
+      "深度": "deep",
+      "爆炸": "breaking",
+      "快讯": "brief",
+      "专栏": "column"
+    };
+
+    function assetUrl(fileName) {
+      return new URL(
+        `../../../gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/${fileName}`,
+        location.href
+      ).href;
+    }
+
+    function decorateArticleNode(node) {
+      const code = node.querySelector(".candidate-id, .slot__article-id")?.textContent?.trim();
+      if (!code) return;
+      node.dataset.articleCode = code;
+      const metaNode = node.querySelector(".candidate-meta, .slot__meta");
+      const meta = metaNode?.textContent?.trim() || "";
+      const recipe = Object.entries(recipeByLabel).find(([label]) => meta.startsWith(label))?.[1] || "unknown";
+      node.dataset.recipe = recipe;
+      if (meta.includes("金级")) node.dataset.quality = "gold";
+      else if (meta.includes("银级")) node.dataset.quality = "silver";
+      else if (meta.includes("铜级")) node.dataset.quality = "bronze";
+
+      if (node.classList.contains("candidate-card") && metaNode && !metaNode.dataset.fieldLabeled) {
+        metaNode.textContent = meta.replace(/\s*·\s*(\d+)$/, " · 基值 $1");
+        metaNode.dataset.fieldLabeled = "true";
+      }
+
+      const imageName = imageByCode[code];
+      if (imageName) {
+        node.classList.add("has-story-art");
+        node.dataset.assetState = "story-art";
+        node.querySelector(".candidate-thumb")?.removeAttribute("title");
+        node.style.setProperty("--story-image", `url("${assetUrl(imageName)}")`);
+      } else {
+        node.classList.remove("has-story-art");
+        node.dataset.assetState = "placeholder";
+        node.querySelector(".candidate-thumb")?.setAttribute("title", "占位缩略图：正式报道图待补");
+        node.style.removeProperty("--story-image");
+      }
+    }
+
+    const sortState = {
+      quality_desc: ["高", "当前按等级高到低排序"],
+      quality_asc: ["低", "当前按等级低到高排序"],
+      acquired_desc: ["新", "当前按获得时间新到旧排序"],
+      acquired_asc: ["旧", "当前按获得时间旧到新排序"]
+    };
+
+    function ensureVisualWidgets(doc, win) {
+      const workspace = doc.querySelector(".workspace");
+      if (!workspace) return false;
+
+      const filterButton = doc.getElementById("candidate-filter-button");
+      const sortButton = doc.getElementById("candidate-sort-button");
+      filterButton.title = "按报道类型筛选";
+      sortButton.title = "按等级或获得时间排序";
+
+      if (!sortButton.querySelector(".candidate-sort-state")) {
+        const badge = doc.createElement("span");
+        badge.className = "candidate-sort-state";
+        badge.setAttribute("aria-hidden", "true");
+        sortButton.appendChild(badge);
+      }
+
+      const centerHeading = doc.querySelector(".center-panel .panel-heading");
+      if (centerHeading && !centerHeading.querySelector(".targeting-guidance")) {
+        const guidance = doc.createElement("span");
+        guidance.className = "targeting-guidance";
+        guidance.textContent = "选择角标版位替换";
+        guidance.hidden = true;
+        centerHeading.insertBefore(guidance, doc.getElementById("clear-layout"));
+      }
+
+      if (!doc.getElementById("clear-layout-confirmation")) {
+        const layer = doc.createElement("section");
+        layer.id = "clear-layout-confirmation";
+        layer.className = "clear-confirm-layer";
+        layer.hidden = true;
+        layer.setAttribute("role", "dialog");
+        layer.setAttribute("aria-modal", "true");
+        layer.setAttribute("aria-labelledby", "clear-confirm-title");
+        layer.innerHTML = `
+          <div class="clear-confirm-card">
+            <div class="clear-confirm-kicker">破坏性操作</div>
+            <h2 id="clear-confirm-title">确认清空双版？</h2>
+            <p>所有已上版报道将返回候选栏，当前推演结果立即失效。</p>
+            <div class="clear-confirm-actions">
+              <button class="clear-confirm-cancel" type="button">继续编辑</button>
+              <button class="clear-confirm-submit" type="button">确认清空</button>
+            </div>
+          </div>`;
+        doc.querySelector(".stage").appendChild(layer);
+
+        const nativeConfirm = win.confirm.bind(win);
+        const visualConfirm = (message) => {
+          if (!String(message).includes("清空本期双版")) return nativeConfirm(message);
+          layer.hidden = false;
+          layer.querySelector(".clear-confirm-cancel").focus();
+          return false;
+        };
+        win.confirm = visualConfirm;
+
+        layer.querySelector(".clear-confirm-cancel").addEventListener("click", () => {
+          layer.hidden = true;
+          doc.getElementById("clear-layout").focus();
+        });
+        layer.querySelector(".clear-confirm-submit").addEventListener("click", () => {
+          layer.hidden = true;
+          win.confirm = () => true;
+          doc.getElementById("clear-layout").click();
+          win.confirm = visualConfirm;
+        });
+        doc.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && !layer.hidden) {
+            event.preventDefault();
+            layer.querySelector(".clear-confirm-cancel").click();
+          }
+        });
+      }
+
+      doc.querySelectorAll("[data-sort-mode]").forEach((button) => {
+        if (button.dataset.visualListener) return;
+        button.dataset.visualListener = "true";
+        button.addEventListener("click", () => queueMicrotask(() => decorate(doc)));
+      });
+      return true;
+    }
+
+    function decorate(doc) {
+      doc.querySelectorAll(".candidate-card, .slot.is-occupied").forEach(decorateArticleNode);
+      doc.querySelectorAll(".slot:not(.is-occupied)").forEach((slot) => {
+        slot.classList.remove("has-story-art");
+        slot.style.removeProperty("--story-image");
+      });
+
+      const activeSort = doc.querySelector("[data-sort-mode][aria-checked='true']")?.dataset.sortMode || "acquired_desc";
+      const [shortSort, sortLabel] = sortState[activeSort];
+      const sortButton = doc.getElementById("candidate-sort-button");
+      const sortBadge = sortButton?.querySelector(".candidate-sort-state");
+      if (sortBadge && sortBadge.textContent !== shortSort) sortBadge.textContent = shortSort;
+      if (sortButton) sortButton.setAttribute("aria-label", `候选报道排序，${sortLabel}`);
+
+      const selectedVisible = Boolean(doc.querySelector(".candidate-card.is-selected"));
+      const selectedHidden = !doc.getElementById("candidate-reveal-selected")?.hidden;
+      const guidance = doc.querySelector(".targeting-guidance");
+      if (guidance) guidance.hidden = !(selectedVisible || selectedHidden);
+    }
+
+    frame.addEventListener("load", () => {
+      const doc = frame.contentDocument;
+      const win = frame.contentWindow;
+      const link = doc.createElement("link");
+      link.rel = "stylesheet";
+      link.href = new URL("./visual.css", location.href).href;
+      doc.head.appendChild(link);
+      doc.title = "发刊编辑界面｜正式视觉包装候选 v1";
+      const stage = doc.querySelector(".stage");
+      if (stage) stage.dataset.artifact = "formal_visual_packaging_candidate_v1";
+
+      if (!ensureVisualWidgets(doc, win)) return;
+      decorate(doc);
+      const workspace = doc.querySelector(".workspace");
+      const observer = new MutationObserver(() => decorate(doc));
+      observer.observe(workspace, { childList: true, subtree: true });
+
+      window.editorialVisual = {
+        frame,
+        getAuditState: () => win.editorialWireframe?.getAuditState(),
+        showState: (name) => win.editorialWireframe?.showState(name),
+        setCandidateCount: (count) => win.editorialWireframe?.setCandidateCount(count),
+        clearFilters: () => win.editorialWireframe?.clearFilters(),
+        get inner() { return win.editorialWireframe; }
+      };
+    });
+  </script>
+</body>
+</html>

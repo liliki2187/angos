@@ -1,23 +1,37 @@
 # 发刊编辑界面标杆落地状态
 
-更新时间：2026-07-17（功能结构纠偏：包装 Mock v1 因候选容量与双 CTA 被否决；当前黑色结构稿已通过几何与双 agent 回验，等待用户审核，不是最终发刊编辑界面）
+更新时间：2026-07-22（v6 继续作为功能结构与交互位置真值；中央双版编辑结构稿 v2 已完成 UI / UX 双 PASS，待用户结构裁决；不是 Godot 生产界面）
 
 ## 当前结论
 
-当前 Godot 发刊编辑台保持唯一“双版常显”，不提供单版放大。主版与副版已统一为同一期杂志的暖米色纸面、纸边和油墨体系；副头版继续沿用 A02“会呼吸路牌”题材的重绘报道图，但不再使用整块冷钴蓝页壳。主 / 副层级改由头版高度、标题字号、图片构图、栏线和留白承担。
+A238 已冻结 `formal_ui_structure_wireframe_v4`：桌面 `1920×1080`、固定 `320 / 1040 / 360` 三栏、双页完整常显、8 卡无滚动、12 卡仅左栏滚动、定向替换、重算阻断、右栏固定阻断与唯一 CTA。用户本轮又明确采用“无名称搜索、类型筛选与等级/获得时间排序并存”的左栏方案。
 
-**当前截图不是最终界面效果。** 现阶段只在程序化结构稿上接入了主 / 副版纸面壳与六张报道图等局部报刊资产。顶部状态条、左侧候选池、中央工作区外壳、右侧发刊复核、按钮、文字层级与大部分边框仍由 `PanelContainer + StyleBoxFlat` 等程序化控件生成，尚未完成整屏视觉包装、物件化、图文融合或最终 UI 验收。
+当前最新冻结的功能 / 布局候选仍为 `weekly-editorial-formal-visual-packaging-v4`；v6 继续作为信息架构、功能区责任与交互位置真值。用户未整套选择 A / B / C，而是明确锁定 B 的明亮杂志纸面，同时要求外围底板与组件恢复 benchmark 的深海军蓝和钴蓝 / 青绿 / 橄榄中间调；v2 只保留为程序换肤失败样本。
 
-2026-07-17 的 `weekly-editorial-packaging-mock-v1` 已因功能容量错误降级：单张约 `280×264` 大候选卡无法承载多篇报道的比较与滚动，且双 CTA 与当前 `signoff_panel` 单一 `primary_cta` 合同冲突。它只保留为包装探索 / 偏差证据，不再作为结构真源。本轮已退回黑色结构阶段，以 `8` 篇候选、`6` 张 `288×92` 常显、`2` 张滚动访问、`3/6` 版位和单一禁用签批 CTA 重新建立功能候选。
+**当前截图仍不是最终界面或 Godot 生产证据。** v4 没有重新生成正式方形母图或横向扩图，A01–A06 旧素材只用于图片窗与裁切压力预览，A07–A13 仍是占位；组件合同、Godot、GDD 规则真源均未修改。
 
-普通版位现已接入四张 B 级报道图：`article_id=1003` 港口广播、`article_id=1004` 罗斯威尔拒绝复印、`article_id=1005` 市政厅影子部门与 `article_id=1006` 蓝色电话亭猫群。compact / tall 版位会按当前文章 ID 从 manifest 动态解析对应图片；未来真实存在但未建立映射的文章继续使用既有纯色 fallback。
-
-A225 已记录用户对 1006 单图及六版位全填充双版预览的明确确认。1003–1006 普通报道图**资产切片**的定向审计、42 项结构宿主交互回归和 `0/6、3/6、5/6、6/6` 容量态均通过；这些证据只说明报道图能在当前结构宿主中运行，不说明发刊编辑界面已经完成包装。全局 `test_weekly_run_layout.gd` 的 22 项失败已诊断为仍指向隐藏 legacy WorldView / RegionView 与已移除 StatsPanel 路径的测试漂移，正式 smoke 文件尚待同步。
-
-交互已从“六版位动作地毯”收敛为：默认 `0` 枚换稿按钮；点击一个占用版位后只显示该版位右下 `1` 枚“换稿”；拖拽态与确认态为 `0`。候选投放、覆盖退稿、槽间移动、占用槽原子交换和拖回候选均走同一个原子事务。
+发刊规则仍有一项待裁决：公式侧要求必填槽位完整，边界侧允许头条为空时尝试发刊。本视觉候选沿用现有硬阻断展示，但在裁决前不得把该口径冻结进 GDD 或组件合同。
 
 ## 已完成
 
+- A238 已记录 v4 功能结构冻结，v4 作为正式视觉包装的结构真源。
+- 用户在正式视觉包装候选 v1 上重新打开了报道图片框合同：每篇报道以一张方形核心构图为真源，除主头版外全部使用方图，主头版横图只能由方图左右扩图获得。
+- 两规格图片合同黑白结构审阅板 v1 已完成 UX 诊断 → UI 设计 → 父级合并；当前推荐 `1024×1024` 方形母图、`189×189` 普通位、`210×210` 副头版方图与 `15:8` 主头版扩图，P0 为 0。
+- 用户已确认上述精确参数；正式视觉包装候选 v2 已完成独立 HTML 落地与 `1920×1080` 回归。
+- v2 默认定向、真实换稿重算、确认送印与 12 条候选左栏滚动均通过；三张静态证据、animated WebP 与机器审计已生成。
+- 用户随后依据 v2 实图撤回副头版 `210×210` 方图方案，指出其造成大片无法填充的无职责空白。
+- UX 复诊判定 v2 `FAIL`、副头版横图方向 `PASS WITH CHANGES`；UI Designer 与父级统一采用 `375×200`，不采用与主头版等权的 `410×219`。
+- 正式视觉包装候选 v3 已完成默认、最长标题、真实换稿重算、确认送印与 12 条候选回归；三张静态证据、7 帧 animated WebP 与机器审计已生成。
+- 用户已确认并冻结 v3 副头版横图结构；随后提出主头版标题需更大以形成头版感。
+- v4 已完成 UX 诊断 → UI 设计 → 父级合并；主标题改为真实字宽驱动的 `28px` 单行 / `24px` 双行，A01 与最长 A12 均无溢出，主图和 meta 未移动。
+- 用户查看 v4 完整三栏双版截图后确认标题大小，A247 主头版标题层级正式冻结。
+- v5 已完成 UX 诊断 → UI 设计 → 父级合并；普通编辑、定向替换、重算、确认冻结与实际清空后的空版状态均已回归，清空入口只在可执行状态显示并进入键盘焦点链。
+- 用户指出 v5 的“选择可替换版位”无法直接理解；v6 已按 UX 复核 → UI 设计 → 父级合并改为不可点击的明确下一步提示，其余状态未改变。
+- 用户明确要求在当前 v6 UI 布局基础上，按两张美术标杆生成完整风格稿；首稿因三栏几何漂移内部退回。v2 虽锁回 `320 / 1040 / 360` 三栏并曾通过 UI / UX 复审，但用户指出它仍是程序框体换肤，现已正式否决；原 PASS 无效。
+- 左栏已落地无名称搜索的类型多选筛选，以及等级/获得时间四向排序。
+- 正式视觉包装候选 v1 已完成 UI Designer → UX 老哥 → 父级合并；UX 结论 `PASS WITH CHANGES`、P0 为 0。
+- UX 必须修中的排序状态常显、11px候选元信息、合法目标角标、明确返回修改、项目内清空确认与锈红语义收敛已完成。
+- 已生成五张 `1920×1080` 状态截图、审阅总览板、6帧 animated WebP 与机器审计。
 - 删除常驻教学 footer、固定持稿功能条、可交互页眉、单版聚焦和上下文缩略分支。
 - 双版保持 `490×800` 常显，并共享唯一 `slot_assignment`。
 - 刊头只承担《世界未解之谜周刊》身份装饰，不承载选择或取消功能。
@@ -45,6 +59,36 @@ A225 已记录用户对 1006 单图及六版位全填充双版预览的明确确
 
 ## 生产证据
 
+- v4 结构真源：`docs/prototypes/weekly-editorial-formal-black-structure-v4/`。
+- 正式视觉包装候选 v1：`docs/prototypes/weekly-editorial-formal-visual-packaging-v1/`。
+- 正式视觉包装候选 v2：`docs/prototypes/weekly-editorial-formal-visual-packaging-v2/`。
+- v2 状态截图、换稿动态与机器审计：`docs/screenshots/2026-07-21-weekly-editorial-formal-visual-packaging-v2/`。
+- v2 交付清单：`2026-07-21-weekly-editorial-formal-visual-packaging-v2-delivery-manifest.md`。
+- 正式视觉包装候选 v3：`docs/prototypes/weekly-editorial-formal-visual-packaging-v3/`。
+- v3 状态截图、换稿动态与机器审计：`docs/screenshots/2026-07-21-weekly-editorial-formal-visual-packaging-v3/`。
+- v3 交付清单：`2026-07-21-weekly-editorial-formal-visual-packaging-v3-delivery-manifest.md`。
+- 正式视觉包装候选 v4：`docs/prototypes/weekly-editorial-formal-visual-packaging-v4/`。
+- v4 主状态、最长标题压力截图与审计：`docs/screenshots/2026-07-21-weekly-editorial-formal-visual-packaging-v4/`。
+- v4 交付清单：`2026-07-21-weekly-editorial-formal-visual-packaging-v4-delivery-manifest.md`。
+- 正式视觉包装候选 v5：`docs/prototypes/weekly-editorial-formal-visual-packaging-v5/`。
+- v5 普通编辑 / 定向替换整页截图与机器审计：`docs/screenshots/2026-07-21-weekly-editorial-formal-visual-packaging-v5/`。
+- v5 交付清单：`2026-07-21-weekly-editorial-formal-visual-packaging-v5-delivery-manifest.md`。
+- 正式视觉包装候选 v6：`docs/prototypes/weekly-editorial-formal-visual-packaging-v6/`。
+- v6 定向提示整页截图与机器审计：`docs/screenshots/2026-07-21-weekly-editorial-formal-visual-packaging-v6/`。
+- v6 交付清单：`2026-07-21-weekly-editorial-formal-visual-packaging-v6-delivery-manifest.md`。
+- 完整风格稿 v2 失败样本：`image_gen/2026-07-21/20260721-174656_weekly-editorial-style-draft-v2.png`（用户已否决，不得作为美术候选）。
+- 完整风格稿 v2 交付清单：`2026-07-21-weekly-editorial-full-style-draft-v2-delivery-manifest.md`。
+- 物件化完整风格稿 v3.1：`image_gen/2026-07-21/20260721-183300_weekly-editorial-objectified-style-draft-v3-1.png`。
+- v3.1 交付清单：`2026-07-21-weekly-editorial-objectified-style-draft-v3-1-delivery-manifest.md`。
+- A 夜班印务室：`image_gen/2026-07-21/20260721-190000_weekly-editorial-style-option-a-night-print-room.png`。
+- B 现场回传编辑桌：`image_gen/2026-07-21/20260721-190500_weekly-editorial-style-option-b-field-transmission.png`。
+- C 截稿校样台：`image_gen/2026-07-21/20260721-191000_weekly-editorial-style-option-c-deadline-proofing.png`。
+- A / B / C 交付清单：`2026-07-21-weekly-editorial-style-options-abc-delivery-manifest.md`。
+- 当前审阅总览：`docs/screenshots/2026-07-21-weekly-editorial-formal-visual-packaging-v1/00-review-contact-sheet.png`。
+- 当前状态证据与审计：`docs/screenshots/2026-07-21-weekly-editorial-formal-visual-packaging-v1/`；产物类型为 `formal_visual_packaging_candidate`，不得称为 Godot 生产界面。
+- 当前交付清单：`2026-07-21-weekly-editorial-formal-visual-packaging-v1-delivery-manifest.md`。
+- 两规格图片合同审阅板：`docs/prototypes/weekly-editorial-two-spec-image-contract-review-v1/`；主审阅图与审计位于 `docs/screenshots/2026-07-21-weekly-editorial-two-spec-image-contract-review-v1/`。
+- 两规格图片合同交付清单：`2026-07-21-weekly-editorial-two-spec-image-contract-review-v1-delivery-manifest.md`。
 - 当前合同板：`PAGE-CONTRACT-BOARD-v5-SAME-PAPER-LOCAL-REPLACE.md`
 - 类合同真源：`design/ui-contracts/weekly-editorial/`
 - 资产 manifest：`gd_project/Assets/ui/angus_packaging/weekly_editorial/weekly_editorial_asset_manifest.json`（v7）
@@ -71,15 +115,23 @@ A225 已记录用户对 1006 单图及六版位全填充双版预览的明确确
 
 ## 当前工作流位置
 
-- 当前级别：`formal_ui_structure_wireframe_v2_ready_for_user_review`。
-- 1003–1006 四张普通报道图单图切片的用户确认继续有效；`weekly-editorial-packaging-mock-v1` 已因候选容量与 CTA 合同冲突而否决 / 降级，不得据此称为整屏包装开始或结构通过。
-- UX 老哥与 UI Designer 已完成正式字段、八卡容量与右栏复核结构收束；父级已输出确定性 `1920×1080` 正式界面黑白结构候选。放行范围仍只到功能结构，不包含 Godot 运行时、最终美术、10 / 12 篇动态滚动回归或生产 UI。
-- 下一步等待用户审核 v2 正式黑白结构；用户确认后，才升 `candidate_card` 位置合同并以它为布局真源进入整屏视觉包装。用户确认前不改 Godot，也不继续扩产 B / C 级资源。
+- 当前级别：`central_spread_editorial_structure_v2_right_inner_gutter_fix_applied_pending_render_review`。
+- v4 功能结构、v3 副头版横图与 v4 主头版标题层级已经冻结；早期 `weekly-editorial-packaging-mock-v1` 与 v2 副头版方图方案只作历史证据。
+- 用户明确指出：A / C 整体过暗影响阅读；B 的杂志亮度值得采用，但浅帆布底板和浅色组件偏离美术标杆。
+- 方案 1 钴蓝配色偏好继续有效，但主头版资产化预演 v1 已被用户否决：固定装饰侵入眉题区，真实生图在拆分时被程序重画的线框与色条取代，导致成品重新接近程序 UI。几何审计只保留为坐标证据，不再构成美术放行。
+- 修正后的 v3 已完成完整 2× `visual master`、真实动态文字 / 报道图回填和整屏预览：纸面、照片压角与印务信号来自真实生图，程序只做裁切、蒙版、内容回填与位置合成。因其余区域仍为程序皮肤，v3 当前只记为组件级局部暂准；整屏图只证明位置兼容，不再要求用户据此批准美术或放行拆层。
+- 中央双版区域母件 v1 的合同几何、暖纸 / 书脊和报道图材质可保留，但用户判定文字与图版配合很差、没有报刊感且不如程序版；此前 UI / UX PASS 已撤回，v1 不得反向拆层。
+- 返工只保留中央区域 / 页壳 / 书脊 / 六个版位外矩形与命中区；六组内部 headline / photo / meta 排列、主副头版构图、版头 / 栏网 / 图注带和印务信号全部解冻。下一轮仍是中央双版，不启动左栏。
+- 中央双版编辑结构稿 v2 的右页普通报道空轨修正已写入 HTML：图片保持 `160×160`，由 `x=53` 移至 `x=26`，全高竖线改为 `32px` folio 短规则，标题与 meta 不动。原 UI Designer / UX 全区域 PASS 仍保持撤回；本轮预览环境拒绝直接打开本机 `file://` 页面，待补真实整版截图后再决定是否冻结。
+- 已正式采用 `局部暂准 → 区域通过 → 整屏冻结 → 运行态生产冻结` 审阅分级；未美术化区域使用目标风格代理，不显示旧程序皮肤作为审美背景。
+- `candidate_card` 扩产继续暂停，不进入正式 Godot 发刊场景、组件合同升版或 GDD 修改。
 
 ## 后续仍未完成
 
-- B 级专题 / 内页图，及 C 级地图、波形、证据模块。
-- 整屏视觉包装：顶部状态条、候选报道池、中央杂志工作台外壳、发刊复核 / 签批区、CTA、空态 / 中间态 / 满态的统一物件语法与图文融合。
-- 完整长标题压力截图。
+- A07–A13 七张正式语义报道图与全部报道图的大图 / 窄槽 / 64px 缩略图裁切安全区。
+- 正式视觉包装的最长中文标题、不同质量标签和多槽位裁切压力图。
+- 键盘 / 手柄焦点链，以及不依赖 hover 的合法目标换稿路径（若正式范围要求）。
+- `candidate_card`、`signoff_panel` 合同升版与 Godot 正式落地。
+- 裁决“不完整版面属于严重风险还是硬阻断”，随后再同步 GDD 真源。
 - 将 `test_weekly_run_layout.gd` 从 legacy WorldView / RegionView / StatsPanel 断言同步到现行 WMW assembly、`RegionTaskBoardV2` 与 `EditorialRoot`；这是测试清理，不是视觉包装完成证据。
 - `pre_publish_check`、公开取向、同题疲劳的完整玩家可见链路；本轮只保留现有结算预览，不冒充已接通。

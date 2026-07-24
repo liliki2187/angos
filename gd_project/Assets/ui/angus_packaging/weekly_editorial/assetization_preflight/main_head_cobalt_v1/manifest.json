@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "artifact": "weekly_editorial_main_head_cobalt_assetization_preflight_v1",
+  "source_generation": "D:/angos/image_gen/2026-07-22/20260722-weekly-editorial-main-head-cobalt-source-v1.png",
+  "contract": "design/ui-contracts/weekly-editorial/main_head_slot.json",
+  "logical_size": [
+    442,
+    374
+  ],
+  "source_size_2x": [
+    884,
+    748
+  ],
+  "runtime_position": [
+    459,
+    276
+  ],
+  "content_rects": {
+    "headline": [
+      16,
+      14,
+      410,
+      68
+    ],
+    "photo": [
+      16,
+      92,
+      410,
+      218
+    ],
+    "meta": [
+      16,
+      318,
+      360,
+      42
+    ],
+    "local_replace_action": [
+      390,
+      322,
+      44,
+      44
+    ]
+  },
+  "geometry_rules": {
+    "root_rotation_degrees": 0,
+    "hit_rect": [
+      0,
+      0,
+      442,
+      374
+    ],
+    "visual_overlays_receive_input": false,
+    "dynamic_text_baked": false,
+    "story_art_baked": false,
+    "button_text_baked": false
+  },
+  "assets": [
+    {
+      "id": "base_paper",
+      "path": "D:/angos/gd_project/Assets/ui/angus_packaging/weekly_editorial/assetization_preflight/main_head_cobalt_v1/base-paper.png",
+      "size": [
+        884,
+        748
+      ],
+      "mode": "RGBA",
+      "alpha": {
+        "transparent_pixels": 0,
+        "opaque_pixels": 357520,
+        "partial_alpha_pixels": 303712,
+        "nontransparent_fraction": 1.0
+      }
+    },
+    {
+      "id": "fixed_decoration",
+      "path": "D:/angos/gd_project/Assets/ui/angus_packaging/weekly_editorial/assetization_preflight/main_head_cobalt_v1/fixed-decoration.png",
+      "size": [
+        884,
+        748
+      ],
+      "mode": "RGBA",
+      "alpha": {
+        "transparent_pixels": 642286,
+        "opaque_pixels": 0,
+        "partial_alpha_pixels": 18946,
+        "nontransparent_fraction": 0.028653
+      }
+    },
+    {
+      "id": "state_legal",
+      "path": "D:/angos/gd_project/Assets/ui/angus_packaging/weekly_editorial/assetization_preflight/main_head_cobalt_v1/state-legal.png",
+      "size": [
+        884,
+        748
+      ],
+      "mode": "RGBA",
+      "alpha": {
+        "transparent_pixels": 657522,
+        "opaque_pixels": 0,
+        "partial_alpha_pixels": 3710,
+        "nontransparent_fraction": 0.005611
+      }
+    },
+    {
+      "id": "state_hover",
+      "path": "D:/angos/gd_project/Assets/ui/angus_packaging/weekly_editorial/assetization_preflight/main_head_cobalt_v1/state-hover.png",
+      "size": [
+        884,
+        748
+      ],
+      "mode": "RGBA",
+      "alpha": {
+        "transparent_pixels": 657327,
+        "opaque_pixels": 0,
+        "partial_alpha_pixels": 3905,
+        "nontransparent_fraction": 0.005906
+      }
+    },
+    {
+      "id": "state_focused",
+      "path": "D:/angos/gd_project/Assets/ui/angus_packaging/weekly_editorial/assetization_preflight/main_head_cobalt_v1/state-focused.png",
+      "size": [
+        884,
+        748
+      ],
+      "mode": "RGBA",
+      "alpha": {
+        "transparent_pixels": 657072,
+        "opaque_pixels": 0,
+        "partial_alpha_pixels": 4160,
+        "nontransparent_fraction": 0.006291
+      }
+    },
+    {
+      "id": "replace_action_skin",
+      "path": "D:/angos/gd_project/Assets/ui/angus_packaging/weekly_editorial/assetization_preflight/main_head_cobalt_v1/replace-action-skin.png",
+      "size": [
+        88,
+        88
+      ],
+      "mode": "RGBA",
+      "alpha": {
+        "transparent_pixels": 1327,
+        "opaque_pixels": 626,
+        "partial_alpha_pixels": 5791,
+        "nontransparent_fraction": 0.828642
+      }
+    }
+  ],
+  "composites": [
+    "assembled-idle.png",
+    "assembled-legal.png",
+    "assembled-hover.png",
+    "assembled-focused.png"
+  ]
+}

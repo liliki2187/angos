@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1040, initial-scale=1">
+  <title>发刊中央双版｜现代异常周刊校样结构稿 v2</title>
+  <style>
+    :root {
+      --ink: #171918;
+      --muted: #626661;
+      --hairline: #555a56;
+      --paper: #f3f2ec;
+      --paper-alt: #e8e8e2;
+      --desk: #d6d7d3;
+      --shadow: rgba(20, 22, 21, .18);
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      width: 1040px;
+      height: 920px;
+      margin: 0;
+      overflow: hidden;
+      background: var(--desk);
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+      text-rendering: geometricPrecision;
+    }
+
+    .stage {
+      position: relative;
+      width: 1040px;
+      height: 920px;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.22), transparent 18%, transparent 82%, rgba(0,0,0,.035)),
+        var(--desk);
+    }
+
+    .spread-toolbar {
+      position: absolute;
+      left: 15px;
+      top: 16px;
+      width: 1010px;
+      height: 56px;
+      display: grid;
+      grid-template-columns: 150px 1fr 220px;
+      align-items: center;
+      border-top: 2px solid var(--ink);
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .spread-toolbar__title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+
+    .spread-toolbar__status {
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: .06em;
+    }
+
+    .spread-toolbar__proof {
+      justify-self: end;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: .08em;
+    }
+
+    .proof-bars {
+      display: grid;
+      grid-template-columns: 46px 30px 20px;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .proof-bars span {
+      display: block;
+      height: 5px;
+      background: #555;
+    }
+
+    .proof-bars span:nth-child(2) { background: #888; }
+    .proof-bars span:nth-child(3) { background: #bbb; }
+
+    .page {
+      position: absolute;
+      top: 88px;
+      width: 490px;
+      height: 800px;
+      overflow: hidden;
+      background:
+        linear-gradient(115deg, transparent 0 62%, rgba(0,0,0,.018) 62% 68%, transparent 68%),
+        var(--paper);
+      border: 1px solid #8b8e89;
+      box-shadow: 0 7px 14px var(--shadow);
+    }
+
+    .page--left { left: 15px; border-radius: 2px 0 0 2px; }
+    .page--right { left: 535px; border-radius: 0 2px 2px 0; }
+
+    .page--left::after,
+    .page--right::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 12px;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .page--left::after {
+      right: 0;
+      background: linear-gradient(90deg, transparent, rgba(0,0,0,.12));
+    }
+
+    .page--right::after {
+      left: 0;
+      background: linear-gradient(90deg, rgba(0,0,0,.12), transparent);
+    }
+
+    .spine {
+      position: absolute;
+      left: 505px;
+      top: 88px;
+      width: 30px;
+      height: 800px;
+      z-index: 4;
+      pointer-events: none;
+      background: linear-gradient(90deg, rgba(0,0,0,.12), rgba(255,255,255,.24) 45%, rgba(0,0,0,.12));
+      mix-blend-mode: multiply;
+      opacity: .72;
+    }
+
+    .page-head {
+      position: absolute;
+      left: 24px;
+      top: 24px;
+      width: 442px;
+      height: 52px;
+      display: grid;
+      grid-template-columns: 72px 1fr 68px;
+      align-items: start;
+      border-bottom: 1px solid var(--hairline);
+    }
+
+    .page-head__folio,
+    .page-head__issue {
+      font-family: Consolas, monospace;
+      font-size: 10px;
+      line-height: 16px;
+      letter-spacing: .08em;
+      color: var(--muted);
+    }
+
+    .page-head__section {
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 800;
+      letter-spacing: .05em;
+    }
+
+    .page-head__issue { text-align: right; }
+
+    .page-rule,
+    .column-rule,
+    .story-rule,
+    .aside-rule {
+      position: absolute;
+      background: var(--hairline);
+      opacity: .78;
+    }
+
+    .page-rule { left: 24px; width: 442px; height: 1px; }
+    .page-rule--left-split { top: 476px; }
+    .page-rule--right-split { top: 444px; }
+    .page-rule--bottom { top: 772px; opacity: .48; }
+
+    .column-rule {
+      top: 486px;
+      left: 244px;
+      width: 1px;
+      height: 282px;
+      opacity: .32;
+    }
+
+    .page--right .column-rule {
+      top: 454px;
+      height: 314px;
+    }
+
+    .story {
+      position: absolute;
+    }
+
+    .story-eyebrow {
+      position: absolute;
+      margin: 0;
+      color: var(--muted);
+      font-family: Consolas, "Microsoft YaHei", monospace;
+      font-size: 10px;
+      line-height: 14px;
+      letter-spacing: .045em;
+      white-space: nowrap;
+    }
+
+    .story-title {
+      position: absolute;
+      margin: 0;
+      overflow: hidden;
+      font-weight: 800;
+    }
+
+    .story-photo {
+      position: absolute;
+      display: block;
+      object-fit: cover;
+      filter: grayscale(1) contrast(.92) brightness(1.02);
+      border: 1px solid #4e514e;
+    }
+
+    .story-meta {
+      position: absolute;
+      margin: 0;
+      color: var(--muted);
+      font-family: Consolas, "Microsoft YaHei", monospace;
+      font-size: 10px;
+      line-height: 14px;
+      letter-spacing: .02em;
+    }
+
+    .slug {
+      position: absolute;
+      height: 14px;
+      padding-left: 8px;
+      border-left: 4px solid var(--ink);
+      font-size: 10px;
+      line-height: 14px;
+      font-weight: 800;
+      letter-spacing: .06em;
+    }
+
+    .main-story {
+      left: 24px;
+      top: 92px;
+      width: 442px;
+      height: 374px;
+    }
+
+    .main-story .story-eyebrow { left: 0; top: 0; width: 150px; height: 16px; }
+    .main-story .story-title {
+      left: 0;
+      top: 22px;
+      width: 442px;
+      height: 66px;
+      font-size: 28px;
+      line-height: 32px;
+      letter-spacing: -.035em;
+    }
+    .main-story .story-rule { left: 0; top: 96px; width: 442px; height: 1px; }
+    .main-story .story-photo { left: 0; top: 106px; width: 442px; height: 208px; }
+    .main-story .slug { left: 0; top: 324px; width: 68px; }
+    .main-story .story-meta { left: 80px; top: 320px; width: 300px; height: 30px; }
+
+    .secondary-story {
+      left: 24px;
+      top: 92px;
+      width: 442px;
+      height: 342px;
+      border-top: 1px solid var(--hairline);
+    }
+
+    .secondary-story .story-photo { left: 0; top: 28px; width: 296px; height: 210px; }
+    .secondary-story .story-eyebrow { left: 312px; top: 28px; width: 130px; height: 16px; white-space: normal; }
+    .secondary-story .story-title {
+      left: 312px;
+      top: 52px;
+      width: 130px;
+      height: 112px;
+      font-size: 22px;
+      line-height: 27px;
+      letter-spacing: -.035em;
+    }
+    .secondary-story .story-rule { left: 312px; top: 172px; width: 130px; height: 1px; }
+    .secondary-story .story-meta { left: 0; top: 250px; width: 296px; height: 28px; }
+    .secondary-story .secondary-index {
+      position: absolute;
+      left: 312px;
+      top: 186px;
+      width: 130px;
+      color: var(--muted);
+      font-family: Consolas, monospace;
+      font-size: 10px;
+      line-height: 15px;
+    }
+
+    .feature-story {
+      top: 486px;
+      width: 213px;
+      height: 282px;
+    }
+
+    .feature-story--one { left: 24px; }
+    .feature-story--two { left: 253px; }
+    .feature-story .story-eyebrow { left: 0; top: 0; width: 104px; height: 14px; }
+    .feature-story .story-title {
+      left: 0;
+      top: 18px;
+      width: 213px;
+      height: 46px;
+      font-size: 14px;
+      line-height: 18px;
+    }
+    .feature-story .story-rule { left: 0; top: 70px; width: 213px; height: 1px; }
+    .feature-story .story-photo { left: 0; top: 78px; width: 160px; height: 160px; }
+    .feature-story .aside-rule { left: 172px; top: 78px; width: 1px; height: 140px; opacity: .45; }
+    .feature-story .story-index {
+      position: absolute;
+      left: 181px;
+      top: 80px;
+      color: var(--muted);
+      font: 10px/14px Consolas, monospace;
+      writing-mode: vertical-rl;
+      letter-spacing: .08em;
+    }
+    .feature-story .story-meta { left: 0; top: 248px; width: 149px; height: 24px; }
+
+    .inner-story {
+      top: 454px;
+      width: 213px;
+      height: 314px;
+    }
+
+    .inner-story--one { left: 24px; }
+    .inner-story--two { left: 253px; }
+    .inner-story .story-eyebrow { left: 0; top: 0; width: 104px; height: 14px; }
+    .inner-story .aside-rule { left: 18px; top: 22px; width: 1px; height: 32px; opacity: .62; }
+    .inner-story .story-index {
+      position: absolute;
+      left: 0;
+      top: 22px;
+      color: var(--muted);
+      font: 10px/14px Consolas, monospace;
+      letter-spacing: .08em;
+    }
+    .inner-story .story-photo { left: 26px; top: 22px; width: 160px; height: 160px; }
+    .inner-story .story-title {
+      left: 0;
+      top: 194px;
+      width: 213px;
+      height: 46px;
+      font-size: 14px;
+      line-height: 18px;
+    }
+    .inner-story .story-rule { left: 0; top: 248px; width: 149px; height: 1px; }
+    .inner-story .story-meta { left: 0; top: 258px; width: 149px; height: 26px; }
+
+    .page-note {
+      position: absolute;
+      left: 24px;
+      bottom: 7px;
+      color: #737773;
+      font: 9px/12px Consolas, monospace;
+      letter-spacing: .08em;
+    }
+
+    .page-number {
+      position: absolute;
+      right: 24px;
+      bottom: 7px;
+      color: #737773;
+      font: 10px/12px Consolas, monospace;
+    }
+  </style>
+</head>
+<body>
+  <main class="stage" aria-label="发刊编辑中央双版现代异常周刊校样黑白结构稿">
+    <header class="spread-toolbar">
+      <div class="spread-toolbar__title">本期双版</div>
+      <div class="spread-toolbar__status">已排 6 / 6　·　校样结构 v2</div>
+      <div class="spread-toolbar__proof">
+        <div class="proof-bars" aria-hidden="true"><span></span><span></span><span></span></div>
+        <span>WMW / PROOF 018</span>
+      </div>
+    </header>
+
+    <section class="page page--left" aria-label="第1版 主版">
+      <header class="page-head">
+        <div class="page-head__folio">VOL.018</div>
+        <div class="page-head__section">第1版 · 主版</div>
+        <div class="page-head__issue">WMW 01</div>
+      </header>
+
+      <article class="story main-story">
+        <p class="story-eyebrow">头版主稿 · A01</p>
+        <h1 class="story-title">M330末班车在不存在的<br>站台停了三秒</h1>
+        <span class="story-rule" aria-hidden="true"></span>
+        <img class="story-photo" src="../../../gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/editorial-story-m330-last-train-v1.png" alt="M330末班车报道图">
+        <span class="slug">深度</span>
+        <p class="story-meta">金级 · 620　/　EDITION PROOF A01</p>
+      </article>
+
+      <span class="page-rule page-rule--left-split" aria-hidden="true"></span>
+      <span class="column-rule" aria-hidden="true"></span>
+
+      <article class="story feature-story feature-story--one">
+        <p class="story-eyebrow">重点专题 1 · A02</p>
+        <h2 class="story-title">51区夜班货车携带会呼吸的路牌</h2>
+        <span class="story-rule" aria-hidden="true"></span>
+        <img class="story-photo" src="../../../gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/editorial-story-area51-breathing-sign-v1.png" alt="51区夜班货车报道图">
+        <span class="aside-rule" aria-hidden="true"></span>
+        <span class="story-index">COLUMN 02</span>
+        <p class="story-meta">爆料 · 金级 · 500</p>
+      </article>
+
+      <article class="story feature-story feature-story--two">
+        <p class="story-eyebrow">重点专题 2 · A05</p>
+        <h2 class="story-title">市政厅新增了一个不存在的影子部门</h2>
+        <span class="story-rule" aria-hidden="true"></span>
+        <img class="story-photo" src="../../../gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/editorial-story-city-hall-shadow-department-v1.png" alt="市政厅影子部门报道图">
+        <span class="aside-rule" aria-hidden="true"></span>
+        <span class="story-index">COLUMN 05</span>
+        <p class="story-meta">专栏 · 铜级 · 410</p>
+      </article>
+
+      <span class="page-rule page-rule--bottom" aria-hidden="true"></span>
+      <span class="page-note">WEIRD NEWS / FINAL PROOF</span>
+      <span class="page-number">02</span>
+    </section>
+
+    <div class="spine" aria-hidden="true"></div>
+
+    <section class="page page--right" aria-label="第2版 副版">
+      <header class="page-head">
+        <div class="page-head__folio">VOL.018</div>
+        <div class="page-head__section">第2版 · 副版</div>
+        <div class="page-head__issue">WMW 02</div>
+      </header>
+
+      <article class="story secondary-story">
+        <img class="story-photo" src="../../../gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/editorial-story-harbor-tomorrow-tide-v1.png" alt="港口广播报道图">
+        <p class="story-eyebrow">副头版 · A03</p>
+        <h2 class="story-title">港口广播连续七晚播报明天的潮汐</h2>
+        <span class="story-rule" aria-hidden="true"></span>
+        <p class="story-meta">快讯 · 银级 · 450　/　HARBOR DESK</p>
+        <div class="secondary-index">SECOND LEAD<br>PROOF / 03</div>
+      </article>
+
+      <span class="page-rule page-rule--right-split" aria-hidden="true"></span>
+      <span class="column-rule" aria-hidden="true"></span>
+
+      <article class="story inner-story inner-story--one">
+        <p class="story-eyebrow">内页 1 · A06</p>
+        <span class="aside-rule" aria-hidden="true"></span>
+        <span class="story-index">06</span>
+        <img class="story-photo" src="../../../gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/editorial-story-cats-refuse-blue-phone-booth-v1.png" alt="蓝色电话亭报道图">
+        <h2 class="story-title">郊区猫群一致拒绝经过蓝色电话亭</h2>
+        <span class="story-rule" aria-hidden="true"></span>
+        <p class="story-meta">快讯 · 铜级 · 380</p>
+      </article>
+
+      <article class="story inner-story inner-story--two">
+        <p class="story-eyebrow">内页 2 · A07</p>
+        <span class="aside-rule" aria-hidden="true"></span>
+        <span class="story-index">07</span>
+        <img class="story-photo" src="../../../gd_project/Assets/ui/angus_packaging/weekly_editorial/assetized/editorial-story-roswell-copy-refusal-v1.png" alt="罗斯威尔档案报道图">
+        <h2 class="story-title">罗斯威尔档案第十四页拒绝复印</h2>
+        <span class="story-rule" aria-hidden="true"></span>
+        <p class="story-meta">深度 · 银级 · 360</p>
+      </article>
+
+      <span class="page-rule page-rule--bottom" aria-hidden="true"></span>
+      <span class="page-note">NIGHT EDITION / LAYOUT DESK</span>
+      <span class="page-number">03</span>
+    </section>
+  </main>
+</body>
+</html>

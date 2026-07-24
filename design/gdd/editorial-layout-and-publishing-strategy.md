@@ -118,6 +118,8 @@ publish_valid = required_slots_filled and blocked_task_not_violated
 | `slot_id` | string | 是 | 版位 ID |
 | `article_id` | int/string | 是 | 稿件 ID |
 | `recipe_type` | enum | 是 | 稿件类型 |
+| `quality` | string | 是 | 稿件质量档位，供候选栏按等级排序 |
+| `acquired_order` | int | 是 | 本周候选池内获得序号，供候选栏按获得时间先后排序 |
 | `public_stance` | enum/null | 是 | 公开取向 |
 | `primary_topic_key` | string/null | 是 | 同题追踪主键 |
 | `intrinsic_base_value` | int | 是 | 稿内原始基础值 |
