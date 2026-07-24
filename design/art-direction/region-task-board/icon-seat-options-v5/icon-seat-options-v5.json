@@ -1,0 +1,148 @@
+{
+  "id": "region_task_permanent_icon_seat_options_v5",
+  "status": "visual_options_pending_user_selection",
+  "production_integration": false,
+  "runtime_contract": {
+    "pin": [
+      64,
+      80
+    ],
+    "icon": [
+      18,
+      14,
+      28,
+      28
+    ]
+  },
+  "options": [
+    {
+      "id": "a_open_bottom_frame",
+      "source": "design/art-direction/region-task-board/icon-seat-options-v5/01-option-a-open-bottom-frame-chroma.png",
+      "frame_3x": "design/art-direction/region-task-board/icon-seat-options-v5/rt-task-pin-permanent-icon-seat-a-open-bottom-v5-3x.png",
+      "frame_1x": "design/art-direction/region-task-board/icon-seat-options-v5/rt-task-pin-permanent-icon-seat-a-open-bottom-v5-1x.png",
+      "metrics": {
+        "source_bbox": [
+          240,
+          248,
+          566,
+          677
+        ],
+        "source_crop_size": [
+          326,
+          429
+        ],
+        "scaled_size": [
+          182,
+          240
+        ],
+        "frame_3x": [
+          192,
+          240
+        ],
+        "frame_1x": [
+          64,
+          80
+        ],
+        "left_padding_3x": 4,
+        "tip_center_x_3x": 96.5,
+        "tip_center_x_1x": 32.0,
+        "target_tip_center_x_3x": 96,
+        "target_tip_center_x_1x": 32,
+        "components_3x": 1,
+        "components_1x": 1
+      },
+      "key_removal": {
+        "sampled_key": "#e30fcd",
+        "transparent_pixels": 1464453,
+        "total_pixels": 1573605,
+        "method": "border-connected magenta flood; hard high-resolution matte before downscale"
+      }
+    },
+    {
+      "id": "b_closed_octagon_groove",
+      "source": "design/art-direction/region-task-board/icon-seat-options-v5/02-option-b-closed-octagon-groove-chroma.png",
+      "frame_3x": "design/art-direction/region-task-board/icon-seat-options-v5/rt-task-pin-permanent-icon-seat-b-closed-v5-3x.png",
+      "frame_1x": "design/art-direction/region-task-board/icon-seat-options-v5/rt-task-pin-permanent-icon-seat-b-closed-v5-1x.png",
+      "metrics": {
+        "source_bbox": [
+          159,
+          168,
+          612,
+          750
+        ],
+        "source_crop_size": [
+          453,
+          582
+        ],
+        "scaled_size": [
+          187,
+          240
+        ],
+        "frame_3x": [
+          192,
+          240
+        ],
+        "frame_1x": [
+          64,
+          80
+        ],
+        "left_padding_3x": 0,
+        "tip_center_x_3x": 96.0,
+        "tip_center_x_1x": 32.0,
+        "target_tip_center_x_3x": 96,
+        "target_tip_center_x_1x": 32,
+        "components_3x": 1,
+        "components_1x": 1
+      },
+      "key_removal": {
+        "sampled_key": "#ea0bdd",
+        "transparent_pixels": 1368938,
+        "total_pixels": 1573605,
+        "method": "border-connected magenta flood; hard high-resolution matte before downscale"
+      }
+    },
+    {
+      "id": "c_tonal_paper_window",
+      "source": "design/art-direction/region-task-board/icon-seat-options-v5/03-option-c-tonal-paper-window-chroma.png",
+      "frame_3x": "design/art-direction/region-task-board/icon-seat-options-v5/rt-task-pin-permanent-icon-seat-c-window-v5-3x.png",
+      "frame_1x": "design/art-direction/region-task-board/icon-seat-options-v5/rt-task-pin-permanent-icon-seat-c-window-v5-1x.png",
+      "metrics": {
+        "source_bbox": [
+          160,
+          168,
+          612,
+          747
+        ],
+        "source_crop_size": [
+          452,
+          579
+        ],
+        "scaled_size": [
+          187,
+          240
+        ],
+        "frame_3x": [
+          192,
+          240
+        ],
+        "frame_1x": [
+          64,
+          80
+        ],
+        "left_padding_3x": 0,
+        "tip_center_x_3x": 95.5,
+        "tip_center_x_1x": 32.0,
+        "target_tip_center_x_3x": 96,
+        "target_tip_center_x_1x": 32,
+        "components_3x": 1,
+        "components_1x": 1
+      },
+      "key_removal": {
+        "sampled_key": "#ea15d0",
+        "transparent_pixels": 1369689,
+        "total_pixels": 1572656,
+        "method": "border-connected magenta flood; hard high-resolution matte before downscale"
+      }
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "id": "region_task_permanent_right_state_chain_v5b",
+  "status": "runtime_candidate_pending_user_visual_review",
+  "production_integration": false,
+  "user_selection": "B_closed_octagonal_paper_groove",
+  "reason": "A reads as unfinished because the lower half of the frame is missing",
+  "runtime_contract": {
+    "pin": [
+      64,
+      80
+    ],
+    "compound": [
+      278,
+      80
+    ],
+    "hit": [
+      72,
+      80
+    ],
+    "anchor": [
+      36,
+      76
+    ],
+    "caption_rect": [
+      78,
+      4,
+      200,
+      72
+    ]
+  },
+  "state_layering": {
+    "idle": "B pin-only",
+    "hover": "B default compound",
+    "selected": "v4b selected olive underlay behind B default compound"
+  },
+  "metrics": {
+    "default": {
+      "source_bbox": [
+        159,
+        168,
+        1694,
+        748
+      ],
+      "source_crop_size": [
+        1535,
+        580
+      ],
+      "scaled_size_before_three_slice": [
+        635,
+        240
+      ],
+      "frame_3x": [
+        834,
+        240
+      ],
+      "frame_1x": [
+        278,
+        80
+      ],
+      "tip_center_x_3x": 108.0,
+      "tip_center_x_1x": 36.0,
+      "target_anchor_x_3x": 108,
+      "target_anchor_x_1x": 36,
+      "components_3x": 1,
+      "components_1x": 1,
+      "three_slice": {
+        "left_fixed_3x": 240,
+        "right_fixed_3x": 60,
+        "left_padding_3x": 12,
+        "rule": "only the calm central writable paper face is extended; the pin head, shared shoulder and far type cap remain fixed"
+      }
+    },
+    "selected_underlay": {
+      "source_bbox": [
+        114,
+        139,
+        1699,
+        748
+      ],
+      "source_crop_size": [
+        1585,
+        609
+      ],
+      "scaled_size_before_three_slice": [
+        625,
+        240
+      ],
+      "frame_3x": [
+        834,
+        240
+      ],
+      "frame_1x": [
+        278,
+        80
+      ],
+      "tip_center_x_3x": 107.5,
+      "tip_center_x_1x": 32.0,
+      "target_anchor_x_3x": 108,
+      "target_anchor_x_1x": 36,
+      "components_3x": 1,
+      "components_1x": 1,
+      "three_slice": {
+        "left_fixed_3x": 240,
+        "right_fixed_3x": 60,
+        "left_padding_3x": -2,
+        "rule": "only the calm central writable paper face is extended; the pin head, shared shoulder and far type cap remain fixed"
+      }
+    },
+    "pin_only": {
+      "source_bbox": [
+        159,
+        168,
+        612,
+        750
+      ],
+      "source_crop_size": [
+        453,
+        582
+      ],
+      "scaled_size": [
+        187,
+        240
+      ],
+      "frame_3x": [
+        192,
+        240
+      ],
+      "frame_1x": [
+        64,
+        80
+      ],
+      "left_padding_3x": 0,
+      "tip_center_x_3x": 96.0,
+      "tip_center_x_1x": 32.0,
+      "target_tip_center_x_3x": 96,
+      "target_tip_center_x_1x": 32,
+      "components_3x": 1,
+      "components_1x": 1
+    },
+    "key_removal": {
+      "default": {
+        "sampled_key": "#e814da",
+        "transparent_pixels": 966392,
+        "total_pixels": 1572656,
+        "method": "border-connected magenta flood; hard high-resolution matte before downscale"
+      },
+      "selected": {
+        "sampled_key": "#e90edf",
+        "transparent_pixels": 923564,
+        "total_pixels": 1573605,
+        "method": "border-connected magenta flood; hard high-resolution matte before downscale"
+      },
+      "pin_only": {
+        "sampled_key": "#ea0bdd",
+        "transparent_pixels": 1368938,
+        "total_pixels": 1573605,
+        "method": "border-connected magenta flood; hard high-resolution matte before downscale"
+      }
+    },
+    "runtime_gif_source_frames": 58
+  }
+}

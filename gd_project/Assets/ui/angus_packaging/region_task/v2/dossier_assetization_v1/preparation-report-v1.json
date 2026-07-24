@@ -1,0 +1,92 @@
+[
+  {
+    "source": "image_gen/2026-07-22/region-task-dossier-assetization-v1/prepared/rt-dossier-shell-alpha-v1.png",
+    "destination": "gd_project/Assets/ui/angus_packaging/region_task/v2/dossier_assetization_v1/rt-dossier-shell-v1-2x.png",
+    "source_size": [
+      822,
+      1914
+    ],
+    "source_alpha_bbox": [
+      41,
+      65,
+      786,
+      1836
+    ],
+    "target_size": [
+      824,
+      1920
+    ],
+    "resized_art_size": [
+      799,
+      1900
+    ],
+    "target_alpha_bbox": [
+      14,
+      12,
+      809,
+      1909
+    ],
+    "padding_minimum": 10,
+    "scale_mode": "uniform_fit"
+  },
+  {
+    "source": "image_gen/2026-07-22/region-task-dossier-assetization-v1/prepared/rt-dossier-section-alpha-v2-edge-clean.png",
+    "destination": "gd_project/Assets/ui/angus_packaging/region_task/v2/dossier_assetization_v1/rt-dossier-section-plate-v1-2x.png",
+    "source_size": [
+      1962,
+      801
+    ],
+    "source_alpha_bbox": [
+      21,
+      41,
+      1937,
+      751
+    ],
+    "target_size": [
+      728,
+      288
+    ],
+    "resized_art_size": [
+      712,
+      264
+    ],
+    "target_alpha_bbox": [
+      9,
+      12,
+      719,
+      275
+    ],
+    "padding_minimum": 8,
+    "scale_mode": "uniform_fit"
+  },
+  {
+    "source": "image_gen/2026-07-22/region-task-dossier-assetization-v1/prepared/rt-dispatch-cta-alpha-v1.png",
+    "destination": "gd_project/Assets/ui/angus_packaging/region_task/v2/dossier_assetization_v1/rt-dispatch-cta-mother-v1-2x.png",
+    "source_size": [
+      1672,
+      941
+    ],
+    "source_alpha_bbox": [
+      116,
+      257,
+      1563,
+      692
+    ],
+    "target_size": [
+      712,
+      224
+    ],
+    "resized_art_size": [
+      692,
+      208
+    ],
+    "target_alpha_bbox": [
+      11,
+      9,
+      701,
+      215
+    ],
+    "padding_minimum": 8,
+    "scale_mode": "uniform_fit"
+  }
+]

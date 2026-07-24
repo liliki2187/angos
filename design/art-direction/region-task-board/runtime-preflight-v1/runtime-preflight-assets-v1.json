@@ -1,0 +1,75 @@
+{
+  "id": "region_task_selected_backplate_runtime_preflight_v1",
+  "status": "preflight_only_not_production_atlas",
+  "frame_order": [
+    "permanent",
+    "temp",
+    "chain",
+    "hidden"
+  ],
+  "type_colors": {
+    "permanent": "#7F8A47",
+    "temp": "#886A40",
+    "chain": "#34767A",
+    "hidden": "#445967"
+  },
+  "assets": {
+    "selected_backplates": {
+      "path": "design/art-direction/region-task-board/runtime-preflight-v1/rt-task-pin-selected-backplates-v1-atlas-3x.png",
+      "frame_size": [
+        216,
+        240
+      ],
+      "runtime_size": [
+        72,
+        80
+      ]
+    },
+    "pin_type_accents": {
+      "path": "design/art-direction/region-task-board/runtime-preflight-v1/rt-task-pin-type-accents-v1-atlas-3x.png",
+      "frame_size": [
+        192,
+        240
+      ],
+      "runtime_size": [
+        64,
+        80
+      ]
+    },
+    "label_type_accents": {
+      "path": "design/art-direction/region-task-board/runtime-preflight-v1/rt-task-label-type-accents-v1-atlas-2x.png",
+      "frame_size": [
+        400,
+        144
+      ],
+      "runtime_size": [
+        200,
+        72
+      ]
+    }
+  },
+  "frozen_contract": {
+    "pin_visual_size": [
+      64,
+      80
+    ],
+    "pin_hit_size": [
+      72,
+      80
+    ],
+    "anchor_in_hit_control": [
+      36,
+      76
+    ],
+    "label_size": [
+      200,
+      72
+    ],
+    "label_content_rect": [
+      14,
+      8,
+      166,
+      56
+    ]
+  }
+}

@@ -42,6 +42,11 @@ var _dossier_summary: RichTextLabel
 var _dossier_meta: Label
 var _dossier_risk: Label
 var _dossier_hint: Label
+var _dossier_risk_title: Label
+var _dossier_risk_accent: ColorRect
+var _dossier_shell_texture: TextureRect
+var _dossier_meta_plate: NinePatchRect
+var _dossier_risk_plate: NinePatchRect
 var _dispatch_button: Button
 var _schedule_summary: Label
 var _schedule_preview: Label
@@ -50,6 +55,7 @@ var _advance_button: Button
 var _payload: Dictionary = {}
 var _selected_task_id := ""
 var _hovered_task_id := ""
+var _pending_selection_transition_id := ""
 var _card_buttons: Dictionary = {}
 var _pin_buttons: Dictionary = {}
 var _cluster_buttons: Dictionary = {}
@@ -92,6 +98,7 @@ func render(payload: Dictionary) -> void:
 	var nodes: Array = payload.get("nodes", [])
 	_rebuild_event_cards(nodes)
 	_rebuild_event_pins(nodes)
+	_pending_selection_transition_id = ""
 	_render_dossier(payload)
 	_render_schedule(payload, nodes)
 
@@ -139,6 +146,35 @@ func is_advance_day_enabled() -> bool:
 
 func get_dossier_summary_text() -> String:
 	return _dossier_summary.text if is_instance_valid(_dossier_summary) else ""
+
+func get_dossier_title_text() -> String:
+	return _dossier_title.text if is_instance_valid(_dossier_title) else ""
+
+func get_dossier_meta_text() -> String:
+	return _dossier_meta.text if is_instance_valid(_dossier_meta) else ""
+
+func get_dossier_risk_text() -> String:
+	return _dossier_risk.text if is_instance_valid(_dossier_risk) else ""
+
+func get_dossier_recommendation_text() -> String:
+	return _dossier_hint.text if is_instance_valid(_dossier_hint) else ""
+
+func is_dossier_summary_scroll_enabled() -> bool:
+	return is_instance_valid(_dossier_summary) and _dossier_summary.scroll_active
+
+func are_dossier_candidate_assets_loaded() -> bool:
+	var cta_style := _dispatch_button.get_theme_stylebox("normal") if is_instance_valid(_dispatch_button) else null
+	return (
+		is_instance_valid(_dossier_shell_texture)
+		and _dossier_shell_texture.texture != null
+		and is_instance_valid(_dossier_meta_plate)
+		and _dossier_meta_plate.texture != null
+		and is_instance_valid(_dossier_risk_plate)
+		and _dossier_risk_plate.texture != null
+		and is_instance_valid(_dispatch_button)
+		and cta_style is StyleBoxTexture
+		and (cta_style as StyleBoxTexture).texture != null
+	)
 
 func get_visible_pin_label_count() -> int:
 	var count := 0
@@ -275,41 +311,67 @@ func _build_map_stage() -> void:
 	border.z_index = 10
 
 func _build_dossier() -> void:
-	_make_panel(_design_root, Rect2(1498, 110, 398, 946), Color("173e5b"), Color("456373"), 1, 7)
-	var panel := _make_panel(_design_root, RIGHT_RECT, PAPER, PAPER_LIGHT, 3, 9)
-	_dossier_kicker = _make_label(panel, "CURRENT ASSIGNMENT / 当前任务", Rect2(24, 22, 364, 28), 13, TEAL)
-	_dossier_title = _make_label(panel, "选择一份事件档案", Rect2(24, 58, 364, 76), 25, INK)
+	_make_panel(_design_root, Rect2(1498, 110, 398, 946), Color(0.01, 0.04, 0.06, 0.36), Color(0, 0, 0, 0), 0, 8)
+	var panel := Control.new()
+	panel.position = RIGHT_RECT.position
+	panel.size = RIGHT_RECT.size
+	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_design_root.add_child(panel)
+
+	_dossier_shell_texture = TextureRect.new()
+	_dossier_shell_texture.name = "DossierShellAssetV1"
+	_dossier_shell_texture.position = Vector2.ZERO
+	_dossier_shell_texture.size = RIGHT_RECT.size
+	_dossier_shell_texture.texture = ManifestV2.load_asset_texture("rt_dossier_shell")
+	_dossier_shell_texture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_dossier_shell_texture.stretch_mode = TextureRect.STRETCH_SCALE
+	_dossier_shell_texture.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	panel.add_child(_dossier_shell_texture)
+
+	_dossier_kicker = _make_label(panel, "CURRENT ASSIGNMENT / 当前任务", Rect2(24, 24, 340, 20), 13, TEAL)
+	_dossier_title = _make_label(panel, "选择一份事件档案", Rect2(24, 54, 340, 58), 25, INK)
 	_dossier_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_dossier_title.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_dossier_title.max_lines_visible = 2
-	_make_rule(panel, Rect2(24, 138, 364, 2), Color("87917f"))
+	_make_rule(panel, Rect2(24, 132, 340, 1), Color("87917f"))
 
-	var summary_caption := _make_label(panel, "摘要", Rect2(24, 154, 364, 28), 16, INK)
+	var summary_caption := _make_label(panel, "摘要", Rect2(24, 148, 340, 22), 16, INK)
 	summary_caption.add_theme_color_override("font_color", TEAL)
 	_dossier_summary = RichTextLabel.new()
-	_dossier_summary.position = Vector2(24, 190)
-	_dossier_summary.size = Vector2(364, 268)
+	_dossier_summary.position = Vector2(24, 184)
+	_dossier_summary.size = Vector2(340, 252)
 	_dossier_summary.bbcode_enabled = true
 	_dossier_summary.fit_content = false
-	_dossier_summary.scroll_active = true
+	_dossier_summary.scroll_active = false
 	_dossier_summary.add_theme_font_size_override("normal_font_size", 16)
 	_dossier_summary.add_theme_font_size_override("bold_font_size", 16)
 	_dossier_summary.add_theme_constant_override("line_separation", 5)
 	_dossier_summary.add_theme_color_override("default_color", INK)
 	panel.add_child(_dossier_summary)
 
-	var meta_panel := _make_panel(panel, Rect2(20, 480, 372, 134), Color("d8d0b8"), Color("7a806e"), 2, 1)
-	var meta_title := _make_label(meta_panel, "地点 / 耗时 / 需求", Rect2(14, 12, 342, 24), 14, TEAL)
+	_dossier_meta_plate = _make_dossier_section_plate(panel, Rect2(24, 472, 364, 140), "DossierMetaPlateV1")
+	var meta_title := _make_label(_dossier_meta_plate, "地点 / 耗时 / 需求", Rect2(16, 16, 332, 22), 14, TEAL)
 	meta_title.add_theme_color_override("font_color", TEAL)
-	_dossier_meta = _make_label(meta_panel, "等待选择后填入任务元信息。", Rect2(14, 44, 342, 72), 15, INK)
+	_dossier_meta = _make_label(_dossier_meta_plate, "等待选择后填入任务元信息。", Rect2(16, 48, 332, 72), 15, INK)
 	_dossier_meta.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 
-	var risk_panel := _make_panel(panel, Rect2(20, 632, 372, 150), Color("d8d0b8"), Color("7a806e"), 2, 1)
-	var risk_title := _make_label(risk_panel, "风险 / 链条", Rect2(14, 12, 342, 24), 14, RUST)
-	risk_title.add_theme_color_override("font_color", RUST)
-	_dossier_risk = _make_label(risk_panel, "等待选择后显示截稿与连续追踪信息。", Rect2(14, 42, 342, 58), 15, INK)
+	_dossier_risk_plate = _make_dossier_section_plate(panel, Rect2(20, 622, 372, 174), "DossierRiskPlateV1")
+	_dossier_risk_accent = ColorRect.new()
+	_dossier_risk_accent.position = Vector2(10, 16)
+	_dossier_risk_accent.size = Vector2(3, 142)
+	_dossier_risk_accent.color = MUTED
+	_dossier_risk_accent.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_dossier_risk_plate.add_child(_dossier_risk_accent)
+	_dossier_risk_title = _make_label(_dossier_risk_plate, "风险等级 / 依据 / 建议", Rect2(16, 16, 332, 22), 14, MUTED)
+	_dossier_risk_title.add_theme_color_override("font_color", MUTED)
+	_dossier_risk = _make_label(_dossier_risk_plate, "等待选择后显示风险等级、截稿与连续追踪信息。", Rect2(16, 48, 332, 70), 15, INK)
 	_dossier_risk.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_dossier_hint = _make_label(risk_panel, "本页选择不会消耗天数。", Rect2(14, 108, 342, 28), 13, TEAL)
+	_dossier_risk.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	_dossier_risk.max_lines_visible = 3
+	_dossier_hint = _make_label(_dossier_risk_plate, "本页选择不会消耗天数。", Rect2(16, 122, 332, 40), 13, TEAL)
+	_dossier_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_dossier_hint.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	_dossier_hint.max_lines_visible = 2
 
 	_dispatch_button = Button.new()
 	_dispatch_button.name = "DispatchButton"
@@ -318,7 +380,7 @@ func _build_dossier() -> void:
 	_dispatch_button.text = "先选择任务"
 	_dispatch_button.focus_mode = Control.FOCUS_ALL
 	_dispatch_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	_style_button(_dispatch_button, OLIVE, PAPER_LIGHT, INK, 22)
+	_style_dossier_asset_button(_dispatch_button, ManifestV2.load_asset_texture("rt_dispatch_cta_mother"), INK, 22)
 	panel.add_child(_dispatch_button)
 	_dispatch_button.pressed.connect(func() -> void: open_dispatch_requested.emit())
 
@@ -462,7 +524,11 @@ func _create_event_pin(item: Dictionary, anchor_position: Vector2, resolved_posi
 	pin.set_meta("resolved_position", resolved_position)
 	pin.set_meta("cluster_key", cluster_key)
 	_pin_layer.add_child(pin)
-	pin.configure(item, task_id == _selected_task_id)
+	var should_animate_selection := task_id == _selected_task_id and task_id == _pending_selection_transition_id
+	pin.configure(item, task_id == _selected_task_id and not should_animate_selection)
+	if should_animate_selection:
+		pin.set_external_hover(true)
+		_start_pin_selection_transition.call_deferred(pin, task_id)
 	pin.visible = visible_now
 	_pin_buttons[task_id] = pin
 	pin.pressed.connect(_on_event_pressed.bind(task_id))
@@ -582,32 +648,42 @@ func _render_dossier(payload: Dictionary) -> void:
 		_dossier_summary.text = "[color=#18282d]%s[/color]" % summary
 		_dossier_meta.text = str(payload.get("region_node_meta", "任务元信息暂缺。"))
 		var risk_lines: Array[String] = []
+		var risk_level := str(payload.get("region_node_risk_level", "未评估"))
+		var risk_color := _dossier_risk_color(risk_level)
+		_dossier_risk_title.add_theme_color_override("font_color", risk_color)
+		_dossier_risk_accent.color = risk_color
+		risk_lines.append("风险等级：%s" % risk_level)
 		var deadline := str(payload.get("region_node_deadline", ""))
 		var chain := str(payload.get("region_node_chain", ""))
 		if not deadline.is_empty():
 			risk_lines.append("截稿：%s" % deadline)
 		if not chain.is_empty():
 			risk_lines.append(chain)
-		if risk_lines.is_empty():
+		if deadline.is_empty() and chain.is_empty():
 			risk_lines.append("常规调查 · 无额外截稿或链条提示")
 		_dossier_risk.text = "\n".join(risk_lines)
-		_dossier_hint.text = str(payload.get("region_action_hint", "本页选择不会消耗天数。"))
+		_dossier_hint.text = str(payload.get("region_node_recommendation", payload.get("region_action_hint", "本页选择不会消耗天数。")))
 	else:
+		_dossier_risk_title.add_theme_color_override("font_color", MUTED)
+		_dossier_risk_accent.color = MUTED
 		_dossier_summary.text = "[color=#59645f]选择左侧任务卡或地图图钉。地图地标只用于辨认地区，不可点击。[/color]"
 		_dossier_meta.text = "等待选择后填入任务元信息。"
-		_dossier_risk.text = "等待选择后显示截稿与连续追踪信息。"
+		_dossier_risk.text = "等待选择后显示风险等级、截稿与连续追踪信息。"
 		_dossier_hint.text = "本页选择不会消耗天数。"
 	var can_open := has_selection and bool(payload.get("dispatch_open_enabled", false))
 	_dispatch_button.disabled = not can_open
 	_dispatch_button.text = str(payload.get("dispatch_open_text", "送至签批台" if can_open else "先选择任务"))
-	_style_button(
-		_dispatch_button,
-		OLIVE if can_open else Color("aaa58e"),
-		PAPER_LIGHT if can_open else Color("817d6f"),
-		INK if can_open else Color("5f615a"),
-		22
-	)
 	_dispatch_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND if can_open else Control.CURSOR_ARROW
+
+func _dossier_risk_color(risk_level: String) -> Color:
+	var normalized := risk_level.strip_edges().to_lower()
+	if normalized in ["高", "high", "critical"]:
+		return RUST
+	if normalized in ["中", "medium", "moderate"]:
+		return Color("b47d35")
+	if normalized in ["低", "low"]:
+		return TEAL
+	return MUTED
 
 func _render_schedule(payload: Dictionary, nodes: Array) -> void:
 	var enabled_count := 0
@@ -623,7 +699,16 @@ func _render_schedule(payload: Dictionary, nodes: Array) -> void:
 func _on_event_pressed(task_id: String) -> void:
 	if task_id.is_empty():
 		return
+	_pending_selection_transition_id = task_id
 	node_selected.emit(task_id)
+
+func _start_pin_selection_transition(pin: Control, task_id: String) -> void:
+	if not is_instance_valid(pin):
+		return
+	pin.call("set_selected", true, true)
+	await get_tree().create_timer(0.096).timeout
+	if is_instance_valid(pin):
+		pin.call("set_external_hover", task_id == _hovered_task_id)
 
 func _on_card_hover(task_id: String, hovering: bool) -> void:
 	_hovered_task_id = task_id if hovering else ""
@@ -683,6 +768,53 @@ func _apply_card_style(button: Button, selected: bool, hovered: bool, tone: Stri
 	button.add_theme_color_override("font_pressed_color", INK)
 	button.add_theme_color_override("font_focus_color", INK)
 	button.add_theme_color_override("font_disabled_color", Color("686a65"))
+
+func _make_dossier_section_plate(parent: Control, rect: Rect2, node_name: String) -> NinePatchRect:
+	var plate := NinePatchRect.new()
+	plate.name = node_name
+	plate.position = rect.position
+	plate.size = rect.size
+	plate.texture = ManifestV2.load_asset_texture("rt_dossier_section_plate")
+	plate.patch_margin_left = 48
+	plate.patch_margin_top = 48
+	plate.patch_margin_right = 72
+	plate.patch_margin_bottom = 48
+	plate.axis_stretch_horizontal = NinePatchRect.AXIS_STRETCH_MODE_STRETCH
+	plate.axis_stretch_vertical = NinePatchRect.AXIS_STRETCH_MODE_STRETCH
+	plate.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	parent.add_child(plate)
+	return plate
+
+func _style_dossier_asset_button(button: Button, texture: Texture2D, font_color: Color, font_size: int) -> void:
+	var normal := StyleBoxTexture.new()
+	normal.texture = texture
+	normal.texture_margin_left = 48
+	normal.texture_margin_top = 36
+	normal.texture_margin_right = 48
+	normal.texture_margin_bottom = 36
+	normal.content_margin_left = 40
+	normal.content_margin_right = 40
+	normal.content_margin_top = 22
+	normal.content_margin_bottom = 22
+	var hover: StyleBoxTexture = normal.duplicate()
+	hover.modulate_color = Color("f4f6d7")
+	var pressed: StyleBoxTexture = normal.duplicate()
+	pressed.modulate_color = Color("d7d9b7")
+	var disabled_style: StyleBoxTexture = normal.duplicate()
+	disabled_style.modulate_color = Color("aeb09d")
+	var focus: StyleBoxTexture = normal.duplicate()
+	focus.modulate_color = Color("fffbd8")
+	button.add_theme_stylebox_override("normal", normal)
+	button.add_theme_stylebox_override("hover", hover)
+	button.add_theme_stylebox_override("pressed", pressed)
+	button.add_theme_stylebox_override("focus", focus)
+	button.add_theme_stylebox_override("disabled", disabled_style)
+	button.add_theme_color_override("font_color", font_color)
+	button.add_theme_color_override("font_hover_color", font_color)
+	button.add_theme_color_override("font_pressed_color", font_color)
+	button.add_theme_color_override("font_focus_color", font_color)
+	button.add_theme_color_override("font_disabled_color", Color("555b50"))
+	button.add_theme_font_size_override("font_size", font_size)
 
 func _style_button(button: Button, bg: Color, border: Color, font_color: Color, font_size: int) -> void:
 	var style := _style_box(bg, border, 3, 2)

@@ -1,12 +1,12 @@
 {
   "id": "region_task_dossier_v2",
-  "version": 3,
+  "version": 4,
   "runtime_rect": [1484, 96, 412, 960],
   "zones": {
     "header": [1508, 120, 364, 104],
     "summary": [1508, 244, 364, 304],
     "metadata": [1508, 568, 364, 140],
-    "risk_and_chain": [1508, 728, 364, 144],
+    "risk_and_chain": [1504, 718, 372, 174],
     "primary_cta": [1512, 916, 356, 112]
   },
   "data_fields": [
@@ -15,6 +15,8 @@
     "payload.region_node_meta",
     "payload.region_node_deadline",
     "payload.region_node_chain",
+    "payload.region_node_risk_level",
+    "payload.region_node_recommendation",
     "payload.region_action_hint",
     "payload.dispatch_open_enabled",
     "payload.dispatch_open_text"
@@ -42,7 +44,8 @@
     "summary_overflow": "open_full_summary_layer",
     "title_max_lines": 2,
     "cta_runtime_text": true,
-    "overflow_must_not_cover_cta": true
+    "overflow_must_not_cover_cta": true,
+    "selected_information_contract": "必须同时显示显式风险等级与一条可执行建议；截稿和连续追踪只作为风险依据，不替代等级。"
   },
   "interaction": {
     "primary_cta": "open_dispatch",

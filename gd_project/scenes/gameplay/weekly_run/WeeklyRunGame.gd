@@ -682,6 +682,8 @@ func _build_explore_payload() -> Dictionary:
 		"region_node_meta": mission_payload.region_node_meta,
 		"region_node_deadline": mission_payload.region_node_deadline,
 		"region_node_chain": mission_payload.region_node_chain,
+		"region_node_risk_level": mission_payload.region_node_risk_level,
+		"region_node_recommendation": mission_payload.region_node_recommendation,
 		"region_action_hint": mission_payload.region_action_hint,
 		"probability_text": mission_payload.probability,
 		"dice_text": mission_payload.dice,
@@ -877,6 +879,8 @@ func _build_mission_payload() -> Dictionary:
 		"region_node_meta": "",
 		"region_node_deadline": "",
 		"region_node_chain": "",
+		"region_node_risk_level": "",
+		"region_node_recommendation": "",
 		"region_action_hint": "选择后送至签批台配置骰池，本页不消耗天数。",
 		"summary": "选择一份任务档案，查看线索、耗时和风险。",
 		"probability": "有效点：等待选人",
@@ -909,6 +913,8 @@ func _build_mission_payload() -> Dictionary:
 		_compact_node_need_text(str(preview.relevant_labels)),
 		int(node.days),
 	]
+	default_payload.region_node_risk_level = str(preview.risk_label)
+	default_payload.region_node_recommendation = "建议：优先配置 %s；签批台复核达标率。" % str(preview.relevant_labels)
 	default_payload.region_action_hint = "送至签批台配置骰池，本页不消耗天数。"
 	default_payload.summary = "[b]线报摘要[/b]\n%s\n[color=#8c6d2d]需求[/color] %s · [color=#8c6d2d]耗时[/color] %d天" % [
 		str(node.description),

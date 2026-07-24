@@ -1,0 +1,142 @@
+{
+  "id": "region_task_permanent_selected_right_compound_probe_v4",
+  "status": "single_art_probe_pending_user_review",
+  "production_integration": false,
+  "runtime_contract": {
+    "compound": [
+      278,
+      80
+    ],
+    "pin_hit": [
+      72,
+      80
+    ],
+    "anchor_in_hit": [
+      36,
+      76
+    ],
+    "caption_rect": [
+      78,
+      4,
+      200,
+      72
+    ],
+    "text_content": [
+      14,
+      12,
+      158,
+      48
+    ]
+  },
+  "metrics": {
+    "selected": {
+      "source_bbox": [
+        138,
+        166,
+        1698,
+        747
+      ],
+      "source_crop_size": [
+        1560,
+        581
+      ],
+      "scaled_size_before_three_slice": [
+        644,
+        240
+      ],
+      "frame_3x": [
+        834,
+        240
+      ],
+      "frame_1x": [
+        278,
+        80
+      ],
+      "tip_center_x_3x": 107.5,
+      "tip_center_x_1x": 35.5,
+      "target_anchor_x_3x": 108,
+      "target_anchor_x_1x": 36,
+      "components_3x": 1,
+      "components_1x": 1,
+      "three_slice": {
+        "left_fixed_3x": 240,
+        "right_fixed_3x": 60,
+        "left_padding_3x": 2,
+        "rule": "only the calm central writable paper face is extended; the pin head, shared shoulder and far type cap remain fixed"
+      }
+    },
+    "default": {
+      "source_bbox": [
+        159,
+        167,
+        1696,
+        748
+      ],
+      "source_crop_size": [
+        1537,
+        581
+      ],
+      "scaled_size_before_three_slice": [
+        635,
+        240
+      ],
+      "frame_3x": [
+        834,
+        240
+      ],
+      "frame_1x": [
+        278,
+        80
+      ],
+      "tip_center_x_3x": 108.0,
+      "tip_center_x_1x": 36.0,
+      "target_anchor_x_3x": 108,
+      "target_anchor_x_1x": 36,
+      "components_3x": 1,
+      "components_1x": 1,
+      "three_slice": {
+        "left_fixed_3x": 240,
+        "right_fixed_3x": 60,
+        "left_padding_3x": 12,
+        "rule": "only the calm central writable paper face is extended; the pin head, shared shoulder and far type cap remain fixed"
+      }
+    },
+    "pin_only": {
+      "source_bbox": [
+        159,
+        168,
+        612,
+        748
+      ],
+      "source_crop_size": [
+        453,
+        580
+      ],
+      "scaled_size": [
+        187,
+        240
+      ],
+      "frame_3x": [
+        192,
+        240
+      ],
+      "frame_1x": [
+        64,
+        80
+      ],
+      "left_padding_3x": 0,
+      "tip_center_x_3x": 96.0,
+      "tip_center_x_1x": 32.0,
+      "target_tip_center_x_3x": 96,
+      "target_tip_center_x_1x": 32,
+      "components_3x": 1,
+      "components_1x": 1
+    },
+    "pin_only_key_removal": {
+      "sampled_key": "#f20be1",
+      "transparent_pixels": 1368406,
+      "total_pixels": 1572656,
+      "method": "border-connected magenta flood; hard high-resolution matte before downscale"
+    }
+  }
+}

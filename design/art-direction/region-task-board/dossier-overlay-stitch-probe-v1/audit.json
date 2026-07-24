@@ -1,0 +1,74 @@
+{
+  "probe_only": true,
+  "source_size": [
+    822,
+    1914
+  ],
+  "normalized_size": [
+    824,
+    1920
+  ],
+  "base_size": [
+    824,
+    1920
+  ],
+  "cta_size": [
+    712,
+    224
+  ],
+  "contract_rects_2x": {
+    "summary": [
+      48,
+      296,
+      776,
+      904
+    ],
+    "metadata": [
+      48,
+      944,
+      776,
+      1224
+    ],
+    "risk": [
+      40,
+      1244,
+      784,
+      1592
+    ],
+    "cta": [
+      56,
+      1640,
+      768,
+      1864
+    ]
+  },
+  "art_rects_2x": {
+    "risk_wash_with_top_bleed": [
+      40,
+      1224,
+      784,
+      1592
+    ]
+  },
+  "imagegen_sample_rects_2x": {
+    "metadata": [
+      48,
+      882,
+      776,
+      1206
+    ],
+    "risk": [
+      40,
+      1206,
+      784,
+      1528
+    ]
+  },
+  "nonzero_alpha_pixels": {
+    "summary_accent": 2200,
+    "metadata_wash": 196162,
+    "risk_wash": 260597,
+    "cta": 140672
+  },
+  "implementation_note": "程序仅裁切、遮罩、缩放与拼接；正式纹理来自同一张 imagegen 母件。"
+}

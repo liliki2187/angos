@@ -1,6 +1,6 @@
 {
   "id": "region_task_event_pin_v2",
-  "version": 5,
+  "version": 6,
   "runtime_rect": [420, 96, 1040, 804],
   "event_count": "0..N",
   "position_source": "payload.nodes[*].map_pos",
@@ -9,8 +9,8 @@
     "source": "payload.nodes[*].id",
     "same_id_as_event_card": true
   },
-  "asset_class": "rt_task_pin_shell_mother",
-  "implementation": "fixed_alpha_shell_label_and_icon_atlas_plus_runtime_backplate_partial_arc_and_state_carrier",
+  "asset_class": "rt_task_pin_compound_b_type_frame_v7",
+  "implementation": "fixed_alpha_idle_pin_plus_right_left_compound_state_atlases_plus_runtime_icon_text_and_crossfade",
   "export_scale": 3,
   "visual_asset_size": [64, 80],
   "visual_offset_in_hit_control": [4, 0],
@@ -20,13 +20,44 @@
   "icon_slot_in_asset": [18, 14, 28, 28],
   "label_anchor_right_in_hit_control": [78, 4],
   "label_anchor_left_in_hit_control": [-208, 4],
+  "compound_right": {
+    "source_frame_size": [834, 240],
+    "runtime_frame_size": [278, 80],
+    "runtime_position": [0, 0]
+  },
+  "compound_left": {
+    "source_frame_size": [840, 240],
+    "runtime_frame_size": [280, 80],
+    "runtime_position": [-208, 0]
+  },
+  "kind_frame_order": ["permanent", "chain", "hidden", "temp"],
+  "kind_selected_colors": {
+    "permanent": "#7F8A47",
+    "chain": "#34767A",
+    "hidden": "#445967",
+    "temp": "#886A40"
+  },
   "states": ["available", "hover", "selected", "disabled", "assigned", "urgent", "locked", "focus"],
-  "state_ownership": "Godot selection paper backplate, partial print arc, attached status carrier, label accent spine, disabled slash and focus; bitmap geometry and anchor are identical in every state.",
+  "state_ownership": {
+    "available": "共享 B 型闭合纸槽图钉美术",
+    "hover": "中性 B 型闭合内框一体短签美术 + 类型色远端窄签",
+    "selected": "类型色 B 型闭合内框 + 类型色纸背板一体短签美术",
+    "focus": "深墨色 B 型闭合内框一体短签美术",
+    "assigned_urgent_locked_disabled": "固定透明状态 badge 图集；不再由 Polygon2D、Line2D 或 draw_arc 绘制",
+    "runtime": "仅负责 task_id、类型 icon、动态文字、状态选择、alpha 交叉淡入淡出与 disabled 明度"
+  },
+  "motion": {
+    "hover_seconds": 0.1,
+    "hover_to_selected_seconds": 0.096,
+    "deselect_seconds": 0.08,
+    "easing": "cubic_ease_out",
+    "geometry_and_anchor_invariant": true
+  },
   "shadow_ownership": "Godot; no external shadow baked into alpha.",
   "label_policy": {
-    "asset_mode": "fixed_transparent_bitmap_200x72",
+    "asset_mode": "integrated_fixed_compound_bitmap",
     "nine_patch": false,
-    "content_rect": [14, 8, 166, 56],
+    "content_rect_in_label": [14, 8, 166, 56],
     "mouse_filter": "ignore",
     "persistent_labels": "selected_only",
     "hover_label": true,
@@ -57,7 +88,9 @@
     "fixed_hotspot_manifest",
     "landmark_as_task_button",
     "pin_without_task_id",
-    "event_icon_baked_into_pin_shell",
+    "event_icon_or_runtime_text_baked_into_compound",
+    "detached_label_background",
+    "runtime_polygon_or_line_state_decoration",
     "detached_full_concentric_selection_ring",
     "naked_unicode_kind_or_state_symbol",
     "external_shadow_in_alpha",

@@ -1,0 +1,176 @@
+{
+  "id": "region_task_macro_production_preflight_v2",
+  "status": "runtime_candidate_pending_user_visual_review",
+  "production_integration": false,
+  "runtime_contract_preserved": {
+    "hit": [
+      72,
+      80
+    ],
+    "anchor_in_hit": [
+      36,
+      76
+    ],
+    "default_pin": [
+      64,
+      80
+    ],
+    "selected_pin": [
+      64,
+      80
+    ],
+    "label": [
+      200,
+      72
+    ],
+    "label_anchor_right": [
+      78,
+      4
+    ],
+    "label_anchor_left": [
+      -208,
+      4
+    ]
+  },
+  "candidate_text_rects": {
+    "content": [
+      14,
+      12,
+      158,
+      48
+    ],
+    "title": [
+      14,
+      12,
+      158,
+      25
+    ],
+    "meta": [
+      14,
+      39,
+      158,
+      20
+    ]
+  },
+  "source_bboxes": {
+    "pin_default_permanent": [
+      442,
+      28,
+      641,
+      248
+    ],
+    "pin_selected_permanent": [
+      886,
+      28,
+      1137,
+      248
+    ],
+    "label_right_permanent": [
+      90,
+      134,
+      515,
+      326
+    ],
+    "label_left_permanent": [
+      89,
+      415,
+      514,
+      608
+    ],
+    "pin_default_temp": [
+      442,
+      271,
+      641,
+      496
+    ],
+    "pin_selected_temp": [
+      885,
+      271,
+      1136,
+      496
+    ],
+    "label_right_temp": [
+      581,
+      134,
+      1006,
+      326
+    ],
+    "label_left_temp": [
+      580,
+      415,
+      1005,
+      608
+    ],
+    "pin_default_chain": [
+      441,
+      514,
+      640,
+      744
+    ],
+    "pin_selected_chain": [
+      885,
+      514,
+      1137,
+      744
+    ],
+    "label_right_chain": [
+      1073,
+      134,
+      1498,
+      326
+    ],
+    "label_left_chain": [
+      1072,
+      415,
+      1497,
+      608
+    ],
+    "pin_default_hidden": [
+      442,
+      756,
+      640,
+      992
+    ],
+    "pin_selected_hidden": [
+      885,
+      756,
+      1136,
+      992
+    ],
+    "label_right_hidden": [
+      1564,
+      134,
+      1987,
+      326
+    ],
+    "label_left_hidden": [
+      1564,
+      415,
+      1987,
+      608
+    ],
+    "badge_assigned": [
+      304,
+      292,
+      557,
+      634
+    ],
+    "badge_urgent": [
+      709,
+      292,
+      976,
+      634
+    ],
+    "badge_locked": [
+      1115,
+      292,
+      1378,
+      634
+    ]
+  },
+  "notes": [
+    "图钉 default / selected 为组合件，不再拆微型色片。",
+    "短签 right / left 分别生产，端帽始终位于远端。",
+    "状态小纸签运行候选尺寸为 24×24，需用户确认后才改正式合同。"
+  ]
+}

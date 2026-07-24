@@ -1,0 +1,218 @@
+{
+  "id": "region_task_compound_b_type_frame_production_v7",
+  "status": "production_candidate_pending_user_visual_review",
+  "source_candidate": "runtime-preflight-v6-selected-type-frame",
+  "kind_order": [
+    "permanent",
+    "chain",
+    "hidden",
+    "temp"
+  ],
+  "type_colors": {
+    "permanent": "#7F8A47",
+    "chain": "#34767A",
+    "hidden": "#445967",
+    "temp": "#886A40"
+  },
+  "runtime_contract": {
+    "pin": [
+      64,
+      80
+    ],
+    "hit": [
+      72,
+      80
+    ],
+    "anchor_in_hit": [
+      36,
+      76
+    ],
+    "compound_right": [
+      278,
+      80
+    ],
+    "compound_left": [
+      280,
+      80
+    ],
+    "caption_right": [
+      78,
+      4,
+      200,
+      72
+    ],
+    "caption_left": [
+      -208,
+      4,
+      200,
+      72
+    ],
+    "text_content": [
+      14,
+      8,
+      166,
+      56
+    ]
+  },
+  "states": {
+    "idle": "shared B pin-only + runtime kind icon",
+    "hover": "neutral B compound with type cap",
+    "selected": "type selected underlay + type-color B frame compound",
+    "focus": "ink B frame compound with type cap",
+    "assigned_urgent_locked_disabled": "fixed art badge atlas"
+  },
+  "motion": {
+    "hover_to_selected_target_ms": 96,
+    "selected_to_hover_target_ms": 80,
+    "easing": "cubic_ease_out",
+    "crossfade": "hover=1-t; selected=t; underlay=t"
+  },
+  "alpha_equal_hover_selected_focus": {
+    "permanent_right": true,
+    "permanent_left": true,
+    "chain_right": true,
+    "chain_left": true,
+    "hidden_right": true,
+    "hidden_left": true,
+    "temp_right": true,
+    "temp_left": true
+  },
+  "color_medians": {
+    "permanent": {
+      "target": [
+        127,
+        138,
+        71
+      ],
+      "hover_cap": [
+        127.0,
+        138.0,
+        71.0
+      ],
+      "selected_frame": [
+        127.0,
+        138.0,
+        71.0
+      ],
+      "selected_cap": [
+        127.0,
+        138.0,
+        71.0
+      ],
+      "selected_underlay": [
+        127.0,
+        138.0,
+        71.0
+      ],
+      "focus_frame": [
+        23.0,
+        37.0,
+        42.0
+      ]
+    },
+    "chain": {
+      "target": [
+        52,
+        118,
+        122
+      ],
+      "hover_cap": [
+        52.0,
+        118.0,
+        122.0
+      ],
+      "selected_frame": [
+        52.0,
+        118.0,
+        122.0
+      ],
+      "selected_cap": [
+        52.0,
+        118.0,
+        122.0
+      ],
+      "selected_underlay": [
+        52.0,
+        118.0,
+        122.0
+      ],
+      "focus_frame": [
+        23.0,
+        37.0,
+        42.0
+      ]
+    },
+    "hidden": {
+      "target": [
+        68,
+        89,
+        103
+      ],
+      "hover_cap": [
+        68.0,
+        89.0,
+        103.0
+      ],
+      "selected_frame": [
+        68.0,
+        89.0,
+        103.0
+      ],
+      "selected_cap": [
+        68.0,
+        89.0,
+        103.0
+      ],
+      "selected_underlay": [
+        68.0,
+        89.0,
+        103.0
+      ],
+      "focus_frame": [
+        23.0,
+        37.0,
+        42.0
+      ]
+    },
+    "temp": {
+      "target": [
+        136,
+        106,
+        64
+      ],
+      "hover_cap": [
+        136.0,
+        106.0,
+        64.0
+      ],
+      "selected_frame": [
+        136.0,
+        106.0,
+        64.0
+      ],
+      "selected_cap": [
+        136.0,
+        106.0,
+        64.0
+      ],
+      "selected_underlay": [
+        136.0,
+        106.0,
+        64.0
+      ],
+      "focus_frame": [
+        23.0,
+        37.0,
+        42.0
+      ]
+    }
+  },
+  "runtime_drawing_removed": [
+    "selected Polygon2D backplate",
+    "hover/selected/focus draw_arc",
+    "Polygon2D/Line2D state carrier",
+    "disabled Line2D slash",
+    "detached label background"
+  ],
+  "production_dir": "gd_project/Assets/ui/angus_packaging/region_task/v2/pin_compound_v7"
+}

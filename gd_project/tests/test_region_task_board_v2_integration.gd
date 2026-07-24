@@ -31,6 +31,11 @@ func _run() -> void:
 	await _settle_frames(4)
 	_assert(str(scene.selected_node_id) == "m330", "board event signal should update the game selection")
 	_assert(board.get_selected_task_id() == "m330", "board should rerender the selected event")
+	_assert(board.get_dossier_title_text() == "M330 末班车空白段", "dossier title should come from the selected m330 node")
+	_assert(board.get_dossier_meta_text().find("追踪") >= 0 and board.get_dossier_meta_text().find("2天") >= 0, "dossier type and duration should match the selected m330 node")
+	_assert(board.get_dossier_risk_text().find("连续追踪") >= 0 and board.get_dossier_risk_text().find("截稿") < 0, "dossier risk basis should match the selected chain node without stale deadline data")
+	_assert(board.get_dossier_risk_text().begins_with("风险等级："), "selected production dossier should show the calculated risk level")
+	_assert(board.get_dossier_recommendation_text().begins_with("建议："), "selected production dossier should show a staffing recommendation")
 	_assert(board.is_dispatch_enabled(), "dispatch CTA should enable after selection")
 	var dispatch_button := board.find_child("DispatchButton", true, false) as Button
 	_assert(dispatch_button != null, "dispatch button should be discoverable")

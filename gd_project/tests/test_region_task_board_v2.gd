@@ -15,6 +15,8 @@ func _run() -> void:
 	board.node_selected.connect(func(task_id: String) -> void: _selected_signal_id = task_id)
 	await process_frame
 	_assert(board.is_map_texture_loaded(), "board should load the clean map texture")
+	_assert(board.are_dossier_candidate_assets_loaded(), "dossier should load the shell, section plate, and CTA art assets")
+	_assert(not board.is_dossier_summary_scroll_enabled(), "dossier summary should follow the no-inner-scroll contract")
 
 	board.render(_fixture_payload(0, ""))
 	_assert(board.get_event_card_count() == 0, "zero events should create zero cards")
@@ -30,6 +32,13 @@ func _run() -> void:
 	_assert(board.get_visible_pin_label_count() == 1, "only the selected pin label should persist")
 	_assert(board.is_dispatch_enabled(), "dispatch should enable for selected event")
 	_assert(board.get_dossier_summary_text().find("用于压力测试") >= 0, "dossier should receive runtime summary text")
+	_assert(board.get_dossier_risk_text().find("风险等级：低") >= 0, "selected dossier should show an explicit risk level")
+	_assert(board.get_dossier_recommendation_text().begins_with("建议："), "selected dossier should show an actionable recommendation")
+	var one_event_pins: Dictionary = board.get("_pin_buttons")
+	var one_event_pin: Control = one_event_pins.get("event_0")
+	_assert(is_instance_valid(one_event_pin), "selected production pin should exist")
+	_assert(float(one_event_pin.call("get_selected_visual_alpha")) >= 0.99, "selected production pin should show the selected compound atlas")
+	_assert(bool(one_event_pin.call("is_using_assetized_state_badge")), "production pin should use the art state badge atlas")
 
 	board.render(_fixture_payload(5, "event_3"))
 	_assert(board.get_event_card_count() == 5, "N events should create N cards")
@@ -94,6 +103,7 @@ func _fixture_payload(event_count: int, selected_id: String) -> Dictionary:
 			"days": 1 + index % 3,
 			"type": "pop" if index == 2 else "occult" if index == 3 else "sci",
 			"tone": "deadline" if index == 2 else "chain" if index == 3 else "normal",
+			"state": "assigned" if index == 0 else "available",
 			"selected": task_id == selected_id,
 			"enabled": true,
 			"map_pos": {"x": 0.16 + 0.16 * index, "y": 0.24 + 0.12 * (index % 3)},
@@ -109,6 +119,8 @@ func _fixture_payload(event_count: int, selected_id: String) -> Dictionary:
 		"region_node_meta": "常驻/纪实 · 需求 洞察/推理 · 2天",
 		"region_node_deadline": "截稿剩 2 天" if selected_id != "" else "",
 		"region_node_chain": "连续追踪：成功后出现后续线索" if selected_id != "" else "",
+		"region_node_risk_level": "低" if selected_id != "" else "",
+		"region_node_recommendation": "建议：优先派遣洞察较高的记者。" if selected_id != "" else "",
 		"region_action_hint": "送至签批台配置骰池，本页不消耗天数。",
 		"dispatch_open_enabled": selected_id != "",
 		"dispatch_open_text": "送至签批台" if selected_id != "" else "先选择任务",

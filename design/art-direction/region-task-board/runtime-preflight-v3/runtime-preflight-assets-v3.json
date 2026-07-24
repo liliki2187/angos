@@ -1,0 +1,62 @@
+{
+  "id": "region_task_pin_label_integrated_join_v3",
+  "status": "visual_candidate_pending_user_review",
+  "production_integration": false,
+  "art_source": "01-integrated-pin-label-source-v3-alpha.png",
+  "implementation": "baked_compound_background_with_dynamic_icon_and_text",
+  "runtime_contract_preserved": {
+    "hit": [
+      72,
+      80
+    ],
+    "anchor_in_hit": [
+      36,
+      76
+    ],
+    "pin": [
+      64,
+      80
+    ],
+    "caption_rect_right": [
+      78,
+      4,
+      200,
+      72
+    ],
+    "caption_rect_left": [
+      -208,
+      4,
+      200,
+      72
+    ],
+    "compound_right": [
+      278,
+      80
+    ],
+    "compound_left": [
+      280,
+      80
+    ],
+    "text_content": [
+      14,
+      12,
+      158,
+      48
+    ]
+  },
+  "visual_join": {
+    "right_underlap_px": 12,
+    "left_underlap_px": 10,
+    "layer_order": [
+      "compound_paper",
+      "kind_icon_and_dynamic_text",
+      "state_badge"
+    ],
+    "program_connector": false
+  },
+  "notes": [
+    "逻辑 caption anchor 不移动；接合关系烘焙在组合底图内。",
+    "九宫格只延展横条中央空白纸面，左右端帽与 pin 不拉伸。",
+    "当前只生成预检候选，未替换 Godot 生产资源。"
+  ]
+}
