@@ -609,6 +609,39 @@ hard_gates:
       - blocking_risk_or_rejection_signals_outweigh_anomaly_story_hooks
       - humor_exists_only_as_penalty_rejection_or_unavailable_copy
       - color_variety_exists_only_in_swatches_status_dots_or_footer
+  component_render_language_lock:
+    status: trial
+    introduced: 2026-07-24
+    auto_required_when:
+      - clean_lowpoly_weekly_artifact_contains_mixed_object_classes
+      - response_claims_component_style_alignment
+      - user_flags_handdrawn_sticker_or_low_poly_image_mismatch
+      - local_component_art_rework_is_requested
+    required:
+      - object_to_rendering_language_map
+      - same_class_visible_component_scan
+      - handdrawn_sticker_contract
+      - coarse_low_poly_story_image_contract
+      - institutional_print_contract
+      - restrained_newsroom_prop_contract
+      - shared_source_image_for_repeated_story_subject
+      - local_roi_and_scope_invariants_when_overall_direction_is_retained
+    evidence_required:
+      - benchmark_and_candidate_component_crops
+      - one_hundred_percent_crop_for_handdrawn_and_prop_language
+      - twenty_five_percent_thumbnail_for_story_image_silhouette
+      - per_component_pass_or_fail_table
+      - list_of_retained_unmodified_elements
+    blockers:
+      - handdrawn_sticker_reads_as_smooth_symmetric_vector_clip_art
+      - story_image_reads_as_photographic_cinematic_or_detailed_low_poly_filter
+      - repeated_story_subject_is_independently_regenerated_across_screen
+      - functional_newsroom_prop_reads_as_photorealistic_product_render
+      - institutional_mark_is_randomly_handdrawn_or_low_poly
+      - symbol_sample_reads_as_equal_weight_software_toolbar
+      - standard_dashed_placeholder_used_as_mystery_symbol
+      - only_user_named_instances_are_checked
+      - full_board_regeneration_used_for_local_component_rework
   ui_geometry:
     auto_required_when:
       - artifact_type_in:

@@ -1,9 +1,11 @@
 # 世界地图 WMW 资产化路线状态页
 
 > **用途**：本资产线的唯一进度真源。每轮交付必须更新本页（这是交付定义的一部分，见 `docs/onboarding/assetized-ui-production-chain.md` §9）。新对话 / 新 AI 接手时先读本页，不需要考古全部评审文件。
-> **最后更新**：2026-07-22（A263 v0.3 已关闭 v0.2 第三卡“锁定”状态签裁切：built-in imagegen 定向生成紧凑闭合双端帽，`848×120` source crop 通过 `direct_resize` 映入 `367×52`，protected 保留率 100%、四向裁切损失 0、右/上/下边距 `8.22/8.67/5.2px`。v0.3 相对 v0.2 只改变第三卡 footer；日程和右栏不回退。UX/UI 均 `PASS / P0=0 / P1=0 / P2=0`，当前等待用户完整整屏确认；未改 Godot、runtime、正式合同、atlas、compact A5.1、B2.12 或 GDD。）
+> **最后更新**：2026-07-24（独立世界地图风格板 v2 的非旅行语义、总体构图、综合色彩和三段阅读链获方向性保留，但组件画法未通过：UFO 贴纸矢量化、站台 / 时钟与无线电塔写实化、底部符号工具栏化、日程器拟物过重。当前状态 `direction_retained_component_render_language_rework_required`；只允许局部组件重画，未改 Godot、runtime、正式合同、atlas、compact A5.1、B2.12 或 GDD。）
 
 ## 一、当前一句话状态
+
+2026-07-24 独立风格板旁路线：v2 已解决旅行目的地首读，但尚未通过对象—画法 Gate。下一轮冻结整板构图、综合色盘、中央地图与 `02` 同源落位，只重画新闻图像、UFO 贴纸、符号试条、待核实批注与日程器表面；详见 A273 与对应 Loop Log。
 
 用户已选择方案 1「无涂布独立周刊」，材料方向继续有效。v0.1 与 v0.2 保留为假通过 / 裁切失败证据；当前唯一主审图为 `wmw-a263-uncoated-fullscreen-default-v0-3.png`，流程对照为 `wmw-a263-uncoated-fullscreen-state-pair-v0-3.png`，全流程证据为 `wmw-a263-uncoated-fullscreen-third-card-mapping-qa-v0-3.png`。v0.3 状态 `dual_reviewed_pending_user_visual_confirmation`；不重开三栏、图片、地图或配色，也不代表 runtime 已实现。
 

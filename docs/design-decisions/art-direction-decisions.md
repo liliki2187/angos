@@ -809,3 +809,17 @@
 - **下一稿首读目标**：25% 下先读“地图上发生了一件安静但不可能的事”，再读选中地区与同源编辑简报，最后才发现日程器和品牌符号。陌生观察者应想“选一条怪新闻追下去”，而不是“选一个地方去”。
 - **状态修订（2026-07-24）**：用户随后回复“继续”，只授权按上述纠偏生成下一张世界地图独立风格板。`image_gen/2026-07-24/world-map-interface-style-board-v2/01-world-map-interface-style-board-v2.png` 已完成：不再使用旅行 pin、罗盘、行程线和风景明信片，以错误影子信号塔、编辑圈注、来源纸签和同源 `02` 选中链重写首读；综合色调经父级自检从过窄黑青修为深墨蓝、钴蓝媒体、冷青异常、暖纸、橄榄与少量芥末。当前为 `visual_candidate_pending_user_review`，不是生产标杆；未授权拆件、atlas、Godot 或运行时接入。
 - **cross-read tags**：`A256/A267/A268/A269`、art、benchmark、color、curiosity、editorial、imagegen、map、mood、rejected-candidate、semantics、travel、ui、ux、world-map、workflow。
+
+### A273. 世界地图风格板 v2 保留总体方向，但组件必须按对象职责绑定画法
+
+- **来源**：2026-07-24 用户对世界地图风格板 v2 的两处局部裁切明确反馈：“目前大方向是对了，但是很多组件的风格又不太对了，比如这个不是手绘风了，图2这些不是低多边形了。再检查一下。”
+- **用户裁决**：v2 的非旅行语义、左索引—中央地图—右 `NEWS LEAD` 阅读链、深海军蓝 / 钴蓝 / 青绿 / 橄榄 / 暖纸综合色彩面积和 `02` 同源内容关系继续保留；当前组件画法不通过，状态改为 `direction_retained_component_render_language_rework_required`。不得据此拆件、扩展区域地图 / 报刊页、进入 atlas / Godot 或升格生产候选。
+- **对象—画法合同**：
+  - 手工态度贴纸使用偏心剪影、线重变化、错位哑光填色和不等宽模切边；`UFO NO PARKING` 的梗保留，但光滑对称矢量飞碟撤回。
+  - 新闻现场图像先删除摄影信息，再以强剪影、`3–8` 个结构体块和少量大色面重建；锁定站台 / 时钟、无线电塔、悬浮建筑属于同一管线。无线电塔在左卡、中央照片和右栏只允许复用同一母图。
+  - WMW、期号、条码和状态签属于机构印刷图形，继续保持正交、稳定和可复用，不为“统一”手写化或低多边形化。
+  - 夹子、铅笔、文件夹、纸层和日程器属于克制拟物工作物件；允许真实尺度与轻物理叠层，但压低摄影反光、深 bevel、厚投影和工业产品渲染感。
+- **同类扫描修订**：除用户点名两处外，`02` 无线电塔细桁架、`DEFAULT` 建筑逐窗、底部五枚等权符号工具栏和虚线问号 placeholder 同样进入返工；不得只修点名实例。
+- **范围保护**：下一稿只开放新闻图像框、UFO 贴纸、底部符号试条、待核实批注与日程器表面的紧贴 ROI。中央地图、综合色盘、三段阅读链、右侧纸面、白圈 / 黄便签、状态层级和工作物件位置全部冻结；禁止整板重生。
+- **流程修订**：新增试行 `component_render_language_lock`，主规则见 `design/art-direction/clean-lowpoly-weekly-branch-style-guide.md` §6.6。详细 Loop Log 见 `docs/plans/world-map-benchmark-landing/2026-07-24-world-map-style-board-v2-component-render-language-loop-log.md`。
+- **cross-read tags**：`A266/A267/A268/A269/A270`、art、benchmark、component-language、editorial、handdrawn、imagegen、low-poly、partial-acceptance、props、sticker、ui、ux、world-map、workflow。
