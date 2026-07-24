@@ -1,0 +1,280 @@
+{
+  "status": "review_candidate",
+  "base_file": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-colorway-base-user-selected-v0-1.png",
+  "base_source_size": [
+    1672,
+    941
+  ],
+  "base_normalized_file": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-colorway-base-user-selected-v0-1-1920x1080.png",
+  "base_size": [
+    1920,
+    1080
+  ],
+  "normalization": "真实 imagegen 输出仅做 LANCZOS 尺寸归一化；未做程序化重绘或调色。",
+  "geometry_note": "边缘相关只用于发现整屏平移或明显结构漂移；最终视觉仍需人工复核。",
+  "role_sample_rects": {
+    "board": [
+      450,
+      44,
+      1360,
+      125
+    ],
+    "paper": [
+      1410,
+      368,
+      1840,
+      500
+    ],
+    "selected": [
+      500,
+      205,
+      700,
+      390
+    ],
+    "locked": [
+      820,
+      205,
+      1150,
+      390
+    ],
+    "cta": [
+      1410,
+      940,
+      1840,
+      1040
+    ],
+    "deadline": [
+      1710,
+      760,
+      1840,
+      820
+    ]
+  },
+  "variants": {
+    "A": {
+      "title": "核心橄榄周刊",
+      "source_file": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-colorway-01-core-olive-v0-1-imagegen.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "final_file": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-colorway-01-core-olive-v0-1.png",
+      "final_size": [
+        1920,
+        1080
+      ],
+      "role_mean_rgb": {
+        "board": [
+          12,
+          28,
+          37
+        ],
+        "paper": [
+          186,
+          165,
+          138
+        ],
+        "selected": [
+          93,
+          96,
+          66
+        ],
+        "locked": [
+          38,
+          53,
+          61
+        ],
+        "cta": [
+          70,
+          73,
+          47
+        ],
+        "deadline": [
+          136,
+          96,
+          72
+        ]
+      },
+      "zero_shift_edge_cosine": 0.9237,
+      "best_edge_cosine": 0.9237,
+      "best_shift_at_1920": [
+        0,
+        0
+      ],
+      "pass_canvas": true,
+      "pass_global_alignment": true
+    },
+    "B": {
+      "title": "芥末黄 × 钴蓝周刊",
+      "source_file": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-colorway-02-mustard-cobalt-v0-1-imagegen.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "final_file": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-colorway-02-mustard-cobalt-v0-1.png",
+      "final_size": [
+        1920,
+        1080
+      ],
+      "role_mean_rgb": {
+        "board": [
+          6,
+          29,
+          54
+        ],
+        "paper": [
+          223,
+          201,
+          162
+        ],
+        "selected": [
+          133,
+          107,
+          46
+        ],
+        "locked": [
+          33,
+          56,
+          80
+        ],
+        "cta": [
+          142,
+          108,
+          39
+        ],
+        "deadline": [
+          174,
+          100,
+          75
+        ]
+      },
+      "zero_shift_edge_cosine": 0.9091,
+      "best_edge_cosine": 0.9091,
+      "best_shift_at_1920": [
+        0,
+        0
+      ],
+      "pass_canvas": true,
+      "pass_global_alignment": true
+    },
+    "C": {
+      "title": "极地青档案",
+      "source_file": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-colorway-03-arctic-teal-v0-1-imagegen.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "final_file": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-colorway-03-arctic-teal-v0-1.png",
+      "final_size": [
+        1920,
+        1080
+      ],
+      "role_mean_rgb": {
+        "board": [
+          7,
+          31,
+          41
+        ],
+        "paper": [
+          203,
+          202,
+          194
+        ],
+        "selected": [
+          62,
+          114,
+          116
+        ],
+        "locked": [
+          32,
+          56,
+          66
+        ],
+        "cta": [
+          33,
+          80,
+          86
+        ],
+        "deadline": [
+          178,
+          114,
+          91
+        ]
+      },
+      "zero_shift_edge_cosine": 0.9054,
+      "best_edge_cosine": 0.9054,
+      "best_shift_at_1920": [
+        0,
+        0
+      ],
+      "pass_canvas": true,
+      "pass_global_alignment": true
+    },
+    "D": {
+      "title": "黑墨 × 酸绿印刷",
+      "source_file": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-colorway-04-ink-acid-v0-1-imagegen.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "final_file": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-colorway-04-ink-acid-v0-1.png",
+      "final_size": [
+        1920,
+        1080
+      ],
+      "role_mean_rgb": {
+        "board": [
+          8,
+          21,
+          27
+        ],
+        "paper": [
+          189,
+          187,
+          183
+        ],
+        "selected": [
+          130,
+          141,
+          51
+        ],
+        "locked": [
+          59,
+          65,
+          69
+        ],
+        "cta": [
+          82,
+          97,
+          37
+        ],
+        "deadline": [
+          163,
+          92,
+          78
+        ]
+      },
+      "zero_shift_edge_cosine": 0.9119,
+      "best_edge_cosine": 0.9119,
+      "best_shift_at_1920": [
+        0,
+        0
+      ],
+      "pass_canvas": true,
+      "pass_global_alignment": true
+    }
+  },
+  "pairwise_role_rgb_rms": {
+    "A-B": 27.91,
+    "A-C": 27.98,
+    "A-D": 21.8,
+    "B-C": 38.82,
+    "B-D": 21.83,
+    "C-D": 30.92
+  },
+  "comparison_board": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-colorway-v0-1-comparison-board.png",
+  "comparison_board_size": [
+    3840,
+    2280
+  ]
+}

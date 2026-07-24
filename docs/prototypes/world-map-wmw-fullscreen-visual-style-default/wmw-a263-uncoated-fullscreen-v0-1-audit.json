@@ -1,0 +1,1703 @@
+{
+  "artifact_type": "fullscreen_filled_state_text_mock_state_pair",
+  "version": "wmw_a263_uncoated_fullscreen_text_landing_v0_1",
+  "status": "user_visual_review_failed_rework_required",
+  "decision_source": "A263",
+  "canvas": [
+    1920,
+    1080
+  ],
+  "source": {
+    "built_in_imagegen_used": true,
+    "selected_material_direction": "无涂布独立周刊",
+    "file": "wmw-a259-01-uncoated-independent-weekly-v0-1.png",
+    "sha256": "05993fe9b29799047c1899529e757b258ae3301a6feeb5312a435a9242dabe64"
+  },
+  "outputs": {
+    "default": "wmw-a263-uncoated-fullscreen-default-v0-1.png",
+    "schedule_confirming": "wmw-a263-uncoated-fullscreen-schedule-confirming-v0-1.png",
+    "state_pair_board": "wmw-a263-uncoated-fullscreen-state-pair-v0-1.png",
+    "default_sha256": "7ab5d4dda43bac39f02fa7b5a5c671679a593ea9dc5435b683aedb41f0b71551",
+    "schedule_confirming_sha256": "81ef13d1f98a2b199895d658e1c384c3fad3c16917e945fdffb07fc508dcf6fe",
+    "state_pair_board_sha256": "c0aa888282c50cfe68f94b4566ab63bf004227a053e0c0f63454eef3e5063794"
+  },
+  "visible_geometry": {
+    "left_card_north": [
+      22,
+      22,
+      407,
+      285
+    ],
+    "left_card_east": [
+      22,
+      312,
+      407,
+      271
+    ],
+    "left_card_pacific": [
+      22,
+      589,
+      407,
+      215
+    ],
+    "schedule": [
+      22,
+      813,
+      407,
+      242
+    ],
+    "center": [
+      450,
+      23,
+      918,
+      1032
+    ],
+    "right_dossier": [
+      1384,
+      23,
+      514,
+      1032
+    ],
+    "right_photo": [
+      1397,
+      76,
+      482,
+      360
+    ],
+    "right_copy": [
+      1404,
+      438,
+      428,
+      112
+    ],
+    "mission_rows": [
+      1398,
+      556,
+      482,
+      311
+    ],
+    "cta": [
+      1398,
+      884,
+      482,
+      148
+    ]
+  },
+  "content": {
+    "rectangular_image_slots": 8,
+    "mission_rows": 4,
+    "primary_cta_count": 1,
+    "route_lines_drawn": 0,
+    "redline_status_badge_present": false,
+    "selected_region_id": "north_america"
+  },
+  "art_program_boundary": {
+    "imagegen_owns_all_visible_carrier_materials": true,
+    "source_derived_patch_count": 10,
+    "source_derived_patches": [
+      {
+        "source_crop_xyxy": [
+          92,
+          252,
+          282,
+          288
+        ],
+        "target_rect_xywh": [
+          49,
+          744,
+          265,
+          52
+        ],
+        "role": "恢复第三卡标题纸带并保留原状态色签"
+      },
+      {
+        "source_crop_xyxy": [
+          1476,
+          458,
+          1726,
+          526
+        ],
+        "target_rect_xywh": [
+          1404,
+          438,
+          428,
+          112
+        ],
+        "role": "右侧标题/正文/摘要同源纸面"
+      },
+      {
+        "source_crop_xyxy": [
+          96,
+          998,
+          346,
+          1020
+        ],
+        "target_rect_xywh": [
+          151,
+          839,
+          238,
+          25
+        ],
+        "role": "日期/剩余日同源纸面"
+      },
+      {
+        "source_crop_xyxy": [
+          96,
+          998,
+          346,
+          1020
+        ],
+        "target_rect_xywh": [
+          75,
+          848,
+          58,
+          66
+        ],
+        "role": "清除底图箭头并承载动态确认图标"
+      },
+      {
+        "source_crop_xyxy": [
+          96,
+          998,
+          346,
+          1020
+        ],
+        "target_rect_xywh": [
+          75,
+          951,
+          307,
+          20
+        ],
+        "role": "后果行一文字薄罩"
+      },
+      {
+        "source_crop_xyxy": [
+          96,
+          998,
+          346,
+          1020
+        ],
+        "target_rect_xywh": [
+          75,
+          998,
+          307,
+          20
+        ],
+        "role": "后果行二文字薄罩"
+      },
+      {
+        "source_crop_xyxy": [
+          1600,
+          650,
+          1770,
+          686
+        ],
+        "target_rect_xywh": [
+          1540,
+          560,
+          286,
+          66
+        ],
+        "role": "任务 1 文字区薄罩"
+      },
+      {
+        "source_crop_xyxy": [
+          1600,
+          650,
+          1770,
+          686
+        ],
+        "target_rect_xywh": [
+          1540,
+          638,
+          286,
+          64
+        ],
+        "role": "任务 2 文字区薄罩"
+      },
+      {
+        "source_crop_xyxy": [
+          1600,
+          650,
+          1770,
+          686
+        ],
+        "target_rect_xywh": [
+          1540,
+          714,
+          286,
+          66
+        ],
+        "role": "任务 3 文字区薄罩"
+      },
+      {
+        "source_crop_xyxy": [
+          1600,
+          650,
+          1770,
+          686
+        ],
+        "target_rect_xywh": [
+          1540,
+          793,
+          286,
+          68
+        ],
+        "role": "任务 4 文字区薄罩"
+      }
+    ],
+    "default_and_confirming_patch_sets_identical": true,
+    "program_flat_surface_overlay_count": 0,
+    "program_owns_exact_text_and_target_state_semantics": true,
+    "program_color_regrade_used": false,
+    "program_redraw_of_story_images_or_map_used": false
+  },
+  "text_safe_area": {
+    "default_checked_records": 38,
+    "confirming_checked_records": 38,
+    "default_violations": [],
+    "confirming_violations": [],
+    "passed": true,
+    "default_records": [
+      {
+        "key": "masthead",
+        "text": "世界未解之谜周刊",
+        "bbox_xyxy": [
+          492,
+          80,
+          748,
+          113
+        ],
+        "safe_rect_xywh": [
+          492,
+          76,
+          604,
+          40
+        ],
+        "passed": true
+      },
+      {
+        "key": "week",
+        "text": "第 1 周",
+        "bbox_xyxy": [
+          1258,
+          84,
+          1315,
+          103
+        ],
+        "safe_rect_xywh": [
+          1170,
+          78,
+          145,
+          26
+        ],
+        "passed": true
+      },
+      {
+        "key": "left_title_0",
+        "text": "北美禁区带",
+        "bbox_xyxy": [
+          64,
+          262,
+          174,
+          285
+        ],
+        "safe_rect_xywh": [
+          64,
+          256,
+          232,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "left_state_0",
+        "text": "选中",
+        "bbox_xyxy": [
+          347,
+          265,
+          383,
+          283
+        ],
+        "safe_rect_xywh": [
+          323,
+          257,
+          84,
+          30
+        ],
+        "passed": true
+      },
+      {
+        "key": "left_title_1",
+        "text": "东亚神秘地带",
+        "bbox_xyxy": [
+          64,
+          536,
+          196,
+          559
+        ],
+        "safe_rect_xywh": [
+          64,
+          530,
+          232,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "left_state_1",
+        "text": "锁定",
+        "bbox_xyxy": [
+          347,
+          539,
+          383,
+          558
+        ],
+        "safe_rect_xywh": [
+          323,
+          531,
+          84,
+          30
+        ],
+        "passed": true
+      },
+      {
+        "key": "left_title_2",
+        "text": "太平洋失航带",
+        "bbox_xyxy": [
+          64,
+          760,
+          196,
+          782
+        ],
+        "safe_rect_xywh": [
+          64,
+          754,
+          232,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "left_state_2",
+        "text": "锁定",
+        "bbox_xyxy": [
+          347,
+          763,
+          383,
+          782
+        ],
+        "safe_rect_xywh": [
+          323,
+          754,
+          84,
+          30
+        ],
+        "passed": true
+      },
+      {
+        "key": "map_selected",
+        "text": "北美禁区带",
+        "bbox_xyxy": [
+          654,
+          381,
+          754,
+          402
+        ],
+        "safe_rect_xywh": [
+          654,
+          374,
+          172,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "map_east",
+        "text": "东亚神秘地带",
+        "bbox_xyxy": [
+          1088,
+          401,
+          1208,
+          422
+        ],
+        "safe_rect_xywh": [
+          1016,
+          394,
+          196,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "map_pacific",
+        "text": "太平洋失航带",
+        "bbox_xyxy": [
+          1092,
+          683,
+          1212,
+          704
+        ],
+        "safe_rect_xywh": [
+          1016,
+          676,
+          200,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "right_title",
+        "text": "北美禁区带",
+        "bbox_xyxy": [
+          1424,
+          451,
+          1554,
+          478
+        ],
+        "safe_rect_xywh": [
+          1424,
+          447,
+          388,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "right_body_1",
+        "text": "都市传说与军事封锁交叠。",
+        "bbox_xyxy": [
+          1424,
+          494,
+          1616,
+          511
+        ],
+        "safe_rect_xywh": [
+          1424,
+          490,
+          388,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "right_body_2",
+        "text": "军方巡逻、档案残页与异常雷达同时露头。",
+        "bbox_xyxy": [
+          1424,
+          516,
+          1690,
+          529
+        ],
+        "safe_rect_xywh": [
+          1424,
+          512,
+          388,
+          22
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_header",
+        "text": "任务情报",
+        "bbox_xyxy": [
+          1424,
+          533,
+          1496,
+          552
+        ],
+        "safe_rect_xywh": [
+          1424,
+          527,
+          100,
+          28
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_summary",
+        "text": "常驻 2 · 限时 1 · 深链 1",
+        "bbox_xyxy": [
+          1571,
+          535,
+          1698,
+          547
+        ],
+        "safe_rect_xywh": [
+          1508,
+          532,
+          190,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_expanded",
+        "text": "已展开 4 / 4",
+        "bbox_xyxy": [
+          1753,
+          535,
+          1820,
+          547
+        ],
+        "safe_rect_xywh": [
+          1712,
+          532,
+          108,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_title_0",
+        "text": "51 区外围公路",
+        "bbox_xyxy": [
+          1544,
+          571,
+          1674,
+          592
+        ],
+        "safe_rect_xywh": [
+          1544,
+          564,
+          278,
+          30
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_meta_0",
+        "text": "科学纪实 · 耗时 2 天",
+        "bbox_xyxy": [
+          1544,
+          602,
+          1689,
+          618
+        ],
+        "safe_rect_xywh": [
+          1544,
+          594,
+          190,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_state_0",
+        "text": "常驻",
+        "bbox_xyxy": [
+          1790,
+          602,
+          1822,
+          618
+        ],
+        "safe_rect_xywh": [
+          1710,
+          594,
+          112,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_title_1",
+        "text": "罗斯威尔档案残页",
+        "bbox_xyxy": [
+          1544,
+          649,
+          1704,
+          670
+        ],
+        "safe_rect_xywh": [
+          1544,
+          642,
+          278,
+          30
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_meta_1",
+        "text": "科学纪实 · 耗时 1 天",
+        "bbox_xyxy": [
+          1544,
+          680,
+          1689,
+          696
+        ],
+        "safe_rect_xywh": [
+          1544,
+          672,
+          190,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_state_1",
+        "text": "常驻",
+        "bbox_xyxy": [
+          1790,
+          680,
+          1822,
+          696
+        ],
+        "safe_rect_xywh": [
+          1710,
+          672,
+          112,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_title_2",
+        "text": "突发：雷达异常光点",
+        "bbox_xyxy": [
+          1544,
+          725,
+          1724,
+          746
+        ],
+        "safe_rect_xywh": [
+          1544,
+          718,
+          278,
+          30
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_meta_2",
+        "text": "大众热度 · 耗时 2 天",
+        "bbox_xyxy": [
+          1544,
+          756,
+          1689,
+          772
+        ],
+        "safe_rect_xywh": [
+          1544,
+          748,
+          190,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_state_2",
+        "text": "限时至第 4 天",
+        "bbox_xyxy": [
+          1736,
+          758,
+          1822,
+          771
+        ],
+        "safe_rect_xywh": [
+          1710,
+          748,
+          112,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_title_3",
+        "text": "M330 末班车空白段",
+        "bbox_xyxy": [
+          1544,
+          804,
+          1727,
+          825
+        ],
+        "safe_rect_xywh": [
+          1544,
+          797,
+          278,
+          30
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_meta_3",
+        "text": "神秘玄学 · 耗时 2 天",
+        "bbox_xyxy": [
+          1544,
+          834,
+          1689,
+          851
+        ],
+        "safe_rect_xywh": [
+          1544,
+          827,
+          190,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_state_3",
+        "text": "深链",
+        "bbox_xyxy": [
+          1790,
+          835,
+          1822,
+          850
+        ],
+        "safe_rect_xywh": [
+          1710,
+          827,
+          112,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "primary_cta",
+        "text": "进入地区任务台  →",
+        "bbox_xyxy": [
+          1519,
+          947,
+          1759,
+          976
+        ],
+        "safe_rect_xywh": [
+          1432,
+          934,
+          414,
+          52
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_section",
+        "text": "全局日程",
+        "bbox_xyxy": [
+          65,
+          820,
+          113,
+          831
+        ],
+        "safe_rect_xywh": [
+          62,
+          815,
+          100,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_current",
+        "text": "当前第 1 天",
+        "bbox_xyxy": [
+          158,
+          846,
+          241,
+          861
+        ],
+        "safe_rect_xywh": [
+          158,
+          842,
+          112,
+          19
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_remaining",
+        "text": "剩余 7 天",
+        "bbox_xyxy": [
+          315,
+          846,
+          382,
+          862
+        ],
+        "safe_rect_xywh": [
+          270,
+          842,
+          112,
+          22
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_icon",
+        "text": "→",
+        "bbox_xyxy": [
+          90,
+          874,
+          118,
+          890
+        ],
+        "safe_rect_xywh": [
+          82,
+          855,
+          44,
+          48
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_title",
+        "text": "推进到下一天",
+        "bbox_xyxy": [
+          158,
+          872,
+          290,
+          895
+        ],
+        "safe_rect_xywh": [
+          158,
+          870,
+          224,
+          28
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_help",
+        "text": "点击后查看推进影响",
+        "bbox_xyxy": [
+          158,
+          906,
+          284,
+          919
+        ],
+        "safe_rect_xywh": [
+          158,
+          900,
+          224,
+          22
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_result_1",
+        "text": "当前：无任务到期",
+        "bbox_xyxy": [
+          75,
+          956,
+          203,
+          971
+        ],
+        "safe_rect_xywh": [
+          75,
+          951,
+          307,
+          22
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_result_2",
+        "text": "日程归零：进入编辑部阶段",
+        "bbox_xyxy": [
+          75,
+          1002,
+          267,
+          1019
+        ],
+        "safe_rect_xywh": [
+          75,
+          998,
+          307,
+          22
+        ],
+        "passed": true
+      }
+    ],
+    "confirming_records": [
+      {
+        "key": "masthead",
+        "text": "世界未解之谜周刊",
+        "bbox_xyxy": [
+          492,
+          80,
+          748,
+          113
+        ],
+        "safe_rect_xywh": [
+          492,
+          76,
+          604,
+          40
+        ],
+        "passed": true
+      },
+      {
+        "key": "week",
+        "text": "第 1 周",
+        "bbox_xyxy": [
+          1258,
+          84,
+          1315,
+          103
+        ],
+        "safe_rect_xywh": [
+          1170,
+          78,
+          145,
+          26
+        ],
+        "passed": true
+      },
+      {
+        "key": "left_title_0",
+        "text": "北美禁区带",
+        "bbox_xyxy": [
+          64,
+          262,
+          174,
+          285
+        ],
+        "safe_rect_xywh": [
+          64,
+          256,
+          232,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "left_state_0",
+        "text": "选中",
+        "bbox_xyxy": [
+          347,
+          265,
+          383,
+          283
+        ],
+        "safe_rect_xywh": [
+          323,
+          257,
+          84,
+          30
+        ],
+        "passed": true
+      },
+      {
+        "key": "left_title_1",
+        "text": "东亚神秘地带",
+        "bbox_xyxy": [
+          64,
+          536,
+          196,
+          559
+        ],
+        "safe_rect_xywh": [
+          64,
+          530,
+          232,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "left_state_1",
+        "text": "锁定",
+        "bbox_xyxy": [
+          347,
+          539,
+          383,
+          558
+        ],
+        "safe_rect_xywh": [
+          323,
+          531,
+          84,
+          30
+        ],
+        "passed": true
+      },
+      {
+        "key": "left_title_2",
+        "text": "太平洋失航带",
+        "bbox_xyxy": [
+          64,
+          760,
+          196,
+          782
+        ],
+        "safe_rect_xywh": [
+          64,
+          754,
+          232,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "left_state_2",
+        "text": "锁定",
+        "bbox_xyxy": [
+          347,
+          763,
+          383,
+          782
+        ],
+        "safe_rect_xywh": [
+          323,
+          754,
+          84,
+          30
+        ],
+        "passed": true
+      },
+      {
+        "key": "map_selected",
+        "text": "北美禁区带",
+        "bbox_xyxy": [
+          654,
+          381,
+          754,
+          402
+        ],
+        "safe_rect_xywh": [
+          654,
+          374,
+          172,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "map_east",
+        "text": "东亚神秘地带",
+        "bbox_xyxy": [
+          1088,
+          401,
+          1208,
+          422
+        ],
+        "safe_rect_xywh": [
+          1016,
+          394,
+          196,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "map_pacific",
+        "text": "太平洋失航带",
+        "bbox_xyxy": [
+          1092,
+          683,
+          1212,
+          704
+        ],
+        "safe_rect_xywh": [
+          1016,
+          676,
+          200,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "right_title",
+        "text": "北美禁区带",
+        "bbox_xyxy": [
+          1424,
+          451,
+          1554,
+          478
+        ],
+        "safe_rect_xywh": [
+          1424,
+          447,
+          388,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "right_body_1",
+        "text": "都市传说与军事封锁交叠。",
+        "bbox_xyxy": [
+          1424,
+          494,
+          1616,
+          511
+        ],
+        "safe_rect_xywh": [
+          1424,
+          490,
+          388,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "right_body_2",
+        "text": "军方巡逻、档案残页与异常雷达同时露头。",
+        "bbox_xyxy": [
+          1424,
+          516,
+          1690,
+          529
+        ],
+        "safe_rect_xywh": [
+          1424,
+          512,
+          388,
+          22
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_header",
+        "text": "任务情报",
+        "bbox_xyxy": [
+          1424,
+          533,
+          1496,
+          552
+        ],
+        "safe_rect_xywh": [
+          1424,
+          527,
+          100,
+          28
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_summary",
+        "text": "常驻 2 · 限时 1 · 深链 1",
+        "bbox_xyxy": [
+          1571,
+          535,
+          1698,
+          547
+        ],
+        "safe_rect_xywh": [
+          1508,
+          532,
+          190,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_expanded",
+        "text": "已展开 4 / 4",
+        "bbox_xyxy": [
+          1753,
+          535,
+          1820,
+          547
+        ],
+        "safe_rect_xywh": [
+          1712,
+          532,
+          108,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_title_0",
+        "text": "51 区外围公路",
+        "bbox_xyxy": [
+          1544,
+          571,
+          1674,
+          592
+        ],
+        "safe_rect_xywh": [
+          1544,
+          564,
+          278,
+          30
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_meta_0",
+        "text": "科学纪实 · 耗时 2 天",
+        "bbox_xyxy": [
+          1544,
+          602,
+          1689,
+          618
+        ],
+        "safe_rect_xywh": [
+          1544,
+          594,
+          190,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_state_0",
+        "text": "常驻",
+        "bbox_xyxy": [
+          1790,
+          602,
+          1822,
+          618
+        ],
+        "safe_rect_xywh": [
+          1710,
+          594,
+          112,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_title_1",
+        "text": "罗斯威尔档案残页",
+        "bbox_xyxy": [
+          1544,
+          649,
+          1704,
+          670
+        ],
+        "safe_rect_xywh": [
+          1544,
+          642,
+          278,
+          30
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_meta_1",
+        "text": "科学纪实 · 耗时 1 天",
+        "bbox_xyxy": [
+          1544,
+          680,
+          1689,
+          696
+        ],
+        "safe_rect_xywh": [
+          1544,
+          672,
+          190,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_state_1",
+        "text": "常驻",
+        "bbox_xyxy": [
+          1790,
+          680,
+          1822,
+          696
+        ],
+        "safe_rect_xywh": [
+          1710,
+          672,
+          112,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_title_2",
+        "text": "突发：雷达异常光点",
+        "bbox_xyxy": [
+          1544,
+          725,
+          1724,
+          746
+        ],
+        "safe_rect_xywh": [
+          1544,
+          718,
+          278,
+          30
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_meta_2",
+        "text": "大众热度 · 耗时 2 天",
+        "bbox_xyxy": [
+          1544,
+          756,
+          1689,
+          772
+        ],
+        "safe_rect_xywh": [
+          1544,
+          748,
+          190,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_state_2",
+        "text": "限时至第 4 天",
+        "bbox_xyxy": [
+          1736,
+          758,
+          1822,
+          771
+        ],
+        "safe_rect_xywh": [
+          1710,
+          748,
+          112,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_title_3",
+        "text": "M330 末班车空白段",
+        "bbox_xyxy": [
+          1544,
+          804,
+          1727,
+          825
+        ],
+        "safe_rect_xywh": [
+          1544,
+          797,
+          278,
+          30
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_meta_3",
+        "text": "神秘玄学 · 耗时 2 天",
+        "bbox_xyxy": [
+          1544,
+          834,
+          1689,
+          851
+        ],
+        "safe_rect_xywh": [
+          1544,
+          827,
+          190,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_state_3",
+        "text": "深链",
+        "bbox_xyxy": [
+          1790,
+          835,
+          1822,
+          850
+        ],
+        "safe_rect_xywh": [
+          1710,
+          827,
+          112,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "primary_cta",
+        "text": "进入地区任务台  →",
+        "bbox_xyxy": [
+          1519,
+          947,
+          1759,
+          976
+        ],
+        "safe_rect_xywh": [
+          1432,
+          934,
+          414,
+          52
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_section",
+        "text": "全局日程",
+        "bbox_xyxy": [
+          65,
+          820,
+          113,
+          831
+        ],
+        "safe_rect_xywh": [
+          62,
+          815,
+          100,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_current",
+        "text": "当前第 1 天",
+        "bbox_xyxy": [
+          158,
+          846,
+          241,
+          861
+        ],
+        "safe_rect_xywh": [
+          158,
+          842,
+          112,
+          19
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_remaining",
+        "text": "剩余 7 天",
+        "bbox_xyxy": [
+          315,
+          846,
+          382,
+          862
+        ],
+        "safe_rect_xywh": [
+          270,
+          842,
+          112,
+          22
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_icon",
+        "text": "!",
+        "bbox_xyxy": [
+          99,
+          869,
+          109,
+          890
+        ],
+        "safe_rect_xywh": [
+          82,
+          855,
+          44,
+          48
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_title",
+        "text": "确认推进到第 2 天",
+        "bbox_xyxy": [
+          158,
+          872,
+          340,
+          895
+        ],
+        "safe_rect_xywh": [
+          158,
+          870,
+          224,
+          28
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_help",
+        "text": "再次点击执行；后果见下方",
+        "bbox_xyxy": [
+          158,
+          906,
+          326,
+          919
+        ],
+        "safe_rect_xywh": [
+          158,
+          900,
+          224,
+          22
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_result_1",
+        "text": "确认后：剩余 6 天 · 无任务到期",
+        "bbox_xyxy": [
+          75,
+          956,
+          300,
+          972
+        ],
+        "safe_rect_xywh": [
+          75,
+          951,
+          307,
+          22
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_result_2",
+        "text": "限时任务：雷达异常仍开放至第 4 天",
+        "bbox_xyxy": [
+          75,
+          1003,
+          334,
+          1019
+        ],
+        "safe_rect_xywh": [
+          75,
+          998,
+          307,
+          22
+        ],
+        "passed": true
+      }
+    ]
+  },
+  "state_difference": {
+    "allowed_rect_xywh": [
+      65,
+      839,
+      327,
+      189
+    ],
+    "difference_bbox_xyxy": [
+      75,
+      869,
+      340,
+      1019
+    ],
+    "outside_allowed_bbox_xyxy": null,
+    "schedule_only": true
+  },
+  "source_difference": {
+    "default": {
+      "difference_bbox_xyxy": [
+        49,
+        80,
+        1830,
+        1019
+      ],
+      "outside_allowed_bbox_xyxy": null,
+      "outside_allowed_pixels": 0,
+      "passed": true
+    },
+    "schedule_confirming": {
+      "difference_bbox_xyxy": [
+        49,
+        80,
+        1830,
+        1019
+      ],
+      "outside_allowed_bbox_xyxy": null,
+      "outside_allowed_pixels": 0,
+      "passed": true
+    }
+  },
+  "runtime_support": {
+    "target_only": true,
+    "independent_advance_day": false,
+    "a51h_full_height": false,
+    "deadline_day_in_world_preview": false,
+    "godot_runtime_unchanged": true
+  },
+  "resolution_boundary": {
+    "validated_target": "1920x1080 desktop only",
+    "lower_resolution_runtime_validation": "not_executed_formal_runtime_required",
+    "recommended_minimum_runtime_font_px_at_1366x768": 14,
+    "recommended_text_texture_contrast_max_percent": 2,
+    "recommended_mipmap_or_prefilter_at_1600_and_1366": true
+  },
+  "final_reviews": {
+    "ux_laoge": {
+      "verdict": "RETRACTED_FALSE_PASS",
+      "p0": 0,
+      "p1": 3,
+      "p2": 0,
+      "notes": [
+        "前次 PASS 已撤回：只检查 text bbox 位于作者定义的 safe rect，没有独立核对真实可见载体、语义间距与 100% 局部裁切。",
+        "第三卡状态签错层、日程状态与动作粘连、右栏正文与任务章节拥挤均为 P1。"
+      ]
+    },
+    "ui_designer": {
+      "verdict": "RETRACTED_FALSE_PASS",
+      "p0": 0,
+      "p1": 3,
+      "p2": 1,
+      "notes": [
+        "前次 PASS 已撤回：来源差分只能证明允许区外未变化，不能证明允许区内补纸、层级和接缝成立。",
+        "右栏正文第二行 safe rect 与任务标题 safe rect 重叠 7px；任务标题实际 bbox 与首任务载体仅余 4px。"
+      ]
+    }
+  },
+  "user_visual_review": {
+    "verdict": "FAIL",
+    "p0": 0,
+    "p1": 3,
+    "issues": [
+      {
+        "id": "third_card_state_carrier_mismatch",
+        "result": "FAIL",
+        "evidence": "第三卡标题补纸、照片和原灰靛状态签错层；锁定文字未稳定落入真实状态签。"
+      },
+      {
+        "id": "schedule_state_action_grouping",
+        "result": "FAIL",
+        "evidence": "当前日/剩余日与推进动作共用并贴近同一可见动作载体，状态事实与操作动词无法快速分组。"
+      },
+      {
+        "id": "dossier_body_mission_spacing",
+        "result": "FAIL",
+        "evidence": "正文第二行 safe rect y512-534 与任务标题 safe rect y527-555 重叠；标题 bbox 底 y552 到首任务载体 y556 仅 4px。"
+      }
+    ]
+  },
+  "visual_carrier_audit": {
+    "passed": false,
+    "contract_safe_rect_containment_only": true,
+    "visible_carrier_ownership_checked_before_user_review": false,
+    "semantic_safe_rect_intersections": [
+      {
+        "a": "right_body_2",
+        "b": "mission_header",
+        "intersection_xyxy": [
+          1424,
+          527,
+          1524,
+          534
+        ]
+      }
+    ],
+    "minimum_group_gap_passed": false,
+    "state_text_centered_in_visible_state_carrier": false,
+    "independent_100_percent_local_crop_review_passed": false
+  },
+  "visual_stats": {
+    "mean_rgb_240x135": [
+      98.54,
+      103.87,
+      113.21
+    ],
+    "stddev_rgb_240x135": [
+      66.86,
+      57.29,
+      48.65
+    ]
+  },
+  "assertions": {
+    "selected_scheme_1_pixels_preserved_outside_text_and_patch_zones": true,
+    "eight_classic_rectangular_image_slots": true,
+    "all_text_inside_safe_rects": true,
+    "text_inside_visible_carriers": false,
+    "semantic_groups_non_overlapping": false,
+    "minimum_group_gap_passed": false,
+    "state_text_centered_in_state_carrier": false,
+    "independent_local_crop_review_passed": false,
+    "state_delta_schedule_only": true,
+    "right_title_not_over_photo": true,
+    "static_fasteners_have_no_runtime_semantics": true,
+    "formal_contracts_unchanged": true,
+    "godot_unchanged": true
+  }
+}

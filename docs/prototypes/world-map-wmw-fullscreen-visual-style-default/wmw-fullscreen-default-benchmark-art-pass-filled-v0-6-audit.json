@@ -1,0 +1,953 @@
+{
+  "artifact_type": "fullscreen_benchmark_art_identity_revision_candidate",
+  "version": "wmw_fullscreen_default_benchmark_art_pass_v0_6",
+  "status": "benchmark_ui_ux_pass_pending_user_art_direction_decision",
+  "canvas": [
+    1920,
+    1080
+  ],
+  "state": "default",
+  "source": {
+    "built_in_imagegen_used": true,
+    "file": "wmw-fullscreen-default-benchmark-art-pass-imagegen-source-v0-6.png",
+    "size": [
+      1672,
+      941
+    ],
+    "sha256": "8eef0a9823c52d8862e96e4157f771c1a49261813b80f381d3a36c8f8fea8c32",
+    "reference_priority": [
+      "benchmark-board-01",
+      "benchmark-board-02",
+      "v0.5-geometry-content-mask-only"
+    ]
+  },
+  "output": {
+    "file": "wmw-fullscreen-default-benchmark-art-pass-filled-v0-6.png",
+    "size": [
+      1920,
+      1080
+    ],
+    "mode": "RGB",
+    "sha256": "bc54b193fd8df073aa14d5a29f9ef7df2abbe13e1f8a53f60f4aa121d03055c8"
+  },
+  "geometry": {
+    "rects_xywh": {
+      "left_card_north": [
+        30,
+        36,
+        348,
+        240
+      ],
+      "left_card_east": [
+        30,
+        294,
+        348,
+        240
+      ],
+      "left_card_pacific": [
+        30,
+        552,
+        348,
+        240
+      ],
+      "schedule": [
+        30,
+        810,
+        348,
+        246
+      ],
+      "center_column": [
+        402,
+        24,
+        972,
+        1032
+      ],
+      "center_title": [
+        426,
+        24,
+        924,
+        72
+      ],
+      "map_stage": [
+        426,
+        96,
+        924,
+        936
+      ],
+      "right_dossier": [
+        1398,
+        24,
+        480,
+        1032
+      ],
+      "right_title": [
+        1438,
+        72,
+        300,
+        72
+      ],
+      "right_photo": [
+        1431,
+        171,
+        414,
+        264
+      ],
+      "right_body": [
+        1431,
+        456,
+        414,
+        135
+      ],
+      "mission_header": [
+        1425,
+        609,
+        426,
+        66
+      ],
+      "mission_rows": [
+        1431,
+        681,
+        414,
+        248
+      ],
+      "cta": [
+        1425,
+        957,
+        426,
+        75
+      ]
+    },
+    "left_axis_values": {
+      "x": [
+        30,
+        30,
+        30,
+        30
+      ],
+      "width": [
+        348,
+        348,
+        348,
+        348
+      ],
+      "right": [
+        378,
+        378,
+        378,
+        378
+      ],
+      "center_x": [
+        204,
+        204,
+        204,
+        204
+      ]
+    },
+    "left_vertical_gaps_px": [
+      18,
+      18,
+      18
+    ],
+    "route_lines_drawn": 0,
+    "new_ui_modules_added": 0
+  },
+  "art_program_boundary": {
+    "imagegen_owns_all_visible_carrier_materials": true,
+    "same_source_art_patch_count": 35,
+    "program_flat_surface_overlay_count": 0,
+    "program_owns_text_and_runtime_semantics": true
+  },
+  "content": {
+    "selected_region_id": "north_america",
+    "map_pin_count": 3,
+    "mission_row_count": 4,
+    "primary_cta_count": 1,
+    "redline_status_badge_present": false
+  },
+  "text_safe_area": {
+    "checked_records": 43,
+    "violations": [],
+    "passed": true,
+    "records": [
+      {
+        "key": "masthead",
+        "text": "WORLD MYSTERIES WEEKLY",
+        "bbox_xyxy": [
+          426,
+          39,
+          957,
+          81
+        ],
+        "safe_rect_xywh": [
+          426,
+          24,
+          700,
+          72
+        ],
+        "passed": true
+      },
+      {
+        "key": "week",
+        "text": "WEEK 01",
+        "bbox_xyxy": [
+          1286,
+          52,
+          1348,
+          63
+        ],
+        "safe_rect_xywh": [
+          1160,
+          24,
+          188,
+          72
+        ],
+        "passed": true
+      },
+      {
+        "key": "left_title_0",
+        "text": "北美禁区带",
+        "bbox_xyxy": [
+          98,
+          219,
+          183,
+          237
+        ],
+        "safe_rect_xywh": [
+          66,
+          200,
+          198,
+          48
+        ],
+        "passed": true
+      },
+      {
+        "key": "left_state_0",
+        "text": "选中",
+        "bbox_xyxy": [
+          311,
+          221,
+          339,
+          233
+        ],
+        "safe_rect_xywh": [
+          284,
+          202,
+          82,
+          48
+        ],
+        "passed": true
+      },
+      {
+        "key": "left_title_1",
+        "text": "东亚神秘地带",
+        "bbox_xyxy": [
+          70,
+          477,
+          172,
+          495
+        ],
+        "safe_rect_xywh": [
+          66,
+          458,
+          198,
+          48
+        ],
+        "passed": true
+      },
+      {
+        "key": "left_state_1",
+        "text": "锁定",
+        "bbox_xyxy": [
+          311,
+          479,
+          339,
+          492
+        ],
+        "safe_rect_xywh": [
+          284,
+          460,
+          82,
+          48
+        ],
+        "passed": true
+      },
+      {
+        "key": "left_title_2",
+        "text": "太平洋失航带",
+        "bbox_xyxy": [
+          70,
+          735,
+          172,
+          753
+        ],
+        "safe_rect_xywh": [
+          66,
+          716,
+          198,
+          48
+        ],
+        "passed": true
+      },
+      {
+        "key": "left_state_2",
+        "text": "锁定",
+        "bbox_xyxy": [
+          311,
+          737,
+          339,
+          750
+        ],
+        "safe_rect_xywh": [
+          284,
+          718,
+          82,
+          48
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_section",
+        "text": "全局日程",
+        "bbox_xyxy": [
+          50,
+          823,
+          98,
+          834
+        ],
+        "safe_rect_xywh": [
+          46,
+          817,
+          116,
+          22
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_current",
+        "text": "当前第 1 天",
+        "bbox_xyxy": [
+          58,
+          842,
+          151,
+          860
+        ],
+        "safe_rect_xywh": [
+          58,
+          836,
+          132,
+          28
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_remaining",
+        "text": "剩余 7 天",
+        "bbox_xyxy": [
+          275,
+          843,
+          350,
+          861
+        ],
+        "safe_rect_xywh": [
+          218,
+          836,
+          132,
+          28
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_title",
+        "text": "推进到下一天",
+        "bbox_xyxy": [
+          144,
+          904,
+          288,
+          929
+        ],
+        "safe_rect_xywh": [
+          140,
+          897,
+          214,
+          36
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_subtitle",
+        "text": "点击后查看推进影响",
+        "bbox_xyxy": [
+          144,
+          949,
+          252,
+          960
+        ],
+        "safe_rect_xywh": [
+          140,
+          942,
+          214,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_info_1",
+        "text": "当前：无任务到期",
+        "bbox_xyxy": [
+          50,
+          999,
+          146,
+          1011
+        ],
+        "safe_rect_xywh": [
+          46,
+          994,
+          316,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "schedule_info_2",
+        "text": "日程归零：进入编辑部阶段",
+        "bbox_xyxy": [
+          50,
+          1027,
+          194,
+          1039
+        ],
+        "safe_rect_xywh": [
+          46,
+          1022,
+          316,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "map_label_0",
+        "text": "北美禁区带",
+        "bbox_xyxy": [
+          646,
+          345,
+          736,
+          363
+        ],
+        "safe_rect_xywh": [
+          646,
+          336,
+          190,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "map_lock_1",
+        "text": "锁",
+        "bbox_xyxy": [
+          1116,
+          359,
+          1127,
+          369
+        ],
+        "safe_rect_xywh": [
+          1108,
+          349,
+          28,
+          28
+        ],
+        "passed": true
+      },
+      {
+        "key": "map_label_1",
+        "text": "东亚神秘地带",
+        "bbox_xyxy": [
+          986,
+          356,
+          1094,
+          374
+        ],
+        "safe_rect_xywh": [
+          904,
+          347,
+          190,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "map_lock_2",
+        "text": "锁",
+        "bbox_xyxy": [
+          1156,
+          707,
+          1167,
+          717
+        ],
+        "safe_rect_xywh": [
+          1148,
+          697,
+          28,
+          28
+        ],
+        "passed": true
+      },
+      {
+        "key": "map_label_2",
+        "text": "太平洋失航带",
+        "bbox_xyxy": [
+          1026,
+          704,
+          1134,
+          722
+        ],
+        "safe_rect_xywh": [
+          944,
+          695,
+          190,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "right_region_title",
+        "text": "北美禁区带",
+        "bbox_xyxy": [
+          1444,
+          100,
+          1594,
+          129
+        ],
+        "safe_rect_xywh": [
+          1438,
+          72,
+          300,
+          72
+        ],
+        "passed": true
+      },
+      {
+        "key": "right_body_1",
+        "text": "都市传说与军事封锁交叠。",
+        "bbox_xyxy": [
+          1450,
+          484,
+          1690,
+          505
+        ],
+        "safe_rect_xywh": [
+          1450,
+          475,
+          380,
+          36
+        ],
+        "passed": true
+      },
+      {
+        "key": "right_body_2",
+        "text": "军方巡逻、档案残页与异常雷达同时露头。",
+        "bbox_xyxy": [
+          1450,
+          540,
+          1735,
+          555
+        ],
+        "safe_rect_xywh": [
+          1450,
+          528,
+          380,
+          36
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_header",
+        "text": "任务情报",
+        "bbox_xyxy": [
+          1443,
+          628,
+          1531,
+          651
+        ],
+        "safe_rect_xywh": [
+          1443,
+          618,
+          150,
+          40
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_summary",
+        "text": "常驻 2 · 限时 1 · 深链 1",
+        "bbox_xyxy": [
+          1696,
+          626,
+          1832,
+          639
+        ],
+        "safe_rect_xywh": [
+          1620,
+          616,
+          212,
+          28
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_expanded",
+        "text": "已展开 4 / 4 ︿",
+        "bbox_xyxy": [
+          1749,
+          649,
+          1832,
+          661
+        ],
+        "safe_rect_xywh": [
+          1690,
+          642,
+          142,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_num_0",
+        "text": "01",
+        "bbox_xyxy": [
+          1464,
+          706,
+          1476,
+          714
+        ],
+        "safe_rect_xywh": [
+          1460,
+          693,
+          30,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_title_0",
+        "text": "51 区外围公路",
+        "bbox_xyxy": [
+          1492,
+          692,
+          1595,
+          708
+        ],
+        "safe_rect_xywh": [
+          1492,
+          684,
+          208,
+          28
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_meta_0",
+        "text": "科学纪实 · 耗时 2 天",
+        "bbox_xyxy": [
+          1492,
+          718,
+          1602,
+          729
+        ],
+        "safe_rect_xywh": [
+          1492,
+          711,
+          208,
+          22
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_tag_0",
+        "text": "常驻",
+        "bbox_xyxy": [
+          1800,
+          704,
+          1824,
+          715
+        ],
+        "safe_rect_xywh": [
+          1705,
+          688,
+          125,
+          42
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_num_1",
+        "text": "02",
+        "bbox_xyxy": [
+          1464,
+          770,
+          1476,
+          778
+        ],
+        "safe_rect_xywh": [
+          1460,
+          757,
+          30,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_title_1",
+        "text": "罗斯威尔档案残页",
+        "bbox_xyxy": [
+          1492,
+          755,
+          1620,
+          771
+        ],
+        "safe_rect_xywh": [
+          1492,
+          748,
+          208,
+          28
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_meta_1",
+        "text": "科学纪实 · 耗时 1 天",
+        "bbox_xyxy": [
+          1492,
+          782,
+          1602,
+          793
+        ],
+        "safe_rect_xywh": [
+          1492,
+          775,
+          208,
+          22
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_tag_1",
+        "text": "常驻",
+        "bbox_xyxy": [
+          1800,
+          768,
+          1824,
+          779
+        ],
+        "safe_rect_xywh": [
+          1705,
+          752,
+          125,
+          42
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_num_2",
+        "text": "03",
+        "bbox_xyxy": [
+          1464,
+          834,
+          1476,
+          842
+        ],
+        "safe_rect_xywh": [
+          1460,
+          821,
+          30,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_title_2",
+        "text": "突发：雷达异常光点",
+        "bbox_xyxy": [
+          1492,
+          820,
+          1636,
+          836
+        ],
+        "safe_rect_xywh": [
+          1492,
+          812,
+          208,
+          28
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_meta_2",
+        "text": "大众热度 · 耗时 2 天",
+        "bbox_xyxy": [
+          1492,
+          846,
+          1602,
+          857
+        ],
+        "safe_rect_xywh": [
+          1492,
+          839,
+          208,
+          22
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_tag_2",
+        "text": "限时至第 4 天",
+        "bbox_xyxy": [
+          1749,
+          832,
+          1824,
+          844
+        ],
+        "safe_rect_xywh": [
+          1705,
+          816,
+          125,
+          42
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_num_3",
+        "text": "04",
+        "bbox_xyxy": [
+          1464,
+          898,
+          1477,
+          906
+        ],
+        "safe_rect_xywh": [
+          1460,
+          885,
+          30,
+          32
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_title_3",
+        "text": "M330 末班车空白段",
+        "bbox_xyxy": [
+          1492,
+          883,
+          1636,
+          899
+        ],
+        "safe_rect_xywh": [
+          1492,
+          876,
+          208,
+          28
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_meta_3",
+        "text": "神秘玄学 · 耗时 2 天",
+        "bbox_xyxy": [
+          1492,
+          910,
+          1602,
+          921
+        ],
+        "safe_rect_xywh": [
+          1492,
+          903,
+          208,
+          22
+        ],
+        "passed": true
+      },
+      {
+        "key": "mission_tag_3",
+        "text": "深链",
+        "bbox_xyxy": [
+          1800,
+          896,
+          1824,
+          908
+        ],
+        "safe_rect_xywh": [
+          1705,
+          880,
+          125,
+          42
+        ],
+        "passed": true
+      },
+      {
+        "key": "primary_cta",
+        "text": "进入地区任务台  →",
+        "bbox_xyxy": [
+          1535,
+          983,
+          1741,
+          1008
+        ],
+        "safe_rect_xywh": [
+          1450,
+          969,
+          376,
+          50
+        ],
+        "passed": true
+      }
+    ]
+  },
+  "style_lock": {
+    "benchmark_identity_first": true,
+    "dashboard_negative_gate": true,
+    "military_archive_negative_gate": true,
+    "strategy_hud_negative_gate": true,
+    "five_second_family_test": "pass_parent_and_ui_designer_p0_0_p1_0_p2_0"
+  },
+  "internal_reviews": {
+    "ui_designer": {
+      "verdict": "PASS",
+      "p0": 0,
+      "p1": 0,
+      "p2": 0
+    },
+    "ux_laoge": {
+      "verdict": "PASS",
+      "p0": 0,
+      "p1": 0,
+      "p2": 0
+    },
+    "parent_three_up_benchmark_review": {
+      "verdict": "PASS",
+      "p0": 0,
+      "p1": 0,
+      "p2": 0
+    },
+    "user_art_direction_decision": "pending"
+  },
+  "visual_stats": {
+    "mean_rgb_240x135": [
+      67.71,
+      75.66,
+      73.63
+    ],
+    "stddev_rgb_240x135": [
+      66.73,
+      53.22,
+      42.52
+    ]
+  },
+  "review_boundary": {
+    "user_should_see_only_complete_player_view": true,
+    "imagegen_source_is_technical_input_not_separate_review": true,
+    "confirming_not_generated_until_default_acceptance": true,
+    "godot_unchanged": true,
+    "formal_contracts_unchanged": true,
+    "component_atlas_not_generated": true
+  }
+}

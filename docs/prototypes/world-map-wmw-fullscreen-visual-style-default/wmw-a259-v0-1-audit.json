@@ -1,0 +1,137 @@
+{
+  "status": "dual_reviewed_pending_user_material_selection",
+  "decision_source": "A261",
+  "generation_mode": "built-in imagegen",
+  "program_role": "只做 16:9 尺寸归一化、拼版、哈希和基础图像审计；不重绘、不调色、不增加 UI 内容。",
+  "source_reference": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-a258-01-light-indigo-sage-v0-1.png",
+  "final_size": [
+    1920,
+    1080
+  ],
+  "locked_contract": {
+    "desktop_aspect": "16:9",
+    "layout": "A 方案三栏功能与尺寸关系",
+    "palette": "A258 方案 1：浅暮靛背景、暖灰米纸、鼠尾草绿、灰靛、柔珊瑚、深鼠尾草 CTA",
+    "rectangular_image_slots": 8,
+    "mission_rows": 4,
+    "cta_count": 1,
+    "forbidden": [
+      "multi_photo_collage",
+      "irregular_image_mask",
+      "title_over_image",
+      "new_runtime_function",
+      "fake_text",
+      "fake_controls"
+    ]
+  },
+  "controlled_experiment": [
+    "既有静态装订与五金元素的材质转译",
+    "纸张、底板、油墨和表面颗粒",
+    "当代独立怪新闻周刊的情绪强弱",
+    "允许故事插图题材在不增加资源位与复杂度的前提下形成概念级变化"
+  ],
+  "variants": {
+    "1": {
+      "source": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-a259-01-uncoated-independent-weekly-v0-1-imagegen.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "source_sha256": "d081cd5f141109247a800ecdccce81a3e1b3afee1d6f2c08917e11ad54a2bb27",
+      "output": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-a259-01-uncoated-independent-weekly-v0-1.png",
+      "output_size": [
+        1920,
+        1080
+      ],
+      "output_sha256": "05993fe9b29799047c1899529e757b258ae3301a6feeb5312a435a9242dabe64",
+      "mean_rgb": [
+        98.35,
+        103.62,
+        112.99
+      ],
+      "aspect_delta_from_16_9": 0.00094462
+    },
+    "2": {
+      "source": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-a259-02-cloth-spine-special-v0-1-imagegen.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "source_sha256": "5e61ff4f5372c3bfda99252eb380f679fb34c016f9cefe089f74141cb0a82b6c",
+      "output": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-a259-02-cloth-spine-special-v0-1.png",
+      "output_size": [
+        1920,
+        1080
+      ],
+      "output_sha256": "9349918f64175d0f683909fd4c104b8fb4414bf9928bbd12f528e0870d8a8047",
+      "mean_rgb": [
+        93.07,
+        96.68,
+        104.75
+      ],
+      "aspect_delta_from_16_9": 0.00094462
+    },
+    "3": {
+      "source": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-a259-03-fine-mesh-silkscreen-v0-1-imagegen.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "source_sha256": "9276e280cfde582b166abb0f051ed1590b9367ae92c6d0d656e652310641e29b",
+      "output": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-a259-03-fine-mesh-silkscreen-v0-1.png",
+      "output_size": [
+        1920,
+        1080
+      ],
+      "output_sha256": "d70b0900a1852124cddecd84c8437f5026e8bbfeb3fd32eee667e784718fd7a0",
+      "mean_rgb": [
+        97.97,
+        104.44,
+        116.68
+      ],
+      "aspect_delta_from_16_9": 0.00094462
+    }
+  },
+  "comparison_board": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-a259-v0-1-comparison-board.png",
+  "comparison_board_size": [
+    3840,
+    2312
+  ],
+  "review": {
+    "parent": {
+      "verdict": "PASS",
+      "ranking": [
+        "1",
+        "2",
+        "3"
+      ],
+      "summary": "三套整屏对齐稳定；首轮丝印草稿因地图和故事图漂移已在交付前淘汰，未进入最终文件。"
+    },
+    "ux": {
+      "verdict": {
+        "1": "PASS_P0_0_P1_0_P2_1",
+        "2": "PASS_P0_0_P1_0_P2_2",
+        "3": "PASS_P0_0_P1_0_P2_2"
+      },
+      "ranking": [
+        "1",
+        "2",
+        "3"
+      ],
+      "summary": "三套均可交用户裁决；方案 1 最稳定地读成当代成人怪新闻周刊。"
+    },
+    "ui": {
+      "verdict": {
+        "1": "PASS_P0_0_P1_0_P2_1",
+        "2": "ITERATE_P0_0_P1_1_P2_1",
+        "3": "ITERATE_P0_0_P1_2_P2_0"
+      },
+      "ranking": [
+        "1",
+        "2",
+        "3"
+      ],
+      "summary": "方案 1 最易按九宫格、纸材 atlas 与轻量 shader 落地；方案 2 需防布纹摩尔纹，方案 3 需恢复色彩采样并分区控制网点。"
+    }
+  }
+}

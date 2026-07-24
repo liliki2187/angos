@@ -1,0 +1,315 @@
+{
+  "artifact_type": "derived_component_candidate_spec",
+  "id": "wmw_schedule_gate_candidate_v0_1",
+  "version": "0.1",
+  "status": "user_accepted_a240_asset_mother_authorized",
+  "target_only": true,
+  "scope": "WMW 1920x1080 桌面版左下全局日程器；不是正式 UI 合同、Godot 实现或有色资产。",
+  "sources": {
+    "layout_truth": "black-white-full-map-v5-1-default.png",
+    "confirming_truth": "black-white-full-map-v5-1-schedule-confirming.png",
+    "bridge_brief": "2026-07-20-world-map-wmw-v5-1-assetization-bridge-brief.md",
+    "legacy_reference_only": "design/ui-contracts/region-task-board/schedule_contract.json",
+    "legacy_atlas_reference_only": "gd_project/Assets/ui/angus_packaging/region_task/assetized/rt-advance-day-atlas.png"
+  },
+  "coordinate_policy": {
+    "runtime_resolution": [1920, 1080],
+    "runtime_component_rect_xywh": [36, 810, 342, 246],
+    "runtime_local_integer_pixels_are_authoritative": true,
+    "reference_resolution": [1280, 720],
+    "reference_component_size": [228, 164],
+    "future_asset_export_size": [456, 328],
+    "future_asset_display_scale": 0.75,
+    "formal_contract_normalization": "deferred_until_user_acceptance"
+  },
+  "component_geometry_runtime_local_xywh": {
+    "component_rect": [0, 0, 342, 246],
+    "input_capture_rect": [0, 0, 342, 246],
+    "activation_hit_rect": [12, 74, 318, 100],
+    "section_label_safe": [12, 2, 116, 14],
+    "date_row": [16, 16, 310, 48],
+    "date_current_safe": [28, 26, 132, 28],
+    "date_remaining_safe": [190, 26, 124, 28],
+    "action_zone": [12, 74, 318, 100],
+    "icon_well": [26, 88, 70, 70],
+    "icon_glyph_safe": [42, 104, 38, 38],
+    "action_title_safe": [114, 88, 202, 34],
+    "action_subtitle_safe": [114, 132, 202, 24],
+    "info_separator_1": [16, 182, 310, 1],
+    "info_row_1": [16, 182, 310, 24],
+    "info_row_1_text_safe": [16, 184, 310, 20],
+    "info_separator_2": [16, 210, 310, 1],
+    "info_row_2": [16, 210, 310, 24],
+    "info_row_2_text_safe": [16, 212, 310, 20],
+    "focus_ring": [2, 2, 338, 242]
+  },
+  "content_anchors_runtime_local": {
+    "section_label": {"point": [12, 9], "align": "left_center"},
+    "current_day": {"point": [28, 40], "align": "left_center"},
+    "remaining_days": {"point": [314, 40], "align": "right_center"},
+    "icon": {"point": [61, 123], "align": "center"},
+    "primary": {"point": [114, 105], "align": "left_center"},
+    "secondary": {"point": [114, 144], "align": "left_center"},
+    "info_line_1": {"point": [16, 194], "align": "left_center"},
+    "info_line_2": {"point": [16, 222], "align": "left_center"}
+  },
+  "copy_capacity": {
+    "single_line_only": true,
+    "font_sizes_px": {"section": 11, "date": 16, "primary_bold": 22, "secondary": 12, "info": 12},
+    "max_fullwidth_units": {"primary": 10, "secondary": 15, "info": 22},
+    "overflow_policy": "内容合同失败；不得缩字、换行或倾斜。"
+  },
+  "layer_policy": {
+    "base": "未来只允许一张无字母版：外纸、日期栏、动作栏、图标井、两条信息栏。",
+    "runtime_content": [
+      "栏目名",
+      "当前日",
+      "剩余日",
+      "主文案",
+      "副文案",
+      "箭头、叹号、执行中符号",
+      "推进后果",
+      "到期提示"
+    ],
+    "state_layers": [
+      "hover",
+      "focus",
+      "pressed",
+      "confirming",
+      "executing",
+      "idle_error",
+      "disabled"
+    ],
+    "external_shadow_owner": "runtime_host",
+    "external_shadow_inside_interactive_alpha": false,
+    "whole_component_or_screen_swap_for_state": false,
+    "bake_runtime_text_or_icons": false
+  },
+  "state_machine": {
+    "stable_states": [
+      "idle_enabled",
+      "confirming",
+      "executing",
+      "disabled_runtime_unavailable",
+      "disabled_zero_days"
+    ],
+    "semantic_modifier_states": ["idle_error"],
+    "transient_semantic_state": "committed",
+    "transitions": [
+      "idle_enabled --activation_hit_rect_first_activate--> confirming",
+      "confirming --activation_hit_rect_second_activate--> executing",
+      "confirming --Esc/click_outside/context_change--> idle_enabled",
+      "executing --success--> committed",
+      "executing --failure--> idle_error",
+      "idle_error --activation_hit_rect_activate--> confirming",
+      "idle_error --context_change/success--> clear_error",
+      "committed --remaining_days_gt_0--> idle_enabled_with_atomic_refresh",
+      "committed --remaining_days_eq_0--> editorial_phase",
+      "runtime_capability_missing --> disabled_runtime_unavailable",
+      "remaining_days_eq_0 --> disabled_zero_days"
+    ],
+    "committed_visual_policy": "不建立独立稳定皮肤；非最后一天成功标记保留 180–300ms，随后原子刷新日期、剩余天数和到期结果并回 idle；最后一天允许 0ms 直接进入编辑部。",
+    "executing_lock": "锁定完整 input_capture_rect [0,0,342,246]，拒绝重复提交。",
+    "input_semantics": {
+      "activation": "idle / confirming / idle_error 仅 activation_hit_rect [12,74,318,100] 可首次或二次激活命令。",
+      "passive_regions": "日期栏、两条信息栏只读；点击这些组件内区域不得激活或取消。",
+      "outside_cancel": "仅 pointer-down 位于 input_capture_rect 之外时取消 confirming。",
+      "executing_capture": "executing 时 input_capture_rect 全部消费输入，但任何位置都不得再次提交。"
+    }
+  },
+  "copy_matrix": {
+    "idle_enabled_fixture_day_1": {
+      "date_current": "当前第 1 天",
+      "date_remaining": "剩余 7 天",
+      "icon": "→",
+      "title": "推进到下一天",
+      "subtitle": "点击后查看推进影响",
+      "info_1": "当前：无任务到期",
+      "info_2": "日程归零：进入编辑部阶段"
+    },
+    "confirming_fixture_day_1": {
+      "date_current": "当前第 1 天",
+      "date_remaining": "剩余 7 天",
+      "icon": "!",
+      "title": "确认推进到第 2 天",
+      "subtitle": "再次点击执行 · 后果见下方",
+      "info_1": "确认后：剩余 6 天 · 无任务到期",
+      "info_2": "限时任务：雷达异常仍开放至第 4 天"
+    },
+    "confirming_last_day_example": {
+      "date_current_template": "当前第 {current_day} 天",
+      "date_remaining": "剩余 1 天",
+      "icon": "!",
+      "title": "确认结束本周日程",
+      "subtitle": "再次点击执行 · 将进入编辑部",
+      "info_1": "确认后：剩余 0 天 · 进入编辑部阶段",
+      "info_2_source": "dynamic_summary_contract.final_rendered_lines.due_info_2.zero"
+    },
+    "executing": {
+      "date_policy": "提交完成前保持提交前的当前日和剩余日。",
+      "icon": "runtime_progress",
+      "title_template": "正在推进到第 {next_day} 天",
+      "subtitle": "命令已提交 · 请稍候",
+      "info_1_source": "dynamic_summary_contract.final_rendered_lines.executing_info_1",
+      "info_2_source": "dynamic_summary_contract.final_rendered_lines.deadline_info_2"
+    },
+    "committed_fixture_day_2": {
+      "date_current": "当前第 2 天",
+      "date_remaining": "剩余 6 天",
+      "icon": "✓",
+      "title": "已推进到第 2 天",
+      "subtitle": "日程已更新",
+      "info_1": "结果：剩余 6 天 · 无任务到期",
+      "info_2": "限时任务：雷达异常仍开放至第 4 天",
+      "min_visible_ms": 180,
+      "max_visible_ms": 300
+    },
+    "executing_last_day_example": {
+      "date_current_template": "当前第 {current_day} 天",
+      "date_remaining": "剩余 1 天",
+      "icon": "runtime_progress",
+      "title": "正在结束本周日程",
+      "subtitle": "命令已提交 · 请稍候",
+      "info_1": "预计：剩余 0 天 · 进入编辑部阶段",
+      "info_2_source": "dynamic_summary_contract.final_rendered_lines.due_info_2"
+    },
+    "committed_last_day_example": {
+      "date_current": "本周日程结束",
+      "date_remaining": "剩余 0 天",
+      "icon": "✓",
+      "title": "本周日程已结束",
+      "subtitle": "正在进入编辑部阶段",
+      "info_1_template": "结果：剩余 0 天 · {expiry_summary}",
+      "info_2": "下一阶段：编辑部",
+      "max_visible_ms": 0
+    },
+    "disabled_runtime_unavailable": {
+      "icon": "—",
+      "title": "推进功能暂不可用",
+      "subtitle": "独立日程命令尚未接入",
+      "info_1": "当前：无任务到期",
+      "info_2": "请继续处理地区任务"
+    },
+    "disabled_zero_days": {
+      "date_current": "本周日程结束",
+      "date_remaining": "剩余 0 天",
+      "icon": "✓",
+      "title": "本周日程已结束",
+      "subtitle": "正在进入编辑部阶段",
+      "info_1": "剩余 0 天 · 不可继续推进",
+      "info_2": "下一阶段：编辑部"
+    },
+    "idle_error": {
+      "date_policy": "保持提交前当前日与剩余日；失败不得消耗天数。",
+      "icon": "!",
+      "title": "推进未完成",
+      "subtitle_template": "失败：{short_error}",
+      "info_1": "未消耗天数 · 日程保持不变",
+      "info_2": "再次点击推进区可重试",
+      "clear_on": ["再次激活", "context_change", "下一次成功"],
+      "short_error_max_fullwidth_units": 12
+    }
+  },
+  "dynamic_summary_contract": {
+    "short_task_name_max_fullwidth_units": 8,
+    "deadline_day_max_digits": 2,
+    "display_count_max": 99,
+    "display_count_overflow": "99+",
+    "composition_policy": "下列格式直接产出最终渲染整行，不得再由外层模板追加“预计、到期提示、限时任务”等前缀。",
+    "final_rendered_lines": {
+      "confirming_info_1": {
+        "zero": "确认后：剩余 {next_remaining_days} 天 · 无任务到期",
+        "one": "确认后：剩余 {next_remaining_days} 天 · 到期 {short_task_name}",
+        "many": "确认后：剩余 {next_remaining_days} 天 · 到期 {count} 项"
+      },
+      "executing_info_1": {
+        "zero": "预计：剩余 {next_remaining_days} 天 · 无任务到期",
+        "one": "预计：剩余 {next_remaining_days} 天 · 到期 {short_task_name}",
+        "many": "预计：剩余 {next_remaining_days} 天 · 到期 {count} 项"
+      },
+      "due_info_2": {
+        "zero": "到期提示：本次推进无任务到期",
+        "one": "到期：{short_task_name}",
+        "many": "到期：{count} 项"
+      },
+      "deadline_info_2": {
+        "zero": "限时任务：无",
+        "one": "限时任务：{short_task_name}仍开放至第 {deadline_day} 天",
+        "many": "限时任务：{count} 项 · 最早第 {earliest_deadline_day} 天"
+      }
+    },
+    "overflow_policy": "短任务名超过 8 个全角单位时，必须使用内容层提供的 short_title；缺失 short_title 视为内容合同失败。不得自由截断、缩字或换行。",
+    "detail_owner": "右侧任务情报与具体任务行；日程器只显示 0/1/N 聚合。",
+    "pressure_fixtures": [
+      "确认后：剩余 99 天 · 无任务到期",
+      "确认后：剩余 99 天 · 到期 北境深层雷达异常",
+      "确认后：剩余 99 天 · 到期 99 项",
+      "确认后：剩余 99 天 · 到期 99+ 项",
+      "预计：剩余 99 天 · 无任务到期",
+      "预计：剩余 99 天 · 到期 北境深层雷达异常",
+      "预计：剩余 99 天 · 到期 99 项",
+      "预计：剩余 99 天 · 到期 99+ 项",
+      "到期提示：本次推进无任务到期",
+      "到期：北境深层雷达异常",
+      "到期：99 项",
+      "到期：99+ 项",
+      "限时任务：无",
+      "限时任务：北境深层雷达异常仍开放至第 99 天",
+      "限时任务：99 项 · 最早第 99 天",
+      "限时任务：99+ 项 · 最早第 99 天",
+      "失败：服务器未返回结算结果",
+      "未消耗天数 · 日程保持不变",
+      "再次点击推进区可重试"
+    ]
+  },
+  "interaction_modifiers": {
+    "hover": "仅 idle_enabled / confirming / idle_error 的 action_zone 增强边线或局部明度；不改变几何、文字或热区。",
+    "focus": "仅 idle_enabled / confirming / idle_error 在 [2,2,338,242] 显示 2px 连续内焦点环；Enter/Space 仅激活 activation_hit_rect 对应动作语义。",
+    "pressed": "仅 idle_enabled / confirming / idle_error 的 activation_hit_rect / action_zone 提供瞬时压下反馈；不位移文字、图标或热区。",
+    "disabled": "不响应 hover / pressed，不进入键盘焦点序列。",
+    "executing": "忽略全部重复输入；不得叠加 hover / pressed。"
+  },
+  "confirmation_exit_rules": [
+    "Esc",
+    "点击 input_capture_rect 之外",
+    "切换地区",
+    "周、阶段或其他关键上下文变化"
+  ],
+  "runtime_truth_boundary": {
+    "independent_advance_day_supported_now": false,
+    "mock_must_be_labeled_target_only": true,
+    "real_build_without_capability_must_show": "disabled_runtime_unavailable",
+    "no_negative_remaining_days": true,
+    "remaining_days_formula": "next_remaining_days = max(remaining_days - 1, 0)"
+  },
+  "state_delta_allowed_runtime_local_xywh": {
+    "date_glyphs": [16, 16, 310, 48],
+    "action_feedback": [12, 74, 318, 100],
+    "icon_glyph": [42, 104, 38, 38],
+    "info_glyphs": [16, 184, 310, 48],
+    "focus_ring": [2, 2, 338, 242]
+  },
+  "immutable_between_states": [
+    "outer_shell",
+    "date_module_geometry",
+    "action_module_geometry",
+    "icon_well_geometry",
+    "separators",
+    "external_shadow_geometry"
+  ],
+  "legacy_reuse_boundary": {
+    "schedule_contract": "只继承无字母版 + runtime 内容、二次确认、未来接入前禁用三条原则；不继承 1436x140 横向几何。",
+    "rt_advance_day_atlas": "只参考日历/箭头和 enabled/hover/pressed/focus 的语义覆盖范围；不复用外框、比例、颜色皮肤或整帧。"
+  },
+  "acceptance_gates": [
+    "所有稳定状态保持 342x246 同几何；input_capture_rect 与 activation_hit_rect 职责固定且不得混写。",
+    "idle / confirming 点击日期栏或信息栏不得执行；点击组件外取消 confirming；executing 锁定完整输入捕获区。",
+    "idle 与 confirming 必须能逐像素回放 v5.1 对应 crop。",
+    "所有状态文字 bbox 必须落在各自 safe rect 内。",
+    "0/1/N 到期摘要、双位数数量 / 截止日、最长 short_title 与 idle_error 必须通过压力 bbox。",
+    "最后一天确认明确剩余 0 天并进入编辑部，不出现下一天空状态或负数。",
+    "真实 runtime 未接入时不得显示 enabled。",
+    "不修改 design/ui-contracts、Godot 或 compact A5.1。",
+    "不生成有色资产或有色整屏。"
+  ]
+}

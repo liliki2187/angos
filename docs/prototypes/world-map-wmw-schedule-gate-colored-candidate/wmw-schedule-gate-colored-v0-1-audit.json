@@ -1,0 +1,715 @@
+{
+  "artifact_type": "derived_no_text_component_candidate_audit",
+  "version": "schedule_gate_v0_1_colored",
+  "status": "technical_pipeline_evidence_only_not_visual_candidate_a242",
+  "target_only": true,
+  "source_truth": {
+    "built_in_imagegen_used": true,
+    "imagegen_source": "wmw-schedule-gate-material-ingredients-imagegen-source-v0-1.png",
+    "material_manifest": "wmw-schedule-gate-material-ingredients-v0-1-manifest.json",
+    "candidate_spec": "D:\\angos\\docs\\prototypes\\world-map-wmw-black-white-structure\\schedule-gate-v0-1-candidate-spec.json",
+    "benchmark_branch": "clean-lowpoly-weekly"
+  },
+  "review_status": {
+    "ui_designer": "pass_p0_0_p1_0_p2_1",
+    "ux_laoge": "pass_p0_0_p1_0_p2_1",
+    "remaining_p2": "date module downsamples to 49px height versus 48px target; within approved <=1px tolerance",
+    "user_visual_decision": "withdrawn_a242_missing_approved_fullscreen_style_mock"
+  },
+  "outputs": {
+    "work_no_text": {
+      "file": "wmw-schedule-gate-no-text-work-1368x984-v0-1.png",
+      "size": [
+        1368,
+        984
+      ]
+    },
+    "master_no_text": {
+      "file": "wmw-schedule-gate-no-text-master-456x328-v0-1.png",
+      "size": [
+        456,
+        328
+      ]
+    },
+    "runtime_no_text": {
+      "file": "wmw-schedule-gate-no-text-runtime-342x246-v0-1.png",
+      "size": [
+        342,
+        246
+      ]
+    },
+    "runtime_states": {
+      "idle": "wmw-schedule-gate-state-idle-342x246-v0-1.png",
+      "confirming": "wmw-schedule-gate-state-confirming-342x246-v0-1.png",
+      "executing": "wmw-schedule-gate-state-executing-342x246-v0-1.png",
+      "runtime-unavailable": "wmw-schedule-gate-state-runtime-unavailable-342x246-v0-1.png",
+      "idle-error": "wmw-schedule-gate-state-idle-error-342x246-v0-1.png",
+      "confirming-last-day": "wmw-schedule-gate-state-confirming-last-day-342x246-v0-1.png",
+      "zero-days": "wmw-schedule-gate-state-zero-days-342x246-v0-1.png"
+    },
+    "technical_evidence_boards": [
+      "wmw-schedule-gate-colored-v0-1-full-pipeline-walkthrough-1920x1080.png",
+      "wmw-schedule-gate-colored-v0-1-runtime-states-review-1920x1080.png",
+      "wmw-schedule-gate-colored-v0-1-material-geometry-review-1920x1080.png"
+    ],
+    "user_review_boards": []
+  },
+  "hashes_sha256": {
+    "source": "2fc9746cac1a95e716686c2a66f349a4ef09ec029c6d85185bfcf0a173a2c1ce",
+    "work": "d7cfed57866c35b1b9a202e7f8a9bfce3adf8a132e631d86055152b1f351bf8b",
+    "master": "55ccc145fca5c25673ec9de1ae3a6e9d2b267baa86082267f0287a9a0cb8f933",
+    "runtime_no_text": "f590e4944eee4f38145a2bd92970fbd34f146e722c2d4f5862242ae21e52eb01",
+    "material_review_board": "6bfe3f79d6de4c19578f1759ddf5096214d4ee09fa3eb61af657d7d7771a6f20",
+    "state_review_board": "ef9e63966ddc64e25faf0de73fa7171e27026af081886f318fced6caaad6d88c",
+    "full_pipeline_walkthrough": "9c05ddabb86e1246923a61ae1850a0f06645d1c21267f522ca5bd798a04633f1",
+    "state_idle": "bd7ff08b92e40ca563e03d1f84b8a56a179aac1cca5bbd712dbb6a27c301138e",
+    "state_confirming": "107a31ae5287ba343b829f91e0feae61d232d006091aae9de80bdf7c8ed8a603",
+    "state_executing": "c30e0c4a8ffc8f16407ee6ec14dd9c8ce7a6a11f91fe3f77b53dd109e701e6f8",
+    "state_runtime-unavailable": "41ad78fe1ee8a46f09f41e9947afe42eccdeb27235ba1cdbe988d0cd9a5d2ec3",
+    "state_idle-error": "9e833ec744a2333997df31502d0ff8c6aaff7962de4a7f0483b7318fffc9b7ba",
+    "state_confirming-last-day": "a0dfb4b22d12dfb1724644d7325a1ee7f40a470e5137cc03e534990f2771bc77",
+    "state_zero-days": "9b2b808ea40a1a0bf1e86396ea95cc12a6e11af4f11537f04fb3aa6a703489e5"
+  },
+  "geometry": {
+    "runtime_local_integer_pixels_authoritative": true,
+    "work_scale_from_runtime": 4,
+    "work_to_master_scale": [
+      1,
+      3
+    ],
+    "master_to_runtime_scale": 0.75,
+    "records": [
+      {
+        "key": "date",
+        "expected_xywh": [
+          16,
+          16,
+          310,
+          48
+        ],
+        "actual_xywh": [
+          16,
+          16,
+          310,
+          49
+        ],
+        "delta_px": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "passed_within_1px": true
+      },
+      {
+        "key": "action",
+        "expected_xywh": [
+          12,
+          74,
+          318,
+          100
+        ],
+        "actual_xywh": [
+          12,
+          74,
+          318,
+          100
+        ],
+        "delta_px": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "passed_within_1px": true
+      },
+      {
+        "key": "icon",
+        "expected_xywh": [
+          26,
+          88,
+          70,
+          70
+        ],
+        "actual_xywh": [
+          26,
+          88,
+          70,
+          70
+        ],
+        "delta_px": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "passed_within_1px": true
+      },
+      {
+        "key": "info_1",
+        "expected_xywh": [
+          16,
+          182,
+          310,
+          24
+        ],
+        "actual_xywh": [
+          16,
+          182,
+          310,
+          24
+        ],
+        "delta_px": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "passed_within_1px": true
+      },
+      {
+        "key": "info_2",
+        "expected_xywh": [
+          16,
+          210,
+          310,
+          24
+        ],
+        "actual_xywh": [
+          16,
+          210,
+          310,
+          24
+        ],
+        "delta_px": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "passed_within_1px": true
+      }
+    ],
+    "all_within_1px": true,
+    "input_capture_rect_xywh": [
+      0,
+      0,
+      342,
+      246
+    ],
+    "activation_hit_rect_xywh": [
+      12,
+      74,
+      318,
+      100
+    ]
+  },
+  "alpha": {
+    "mode": "RGBA",
+    "visible_bbox_xyxy": [
+      0,
+      0,
+      456,
+      328
+    ],
+    "full_456x328_bbox_no_padding": true,
+    "alpha_zero_nonzero_rgb_values": 0,
+    "external_shadow_pixels": 0
+  },
+  "color_roles": {
+    "mother_tokens": {
+      "warm": [
+        183,
+        164,
+        136
+      ],
+      "olive": [
+        83,
+        100,
+        61
+      ],
+      "ivory": [
+        192,
+        185,
+        179
+      ],
+      "ink": [
+        31,
+        36,
+        37
+      ]
+    },
+    "base_warning_rust_near_pixels": 0,
+    "base_teal_near_pixels": 0,
+    "warning_rust_owner": "runtime confirming / idle_error overlay",
+    "teal_owner": "runtime executing overlay"
+  },
+  "text_safe_area": {
+    "checked_state_text_records": 56,
+    "expected_state_text_records": 56,
+    "violations": [],
+    "passed": true
+  },
+  "dynamic_copy_pressure": {
+    "checked_records": 20,
+    "expected_records": 20,
+    "records": [
+      {
+        "key": "pressure_0",
+        "text": "确认后：剩余 99 天 · 无任务到期",
+        "bbox_xyxy": [
+          16,
+          189,
+          193,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "pressure_1",
+        "text": "确认后：剩余 99 天 · 到期 北境深层雷达异常",
+        "bbox_xyxy": [
+          16,
+          189,
+          257,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "pressure_2",
+        "text": "确认后：剩余 99 天 · 到期 99 项",
+        "bbox_xyxy": [
+          16,
+          189,
+          191,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "pressure_3",
+        "text": "确认后：剩余 99 天 · 到期 99+ 项",
+        "bbox_xyxy": [
+          16,
+          189,
+          200,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "pressure_4",
+        "text": "预计：剩余 99 天 · 无任务到期",
+        "bbox_xyxy": [
+          16,
+          189,
+          181,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "pressure_5",
+        "text": "预计：剩余 99 天 · 到期 北境深层雷达异常",
+        "bbox_xyxy": [
+          16,
+          189,
+          245,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "pressure_6",
+        "text": "预计：剩余 99 天 · 到期 99 项",
+        "bbox_xyxy": [
+          16,
+          189,
+          179,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "pressure_7",
+        "text": "预计：剩余 99 天 · 到期 99+ 项",
+        "bbox_xyxy": [
+          16,
+          189,
+          188,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "pressure_8",
+        "text": "到期提示：本次推进无任务到期",
+        "bbox_xyxy": [
+          16,
+          217,
+          184,
+          229
+        ],
+        "safe_rect_xywh": [
+          16,
+          212,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "pressure_9",
+        "text": "到期：北境深层雷达异常",
+        "bbox_xyxy": [
+          16,
+          217,
+          148,
+          229
+        ],
+        "safe_rect_xywh": [
+          16,
+          212,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "pressure_10",
+        "text": "到期：99 项",
+        "bbox_xyxy": [
+          16,
+          217,
+          82,
+          229
+        ],
+        "safe_rect_xywh": [
+          16,
+          212,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "pressure_11",
+        "text": "到期：99+ 项",
+        "bbox_xyxy": [
+          16,
+          217,
+          91,
+          229
+        ],
+        "safe_rect_xywh": [
+          16,
+          212,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "pressure_12",
+        "text": "限时任务：无",
+        "bbox_xyxy": [
+          16,
+          217,
+          88,
+          229
+        ],
+        "safe_rect_xywh": [
+          16,
+          212,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "pressure_13",
+        "text": "限时任务：北境深层雷达异常仍开放至第 99 天",
+        "bbox_xyxy": [
+          16,
+          217,
+          266,
+          229
+        ],
+        "safe_rect_xywh": [
+          16,
+          212,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "pressure_14",
+        "text": "限时任务：99 项 · 最早第 99 天",
+        "bbox_xyxy": [
+          16,
+          217,
+          187,
+          229
+        ],
+        "safe_rect_xywh": [
+          16,
+          212,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "pressure_15",
+        "text": "限时任务：99+ 项 · 最早第 99 天",
+        "bbox_xyxy": [
+          16,
+          217,
+          196,
+          229
+        ],
+        "safe_rect_xywh": [
+          16,
+          212,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "pressure_16",
+        "text": "失败：服务器未返回结算结果",
+        "bbox_xyxy": [
+          114,
+          138,
+          270,
+          151
+        ],
+        "safe_rect_xywh": [
+          114,
+          132,
+          202,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "pressure_17",
+        "text": "未消耗天数 · 日程保持不变",
+        "bbox_xyxy": [
+          16,
+          189,
+          159,
+          200
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "pressure_18",
+        "text": "再次点击推进区可重试",
+        "bbox_xyxy": [
+          16,
+          216,
+          136,
+          228
+        ],
+        "safe_rect_xywh": [
+          16,
+          212,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "pressure_19",
+        "text": "确认后：剩余 0 天 · 进入编辑部阶段",
+        "bbox_xyxy": [
+          16,
+          189,
+          210,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      }
+    ],
+    "violations": [],
+    "passed": true
+  },
+  "state_layering": {
+    "one_master_hash_for_all_states": "55ccc145fca5c25673ec9de1ae3a6e9d2b267baa86082267f0287a9a0cb8f933",
+    "state_count": 7,
+    "baked_runtime_text_or_icons": false,
+    "whole_component_swap_required": false,
+    "static_snapshots_do_not_prove_runtime_timing_or_input": true,
+    "runtime_overlay_metrics": {
+      "confirming_rust": {
+        "mask_xywh": [
+          12,
+          74,
+          318,
+          100
+        ],
+        "color_rgb": [
+          126,
+          72,
+          48
+        ],
+        "outline_width_px": 3,
+        "top_accent_alpha": 150
+      },
+      "idle_error_rust": {
+        "mask_xywh": [
+          12,
+          74,
+          318,
+          100
+        ],
+        "color_rgb": [
+          126,
+          72,
+          48
+        ],
+        "outline_width_px": 3,
+        "bottom_accent_alpha": 220
+      },
+      "executing_teal": {
+        "mask_xywh": [
+          12,
+          74,
+          318,
+          100
+        ],
+        "color_rgb": [
+          48,
+          67,
+          67
+        ],
+        "outline_width_px": 3,
+        "hatch_alpha": 115
+      },
+      "disabled_gray": {
+        "mask_xywh": [
+          12,
+          74,
+          318,
+          100
+        ],
+        "color_rgb": [
+          103,
+          101,
+          84
+        ],
+        "fill_alpha": 218,
+        "outline_width_px": 3
+      }
+    }
+  },
+  "review_board_layout": {
+    "runtime_states_title_target_rect_xywh": [
+      36,
+      24,
+      900,
+      48
+    ],
+    "runtime_states_title_glyph_bbox_xyxy": [
+      36,
+      24,
+      913,
+      49
+    ],
+    "runtime_states_title_not_clipped": true,
+    "user_review_context_present": {
+      "purpose": true,
+      "why_now": true,
+      "user_judgement": true
+    },
+    "full_authorized_pipeline_present": [
+      "imagegen_source",
+      "role_crops",
+      "normalized_materials",
+      "1368x984_deterministic_assembly",
+      "456x328_no_text_master",
+      "342x246_runtime_replay",
+      "runtime_state_overlays",
+      "seven_final_visible_states"
+    ]
+  },
+  "assertions": {
+    "true_imagegen_source_preserved": true,
+    "master_is_real_456x328_rgba_png": true,
+    "runtime_replay_is_real_342x246_png": true,
+    "review_boards_are_real_1920x1080_png": true,
+    "no_text_or_icon_baked_in_mother_by_construction": true,
+    "all_text_inside_existing_safe_rects": true,
+    "all_pressure_strings_inside_existing_safe_rects": true,
+    "formal_ui_contract_unchanged": true,
+    "godot_runtime_unchanged": true,
+    "compact_a51_unchanged": true,
+    "colored_full_screen_not_generated": true,
+    "not_a_fullscreen_visual_style_candidate": true,
+    "component_asset_expansion_paused_by_a242": true
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "artifact_type": "imagegen_material_ingredient_manifest",
+  "version": "schedule_gate_v0_1",
+  "source": "wmw-schedule-gate-material-ingredients-imagegen-source-v0-1.png",
+  "source_size": [
+    1477,
+    1065
+  ],
+  "source_sha256": "2fc9746cac1a95e716686c2a66f349a4ef09ec029c6d85185bfcf0a173a2c1ce",
+  "ingredients": {
+    "warm": {
+      "source_crop_xyxy": [
+        30,
+        32,
+        712,
+        512
+      ],
+      "source_crop_file": "wmw-schedule-gate-ingredient-warm-imagegen-v0-1.png",
+      "normalized_file": "wmw-schedule-gate-ingredient-warm-normalized-v0-1.png",
+      "source_crop_stats": {
+        "median_rgb": [
+          189,
+          168,
+          137
+        ],
+        "mean_rgb": [
+          185.12,
+          164.96,
+          134.12
+        ],
+        "std_luminance": 8.97,
+        "min_luminance": 138.16,
+        "max_luminance": 189.87
+      },
+      "normalized_stats": {
+        "median_rgb": [
+          182,
+          163,
+          135
+        ],
+        "mean_rgb": [
+          181.03,
+          161.5,
+          133.92
+        ],
+        "std_luminance": 4.56,
+        "min_luminance": 151.02,
+        "max_luminance": 176.02
+      },
+      "target_rgb": [
+        183,
+        164,
+        136
+      ]
+    },
+    "olive": {
+      "source_crop_xyxy": [
+        760,
+        32,
+        1444,
+        512
+      ],
+      "source_crop_file": "wmw-schedule-gate-ingredient-olive-imagegen-v0-1.png",
+      "normalized_file": "wmw-schedule-gate-ingredient-olive-normalized-v0-1.png",
+      "source_crop_stats": {
+        "median_rgb": [
+          85,
+          91,
+          53
+        ],
+        "mean_rgb": [
+          81.78,
+          88.43,
+          52.01
+        ],
+        "std_luminance": 7.28,
+        "min_luminance": 61.35,
+        "max_luminance": 102.84
+      },
+      "normalized_stats": {
+        "median_rgb": [
+          83,
+          100,
+          61
+        ],
+        "mean_rgb": [
+          80.75,
+          98.09,
+          59.42
+        ],
+        "std_luminance": 3.49,
+        "min_luminance": 81.57,
+        "max_luminance": 101.57
+      },
+      "target_rgb": [
+        83,
+        100,
+        61
+      ]
+    },
+    "ivory": {
+      "source_crop_xyxy": [
+        30,
+        555,
+        712,
+        1032
+      ],
+      "source_crop_file": "wmw-schedule-gate-ingredient-ivory-imagegen-v0-1.png",
+      "normalized_file": "wmw-schedule-gate-ingredient-ivory-normalized-v0-1.png",
+      "source_crop_stats": {
+        "median_rgb": [
+          208,
+          198,
+          182
+        ],
+        "mean_rgb": [
+          206.48,
+          195.8,
+          179.96
+        ],
+        "std_luminance": 5.96,
+        "min_luminance": 173.47,
+        "max_luminance": 212.76
+      },
+      "normalized_stats": {
+        "median_rgb": [
+          191,
+          184,
+          178
+        ],
+        "mean_rgb": [
+          191.53,
+          185.99,
+          176.37
+        ],
+        "std_luminance": 1.23,
+        "min_luminance": 180.05,
+        "max_luminance": 189.05
+      },
+      "target_rgb": [
+        192,
+        185,
+        179
+      ]
+    },
+    "ink": {
+      "source_crop_xyxy": [
+        760,
+        555,
+        1444,
+        1032
+      ],
+      "source_crop_file": "wmw-schedule-gate-ingredient-ink-imagegen-v0-1.png",
+      "normalized_file": "wmw-schedule-gate-ingredient-ink-normalized-v0-1.png",
+      "source_crop_stats": {
+        "median_rgb": [
+          45,
+          45,
+          44
+        ],
+        "mean_rgb": [
+          43.36,
+          43.65,
+          42.82
+        ],
+        "std_luminance": 4.26,
+        "min_luminance": 29.79,
+        "max_luminance": 56.86
+      },
+      "normalized_stats": {
+        "median_rgb": [
+          30,
+          35,
+          36
+        ],
+        "mean_rgb": [
+          30.82,
+          35.59,
+          36.03
+        ],
+        "std_luminance": 0.69,
+        "min_luminance": 32.01,
+        "max_luminance": 36.01
+      },
+      "target_rgb": [
+        31,
+        36,
+        37
+      ]
+    }
+  },
+  "normalization_policy": "imagegen broad value planes + branch token centering; deterministic masks own geometry",
+  "assembled_no_text_master": "wmw-schedule-gate-no-text-master-456x328-v0-1.png"
+}

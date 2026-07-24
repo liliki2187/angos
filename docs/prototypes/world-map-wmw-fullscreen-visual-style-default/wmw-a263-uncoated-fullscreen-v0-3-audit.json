@@ -1,0 +1,2793 @@
+{
+  "artifact_type": "fullscreen_filled_state_text_mock_state_pair",
+  "version": "wmw_a263_uncoated_fullscreen_text_landing_v0_3",
+  "status": "dual_reviewed_pending_user_visual_confirmation",
+  "decision_source": "A263",
+  "canvas": [
+    1920,
+    1080
+  ],
+  "source": {
+    "built_in_imagegen_used": true,
+    "selected_material_direction": "无涂布独立周刊",
+    "file": "wmw-a259-01-uncoated-independent-weekly-v0-1.png",
+    "sha256": "05993fe9b29799047c1899529e757b258ae3301a6feeb5312a435a9242dabe64",
+    "localized_imagegen_edits": [
+      {
+        "file": "wmw-a263-v03-third-card-footer-imagegen.png",
+        "sha256": "d76b360933926af2c6f43bf788c0443854e330b45d47ebcdcca8efee83986c26",
+        "role": "第三卡完整无字标题/状态载体"
+      },
+      {
+        "file": "wmw-a263-v02-schedule-carriers-imagegen.png",
+        "sha256": "b1c680898840551babcd2d0b609f92c3feb887d8e7146a4efe3213d11fe6663b",
+        "role": "分离日期与主动作的无字载体"
+      }
+    ]
+  },
+  "outputs": {
+    "default": "wmw-a263-uncoated-fullscreen-default-v0-3.png",
+    "schedule_confirming": "wmw-a263-uncoated-fullscreen-schedule-confirming-v0-3.png",
+    "state_pair_board": "wmw-a263-uncoated-fullscreen-state-pair-v0-3.png",
+    "local_qa_board": "wmw-a263-uncoated-fullscreen-local-qa-v0-3.png",
+    "third_card_mapping_qa_board": "wmw-a263-uncoated-fullscreen-third-card-mapping-qa-v0-3.png",
+    "local_100_percent_crops": [
+      {
+        "key": "third_card",
+        "source_xyxy": [
+          22,
+          690,
+          429,
+          813
+        ],
+        "output": "wmw-a263-uncoated-fullscreen-qa-third-card-v0-3.png",
+        "scale": "100%",
+        "review_source": "final_default_png"
+      },
+      {
+        "key": "schedule",
+        "source_xyxy": [
+          22,
+          813,
+          429,
+          1055
+        ],
+        "output": "wmw-a263-uncoated-fullscreen-qa-schedule-v0-3.png",
+        "scale": "100%",
+        "review_source": "final_default_png"
+      },
+      {
+        "key": "dossier",
+        "source_xyxy": [
+          1384,
+          430,
+          1898,
+          575
+        ],
+        "output": "wmw-a263-uncoated-fullscreen-qa-dossier-v0-3.png",
+        "scale": "100%",
+        "review_source": "final_default_png"
+      }
+    ],
+    "default_sha256": "78c1098d4010c4733d1b1c96c734b665185d3ab2d35c0867e34be93b06374ddc",
+    "schedule_confirming_sha256": "1871ca00707fda640d5783559bfac3f0e64a4c6b706fa63bce7fe9df82124c2a",
+    "state_pair_board_sha256": "0a1ff9374fd0c4c42fa3594cecfe6bf5c411bad241e9b3c5a4be753e3be75250",
+    "local_qa_board_sha256": "f159c0b81ccfff62714921de7143ee82a5609834644e18b5481abc0155d931db",
+    "third_card_mapping_qa_board_sha256": "ca1396495efe96b09137279a0e5855fb14f665cefd1ea0bc954fc67d05db72c5"
+  },
+  "visible_geometry": {
+    "left_card_north": [
+      22,
+      22,
+      407,
+      285
+    ],
+    "left_card_east": [
+      22,
+      312,
+      407,
+      271
+    ],
+    "left_card_pacific": [
+      22,
+      589,
+      407,
+      215
+    ],
+    "schedule": [
+      22,
+      813,
+      407,
+      242
+    ],
+    "center": [
+      450,
+      23,
+      918,
+      1032
+    ],
+    "right_dossier": [
+      1384,
+      23,
+      514,
+      1032
+    ],
+    "right_photo": [
+      1397,
+      76,
+      482,
+      360
+    ],
+    "right_copy": [
+      1404,
+      438,
+      428,
+      112
+    ],
+    "mission_rows": [
+      1398,
+      556,
+      482,
+      311
+    ],
+    "cta": [
+      1398,
+      884,
+      482,
+      148
+    ]
+  },
+  "content": {
+    "rectangular_image_slots": 8,
+    "mission_rows": 4,
+    "primary_cta_count": 1,
+    "route_lines_drawn": 0,
+    "redline_status_badge_present": false,
+    "selected_region_id": "north_america"
+  },
+  "art_program_boundary": {
+    "imagegen_owns_all_visible_carrier_materials": true,
+    "built_in_imagegen_local_edit_count": 2,
+    "source_derived_patch_count": 12,
+    "source_derived_patches": [
+      {
+        "source_file": "wmw-a263-v03-third-card-footer-imagegen.png",
+        "source_crop_xyxy": [
+          1206,
+          508,
+          2054,
+          628
+        ],
+        "target_rect_xywh": [
+          49,
+          744,
+          367,
+          52
+        ],
+        "role": "第三卡完整单层标题/状态载体",
+        "mapping_mode": "direct_resize"
+      },
+      {
+        "source_file": "wmw-a259-01-uncoated-independent-weekly-v0-1.png",
+        "source_crop_xyxy": [
+          1476,
+          458,
+          1726,
+          526
+        ],
+        "target_rect_xywh": [
+          43,
+          832,
+          350,
+          102
+        ],
+        "role": "清除旧日期/动作共用载体"
+      },
+      {
+        "source_file": "wmw-a263-v02-schedule-carriers-imagegen.png",
+        "source_crop_xyxy": [
+          150,
+          58,
+          1520,
+          212
+        ],
+        "target_rect_xywh": [
+          65,
+          834,
+          317,
+          28
+        ],
+        "role": "独立日期/剩余日载体"
+      },
+      {
+        "source_file": "wmw-a263-v02-schedule-carriers-imagegen.png",
+        "source_crop_xyxy": [
+          155,
+          252,
+          1530,
+          535
+        ],
+        "target_rect_xywh": [
+          65,
+          871,
+          317,
+          63
+        ],
+        "role": "与日期载体分离的主动作载体"
+      },
+      {
+        "source_file": "wmw-a259-01-uncoated-independent-weekly-v0-1.png",
+        "source_crop_xyxy": [
+          1476,
+          458,
+          1726,
+          526
+        ],
+        "target_rect_xywh": [
+          72,
+          879,
+          58,
+          46
+        ],
+        "role": "清除素材箭头并交还动态图标层"
+      },
+      {
+        "source_crop_xyxy": [
+          1476,
+          458,
+          1726,
+          526
+        ],
+        "target_rect_xywh": [
+          1404,
+          438,
+          428,
+          112
+        ],
+        "role": "右侧标题/正文/摘要同源纸面"
+      },
+      {
+        "source_crop_xyxy": [
+          96,
+          998,
+          346,
+          1020
+        ],
+        "target_rect_xywh": [
+          75,
+          951,
+          307,
+          20
+        ],
+        "role": "后果行一文字薄罩"
+      },
+      {
+        "source_crop_xyxy": [
+          96,
+          998,
+          346,
+          1020
+        ],
+        "target_rect_xywh": [
+          75,
+          998,
+          307,
+          20
+        ],
+        "role": "后果行二文字薄罩"
+      },
+      {
+        "source_crop_xyxy": [
+          1600,
+          650,
+          1770,
+          686
+        ],
+        "target_rect_xywh": [
+          1540,
+          560,
+          286,
+          66
+        ],
+        "role": "任务 1 文字区薄罩"
+      },
+      {
+        "source_crop_xyxy": [
+          1600,
+          650,
+          1770,
+          686
+        ],
+        "target_rect_xywh": [
+          1540,
+          638,
+          286,
+          64
+        ],
+        "role": "任务 2 文字区薄罩"
+      },
+      {
+        "source_crop_xyxy": [
+          1600,
+          650,
+          1770,
+          686
+        ],
+        "target_rect_xywh": [
+          1540,
+          714,
+          286,
+          66
+        ],
+        "role": "任务 3 文字区薄罩"
+      },
+      {
+        "source_crop_xyxy": [
+          1600,
+          650,
+          1770,
+          686
+        ],
+        "target_rect_xywh": [
+          1540,
+          793,
+          286,
+          68
+        ],
+        "role": "任务 4 文字区薄罩"
+      }
+    ],
+    "default_and_confirming_patch_sets_identical": true,
+    "program_flat_surface_overlay_count": 0,
+    "program_owns_exact_text_and_target_state_semantics": true,
+    "program_color_regrade_used": false,
+    "program_redraw_of_story_images_or_map_used": false
+  },
+  "text_safe_area": {
+    "default_checked_records": 38,
+    "confirming_checked_records": 38,
+    "default_violations": [],
+    "confirming_violations": [],
+    "passed": true,
+    "default_records": [
+      {
+        "key": "masthead",
+        "text": "世界未解之谜周刊",
+        "bbox_xyxy": [
+          492,
+          80,
+          748,
+          113
+        ],
+        "safe_rect_xywh": [
+          492,
+          76,
+          604,
+          40
+        ],
+        "owner_carrier_id": "masthead",
+        "owner_carrier_rect_xywh": [
+          492,
+          76,
+          604,
+          40
+        ],
+        "semantic_group_id": "masthead",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "week",
+        "text": "第 1 周",
+        "bbox_xyxy": [
+          1258,
+          84,
+          1315,
+          103
+        ],
+        "safe_rect_xywh": [
+          1170,
+          78,
+          145,
+          26
+        ],
+        "owner_carrier_id": "week",
+        "owner_carrier_rect_xywh": [
+          1170,
+          78,
+          145,
+          26
+        ],
+        "semantic_group_id": "week",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "left_title_0",
+        "text": "北美禁区带",
+        "bbox_xyxy": [
+          64,
+          262,
+          174,
+          285
+        ],
+        "safe_rect_xywh": [
+          64,
+          256,
+          232,
+          32
+        ],
+        "owner_carrier_id": "left_title_0",
+        "owner_carrier_rect_xywh": [
+          64,
+          256,
+          232,
+          32
+        ],
+        "semantic_group_id": "left_title_0",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "left_state_0",
+        "text": "选中",
+        "bbox_xyxy": [
+          347,
+          265,
+          383,
+          283
+        ],
+        "safe_rect_xywh": [
+          323,
+          257,
+          84,
+          30
+        ],
+        "owner_carrier_id": "left_state_0",
+        "owner_carrier_rect_xywh": [
+          323,
+          257,
+          84,
+          30
+        ],
+        "semantic_group_id": "left_state_0",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "left_title_1",
+        "text": "东亚神秘地带",
+        "bbox_xyxy": [
+          64,
+          536,
+          196,
+          559
+        ],
+        "safe_rect_xywh": [
+          64,
+          530,
+          232,
+          32
+        ],
+        "owner_carrier_id": "left_title_1",
+        "owner_carrier_rect_xywh": [
+          64,
+          530,
+          232,
+          32
+        ],
+        "semantic_group_id": "left_title_1",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "left_state_1",
+        "text": "锁定",
+        "bbox_xyxy": [
+          347,
+          539,
+          383,
+          558
+        ],
+        "safe_rect_xywh": [
+          323,
+          531,
+          84,
+          30
+        ],
+        "owner_carrier_id": "left_state_1",
+        "owner_carrier_rect_xywh": [
+          323,
+          531,
+          84,
+          30
+        ],
+        "semantic_group_id": "left_state_1",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "left_title_2",
+        "text": "太平洋失航带",
+        "bbox_xyxy": [
+          64,
+          760,
+          196,
+          782
+        ],
+        "safe_rect_xywh": [
+          64,
+          754,
+          232,
+          32
+        ],
+        "owner_carrier_id": "third_card_footer",
+        "owner_carrier_rect_xywh": [
+          49,
+          744,
+          367,
+          52
+        ],
+        "semantic_group_id": "third_card_information",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "left_state_2",
+        "text": "锁定",
+        "bbox_xyxy": [
+          334,
+          765,
+          370,
+          784
+        ],
+        "safe_rect_xywh": [
+          304,
+          757,
+          96,
+          30
+        ],
+        "owner_carrier_id": "third_card_state_tag",
+        "owner_carrier_rect_xywh": [
+          296,
+          753,
+          112,
+          38
+        ],
+        "semantic_group_id": "third_card_information",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "map_selected",
+        "text": "北美禁区带",
+        "bbox_xyxy": [
+          654,
+          381,
+          754,
+          402
+        ],
+        "safe_rect_xywh": [
+          654,
+          374,
+          172,
+          32
+        ],
+        "owner_carrier_id": "map_selected",
+        "owner_carrier_rect_xywh": [
+          654,
+          374,
+          172,
+          32
+        ],
+        "semantic_group_id": "map_selected",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "map_east",
+        "text": "东亚神秘地带",
+        "bbox_xyxy": [
+          1088,
+          401,
+          1208,
+          422
+        ],
+        "safe_rect_xywh": [
+          1016,
+          394,
+          196,
+          32
+        ],
+        "owner_carrier_id": "map_east",
+        "owner_carrier_rect_xywh": [
+          1016,
+          394,
+          196,
+          32
+        ],
+        "semantic_group_id": "map_east",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "map_pacific",
+        "text": "太平洋失航带",
+        "bbox_xyxy": [
+          1092,
+          683,
+          1212,
+          704
+        ],
+        "safe_rect_xywh": [
+          1016,
+          676,
+          200,
+          32
+        ],
+        "owner_carrier_id": "map_pacific",
+        "owner_carrier_rect_xywh": [
+          1016,
+          676,
+          200,
+          32
+        ],
+        "semantic_group_id": "map_pacific",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "right_title",
+        "text": "北美禁区带",
+        "bbox_xyxy": [
+          1424,
+          451,
+          1554,
+          478
+        ],
+        "safe_rect_xywh": [
+          1424,
+          447,
+          388,
+          32
+        ],
+        "owner_carrier_id": "dossier_copy",
+        "owner_carrier_rect_xywh": [
+          1404,
+          438,
+          428,
+          112
+        ],
+        "semantic_group_id": "dossier_title",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "right_body_1",
+        "text": "都市传说与军事封锁交叠。",
+        "bbox_xyxy": [
+          1424,
+          485,
+          1616,
+          502
+        ],
+        "safe_rect_xywh": [
+          1424,
+          480,
+          388,
+          24
+        ],
+        "owner_carrier_id": "dossier_copy",
+        "owner_carrier_rect_xywh": [
+          1404,
+          438,
+          428,
+          112
+        ],
+        "semantic_group_id": "dossier_body",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "right_body_2",
+        "text": "军方巡逻、档案残页与异常雷达同时露头。",
+        "bbox_xyxy": [
+          1424,
+          504,
+          1690,
+          517
+        ],
+        "safe_rect_xywh": [
+          1424,
+          500,
+          388,
+          18
+        ],
+        "owner_carrier_id": "dossier_copy",
+        "owner_carrier_rect_xywh": [
+          1404,
+          438,
+          428,
+          112
+        ],
+        "semantic_group_id": "dossier_body",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_header",
+        "text": "任务情报",
+        "bbox_xyxy": [
+          1424,
+          527,
+          1496,
+          546
+        ],
+        "safe_rect_xywh": [
+          1424,
+          524,
+          100,
+          24
+        ],
+        "owner_carrier_id": "dossier_copy",
+        "owner_carrier_rect_xywh": [
+          1404,
+          438,
+          428,
+          112
+        ],
+        "semantic_group_id": "mission_heading",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_summary",
+        "text": "常驻 2 · 限时 1 · 深链 1",
+        "bbox_xyxy": [
+          1571,
+          530,
+          1698,
+          542
+        ],
+        "safe_rect_xywh": [
+          1528,
+          525,
+          170,
+          20
+        ],
+        "owner_carrier_id": "dossier_copy",
+        "owner_carrier_rect_xywh": [
+          1404,
+          438,
+          428,
+          112
+        ],
+        "semantic_group_id": "mission_heading",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_expanded",
+        "text": "已展开 4 / 4",
+        "bbox_xyxy": [
+          1753,
+          530,
+          1820,
+          542
+        ],
+        "safe_rect_xywh": [
+          1712,
+          525,
+          108,
+          20
+        ],
+        "owner_carrier_id": "dossier_copy",
+        "owner_carrier_rect_xywh": [
+          1404,
+          438,
+          428,
+          112
+        ],
+        "semantic_group_id": "mission_heading",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_title_0",
+        "text": "51 区外围公路",
+        "bbox_xyxy": [
+          1544,
+          571,
+          1674,
+          592
+        ],
+        "safe_rect_xywh": [
+          1544,
+          564,
+          278,
+          30
+        ],
+        "owner_carrier_id": "mission_row_1",
+        "owner_carrier_rect_xywh": [
+          1398,
+          556,
+          482,
+          78
+        ],
+        "semantic_group_id": "mission_row_1",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_meta_0",
+        "text": "科学纪实 · 耗时 2 天",
+        "bbox_xyxy": [
+          1544,
+          602,
+          1689,
+          618
+        ],
+        "safe_rect_xywh": [
+          1544,
+          594,
+          190,
+          24
+        ],
+        "owner_carrier_id": "mission_meta_0",
+        "owner_carrier_rect_xywh": [
+          1544,
+          594,
+          190,
+          24
+        ],
+        "semantic_group_id": "mission_meta_0",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_state_0",
+        "text": "常驻",
+        "bbox_xyxy": [
+          1790,
+          602,
+          1822,
+          618
+        ],
+        "safe_rect_xywh": [
+          1710,
+          594,
+          112,
+          24
+        ],
+        "owner_carrier_id": "mission_state_0",
+        "owner_carrier_rect_xywh": [
+          1710,
+          594,
+          112,
+          24
+        ],
+        "semantic_group_id": "mission_state_0",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_title_1",
+        "text": "罗斯威尔档案残页",
+        "bbox_xyxy": [
+          1544,
+          649,
+          1704,
+          670
+        ],
+        "safe_rect_xywh": [
+          1544,
+          642,
+          278,
+          30
+        ],
+        "owner_carrier_id": "mission_row_2",
+        "owner_carrier_rect_xywh": [
+          1398,
+          634,
+          482,
+          78
+        ],
+        "semantic_group_id": "mission_row_2",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_meta_1",
+        "text": "科学纪实 · 耗时 1 天",
+        "bbox_xyxy": [
+          1544,
+          680,
+          1689,
+          696
+        ],
+        "safe_rect_xywh": [
+          1544,
+          672,
+          190,
+          24
+        ],
+        "owner_carrier_id": "mission_meta_1",
+        "owner_carrier_rect_xywh": [
+          1544,
+          672,
+          190,
+          24
+        ],
+        "semantic_group_id": "mission_meta_1",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_state_1",
+        "text": "常驻",
+        "bbox_xyxy": [
+          1790,
+          680,
+          1822,
+          696
+        ],
+        "safe_rect_xywh": [
+          1710,
+          672,
+          112,
+          24
+        ],
+        "owner_carrier_id": "mission_state_1",
+        "owner_carrier_rect_xywh": [
+          1710,
+          672,
+          112,
+          24
+        ],
+        "semantic_group_id": "mission_state_1",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_title_2",
+        "text": "突发：雷达异常光点",
+        "bbox_xyxy": [
+          1544,
+          725,
+          1724,
+          746
+        ],
+        "safe_rect_xywh": [
+          1544,
+          718,
+          278,
+          30
+        ],
+        "owner_carrier_id": "mission_row_3",
+        "owner_carrier_rect_xywh": [
+          1398,
+          710,
+          482,
+          78
+        ],
+        "semantic_group_id": "mission_row_3",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_meta_2",
+        "text": "大众热度 · 耗时 2 天",
+        "bbox_xyxy": [
+          1544,
+          756,
+          1689,
+          772
+        ],
+        "safe_rect_xywh": [
+          1544,
+          748,
+          190,
+          24
+        ],
+        "owner_carrier_id": "mission_meta_2",
+        "owner_carrier_rect_xywh": [
+          1544,
+          748,
+          190,
+          24
+        ],
+        "semantic_group_id": "mission_meta_2",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_state_2",
+        "text": "限时至第 4 天",
+        "bbox_xyxy": [
+          1736,
+          758,
+          1822,
+          771
+        ],
+        "safe_rect_xywh": [
+          1710,
+          748,
+          112,
+          24
+        ],
+        "owner_carrier_id": "mission_state_2",
+        "owner_carrier_rect_xywh": [
+          1710,
+          748,
+          112,
+          24
+        ],
+        "semantic_group_id": "mission_state_2",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_title_3",
+        "text": "M330 末班车空白段",
+        "bbox_xyxy": [
+          1544,
+          804,
+          1727,
+          825
+        ],
+        "safe_rect_xywh": [
+          1544,
+          797,
+          278,
+          30
+        ],
+        "owner_carrier_id": "mission_row_4",
+        "owner_carrier_rect_xywh": [
+          1398,
+          789,
+          482,
+          78
+        ],
+        "semantic_group_id": "mission_row_4",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_meta_3",
+        "text": "神秘玄学 · 耗时 2 天",
+        "bbox_xyxy": [
+          1544,
+          834,
+          1689,
+          851
+        ],
+        "safe_rect_xywh": [
+          1544,
+          827,
+          190,
+          24
+        ],
+        "owner_carrier_id": "mission_meta_3",
+        "owner_carrier_rect_xywh": [
+          1544,
+          827,
+          190,
+          24
+        ],
+        "semantic_group_id": "mission_meta_3",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_state_3",
+        "text": "深链",
+        "bbox_xyxy": [
+          1790,
+          835,
+          1822,
+          850
+        ],
+        "safe_rect_xywh": [
+          1710,
+          827,
+          112,
+          24
+        ],
+        "owner_carrier_id": "mission_state_3",
+        "owner_carrier_rect_xywh": [
+          1710,
+          827,
+          112,
+          24
+        ],
+        "semantic_group_id": "mission_state_3",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "primary_cta",
+        "text": "进入地区任务台  →",
+        "bbox_xyxy": [
+          1519,
+          947,
+          1759,
+          976
+        ],
+        "safe_rect_xywh": [
+          1432,
+          934,
+          414,
+          52
+        ],
+        "owner_carrier_id": "primary_cta",
+        "owner_carrier_rect_xywh": [
+          1432,
+          934,
+          414,
+          52
+        ],
+        "semantic_group_id": "primary_cta",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "schedule_section",
+        "text": "全局日程",
+        "bbox_xyxy": [
+          65,
+          820,
+          113,
+          831
+        ],
+        "safe_rect_xywh": [
+          62,
+          815,
+          100,
+          20
+        ],
+        "owner_carrier_id": "schedule_section",
+        "owner_carrier_rect_xywh": [
+          62,
+          815,
+          100,
+          20
+        ],
+        "semantic_group_id": "schedule_section",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "schedule_current",
+        "text": "当前第 1 天",
+        "bbox_xyxy": [
+          80,
+          842,
+          163,
+          857
+        ],
+        "safe_rect_xywh": [
+          78,
+          838,
+          120,
+          20
+        ],
+        "owner_carrier_id": "schedule_date",
+        "owner_carrier_rect_xywh": [
+          65,
+          834,
+          317,
+          28
+        ],
+        "semantic_group_id": "schedule_date",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "schedule_remaining",
+        "text": "剩余 7 天",
+        "bbox_xyxy": [
+          301,
+          842,
+          368,
+          858
+        ],
+        "safe_rect_xywh": [
+          250,
+          838,
+          120,
+          20
+        ],
+        "owner_carrier_id": "schedule_date",
+        "owner_carrier_rect_xywh": [
+          65,
+          834,
+          317,
+          28
+        ],
+        "semantic_group_id": "schedule_date",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "schedule_icon",
+        "text": "→",
+        "bbox_xyxy": [
+          91,
+          897,
+          119,
+          913
+        ],
+        "safe_rect_xywh": [
+          82,
+          880,
+          46,
+          44
+        ],
+        "owner_carrier_id": "schedule_action_key",
+        "owner_carrier_rect_xywh": [
+          65,
+          871,
+          70,
+          63
+        ],
+        "semantic_group_id": "schedule_action",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "schedule_title",
+        "text": "推进到下一天",
+        "bbox_xyxy": [
+          158,
+          878,
+          290,
+          901
+        ],
+        "safe_rect_xywh": [
+          158,
+          877,
+          218,
+          28
+        ],
+        "owner_carrier_id": "schedule_action_plate",
+        "owner_carrier_rect_xywh": [
+          143,
+          871,
+          239,
+          63
+        ],
+        "semantic_group_id": "schedule_action",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "schedule_help",
+        "text": "点击后查看推进影响",
+        "bbox_xyxy": [
+          158,
+          911,
+          284,
+          924
+        ],
+        "safe_rect_xywh": [
+          158,
+          906,
+          218,
+          22
+        ],
+        "owner_carrier_id": "schedule_action_plate",
+        "owner_carrier_rect_xywh": [
+          143,
+          871,
+          239,
+          63
+        ],
+        "semantic_group_id": "schedule_action",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "schedule_result_1",
+        "text": "当前：无任务到期",
+        "bbox_xyxy": [
+          75,
+          956,
+          203,
+          971
+        ],
+        "safe_rect_xywh": [
+          75,
+          951,
+          307,
+          22
+        ],
+        "owner_carrier_id": "schedule_result_1",
+        "owner_carrier_rect_xywh": [
+          75,
+          951,
+          307,
+          22
+        ],
+        "semantic_group_id": "schedule_result_1",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "schedule_result_2",
+        "text": "日程归零：进入编辑部阶段",
+        "bbox_xyxy": [
+          75,
+          1002,
+          267,
+          1019
+        ],
+        "safe_rect_xywh": [
+          75,
+          998,
+          307,
+          22
+        ],
+        "owner_carrier_id": "schedule_result_2",
+        "owner_carrier_rect_xywh": [
+          75,
+          998,
+          307,
+          22
+        ],
+        "semantic_group_id": "schedule_result_2",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      }
+    ],
+    "confirming_records": [
+      {
+        "key": "masthead",
+        "text": "世界未解之谜周刊",
+        "bbox_xyxy": [
+          492,
+          80,
+          748,
+          113
+        ],
+        "safe_rect_xywh": [
+          492,
+          76,
+          604,
+          40
+        ],
+        "owner_carrier_id": "masthead",
+        "owner_carrier_rect_xywh": [
+          492,
+          76,
+          604,
+          40
+        ],
+        "semantic_group_id": "masthead",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "week",
+        "text": "第 1 周",
+        "bbox_xyxy": [
+          1258,
+          84,
+          1315,
+          103
+        ],
+        "safe_rect_xywh": [
+          1170,
+          78,
+          145,
+          26
+        ],
+        "owner_carrier_id": "week",
+        "owner_carrier_rect_xywh": [
+          1170,
+          78,
+          145,
+          26
+        ],
+        "semantic_group_id": "week",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "left_title_0",
+        "text": "北美禁区带",
+        "bbox_xyxy": [
+          64,
+          262,
+          174,
+          285
+        ],
+        "safe_rect_xywh": [
+          64,
+          256,
+          232,
+          32
+        ],
+        "owner_carrier_id": "left_title_0",
+        "owner_carrier_rect_xywh": [
+          64,
+          256,
+          232,
+          32
+        ],
+        "semantic_group_id": "left_title_0",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "left_state_0",
+        "text": "选中",
+        "bbox_xyxy": [
+          347,
+          265,
+          383,
+          283
+        ],
+        "safe_rect_xywh": [
+          323,
+          257,
+          84,
+          30
+        ],
+        "owner_carrier_id": "left_state_0",
+        "owner_carrier_rect_xywh": [
+          323,
+          257,
+          84,
+          30
+        ],
+        "semantic_group_id": "left_state_0",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "left_title_1",
+        "text": "东亚神秘地带",
+        "bbox_xyxy": [
+          64,
+          536,
+          196,
+          559
+        ],
+        "safe_rect_xywh": [
+          64,
+          530,
+          232,
+          32
+        ],
+        "owner_carrier_id": "left_title_1",
+        "owner_carrier_rect_xywh": [
+          64,
+          530,
+          232,
+          32
+        ],
+        "semantic_group_id": "left_title_1",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "left_state_1",
+        "text": "锁定",
+        "bbox_xyxy": [
+          347,
+          539,
+          383,
+          558
+        ],
+        "safe_rect_xywh": [
+          323,
+          531,
+          84,
+          30
+        ],
+        "owner_carrier_id": "left_state_1",
+        "owner_carrier_rect_xywh": [
+          323,
+          531,
+          84,
+          30
+        ],
+        "semantic_group_id": "left_state_1",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "left_title_2",
+        "text": "太平洋失航带",
+        "bbox_xyxy": [
+          64,
+          760,
+          196,
+          782
+        ],
+        "safe_rect_xywh": [
+          64,
+          754,
+          232,
+          32
+        ],
+        "owner_carrier_id": "third_card_footer",
+        "owner_carrier_rect_xywh": [
+          49,
+          744,
+          367,
+          52
+        ],
+        "semantic_group_id": "third_card_information",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "left_state_2",
+        "text": "锁定",
+        "bbox_xyxy": [
+          334,
+          765,
+          370,
+          784
+        ],
+        "safe_rect_xywh": [
+          304,
+          757,
+          96,
+          30
+        ],
+        "owner_carrier_id": "third_card_state_tag",
+        "owner_carrier_rect_xywh": [
+          296,
+          753,
+          112,
+          38
+        ],
+        "semantic_group_id": "third_card_information",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "map_selected",
+        "text": "北美禁区带",
+        "bbox_xyxy": [
+          654,
+          381,
+          754,
+          402
+        ],
+        "safe_rect_xywh": [
+          654,
+          374,
+          172,
+          32
+        ],
+        "owner_carrier_id": "map_selected",
+        "owner_carrier_rect_xywh": [
+          654,
+          374,
+          172,
+          32
+        ],
+        "semantic_group_id": "map_selected",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "map_east",
+        "text": "东亚神秘地带",
+        "bbox_xyxy": [
+          1088,
+          401,
+          1208,
+          422
+        ],
+        "safe_rect_xywh": [
+          1016,
+          394,
+          196,
+          32
+        ],
+        "owner_carrier_id": "map_east",
+        "owner_carrier_rect_xywh": [
+          1016,
+          394,
+          196,
+          32
+        ],
+        "semantic_group_id": "map_east",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "map_pacific",
+        "text": "太平洋失航带",
+        "bbox_xyxy": [
+          1092,
+          683,
+          1212,
+          704
+        ],
+        "safe_rect_xywh": [
+          1016,
+          676,
+          200,
+          32
+        ],
+        "owner_carrier_id": "map_pacific",
+        "owner_carrier_rect_xywh": [
+          1016,
+          676,
+          200,
+          32
+        ],
+        "semantic_group_id": "map_pacific",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "right_title",
+        "text": "北美禁区带",
+        "bbox_xyxy": [
+          1424,
+          451,
+          1554,
+          478
+        ],
+        "safe_rect_xywh": [
+          1424,
+          447,
+          388,
+          32
+        ],
+        "owner_carrier_id": "dossier_copy",
+        "owner_carrier_rect_xywh": [
+          1404,
+          438,
+          428,
+          112
+        ],
+        "semantic_group_id": "dossier_title",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "right_body_1",
+        "text": "都市传说与军事封锁交叠。",
+        "bbox_xyxy": [
+          1424,
+          485,
+          1616,
+          502
+        ],
+        "safe_rect_xywh": [
+          1424,
+          480,
+          388,
+          24
+        ],
+        "owner_carrier_id": "dossier_copy",
+        "owner_carrier_rect_xywh": [
+          1404,
+          438,
+          428,
+          112
+        ],
+        "semantic_group_id": "dossier_body",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "right_body_2",
+        "text": "军方巡逻、档案残页与异常雷达同时露头。",
+        "bbox_xyxy": [
+          1424,
+          504,
+          1690,
+          517
+        ],
+        "safe_rect_xywh": [
+          1424,
+          500,
+          388,
+          18
+        ],
+        "owner_carrier_id": "dossier_copy",
+        "owner_carrier_rect_xywh": [
+          1404,
+          438,
+          428,
+          112
+        ],
+        "semantic_group_id": "dossier_body",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_header",
+        "text": "任务情报",
+        "bbox_xyxy": [
+          1424,
+          527,
+          1496,
+          546
+        ],
+        "safe_rect_xywh": [
+          1424,
+          524,
+          100,
+          24
+        ],
+        "owner_carrier_id": "dossier_copy",
+        "owner_carrier_rect_xywh": [
+          1404,
+          438,
+          428,
+          112
+        ],
+        "semantic_group_id": "mission_heading",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_summary",
+        "text": "常驻 2 · 限时 1 · 深链 1",
+        "bbox_xyxy": [
+          1571,
+          530,
+          1698,
+          542
+        ],
+        "safe_rect_xywh": [
+          1528,
+          525,
+          170,
+          20
+        ],
+        "owner_carrier_id": "dossier_copy",
+        "owner_carrier_rect_xywh": [
+          1404,
+          438,
+          428,
+          112
+        ],
+        "semantic_group_id": "mission_heading",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_expanded",
+        "text": "已展开 4 / 4",
+        "bbox_xyxy": [
+          1753,
+          530,
+          1820,
+          542
+        ],
+        "safe_rect_xywh": [
+          1712,
+          525,
+          108,
+          20
+        ],
+        "owner_carrier_id": "dossier_copy",
+        "owner_carrier_rect_xywh": [
+          1404,
+          438,
+          428,
+          112
+        ],
+        "semantic_group_id": "mission_heading",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_title_0",
+        "text": "51 区外围公路",
+        "bbox_xyxy": [
+          1544,
+          571,
+          1674,
+          592
+        ],
+        "safe_rect_xywh": [
+          1544,
+          564,
+          278,
+          30
+        ],
+        "owner_carrier_id": "mission_row_1",
+        "owner_carrier_rect_xywh": [
+          1398,
+          556,
+          482,
+          78
+        ],
+        "semantic_group_id": "mission_row_1",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_meta_0",
+        "text": "科学纪实 · 耗时 2 天",
+        "bbox_xyxy": [
+          1544,
+          602,
+          1689,
+          618
+        ],
+        "safe_rect_xywh": [
+          1544,
+          594,
+          190,
+          24
+        ],
+        "owner_carrier_id": "mission_meta_0",
+        "owner_carrier_rect_xywh": [
+          1544,
+          594,
+          190,
+          24
+        ],
+        "semantic_group_id": "mission_meta_0",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_state_0",
+        "text": "常驻",
+        "bbox_xyxy": [
+          1790,
+          602,
+          1822,
+          618
+        ],
+        "safe_rect_xywh": [
+          1710,
+          594,
+          112,
+          24
+        ],
+        "owner_carrier_id": "mission_state_0",
+        "owner_carrier_rect_xywh": [
+          1710,
+          594,
+          112,
+          24
+        ],
+        "semantic_group_id": "mission_state_0",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_title_1",
+        "text": "罗斯威尔档案残页",
+        "bbox_xyxy": [
+          1544,
+          649,
+          1704,
+          670
+        ],
+        "safe_rect_xywh": [
+          1544,
+          642,
+          278,
+          30
+        ],
+        "owner_carrier_id": "mission_row_2",
+        "owner_carrier_rect_xywh": [
+          1398,
+          634,
+          482,
+          78
+        ],
+        "semantic_group_id": "mission_row_2",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_meta_1",
+        "text": "科学纪实 · 耗时 1 天",
+        "bbox_xyxy": [
+          1544,
+          680,
+          1689,
+          696
+        ],
+        "safe_rect_xywh": [
+          1544,
+          672,
+          190,
+          24
+        ],
+        "owner_carrier_id": "mission_meta_1",
+        "owner_carrier_rect_xywh": [
+          1544,
+          672,
+          190,
+          24
+        ],
+        "semantic_group_id": "mission_meta_1",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_state_1",
+        "text": "常驻",
+        "bbox_xyxy": [
+          1790,
+          680,
+          1822,
+          696
+        ],
+        "safe_rect_xywh": [
+          1710,
+          672,
+          112,
+          24
+        ],
+        "owner_carrier_id": "mission_state_1",
+        "owner_carrier_rect_xywh": [
+          1710,
+          672,
+          112,
+          24
+        ],
+        "semantic_group_id": "mission_state_1",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_title_2",
+        "text": "突发：雷达异常光点",
+        "bbox_xyxy": [
+          1544,
+          725,
+          1724,
+          746
+        ],
+        "safe_rect_xywh": [
+          1544,
+          718,
+          278,
+          30
+        ],
+        "owner_carrier_id": "mission_row_3",
+        "owner_carrier_rect_xywh": [
+          1398,
+          710,
+          482,
+          78
+        ],
+        "semantic_group_id": "mission_row_3",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_meta_2",
+        "text": "大众热度 · 耗时 2 天",
+        "bbox_xyxy": [
+          1544,
+          756,
+          1689,
+          772
+        ],
+        "safe_rect_xywh": [
+          1544,
+          748,
+          190,
+          24
+        ],
+        "owner_carrier_id": "mission_meta_2",
+        "owner_carrier_rect_xywh": [
+          1544,
+          748,
+          190,
+          24
+        ],
+        "semantic_group_id": "mission_meta_2",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_state_2",
+        "text": "限时至第 4 天",
+        "bbox_xyxy": [
+          1736,
+          758,
+          1822,
+          771
+        ],
+        "safe_rect_xywh": [
+          1710,
+          748,
+          112,
+          24
+        ],
+        "owner_carrier_id": "mission_state_2",
+        "owner_carrier_rect_xywh": [
+          1710,
+          748,
+          112,
+          24
+        ],
+        "semantic_group_id": "mission_state_2",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_title_3",
+        "text": "M330 末班车空白段",
+        "bbox_xyxy": [
+          1544,
+          804,
+          1727,
+          825
+        ],
+        "safe_rect_xywh": [
+          1544,
+          797,
+          278,
+          30
+        ],
+        "owner_carrier_id": "mission_row_4",
+        "owner_carrier_rect_xywh": [
+          1398,
+          789,
+          482,
+          78
+        ],
+        "semantic_group_id": "mission_row_4",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_meta_3",
+        "text": "神秘玄学 · 耗时 2 天",
+        "bbox_xyxy": [
+          1544,
+          834,
+          1689,
+          851
+        ],
+        "safe_rect_xywh": [
+          1544,
+          827,
+          190,
+          24
+        ],
+        "owner_carrier_id": "mission_meta_3",
+        "owner_carrier_rect_xywh": [
+          1544,
+          827,
+          190,
+          24
+        ],
+        "semantic_group_id": "mission_meta_3",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "mission_state_3",
+        "text": "深链",
+        "bbox_xyxy": [
+          1790,
+          835,
+          1822,
+          850
+        ],
+        "safe_rect_xywh": [
+          1710,
+          827,
+          112,
+          24
+        ],
+        "owner_carrier_id": "mission_state_3",
+        "owner_carrier_rect_xywh": [
+          1710,
+          827,
+          112,
+          24
+        ],
+        "semantic_group_id": "mission_state_3",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "primary_cta",
+        "text": "进入地区任务台  →",
+        "bbox_xyxy": [
+          1519,
+          947,
+          1759,
+          976
+        ],
+        "safe_rect_xywh": [
+          1432,
+          934,
+          414,
+          52
+        ],
+        "owner_carrier_id": "primary_cta",
+        "owner_carrier_rect_xywh": [
+          1432,
+          934,
+          414,
+          52
+        ],
+        "semantic_group_id": "primary_cta",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "schedule_section",
+        "text": "全局日程",
+        "bbox_xyxy": [
+          65,
+          820,
+          113,
+          831
+        ],
+        "safe_rect_xywh": [
+          62,
+          815,
+          100,
+          20
+        ],
+        "owner_carrier_id": "schedule_section",
+        "owner_carrier_rect_xywh": [
+          62,
+          815,
+          100,
+          20
+        ],
+        "semantic_group_id": "schedule_section",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "schedule_current",
+        "text": "当前第 1 天",
+        "bbox_xyxy": [
+          80,
+          842,
+          163,
+          857
+        ],
+        "safe_rect_xywh": [
+          78,
+          838,
+          120,
+          20
+        ],
+        "owner_carrier_id": "schedule_date",
+        "owner_carrier_rect_xywh": [
+          65,
+          834,
+          317,
+          28
+        ],
+        "semantic_group_id": "schedule_date",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "schedule_remaining",
+        "text": "剩余 7 天",
+        "bbox_xyxy": [
+          301,
+          842,
+          368,
+          858
+        ],
+        "safe_rect_xywh": [
+          250,
+          838,
+          120,
+          20
+        ],
+        "owner_carrier_id": "schedule_date",
+        "owner_carrier_rect_xywh": [
+          65,
+          834,
+          317,
+          28
+        ],
+        "semantic_group_id": "schedule_date",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "schedule_icon",
+        "text": "!",
+        "bbox_xyxy": [
+          100,
+          892,
+          110,
+          913
+        ],
+        "safe_rect_xywh": [
+          82,
+          880,
+          46,
+          44
+        ],
+        "owner_carrier_id": "schedule_action_key",
+        "owner_carrier_rect_xywh": [
+          65,
+          871,
+          70,
+          63
+        ],
+        "semantic_group_id": "schedule_action",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "schedule_title",
+        "text": "确认推进到第 2 天",
+        "bbox_xyxy": [
+          158,
+          878,
+          340,
+          901
+        ],
+        "safe_rect_xywh": [
+          158,
+          877,
+          218,
+          28
+        ],
+        "owner_carrier_id": "schedule_action_plate",
+        "owner_carrier_rect_xywh": [
+          143,
+          871,
+          239,
+          63
+        ],
+        "semantic_group_id": "schedule_action",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "schedule_help",
+        "text": "再次点击执行；后果见下方",
+        "bbox_xyxy": [
+          158,
+          911,
+          326,
+          924
+        ],
+        "safe_rect_xywh": [
+          158,
+          906,
+          218,
+          22
+        ],
+        "owner_carrier_id": "schedule_action_plate",
+        "owner_carrier_rect_xywh": [
+          143,
+          871,
+          239,
+          63
+        ],
+        "semantic_group_id": "schedule_action",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "schedule_result_1",
+        "text": "确认后：剩余 6 天 · 无任务到期",
+        "bbox_xyxy": [
+          75,
+          956,
+          300,
+          972
+        ],
+        "safe_rect_xywh": [
+          75,
+          951,
+          307,
+          22
+        ],
+        "owner_carrier_id": "schedule_result_1",
+        "owner_carrier_rect_xywh": [
+          75,
+          951,
+          307,
+          22
+        ],
+        "semantic_group_id": "schedule_result_1",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      },
+      {
+        "key": "schedule_result_2",
+        "text": "限时任务：雷达异常仍开放至第 4 天",
+        "bbox_xyxy": [
+          75,
+          1003,
+          334,
+          1019
+        ],
+        "safe_rect_xywh": [
+          75,
+          998,
+          307,
+          22
+        ],
+        "owner_carrier_id": "schedule_result_2",
+        "owner_carrier_rect_xywh": [
+          75,
+          998,
+          307,
+          22
+        ],
+        "semantic_group_id": "schedule_result_2",
+        "contract_safe_rect_passed": true,
+        "visible_carrier_passed": true,
+        "passed": true
+      }
+    ]
+  },
+  "state_difference": {
+    "allowed_rect_xywh": [
+      65,
+      871,
+      317,
+      149
+    ],
+    "difference_bbox_xyxy": [
+      75,
+      878,
+      340,
+      1019
+    ],
+    "outside_allowed_bbox_xyxy": null,
+    "schedule_only": true
+  },
+  "source_difference": {
+    "default": {
+      "difference_bbox_xyxy": [
+        43,
+        80,
+        1830,
+        1019
+      ],
+      "outside_allowed_bbox_xyxy": null,
+      "outside_allowed_pixels": 0,
+      "passed": true
+    },
+    "schedule_confirming": {
+      "difference_bbox_xyxy": [
+        43,
+        80,
+        1830,
+        1019
+      ],
+      "outside_allowed_bbox_xyxy": null,
+      "outside_allowed_pixels": 0,
+      "passed": true
+    }
+  },
+  "scope_invariant_vs_v0_1": {
+    "default": {
+      "mutable_rects_xywh": [
+        [
+          49,
+          744,
+          367,
+          52
+        ],
+        [
+          43,
+          832,
+          350,
+          102
+        ],
+        [
+          1404,
+          438,
+          428,
+          118
+        ]
+      ],
+      "difference_bbox_xyxy": [
+        43,
+        485,
+        1820,
+        934
+      ],
+      "outside_mutable_bbox_xyxy": null,
+      "passed": true
+    },
+    "schedule_confirming": {
+      "mutable_rects_xywh": [
+        [
+          49,
+          744,
+          367,
+          52
+        ],
+        [
+          43,
+          832,
+          350,
+          102
+        ],
+        [
+          1404,
+          438,
+          428,
+          118
+        ]
+      ],
+      "difference_bbox_xyxy": [
+        43,
+        485,
+        1820,
+        934
+      ],
+      "outside_mutable_bbox_xyxy": null,
+      "passed": true
+    }
+  },
+  "scope_invariant_vs_v0_2": {
+    "default": {
+      "mutable_rects_xywh": [
+        [
+          49,
+          744,
+          367,
+          52
+        ]
+      ],
+      "difference_bbox_xyxy": [
+        49,
+        744,
+        416,
+        796
+      ],
+      "outside_mutable_bbox_xyxy": null,
+      "passed": true
+    },
+    "schedule_confirming": {
+      "mutable_rects_xywh": [
+        [
+          49,
+          744,
+          367,
+          52
+        ]
+      ],
+      "difference_bbox_xyxy": [
+        49,
+        744,
+        416,
+        796
+      ],
+      "outside_mutable_bbox_xyxy": null,
+      "passed": true
+    }
+  },
+  "runtime_support": {
+    "target_only": true,
+    "independent_advance_day": false,
+    "a51h_full_height": false,
+    "deadline_day_in_world_preview": false,
+    "godot_runtime_unchanged": true
+  },
+  "resolution_boundary": {
+    "validated_target": "1920x1080 desktop only",
+    "lower_resolution_runtime_validation": "not_executed_formal_runtime_required",
+    "recommended_minimum_runtime_font_px_at_1366x768": 14,
+    "recommended_text_texture_contrast_max_percent": 2,
+    "recommended_mipmap_or_prefilter_at_1600_and_1366": true
+  },
+  "withdrawn_reviews": {
+    "reason": "2026-07-22 用户在最终整屏中指出第三卡锁定状态签右端不完整；名义 carrier 与文字中心证据不能证明实际图形对象完整。",
+    "previous_status": "dual_reviewed_pending_user_visual_confirmation",
+    "previous_ux_verdict": "PASS",
+    "previous_ui_verdict": "PASS"
+  },
+  "final_reviews": {
+    "ux_laoge": {
+      "verdict": "PASS",
+      "p0": 0,
+      "p1": 0,
+      "p2": 0,
+      "method": "先看完整默认态与第三卡100%局部，再核对audit",
+      "notes": [
+        "状态签左右端帽完整且右侧有约8px纸面余量，不再像被裁断按钮。",
+        "第三签113×41相对第二卡101×46的微差不构成层级或标题侵占；日程与右栏未回退。"
+      ]
+    },
+    "ui_designer": {
+      "verdict": "PASS",
+      "p0": 0,
+      "p1": 0,
+      "p2": 0,
+      "method": "先看完整整屏、100%/200%第三卡与映射流程板，再核对audit",
+      "notes": [
+        "protected保留率100%，四向crop loss为0，左右端帽、边距和实际色域文字中心均通过。",
+        "v0.3相对v0.2只改变第三卡footer；尺寸微差在较矮第三卡中保持平衡，不构成组件错型。"
+      ]
+    }
+  },
+  "v0_1_failure_regression_targets": {
+    "source": "2026-07-22 用户三张 100% 局部截图",
+    "required_fixed_issues": [
+      {
+        "id": "third_card_state_carrier_mismatch",
+        "current_parent_result": "FIXED_DUAL_REVIEWED"
+      },
+      {
+        "id": "schedule_state_action_grouping",
+        "v0_2_parent_result": "FIXED_REVIEWED"
+      },
+      {
+        "id": "dossier_body_mission_spacing",
+        "v0_2_parent_result": "FIXED_REVIEWED"
+      }
+    ]
+  },
+  "protected_object_mapping_audit": {
+    "third_card_state_tag": {
+      "passed": true,
+      "fit_mode": "direct_resize",
+      "source_crop_xyxy": [
+        1206,
+        508,
+        2054,
+        628
+      ],
+      "source_crop_size": [
+        848,
+        120
+      ],
+      "source_crop_aspect": 7.066667,
+      "target_rect_xywh": [
+        49,
+        744,
+        367,
+        52
+      ],
+      "target_rect_aspect": 7.057692,
+      "source_target_aspect_error_percent": 0.13,
+      "non_uniform_scale_error_percent": 0.127,
+      "effective_source_window_xyxy": [
+        1206,
+        508,
+        2054,
+        628
+      ],
+      "protected_source_bbox_xyxy": [
+        1775,
+        528,
+        2035,
+        616
+      ],
+      "protected_bbox_inside_effective_window": true,
+      "protected_crop_loss_px": {
+        "left": 0.0,
+        "right": 0.0,
+        "top": 0.0,
+        "bottom": 0.0
+      },
+      "protected_pixel_retention_ratio": 1.0,
+      "mapped_visible_protected_bbox_xyxy": [
+        295.25,
+        752.67,
+        407.78,
+        790.8
+      ],
+      "protected_bbox_touches_target_edge": false,
+      "target_edge_margin_px": {
+        "left": 246.25,
+        "right": 8.22,
+        "top": 8.67,
+        "bottom": 5.2
+      },
+      "target_edge_margin_passed": true,
+      "endcaps_present": {
+        "left": true,
+        "right": true
+      },
+      "failure": null,
+      "state_text_to_visible_tag_center_error_xy": [
+        0.49,
+        2.77
+      ],
+      "state_text_to_visible_tag_center_max_error_px": 4,
+      "title_to_state_visual_gap_px": 99.25,
+      "title_to_state_visual_gap_min_px": 16
+    }
+  },
+  "visual_carrier_audit": {
+    "default": {
+      "passed": true,
+      "all_text_inside_owner_carrier": true,
+      "body_bbox_xyxy": [
+        1424,
+        485,
+        1690,
+        517
+      ],
+      "mission_heading_bbox_xyxy": [
+        1424,
+        527,
+        1820,
+        546
+      ],
+      "body_to_mission_heading_gap_px": 10,
+      "body_to_mission_heading_min_px": 10,
+      "mission_heading_to_first_row_gap_px": 10,
+      "mission_heading_to_first_row_min_px": 8,
+      "body_2_to_mission_header_safe_rect_intersection_xyxy": null,
+      "schedule_date_action_carrier_intersection_xyxy": null,
+      "schedule_date_to_action_gap_px": 9,
+      "schedule_date_to_action_min_px": 8,
+      "third_card_state_text_center_xy": [
+        352.0,
+        774.5
+      ],
+      "third_card_state_carrier_center_xy": [
+        352.0,
+        772.0
+      ],
+      "third_card_state_center_error_xy": [
+        0.0,
+        2.5
+      ],
+      "third_card_state_center_max_error_px": 8
+    },
+    "schedule_confirming": {
+      "passed": true,
+      "all_text_inside_owner_carrier": true,
+      "body_bbox_xyxy": [
+        1424,
+        485,
+        1690,
+        517
+      ],
+      "mission_heading_bbox_xyxy": [
+        1424,
+        527,
+        1820,
+        546
+      ],
+      "body_to_mission_heading_gap_px": 10,
+      "body_to_mission_heading_min_px": 10,
+      "mission_heading_to_first_row_gap_px": 10,
+      "mission_heading_to_first_row_min_px": 8,
+      "body_2_to_mission_header_safe_rect_intersection_xyxy": null,
+      "schedule_date_action_carrier_intersection_xyxy": null,
+      "schedule_date_to_action_gap_px": 9,
+      "schedule_date_to_action_min_px": 8,
+      "third_card_state_text_center_xy": [
+        352.0,
+        774.5
+      ],
+      "third_card_state_carrier_center_xy": [
+        352.0,
+        772.0
+      ],
+      "third_card_state_center_error_xy": [
+        0.0,
+        2.5
+      ],
+      "third_card_state_center_max_error_px": 8
+    },
+    "declared_rect_text_audit_passed": true,
+    "parent_passed": true,
+    "independent_local_crop_review": "PASS"
+  },
+  "visual_stats": {
+    "mean_rgb_240x135": [
+      98.74,
+      104.07,
+      113.44
+    ],
+    "stddev_rgb_240x135": [
+      67.06,
+      57.48,
+      48.83
+    ]
+  },
+  "assertions": {
+    "selected_scheme_1_pixels_preserved_outside_text_and_patch_zones": true,
+    "eight_classic_rectangular_image_slots": true,
+    "all_text_inside_safe_rects": true,
+    "text_inside_visible_carriers": true,
+    "semantic_groups_non_overlapping": true,
+    "minimum_group_gap_passed": true,
+    "state_text_centered_in_state_carrier": true,
+    "scope_invariant_vs_v0_1_passed": true,
+    "v0_3_changes_only_third_card_footer_vs_v0_2": true,
+    "third_card_state_carrier_complete": true,
+    "third_card_state_endcaps_complete": true,
+    "third_card_state_tag_retention_at_least_99_percent": true,
+    "independent_local_crop_review_passed": true,
+    "state_delta_schedule_only": true,
+    "right_title_not_over_photo": true,
+    "static_fasteners_have_no_runtime_semantics": true,
+    "formal_contracts_unchanged": true,
+    "godot_unchanged": true
+  }
+}

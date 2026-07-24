@@ -1,0 +1,252 @@
+{
+  "artifact_type": "structure_wireframe_state_pair",
+  "version": "full_map_functional_truth_v5_1",
+  "viewport": [
+    1920,
+    1080
+  ],
+  "source": "D:\\angos\\docs\\prototypes\\world-map-wmw-black-white-structure\\black-white-full-map-v5-default.png",
+  "fixture": {
+    "week": 1,
+    "current_day": 1,
+    "remaining_days": 7,
+    "reputation": 45,
+    "roswell_dossier": false,
+    "east_asia_unlocked": false,
+    "pacific_unlocked": false
+  },
+  "outputs": {
+    "default": "D:\\angos\\docs\\prototypes\\world-map-wmw-black-white-structure\\black-white-full-map-v5-1-default.png",
+    "schedule_confirming": "D:\\angos\\docs\\prototypes\\world-map-wmw-black-white-structure\\black-white-full-map-v5-1-schedule-confirming.png"
+  },
+  "target_only": true,
+  "runtime_support": {
+    "independent_advance_day": false,
+    "a51h_full_height": false,
+    "deadline_day_in_world_preview": false
+  },
+  "geometry": {
+    "columns_unchanged": true,
+    "map_stage": [
+      426,
+      96,
+      924,
+      936
+    ],
+    "schedule": [
+      36,
+      810,
+      342,
+      246
+    ],
+    "east_asia_card": [
+      66,
+      294,
+      306,
+      240
+    ],
+    "right_dossier": [
+      1398,
+      24,
+      480,
+      1032
+    ],
+    "cta": [
+      1425,
+      957,
+      426,
+      75
+    ],
+    "allowed_rects_xywh": [
+      [
+        0,
+        0,
+        402,
+        24
+      ],
+      [
+        1160,
+        40,
+        190,
+        36
+      ],
+      [
+        1408,
+        32,
+        362,
+        32
+      ],
+      [
+        650,
+        1033,
+        476,
+        22
+      ],
+      [
+        66,
+        294,
+        306,
+        240
+      ],
+      [
+        36,
+        810,
+        342,
+        246
+      ],
+      [
+        1134,
+        341,
+        60,
+        60
+      ],
+      [
+        1130,
+        680,
+        60,
+        60
+      ],
+      [
+        1431,
+        456,
+        414,
+        135
+      ],
+      [
+        1425,
+        609,
+        426,
+        66
+      ],
+      [
+        1431,
+        681,
+        414,
+        248
+      ]
+    ]
+  },
+  "route_removal": {
+    "paths": [
+      [
+        [
+          620,
+          365
+        ],
+        [
+          790,
+          284
+        ],
+        [
+          990,
+          286
+        ],
+        [
+          1164,
+          371
+        ]
+      ],
+      [
+        [
+          620,
+          365
+        ],
+        [
+          810,
+          466
+        ],
+        [
+          960,
+          606
+        ],
+        [
+          1160,
+          710
+        ]
+      ],
+      [
+        [
+          1164,
+          371
+        ],
+        [
+          1195,
+          490
+        ],
+        [
+          1180,
+          592
+        ],
+        [
+          1160,
+          710
+        ]
+      ]
+    ],
+    "exact_difference_bbox_xyxy": [
+      637,
+      283,
+      1197,
+      703
+    ],
+    "exact_changed_pixels": 2142,
+    "allowed_mask_dilation_px": 6,
+    "allowed_mask_pixels": 21438,
+    "edge_data_present": false
+  },
+  "copy_truth": {
+    "schedule_deep_chain_advance_removed": true,
+    "zero_days_enters_editorial": true,
+    "east_asia_locked": true,
+    "mission_summary": "常驻 2 · 限时 1 · 深链 1",
+    "mission_type_source": "Content.TAG_LABELS[node.type]",
+    "region_body_secondary_is_candidate_copy": true,
+    "issue_number_removed_until_formal_source_exists": true
+  },
+  "diff": {
+    "default_vs_v5": {
+      "difference_bbox_xyxy": [
+        52,
+        12,
+        1785,
+        1055
+      ],
+      "changed_pixels": 25256,
+      "outside_allowed_pixels": 0,
+      "passed": true
+    },
+    "confirming_vs_v5": {
+      "difference_bbox_xyxy": [
+        52,
+        12,
+        1785,
+        1055
+      ],
+      "changed_pixels": 27809,
+      "outside_allowed_pixels": 0,
+      "passed": true
+    },
+    "default_vs_confirming": {
+      "difference_bbox_xyxy": [
+        52,
+        907,
+        332,
+        1039
+      ],
+      "changed_pixels": 6390,
+      "outside_schedule_pixels": 0,
+      "passed": true
+    }
+  },
+  "assertions": {
+    "outside_allowed_pixels_default": true,
+    "outside_allowed_pixels_confirming": true,
+    "state_delta_schedule_only": true,
+    "three_column_geometry_unchanged": true,
+    "map_outline_and_pin_coordinates_unchanged": true,
+    "right_boxes_and_cta_unchanged": true,
+    "compact_a51_frozen_contract_unchanged": true,
+    "godot_runtime_unchanged": true,
+    "colored_art_not_generated": true
+  }
+}

@@ -1,0 +1,398 @@
+{
+  "status": "art_direction_candidates_dual_reviewed_pending_user_choice",
+  "source_generation": "built-in imagegen",
+  "program_role": "只做已生成整屏的分区裁切、尺寸归一化、宏观三栏回位、拼版与审计；不重绘、不调色、不新增 UI 内容。",
+  "source_size": [
+    1672,
+    941
+  ],
+  "final_size": [
+    1920,
+    1080
+  ],
+  "target_boxes_1672x941": {
+    "left_cards": [
+      22,
+      20,
+      373,
+      694
+    ],
+    "schedule": [
+      22,
+      707,
+      373,
+      920
+    ],
+    "map": [
+      393,
+      20,
+      1191,
+      920
+    ],
+    "dossier": [
+      1208,
+      20,
+      1649,
+      920
+    ]
+  },
+  "target_boxes_1920x1080": {
+    "left_cards": [
+      25,
+      23,
+      428,
+      797
+    ],
+    "schedule": [
+      25,
+      811,
+      428,
+      1056
+    ],
+    "map": [
+      451,
+      23,
+      1368,
+      1056
+    ],
+    "dossier": [
+      1387,
+      23,
+      1894,
+      1056
+    ]
+  },
+  "variants": {
+    "A": {
+      "source": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-adult-weird-weekly-01-news-frontpage-v0-2-imagegen.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "output": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-adult-weird-weekly-01-news-frontpage-v0-2.png",
+      "output_size": [
+        1920,
+        1080
+      ],
+      "background_rgb": [
+        21,
+        28,
+        28
+      ],
+      "regions": {
+        "left_cards": {
+          "source_crop": [
+            15,
+            18,
+            411,
+            758
+          ],
+          "target_box_1672x941": [
+            22,
+            20,
+            373,
+            694
+          ],
+          "target_box_1920x1080": [
+            25,
+            23,
+            428,
+            797
+          ]
+        },
+        "schedule": {
+          "source_crop": [
+            28,
+            760,
+            411,
+            922
+          ],
+          "target_box_1672x941": [
+            22,
+            707,
+            373,
+            920
+          ],
+          "target_box_1920x1080": [
+            25,
+            811,
+            428,
+            1056
+          ]
+        },
+        "map": {
+          "source_crop": [
+            430,
+            14,
+            1172,
+            923
+          ],
+          "target_box_1672x941": [
+            393,
+            20,
+            1191,
+            920
+          ],
+          "target_box_1920x1080": [
+            451,
+            23,
+            1368,
+            1056
+          ]
+        },
+        "dossier": {
+          "source_crop": [
+            1190,
+            16,
+            1652,
+            923
+          ],
+          "target_box_1672x941": [
+            1208,
+            20,
+            1649,
+            920
+          ],
+          "target_box_1920x1080": [
+            1387,
+            23,
+            1894,
+            1056
+          ]
+        }
+      }
+    },
+    "B": {
+      "source": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-adult-weird-weekly-02-editorial-pitch-desk-v0-2-imagegen.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "output": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-adult-weird-weekly-02-editorial-pitch-desk-v0-2.png",
+      "output_size": [
+        1920,
+        1080
+      ],
+      "background_rgb": [
+        14,
+        26,
+        28
+      ],
+      "regions": {
+        "left_cards": {
+          "source_crop": [
+            24,
+            20,
+            500,
+            682
+          ],
+          "target_box_1672x941": [
+            22,
+            20,
+            373,
+            694
+          ],
+          "target_box_1920x1080": [
+            25,
+            23,
+            428,
+            797
+          ]
+        },
+        "schedule": {
+          "source_crop": [
+            18,
+            690,
+            500,
+            922
+          ],
+          "target_box_1672x941": [
+            22,
+            707,
+            373,
+            920
+          ],
+          "target_box_1920x1080": [
+            25,
+            811,
+            428,
+            1056
+          ]
+        },
+        "map": {
+          "source_crop": [
+            509,
+            20,
+            1212,
+            923
+          ],
+          "target_box_1672x941": [
+            393,
+            20,
+            1191,
+            920
+          ],
+          "target_box_1920x1080": [
+            451,
+            23,
+            1368,
+            1056
+          ]
+        },
+        "dossier": {
+          "source_crop": [
+            1223,
+            20,
+            1652,
+            923
+          ],
+          "target_box_1672x941": [
+            1208,
+            20,
+            1649,
+            920
+          ],
+          "target_box_1920x1080": [
+            1387,
+            23,
+            1894,
+            1056
+          ]
+        }
+      }
+    },
+    "C": {
+      "source": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-adult-weird-weekly-03-world-oddities-special-v0-2-imagegen.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "output": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-adult-weird-weekly-03-world-oddities-special-v0-2.png",
+      "output_size": [
+        1920,
+        1080
+      ],
+      "background_rgb": [
+        9,
+        25,
+        28
+      ],
+      "regions": {
+        "left_cards": {
+          "source_crop": [
+            13,
+            14,
+            470,
+            641
+          ],
+          "target_box_1672x941": [
+            22,
+            20,
+            373,
+            694
+          ],
+          "target_box_1920x1080": [
+            25,
+            23,
+            428,
+            797
+          ]
+        },
+        "schedule": {
+          "source_crop": [
+            13,
+            649,
+            470,
+            920
+          ],
+          "target_box_1672x941": [
+            22,
+            707,
+            373,
+            920
+          ],
+          "target_box_1920x1080": [
+            25,
+            811,
+            428,
+            1056
+          ]
+        },
+        "map": {
+          "source_crop": [
+            481,
+            15,
+            1165,
+            920
+          ],
+          "target_box_1672x941": [
+            393,
+            20,
+            1191,
+            920
+          ],
+          "target_box_1920x1080": [
+            451,
+            23,
+            1368,
+            1056
+          ]
+        },
+        "dossier": {
+          "source_crop": [
+            1176,
+            14,
+            1655,
+            920
+          ],
+          "target_box_1672x941": [
+            1208,
+            20,
+            1649,
+            920
+          ],
+          "target_box_1920x1080": [
+            1387,
+            23,
+            1894,
+            1056
+          ]
+        }
+      }
+    }
+  },
+  "comparison_board": "D:\\angos\\docs\\prototypes\\world-map-wmw-fullscreen-visual-style-default\\wmw-adult-weird-weekly-v0-2-comparison-board.png",
+  "comparison_board_size": [
+    3840,
+    2280
+  ],
+  "review": {
+    "ux": {
+      "ranking": [
+        "B",
+        "C",
+        "A"
+      ],
+      "verdict": {
+        "A": "ITERATE_P0_0_P1_1",
+        "B": "PASS_P0_0_P1_0",
+        "C": "ITERATE_P0_0_P1_1"
+      },
+      "summary": "B 的故事比较、选中连续性与锁定语义最完整；C 的情绪承诺最强；A 仍略近国际态势新闻。"
+    },
+    "ui": {
+      "ranking": [
+        "B",
+        "C",
+        "A"
+      ],
+      "verdict": {
+        "A": "ITERATE_DIRECTION_ONLY",
+        "B": "ITERATE_BUT_VISUAL_DIRECTION_APPROVED",
+        "C": "ITERATE_DIRECTION_ONLY"
+      },
+      "summary": "三套均无明显裁切拉伸，但只有风格方向可供裁决；B 最接近标杆，仍需统一内部子槽后才能成为正式母本。"
+    },
+    "parent_conclusion": "本轮只请用户裁决 A/B/C 的玩家身份感；推荐 B 编辑部选题桌。不得把任一方案称为正式整屏母本。"
+  }
+}

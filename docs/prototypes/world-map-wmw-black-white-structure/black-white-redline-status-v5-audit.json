@@ -1,0 +1,138 @@
+{
+  "artifact_type": "structure_wireframe_variant_pair",
+  "version": "redline_status_decision_v5",
+  "viewport": [
+    1920,
+    1080
+  ],
+  "source": "D:\\angos\\docs\\prototypes\\world-map-wmw-black-white-structure\\black-white-full-map-v4-default.png",
+  "shared_invariants": {
+    "left_column_unchanged": true,
+    "center_map_unchanged": true,
+    "right_photo_unchanged": true,
+    "mission_intel_summary_unchanged": true,
+    "four_mission_rows_unchanged": true,
+    "task_03_deadline_label_unchanged": true,
+    "cta_unchanged": true,
+    "region_body_rect": [
+      1431,
+      456,
+      414,
+      135
+    ],
+    "incorrect_remaining_days_sentence_removed": true,
+    "compact_a51_frozen_contract_changed": false,
+    "godot_runtime_changed": false,
+    "colored_art_generated": false
+  },
+  "candidate_a": {
+    "role": "CONDITIONAL",
+    "output": "D:\\angos\\docs\\prototypes\\world-map-wmw-black-white-structure\\black-white-redline-status-v5-a-earliest-deadline.png",
+    "region_title": [
+      1521,
+      87,
+      240,
+      51
+    ],
+    "status_stamp": [
+      1767,
+      75,
+      87,
+      87
+    ],
+    "label_safe_zone": [
+      1773,
+      91,
+      75,
+      20
+    ],
+    "value_safe_zone": [
+      1773,
+      118,
+      75,
+      28
+    ],
+    "copy": [
+      "最早截止",
+      "第4天"
+    ],
+    "interactive": false,
+    "requires_earliest_deadline_day": true,
+    "requires_same_source_as_visible_mission_rows": true,
+    "current_runtime_support": false,
+    "diff": {
+      "difference_bbox_xyxy": [
+        1450,
+        93,
+        1843,
+        585
+      ],
+      "changed_pixels": 8729,
+      "outside_allowed_pixels": 0,
+      "allowed_rects_xywh": [
+        [
+          1767,
+          75,
+          87,
+          87
+        ],
+        [
+          1431,
+          456,
+          414,
+          135
+        ]
+      ],
+      "passed": true
+    }
+  },
+  "candidate_b": {
+    "role": "SELECTED_DEFAULT",
+    "output": "D:\\angos\\docs\\prototypes\\world-map-wmw-black-white-structure\\black-white-redline-status-v5-b-remove-stamp.png",
+    "promoted_default_output": "D:\\angos\\docs\\prototypes\\world-map-wmw-black-white-structure\\black-white-full-map-v5-default.png",
+    "warning_title_override": [
+      1521,
+      87,
+      333,
+      51
+    ],
+    "warning_status_stamp_visible": false,
+    "locked_chain_status_stamp_capability_retained": true,
+    "compact_a51_base_slot_retained": true,
+    "interactive": false,
+    "requires_new_runtime_aggregate": false,
+    "diff": {
+      "difference_bbox_xyxy": [
+        1450,
+        75,
+        1855,
+        585
+      ],
+      "changed_pixels": 13929,
+      "outside_allowed_pixels": 0,
+      "allowed_rects_xywh": [
+        [
+          1519,
+          72,
+          337,
+          92
+        ],
+        [
+          1431,
+          456,
+          414,
+          135
+        ]
+      ],
+      "passed": true
+    }
+  },
+  "decision": {
+    "selected": "B",
+    "selected_at": "2026-07-20",
+    "reason": "当前状态章不独占回答玩家问题；剩余天数已由左下日程器承载，限时数量与具体截止分别由任务摘要和任务行承载。",
+    "candidate_a_retained_as_conditional_reference": true,
+    "user_ruling_required_before_runtime_or_contract_change": false,
+    "runtime_or_contract_change_authorized": false
+  }
+}

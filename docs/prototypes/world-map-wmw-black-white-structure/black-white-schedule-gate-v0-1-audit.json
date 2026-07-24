@@ -1,0 +1,585 @@
+{
+  "artifact_type": "derived_component_contract_board_audit",
+  "version": "schedule_gate_v0_1",
+  "viewport": [
+    1920,
+    1080
+  ],
+  "output": "D:\\angos\\docs\\prototypes\\world-map-wmw-black-white-structure\\black-white-schedule-gate-v0-1-contract-board.png",
+  "candidate_spec": "D:\\angos\\docs\\prototypes\\world-map-wmw-black-white-structure\\schedule-gate-v0-1-candidate-spec.json",
+  "target_only": true,
+  "review_status": {
+    "ui_designer": "pass",
+    "ux_final": "pass_p0_0_p1_0_p2_0",
+    "user_decision": "accepted_a240"
+  },
+  "source_component_rect_xywh": [
+    36,
+    810,
+    342,
+    246
+  ],
+  "board_state_card_rects_xywh": {
+    "idle": [
+      48,
+      174,
+      342,
+      246
+    ],
+    "confirming": [
+      414,
+      174,
+      342,
+      246
+    ],
+    "executing": [
+      780,
+      174,
+      342,
+      246
+    ],
+    "last_day": [
+      48,
+      482,
+      342,
+      246
+    ],
+    "runtime_disabled": [
+      414,
+      482,
+      342,
+      246
+    ],
+    "zero_days": [
+      780,
+      482,
+      342,
+      246
+    ]
+  },
+  "source_crop_replay": {
+    "idle_enabled_exact": true,
+    "confirming_exact": true
+  },
+  "geometry": {
+    "runtime_local_integer_pixels_authoritative": true,
+    "all_rects_within_component": true,
+    "rects_xywh": {
+      "component_rect": [
+        0,
+        0,
+        342,
+        246
+      ],
+      "input_capture_rect": [
+        0,
+        0,
+        342,
+        246
+      ],
+      "activation_hit_rect": [
+        12,
+        74,
+        318,
+        100
+      ],
+      "section_label_safe": [
+        12,
+        2,
+        116,
+        14
+      ],
+      "date_row": [
+        16,
+        16,
+        310,
+        48
+      ],
+      "date_current_safe": [
+        28,
+        26,
+        132,
+        28
+      ],
+      "date_remaining_safe": [
+        190,
+        26,
+        124,
+        28
+      ],
+      "action_zone": [
+        12,
+        74,
+        318,
+        100
+      ],
+      "icon_well": [
+        26,
+        88,
+        70,
+        70
+      ],
+      "icon_glyph_safe": [
+        42,
+        104,
+        38,
+        38
+      ],
+      "action_title_safe": [
+        114,
+        88,
+        202,
+        34
+      ],
+      "action_subtitle_safe": [
+        114,
+        132,
+        202,
+        24
+      ],
+      "info_separator_1": [
+        16,
+        182,
+        310,
+        1
+      ],
+      "info_row_1": [
+        16,
+        182,
+        310,
+        24
+      ],
+      "info_row_1_text_safe": [
+        16,
+        184,
+        310,
+        20
+      ],
+      "info_separator_2": [
+        16,
+        210,
+        310,
+        1
+      ],
+      "info_row_2": [
+        16,
+        210,
+        310,
+        24
+      ],
+      "info_row_2_text_safe": [
+        16,
+        212,
+        310,
+        20
+      ],
+      "focus_ring": [
+        2,
+        2,
+        338,
+        242
+      ]
+    }
+  },
+  "text_safe_area": {
+    "checked_runtime_text_records": 48,
+    "violations": [],
+    "passed": true
+  },
+  "dynamic_copy_pressure": {
+    "checked_records": 20,
+    "records": [
+      {
+        "key": "dynamic_info_0",
+        "text": "确认后：剩余 99 天 · 无任务到期",
+        "bbox_xyxy": [
+          16,
+          189,
+          193,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "dynamic_info_1",
+        "text": "确认后：剩余 99 天 · 到期 北境深层雷达异常",
+        "bbox_xyxy": [
+          16,
+          189,
+          257,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "dynamic_info_2",
+        "text": "确认后：剩余 99 天 · 到期 99 项",
+        "bbox_xyxy": [
+          16,
+          189,
+          191,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "dynamic_info_3",
+        "text": "确认后：剩余 99 天 · 到期 99+ 项",
+        "bbox_xyxy": [
+          16,
+          189,
+          200,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "dynamic_info_4",
+        "text": "预计：剩余 99 天 · 无任务到期",
+        "bbox_xyxy": [
+          16,
+          189,
+          181,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "dynamic_info_5",
+        "text": "预计：剩余 99 天 · 到期 北境深层雷达异常",
+        "bbox_xyxy": [
+          16,
+          189,
+          245,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "dynamic_info_6",
+        "text": "预计：剩余 99 天 · 到期 99 项",
+        "bbox_xyxy": [
+          16,
+          189,
+          179,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "dynamic_info_7",
+        "text": "预计：剩余 99 天 · 到期 99+ 项",
+        "bbox_xyxy": [
+          16,
+          189,
+          188,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "dynamic_info_8",
+        "text": "到期提示：本次推进无任务到期",
+        "bbox_xyxy": [
+          16,
+          189,
+          184,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "dynamic_info_9",
+        "text": "到期：北境深层雷达异常",
+        "bbox_xyxy": [
+          16,
+          189,
+          148,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "dynamic_info_10",
+        "text": "到期：99 项",
+        "bbox_xyxy": [
+          16,
+          189,
+          82,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "dynamic_info_11",
+        "text": "到期：99+ 项",
+        "bbox_xyxy": [
+          16,
+          189,
+          91,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "dynamic_info_12",
+        "text": "限时任务：无",
+        "bbox_xyxy": [
+          16,
+          189,
+          88,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "dynamic_info_13",
+        "text": "限时任务：北境深层雷达异常仍开放至第 99 天",
+        "bbox_xyxy": [
+          16,
+          189,
+          266,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "dynamic_info_14",
+        "text": "限时任务：99 项 · 最早第 99 天",
+        "bbox_xyxy": [
+          16,
+          189,
+          187,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "dynamic_info_15",
+        "text": "限时任务：99+ 项 · 最早第 99 天",
+        "bbox_xyxy": [
+          16,
+          189,
+          196,
+          201
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "idle_error_title",
+        "text": "推进未完成",
+        "bbox_xyxy": [
+          114,
+          95,
+          224,
+          118
+        ],
+        "safe_rect_xywh": [
+          114,
+          88,
+          202,
+          34
+        ],
+        "passed": true
+      },
+      {
+        "key": "idle_error_subtitle",
+        "text": "失败：服务器未返回结算结果",
+        "bbox_xyxy": [
+          114,
+          138,
+          270,
+          151
+        ],
+        "safe_rect_xywh": [
+          114,
+          132,
+          202,
+          24
+        ],
+        "passed": true
+      },
+      {
+        "key": "idle_error_info_1",
+        "text": "未消耗天数 · 日程保持不变",
+        "bbox_xyxy": [
+          16,
+          189,
+          159,
+          200
+        ],
+        "safe_rect_xywh": [
+          16,
+          184,
+          310,
+          20
+        ],
+        "passed": true
+      },
+      {
+        "key": "idle_error_info_2",
+        "text": "再次点击推进区可重试",
+        "bbox_xyxy": [
+          16,
+          216,
+          136,
+          228
+        ],
+        "safe_rect_xywh": [
+          16,
+          212,
+          310,
+          20
+        ],
+        "passed": true
+      }
+    ],
+    "violations": [],
+    "passed": true
+  },
+  "state_policy": {
+    "stable_visible_states": 5,
+    "edge_state_examples_on_board": 2,
+    "committed_is_transient_semantic_node": true,
+    "executing_full_hit_rect_locked": true,
+    "negative_remaining_days_forbidden": true,
+    "committed_feedback_ms_non_last_day": [
+      180,
+      300
+    ],
+    "idle_error_defined": true
+  },
+  "input_semantics": {
+    "component_rect_xywh": [
+      0,
+      0,
+      342,
+      246
+    ],
+    "input_capture_rect_xywh": [
+      0,
+      0,
+      342,
+      246
+    ],
+    "activation_hit_rect_xywh": [
+      12,
+      74,
+      318,
+      100
+    ],
+    "date_and_info_rows_are_passive": true,
+    "outside_component_cancels_confirming": true,
+    "executing_locks_full_input_capture": true
+  },
+  "assertions": {
+    "is_real_1920x1080_png": true,
+    "black_white_neutral_tone_only": true,
+    "max_rgb_channel_delta": 4,
+    "idle_and_confirming_match_v5_1": true,
+    "all_state_cards_same_342x246_geometry": true,
+    "all_generated_text_inside_safe_rects": true,
+    "dynamic_summary_and_error_pressure_passed": true,
+    "activation_and_input_capture_are_separated": true,
+    "formal_contract_unchanged": true,
+    "godot_runtime_unchanged": true,
+    "compact_a51_unchanged": true,
+    "colored_art_not_generated": true
+  }
+}
