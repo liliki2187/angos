@@ -402,6 +402,26 @@ stage_transitions:
       - rollback_to_content_rects
 
 hard_gates:
+  editorial_media_identity:
+    status: trial
+    introduced: 2026-07-22
+    auto_required_when:
+      - review_target_is_newspaper_magazine_or_editorial_spread
+      - editorial_region_is_claimed_ready_for_freeze_or_reverse_split
+    required:
+      - reference_and_previous_structure_side_by_side
+      - explicit_grouping_replacement_for_removed_ui_frames
+      - unlabeled_hierarchy_five_second_test
+      - blurred_image_media_identity_test
+      - editorial_gutter_content_value_check
+      - explicit_editorial_media_identity_pass_or_fail
+    blockers:
+      - paper_texture_claimed_as_publication_identity
+      - contract_rects_claimed_as_editorial_composition
+      - main_secondary_and_standard_roles_require_labels_to_be_distinguished
+      - spread_reads_as_album_gallery_portfolio_or_ui_card_wall
+      - removed_program_frames_have_no_grid_rules_baselines_or_caption_system_replacement
+      - low_information_folio_gutter_consumes_twenty_percent_or_more_of_story_width
   screen_identity:
     status: trial
     introduced: 2026-07-16
@@ -549,6 +569,46 @@ hard_gates:
       - user_says_color_differs_and_no_contract_revision
       - local_hue_fix_causes_global_l_drop_over_3
       - active_map_or_paper_regions_darkened_by_global_grade
+  cross_screen_style_lock:
+    status: trial
+    introduced: 2026-07-22
+    auto_required_when:
+      - user_requests_two_or_more_screens_in_one_unified_art_style
+      - response_claims_cross_screen_style_consistency
+      - imagegen_batch_contains_two_or_more_ui_screens
+    required:
+      - one_joint_multi_screen_style_proof_before_separate_full_screen_outputs
+      - identical_original_benchmark_set_for_every_screen
+      - shared_style_kernel_and_negative_contract
+      - shared_palette_area_hierarchy
+      - shared_low_poly_block_scale
+      - shared_lighting_and_image_flattening_method
+      - shared_paper_material_and_symbol_vocabulary
+      - benchmark_and_all_candidates_side_by_side
+      - twenty_five_percent_thumbnail_comparison
+      - benchmark_emotional_promise_first_read_comparison
+      - anomaly_story_hook_before_institutional_workflow
+      - mixed_editorial_media_and_scale_rhythm
+      - explicit_pass_or_fail_per_screen_and_for_whole_batch
+    evidence_required:
+      - joint_style_proof_or_contact_sheet
+      - benchmark_plus_all_screen_contact_sheet
+      - palette_area_notes_per_screen
+      - block_scale_and_realism_notes_per_screen
+      - first_three_nouns_and_action_tendency_for_benchmark_and_candidate
+      - institution_pressure_vs_story_curiosity_visual_weight_note
+    blockers:
+      - unapproved_generated_screen_used_as_style_truth_for_next_screen
+      - separate_serial_prompts_claimed_as_joint_generation
+      - shared_border_font_or_button_color_claimed_as_full_style_consistency
+      - any_screen_reads_as_photorealistic_scene_gis_cinematic_render_or_software_dashboard
+      - dense_uniform_micro_facets_on_map_or_story_image
+      - benchmark_comparison_done_one_screen_at_a_time_only
+      - ui_or_ux_functional_pass_used_as_art_style_pass
+      - candidate_first_reads_as_bureaucratic_approval_intelligence_control_or_crisis_response
+      - blocking_risk_or_rejection_signals_outweigh_anomaly_story_hooks
+      - humor_exists_only_as_penalty_rejection_or_unavailable_copy
+      - color_variety_exists_only_in_swatches_status_dots_or_footer
   ui_geometry:
     auto_required_when:
       - artifact_type_in:
@@ -641,6 +701,9 @@ hard_gates:
     required:
       - visible_color_module_rect
       - carrier_rect
+      # 2026-07-22 A263 false-pass 复发升级：不能再让作者自画 safe rect 自证正确。
+      - owner_carrier_id_per_text_field
+      - semantic_group_id_per_text_field
       - inner_rect
       - runtime_glyph_bbox
       - font_left_top_bearing_preserved
@@ -652,8 +715,26 @@ hard_gates:
       - normal_and_longest_copy_fit_without_wrap_or_compression
       - target_engine_font_and_scale_evidence
       - carrier_texture_continuity_after_resize_or_rebuild
+      # 2026-07-22 A263 v0.2：名义 carrier 与文字居中均通过，真实状态签仍被 cover-fit 裁掉一半。
+      - source_target_aspect_ratio_report_for_raster_carrier_patch
+      - fit_crop_effective_source_window_xyxy
+      - protected_visual_object_bbox_before_transform
+      - protected_visual_object_crop_loss_px_per_edge
+      - protected_visual_object_pixel_retention_ratio
+      - mapped_visible_carrier_bbox_or_color_mask
+      - left_and_right_endcap_presence
+      - carrier_edge_margin_and_closed_contour
+      - safe_rect_pairwise_intersection_scan
+      - minimum_semantic_group_gap_px_by_role
+      - state_text_center_inside_visible_state_carrier
+      - changed_text_or_patch_neighborhood_100px_review
     evidence_required:
       - carrier_closeup
+      - independently_cropped_100_percent_carrier_closeup
+      - changed_region_100px_neighborhood_crop
+      - ingredient_source_crop_fit_final_comparison
+      - protected_object_bbox_overlay
+      - final_100_and_200_percent_endcap_closeup
       - exact_scale_text_slot_stress
       - bbox_probe_per_font_size_and_copy
       - text_bbox_evidence_validator_pass
@@ -661,6 +742,11 @@ hard_gates:
       - target_engine_runtime_screenshot
     blockers:
       - ideal_safe_zone_not_contained_by_visible_carrier
+      - author_declared_safe_rect_has_no_verified_visible_carrier
+      - semantically_distinct_safe_rects_overlap
+      - semantic_group_gap_below_declared_role_minimum
+      - state_text_center_outside_visible_state_carrier
+      - aggregate_safe_rect_pass_claimed_as_visual_pass_without_independent_local_crop
       - proxy_font_claimed_as_final_font_metrics
       - text_squeezed_by_font_shrink_or_manual_y_offset
       - font_metric_offset_discarded
@@ -668,6 +754,13 @@ hard_gates:
       - fit_only_compares_width_height_without_absolute_containment
       - manual_y_offset_used_to_fake_centering
       - resized_carrier_has_seam_smear_or_flat_color_band
+      - fit_or_cover_used_without_effective_source_window_report
+      - source_target_aspect_mismatch_without_crop_loss_review
+      - protected_visual_object_bbox_not_inside_effective_source_window
+      - protected_visual_object_pixel_retention_below_99_percent
+      - declared_carrier_rect_used_without_actual_visible_pixel_bbox_or_mask
+      - carrier_endcap_missing_or_closed_contour_broken
+      - carrier_visible_pixels_touch_patch_edge_when_source_has_margin
   retired_carrier_absence:
     auto_required_when:
       - visible_text_carrier_or_information_lane_retired

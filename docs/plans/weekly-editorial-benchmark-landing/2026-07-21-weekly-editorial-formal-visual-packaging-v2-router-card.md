@@ -23,7 +23,7 @@
 - `weekly-editorial-formal-black-structure-v4`
 - `weekly-editorial-formal-visual-packaging-v1`
 - `weekly-editorial-two-spec-image-contract-review-v1`
-- 设计采纳记录 A242 的 2026-07-21 精确参数修订
+- 设计采纳记录 A271 的 2026-07-21 精确参数修订
 
 ## 输出与证据
 

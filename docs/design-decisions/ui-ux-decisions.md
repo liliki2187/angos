@@ -1084,6 +1084,25 @@
 - **cross-read tags**：`A99`、`A110`、`A211`、`A221`、`A228`、`A229`、advance-day、conditional-feedback、dossier、information-architecture、map-stage、structure-wireframe、ui、ux、world-map。
 - **状态**：已生成 v4 默认全地图与条件世界变化两态，等待用户视觉裁决。
 
+### A233. WMW 右侧 warning 态删除“红线升温”状态章，剩余天数只由左下日程器承载
+
+- **来源**：2026-07-20 用户复核 A / B 两张 1920×1080 黑白结构稿后明确回复“可以的，选B吧，因为剩余天数实际上在左下角已经标注出来了”。
+- **职责裁决**：左下完整日程器独占承载当前日、剩余天数、推进到下一天、推进后果与到期提示；右侧地区档案不再用泛化状态章重复全局时间。右侧 `任务情报` 摘要继续用 `限时 1` 回答“当前地区有没有 / 有几条限时任务”，具体任务行继续用 `限时至第 4 天` 回答“是哪条任务 / 何时截止”。
+- **默认结构**：A5.1-H 的 warning 派生态不渲染 `[1767,75,87,87]` 的“红线升温”可见章；地区标题由 `[1521,87,240,51]` 扩为 `[1521,87,333,51]`，右缘保持 `x=1854`，回收原章位置且不留下暗示缺件的空槽。地区说明删除“红线稿需在 7 天内处理。”，保留“都市传说与军事封锁交叉。”与“地区说明只回答为什么去。”。
+- **状态能力边界**：本裁决只作用于 A5.1-H warning 默认态。locked / chain 等已有合法状态仍可使用原 `[1767,75,87,87]` 状态槽；compact A5.1 frozen 的基础 `status_stamp` 能力与几何不退役、不升版。
+- **候选 A 处理**：“最早截止 / 第4天”保留为条件参考，不进入当前默认态。只有未来明确需要跨地区紧迫度比较，并建立与可见任务行同源的 `earliest_deadline_day` 聚合后，才可重新评估；不得硬编码第 4 天或复用 `remaining_days`。
+- **实现边界**：当前只把 v5 B 黑白结构稿升为默认结构候选，未授权修改 Godot、正式组件合同或生成有色整屏。若后续进入 runtime，应同时清理 `_build_region_warning_text()` 与地区卡状态中把 `remaining_days` 冒充任务截止窗口的旧表达。
+- **证据**：`docs/prototypes/world-map-wmw-black-white-structure/black-white-full-map-v5-default.png`、`black-white-redline-status-v5-audit.json`、`docs/plans/world-map-benchmark-landing/2026-07-20-world-map-wmw-redline-status-v5-review.md`。
+- **状态**：已采纳；B 已升为 v5 默认黑白结构候选，runtime / frozen 合同 / 有色稿继续冻结。
+- **cross-read tags**：`A99`、`A110`、`A184`、`A205`、`A211`、`A229`、`A232`、advance-day、data-binding、dossier、information-architecture、schedule、structure-wireframe、ui、ux、world-map。
+
+### A235. 区域任务台右 dossier 在选中任务后显示风险等级与可执行建议
+
+- **来源**：2026-07-20 用户复核区域任务台真实截图后明确指出，点选某个任务后，右侧组件应显示该任务的风险等级，以及推荐或建议。
+- **信息职责**：右 dossier 必须回答“风险多高、为什么、现在怎么做”。建议最少包含 `risk_level`、`risk_reasons` 与 `recommendation` 三类字段；推荐必须能指导下一步派遣或资源准备，不得只是重复风险等级，也不得由 UI 根据颜色或占位文案临场编造。
+- **实现边界**：当前 `dossier_contract.json v3` 尚无完整字段，进入实现前必须先核对 GDD / 正式任务 payload 并升版合同；本条不授权改动 event card，也不把风险 / 推荐文字烘焙进短签母板。
+- **状态**：需求已采纳并进入短签资产化之后的下一阶段。当前先完成短签类型 / 状态美术语言确认；随后以单个真实任务做 dossier 信息竖切片，再进入 Godot。
+
 ### A213. 发刊副头版采用分层 A 级资产化，并把状态反馈从 meta 移到右下动作位
 
 - **来源**：2026-07-15 用户要求列明后续大步骤与产出后明确回复“可以，进行”，授权执行副头版 A 级纵向切片。按项目 UI 双 agent 规则，`ui_designer` 提出“冷钴蓝编辑稿卡＋中景异常快照”，`ux_laoge` 复核出合同漂移、拿稿时退回 / 替换竞争、状态只靠颜色、fallback 常驻和来源态调暗误读等 P1；父级采用 UX 修订完成接入。
@@ -1121,3 +1140,119 @@
 - **证据**：母图、manifest v4、`12/12` 新资产审计、既有 `42/42` 双版交互审计、`8/8` 标题自适应回归、Godot smoke 与三张 windowed OpenGL 运行截图位于 `docs/screenshots/2026-07-15-weekly-editorial-standard-story-b-slice/` 及相邻资产目录。
 - **状态**：已按单图纵向切片落地为 `evidence_ready_pending_user_visual_review`；用户确认当前构图、亮度和层级后，才进入下一张 B 级报道图。
 - **cross-read tags**：`A192/A198/A202/A214/A216`、assetized-ui、article-id、clean-lowpoly、crop、editorial、fallback、godot、imagegen、magazine、runtime、ui、ux。
+
+### A236. 发刊候选报道栏删除名称搜索，只保留类型筛选与等级 / 获得时间排序
+
+- **来源**：2026-07-20 用户复核候选报道筛选 / 排序局部黑白解说图后明确指出，搜索需要输入名称，在游戏中操作麻烦，应当去掉；筛选和排序保留，其中筛选按不同报道类型，排序按等级或获得时间先后。
+- **栏头裁决**：左侧候选报道栏继续使用现有 `288×48` 栏头与 `y=80` 列表起点，不增加常驻高度。删除搜索入口、输入态、清除搜索和标题 / 标签检索逻辑；栏头只保留筛选与排序两个 `44×44` 入口，8 张 `288×92` 候选卡在 1080p 内完整可见的容量目标不变。
+- **筛选裁决**：首版筛选只消费 `recipe_type`，提供“全部、抢先快讯、深度报道、个人专栏、爆炸性新闻”。具体类型允许多选；“全部”与具体类型互斥，取消最后一个具体类型时自动恢复“全部”。本条不授权顺带加入取向、主题、数值或全文检索。
+- **排序裁决**：`quality` 映射为玩家可见“等级”，提供高到低 / 低到高。获得时间提供新到旧 / 旧到新；不得用数组下标、候选快照顺序、稿件 ID 或 `synth_topic_order` 冒充获得时间。同一主排序值下按候选快照原始顺序，再以稳定 ID 兜底。
+- **状态边界**：筛选与排序浮层互斥，均只改变左栏可见集合，不触发推演重算，也不取消当前选中来源。筛选隐藏已选稿时，栏头显示“已选隐藏 · 显示”；临时显示期间若玩家再次修改筛选，立即结束临时态并以最新条件为准。
+- **2026-07-20 落地授权与字段修订**：用户查看纠偏版结构图后明确回复“按照这个方向落地”。候选稿字段契约新增 `acquired_order`：在本周候选池内单调递增，越大表示越晚获得；它只服务新旧排序，不作为现实时间戳显示。正式结构稿中的获得时间新 / 旧排序因此解锁，不再使用禁用占位。
+- **实现边界**：本轮授权先落 GDD 字段与 HTML 正式黑白结构稿 v4，不修改 Godot 或现有组件合同版本；进入 Godot 时再把 `acquired_order` 接入真实候选稿生成与存档数据。
+- **证据**：`docs/prototypes/weekly-editorial-formal-black-structure-v4/`、`docs/screenshots/2026-07-20-weekly-editorial-formal-black-structure-v4-filter-sort/01-default-acquired-new-to-old.png`、`02-filter-deep-and-breaking.png`、`03-sort-quality-high-to-low.png`、`04-filter-sort-interaction-demo.webp` 与 `audit.json`。
+- **状态**：已采纳并完成本轮授权范围；GDD 字段与 HTML v4 已落地，自动审计全部通过，等待用户据真实截图 / 动态演示决定是否冻结该局部结构。Godot 与组件合同仍未修改。
+- **cross-read tags**：`A192/A198/A202/A214`、candidate-pool、data-binding、editorial、filter、publishing、sort、structure-wireframe、ui、ux、`design/gdd/content-production-and-article-generation.md`、`design/gdd/editorial-layout-and-publishing-strategy.md`。
+
+### A237. WMW v5.1 两态冻结为当前整屏黑白布局真源
+
+- **来源**：2026-07-20 用户查看 `black-white-full-map-v5-1-default.png` 与 `black-white-full-map-v5-1-schedule-confirming.png`，并在获知两处候选文案后明确回复“没有什么问题，推进”。
+- **布局裁决**：v5.1 默认态与日程原位确认态通过用户视觉裁决，冻结为当前 1920×1080 整屏黑白布局真源。A229 的三栏职责、A232 的 924×936 无常驻回执地图、A233 / B 的 warning 状态章删除、左下 342×246 日程器、右侧 A5.1-H 四任务展开与底锚 CTA 一并保留；后续不得因进入有色或 runtime 阶段重新引入路线、红线 / 深链常驻条、顶部“红线升温”章或无职责填空模块。
+- **文案裁决**：任务摘要正式采用 `常驻 2 · 限时 1 · 深链 1`；地区正文第二行正式采用 `军方巡逻、档案残页与异常雷达同时露头。`。默认日程继续使用 `当前：无任务到期`，不增加 `构成：` 轴名；只有后续观察测试确认栏目类型与任务结构类型发生真实误读时，才可重开该 P2。
+- **真值边界**：本冻结只覆盖黑白结构与静态状态文案。`TARGET_ONLY` 标记继续有效；`advance_day`、A5.1-H 全高展开、世界地图截止预览和锁定地区点击反馈尚未完成 runtime 证据，不能从本裁决推断已实现。
+- **合同边界**：compact A5.1 frozen、正式 Godot 组件合同和现有 runtime 均未修改。A5.1-H 仍是整屏派生目标结构，不得用本条反向覆盖 compact A5.1 的基础状态槽或几何。
+- **证据**：`docs/prototypes/world-map-wmw-black-white-structure/black-white-full-map-v5-1-default.png`、`black-white-full-map-v5-1-schedule-confirming.png`、`black-white-full-map-v5-1-audit.json`、`docs/plans/world-map-benchmark-landing/2026-07-20-world-map-wmw-full-map-functional-truth-v5-1-review.md`。
+- **状态**：已采纳并冻结为当前整屏黑白布局真源；下一阶段可准备资产化 / 有色映射 brief，但在该 brief 完成前不直接生有色整屏，不改 Godot 或正式合同。
+- **cross-read tags**：`A229`、`A232`、`A233`、accepted、advance-day、dossier、frozen-layout、information-architecture、schedule、structure-wireframe、target-only、ui、ux、world-map。
+
+### A238. 发刊编辑 v4 冻结为正式视觉包装的功能结构真源
+
+- **来源**：2026-07-21 用户在查看发刊编辑正式黑白结构稿 v4 的筛选 / 排序落地证据，并被明确告知“若结构没问题即可冻结并进入正式视觉包装，Godot 与组件合同仍先不动”后，回复“继续”。
+- **冻结范围**：v4 的桌面 `1920×1080` 固定三栏、中央双版完整常显、8 条候选全显 / 12 条仅左栏滚动、高密度横卡、类型多选筛选、等级与获得时间排序、定向替换、单一局部替换按钮、替换后重算、右栏证据链与固定硬阻断、唯一主 CTA、确认态冻结双版与返回编辑，升为本轮正式视觉包装的功能结构真源。
+- **视觉阶段边界**：后续可在不改变上述布局、容量和状态机的前提下，使用 clean low-poly weekly 支线标杆、纸张 / 色彩合同和既有报道图制作 `filled_state_text_mock / formal_visual_packaging_candidate`。不得把黑白线框直接当最终 UI，也不得借视觉包装恢复搜索、巨型候选卡、单页放大、报头交互、底部抓取状态条、全版替换按钮或第二个送印按钮。
+- **实现边界**：本裁决不授权修改 Godot、正式组件合同或发刊规则 GDD；`candidate_card v1.3.0` 与 `signoff_panel v1.2.0` 仍只是后续实现阶段的升版提议。视觉候选通过用户复核后，再单独决定合同与 runtime 接入。
+- **状态**：已采纳；v4 结构冻结，正式视觉包装阶段启动。
+- **cross-read tags**：`A192/A198/A202/A214/A236`、accepted、candidate-pool、clean-lowpoly、editorial、filter、formal-visual-packaging、frozen-layout、publishing、sort、structure-wireframe、ui、ux。
+
+### A240. WMW `schedule_gate v0.1` 派生候选冻结为首条资产化纵切片输入
+
+- **来源**：2026-07-21 用户查看 `black-white-schedule-gate-v0-1-contract-board.png`，获知 UI / UX 最终 `P0=0/P1=0/P2=0`、48 条状态文字与 20 条最终装配压力文案全部通过，并被明确告知下一步只制作单张无字有色母版后，回复“没问题，推进”。
+- **候选冻结**：`schedule_gate v0.1` 的 runtime-local `[36,810,342,246]`、日期栏、动作栏、图标井、两条信息栏、文字安全区和同壳状态矩阵冻结为首条资产化纵切片输入。`input_capture_rect=[0,0,342,246]` 只负责组件归属、点外取消与 executing 输入锁；`activation_hit_rect=[12,74,318,100]` 是唯一推进 / 确认推进激活区，日期与信息行持续只读。
+- **状态裁决**：保留 `idle_enabled / confirming / executing / disabled_runtime_unavailable / disabled_zero_days`，`idle_error` 为不扣天、原值保持、可重试的语义修饰态；`committed` 非末日只保留 180–300ms，末日允许直接进入编辑部。剩余日计算钳制为 `max(remaining_days-1, 0)`；动态摘要直接产出最终渲染整行并覆盖 0/1/99/99+、两位截止日和 8 全角短标题。
+- **资产授权**：下一阶段只授权制作一张 `[456,328]` 无字有色母版并以 `0.75` 显示到 342×246 runtime 组件，随后用运行时文字 / 图标回填 default、confirming、executing、unavailable、末日与 0 天状态。生图只负责纸张 / 色块 / 边缘材质源，程序可负责精确几何装配、透明 / 裁切与 QA，但不得以程序绘色冒充真实生图。
+- **冻结边界**：本条仍不是正式 `design/ui-contracts/` 或 Godot 实现授权；不生成有色整屏，不修改 compact A5.1、B2.12、地图或三栏结构，也不得在当前 runtime 没有独立 `advance_day` 时显示 enabled。
+- **证据**：`docs/prototypes/world-map-wmw-black-white-structure/schedule-gate-v0-1-candidate-spec.json`、`black-white-schedule-gate-v0-1-contract-board.png`、`black-white-schedule-gate-v0-1-audit.json`、`docs/plans/world-map-benchmark-landing/2026-07-21-world-map-wmw-schedule-gate-v0-1-review.md`。
+- **状态**：已采纳；派生候选冻结为资产母版输入，单组件无字有色母版生产已解锁，正式合同与 runtime 继续冻结。
+- **cross-read tags**：`A227/A237`、accepted、advance-day、assetized-ui、candidate-spec、clean-lowpoly、input-semantics、schedule、state-machine、target-only、ui、ux、world-map。
+
+### A271. 每篇报道只保留一个正方形核心构图与一个由其扩图得到的头版横图
+
+- **来源**：2026-07-21 用户复核发刊编辑正式视觉包装候选 v1 后明确指出，同一报道在头版、副版、普通版位和左侧候选栏不应出现互不相容的图片规格；每篇报道的图片体系必须收敛为两种规格。
+- **单一视觉身份**：每篇报道只有一个故事主题、一个主体布局和一个视觉身份，不为不同 UI 位置分别重画互不一致的构图。正方形图是构图真源，核心人物 / 物件 / 异常符号必须在正方形安全区内完整成立。
+- **两种规格**：`square` 用于除主头版外的全部位置，包括左侧候选缩略图、副头版、专题位与内页位；这些位置的图片框统一为 `1:1`。`headliner_landscape` 只用于主头版，由同一正方形构图向左右扩图获得，不得用横图硬裁正方形，也不得另生一张主题关系不同的横图。
+- **扩图规则**：横图必须保留正方形核心区的主体尺度、姿态、光照、色彩和叙事焦点；新增内容只发生在左右扩展区。正方形核心区单独截取时仍须是完整可读的正式图片，而不是横图中间被动裁下的一块。
+- **结构影响**：A238 的三栏、双页常显、8卡容量、定向替换、右栏职责与唯一 CTA 继续冻结；但“副头版和普通版位现有非正方形图片窗”被本条重新打开，必须统一为正方形后再冻结视觉布局。当前视觉包装候选 v1 因此不能直接升为最终图片框合同。
+- **待定参数**：主头版横图的精确长宽比、正方形母图源尺寸、横向扩图源尺寸和扩展安全区尚未由用户指定；在完成局部黑白结构对照与裁切合同前不得擅自写死。
+- **实现边界**：本条先登记为界面与美术资产规则，不立即修改 Godot、现有组件合同、报道图文件或 GDD。下一步可按“UX 诊断 → UI 设计 → 父级合并”只重做图片窗规格与页面内排布，再由用户审核。
+- **状态**：已采纳为后续图片资产与版位框体的上位规则；精确横图比例及新版局部排布待确认。
+- **2026-07-21 精确参数修订**：用户查看 `weekly-editorial-two-spec-image-contract-review-v1` 的整板、双页局部与比例对照后回复“好的，继续”，放行结构板中的三项推荐：方形母图源尺寸冻结为 `1024×1024`；主头版横图冻结为 `15:8 / 1920×1024`，由方形核心左右各扩 `448px`，运行显示 `410×219`；副头版冻结为 `210×210` 方图 + `12px` 间隔 + `188×210` 文字栏；普通位统一为 `189×189`，候选保持 `64×64`。无摘要字段时只显示标题、meta 与留白，不为填版虚构字段。该放行授权制作 HTML 正式视觉包装候选 v2 与验证证据，Godot、正式组件合同、GDD 和正式报道图重制继续冻结。
+- **后续修订提醒**：上述副头版 `210×210` 方图方案已因实际成稿出现大片无职责空白而被用户撤回，改由 A243 接管；方形母图、主头版、普通位与候选参数不变。
+- **修订后状态**：两规格图片合同的核心原则继续有效；副头版消费端已由 A243 修订为横图。
+- **cross-read tags**：`A168/A198/A202/A213/A214/A218/A238`、accepted、art、asset-contract、candidate-card、clean-lowpoly、crop-safe-area、editorial、headliner、imagegen、layout、publishing、square-master、ui、ux。
+
+### A243. 副头版与主头版共同使用同源 15:8 横图，并以显示面积保持主副层级
+
+- **来源**：2026-07-21 用户审阅正式视觉包装候选 v2 后指出，副头版使用 `210×210` 方图会让剩余版面形成大片无法填充的空白，明确建议副头版也改用长方形图片。
+- **两规格修订**：报道资产仍只有 `square + headliner_landscape` 两种。`square` 服务候选缩略图与四个普通版位；`headliner_landscape` 由 `1024×1024` 方形母图左右扩展为 `1920×1024 / 15:8`，由主头版和副头版共同消费，不新增第三张构图。
+- **显示分级**：主头版保持 `410×219`；副头版采用 `375×200`，面积约为主头版的 `83.5%`，以尺寸差保留主副层级，不采用等权的 `410×219`。
+- **副头版排布**：`442×342` 外槽内，横图 `[33,14,375,200]`；角色 `[15,226,72,14]`；ID `[95,226,48,14]`；标题 `[15,248,411,48]`、最多两行；meta `[15,306,411,18]`、强制单行；局部换稿 `[354,160,44,44]`。
+- **安全区**：副头版横图中央 `200×200` 映射方形核心，两侧各约 `87.5px` 为扩展翼；换稿按钮只进入右扩展翼 action-safe zone，扩展翼不得放唯一人物、异常符号、文字或关键线索。
+- **实现边界**：本条授权制作 HTML 正式视觉包装候选 v3 与验证证据；Godot、正式组件合同、GDD、正式方形母图和横向扩图生产继续冻结。
+- **状态**：已采纳，v2 副头版方图方案撤回，由 v3 横图方案替代。
+- **2026-07-21 冻结确认**：用户查看 v3 主状态图与换稿动态后明确回复“可以，没问题”。副头版 `375×200` 横图、图下标题 / meta、右扩展翼换稿按钮及主副共用同源横图的结构正式冻结；随后只重新打开主头版标题字号，不重开副头版布局。
+- **cross-read tags**：`A213/A214/A238/A271`、accepted、art、asset-contract、editorial、headliner-landscape、layout、publishing、secondary-headline、square-master、ui、ux。
+
+### A244. WMW 左栏地区卡与日程器必须 0px 容差共轴同宽
+
+- **来源**：2026-07-21 用户复核 WMW 默认态整屏 v0.2 后指出，左下日程器与上方三张地区卡没有对齐，属于不应交给用户发现的明显基础错误，并明确要求以后不要再展示这种界面。
+- **外壳共轴**：北美、东亚、太平洋三张卡与日程器统一为 `x=66,w=306,right=372,center_x=219`。日程器从 `[36,810,342,246]` 修订为 `[66,810,306,246]`；四组件 y / h 分别保持 `36/240、294/240、552/240、810/246`，三段垂直间距均为 18px。
+- **日程内部**：runtime-local 日期头 `[16,16,274,48]`、动作区 `[12,74,282,100]`、图标井 `[24,91,64,64]`、两条后果 `[16,182,274,24] / [16,210,274,24]`。只压缩横向留白，不删除当前日、剩余日、推进、后果预览、到期信息或归零去向。
+- **硬 Gate**：后续整屏在生成用户交付图前必须同时通过 `left_axis_group_exact`、`left_stack_gap_exact`、`visible_shell_edge_alignment`、`child_rect_containment`、`text_pressure_after_resize` 和内部 alignment overlay；四外壳左右边、宽度和中心轴容差均为 0px。任何正常观看比例即可发现的错位必须在内部阻断，不得依赖用户终审发现。
+- **修订关系**：本条只修订 A237 / A240 中日程器的整屏宽度与位置；三栏职责、三张地区卡、246px 高度、日程功能、中央地图、A5.1-H 和正式合同冻结边界继续有效。
+- **实现边界**：当前只进入完整 filled-state 风格候选与审计，不修改 Godot、正式组件合同、compact A5.1 或 B2.12。
+- **状态**：已采纳；v0.2 因共轴错误撤回，v0.3 为当前等待用户复核的完整整屏候选。
+- **cross-read tags**：`A227/A237/A240`、accepted、alignment、assetized-ui、schedule、shared-edge、ui、ux、world-map、workflow。
+
+**2026-07-21 美术阶段修订**：用户继续复核 v0.3 后指出，虽然四组件彼此已经共轴，但整组 `x=66,w=306` 相对美术标杆仍过度内缩，且当前按钮 / 纸面属于程序粗装。A244 的“同轴同宽、18px 间距、0px 容差 Gate”继续有效；精确 `x=66,w=306` 降为 v0.3 功能与几何证据，不再是美术布局真源。下一完整 art-pass 候选使用 `x=30,w=348,right=378`，与中央责任区形成 24px 间距、与地图主场形成 48px 间距；该候选必须在完整整屏效果图中由用户裁决，未获确认前不写入正式合同或 runtime。
+
+**2026-07-21 v0.4 用户裁决**：用户明确确认“版面没问题”，因此 `x=30,w=348,right=378`、三段 18px 间距、地图与右档案 rect 可作为下一整屏 art pass 的布局真值继续使用；但同一句同时否决 v0.4 美术效果。该版面确认不升正式 runtime / 组件合同，也不代表 v0.4 视觉皮肤获批。艺术身份失败由 A248 接管。
+
+### A247. 主头版标题必须与副头版形成明确字号层级
+
+- **来源**：2026-07-21 用户确认副头版横图结构没有问题后指出，当前主头版标题文字仍偏小，缺少头版感。
+- **层级裁决**：副头版继续使用 `18px / 23px / 700`。主头版把角色与报道 ID 压成同一眉题行，主标题按真实运行字体宽度选择 `28px / 34px / 800` 单行或 `24px / 26px / 800` 双行，禁止继续使用与副头版只差 `1px` 的 `19px` 标题。
+- **几何边界**：主头版外槽 `442×374`、主图 `[15,91,410,219]` 和 meta 保持不动；眉题位于 `[15,13,128,14]`，主标题宽度固定 `410px`。双行标题盒按真实字体压力修正为 `[15,29,410,54]`，与主图保留 `7px` 间隔。
+- **运行规则**：先以真实运行字体测量 `28px` 单行宽度；溢出后稳定切为 `24px` 双行。同一标题重复渲染必须得到相同行态；双行仍溢出时记录容量失败，不静默缩字或省略。
+- **实现边界**：本条只授权 HTML 正式视觉包装候选 v4 与截图 / 压力证据；不修改副头版冻结结构、Godot、正式组件合同、GDD 或正式报道图。
+- **状态**：已采纳并落地为 v4 候选，等待用户依据整屏截图确认标题视觉权重。
+- **2026-07-21 冻结确认**：用户查看 v4 完整三栏双版截图后明确回复“大小可以的”。主头版 `28px` 单行 / `24px` 双行的真实字宽分档、`800` 字重、眉题排布与 `410×54` 双行标题盒正式冻结；后续视觉包装不得退回 `19px`，也不得借标题调整移动主图或副头版。
+- **cross-read tags**：`A238/A243`、accepted、editorial、headline、hierarchy、publishing、responsive-type、typography、ui、ux。
+
+### A249. 定向换稿顶部提示必须说明下一步且不得伪装成按钮
+
+- **来源**：2026-07-21 用户查看 v5 中栏顶部“选择可替换版位”后明确表示“不太看懂这个是干嘛的”；在获知它是选中左侧报道后的下一步提示后，确认采用更明确的文案与非按钮样式。
+- **文案与条件**：仅在已经选中候选报道且至少存在一个合法目标版位时显示“下一步：点击报纸中高亮的版位”；替换完成、取消选稿、无合法目标、重算或确认冻结时不显示这句提示。
+- **视觉语义**：提示是 `role=status` 普通文字，不使用底色、描边、圆角、阴影、图标、悬停或焦点反馈；不可点击、不可聚焦，避免与真正操作入口混淆。
+- **实现边界**：本条只授权 HTML 正式视觉包装候选 v6 与截图 / 审计；v4 已冻结版面、v5 操作条网格、Godot、正式组件合同与 GDD 均不改变。
+- **状态**：已采纳并落地为 v6 候选，待用户依据整页截图确认是否冻结该局部。
+- **cross-read tags**：`A214/A238/A247`、accepted、editorial、instruction-copy、interaction-state、publishing、targeted-replace、ui、ux。
+### A265. 区域任务左栏底板印刷随条目显隐，右 dossier 保留连续纸面但必须建立四段语义
+
+- **来源**：2026-07-22 用户复核区域任务台图文一体稿后明确指出：`ISSUE INDEX / ISSUE 002 / NORTH SHORE DESK` 不应成为暖白纸面上的无意义固定内容；它只能是条目不足时露出的底板印刷。用户同时指出右侧摘要、执行条件、风险、依据与建议混在一起，没有体现不同分区；随后回复“继续”，授权按诊断制作一张局部双态实验板。
+- **左栏规则**：期号 / desk 印刷属于深青文件夹底板层，位于任务纸条下方，不进入任务 VBox、滚动内容高度、空状态或独立模块。条目少时按未占高度自然露出，条目增多时由任务纸条自然覆盖；不得通过单独白纸、外框、图标、状态或热区把它表现成第三条内容。固定印刷可进入底板美术层；若期号需要动态同步，只能作为底板层低权重文字，不得提升到功能内容层。
+- **右侧规则**：不重新使用多张封闭中性卡，但“连续纸面”不得等同于“无分区”。信息顺序固定为：`页眉 / 摘要 → 地点 / 耗时 / 需求 → 风险等级 / 依据 / 建议 → 主 CTA`。页眉与摘要使用裸暖纸、规则线和留白；执行条件使用低饱和青色全宽带；风险决策使用锈红侧签 / 折线 / 浅锈底面并在内部按等级、依据、建议分行；底部橄榄 CTA 独立封闭且是唯一高权重动作。
+- **资产边界**：当前正式实现把 metadata 与 risk 复用同一 `rt_dossier_section_plate`，只能证明坐标分区，不能继续作为视觉角色真值。用户确认局部板后，应先反推 `void print / metadata band / risk tab + field / CTA` 的资产角色与必要合同升版；优先保持 dossier 外框、栏宽、现有槽位与 CTA 锚点，不得直接把整张有字 dossier 烘焙为一张不可回填大图。
+- **局部实验结果**：真实生图局部板同时展示两条任务露出底板印刷与四条任务完整遮盖；B 态页眉 `4 条可选`、四张任务和回条 `可处理 4` 一致。右侧四段角色清楚。UI Designer 与 UX 老哥均判 `GO / P0=0 / P1=0 / P2=1`；唯一 P2 是浅锈风险底色面积略大，可在拆分前收窄或降饱和，把最高权重继续留给 CTA。
+- **当前状态**：`accepted-for-local-experiment / pending-user-visual-freeze`。局部板可以进入用户审阅，但尚未授权修改 Godot、`dossier_contract.json`、component inventory、manifest 或 event card；用户确认后才进入资产拆分合同草案和单例回填证明。
+- **2026-07-22 同源叠印试装修订**：用户追问一体式无框分区是否适合拼接，并回复“那试一下”，授权单例拆分 / 回填实验。现已从同一张无字生图母件抽取摘要竖线、青色 metadata 与锈色 risk 透明叠印，保留完整既有底纸和独立 CTA；risk 美术层向上出血 `10px@1×` 消除文字安全区之间的白缝，但文字 rect、CTA 锚点和正式合同均未改变。Godot 4.6.3 真实 `412×960@1×` 试装中，UI Designer 与 UX 老哥最终均为 `GO / P0=0 / P1=0 / P2=1`；结构适合进入正式资产化，仍等待用户视觉冻结。P2 仅为浅锈底色权重略接近 CTA，以及四处辅助小字需要补多分辨率字体回归。
+- **cross-read tags**：`A235/A245/A257/A260`、accepted-for-local-experiment、assetized-ui、dossier、imagegen、information-architecture、region、risk、semantic-zone、ui、ux、void-print、workflow。
