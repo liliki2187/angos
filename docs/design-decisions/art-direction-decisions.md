@@ -823,3 +823,40 @@
 - **范围保护**：下一稿只开放新闻图像框、UFO 贴纸、底部符号试条、待核实批注与日程器表面的紧贴 ROI。中央地图、综合色盘、三段阅读链、右侧纸面、白圈 / 黄便签、状态层级和工作物件位置全部冻结；禁止整板重生。
 - **流程修订**：新增试行 `component_render_language_lock`，主规则见 `design/art-direction/clean-lowpoly-weekly-branch-style-guide.md` §6.6。详细 Loop Log 见 `docs/plans/world-map-benchmark-landing/2026-07-24-world-map-style-board-v2-component-render-language-loop-log.md`。
 - **cross-read tags**：`A266/A267/A268/A269/A270`、art、benchmark、component-language、editorial、handdrawn、imagegen、low-poly、partial-acceptance、props、sticker、ui、ux、world-map、workflow。
+
+### A274. 世界地图六版配色选择 A「夜班石板蓝」作为当前跨屏配色锚点
+
+- **来源**：2026-07-28 用户复核六版世界地图完整配色候选后明确表示：“感觉还得是 A。”
+- **用户裁决**：A「夜班石板蓝」从六版比较候选中胜出，作为后续同族界面风格稿的当前配色锚点。B 旧牛仔蓝、C 深墨海军蓝、D 煤油青蓝、E 烟灰靛蓝、F 橄榄主导·灰蓝状态保留为偏差边界与备查，不再并行扩展。
+- **配色关系**：继续使用深海军蓝负空间、低饱和石板蓝结构纸件和少量旧钢蓝状态锚点；综合色彩仍由暖纸、橄榄、芥末与冷青事件光共同承担，不得把 A 简化为“全屏深蓝换色”。本轮对照标签 `#071923 / #40566A / #426E96` 只表示目标色域与层级关系，不是逐像素取样后的正式 runtime token。
+- **跨屏边界**：A 可作为区域地图、报刊填入等下一张风格稿的配色输入，但每个界面仍须先服从自身黑白功能稿、核心原型和对象—画法合同；不得复制世界地图的具体物件、纸堆或构图。下一界面是否通过仍需独立标杆对照与跨屏同族 Gate。
+- **状态**：已采纳为当前配色方向；世界地图 A 本身仍是 `visual_style_reference`，不自动升级为生产标杆、正式 palette 合同、atlas 或 Godot 资源。
+- **cross-read tags**：`A254/A269/A273`、accepted、art、benchmark、clean-lowpoly、colorway、cross-screen-consistency、editorial、imagegen、palette-anchor、region、publishing、ui、world-map、workflow。
+
+### A275. 区域地图中央地图选择 A2「冷青岩盘」作为当前视觉方向
+
+- **来源**：2026-07-28 用户查看 `A1 夜蓝潮汐层 / A2 冷青岩盘 / A3 铅蓝剪报图` 三版中央地图与 25% 整屏对照后明确回复：“那就 A2 吧。”
+- **用户裁决**：A2「冷青岩盘」从三版比较候选中胜出，作为区域地图中央地图的当前视觉方向。对应参考图为 `image_gen/2026-07-28/region-map-map-variants-v1/02-a2-cool-teal-terrain.png`。
+- **冻结关系**：地图内部以墨蓝水域、偏蓝且低饱和的冷青灰陆地、石板蓝高地、浅中性灰岸线 / 交通骨架和极少量状态色构成；陆地使用少量粗壮岩盘大面，海湾保持完整负形，事件节点继续用浅纸形状编码，`R-21` 选中链保持清楚的明度与色相差。
+- **跨屏关系**：继续继承 A274 世界地图 A「夜班石板蓝」的深海军负空间、石板蓝状态锚点与暖纸温度，但区域地图以本地海岸 / 河口、地貌岩盘和多事件坐标建立自己的近景作业图身份，不复制世界地图大陆、照片或全局构图。
+- **反向保护**：冷青必须保持偏蓝和低饱和，不得滑向橄榄军绿；禁止准星、荧光边、扫描线、等距战术网格和雷达同心圈；交通骨架不得增加箭头、目的地串联或观光语义；不得通过全屏洗冷取消真实编辑部暖纸与物件温度。
+- **未采纳候选的用途**：A1 只保留为潮湿夜班氛围与黑色幽默剂量参考；A3 只保留为剪报拟物与旅行 / 情报误读边界参考，不再并行扩展。
+- **状态**：已采纳为区域地图的 `visual_style_reference` 方向；尚未冻结正式 palette token、无字资产母版、状态 atlas、完整有字界面或 Godot runtime。
+- **状态修订（2026-07-28）**：用户将 A2 与世界地图 A 并排后指出地图更灰土、纸张也偏暗，并要求调整。A2 的岩盘结构选择继续有效，但原 `02-a2-cool-teal-terrain.png` 不再作为色彩 / 纸张通过稿。已生成 A2.1 联合校准；因纸面过白降级为中间诊断稿，随后只回调纸面得到 `09-a2-2-paper-balanced.png`。A2.2 当前为 `pending_user_review`，尚未替换 A275 的正式参考图指针。
+- **状态修订（2026-07-29）**：用户进一步指出 A2.2 相比世界地图 A 稍显严肃，要求把趣味度拉到相近水平。A2.2 的色彩 / 纸张校准继续有效，但其制度感压过第二阅读层。A2.3 因黄便签鱼形投影误生成人形且 25% 趣味仍偏弱，降级为诊断稿；A2.4 改用“黄便签鱼形投影 + 左右同源锈圈高空鱼 + 交通票据水波”三层克制异常，当前为 `pending_user_review`。这次修订不改变 A2 岩盘结构选择，也不升格正式 token 或生产资产。
+- **配图画法修订（2026-07-29）**：用户继续复核 A2.4 左侧四张任务配图，指出其不够抽象概括；当它们脱离标杆式多边形背景、单独置于暖纸票据上时，卫星站、灯塔、厂房和天线城会读成低多边形微缩建筑渲染。A2.4 原“对象—画法通过”撤回，整体降为 `direction_retained_component_illustration_rework_required`。下一步冻结票据与整屏，只验证四张图的“单一主剪影、3–5 个大面、3–4 档离散明度、无地台 / AO / 零件清单”转换；A2 结构、A2.2 配色 / 纸张和 A2.4 趣味关系继续有效。
+- **配图转换结果（2026-07-29）**：完成六轮“具体模型 → 抽象编辑符号”真实生图转换。V6 以偏心大碟、竖楔灯塔、宽扁厂房和低锯齿城市建立四种主剪影，并分别绑定背向信号、高空鱼、投影假烟囱与低头接收；独立暖纸卡与 25% 无标题双测通过，UI Designer / UX 老哥均 `PASS，P0=0 / P1=0`。当前为 `dual_review_pass_pending_user_art_direction`，只等待用户决定是否采纳为区域任务配图参考；尚未回填整屏、冻结同源母图或升级生产资产。
+- **颗粒度再次修订（2026-07-29）**：用户把 V6 放回 A2.4 后指出“又有点太极简”，要求从原标杆寻找合适的度。旧双审 PASS 自此只保留为“关闭微缩模型问题”的过程证据，V6 与整屏回填稿降级为 `over_minimal_icon_layer_diagnostic`，不再等待采纳。标杆重新定位到 `PHOTO & SNAPSHOT` 的简化端：主体 `6–9` 个结构块、环境 `2–4` 个大块、`4–5` 档明度、`3–4` 个综合色相组、`20–35%` 留白与一个 `8–16%` 的异常关系；`COVER vignette` 只作构图辅参考，`ICON DESIGN / GRAPHIC ELEMENTS` 只作反例。当前等待用户判断颗粒度真值板，不继续整屏回填。
+- **整屏趣味度再次修订（2026-07-29）**：将世界地图 A 与区域地图 V2 三尺度诊断并排后，用户明确指出区域界面仍比世界地图更严肃、更无趣。该反馈撤回“A2.4 已通过趣味剂量”的可能性，但不撤回 A2 岩盘结构与 A2.2 纸张 / 配色校准。新结论是制度信息遍布全屏、趣味信号集中边角：左卡、地图和右案卷没有形成同一异常的跨媒介证据链，右案卷空表面积又压过选中内容，四张任务图综合色相与场景节奏过度同调。后续不通过堆贴纸或复制世界页自由拼贴修正；先锁三栏与点击热区，以 R-21 验证“左卡目击 → 地图定位 → 右案卷复核”的单案闭环，并在既有案卷字段内装入真实内容高潮。当前状态为 `region_over_serious_fun_chain_redistribution_required`。
+- **cross-read tags**：`A267/A270/A274`、accepted、art、benchmark、clean-lowpoly、colorway、editorial、imagegen、local-map、palette-direction、region、selected-chain、ui、ux、workflow。
+
+### A276. 报刊填入风格稿 v1 / v1.1 因再次严肃写实而整体否决
+
+- **来源**：2026-07-29 用户复核 `image_gen/2026-07-29/newspaper-editorial-interface-style-board-v1/` 中 v1 与颜色校准 v1.1 后明确指出：“感觉好严肃啊，风格也不对啊，很写实，为什么老犯同样的问题。”
+- **用户裁决**：本批状态统一降为 `user_rejected_over_serious_realistic_diagnostic_only`；此前“刊物身份、跨屏色彩与趣味度通过候选”的父级结论撤回。不得继续局部调色、拆件、接 Godot，也不得把 v1 / v1.1 或三屏并排图作为下一轮风格参考。
+- **保留范围**：只保留黑白功能稿映射、三栏、双页六版位、5/6 空位状态和右侧签批顺序的结构证据；整屏画法、报道图、纸张占比、标题气质、符号剂量和综合色彩均不保留。
+- **重复根因**：提示词用 `high-fidelity / real editor-in-chief’s desk / convincing / tactile shadows / taking responsibility / irreversible` 先召回可信严肃场景，再用末尾负向词禁止写实，导致模型保留真实透视、地台、逐窗、轨枕、连续照明和空间深度，只在表面加入 low-poly 切面。M330、市政厅、广播塔与 51 区被写成完整场景清单，又被中央大图尺度放大。
+- **情绪与色彩失败**：中央大面积暖纸＋灰蓝报道图成为第一阅读层，钴蓝 / 青绿 / 橄榄只存在于背纸和小标签；v1.1 的外围补色没有改变“严肃正式报纸”首读。黑色幽默主要依赖标题、页脚和阻断文案，遮字后只剩制度栏网、签批与禁用按钮，命中 A268。
+- **流程修订**：发刊整屏前必须先按最终显示尺度验证主头图、普通报道图和候选缩略图；两张原始标杆负责塑造方法，世界 / 区域整屏只负责配色和跨屏物件关系。主头图、去字情绪、彩色主内容与图形幽默未通过前，禁止再次生成完整三栏。
+- **Loop Log**：`image_gen/2026-07-29/newspaper-editorial-interface-style-board-v1/2026-07-29-newspaper-editorial-over-serious-realism-repeat-loop-log.md`。
+- **cross-read tags**：`A192/A198/A220/A248/A264/A266/A267/A268/A269/A272/A273/A275`、art、benchmark、black-humor、clean-lowpoly、editorial、imagegen、loop-log、low-poly、publishing、realism、rejected-candidate、serious-tone、style-drift、ui、workflow。

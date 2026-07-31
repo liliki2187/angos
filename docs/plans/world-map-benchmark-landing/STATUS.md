@@ -1,11 +1,17 @@
 # 世界地图 WMW 资产化路线状态页
 
 > **用途**：本资产线的唯一进度真源。每轮交付必须更新本页（这是交付定义的一部分，见 `docs/onboarding/assetized-ui-production-chain.md` §9）。新对话 / 新 AI 接手时先读本页，不需要考古全部评审文件。
-> **最后更新**：2026-07-24（独立世界地图风格板 v2 的非旅行语义、总体构图、综合色彩和三段阅读链获方向性保留，但组件画法未通过：UFO 贴纸矢量化、站台 / 时钟与无线电塔写实化、底部符号工具栏化、日程器拟物过重。当前状态 `direction_retained_component_render_language_rework_required`；只允许局部组件重画，未改 Godot、runtime、正式合同、atlas、compact A5.1、B2.12 或 GDD。）
+> **最后更新**：2026-07-28（用户已从六版世界地图配色中选择 A「夜班石板蓝」，登记为 A274，并作为后续同族界面风格稿的当前配色锚点。当前状态 `colorway_a_selected_as_cross_screen_palette_anchor`；A 仍是 `visual_style_reference`，不等于正式色彩 token、生产标杆、atlas 或 Godot 冻结。）
 
 ## 一、当前一句话状态
 
-2026-07-24 独立风格板旁路线：v2 已解决旅行目的地首读，但尚未通过对象—画法 Gate。下一轮冻结整板构图、综合色盘、中央地图与 `02` 同源落位，只重画新闻图像、UFO 贴纸、符号试条、待核实批注与日程器表面；详见 A273 与对应 Loop Log。
+2026-07-28 六版配色候选已完成并裁决：用户选择 A「夜班石板蓝」。后续同族风格稿继承其“深海军蓝负空间 + 低饱和石板蓝结构层 + 少量旧钢蓝状态锚点”，同时继续保留暖纸、橄榄、芥末和冷青事件光；不得复制世界地图的具体构图或物件。详见 A274 与 `2026-07-28-world-map-colorways-v1-delivery-manifest.md`。
+
+同日 v4 蓝色层级试改继续作为六版配色前的单方案证据：它首次把高饱和蓝从大面积文件夹、卡背和结构底衬撤回，证明了“深海军蓝负空间 + 哑光灰蓝纸件”的方向可行。v4 未改变正式合同、runtime、GDD 或设计采纳记录。
+
+同日 v3 组件语言候选继续保留为换色前基线：强剪影粗块面新闻图、三处 `02` 塔同母版视觉、锁定站台、待核批注与底部符号职责差异已达到本轮主要目标；UFO 仍略显平滑对称，`DAY 1` 仍保留偏强工业外壳感。连续两轮仍残留同类偏差，按 stop-loss 不再做第三次组件整板编辑。
+
+2026-07-24 的 v2 诊断仍作为返工输入保留：其非旅行语义、总体构图、综合色彩与左索引→中央地图→右 `NEWS LEAD` 三段阅读链方向成立，但对象—画法 Gate 未通过；详见 A273 与对应 Loop Log。
 
 用户已选择方案 1「无涂布独立周刊」，材料方向继续有效。v0.1 与 v0.2 保留为假通过 / 裁切失败证据；当前唯一主审图为 `wmw-a263-uncoated-fullscreen-default-v0-3.png`，流程对照为 `wmw-a263-uncoated-fullscreen-state-pair-v0-3.png`，全流程证据为 `wmw-a263-uncoated-fullscreen-third-card-mapping-qa-v0-3.png`。v0.3 状态 `dual_reviewed_pending_user_visual_confirmation`；不重开三栏、图片、地图或配色，也不代表 runtime 已实现。
 
