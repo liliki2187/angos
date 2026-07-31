@@ -108,4 +108,4 @@ To test the exact executable from a crash dialog, pass it explicitly:
 powershell.exe -ExecutionPolicy Bypass -File .\scripts\run_godot_gui_startup_check.ps1 -GodotPath "D:\angos\tools\godot\4.6.2-stable\Godot_v4.6.2-stable_win64.exe"
 ```
 
-Use screenshots, layout tests, UX / UI review, and assetized UI gates for those.
+Use screenshots, layout tests, UX / UI review, and assetized UI gates for those. For the smallest runtime screenshot pass after this smoke, run [`godot-visual-feedback-smoke.md`](./godot-visual-feedback-smoke.md).

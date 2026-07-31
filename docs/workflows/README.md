@@ -9,6 +9,7 @@
 - [`workflow-gates.yml`](./workflow-gates.yml)：机器可读的阶段、风险与产物规则；自 2026-07-08 起作为产物类型、阶段转换与 hard gate 真源，gate 变更必须同步写入此文件。
 - [`ui-geometry-and-text-safety-gates.md`](./ui-geometry-and-text-safety-gates.md)：资产化 UI 链和美术动效链共用的几何、正交与文字安全 gate 真源。
 - [`godot-agent-smoke.md`](./godot-agent-smoke.md)：Codex 改动后的 Godot 健康检查，组合 `gda script validate` 与真实 headless weekly-run smoke。
+- [`godot-visual-feedback-smoke.md`](./godot-visual-feedback-smoke.md)：Codex 改 Godot 后的最小视觉反馈检查，产出真实窗口截图并挡住黑帧 / 空帧假阳性。
 - [`godot-debug-skill-v0.md`](./godot-debug-skill-v0.md)：Angus Godot 错误笔记，提供白话错误卡、修复规则与验证命令。
 - `scripts/run_godot_gui_startup_check.ps1`：Windows GUI / 精确 Godot 可执行文件的独立启动检查。
 - [`ai-radar-memory.md`](./ai-radar-memory.md)：Angus AI 日报 / 下一期报告的上下文侧车。
