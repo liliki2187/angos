@@ -662,6 +662,10 @@
 - **当前候选裁决**：A–D 虽然配色差异与几何保真通过，但都未改变“全球异常管控台”的体验承诺，统一降级为 `rejected_by_user_serious_political_tone_diagnostic_only`，不再等待用户选色，也不得作为正式有字稿或拆件母本。
 - **反向边界**：纠偏不得退化为整体提亮 / 加饱和、多色滤镜、边角贴纸补丁，也不得滑向儿童卡通、糖果色、贴纸轰炸、怪物乐园或无规则热闹；不得新增按钮、徽章、工具栏、路线或伪故事功能。
 - **状态与下一步**：体验方向已采纳；当前只完成意图诊断。下一轮需先写新的整屏视觉 brief，再决定是否生图；Godot、正式组件合同、GDD 与 frozen compact A5.1 保持不动。
+- **2026-08-17 SCP 机构感复发审计**：用户复核 A308 的真实 ImageGen 整屏装回预演后指出，当前版本仍未与 SCP 式严肃办公机构拉开差距。父级、UX 老哥与 UI Designer 对照当前整屏、A291 及两张 clean-low-poly weekly 标杆后确认该判断成立：A308 解决了程序绘制和纸物质感，但没有解决品牌身份；锁、编号、章记、`CASE FILE`、监控网格、红色围捕圈与权限语义被推到第一阅读层，怪新闻、周刊生产、媒介收藏和冷面幽默退到第二 / 第三层。该复发直接命中本条，不新建重复方向决策。
+- **标杆权限修订**：两张 clean-low-poly weekly benchmark 中的色板、宽块面低多边形、纸品体积、夹具、文件夹、照片、版式切割与完成度继续是美术表现真值；其中的 `TOP SECRET / CONFIDENTIAL / CASE FILE / radar / target reticle / secret archive` 只能作为局部反差材料，不能作为 WMW 的叙事身份和跨屏对象关系真值。A291 继续提供整屏平衡与编辑现场关系，但其 `EVIDENCE MAP` 等机构语汇也不得自动继承为品牌主语。
+- **复发后的最小身份 Gate**：遮住顶部刊名和单张 UFO 便签后，若整屏仍可自然命名为“异常管理局世界监控终端”，则视觉方向失败；未来候选必须首先被读成“成年人认真编辑怪新闻”，其次才是专业秩序，机构制度只允许作为冷面反差的收束层。通过该 Gate 不要求重开三栏、FrontCarrier、图片槽、Disclosure、CTA 或 hit rect，但要求重做高权重可见身份层。
+- **当前候选裁决修订**：`image_gen/2026-08-14/world-map-real-imagegen-filled-state-preview-v1/06-final-direction-preview-1920x1080.png` 从 `pending_user_visual_decision` 降级为 `brand_identity_gap_diagnostic_only / scp_institution_read_fail`；不得升格为 filled-state visual target、生产母件或 Godot 落地输入。Loop Log：`docs/plans/world-map-benchmark-landing/2026-08-17-world-map-scp-institution-style-regression-loop-log.md`。
 - **cross-read tags**：`A181/A192/A242/A248/A254`、art、benchmark、curiosity、editorial、emotional-promise、full-screen、mystery、political-tone、rejected-candidate、story-hook、ui、ux、world-map、workflow。
 
 ### A257. 区域任务 B 闭合类型色 compound 按推荐方向正式落地

@@ -1,155 +1,21 @@
-# Prompt Planning
+# 提示词规划
 
-Use this file when turning a user request into a production-ready image prompt.
+先写本轮图像要证明的效果，再说明主体、构图、造型语言、材质/光照、参考职责及需保护的内容。不要求统一八段模板或生产就绪措辞。
 
-## Core Prompt Shape
+## 正面描述优先
 
-Build prompts in this order:
+风格探索强调大形、配色层级、情绪与趣味；真实内容概念稿说明区域职责和代表性内容；生产母件才写共享尺寸、透明、可写区和禁止烘焙内容。clean-low-poly 的几何应是造型/明度概括，不自动解释成纸张褶皱或细碎写实网格。
 
-1. Asset identity
-2. Intended game use
-3. Subject description
-4. Framing / camera / composition
-5. Materials / lighting / rendering language
-6. Background requirement
-7. Reference-image role if present
-8. Negative constraints
+## 有针对性的负面约束
 
-## Common Game Asset Defaults
+没有适用于全部资产的长负面词墙。UI 允许边框、接触阴影、纸层和贴纸；角色的有意不对称不视为坏解剖；颜色变体可以使用不同彩度。只排除未请求水印、压缩瑕疵和本图真正的已知失效。
 
-| Asset Type | Default Background | Typical Shape | Prompt Additions |
-| --- | --- | --- | --- |
-| `icon` | transparent | square | centered object, clean silhouette, readable at small size |
-| `item` | transparent | square | isolated prop, production-ready asset, readable at small size |
-| `prop` | transparent | square or `3:2` | object-first composition, no scene clutter |
-| `sprite` | transparent | square or portrait | 2D game sprite readability, clean outline, animation-friendly silhouette |
-| `vfx` | transparent | square | emissive effect only, no mockup presentation |
-| `decal` | transparent | square | flat readable graphic treatment, edge-safe cutout |
-| `texture` | opaque | square | surface-first, material clarity, avoid scene composition |
-| `tileable-texture` | opaque | square | seamless tiling, edge continuity, even coverage |
-| `portrait` | opaque | `3:4` or `4:5` | bust or waist-up framing, facial readability |
-| `character-concept` | opaque | `2:3`, `3:4`, or `4:5` | costume read, silhouette read, prop callouts only if asked |
-| `creature-concept` | opaque | `2:3` or `16:9` | anatomy clarity, material hierarchy, threat read |
-| `environment-concept` | opaque | `16:9` or `21:9` | world-building, depth layers, lighting story |
-| `background` | opaque | `16:9` | gameplay-safe composition, horizon and focal structure |
-| `key-art` | opaque | `3:4`, `4:5`, or `16:9` | hero composition, saleable mood, strong focal hierarchy |
-| `poster` | opaque | `3:4` or `4:5` | title space planning, graphic hierarchy, publishable layout |
-| `ui-screen` | opaque | `16:9` | full-screen interface mockup, panel hierarchy, interaction readability |
-| `ui-banner` | opaque | `4:1`, `8:1`, or `16:9` | controlled empty space for UI overlay |
-| `logo-mark` | transparent by default | square | vector-like clarity, bold read, minimal clutter |
-| `card-art` | opaque | `3:4` | frame-aware focal placement |
-| `isometric-asset` | transparent or opaque | square | clean volume read, consistent isometric angle |
+透明件避免意外实心背景和场景，不全局禁止物件自己的阴影。平铺纹理检查接缝；角色才检查意外解剖融合；需要字的海报才检查必要文字。负面词与正面要求冲突时修正负面词，不叠加更多互相否定的句子。
 
-## Negative Constraints
+helper 将选中的约束编入 prompt，支持 `--no-default-negatives`；内置工具按其真实接口发送，不虚构专门 negative 参数。
 
-Always include a shared negative block unless the user explicitly asks otherwise.
+## 参考、数量与复核
 
-Shared negative terms:
+明确每张参考的职责，实际查看后再使用。用户说“保留布局只改颜色”时，版式是保护条件；说“只按大致功能重设计”时，不从旧图偷带布局限制。
 
-- watermark
-- signature
-- artist name
-- copyright stamp
-- frame border
-- presentation mockup
-- UI chrome
-- drop shadow
-- cropped subject
-- cut off limbs
-- duplicate objects
-- extra fingers
-- broken anatomy
-- unreadable text
-- muddy details
-- jpeg artifacts
-- oversaturated colors
-- noisy background
-- inconsistent lighting
-
-Asset-specific negative additions:
-
-- transparent assets:
-  - background scene
-  - floor shadow
-  - environmental clutter
-  - vignette
-- textures:
-  - seams
-  - directional lighting hotspots
-  - perspective scene elements
-- UI banners / posters:
-  - accidental logos
-  - misspelled typography
-  - random stickers
-- portraits / characters:
-  - asymmetrical eyes
-  - malformed hands
-  - fused accessories
-
-Do not send negative constraints as a separate provider field. Fold them into the final prompt as a "Do not include" or "Avoid" clause.
-
-## Reference Image Use
-
-If reference images exist:
-
-- Explain what each reference controls:
-  - composition
-  - costume
-  - palette
-  - material
-  - silhouette
-  - editing target
-- Keep that intent in the metadata JSON.
-- Do not say "copy this exactly" unless the user explicitly wants a faithful derivative and the request is legally safe.
-
-## Quantity Heuristics
-
-If the user does not specify `count`, use:
-
-- `1` for most production assets
-- `2` for look exploration, icon exploration, or character exploration
-- `4` only when the user clearly wants options or variant exploration
-
-Avoid defaulting to high counts because image generation is expensive and slower than text work.
-
-## Transparency Heuristics
-
-If the user does not specify background:
-
-- Infer `transparent` for:
-  - icon
-  - item
-  - prop
-  - sprite
-  - vfx
-  - decal
-  - logo-mark
-- Infer `opaque` for:
-  - texture
-  - portrait
-  - character-concept
-  - creature-concept
-  - environment-concept
-  - background
-  - key-art
-  - poster
-  - ui-screen
-  - ui-banner
-  - card-art
-
-## Metadata Expectations
-
-Record these fields in every sidecar JSON:
-
-- original user request
-- normalized asset type
-- inferred or explicit background mode
-- chosen model and model-selection reason
-- requested size fields and normalized size fields
-- count
-- final prompt
-- negative constraints
-- reference-image list and roles
-- warnings, assumptions, and fallbacks
-- output paths
-- response id, model, usage, and assistant text when available
+按用户指定数量生成，未指定时选择足够回答问题的最少结果。生成后直接对照原图检查是否实现本轮改变、是否损坏应保留部分；不要因 prompt 写过就宣布成功。

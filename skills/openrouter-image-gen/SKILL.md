@@ -1,179 +1,35 @@
 ---
 name: openrouter-image-gen
-description: Plan and generate game-ready images with a hybrid workflow: OpenRouter GPT-5 Image for transparent PNG/WebP assets, and built-in imagegen for opaque textures, concepts, posters, UI banners, portraits, environments, and other non-transparent images. Use when the user asks for OpenRouter image generation, openrouter image gen, openrouter 生图, GPT-5 Image transparent PNGs, reference-image image-to-image generation, game textures, icons, key art, splash art, posters, UI banners, decals, portraits, environment art, props, sprites, or similar visual asset generation tasks. Legacy Nano Banana or Nano Banana 2 phrasing should still trigger this skill, but opaque requests must route to built-in imagegen instead of third-party models. If built-in imagegen / image_gen is unavailable, report that the request cannot be completed in the current session instead of using an OpenRouter opaque fallback.
+description: "Angus 真实生图与参考图编辑路由：图像生成、编辑和透明请求默认使用当前内置 imagegen；项目 OpenRouter helper 仅供明确选择该路径的透明资产请求。用于游戏视觉探索、图像变体和资产生成，不用程序绘图冒充生图。"
 ---
 
-# OpenRouter Image Gen
+# 图像生成与资产路由
 
-Use this skill to plan and run game production image generation with two execution paths:
+按当前请求区分风格探索、真实内容概念稿和复用资产，不把所有请求升级为生产意图。先看参考，再写提示词；参考图负责构图、配色、材质、角色或编辑目标应明确。
 
-- transparent assets -> OpenRouter `openai/gpt-5-image`
-- opaque assets -> built-in `$imagegen`
+## 实际工具边界
 
-## Quick Workflow
+读取 `references/model-routing.md` 选择路径；写 prompt 前读 `references/prompt-planning.md`。内置工具可用时按它的技能和真实参数执行，不能把它当 shell 命令。
 
-1. Read `references/model-routing.md` before choosing a model or validating user-provided size/background constraints.
-2. Read `references/prompt-planning.md` before writing the final prompt bundle.
-3. Normalize the request into:
-   - `asset_type`
-   - `background`
-   - `count`
-   - `route`
-   - `resolution` or framing / aspect hints
-   - `reference_image` paths if any
-   - `slug`
-   - positive prompt
-   - negative constraints
-4. Choose the execution path:
-   - `background=transparent` -> OpenRouter helper script
-   - `background=opaque` -> built-in `$imagegen`
-   - `background=opaque` but built-in `image_gen` is unavailable -> fail with a clear explanation; do not use OpenRouter as a fallback
-5. Only check `config.env` in this skill folder when the request routes to the OpenRouter helper script. Opaque requests must not be blocked on missing OpenRouter config because they do not use OpenRouter.
-6. Validate parameters before sending any API request or tool call. If the request is outside the supported matrix, stop immediately and explain what must change.
-7. Execute the selected path:
-   - OpenRouter path: run the Python script in this folder
-   - Built-in opaque path: call `image_gen`, then copy the selected output from `$CODEX_HOME/generated_images/...` into the workspace
-8. Return the saved image paths and metadata JSON paths to the user.
+- 普通生成、编辑和透明请求：默认内置 `image_gen`，遵循其当前工具说明及 imagegen 技能；不读取 OpenRouter 密钥。
+- 用户明确选择 OpenRouter 透明件路径时，使用现有 GPT-5 Image helper；其旧有参数限制只约束 helper。不能仅因需要 alpha、批量或精确尺寸就自动转付费 API。
+- 用户明确指定其他供应商/型号时说明当前支持情况，不偷换型号或静默改变费用路径。历史 nano banana 别名只用于识别请求，不等于同意改用另一个供应商。
+- 所需工具不可用时说明阻断；不伪造成功，不程序画图冒充，不擅自切外部付费服务。
 
-## Claude-to-IM / IM Triggering
+## 提示词与输出
 
-When this skill is triggered from a `claude-to-im` bridged Codex session, keep the same routing contract:
+保留当前任务要求的视觉自由度。描述大形、构图、色彩关系、材质与重点；负面词只针对这张图的真实风险，不全局禁止边框、阴影、贴纸、UI 或饱和色。不要给地图加多指/人体解剖负面词。
 
-- If the IM user asks for an opaque game or project image and the actual tool list exposes built-in `image_gen`, use the built-in `$imagegen` path.
-- If the bridged Codex SDK/CLI session does not expose built-in `image_gen`, fail directly and tell the user that `$imagegen` is unavailable in the current bridge session.
-- Treat built-in `$imagegen` / `image_gen` as a conversation tool capability, not a shell executable. Do not search for an `image_gen` command on `PATH`.
-- Do not run `scripts/openrouter_image_gen.py` for opaque requests, including bridge sessions where `$imagegen` is unavailable.
-- Save project-bound outputs under `image_gen/YYYY-MM-DD/` and write the sidecar JSON metadata.
-- After saving the image, report the workspace path. For Feishu delivery, the bridge can reuse the `claude-to-im send images` workflow or `skills/claude-to-im/scripts/send-feishu-images-post.mjs`.
-- If the user asks for transparent output, keep using the transparent routing rules below unless the project explicitly changes that policy.
+数量按用户请求；未指定时用足够验证的最少数量。不要为固定版本数额外生图。编辑时保护明确不改的部分，工具做不到精确保持要说明和复核。
 
-## Routing Rules
+项目结果保存到 `image_gen/YYYY-MM-DD/`，从工具实际返回路径复制，不猜缓存目录。记录实际 prompt、参考及其职责、工具/路由、输出路径和重要限制；可复用同批任务记录，不重复制造无用侧车。展示图片与用途，不能只发路径。
 
-- If the user wants a transparent background, route to `openai/gpt-5-image` only.
-- If the user wants a non-transparent image, route to built-in `$imagegen` only.
-- If `image_gen` is unavailable, stop and report failure instead of using OpenRouter.
-- If the user explicitly says `nano banana` or `nano banana 2`, treat that as legacy wording for an opaque request and still route to built-in `$imagegen`.
-- If the user explicitly says `gpt-5-image` for a non-transparent request, explain that this skill uses built-in `$imagegen` for opaque outputs and cannot fall back to OpenRouter when `$imagegen` is unavailable.
-- Treat reference-image generation as a normal path for both routes, but keep the request conservative and validate local file existence first.
+所有阶段都核验本次明确要求的尺寸/比例、透明、内容及应保护部分；实际生产资产再追加边缘质量、目标缩放和复用合同验证。生图结果是否好看需看图；生成小字不能当成已验证的运行字体。
 
-## Common Asset Types
+## 透明 helper
 
-Use the prompt planner to infer defaults for at least these common game-production targets:
+只有用户明确选择该外部路径后才检查本技能配置；默认内置路径不使用它。用 `scripts/openrouter_image_gen.py generate --help` 查看实际参数；`--dry-run` 可验证请求构造，不产生 API 调用。先验证参数再调用，不能把“不支持 exact size”自动变成未经同意的裁切。
 
-- `icon`
-- `item`
-- `prop`
-- `sprite`
-- `vfx`
-- `decal`
-- `texture`
-- `tileable-texture`
-- `portrait`
-- `character-concept`
-- `creature-concept`
-- `environment-concept`
-- `background`
-- `key-art`
-- `poster`
-- `ui-screen`
-- `ui-banner`
-- `logo-mark`
-- `card-art`
-- `isometric-asset`
+必要时用 `--no-default-negatives` 关闭默认避坑，仅保留显式 `--negative`。这不会改变模型、透明路由或供应商。
 
-If the user does not provide an asset type, infer the closest one from their request and record that inference in the metadata JSON.
-
-## Prompt Rules
-
-- Treat the user request as production intent, not as a raw final prompt.
-- Expand the prompt into a game-ready generation prompt that clarifies:
-  - subject
-  - camera/framing
-  - rendering style
-  - material/lighting
-  - silhouette readability
-  - intended in-game use
-  - background requirement
-  - reference-image role if present
-- Always include negative constraints from `references/prompt-planning.md`.
-- Do not rely on a dedicated negative prompt parameter. The script compiles negative constraints into the final prompt text.
-- For built-in opaque requests, format the prompt bundle so it can be pasted directly into `$imagegen` as a single structured prompt.
-
-## Validation Rules
-
-- Stop before calling OpenRouter if:
-  - the user requests transparent output on a non-GPT-5 Image model
-  - the user requests an unsupported literal resolution
-  - `count` is outside the supported range
-  - reference image files do not exist or use unsupported formats
-- Stop before using the OpenRouter helper script if the resolved background is `opaque`; opaque requests belong to built-in `$imagegen`, not this script.
-- Prefer explicit correction over silent fallback.
-- Record every fallback or inference in the metadata JSON.
-
-## Commands
-
-Use these commands from the repository root for the transparent OpenRouter path only:
-
-```powershell
-python ".\skills\openrouter-image-gen\scripts\openrouter_image_gen.py" doctor
-```
-
-```powershell
-python ".\skills\openrouter-image-gen\scripts\openrouter_image_gen.py" generate `
-  --prompt "Clean in-game relic icon, brass sigil, readable silhouette" `
-  --asset-type icon `
-  --background transparent `
-  --count 1 `
-  --resolution 1024x1024 `
-  --slug relic-icon
-```
-
-Add one or more reference images to the transparent path like this:
-
-```powershell
-python ".\skills\openrouter-image-gen\scripts\openrouter_image_gen.py" generate `
-  --prompt "Clean occult crest cutout with sharper silhouette and controlled metallic detail" `
-  --asset-type logo-mark `
-  --background transparent `
-  --count 1 `
-  --resolution 1024x1024 `
-  --reference-image ".\path\to\ref-01.png" `
-  --reference-image ".\path\to\ref-02.png" `
-  --slug occult-crest
-```
-
-For opaque textures, concepts, posters, portraits, banners, and other non-transparent outputs:
-
-- do not run `openrouter_image_gen.py`
-- call built-in `$imagegen`
-- if the result is for this project, copy the selected output from `$CODEX_HOME/generated_images/...` into `image_gen/YYYY-MM-DD/`
-- write a sidecar JSON next to the copied image with the same metadata contract used by this skill, plus:
-  - `execution_mode: "built-in-imagegen-opaque"`
-  - `routing_reason`
-  - `built_in_source_image`
-
-If `$imagegen` / `image_gen` is unavailable in a bridge session, stop and report that opaque generation cannot be completed from that session. Do not use OpenRouter as an opaque fallback.
-
-## Output Rules
-
-- Save final generated files under the workspace root in `image_gen/YYYY-MM-DD/`.
-- Prefix every filename with a local timestamp.
-- Include a descriptive slug in every filename.
-- Save a sidecar JSON next to each image with:
-  - original user request
-  - inferred asset type
-  - chosen route and why
-  - normalized size/background/count
-  - final prompt
-  - negative constraints
-  - reference image list
-  - OpenRouter response identifiers and usage if available for transparent requests
-  - built-in source image path for opaque requests
-  - output file paths
-  - warnings / assumptions / fallbacks
-
-## Files To Read
-
-- `references/model-routing.md`
-- `references/prompt-planning.md`
-- `config.env.example`
+飞书/IM 发送只在用户要求时按 `skills/claude-to-im/SKILL.md` 执行；本技能不复制连接、权限和重发规则。

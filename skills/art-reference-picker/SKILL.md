@@ -1,75 +1,14 @@
 ---
 name: art-reference-picker
-description: Review local art-reference images for the Angus project, compare them against project docs, and select the most relevant images with concrete fit reasons. Use when the user asks to analyze downloaded screenshots, pick the best references for current UI or art needs, explain project relevance, archive selected images, or send chosen images with reasons to a Feishu group.
+description: "查看并筛选 Angus 当前任务相关的美术参考，解释可转译元素与偏差风险。用于参考图比较、选图与用户明确要求的归档/发送，不预设旧复古档案风格。"
 ---
 
-# Art Reference Picker
+# 美术参考筛选
 
-Read only the project docs and image files needed for the current request. Prefer:
+按当前目标和分支建立标准；实际打开候选图，不凭文件名打分。不默认将“复古、克苏鲁、档案、高密度卡牌”当项目当前任务的风格答案。
 
-- `README.md`
-- `docs/plans/art-development-plan.md`
-- `docs/plans/ui-design-plan.md`
-- the relevant files under `design/references/original-art/`
+比较具体的造型概括、构图、色彩角色、材质、细节密度、主题与趣味。区分整屏参考、单项素材参考和不可迁移的元素；清楚说明某图负责什么以及不要继承什么。
 
-Use `view_image` for any candidate image you are going to judge. Do not guess from filenames alone.
+数量按价值而非配额；允许只保留一张，也允许多张互补参考。不用固定评分表或三条理由凑数。目录很大时可用 `scripts/rank_art_references.mjs` 盘点文件，该脚本不替代看图。
 
-## Workflow
-
-### 1. Build project fit criteria
-
-Before ranking any image, reduce the current Angus need to concrete criteria from the docs. Typical criteria:
-
-- `复古报刊感`
-- `黑色幽默 + 克苏鲁/怪谈气质`
-- `高信息密度 UI / 卡牌化界面`
-- `探索、线索、编辑部、档案感`
-- `适合当前阶段的参考价值`
-
-Current stage usually favors UI layout, style direction, and card/editor motifs over final-key-art polish.
-
-### 2. Inspect images and score them
-
-For each candidate image, judge at least:
-
-- motif match to Angus
-- direct use for current UI or art tasks
-- uniqueness versus other references in the same batch
-- risk of sending noise or over-specific inspiration
-
-Keep the selection bar high. It is better to send 1 strong reference than 5 weak ones.
-
-### 3. Write reasons in this format
-
-Use concise Chinese by default:
-
-```text
-这张我保留，理由：
-1. 它最贴合……
-2. 对我们当前的……阶段直接有帮助
-3. 可转译成项目里的……
-```
-
-Do not use generic praise. Tie each reason to an Angus system, screen, or art task.
-
-### 4. Sending to Feishu
-
-When the user asks to send selected images to Feishu:
-
-1. Use `claude-to-im/scripts/send-feishu-images-post.mjs`.
-2. Prefer `--separate` so each selected image is its own message.
-3. Use a short title, usually one line naming the motif.
-4. Put the relevance reason in the caption, not as a separate dump.
-5. If one image was previously sent with bad text, resend that image cleanly instead of referencing the broken message.
-
-### 5. Archiving
-
-If the task includes organizing references in the repo:
-
-- store originals under `design/references/original-art/<date-or-range>/raw/...`
-- keep generated contact sheets or crops under `analysis/`
-- add a short README only if it helps future retrieval
-
-## Resource
-
-Use `scripts/rank_art_references.mjs` to produce a quick filename list from a directory when the batch is large. The script is only for inventory. Final judgment still requires visual inspection.
+只读筛选不自动授权移动、归档或发送。用户要求整理时原图与分析裁片分开保存；要求飞书发送时读 `skills/claude-to-im/SKILL.md` 并遵守其当前接口，不复制过期脚本路径或擅自重发消息。

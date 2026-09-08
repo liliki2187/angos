@@ -1,0 +1,211 @@
+# 2026-09-07：条件式证据目录，不是每轮强制审批表。
+# applies_when 包含任务事件或产物身份；stage_transitions.allowed 可指向产物身份。
+# 本文件是声明目录，不是已经接通所有规则的自动执行引擎。
+version: 2
+risk_levels:
+  tiny:
+    checks: [affected_content]
+  normal:
+    checks: [affected_behavior, actual_output]
+  experimental:
+    checks: [reference_fit, stated_limits]
+    production_prerequisites: false
+  risky:
+    checks: [scope, affected_consumers, recovery, independent_review]
+  production:
+    checks: [contract, runtime, affected_states, visual_review, recovery]
+feedback_contract:
+  default: concise_natural_language
+  full_reports: on_request_or_material_dispute
+loop_log_contract:
+  required_when: [repeated_failure, evidence_or_scope_misclaim, explicit_retrospective]
+  record: [cause, method_change, evidence]
+  automatic_stop_after_fixed_rounds: false
+artifact_types:
+  isolated_technical_probe:
+    evidence_scope: "隔离的技术可行性验证"
+    proves_unobserved_behavior: false
+  structure_wireframe:
+    evidence_scope: "结构与职责"
+    proves_unobserved_behavior: false
+  problem_overlay:
+    evidence_scope: "可见问题定位"
+    proves_unobserved_behavior: false
+  interaction_fix_sketch:
+    evidence_scope: "交互方向"
+    proves_unobserved_behavior: false
+  safe_zone_capacity_validation:
+    evidence_scope: "特定可写区与容量"
+    proves_unobserved_behavior: false
+  logic_smoke:
+    evidence_scope: "所覆盖逻辑"
+    proves_unobserved_behavior: false
+  visual_style_reference:
+    evidence_scope: "风格与氛围"
+    proves_unobserved_behavior: false
+  color_locked_style_draft:
+    evidence_scope: "指定色彩方向"
+    proves_unobserved_behavior: false
+  no_text_style_draft:
+    evidence_scope: "无字视觉语言"
+    proves_unobserved_behavior: false
+  filled_state_text_mock:
+    evidence_scope: "真实内容组合"
+    proves_unobserved_behavior: false
+  component_aspect_taxonomy:
+    evidence_scope: "复用比例分类"
+    proves_unobserved_behavior: false
+  component_class_contract:
+    evidence_scope: "实际组件合同"
+    proves_unobserved_behavior: false
+  full_screen_reinsert_proof:
+    evidence_scope: "整屏装配关系"
+    proves_unobserved_behavior: false
+  screen_structure_target:
+    evidence_scope: "目标结构"
+    proves_unobserved_behavior: false
+  component_reinsert_review_board:
+    evidence_scope: "局部与整体关系"
+    proves_unobserved_behavior: false
+  text_capacity_stress:
+    evidence_scope: "所测试内容容量"
+    proves_unobserved_behavior: false
+  vertical_slice_proof:
+    evidence_scope: "所覆盖纵向切片"
+    proves_unobserved_behavior: false
+  no_text_asset_master:
+    evidence_scope: "无字资产本体"
+    proves_unobserved_behavior: false
+  runtime_skeleton:
+    evidence_scope: "运行结构"
+    proves_unobserved_behavior: false
+  runtime_state_preview:
+    evidence_scope: "所覆盖真实状态"
+    proves_unobserved_behavior: false
+  production_candidate:
+    evidence_scope: "具备指定发布证据的候选"
+    proves_unobserved_behavior: false
+  godot_agent_smoke:
+    evidence_scope: "Godot 指定检查"
+    proves_unobserved_behavior: false
+stage_transitions:
+  exploration:
+    allowed: [visual_style_reference, filled_state_text_mock, isolated_technical_probe]
+    requires_all_geometry_frozen: false
+  representative_validation:
+    allowed: [component_class_contract, vertical_slice_proof, runtime_state_preview]
+    batch_art_requires_visual_basis: true
+  production:
+    requires: [authorized_scope, representative_validation, affected_consumers_verified]
+    allowed: [no_text_asset_master, production_candidate]
+hard_gates:
+  authorized_scope:
+    applies_when: [all_mutations]
+    blockers: [unapproved_external_action, unapproved_semantic_change, unsafe_overwrite]
+  evidence_identity:
+    applies_when: [claims_of_completion_or_validation]
+    blockers: [generated_image_claimed_as_runtime, geometry_claimed_as_art_approval, untested_states_claimed_pass]
+  reusable_content:
+    applies_when: [reusable_asset_production, runtime_assembly]
+    required: [canonical_image_policy, actual_text_capacity, layer_ownership, state_semantics]
+  visual_text_safety:
+    applies_when: [runtime_assembly, production_candidate]
+    required: [actual_writable_surface, input_alignment, affected_state_checks]
+    thresholds_source: current_component_contract
+  reference_fit:
+    applies_when: [visual_target_selection, production_candidate]
+    required: [actual_reference_viewed, actual_result_viewed, correct_style_branch]
+    not_proved_by: [numeric_color_pass, geometry_pass, reviewer_name]
+  precise_color_match:
+    applies_when: [explicit_exact_color_request, approved_material_batch_match]
+    required: [comparable_samples, task_specific_tolerance, visual_check]
+    applies_to_palette_exploration: false
+  godot_agent_smoke:
+    auto_required_when:
+      - changed_files_match_any_of:
+          - gd_project/scenes/**/*.gd
+          - gd_project/scenes/**/*.tscn
+          - gd_project/project.godot
+    not_required_when:
+      - markdown_only
+      - ai_radar_only
+      - html_only_without_godot_changes
+      - design_discussion_without_file_changes
+    required:
+      - gda_script_validate_json
+      - parse_gda_valid_field
+      - godot_headless_weekly_run_smoke
+      - godot_debug_skill_lookup_on_failure
+    blockers:
+      - gda_valid_false
+      - godot_headless_nonzero_exit
+      - node_not_found
+      - null_method_call
+      - preload_or_autoload_runtime_error
+      - native_godot_process_crash_requires_separate_gui_exe_check
+  godot_gui_startup:
+    auto_required_when:
+      - user_reports_any_of:
+          - windows_application_error
+          - memory_could_not_be_read
+          - godot_gui_crash
+          - editor_crash
+      - task_requires_any_of:
+          - open_godot_editor
+          - verify_exact_godot_exe
+          - compare_godot_versions
+      - screenshot_or_log_mentions_any_of:
+          - Godot_v4.6.2-stable_win64.exe
+          - 应用程序错误
+          - 内存不能为 read
+    required:
+      - exact_godot_exe_path
+      - gui_startup_check_script
+      - timeout_or_quit_after_result
+      - log_file_path
+    blockers:
+      - exact_gui_exe_exits_nonzero
+      - exact_gui_exe_hangs_or_modal_crash_dialog
+      - headless_smoke_used_as_gui_crash_proof
+  handoff_completeness:
+    status: trial
+    auto_required_when:
+      - user_requests_cross_endpoint_continuation
+      - user_requests_multi_remote_push
+      - response_claims_seamless_handoff
+    classifications:
+      - GIT_INCLUDED
+      - ACTIVE
+      - REPRODUCIBLE
+      - EXTERNALIZED
+      - SECRET
+      - DISPOSABLE
+      - LOCAL_ONLY_REQUIRED
+      - UNKNOWN
+    required:
+      - explicit_target_remotes_and_branches
+      - fetched_remote_tracking_refs
+      - fast_forward_check_per_remote
+      - handoff_manifest_for_all_unstaged_related_paths
+      - reason_for_every_non_git_classification
+      - evidence_for_reproducible_externalized_and_secret
+      - separate_submission_ready_and_seamless_ready_results
+    active_exception:
+      allowed_only_when: user_explicitly_allows_current_running_work_to_remain_local
+      permits_submission_ready: true
+      permits_seamless_ready: false
+    blockers:
+      - UNKNOWN
+      - LOCAL_ONLY_REQUIRED
+      - missing_classification_reason
+      - missing_reproduction_or_externalization_evidence
+      - active_without_explicit_authorization
+      - target_remote_not_configured
+      - target_remote_not_fetched
+      - target_remote_non_fast_forward
+
+
+gate_lifecycle:
+  add_only_for: specific_failure_with_defined_scope
+  maintenance: replace_duplicate_or_obsolete_rules
+  passed_evidence_reuse: valid_when_dependencies_unchanged

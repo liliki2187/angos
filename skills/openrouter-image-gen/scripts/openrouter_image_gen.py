@@ -52,96 +52,39 @@ TRANSPARENT_FIRST_ASSET_TYPES = {
 }
 
 ASSET_TYPE_SUFFIXES = {
-    "icon": "game icon, centered composition, readable silhouette, clean cutout, production-ready asset",
-    "item": "isolated game item, clean contour, production-ready asset, readable at small size",
-    "prop": "isolated game prop, clear shape language, clean cutout, production-ready asset",
+    "icon": "game icon, centered composition, readable silhouette, clean cutout",
+    "item": "isolated game item, clean contour, readable at small size",
+    "prop": "isolated game prop, clear shape language, clean cutout",
     "sprite": "2D game sprite, clean outline, animation-friendly silhouette, readable at gameplay scale",
-    "vfx": "game VFX asset, emissive effect shape, clean alpha edges, production-ready effect sheet look",
+    "vfx": "game VFX asset, emissive effect shape, clean alpha edges, effect silhouette clarity",
     "decal": "game decal graphic, flat readable graphic language, edge-safe cutout",
-    "texture": "game texture study, material-first read, even detail distribution, production-ready material source",
+    "texture": "game texture study, material-first read, even detail distribution, material source",
     "tileable-texture": "seamless tileable game texture, edge continuity, even coverage, material-first read",
-    "portrait": "portrait concept art, clear face read, costume readability, production-ready character render",
-    "character-concept": "character concept art, costume readability, silhouette clarity, production-ready game character design",
-    "creature-concept": "creature concept art, anatomy clarity, threat readability, production-ready creature design",
-    "environment-concept": "environment concept art, layered depth, strong lighting story, production-ready world-building image",
-    "background": "game background art, gameplay-safe composition, horizon clarity, production-ready background plate",
+    "portrait": "portrait concept art, clear face read, costume readability, character render",
+    "character-concept": "character concept art, costume readability, silhouette clarity, game character design",
+    "creature-concept": "creature concept art, anatomy clarity, threat readability, creature design",
+    "environment-concept": "environment concept art, layered depth, strong lighting story, world-building image",
+    "background": "game background art, gameplay-safe composition, horizon clarity, background plate",
     "key-art": "game key art, hero composition, strong focal hierarchy, premium marketing illustration",
     "poster": "game poster illustration, graphic hierarchy, premium marketing composition, clear focal design",
-    "ui-screen": "full game UI screen mockup, readable panel hierarchy, production-ready interface concept, interaction-first composition",
+    "ui-screen": "full game UI screen mockup, readable panel hierarchy, interface concept, interaction-first composition",
     "ui-banner": "game UI banner art, controlled empty space for overlays, strong focal hierarchy",
     "logo-mark": "game logo mark, clean shape design, bold read, minimal clutter",
     "card-art": "game card illustration, focal composition, frame-aware subject placement",
-    "isometric-asset": "isometric game asset, consistent angle, clean volume read, production-ready asset",
+    "isometric-asset": "isometric game asset, consistent angle, clean volume read",
 }
 
+# 只加入与资产角色有关的避坑；风格、构图和趣味由当前请求决定。
 ASSET_TYPE_NEGATIVES = {
-    "shared": [
-        "watermark",
-        "signature",
-        "artist name",
-        "copyright stamp",
-        "frame border",
-        "presentation mockup",
-        "ui chrome",
-        "drop shadow",
-        "cropped subject",
-        "cut off limbs",
-        "duplicate objects",
-        "extra fingers",
-        "broken anatomy",
-        "unreadable text",
-        "muddy details",
-        "jpeg artifacts",
-        "oversaturated colors",
-        "noisy background",
-        "inconsistent lighting",
-    ],
-    "transparent": [
-        "background scene",
-        "floor shadow",
-        "environmental clutter",
-        "vignette",
-    ],
-    "texture": [
-        "visible seams",
-        "hard lighting hotspots",
-        "perspective scene elements",
-    ],
-    "tileable-texture": [
-        "visible seams",
-        "hard lighting hotspots",
-        "perspective scene elements",
-    ],
-    "poster": [
-        "accidental logos",
-        "misspelled typography",
-        "random stickers",
-    ],
-    "ui-banner": [
-        "accidental logos",
-        "misspelled typography",
-        "random stickers",
-    ],
-    "ui-screen": [
-        "accidental logos",
-        "misspelled typography",
-        "floating panels without structure",
-        "illegible ui labels",
-    ],
-    "portrait": [
-        "asymmetrical eyes",
-        "malformed hands",
-        "fused accessories",
-    ],
-    "character-concept": [
-        "asymmetrical eyes",
-        "malformed hands",
-        "fused accessories",
-    ],
-    "creature-concept": [
-        "merged limbs",
-        "broken anatomy",
-    ],
+    "shared": ["unrequested watermarks", "compression artifacts"],
+    "transparent": ["unintended opaque background", "unrequested background scene"],
+    "texture": ["unrequested perspective scene elements"],
+    "tileable-texture": ["visible tiling seams", "hard lighting hotspots"],
+    "ui-screen": ["illegible required ui labels"],
+    "poster": ["misspelled required typography"],
+    "portrait": ["unintended fused anatomy"],
+    "character-concept": ["unintended fused anatomy"],
+    "creature-concept": ["unintended merged limbs"],
 }
 
 class ValidationError(RuntimeError):
@@ -312,11 +255,13 @@ def validate_gpt_image_request(
     return resolution or "auto", resolved_format
 
 
-def build_negative_constraints(asset_type: str, background: str, user_negatives: list[str]) -> list[str]:
-    negatives = list(ASSET_TYPE_NEGATIVES["shared"])
-    if background == "transparent":
-        negatives.extend(ASSET_TYPE_NEGATIVES["transparent"])
-    negatives.extend(ASSET_TYPE_NEGATIVES.get(asset_type, []))
+def build_negative_constraints(asset_type: str, background: str, user_negatives: list[str], *, use_defaults: bool = True) -> list[str]:
+    negatives: list[str] = []
+    if use_defaults:
+        negatives.extend(ASSET_TYPE_NEGATIVES["shared"])
+        if background == "transparent":
+            negatives.extend(ASSET_TYPE_NEGATIVES["transparent"])
+        negatives.extend(ASSET_TYPE_NEGATIVES.get(asset_type, []))
     negatives.extend(item.strip() for item in user_negatives if item.strip())
     seen: set[str] = set()
     deduped: list[str] = []
@@ -333,14 +278,14 @@ def build_prompt(prompt: str, asset_type: str, background: str, negatives: list[
     background_clause = "transparent background, clean alpha edges" if background == "transparent" else "opaque background, resolved scene context"
     reference_clause = ""
     if reference_images:
-        reference_clause = "Use the provided reference images as guidance for composition, material, palette, or editing intent while keeping the result production-ready."
+        reference_clause = "Follow the reference roles and the requested changes; preserve the parts the request identifies as unchanged."
     negative_clause = "; ".join(negatives)
     parts = [
         prompt.strip(),
         suffix,
         background_clause,
         reference_clause,
-        f"Avoid: {negative_clause}.",
+        f"Avoid: {negative_clause}." if negative_clause else "",
     ]
     return ". ".join(part for part in parts if part)
 
@@ -536,7 +481,7 @@ def plan_request(args: argparse.Namespace) -> PlannedRequest:
     if output_format == "png":
         output_compression = None
 
-    negatives = build_negative_constraints(asset_type, background, args.negative)
+    negatives = build_negative_constraints(asset_type, background, args.negative, use_defaults=not getattr(args, "no_default_negatives", False))
     compiled_prompt = build_prompt(
         prompt=args.prompt,
         asset_type=asset_type,
@@ -773,6 +718,7 @@ def build_parser() -> argparse.ArgumentParser:
     generate.add_argument("--output-compression", type=int, default=None, help="JPEG/WebP compression percentage (0-100).")
     generate.add_argument("--seed", type=int, default=None, help="Base seed. If count>1 the script increments per request.")
     generate.add_argument("--slug", default=None, help="Filename slug. If omitted, the script derives one from the prompt.")
+    generate.add_argument("--no-default-negatives", action="store_true", help="关闭默认避坑，只使用显式 --negative；不改变模型或路由。")
     generate.add_argument("--negative", action="append", default=[], help="Additional negative constraint. Repeat as needed.")
     generate.add_argument("--reference-image", action="append", default=[], help="Local reference image path. Repeat up to 4 times.")
     generate.add_argument("--dry-run", action="store_true", help="Plan and validate without calling OpenRouter.")

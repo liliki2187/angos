@@ -375,3 +375,48 @@
 - **首个落地证据**：中央双版区域母件 v1 已完成无字母件、六篇真实报道回填和未来态整屏，UI Designer 与 UX 均 PASS；当前只待用户裁决“中央区域是否通过”，未通过前不得反向拆层。
 - **边界**：该机制已同步 `docs/onboarding/assetized-ui-production-chain.md`；正式 Godot、组件合同和 GDD 继续不动。
 - **cross-read tags**：`A216/A231/A241/A242/A246/A259`、accepted、art、assetized-ui、component-family、editorial、evidence-level、future-state-proxy、mixed-context、process、region-master、review-surface、ui、ux、workflow。
+
+### A288. ChatGPT 画布以双模式试行侧车接入资产化 UI
+
+- **来源**：2026-08-05 讨论 ChatGPT 画布如何进入 Angus 现有 UI 资产化流程。用户在了解“合同推演台 / 对比验收台”的定位后明确表示“可以，那你想想如何落地进流程”，确认继续按该方向落地。
+- **流程定位**：画布不是资产化主链的新阶段，不新增 `artifact_types`，也不承担仓库真源。它是按需开启的临时协作侧车：阶段 0-4 使用 `contract_workbench` 汇总功能分区、真实字段、容量、状态、组件比例和整屏回填；阶段 7、10-11 使用 `review_workbench` 并排组织目标稿、真实内容预览、真实 Godot / HTML 截图与关键局部。
+- **生产边界**：阶段 5-6 的真实素材、纵向切片与几何校验，以及阶段 8-9 的 atlas、manifest 和引擎装配，不能由画布替代。画布中的预览、导出图或总结不得声称为生产资产、运行截图、纵向切片或生产真源；缺失证据必须标为缺失，不能在画布中补画后冒充完成。
+- **执行规则**：每张画布固定“一页、一个核心问题、一种模式、一种既有产物类型”，声明输入真源、真实数据快照、能证明 / 不能证明、退出条件和 `repo_sync` 目标。用户裁决后，必须把采纳内容回写 GDD、合同 JSON、manifest、代码、STATUS 或采纳记录中的实际责任文件；只有 `repo_sync=完成` 且侧车关闭，结论才可进入下游。
+- **落地位置**：操作真源为 [`assetized-ui-production-chain.md`](../onboarding/assetized-ui-production-chain.md) §1.1；复用模板为 [`ui-assetization-canvas-sidecar.md`](../workflows/templates/ui-assetization-canvas-sidecar.md)；机器检查为 [`workflow-gates.yml`](../workflows/workflow-gates.yml) 的 `chatgpt_canvas_sidecar_integrity`；交付清单在 [`delivery-manifest.md`](../workflows/templates/delivery-manifest.md) 中按需填写。
+- **试行状态**：已采纳并于 2026-08-05 落地。先用于 3 次真实资产化 UI 任务，再复盘保留、合并还是撤销；试行期间不得因工具新颖而强制每个 UI 任务都开画布。
+- **cross-read tags**：`A162/A216/A241/A246/A262`、accepted、assetized-ui、canvas、chatgpt、contract、evidence、godot、process、repo-sync、review-surface、source-of-truth、trial、ui、ux、workflow。
+
+### A358. 按最新官方 Astra 指南审计并精简 UI 资产工作流及配套 subagent
+
+- **来源**：2026-09-07 用户明确要求“参考最新官方模型指南，全面审计并优化当前 UI 资产链的工作流，以及所有配套 subagent，精简冗余和冲突规则”，使 GPT-6 Astra 不被旧规范束缚。
+- **已确认范围**：核实官方模型指南；审计实际加载链；在 UI 资产流程、配套技能/角色入口及相关校验中落实精简和冲突修复。保留美术标杆、内容/交互正确性和授权边界，不把取消流程束缚理解成可任意更改玩法或正式运行资产。
+- **实施说明**：父级据此采用目标与证据驱动、按风险调用专家、按产物阶段验证的工作方式。具体技术方案属于本轮助手实施，不登记成用户逐项确认。历史程序性条款与新规冲突时按本次授权修订；旧文档完整快照保留，既有游戏合同本体和四个冷备技能不因此解冻或删除。
+- **状态**：用户优化授权已采纳；本轮实施和验证详见 [审计报告](../workflows/reports/2026-09-07-astra-ui-workflow-audit.md)。后续真实 UI 任务仍需检验收益，不以文档精简声称美术效果已提升。
+- **cross-read tags**：A216/A246/A357、process、ui、ux、art、assetized-ui、subagent、astra、workflow、official-guidance、progressive-disclosure。
+
+
+#### A358 接续反馈与复盘：自主判断和经验如何共存（2026-09-08）
+
+- **用户明确反馈**：世界地图界面基本完成，准备做下个界面；认为旧UI资产链按较早模型形成，对GPT-6约束较大。希望保留纸边等可迁移经验，又担心规则使独立判断退化；本轮询问合适的规范组织方式，未逐项采纳新规则。
+- **实际证据**：A363父级先行稿与传统路径核心方向接近，传统路径补足折叠、状态及阅读边线；没有两套改后成品的控制实验，父级也有历史背景，不能据此认定无规范普遍胜出。A364局部柔化和大量功能检查没有证明纸边已解决；A365在连续轮廓与实际显示尺寸对照后才改善用户指向的长边。
+- **失败机制与责任**：当前A358文本已经允许自主判断，但曾把几何、运行断言的通过扩大为质量判断。案例约束、已有素材用法和检查完成容易先于实际视觉问题进入决策；这是父级应用经验及验收判断的问题，不能只归咎旧模型或子代理。
+- **父级建议，尚未实施为新规**：短入口保留目标、真源、授权与证据底线；历史故障按触发条件检索，记录原因、失效办法、验证证据和不适用范围；初步方案先由父级依据当前目标形成，再在昂贵资产决策前查相关风险、据证据修正；专家只承担具体盲点；可靠工程经验优先进入工具及可复用实现。单页曲线范围不能升级为所有纸件的规定。
+- **验证建议，尚无新结果**：下一界面的代表区域试行，观察首次可用成品观感、用户纠正次数、同类缺陷复发和工作成本；根据增量价值决定保留、放宽或退役规则，不以文档更短或报告更多证明工作流更好。
+- **本轮范围**：只讨论与登记反馈；未修改活动AGENTS、资产链、技能或子代理规范，也未开始下一个界面。官方GPT-6指南确认其对AGENTS／技能指令较敏感，并建议校准测试强度；上述项目组织方案仍是父级结合实际证据提出的建议。
+
+依据：[A363比较](../plans/world-map-benchmark-landing/2026-09-08-task-panel-quality-comparison/README.md)、[纸边实施与返工](../plans/world-map-benchmark-landing/2026-09-07-soft-columns-landing.md)、[官方GPT-6指南](https://developers.openai.com/api/docs/guides/latest-model)。Cross-read：A363、A364、A365、ui、art、assetized-ui、astra、process、conditional-experience。
+
+
+### A366. 采纳短入口、按决策查经验与按影响验证的规范组织方案
+
+- **来源（2026-09-08）**：用户在规范组织提案后明确要求“按照你的方式去精简优化”。
+- **已确认范围**：按提案精简 AGENTS、相关规范、UI 配套技能/启动入口及验证说明，合并当前工作树仍残留的旧流程；保留可迁移经验，支持父级独立判断。不是授权开始下个界面或改变当前游戏功能。
+- **实施方式**：项目入口保留目标、真源、授权和证据；角色路由单处维护，取消固定双审与顺序；资产链按当前决定选择风险证据，昂贵制作决定前查命中案例；Godot 验证按受影响行为选择；纸边和图文承载经验保留原因、失败尝试、真实证据与限制。具体文件组织是本轮助手实现，不记作用户逐项批准。
+- **修订关系**：A358 接续讨论现已获得实施授权。历史条目保留；与本次冲突的固定会审、固定阶段和跨页处方不再作为当前流程，仍有效的玩法、美术标杆、页面消费者合同及 Git/冷备边界继续保留。
+- **状态与边界**：规范已实施，详见 [实施报告](../workflows/reports/2026-09-08-doc-simplification-implementation.md)。文档与离线检查不证明下个界面美术质量已提升；实际收益须在后续真实工作观察。
+- **cross-read tags**：A358/A363/A364/A365、process、ui、ux、art、assetized-ui、subagent、workflow、actual-worktree、conditional-experience、paper-edge。
+
+#### A366 对 A288 画布侧车的适用范围修订
+
+- **保留的边界**：A288 仍是用户已采纳的历史决策。画布按需作为临时协作侧车，不是仓库真源，不得冒充生产资产或真实运行证据；用户裁决仍须回写到实际责任文件。
+- **不再作为当前强制流程的部分**：`contract_workbench` / `review_workbench` 的旧阶段 0–11 映射、固定“一页一个问题一种模式”、专用 gate、关闭协议及“三次试行”都是当时试行的历史记录，不构成当前任务的必经步骤。当前仅在有助于当前问题时使用便笺或画布，并按实际影响选择验证。

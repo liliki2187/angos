@@ -1,12 +1,13 @@
 {
   "id": "",
   "name": "ux-kb-cross-page",
-  "display_name": "UX 跨界面诊断库",
-  "description": "跨界面检查 + 产品级报告模板（多界面任务必加载）",
-  "version": "1.0.0",
+  "display_name": "UX 跨页任务参考",
+  "description": "真实任务跨多个页面、共享状态或回流路径时，辅助检查体验连续性；多张参考图或同屏对比不自动触发。",
+  "version": "2.0.0",
   "category": "planning",
   "url": null,
   "status": null,
   "installed_at": null,
-  "updated_at": 1779763238000
+  "updated_at": 1788710400000,
+  "source": "SKILL.md"
 }

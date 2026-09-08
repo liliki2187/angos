@@ -1256,3 +1256,941 @@
 - **当前状态**：`accepted-for-local-experiment / pending-user-visual-freeze`。局部板可以进入用户审阅，但尚未授权修改 Godot、`dossier_contract.json`、component inventory、manifest 或 event card；用户确认后才进入资产拆分合同草案和单例回填证明。
 - **2026-07-22 同源叠印试装修订**：用户追问一体式无框分区是否适合拼接，并回复“那试一下”，授权单例拆分 / 回填实验。现已从同一张无字生图母件抽取摘要竖线、青色 metadata 与锈色 risk 透明叠印，保留完整既有底纸和独立 CTA；risk 美术层向上出血 `10px@1×` 消除文字安全区之间的白缝，但文字 rect、CTA 锚点和正式合同均未改变。Godot 4.6.3 真实 `412×960@1×` 试装中，UI Designer 与 UX 老哥最终均为 `GO / P0=0 / P1=0 / P2=1`；结构适合进入正式资产化，仍等待用户视觉冻结。P2 仅为浅锈底色权重略接近 CTA，以及四处辅助小字需要补多分辨率字体回归。
 - **cross-read tags**：`A235/A245/A257/A260`、accepted-for-local-experiment、assetized-ui、dossier、imagegen、information-architecture、region、risk、semantic-zone、ui、ux、void-print、workflow。
+
+### A277. 界面风格板阶段转入真实功能落地，并以世界地图为第一张运行界面
+
+- **来源**：2026-08-03 用户在世界地图、区域地图、报刊填入与角色派遣等风格板连续校准后明确表示“目前风格稿已经差不多了”，并要求开始讨论并推进其落地为真实功能界面，第一张从世界地图开始。
+- **用户裁决**：风格板继续作为视觉方向与组件语言参考，不再以继续扩张独立风格稿为当前主线；实现顺序先世界地图，再按同一资产化方法扩展其它页面。
+- **边界**：本条只确认阶段切换与首屏顺序，不自动把任何完整风格稿升级为生产标杆、正式 atlas 或可直接切入运行时的整屏底图。世界地图 A「夜班石板蓝」继续沿用 A274 的 `visual_style_reference / palette_anchor` 身份；真实落地仍需无字组件、动态中文、状态矩阵、hit rect、安全区和 Godot 运行证据。
+- **状态**：已采纳；世界地图真实功能纵切片进入实施规格与组件资产阶段。
+- **cross-read tags**：`A92/A226/A273/A274`、accepted、assetized-ui、clean-lowpoly、godot、implementation-order、runtime、style-board、ui、ux、world-map、workflow。
+
+### A278. 世界地图资产化前必须先给用户看真实内容 filled-state 整屏目标稿
+
+- **来源**：2026-08-03 在开始讨论世界地图组件化与 Godot 落地时，用户追问“是否应该先让我看看真实内容界面长什么样”。
+- **用户裁决**：是。风格板之后不能直接跳到无字组件、atlas 或运行时拼装；必须先用真实中文、真实地区状态、真实时间口径和唯一主操作，交付一张完整 `1920×1080` 桌面 `filled-state visual target`，让用户先判断实际游戏界面的内容承载、氛围、层级和趣味是否成立。
+- **顺序修订**：正式顺序改为“风格板 → 真实内容整屏目标稿 → 用户视觉裁决 → 无字组件与文字安全区 → Godot 单状态回填 → 多状态矩阵”。若整屏目标稿尚未通过，不得用背景图、组件板、伪文案或透明热区提前替代真实界面验收。
+- **当前世界地图首帧真值**：北美禁区带＝已选中＋红线升温＋可进入；东亚神秘地带与太平洋失航带＝锁定；任务情报保持折叠；`进入地区任务台` 是唯一主 CTA；选择与进入本层均为 `0 天`，`DAY 01` 只读。
+- **状态**：已采纳并触发阶段纠偏；本轮先交付真实内容视觉目标稿，不修改 Godot 运行界面。
+- **2026-08-05 完成度修订**：用户审阅基于 v5 骨架生成的整屏“先看大概”预览后明确指出“太糙”，并要求最终效果呈现既有世界地图风格稿的完成度。该预览降级为 `structural_skin_draft / style-fidelity-failure`，不得继续作为视觉目标、后续 imagegen 参考或资产拆分来源。A278 所称 `filled-state visual target` 必须同时达到 A 风格稿的对象精修、媒介差异、材质层次、异常故事焦点、品牌节奏与黑色幽默密度；只完成布局、配色、纸件化或贴纸点缀不算通过。下一张目标稿仍冻结 A282 功能 rect、状态、69:44 同源三倍复用和动态文字边界，但必须从可见载体层重新绘制到标杆级完成度。
+- **cross-read tags**：`A226/A260/A274/A277`、accepted、filled-state、full-screen、implementation-order、real-content、runtime-gate、ui、ux、visual-target、world-map、workflow。
+
+### A279. 世界地图真实内容稿必须以 A 风格构图为母体，不能以旧功能骨架换 A 色材
+
+- **来源**：2026-08-03 用户审阅首张真实内容目标稿后指出“和原来的界面那么像，反而和刚刚做的风格稿不像”。
+- **用户否决**：首稿的信息可读性不等于风格转译通过。浅色矩形地图、严格网格三栏、巨型中央下详情卡、表单式右案卷、外置大 CTA、普通 pin 与同图多次重复，使其成为旧功能界面的 A 色材换皮；该稿不得继续组件化或进入 Godot。
+- **修正原则**：功能稿只约束三个地区、选中 / 锁定 / 红线状态、右侧地区详情、折叠任务情报、唯一 CTA、期号 / 周次 / 天数与 `0 天` 等功能真值；世界地图 A 决定深蓝地图墙、左上刊头、错层地区剪报、撕纸眼睛 pin、连续新闻纸堆、dossier 内行动票、小型 DAY、暗色负空间和拼贴节奏。旧 runtime 只核对 payload，不作为新视觉骨架。
+- **状态**：首稿降级为 `functional-content-fill-reference / style-translation-deviation`；下一版先重做 A 母体整屏目标稿，用户确认前继续冻结组件拆分与 Godot 接入。
+- **cross-read tags**：`A260/A274/A277/A278`、art-translation、blocked、filled-state、functional-truth、layout-mother、rejected-candidate、style-drift、ui、ux、visual-target、world-map、workflow。
+
+### A280. 世界地图不能照搬 A 完成构图后贴真实文字，必须重新设计 integrated UI
+
+- **来源**：2026-08-03 用户审阅 v2 后指出“只是生硬地进行了一些拼贴，没有重新设计并和真实 UI 结合”。
+- **用户否决**：v2 恢复 A 氛围不等于真实 UI 成立。把 A 的卡片、撕纸、照片、便签、DAY、图标条和 dossier 逐件复制，再用米白文字块覆盖动态内容，仍然只是完成插画加文字贴片；该稿不得组件化或接入 Godot。
+- **新增要求**：A 只提供夜蓝地图舞台、暖纸、粗颗粒低多边形、钴蓝 / 橄榄 / 锈红状态色、薄错层与编辑部证物感等视觉语法；真实界面必须重新设计地区索引卡、地图地区 beacon、动态地区 dossier、只读时间条及其文字槽、唯一 hit rect、状态矩阵和交互反馈，再装配成完整真实内容目标稿。
+- **阶段修订**：正确链路为“操作链与信息层级 → integrated layout 与核心组件结构 → 真实内容整屏目标稿 → 用户裁决 → 无字组件资产 → Godot”。真实内容整屏仍先于生产资产，但不能跳过功能组件设计直接整屏生图。
+- **状态**：v2 降级为 `a-mood-close / integrated-component-failure`；下一步停止生图，先完成第三条路线的结构设计。
+- **cross-read tags**：`A260/A277/A278/A279`、behavior-component、blocked、component-boundary、filled-state、hit-rect、integrated-ui、interaction-state、rejected-candidate、style-grammar、ui、ux、world-map、workflow。
+
+### A281. 世界地图 v3 不对称三区方向保留，左栏消除夹层空洞且地区图一图两用
+
+- **来源**：2026-08-04 用户审阅世界地图 v3 真实运行截图后确认“这个方向可以”，同时指出地区索引与 `DAY 01` 之间存在明显留空，并明确要求左侧地区图片与右侧放大图复用同一个美术资源；若显示尺寸不同，应保持同一画幅并只做等比放大，尽量避免裁切。
+- **结构裁决**：保留 v3 的左选地区—中央地图—右档案不对称三责任区、`960×700` 地图、右侧唯一 CTA 与现有 selected / warning / locked 语法。`RegionIndex=[36,174,372,650]` 不变；只读 `ReadOnlyTimeStrip` 从 `[36,930,372,86]` 上移到 `[36,840,372,86]`，把两个同宽组件之间的无职责间隔从 `106px` 收紧为 `16px`。不拉长索引、不加第四卡、不用日志、教程、资源或伪状态填空。
+- **地区图片裁决**：每个地区只维护一张 canonical 图片资源，当前合同为 `1104×704 / 69:44`。左卡显示 `138×88`，右 dossier 显示 `414×264`，宽高均严格 `3×`；两处必须引用同一 `Texture2D.resource_path`，完整 UV、居中、零裁切、零非等比拉伸。selected / warning / locked 通过图片外的运行时边框、遮罩或状态层表达，不生成另一张构图不同的锁定图。
+- **实现与证据**：v4 `runtime_skeleton / runtime_state_preview` 已按上述合同落进 `gd_project/scenes/prototypes/world_map_integrated/`；状态测试断言同源路径、`1104×704` source、`138×88 / 414×264` display 与 DAY `y=840`，真实 collapsed / expanded / hit rect 截图及三倍对照板位于 `docs/screenshots/2026-08-03-world-map-integrated-functional-skeleton/21-26`。
+- **阶段边界**：当前 SVG 只承担功能骨架的一图复用证明，不是正式地区美术母图；后续替换为正式生图资产时必须保持 canonical path、`69:44`、完整画幅与一图两用合同，不得重新引入 thumbnail / dossier 两套构图。
+- **状态**：已采纳并落地为 v4 功能骨架合同；等待用户对真实截图继续裁决，不升格为生产美术或正式 atlas。
+- **双审结果（2026-08-04）**：UX 首轮终审确认夹层、同源图与 collapsed / expanded 主链 PASS；UI Designer 追加发现 CTA 节点矩形虽通过但前层纸页可见底边短 17px，以及 disclosure 缺少方向符号。实现保持所有功能 rect 不动，把前层纸页扩为完整 `468×842`、后层纸与阴影向外露出，并在同一 disclosure Button 内补右对齐 `⌄/⌃`；最终 UI 与 UX 均复核 `PASS / P0=0 / P1=0 / P2=0`。本条阶段边界不变。
+- **2026-08-05 修订**：用户把 v4 与此前冻结的 V5.1 黑白结构稿并排后要求继续合并。复核确认 A281 只关闭了列表与 DAY 之间的 `106px` 夹层，却把无职责暗色空间转移到 DAY 下方和地图下方；A281 的一图复用合同继续有效，但 `960×700` 地图与 `86px` 只读 DAY 的整屏结构由 A282 取代。
+- **cross-read tags**：`A168/A169/A201/A226/A229/A277/A280`、accepted、asset-reuse、canonical-image、dossier、image-aspect、no-crop、runtime-skeleton、shared-resource、ui、ux、world-map、workflow。
+
+### A282. 世界地图合并版以 V5.1 管纵向容量、v4 管组件语言，三责任区统一收口
+
+- **来源**：2026-08-05 用户查看 V5.1 黑白结构稿与当前 v4 真实界面并排对照后，接受“V5.1 作为纵向容量与功能责任真源、v4 保留同图复用与交互组件”的合并建议并要求继续。
+- **结构裁决**：保留 v3/v4 的不对称视觉关系与左中刊头；`RegionIndex=[36,154,372,640]`，`ScheduleGate=[36,810,372,246]`，`MapField=[432,154,960,902]`，`SelectedRegionDossier=[1416,24,468,1032]`。日程、地图、档案均结束于 `y=1056`，只保留 24px 屏幕安全边，不再把组件外大片暗色解释为呼吸区。
+- **组件继承**：地区图继续使用唯一 `1104×704 / 69:44` canonical 资源，左卡 `138×88`、右档案 `414×264` 严格三倍等比、完整画幅复用；任务情报 collapsed / expanded 同高，CTA 固定在档案底部，地图不增加任务条、工具栏、假事件点或常驻回执。
+- **日程真值**：恢复完整日程容量，但当前 `WeeklyRunSystems.gd` 没有独立 `advance_day` 命令，因此 v5 只允许 `disabled_runtime_unavailable`；不得把 V5.1 的 target-only enabled / confirming 画面冒充已接通运行逻辑。进入地区继续显示 `0 天`，与全局推进日程严格分开。
+- **实现与证据**：v5 已落进 `gd_project/scenes/prototypes/world_map_integrated/`；状态测试新增三责任区共同底线、日程禁用态、任务折叠和同源图断言，真实截图与动图位于 `docs/screenshots/2026-08-03-world-map-integrated-functional-skeleton/31-35`。
+- **状态**：已按用户“继续”落地为 `runtime_skeleton / runtime_state_preview` 候选，等待用户对真实截图作视觉裁决；不升格为生产美术、正式 atlas 或完整 `WeeklyRunGame` 接线。
+- **双审结果（2026-08-05）**：首轮真实截图复核发现静态日程仍以箭头、高对比深底和命令式文案伪装成可点击按钮；折叠摘要存在全高假列表框，南极洲过于对称像填空条。实现随后彻底移除日程 Button 与动作热区，改为低对比静态 Panel 和“日程推进暂未开放”，取消 collapsed 全高边框，统一锁定语义并重画低权重极地轮廓。修正后 UI Designer 与 UX 老哥均确认 `PASS / P0=0 / P1=0 / P2=0`；左中刊头按父级已说明的合并路线保留，不重开完全对称三栏。
+- **cross-read tags**：`A201/A229/A237/A277/A280/A281`、accepted-for-runtime-candidate、advance-day、asset-reuse、dossier、frozen-layout-reconciliation、functional-closure、godot、runtime-skeleton、schedule、shared-resource、ui、ux、world-map、workflow。
+
+### A283. 世界地图高保真稿不能以写实军事档案的精致度冒充 A 风格一致性
+
+- **来源**：2026-08-05 用户把新一轮高保真 filled-state 界面稿的锁定卡片、黄便签与世界地图 A 风格稿并排后再次指出“风格又不太对了”。
+- **用户否决**：该稿虽然补齐了地图、剪报、档案堆、同源地区图与真实文字，但整体从 A 的“时髦、轻巧、有黑色幽默的怪谈周刊拼贴”滑向“严肃、低亮、写实的军事调查档案”。完成度更高不等于风格通过；该稿降级为 `high-fidelity-content-complete / benchmark-style-drift`，不得资产化或接入 Godot。
+- **同板差异**：A 使用明快但克制的冷青 / 钴蓝 / 暖白纸、少量橄榄与高识别黄色，形状以大块平面、清楚轮廓和低颗粒多边形概括；卡片、眼睛、问号、手绘批注、实体办公物共同形成松弛的品牌节奏。被否决稿则整体压暗、压灰、压棕，纸件趋于旧档案，图片增加细小明暗面与现实摄影光照，锁头、雷达、卫星站和规整三栏把语义推向军事 / 监控 / GIS。
+- **下一稿硬约束**：保留 A282 的功能 rect、状态与 69:44 同源三倍复用，但视觉验收必须同时命中：①浅而干净的暖灰白纸，不得灰土；②冷青与钴蓝承担主图的大面积戏剧光，不得只作微小光点；③地区配图使用 3–8 个大结构块和清楚剪影，不画真实建筑细节；④锁定态用品牌化标签、遮片或印刷符号，不用通用软件锁头；⑤黄便签保持明亮、手绘、荒诞，不画军事技术示意；⑥保留标杆的错层、倾斜、越界物件和视觉玩笑，不能被严整三栏完全压平。
+- **阶段裁决**：下一轮不能在当前稿上调色或加贴纸；应以 A 风格稿为唯一视觉母体，把 A282 仅作为透明功能网格重新生成。交付前必须把 A 与候选按同尺寸并排，先判断“是否仍像同一期刊品牌”，再看内容与文字完整度。
+- **cross-read tags**：`A226/A260/A278/A279/A280/A282`、benchmark-comparison、black-humor、clean-lowpoly、editorial-collage、high-fidelity、military-drift、rejected-candidate、style-fidelity、ui、visual-target、world-map、workflow。
+
+### A284. 世界地图 selected、beacon、异常证据与 CTA 必须分属稳定组件家族
+
+- **来源**：2026-08-05 用户圈出 V3 左卡的高饱和蓝条 / 蓝框与北美地图上的同心圆洗衣机标志，指出二者明显和 A 风格稿不搭，并要求继续检查尚缺内容。
+- **用户否决**：V3 不能因洗衣店题材、非军事语义和综合色盘接近 A 就判定整屏风格通过。高饱和整卡蓝框仍是通用游戏菜单 selected；完美同心圆、金属边与大蓝环仍是 POI / 传送门 / 定位器语法。两者把 A 的实体印刷媒介重新翻译成数字软件控件，因此撤回此前内部“整屏风格 PASS”，只保留“非军事语义通过、洗衣店怪新闻题材通过”。
+- **职责分离**：selected 只回答“当前正在看哪条来源”，使用暖纸主体、低饱和钢蓝错位底纸、小型状态签和细编辑连线，不得与主 CTA 同面积、同饱和度；三个 beacon 必须共享稳定的地区选择器基础体与 default / selected / locked 状态语法，当期洗衣店、UFO 或灯塔等异常内容只能作为可替换附件，不得替代 beacon 本体；唯一 CTA 属于 Dossier 的橄榄 / 深钢蓝绿色穿孔签批条或撕票条，权重来自位置、尺寸和物理可操作感，不使用亮钴蓝软件按钮；异常证据必须形成“基础 beacon → 事件附件 → 局部便签 / 批注”的物理挂接簇。
+- **对象语法**：beacon 候选基础体采用同轮廓撕纸眼睛与编号槽；selected 仅增加钢蓝错位底纸和不闭合手绘圈；locked 保持同轮廓，降低对比并用半闭眼睑或小折页遮片双编码，禁止换成另一套锁图标。洗衣店地图附件使用小型冷青“圆窗被水平潮线穿过”的印刷事件牌，芥末便签与其局部重叠；删除孤立眼睛、问号和工具栏式贴纸排列。
+- **其余缺口**：左栏仍是统一矩形软件列表；右侧 CTA 仍是亮蓝 Web 按钮；三处 beacon 不同族；黄色便签、眼睛与问号缺少因果挂接；地图颗粒偏密而新闻图偏平滑写实；右侧仍像一张带按钮的线性报告；受控错层、色纸底托、跨边小标签与媒介差异尚未达到 A。
+- **阶段裁决**：停止继续整屏生图。下一步先建立“地区卡、三态 eye beacon、异常附件簇、撕票 CTA”四个稳定组件族，再把洗衣店内容作为数据附着，并在 A282 精确功能层中合成。若继续使用生图，只生成独立无字资产 / 风格切片，不再让模型决定 rect、状态矩阵、69:44 同源复用、动态文字安全区和交互层级。
+- **cross-read tags**：`A226/A260/A278/A282/A283`、beacon-family、component-language、cta、evidence-cluster、rejected-candidate、selected-state、state-family、style-fidelity、ui、visual-system、world-map、workflow。
+
+### A285. 世界地图手绘符号与新闻图必须先通过微型画法和双尺度颗粒 Gate
+
+- **来源**：2026-08-05 用户对照 A 原版符号条、组件板证据簇和地区卡配图后指出：原版符号更手绘、细节更少、更抽象；当前符号与证据附件仍过度精细，卡图也没有原版低多边形感觉。
+- **用户否决**：组件板 v1 即使建立了正确的 selected / beacon / evidence / CTA 职责关系，也不能判定视觉语言通过。七个带金属圈、吊线、海面渐变和微排版的重复圆窗先读成工业设备板；地区卡图以完整建筑、透视、连续窗洞和表面分面塑造，仍属于低多边形 3D 渲染，不是 A 的平面图形概括。撤回组件板 v1 的整体画法 PASS，仅保留四组件家族的职责分离和关系结构。
+- **符号预算**：每枚只允许一个主剪影、`1–3` 条内部关系线与 `1–2` 种哑光色；偏心、断口、重描、套印错位至少命中两项。眼睛、菱形、缺口时钟、无外圈问号和两道不等长信号波必须在 `48px` 下仍凭外轮廓识别；禁止完美矢量、金属圈、渐变、微字、条码、重复窗口和多层嵌套。
+- **新闻图预算**：从“一条连续海线只存在于多个断电滚筒洞内部，店外仍干燥”的异常关系出发；主体控制为 `6–9` 个大结构块、环境 `2–4` 块、`4–5` 档离散明度、`3–4` 个色相并保留 `20–35%` 负空间。只画三个不规则开口即可证明关系；保留招牌块、偏心门洞、宽窗带和道路等最低场所锚点，禁止完整 3D 建筑、透视地台、AO、反射、逐窗细节和密三角。
+- **双尺度 Gate**：符号必须同时验证约 `96px / 48px`；同一 `69:44` 新闻母图必须直接验证 `138×88` 缩略，不能分别生成。事件附件只是三个暗洞与一条共享海线的两色抽象纸片，不是第三张照片。画法在这两个尺度通过前，不得回填完整组件板或整屏。
+- **阶段状态**：微型校准板 v1 过于平直，v2 从 3D 纠偏成纯几何示意，均为过程偏差；v3 已由 UI / UX 内部判定进入可交用户裁决区间，但未经用户确认，不升格为正式画法真源。
+- **用户方向性反馈（2026-08-05）**：用户查看微型校准板 v3 后评价“好一些”，并要求查看组合上去的效果。该表态仅保留 v3 的手绘抽象度与粗颗粒低多边形方向，不等于最终画法通过；下一步改为局部组合验证板，不直接回填整屏。
+- **cross-read tags**：`A226/A260/A283/A284`、abstraction-budget、dual-scale-gate、hand-drawn-symbol、large-shape-economy、low-poly、micro-calibration、news-image、rejected-candidate、style-fidelity、ui、visual-system、world-map、workflow。
+
+### A286. 世界地图真实界面以原 A 风格稿为可见母体，v5 承担完整功能合同
+
+- **来源**：2026-08-05 用户重新指向原世界地图 A 风格稿并明确表示“本身风格稿效果不错”，要求先用该风格与素材样式结合功能结构，生成一版真实界面图。
+- **用户裁决**：原 A 风格稿重新确认为最高可见真值，决定整屏拼贴关系、深夜石板蓝综合色盘、暖纸 / 蓝灰 / 橄榄纸层、夹子与便签物件语法、大块低多边形新闻图、撕纸手绘符号、错层节奏和成年怪新闻语气。后续微型校准板只用于解释颗粒与细节预算，不能取代 A 成为新画风。
+- **功能边界**：v5 / A282 不是单纯 rect 参考，而是完整功能合同：四个 exact rect、三张整卡 hit rect、三个编号 eye beacon、selected / warning / locked 跨栏同步、Schedule `mouse-ignore` 且不进焦点、唯一 disclosure、唯一 CTA、动态文字槽、`0 天`、以及唯一 `69:44` 母图在 `138×88 / 414×264` 完整 UV 严格三倍复用。A 的散件与贴纸全部为非交互装饰，不得生成新热区或遮挡安全区。
+- **首张整屏候选**：`image_gen/2026-08-05/world-map-a-style-real-ui-v1/01-world-map-a-style-real-ui-v1.png` 已按上述关系生成。UI Designer 与 UX 老哥均判定“视觉目标 PASS / 实现目标 BLOCK”：A 风格、真实字段、三卡、三 beacon、禁用日程、collapsed disclosure、橄榄撕票 CTA、0 天、手绘与低多边形语言成立；但左栏偏宽、地图偏窄且提前结束、Schedule 容量偏短，底部散件侵占 MapField，左右图也不能证明 strict 3×。
+- **保留修正**：02 / 03 locked beacon 需在真实状态层改为同族半闭眼 / 小折页遮片；北美事件附件需与 selected beacon 保持局部物理挂接。生成中文只作视觉占位，正式文字由动态 UI 重排。
+- **阶段状态**：整屏 v1 只作为 `a-style-real-content-visual-candidate / awaiting-user-visual-gate`；用户确认视觉方向后停止整屏生图，进入 A282 精确功能层合成、唯一 69:44 资源回填与真实 1920×1080 截图验收。
+- **用户方向性通过（2026-08-05）**：用户审阅整屏 v1 后确认“大体方向 OK”，只指出贴纸手绘符号线条仍偏细，并明确以原标杆图 4 / 5 的粗线手绘贴纸为修正真值。该反馈保留 v1 的整屏构图、综合色彩、素材关系和功能内容，不授权重生其它部分。
+- **cross-read tags**：`A260/A278/A282/A283/A284/A285`、a-style-mother、asset-reuse、dynamic-text、exact-rect、filled-state、functional-contract、shared-image、ui、visual-target、world-map、workflow。
+
+### A287. 世界地图贴纸使用粗墨手绘线，机构印刷线保持细线分层
+
+- **来源**：2026-08-05 用户在确认整屏 v1 大体方向后，指出当前贴纸符号线条仍太细，并以原标杆中的底部符号条和贴纸页作为线重真值。
+- **用户裁决**：只调整手绘贴纸层，不做全屏加粗。需要进入粗墨族的对象包括地图 01 / 02 / 03 eye beacon、selected 不闭合手画圈、芥末便签上的 UFO / 问号 / 划叉、`NO PARKING` UFO，以及后续同族眼睛三角、黑手和警示涂画。WMW globe、期号、正文、地图网格 / 框、卡片分隔、照片框、条码、状态章外框、disclosure / CTA 箭头和编辑连接线继续保持机构细线。
+- **线重合同**：以当前 `1672×941` 视觉母版为基准，`40–64px` 手绘贴纸主轮廓约 `4–5px`，内部关系线约 `2.5–3.5px`，selected 圈约 `3–4px`；允许 `20–30%` 粗细波动、短断口、局部复描和钝端点，使用深橄榄黑 / 蓝黑而非纯黑。眼睛内部负空间至少约 `45%`；机构细线约 `1–2px`。selected 圈当前线重为上限，禁止继续加粗、补十字、中心点或第二同心环。
+- **产物与 Gate**：`image_gen/2026-08-05/world-map-a-style-real-ui-v2-thick-sticker-ink/01-world-map-a-style-real-ui-v2-thick-sticker-ink.png` 已完成局部墨线修正；误把地区卡机构 globe 改成眼睛的中间结果已撤回。最终 UI Designer 与 UX 老哥均判定局部线重 `PASS / P0=0 / P1=0`：粗贴纸 / 细机构分层成立，无新增假控件，非目标构图、卡片、新闻图、文字和综合色彩未实质改变。
+- **阶段边界**：v2 仍继承 A286 的“视觉方向通过、实现合同未关闭”；静态图不能证明 runtime hover / hit rect，后续需在真实 1920×1080 功能层复核 48px beacon、locked 非文字状态与 selected 圈上限。
+- **cross-read tags**：`A226/A283/A284/A285/A286`、hand-drawn-sticker、ink-weight、institutional-line、selected-ring、state-legibility、style-fidelity、ui、visual-layer、world-map、workflow。
+
+### A289. 世界地图正式贴纸与 beacon 不得由 GDScript 程序绘制冒充生图美术
+
+- **来源**：2026-08-06 用户审阅真实 Godot 纵切片局部后，圈出芥末 UFO 便签、冷青“三窗海平线”附件与 selected eye beacon，指出它们粗糙并追问是否并非生图软件生成。
+- **用户否决**：确认上述三个可见对象由 `WorldMapIntegratedMapDecor.gd` 与 `WorldMapIntegratedBeacon.gd` 使用 `draw_polygon / draw_polyline / draw_arc / draw_circle / draw_line` 程序绘制；纸张表面纹理虽然来自 imagegen，但不能把“生图纸纹＋程序图标”整体表述为已经完成标杆级贴纸美术。当前纵切片的视觉 Gate 撤回，状态改为 `runtime_state_preview / user_visual_gate_failed_programmatic_symbol_assets`。
+- **资产边界**：GDScript 可以继续承担位置、显隐、选中 / 锁定 / warning 状态、连接线、动态文字、hit rect 与焦点逻辑，也可在内部功能调试阶段画占位符；但 UFO、eye beacon、异常附件、问号、划叉、黑手、眼睛三角等承担品牌、幽默和手工气质的符号，必须来自真实生图或人工美术资产。程序只允许裁切、缩放、拆层、染色范围校验、manifest 与状态装配，不得重新用几何 primitive 描出可见终稿。
+- **修复方向**：以 A 风格稿和 A287 粗墨规则生成一张无字、透明背景、同一墨线手感的符号 / 贴纸母版；至少包含 UFO 便签图形、三窗共享海线事件牌、eye beacon 的 default / selected / locked 基础层。中文便签文字、编号和状态说明继续由 runtime 独立排版，selected 圈与 warning 可以拆为真实美术覆盖层，禁止烘焙交互文案。
+- **评审修订**：此前 UI / UX 对纵切片的 `PASS` 只证明功能结构、状态链、可读性与 P1 布局收口；因未检查符号资产 provenance 与标杆级画法完成度，不能继续作为视觉通过证据。生成并接入真实符号资产、重拍 1920×1080 局部与整屏前，不得进入东亚 / 太平洋批量扩产或正式 `WeeklyRunGame` 接线。
+- **修复结果（2026-08-06）**：已用 Codex 内置 ImageGen 参考 A 风格稿生成无字 UFO 便签、三窗共享海线事件牌与四态 eye 接触表，经纯色键去背、透明裁边、等比缩放和四象限拆分形成 6 张透明 PNG。Godot 的 `MapDecor` 与 `Beacon` 已删除 `draw_polygon / draw_polyline / draw_arc / draw_circle` 品牌造型，只保留动态中文、编号、状态文字、机构连接线、hover/focus/blocked 反馈与状态选图。UI Designer 与 UX 老哥终审均 `PASS`，provenance P1 清零；四态路径、`144×144 → 72×72`、stretch 与 mouse-ignore 已逐态自动断言。当前仍是 `runtime_state_preview_symbol_provenance_pass_pending_user_visual_gate`，等待用户审阅实际截图，不升格生产冻结。
+- **Loop Log**：`docs/plans/world-map-benchmark-landing/2026-08-06-world-map-runtime-programmatic-symbol-art-misclassification-loop-log.md`。
+- **cross-read tags**：`A48/A226/A284/A285/A286/A287`、art、asset-provenance、assetized-ui、godot-draw、hand-drawn-sticker、imagegen、rejected-candidate、runtime、symbol-family、ui、visual-gate、world-map、workflow。
+
+### A290. 东亚与太平洋使用单一异常关系的 69:44 无字新闻母图，并保持同资源复用
+
+- **来源**：2026-08-06 用户在 A289 真实符号资产替换后要求继续推进世界地图真实功能界面；此前已明确左侧地区图与右侧放大图必须复用同一个美术资源、保持相同比例并只做等比放大，避免另做裁切版。
+- **本轮范围**：只补齐东亚神秘地带与太平洋失航带两张真实新闻母图，不重开 A282 三栏结构、北美故事图、地图板、贴纸符号、任务 disclosure、唯一 CTA 或日程禁用边界，也不接正式 `WeeklyRunGame`。
+- **图像语义**：东亚以“宽阔阶梯式现代观测建筑穿过骨白圆月中心”为唯一异常关系；太平洋以“倾斜民用海洋监听碟内部装着绝对水平海面”为唯一异常关系。两图均禁止旅游明信片、军事情报、写实摄影、密集机械细节、文字、UI、边框、锁、警告和选中状态。
+- **复用合同**：每区只有一张 `1104×704`、`69:44` PNG。列表卡完整等比显示为 `138×88`；未来该地区可选后，右档案完整等比显示为 `414×264`；两处必须引用同一 `Texture2D.resource_path`，不得另作缩略、裁切或非等比拉伸。
+- **运行结果**：两张图由 Codex 内置 ImageGen 参考 A 风格稿与北美母图分别生成，程序只做中心裁切和尺寸归一化。Godot 已从旧 SVG 切换到真实 PNG，并新增三地区 source size、display size、stretch 与 resource path 断言；现有 8 个交互节点、locked 不改选区、disclosure 原位展开和 CTA 零位移均保持。
+- **双审结果**：UI Designer 与 UX 老哥均判 `PASS / P0=0 / P1=0`。非阻塞 P2 为：东亚当前更像塔体遮住月面，未来剧情大图可强化穿透；太平洋碟腔碎面略多，左上小月亮为弱次亮点，未来同批次再生时可删月并合并碎面。本轮不因 P2 重生。
+- **阶段边界**：当前状态为 `runtime_state_preview_region_story_pack_pass_pending_user_visual_gate`。该状态证明来源、缩放、功能和双审通过，不代表用户已接受最终观感，也不升格 `production_frozen`。
+- **交付清单**：`docs/plans/world-map-benchmark-landing/2026-08-06-world-map-a-runtime-region-story-pack-v1-delivery-manifest.md`。
+- **cross-read tags**：`A282/A283/A285/A286/A289`、asset-reuse、clean-lowpoly、imagegen、locked-state、news-image、runtime-state-preview、shared-resource、ui、visual-gate、world-map、workflow。
+
+### A291. 世界地图整屏视觉目标采用 A 平衡、C 刊头与 B 约 10% 纸层厚度
+
+- **来源**：2026-08-06 用户审阅三张真实 ImageGen 演示图后，明确选择“A 的整体平衡＋C 的刊头清晰度＋B 约 10% 的纸层厚度”，并授权按该合成方案继续。
+- **总体母体**：A 继续决定整屏三栏职责、地图占比、证据簇位置、左侧地区卡与右侧 dossier 的平衡、深夜石板蓝底色，以及暖白纸 / 冷青 / 橄榄 / 芥末 / 锈红的综合色彩节奏。不得借合成之名改变 A282 的 exact rect、三卡热区、三态同步、日程禁用、唯一 disclosure、唯一 CTA 或 `69:44` 同资源复用合同。
+- **C 的借用边界**：只借用更清楚的刊头锁定关系——中文刊名、WMW globe 与 `ISSUE 001 · WEEK 01` 形成可一次扫读的品牌组，并提升标题与地图区之间的留白秩序；不借用 C 的巨大白色圈选、底部红色禁飞 / 禁行牌、海报式大符号或把 selected 误读成扫描半径的视觉语法。
+- **B 的借用边界**：纸层厚度只占整屏表达约 `10%`，集中在右侧 dossier 的 `2–3` 张干净背页、夹子与纸面的接触阴影，以及左下 `DAY 1` 小票的轻微实体厚度；不得引入泛黄棕纸、重污渍、明显破边、旧档案绳结、高密度桌面散件或大面积做旧新闻剪贴感。
+- **选中与装饰边界**：A 的证据簇仍是当前主视觉趣味点，但白色手画圈收小约 `10–15%`，只读作编辑手批而不是雷达 / 扫描范围。证据簇整体保持 `mouse-ignore`，不新增边框、hover、附件按钮、路线、POI 或其它假控件。
+- **阶段边界**：本条只冻结下一张整屏 ImageGen 视觉目标的合成配方；真实 Godot 运行界面仍保持 `runtime_state_preview_region_story_pack_pass_pending_user_visual_gate`，未完成精准资产拆层、动态文字回填与真实截图复核前，不得声称已经落地或 `production_frozen`。
+- **成图与双审结果**：Codex 内置 ImageGen 已以 A 为编辑母图、C 为刊头局部参考、B 为纸层局部参考生成 `image_gen/2026-08-06/world-map-art-gap-demos-v1/04-final-a-c-b10-visual-target.png`。UI Designer 与 UX 老哥一致判定 `PASS / P0=0 / P1=0 / P2=2`：第一眼仍是 A，C 与 B 未反客为主，无新增假控件或状态误读。两个实现期 P2 为 Schedule 左侧夹环缩小约 `15%` 或降低金属高光，以及北美手画圈与红色风险文字保持 `8–12px` 净距并让动态文字处于最高文字层；无需为此重生视觉目标。
+- **生产可用性修订（2026-08-07）**：用户进一步指出目标图中部分资源倾斜，不能作为正式组件使用。前述 `PASS` 自此只保留“视觉配方与操作层级成立”，撤回“可直接进入 Godot 落地”的扩大表述；该整屏仍是 `visual_target`，但 `direct_crop_production=blocked`。右 dossier、三张地区卡、Schedule、ISSUE 票签、状态签、Disclosure 与 CTA 只可作为造型参考，必须重新生成无字、正交、真实比例的独立前壳；背页、夹子、胶带、撕边和阴影另进 `BackDecor`。完整生产边界由 A292 接续。
+- **cross-read tags**：`A282/A283/A286/A287/A289/A290`、accepted-synthesis、clean-lowpoly、evidence-cluster、imagegen、masthead、paper-depth、runtime-boundary、ui、visual-target、world-map、workflow。
+
+### A292. 世界地图功能承载面必须正交，整屏视觉目标禁止直接回裁生产组件
+
+- **来源**：2026-08-07 用户审阅 A291 最终视觉目标后指出，当前部分资源带倾斜，显然不能正式使用；要求从真实运行与资产复用角度逐件分析，避免后续继续生成无法承载功能的组件。
+- **产物降级**：`image_gen/2026-08-06/world-map-art-gap-demos-v1/04-final-a-c-b10-visual-target.png` 继续作为 A＋C＋B10% 的构图、综合色彩、纸层剂量与氛围真值，但整屏本身不是 `no_text_asset_master`，不得从中回裁右 dossier、地区卡、Schedule、票签、CTA、状态签或地图证物簇作为正式资源。最终合成图已经混入动态文字、状态、图片、投影、背景污染与重采样抗锯齿，无法证明透明边、状态同构和运行时安全区。
+- **正交合同**：所有承载动态文字、图片槽、状态、数值、 disclosure、CTA 或 hit rect 的可写正面，功能根节点固定 `rotation=0°`，真实美术壳四边横平竖直，默认倾斜上限 `1°`。前壳、运行时图片、运行时文字、状态覆盖与输入层必须拆开；hit rect 永远为轴对齐矩形，不跟随撕边、夹子、阴影或透明像素扩张。
+- **允许倾斜的范围**：只有无文字、无状态事实、无交互且可独立关闭的 `BackDecor` 可以轻微旋转，例如 dossier 背页、夹子、胶带、非书写折角、投影和证物背板。selected 手画圈、状态 eye 与 warning 装饰虽可不规则，但必须作为独立 `StateDecor`，全部 `MOUSE_FILTER_IGNORE / focus_mode=NONE`；UFO 便签若需要本地化，其可写前面也必须正交。
+- **比例合同**：不以 `1:1` 统一生成组件。方形只用于 WMW globe、eye、手画圈等 icon / badge；ISSUE 票签约 `20:9`，地区卡前纸约 `86:41`，Schedule 为 `62:41`，dossier 为 `39:86`，CTA 为 `207:38`，均按真实显示比例生成 `2×` 源图，禁止先做方图再拉伸。三张地区新闻图继续使用原始 `1104×704 / 69:44` 资源，不从目标图回采。
+- **下一产物**：停止整屏重生，先交《正交功能承载面校正板 01》，只放 dossier 正面主纸、地区卡前纸、Schedule 主纸、ISSUE 票签和 CTA 票券五类无字、无图片、无状态、无阴影前壳；所有组件完全分离并保持真实比例。通过真实边缘水平 / 垂直参考线、`text_geometry_pass` 与 `art_shell_geometry_pass` 后，才允许各自独立生成 `2×` 源图；第二张板再处理背页、夹子、胶带、手画圈和证物底托。
+- **运行节点语法**：`FunctionalRoot(0°) -> BackDecor(可倾斜, IGNORE) + FrontCarrier(0°) + RuntimeImage(0°) + RuntimeText(0°) + StateDecor(IGNORE) + ButtonHitRect(0°)`。不得让一个 PNG 同时承担前壳、装饰、状态、文字和热区。
+- **审计结论**：UX 老哥与 UI Designer 均判“视觉方向保留 / 直接裁切生产 BLOCK”。当前 P0=0（尚未错误接入 runtime）；P1 为右 dossier、左卡、Schedule、证物簇与整屏回裁路径；P2 为夹环尺寸、白圈文字净距和票签页签感。P1 关闭前不得进入 atlas、manifest 或 Godot 正式回填。
+- **校正板执行结果（2026-08-07）**：真实 ImageGen 连续两轮均得到正交纸面，但 dossier / 地区卡比例不受控，因此按止损规则停止 prompt-only 微调。第二轮只作为真实纸材、颜色与低多边形纹理来源；程序仅按 `39:86 / 86:41 / 62:41 / 20:9 / 207:38` 合同执行矩形比例遮罩、拼板和 QA 标注，不生成美术纹理。`03-contract-assembled-sheet.png` 已由独立位图扫描验证五项 `bbox delta=0`、四边 `0°`、比例通过；UI Designer 与 UX 老哥均判 `component_correction_sheet=PASS / P0=0 / P1=0 / P2=2`，可进入独立 `2×` 无字 FrontCarrier，但仍禁止直接裁板、atlas、manifest 或 Godot。当前等待用户确认该生产方法与五类比例合同。
+- **独立 `2×` 执行与合同回查（2026-08-07）**：用户要求继续后，先以 A282 与当前原型真实 rect 回查校正板比例。Dossier `468×1032 / 39:86`、Schedule `372×246 / 62:41`、CTA `414×76 / 207:38` 直接匹配，已分别输出 `936×2064 / 744×492 / 828×152` 独立无字 FrontCarrier；真实 ImageGen 分别提供纸材、颜色与低多边形纹理，程序只做精确裁配 / 镜像铺展、确定性机构线、运行时拼板和 QA。地区卡当前 `340×170=2:1` 与校正板 `86:41` 冲突，ISSUE 又缺 exact runtime rect，因此两者只保留无边缘 `material_reference`，不得升格壳体。UX 首轮发现审计把 Dossier / Schedule 整根误写为 hit rect，并漏掉 Schedule 顶部 Kicker 的 8px 安全区；修正后 Dossier 仅列 Disclosure 与 CTA child，Schedule 明确 `MOUSE_FILTER_IGNORE / FOCUS_NONE`，独立验证 `all_released_pass=true`。UI Designer 与 UX 老哥最终放行 internal slot pressure board，atlas / manifest / Godot 继续阻断。
+- **内部插槽压力板执行结果（2026-08-07）**：真实与容量两组 Dossier 均使用 `468×1032` 固定壳和 A282 插槽，覆盖 collapsed / expanded、八字地区名、`99+`、两位数日期与四行完整 `耗时99天｜限时第99天`；Schedule 覆盖真实禁用、99 天和零日边界，CTA 覆盖五态。程序只回填真实字体、正交布局、状态明暗和 QA，不重画纸材或低多边形纹理。独立验证检查 `81` 处栅格字形，越界与对比失败均为 `0`；地区图使用原始 `1104×704` 完整等比缩至 `414×264`，无裁切、无上采样；冻结插槽零位移，输入合同通过。首轮双审发现 CTA 三态辨识不足、Schedule 禁用箭头像按钮、Preview 缺完整两位截止日压力，均在不改纸材 / 几何 / 热区的前提下关闭；UI Designer 与 UX 老哥终审均 `PASS / P0=0 / P1=0`。完整 locked Dossier 因当前 runtime 不切换右侧档案而不在本阶段伪造；未来若改变行为须另开语义门。下一门仅放行 BackDecor / StateDecor 合成，atlas / manifest / Godot 继续阻断。
+- **内部插槽压力板交付清单**：`docs/plans/world-map-benchmark-landing/2026-08-07-world-map-internal-slot-pressure-board-v1-delivery-manifest.md`。
+- **独立 `2×` 交付清单**：`docs/plans/world-map-benchmark-landing/2026-08-07-world-map-independent-2x-front-carriers-v1-delivery-manifest.md`。
+- **校正板交付清单**：`docs/plans/world-map-benchmark-landing/2026-08-07-world-map-orthogonal-functional-carrier-sheet-v1-delivery-manifest.md`。
+- **Loop Log**：`docs/plans/world-map-benchmark-landing/2026-08-07-world-map-visual-target-slanted-functional-carrier-loop-log.md`。
+- **cross-read tags**：`A282/A286/A291`、art-shell-geometry、assetization、back-decor、component-correction-sheet、dynamic-text、hit-rect、orthographic、production-block、ui、visual-target、world-map、workflow。
+
+### A293. 世界地图暂缓运行时落地，先完成视觉粗糙度诊断与有限返修
+
+- **来源**：2026-08-07 用户在 BackDecor / StateDecor 整屏合成候选完成后明确要求“这个阶段先不急着落地”，先根据当前画面判断哪些组件与局部仍然粗糙、效果不足；随后要求继续推进该诊断，而不是进入 Godot 实装。
+- **阶段边界**：本阶段不进入 atlas、manifest、Godot 或 `WeeklyRunGame` 接线，不增加功能、控件、状态、交互热区或响应式规则；A292 已经通过的正交 FrontCarrier、内部插槽、真实字形、`69:44` 复用、collapsed / expanded 零位移与 CTA 输入合同继续有效，不因视觉返修重开。
+- **立即返修 P1**：第一，疏理北美选中证据簇，降低照片白框、便签、Eye、标签、红圈与连接线之间的同权碰撞；第二，强化顶部 WMW globe、中文刊名、`ISSUE` 票签与小量错位印刷构成的品牌锁定；第三，重做 Dossier / Schedule 背页、夹具、胶带与接触阴影的差异化关系，避免机械复制；第四，削弱中心地图的 GIS 网格与长连接线，让它退为编辑证据底板；第五，确定“红线升温”的唯一主承载位，其余位置降为线索或省略，避免三处同权重复。
+- **合同阻断项**：左侧 RegionCard 视觉完成度可以诊断，但在真实 `340×170=2:1` 与校正板 `86:41` 冲突关闭前不得重做正式前壳；顶部 `ISSUE` 票签若涉及生产裁切，同样须先冻结 exact runtime rect。二者当前只能做概念级造型校准，不能升格生产资源。
+- **冻结不动**：地图大陆低多边形母图、北美 / 东亚 / 太平洋三张 canonical 新闻图、Eye default / selected / locked 状态族、锁定眼符号、CTA 尺寸 / 五态 / hit rect、现有深夜石板蓝与暖白纸综合配色，以及 UFO 黑色幽默的当前剂量均保持冻结。不得以“提升完成度”为名重新生成或替换。
+- **执行顺序**：先做选中证据簇与纸层接触，再做刊头品牌锁定和 GIS 降噪，最后收敛红线状态主承载位；RegionCard 与 ISSUE 精确资产化继续等待合同关闭。返修必须逐区对照，不允许整屏一起重做，以免再次造成风格漂移。
+- **cross-read tags**：`A291/A292`、deferred-runtime、visual-refinement、evidence-cluster、masthead、region-card、paper-contact、status-hierarchy、ui、ux、workflow。
+
+### A294. 世界地图局部返修预演降级为诊断样本，下一轮回到 A291 做整屏风格差距审查
+
+- **来源**：2026-08-07 用户审阅“证据簇＋纸层接触”局部改前 / 改后预演后明确指出“目前这个改动不大，可能要结合风格稿重新看一下”，并要求先输出可供新对话无缝继续的交接对白。
+- **裁决**：`image_gen/2026-08-07/world-map-visual-refinement-preview-v1/` 虽然完成文字安全区、红线主承载位、夹子接触几何和冻结矩形审查，也通过 UI Designer / UX 老哥的局部工艺 Gate，但未通过用户的整体风格 Gate。其状态由 `visual_previsualization_pass_pending_user_decision` 降级为 `diagnostic_local_refinement_insufficient_rejected_as_next_visual_target`。
+- **根因**：上一轮把“真实界面为什么仍不像风格稿”误收窄为证据簇净距、纸层接触与连接线避让，解决的是局部合成工艺，不是 A291 与真实界面之间的品牌、色彩节拍、组件家族和整体氛围差距；因此即使局部 P1 清零，整屏第一眼仍不会发生足够变化。
+- **下一轮入口**：先并排审查 A291 风格稿 `image_gen/2026-08-06/world-map-art-gap-demos-v1/04-final-a-c-b10-visual-target.png` 与当前真实界面候选 `image_gen/2026-08-07/world-map-backdecor-state-decor-v1/06-real-ui-backdecor-reinsert-preview.png`。至少从顶部刊头品牌锁定、左侧三张 RegionCard 的同族差异、中央地图作为编辑证据板而非 GIS 软件的机构语法、Dossier / Schedule 的纸物件关系、综合色彩跨栏节拍和黑色幽默点缀六个维度重新判定整屏改造幅度。
+- **执行边界**：仍不进入 Godot、atlas、manifest 或正式资源拆分；不重开 A292 的三栏功能结构、FrontCarrier、图片 `69:44` 复用、动态文字槽、状态语义、CTA / Disclosure 与 hit rect。下一轮先交整屏差距板与新的 filled-state visual target，再由用户裁决是否足以进入资产化。
+- **协作顺序**：这是改进现有 UI，先由 UX 老哥重新诊断“风格稿到真实界面”的第一眼断裂，再由 UI Designer 输出整屏改造范围；clean-low-poly weekly 支线继续直接对照标杆与 A291，不自动调用旧像素 / 半调坐标系的美术指导。
+- **Loop Log**：`docs/plans/world-map-benchmark-landing/2026-08-07-world-map-local-refinement-too-small-loop-log.md`。
+- **cross-read tags**：`A291/A292/A293`、rejected-preview、style-gap、benchmark-comparison、holistic-art-pass、local-tweak-insufficient、ui、ux、visual-gate、world-map、workflow。
+
+### A295. 世界地图下一版获准大幅视觉重构，截止时间 fixture 暂不采纳
+
+- **来源**：2026-08-10 用户审阅 A291 与当前真实界面的六维整屏差距板、UX 老哥诊断与 UI Designer 改造范围后，明确确认“可以大幅度重构”，同时追问“最早截止：第4天是什么意思”。
+- **采纳范围**：下一张完整 `1920×1080` filled-state visual target 可以显著重做刊头品牌锁定、左侧三张地区卡的视觉家族、中央地图的编辑证据板氛围、跨三栏综合色彩节拍，以及 Dossier / Schedule 的纸物件关系；不得再以阴影、净距、断线或夹具接触等局部工艺微调冒充整屏重构。
+- **冻结继续有效**：本条只批准美术与视觉语言的大幅变化，不批准结构或功能变化。A292 的三栏结构、exact rect、FrontCarrier、动态文字槽、状态语义、Disclosure、CTA、hit rect、地图母体与 `1104×704 / 69:44` 新闻母图等比复用合同继续冻结；RegionCard 比例冲突与 ISSUE exact rect 仍阻断正式壳体，Godot / atlas / manifest 继续暂缓。
+- **截止字段状态**：`最早截止：第4天` 不是本轮新增或已获用户采纳的玩法规则，而是当前真实界面候选右侧 Dossier 中已有的 fixture 文案。它可能表示“该地区当前可见任务中，最早关闭的任务在探索周第 4 天截止”，属于绝对周内日序，而不是“还剩 4 天”、地区整体截止或本周结束时间；但在真实任务数据源和计数口径核实前，这一解释只能作为待验证假设。
+- **出图约束**：下一张 filled-state visual target 不得自行把 `最早截止：第4天` 与 `截稿倒计时7天` 拼成新规则。若代码 / 配置能证明该字段的真实含义，则只使用同源值；若无法证明或本轮不需要它参与地区选择，应先移除该 fixture，而不是让用户替旧预览文案补规则。
+- **cross-read tags**：`A291/A292/A294`、accepted-scope、deadline-fixture、filled-state、holistic-art-pass、pending-clarification、ui、ux、visual-target、world-map。
+
+### A296. 世界地图 filled-state 目标图删除未证实的具体截止日
+
+- **来源**：2026-08-10 用户在了解“最早截止：第4天”只是待验证 fixture、并非已冻结规则后，明确回复“可以先删掉，然后继续”。
+- **删除裁决**：本轮整屏 filled-state visual target 删除右侧 Dossier 的 `最早截止：第4天`；同时不再携带左侧选中地区卡中的 `截稿倒计时7天`，避免一张目标图同时出现两个无法由同一真实数据源解释的具体截止口径。
+- **保留语义**：地区仍可通过已有同源摘要 `限时1 · 线索2 · 深链1` 表达“存在一项限时任务”，但不得由 `限时1` 反推出具体第几天截止、剩余几天或地区整体截止时间。未来若真实任务数据源冻结 deadline 字段与计数口径，须另开运行时文案合同再恢复具体日期。
+- **执行边界**：该删除只清理不可信的展示 fixture，不改变任务机制、日程系统、地区状态、动态文字槽或任何 hit rect。A292 的三栏结构、FrontCarrier、`1104×704 / 69:44` 新闻母图复用、Disclosure、CTA 和输入合同继续冻结；当前仍只生成视觉目标，不进入 Godot、atlas 或 manifest。
+- **cross-read tags**：`A292/A295`、accepted-removal、deadline-fixture、filled-state、no-invented-rule、ui、ux、visual-target、world-map。
+
+### A297. 世界地图左右栏包装沿正式 clean-low-poly 标杆推进冷白档案与共享薄卡架方向
+
+- **来源**：2026-08-10 用户指出左右栏虽然更规整，但包装仍朴素甚至简陋；在纠正“正式美术标杆”应为 `benchmark-board-01.png / benchmark-board-02.png`、A291 只是一张世界地图整屏目标后，要求按正式标杆继续优化，并明确回复“继续”。
+- **方向裁决**：右侧 Dossier 采用冷白主档案正面、`1–2` 张冷灰 / 钴蓝灰薄背页与克制夹具；左侧三张 RegionCard 保留真实 FrontCarrier，以共享深海军蓝薄底盘、选中钴蓝露边与锁定橄榄露边建立同族卡架关系；Schedule 只增加一张低饱和蓝灰背页。综合色彩以深夜石板蓝、冷白、钢蓝、低饱和橄榄为主，芥末黄与锈红只沿用既有品牌 / 风险锚点。
+- **标杆边界**：吸收正式标杆的冷净纸面、蓝灰大纸面统一、低多边形宽块面、纸层压叠与不对称外轮廓；禁止重新滑向泛黄旧档案、厚工业柜、闭合 HUD 机架、SaaS 面板、军事雷达或高密度桌面杂物。A291 继续作为世界地图屏级配方参考，但不得再称作项目两张正式美术标杆。
+- **本轮候选**：`image_gen/2026-08-10/world-map-benchmark-aligned-backdecor-v1/06-fullscreen-filled-state-backdecor-final-candidate-1920x1080.png` 为当前合同安全的完整屏 BackDecor 方向候选；`04-bolder-imagegen-fullscreen-style-exploration.png` 只保留为构图能量上限参考，因改变卡片、地图和刊头几何，不能作为实现布局。
+- **双审结论**：UX 老哥与 UI Designer 均判 `CONDITIONAL`。右栏包装提升成立，左栏已从独立白卡列表提升为共享薄卡架，但整体仍偏克制；未新增伪按钮、伪入口或状态误读。Schedule 原 FrontCarrier 的完整矩形与方形减号仍是已知 P1，本轮不得用 BackDecor 遮盖，只有用户另行授权升级 Schedule 视觉合同时才能移除。
+- **冻结与阶段**：三栏结构、MapField、FrontCarrier、动态文字槽、状态语义、Disclosure、CTA、hit rect、`1104×704 / 69:44` 同源图复用继续冻结；最终候选已验证 MapField 与基线逐像素一致。RegionCard 比例冲突和 ISSUE exact rect 仍未关闭，当前不进入 atlas、manifest、Godot 或 `WeeklyRunGame`，状态为 `benchmark_aligned_backdecor_visual_direction_candidate_pending_user_gate`。
+- **cross-read tags**：`A291/A292/A294/A295/A296`、art、back-decor、benchmark-source、clean-lowpoly、dossier、filled-state、imagegen、region-card、schedule、ui、ux、visual-target、world-map、workflow。
+
+### A298. 世界地图暂时切换为效果优先的大胆氛围探索，不以生产合同提前收束构图
+
+- **来源**：2026-08-11 用户审阅合同安全的 BackDecor 候选后明确表示“还可以再大胆一点”，要求参考正式美术标杆，当前先不收束、只考虑效果，争取做到标杆图的氛围。
+- **探索授权**：本阶段允许视觉稿打破 exact rect、正交纸面、同轴同宽、等距卡列、地图严格居中与装饰不得越栏等生产约束；可以让刊头侵入地图、选中证据簇跨左中栏、Dossier 压入地图、背页与夹具出屏、地区卡错层前突。该授权只用于完整屏 visual exploration，不修订 A292 的后续生产 / 运行时合同。
+- **仍需保留的身份**：左栏与地图共同表达地区选择，North America selected / red-line heated、East Asia / Pacific locked 清楚；右侧只解释当前地区并保留唯一 Disclosure 与唯一进入 CTA；左下 Global Schedule 仍明确 disabled。不得因追求氛围新增路线、工具栏、假状态、假按钮或第二 CTA。
+- **正式标杆**：继续只以 `design/art-direction/references/clean-lowpoly-weekly-branch/benchmark-board-01.png` 与 `benchmark-board-02.png` 作为全局气氛真值；目标是大刊头、混合尺度纸件、照片 / 便签 / 夹具跨层碰撞、钴蓝 / 橄榄 / 芥末大色块节拍和干燥黑色幽默，而不是增加阴影、细线或小贴纸数量。
+- **探索结果**：已用 Codex 内置 ImageGen 生成 A「北美证据撞进头版」、B「档案夹钳住半个世界」及 A2「单一北美证据岛」三张 `1920×1080` 候选，位于 `image_gen/2026-08-11/world-map-bold-benchmark-atmosphere-v1/`。UI Designer 与 UX 老哥均推荐 A 作为最接近标杆氛围的母体；A2 删除重复 Eye 与底部第二故事中心，换取更清楚的地区选择、禁用日程与整屏主语。三图均待用户视觉 Gate，不互相淘汰，也不升格生产目标。
+- **阶段边界**：当前状态为 `atmosphere_first_bold_visual_exploration_pending_user_gate`。不进入 atlas、manifest、Godot 或 `WeeklyRunGame`；用户后续选择气氛母体后，再另行决定哪些越界关系转译回可落地组件，不能把探索授权倒灌为运行时结构变更。
+- **cross-read tags**：`A291/A292/A294/A297`、art、atmosphere-first、benchmark-source、bold-layout、clean-lowpoly、editorial-collage、imagegen、non-production、ui、ux、visual-exploration、world-map、workflow。
+
+### A299. 世界地图大胆氛围稿因只改外部堆叠、未改板块内部内容而降级
+
+- **来源**：2026-08-11 用户审阅 A / B / A2 三张大胆氛围探索后指出，画面主要只是改变布局并把板块错乱堆叠，各板块本身的内容没有明显变化。
+- **用户反馈成立**：三张图虽然加强了刊头尺度、跨栏遮压、纸层错位与钴蓝 / 芥末综合色彩，但 RegionCard 仍是“编号＋缩略图＋说明＋状态签”，Dossier 仍是“标题＋大图＋摘要＋Disclosure＋任务框＋CTA”，Schedule 与地图节点也沿用旧内部语法。外部拼贴不能替代组件内容重设计。
+- **产物降级**：A 降为 `collage_energy_study`，仅保留跨栏构图能量；B 降为 `dossier_scale_study`，仅保留巨型档案压场关系；A2 降为 `single_evidence_island_study`，仅保留单焦点收束。三者不得继续作为下一轮整屏母稿、visual target 或生产参考。
+- **下一产物**：停止继续整屏 ImageGen，先交一张 `1920×1080 世界地图组件内容重构母板`。母板必须并列展示刊头、三态地区卡、中央北美证据层、Dossier、Schedule 与 CTA 的放大内部构图，并逐块说明相比旧模板具体改变的标题层、图文比例、状态承载、字段组织、动作物件与媒介身份。
+- **阶段边界**：组件内容母板只验证内部编辑构成与标杆内容密度，不处理 exact rect、atlas、manifest 或 Godot；母板通过用户视觉 Gate 后再重新组装完整屏。不得继续用倾斜、遮压、阴影、背页、夹子和散件数量冒充板块重做。
+- **Loop Log**：`docs/plans/world-map-benchmark-landing/2026-08-11-world-map-layout-boldness-without-component-redesign-loop-log.md`。
+- **cross-read tags**：`A291/A292/A298`、art、benchmark-gap、component-content、component-render-language、downgraded-exploration、imagegen、layout-only-failure、loop-log、ui、ux、world-map、workflow。
+
+### A300. 世界地图组件内容重构方向通过，继续深化但 V1 不直接升格
+
+- **来源**：2026-08-11 用户审阅 `01-component-content-reconstruction-master-board` 后明确要求“按照这个方向再去搞搞”，即采纳冷净、现代、出版化的组件媒介语言并授权继续放大效果。
+- **采纳范围**：保留刊头品牌锁、三态地区稿夹封面、实体排期票与签批式唯一 CTA 的方向；继续沿用深海军蓝、冷白、钴蓝、橄榄、芥末与少量锈红的跨组件色彩节拍，以及“严肃档案＋克制迟疑手批”的品牌趣味。
+- **V1 边界**：方向通过不等于整板通过。V1 仅作为 `component_direction_motherboard_v1`；中央证据簇吞掉世界选择职责、Eye 章误写“已锁”、刊头路线条形成伪导航、锁区条件术语不统一，以及 Dossier 下半部仍像后台表单，均不得带入完整屏。
+- **下一产物**：继续制作 `1920×1080 世界地图组件内容重构母板 V2`。中央模块须同时保留可辨全球底图、三个地区锚点与北美 selected evidence overlay；Dossier 下半部须改为出版化统计票据、任务索引与留白节奏。其余已通过组件只做风格加深与语义清理，不重新退回旧模板。
+- **阶段边界**：V2 仍是非生产视觉探索，不进入 exact rect、atlas、manifest、Godot 或 `WeeklyRunGame`；须经用户视觉确认后，才重新组装一张完整 `1920×1080 filled-state visual target`。
+- **cross-read tags**：`A291/A294/A299`、accepted-direction、art、clean-lowpoly、component-content、component-direction、dossier、editorial-media、imagegen、map-selection、non-production、ui、ux、world-map、workflow。
+
+### A301. 世界地图采用依附真实对象的轻量编辑部叙事物
+
+- **来源**：2026-08-11 用户审阅组件语言重组后的 filled-state visual target，明确肯定“地区对应地点贴照片并附提示纸条”使界面更有趣、更像编辑部，并要求继续寻找不压功能但能提升趣味、主题与氛围的位置。
+- **已采纳原则**：后续世界地图可以继续加入少量编辑部叙事物，但每件必须依附现有真实对象或编辑动作，例如证据照片来源戳、档案背页分类露边、夜班送稿签或低权重环境媒介；不得独立生成新模块、新节点或新操作。
+- **交互边界**：新增物默认 `NO-HIT / NO-FOCUS / mouse-ignore`，不得侵入动态文字槽、FrontCarrier、状态载体、Disclosure、CTA 与既有 hit rect，也不得使用 `＋`、箭头、Eye、锁、播放、进度点等现有交互或状态符号制造 false affordance。
+- **注意力预算**：整屏新增物原则上最多 `3` 件，其中 `1` 件中等权重、`2` 件低权重；必须以替换无语义装饰或利用暗色负空间为主，不通过增加照片数量、红绳、密集便签、夹子和旧档案杂物堆积气氛。
+- **未冻结项**：具体采用“夜班送稿签、照片来源戳、Dossier 分类背页、线报回条、半出屏媒介盘”等哪三项，仍待用户审阅标注方案后选择；AI 候选不得提前资产化。
+- **阶段边界**：当前只做文字与标注验证；不进入 atlas、manifest、Godot 或 `WeeklyRunGame`。
+- **cross-read tags**：`A291/A294/A300`、accepted-principle、art、atmosphere、back-decor、clean-lowpoly、editorial-narrative、false-affordance、no-hit、non-production、ui、ux、world-map、workflow。
+
+### A302. 世界地图轻量叙事物 V2 进入用户视觉确认，冻结三项且不再加料
+
+- **来源**：2026-08-11 用户在轻量叙事物方案后明确要求“试一试”“继续刚刚的任务”，授权用真实生图验证，但尚未对最终 V2 成图作视觉裁决。
+- **本轮试验项**：整屏只保留三处被动叙事信息：顶部短型 `WORLD FEED / NIGHT DESK / 01` 送稿签、北美证据照片白边上的 `NEWS LEAD 01 / NIGHT DESK` 来源回条、Dossier 钴蓝背页上的 `REGION FILE 01` 分类露边。不得补第四个叙事物，也不得新增媒介盘、铅笔、收据、照片、便签、贴纸或夹具。
+- **语义清理**：已删除长蓝条上的三枚状态方块与 HUD / tab 外观；已移除无真实数据源支撑的 `RECEIVED 00:47`；背页分类不再重复主纸的 `CASE FILE / NEWS LEAD 01`。
+- **互审结果**：UX 最终 Gate 为 `P0=0 / P1=0 / P2=1`，唯一非阻塞 P2 是顶部短签仍略有条形载体感；UI Designer 最终 Gate 判定通过，认为三处分别承担夜班流程、证据来源与地区档案分类，整体剂量合适。父级据此将 V2 定位为“待用户确认方向稿”，不提前升格为正式视觉目标。
+- **交互与阶段边界**：三处均须在后续实现中保持 `MOUSE_FILTER_IGNORE / FOCUS_NONE`，不得进入 CTA、地区锚点、Disclosure 或其他 hit rect；当前仍不进入 atlas、manifest、Godot 或 `WeeklyRunGame`。
+- **证据图**：`image_gen/2026-08-11/world-map-lightweight-editorial-props-v2/02-lightweight-editorial-props-refined-1920x1080.png`。
+- **cross-read tags**：`A291/A294/A300/A301`、art、clean-lowpoly、editorial-narrative、false-affordance、filled-state、imagegen、no-hit、non-production、pending-user-gate、ui、ux、world-map、workflow。
+
+### A303. 世界地图轻量叙事物 V2 降级为氛围参考，组件复用重新阻断
+
+- **来源**：2026-08-13 用户审阅 V2 后指出三张地区图片窗口规格不同，导致同类组件与新闻图无法复用，并要求继续扫描整屏功能不合理项。
+- **产物降级**：V2 的刊头、纸层、证据照片＋批注、送稿签和综合色彩只保留为 `visual_atmosphere_reference`；三张 RegionCard、图片槽、beacon、Dossier 动态槽和输入层不得从该图直接裁切、量测或资产化。A302 的三项轻量叙事物仍可作为 `NO-HIT` 方向，但不代表整屏组件合同通过。
+- **主要阻断**：三张 `340×170` RegionCard 必须共享同一 outer rect、`138×88 / 69:44` photo slot、标题 / 状态 / 条件槽与 hit rect；selected / available / warning / locked 只换内容与状态层，不得改尺寸或重排。每区唯一 `1104×704` canonical 新闻图须在左卡 `138×88`、Dossier `414×264` 完整等比显示并引用同一 `resource_path`；地图证据 overlay 若保留，只能使用同为 `69:44` 的预定义尺寸与安全位置。
+- **状态与输入**：继续服从当前运行合同——锁定地区点击只反馈解锁条件，不替换 `selected_region_id` 或 Dossier；`selected / access / urgency / blocked_feedback` 可在数据与状态层正交表达，但 `selected+locked` 在当前合同中不是合法可见组合。三张卡、三个 beacon、Disclosure 与 CTA 之外的纸层、夹具、便签、来源回条和装饰全部 `MOUSE_FILTER_IGNORE / FOCUS_NONE`。
+- **真源冲突**：A282 的 runtime rect 与现有旧 `left_region_card.json / right_dossier_page.json` 不同；RegionCard `340×170=2:1` 与 `86:41` 壳体冲突、ISSUE 票签 exact rect 仍未关闭。正式 FrontCarrier 与整屏组件拆分继续阻断，不能由方向图反推新尺寸。
+- **实现漂移提醒**：当前原型代码仍保留 A296 已从视觉目标删除的“最早截止：第4天 / 截稿倒计时7天”fixture。后续若恢复接线，必须明确选择修正文档或实现，不得让旧硬编码随组件回流。
+- **下一产物**：先交 A282 exact rect 下的“统一 RegionCard＋三尺度 `69:44` 图槽＋组合状态＋输入层”合同板，再做整屏回填；本阶段仍不进入 atlas、manifest、Godot 或 `WeeklyRunGame`。
+- **Loop Log**：`docs/plans/world-map-benchmark-landing/2026-08-13-world-map-filled-target-component-reuse-loop-log.md`。
+- **cross-read tags**：`A281/A282/A290/A292/A296/A301/A302`、asset-reuse、canonical-image、component-contract、contract-drift、filled-state-downgrade、image-aspect、input-layer、no-hit、runtime-blocked、state-matrix、ui、ux、world-map、workflow。
+
+### A304. 世界地图继续以 A282 的 340×170 RegionCard 制作合同修订提案，正式升版仍待裁决
+
+- **来源**：2026-08-13 用户在 A303 全组件功能审计后明确要求“继续”。父级在推进前说明将使用当前 A282 运行真源的 `340×170` RegionCard 先做 `1920×1080` 功能组件合同板。该“继续”授权本轮制作修订提案，但不替代对正式 contract 升版、`86:41` 旧壳处理与锁区交互的最终产品裁决。
+- **地区卡提案**：三张 RegionCard 统一使用 `340×170` outer rect 与 hit rect，内部统一 `138×88 / 69:44` photo slot、编号槽、标题槽与状态槽；A184 已退役的副信息不得回流左卡。selected、available、warning、locked 只能更换 payload 与 StateDecor，不得改变外框、图片窗、槽位、纸张偏移或点击面。该几何当前只作为实测目标提案；`86:41` 与旧 `204×160` 正式候选须在用户确认后显式升版 / 退役并重跑回填，不能仅凭 HTML 板自动作废。
+- **照片复用合同**：每个地区唯一 `1104×704` canonical 新闻母图在左卡以 `138×88`、右 Dossier 以 `414×264` 完整画幅等比显示，必须引用同一 `resource_path`，禁止裁切、拉伸或另做缩略图。中央证据照片若保留，当前只以 `207×132 / 69:44` 的 `NO-HIT BackDecor` 作为待视觉确认尺寸，不在本条冻结为第三个图片控件。
+- **状态与输入待裁决**：RegionCard 继续分离 `selection / access / urgency / blocked_feedback`。当前 A282 原型中锁区点击只反馈、不改变 `selected_region_id`、不切 Dossier；但正式 `design/gdd/exploration-and-node-dispatch.md` §“取材地图”与 A184 要求锁定地区可选中并在右侧预览解锁缺口。因此 `selected+locked` 是否合法是本板唯一产品级待裁决项，暂不得冻结。当前 disabled runtime 的交互节点为 `3 RegionCard + 3 beacon + 1 Disclosure + 1 CTA = 8`；Schedule 与所有胶带、照片、纸条、回条、连线、章和背页均 `MOUSE_FILTER_IGNORE / FOCUS_NONE`。未来接入“推进一天＋确认态”时须另升 Schedule 输入合同。
+- **整屏实测基线与待定**：修订板沿用 A282 的 RegionIndex `372×640`、MapField `960×902`、Schedule `372×246`、Dossier `468×1032`、Disclosure `414×56` 与 CTA `414×76`。beacon 只使用 `72×72` 核心注册框，标签与外层 hit wrapper 按位置使用各自已登记矩形；ISSUE 票签 exact rect 仍未冻结。这些值在正式 contract 升版前只能称“实测目标基线”，不能提前称新冻结合同。
+- **字段与 Disclosure 修订**：A184 继续有效——左卡只承担地区身份、照片、状态徽章与选中反馈，任务数、解锁缺口和条件下沉 Dossier。A211 继续有效——任务总数、限时 / 线索 / 深链摘要与展开状态合并为唯一 `414×56` Disclosure，使用 `＋/－`，expanded 内容原位显示且 CTA 零位移；不得恢复独立 facts 框或下箭头。
+- **实现漂移**：旧 contract JSON 的参考尺寸与整页 hit rect、`1 / 3 可进入` 数量硬编码、A296 已删除的两条具体时间 fixture，以及 Dossier 北美字段硬编码都必须在恢复运行接线前统一修正；当前合同板只建立评审提案，不进入 atlas、manifest、Godot 或 `WeeklyRunGame`。
+- **证据板**：`C:/Users/gzfangyue/.codex/visualizations/2026/08/10/019fe9bb-6bca-71b3-822b-69174b4f780a/world-map-component-contract-board.html`。
+- **cross-read tags**：`A281/A282/A290/A292/A296/A303`、asset-reuse、canonical-image、component-contract、contract-migration、exact-rect、image-aspect、input-layer、no-hit、region-card、runtime-source、state-matrix、ui、ux、world-map、workflow。
+
+### A305. 世界地图锁定地区可选中预览，RegionCard 正式升版为 340×170
+
+- **来源**：2026-08-13 用户审阅 A304 合同修订板、UX 老哥与 UI Designer 的最终互审后回复“好的，继续”。上一条交付已把待确认指令明确写为“锁区可预览，批准 `340×170` 升版”；本条按该明确上下文执行，不再沿用与 GDD 冲突的 A282 临时锁区行为。
+- **锁区交互裁决**：锁定地区的 Card 与 Beacon 都允许 click 固定选中，原子更新 Card、Beacon、label、evidence、Dossier 与 CTA。Dossier 使用同一固定槽位显示地区身份、真实进度和具体解锁缺口；Disclosure 可原位展开两条已知情报 / 解锁条件；唯一主 CTA 保持同位 `locked_disabled`，不得进入地区任务台。对象级阻断反馈锚定触发 Card / Beacon；hover 仍只高亮，不临时切换详情。`selected+locked` 因此成为合法可见组合，并与 `design/gdd/exploration-and-node-dispatch.md`、A184 重新一致。
+- **RegionCard 升版**：`design/ui-contracts/world-map/left_region_card.json` 升为 `v1.0.0 / frozen`，正式采用 `340×170`、三实例位置 `[52,226] / [52,408] / [52,590]`、`138×88` photo slot、统一编号 / 标题 / 状态槽与完整卡 hit rect。`86:41`、`204×160` 与四卡旧壳不再是当前生产真源，只保留在历史 evidence；A184 的副信息下沉继续有效，右侧退役 meta 区不得恢复任务数或解锁条件。
+- **Dossier 与动作子合同升版**：`right_dossier_page` 升为 `468×1032`，父纸无 hit rect；`right_mission_intel_button` 升为 `414×56` 唯一 disclosure；`right_action_lane` 升为 `414×76` 唯一实体 CTA。三者继续执行 A211 的 `＋/－` 原位两条只读预览、CTA 零位移和 locked_disabled；中央 Evidence `207×132 / NO-HIT` 仍保持 provisional，不随本条冻结。
+- **图源合同**：每个地区唯一 `1104×704` canonical 新闻母图在左卡 `138×88` 与 Dossier `414×264` 使用同一 `resource_path`、`KEEP_ASPECT_CENTERED`、完整画幅等比缩放；任何 `KEEP_ASPECT_COVERED`、独立 clean photo / thumbnail、裁切、拉伸或上采样都属于待清理实现漂移。
+- **执行范围**：本条只升级正式 UI contract JSON 与产品交互语义，允许据此生成下一张完整 `1920×1080` filled-state visual target；当前不修改 Godot、不接 Schedule 命令、不做 atlas / manifest，也不进入 `WeeklyRunGame`。A304 的“锁区待裁决 / 合同修订提案”状态由本条关闭。
+- **cross-read tags**：`A184/A211/A281/A282/A290/A292/A303/A304`、accepted-contract-upgrade、canonical-image、component-contract、dossier-preview、exact-rect、frozen、gdd-alignment、image-aspect、locked-region、region-card、same-resource、state-matrix、ui、ux、world-map、workflow。
+
+### A306. RegionCard 状态不得改变卡体或图片规格，大胆包装改由共享稿夹与状态层承担
+
+- **来源**：2026-08-13 用户复核 `exec-3c9a4662-543f-47c8-b80b-803d968a12b7.png` 后明确指出：“目前01和02因出于不同状态，而使用不同图片规格，这显然是有问题的”，并要求继续。该反馈确认 selected 大图卡与 locked 横幅卡不是可接受的视觉强调，而是同类组件复用与状态合同错误。
+- **几何裁决**：01 / 02 / 03 在任何 `selected / available / warning / locked` 组合下都必须保持同一 `340×170` FrontCarrier、同一 `138×88 / 69:44` photo slot、同一编号 / 标题 / 状态 / 右侧安全槽、同一间距与同一 `340×170` hit rect。状态切换不得放大照片、改变图片比例、增减卡高、改变图文占比或把 locked 改成另一种横幅卡型。
+- **视觉强调转移**：selected 的更高注意力只允许由钴蓝背页露边、壳内锈红窄脊线、Eye / 状态章、短接触阴影与跨栏综合色彩回声承担；locked 只允许使用同构橄榄背页、锁定章和低一档状态皮肤。共享稿夹与状态背页均为 `BackDecor / NO-HIT`，不得扩大或新增点击容器。
+- **图片复用**：三地区分别继续使用各自唯一 `1104×704` canonical 母图，在共同 `138×88` 槽内 `KEEP_ASPECT_CENTERED` 完整等比显示；状态不得切换 resource、thumbnail、裁切方式或显示规格。问题稿只保留刊头、地图证据现场、Dossier 纸层与综合色彩的氛围参考身份，左栏几何与图片窗不得从中裁切或量测。
+- **证明与候选**：`08-left-region-index-bold-rack-proof-1920x1080.png` 用 100% 实际尺寸与 1.5× 三卡叠图证明状态不改规格；`09-filled-state-uniform-regioncard-bold-rack-1920x1080.png` 将共享 ImageGen 稿夹材料回填整屏。两者仍是视觉方向确认候选，不授权进入 Godot、atlas、manifest 或 `WeeklyRunGame`。
+- **cross-read tags**：`A184/A211/A303/A305`、accepted-correction、back-decor、canonical-image、component-uniformity、exact-rect、image-aspect、imagegen、no-hit、region-card、same-resource、selected-state、state-zero-layout-shift、ui、ux、visual-target、world-map、workflow。
+
+### A307. 世界地图程序合成稿降级为合同证明，视觉组件必须回到真实生图来源
+
+- **来源**：2026-08-14 用户复核 `10-selected-locked-east-asia-companion-1920x1080.png` 后明确指出：“现在画面也不对，组件资产感觉大部分都是程序生成的，不是生图软件生成的，比较粗糙简陋，没有质感。”该判断成立。
+- **误判修正**：图 10 / 11 虽复用真实生图纸纹、三张 canonical 新闻图、A291 刊头裁片和部分稿夹材料，但 RegionCard 的边框 / 状态章 / Eye / 文字组织、Schedule 内部、地图标签 / 连线 / 选中圈、Dossier 内容框 / Disclosure / CTA 以及大量主要轮廓均由 Pillow 绘制。它们只能证明 exact rect、状态原子切换、图片同槽与功能语义，不能证明最终美术质感或升格为 `filled_state_visual_target`。
+- **产物降级**：`09-filled-state-uniform-regioncard-bold-rack-1920x1080.png`、`10-selected-locked-east-asia-companion-1920x1080.png` 与 `11-default-vs-selected-locked-atomic-state-board-1920x1080.png` 统一降为 `full_screen_reinsert_proof / contract_composite / state_QA`；不再作为用户视觉方向目标、无字母件、生产切图源或资产化第 7 环通过证据。
+- **重开范围**：下一轮不再对程序组件补纹理或加阴影。RegionCard、Dossier、Schedule、CTA、地图 Beacon / 标签 / selected evidence、刊头品牌组件均须以 A291 与两张 clean-low-poly weekly 标杆为真值，由真实 ImageGen / 美术工具重出无字外观或整合视觉母件；程序只允许裁切、等比缩放、色键转透明、mask、动态文字回填、坐标合成与 QA，不得绘制最终可见纸壳、边框、状态章、按钮底板、标签板或图标。
+- **继续冻结**：A305 / A306 的 `340×170` RegionCard、`138×88 / 69:44` photo slot、同源 `1104×704` 图、Dossier / Disclosure / CTA exact rect、`selected+locked` 语义与所有 hit rect 继续有效；本次只否决视觉来源和质感，不重开功能合同。
+- **阶段边界**：当前正式成熟度回退到“阶段 4 合同与整屏回填证明完成、阶段 2 视觉组件语言需重做”；阶段 5 纵向切片、批量无字素材、atlas、manifest、Godot 与 `WeeklyRunGame` 继续阻断，直至真实生图组件母板获得用户视觉确认。
+- **Loop Log**：`docs/plans/world-map-benchmark-landing/2026-08-14-world-map-program-composite-misclassified-as-visual-target-loop-log.md`。
+- **cross-read tags**：`A48/A90/A121/A259/A291/A305/A306`、accepted-correction、assetized-ui、contract-composite、downgraded-artifact、filled-state、imagegen、loop-log、programmatic-reskin、production-block、ui、ux、visual-target、world-map、workflow。
+
+### A308. 真实 ImageGen 组件先做整屏装回效果预演，再由用户裁决是否升格
+
+- **来源**：2026-08-14 用户查看 RegionCard、Schedule、Dossier 与中央证据层的真实 ImageGen 组件母板后回复“加上之后看看效果”，授权在不进入 Godot / atlas / manifest 的前提下先做一张完整整屏装回预演。
+- **执行范围**：以 A307 降级后的 `09-filled-state-uniform-regioncard-bold-rack-1920x1080.png` 只作为三栏、状态与内容职责的编辑目标；以真实 ImageGen 左栏组件板、Dossier 组件板、02b 中央证据组件板和 A291 为美术参考，通过 Codex 内置 ImageGen 重新统一刊头、三张同壳地区卡、Schedule、中央证据现场和右侧 Dossier。程序仅将 ImageGen 原始 `1672×941` 结果等比重采样为 `1920×1080`，未重新绘制纸壳、边框、状态章、按钮底板或图标。
+- **语义清理**：首张整屏预演中回流的未证实字段 `剩余7天`、`FILED 00:47` 与 Schedule 方框减号已通过定点 ImageGen 编辑删除；随后一并删除悬空残句 `NIGHT DESK /`。保留真实字段 `当前第1天`、原 Disclosure、CTA 与地区状态职责。
+- **当前主审图**：`image_gen/2026-08-14/world-map-real-imagegen-filled-state-preview-v1/06-final-direction-preview-1920x1080.png`。该图只回答综合色彩、纸物尺度、品牌趣味与整屏氛围是否成立；不证明文字精确度、透明裁切、exact rect、同源资源路径、hit rect 或运行时零位移。
+- **双审结果**：UX 老哥判第一眼已明显解决“Pillow 面板＋生图照片”的程序绘制感，三栏操作链未破坏；UI Designer 判更接近 A291 与 clean-low-poly-weekly，深海军蓝、冷白纸、钴蓝、橄榄、芥末和锈红形成跨栏节拍。两者均为 `P0=0 / 可交用户做效果方向预演`。剩余非阻断问题为中央红色椭圆箭头仍略带证据墙 / 路线语义、Schedule 双环略重、地图块面略密与冷白纸纹理重复度略高。
+- **继续冻结**：三栏、FrontCarrier、动态槽、状态语义、Disclosure、CTA / hit rect、三张 `1104×704 / 69:44` canonical 新闻图和 A305 / A306 几何合同继续不动；当前仍禁止资产裁切、生产拆分、atlas、manifest、Godot 与 `WeeklyRunGame`。
+- **状态**：`real_imagegen_fullscreen_direction_preview_pending_user_visual_decision`。只有用户明确确认方向后，才反推严格比例的 RegionCard / Schedule / Dossier / Disclosure / CTA 无字组件源并进入透明化与量测 Gate。
+- **2026-08-17 品牌身份复审**：用户指出当前图仍未与 SCP 式严肃办公机构拉开差距；对照 A256 后确认该图虽然通过材质来源与功能安全复核，但未通过“怪新闻周刊优先、机构秩序第二”的情绪身份 Gate。当前状态修订为 `brand_identity_gap_diagnostic_only / scp_institution_read_fail`，停止反推组件源、透明化与量测；三栏与功能合同继续冻结。后续先完成品牌语义 brief，由用户确认“周刊编辑部 vs 异常机构”的边界后再决定是否生图。
+- **cross-read tags**：`A291/A305/A306/A307`、clean-lowpoly-weekly、dossier、filled-state、imagegen、pending-user-decision、region-card、schedule、semantic-cleanup、ui、ux、visual-direction、world-map、workflow。
+
+### A309. 世界地图语义换皮不等于宏观风格重构，下一候选改走「夜班四色套印选题台」
+
+- **来源**：2026-08-17 用户审阅 `02-full-screen-filled-state-brand-shift-clean-1920x1080.png` 后明确指出：“其实我没太看出来区别，目前看来只是一些小的批注装饰。但我希望的是一些大的风格上的东西，比如一些组件样式、氛围等。”
+- **误判修正**：父级与双 agent 上一轮把 `REGION PITCHES / NEWS LEAD / 现场记录`、UFO 便签、手写批注和 selected / warning 分色的语义改善扩大为品牌视觉通过。遮字并缩至 `480×270` 后，02 仍是“三张左白卡＋中央深蓝地图框＋右侧巨大白纸＋左下白 Schedule”；其最大五个明度形状与 A291 基本同构。UX 老哥与 UI Designer 均撤回原通过结论，02 降为 `semantic_copy_and_annotation_proof / macro_style_fail`。
+- **重开范围**：不重开三栏、功能矩形、动态槽、图片规格、状态语义、Disclosure、CTA 或 hit rect；但左侧 RegionCard 可见壳、中央地图载体与大陆画法、右侧 Dossier 前壳及上下大面积分区、Schedule 材质、整屏综合色与局部色温全部允许宏观重画。小批注、贴纸、阴影、净距与线条不得再作为主要改造量。
+- **唯一推荐方向**：下一候选采用 `Night Press Color-Key Desk / 夜班四色套印选题台`。左栏为钴蓝 / 橄榄 / 芥末三只地区选题夹；中央为冷青 / 钴蓝世界套印版样；右栏为钴蓝背夹＋上部暖白主稿＋下部蓝灰 / 橄榄复核托盘；Schedule 为芥末 / 橄榄实体截稿日历器。暖白纸只承担内容，不再垄断组件外壳。
+- **宏观 Gate**：遮掉全部文字、批注和小于 `80×80px` 的装饰后，左 / 中 / 右仍须各自显示新组件身份；`480×270` 模糊图中左 / 中 / 右三处必须强差异；近白纸全屏建议不超过 `28%`，每个主区至少有一块占本区约 `15–20%` 的综合色中间调物件；大陆缩略先读 `4–6` 组宽块面，不得见均匀三角网。
+- **首张新候选**：`image_gen/2026-08-17/world-map-night-press-color-key-desk-v1/01-night-press-color-key-desk-1920x1080.png` 已由 Codex 内置 ImageGen 从空白画布生成，02 只提供功能位置且作为负面剪影参考。程序仅将模型原始 `1672×941` 结果无裁切规格化为 `1920×1080`，另排版旧新对比板。`480×270 + 12px blur` 粗测显示全屏显著明度变化约 `43.7%`，左 / 中 / 右约 `29.9% / 35.7% / 71.0%`。
+- **当前裁决**：双审确认宏观风格 Gate 通过，可交用户判断大色块与组件家族方向；当前仍有两个视觉 P1——02 / 03 同心圆 pin 回流靶标语法，彩色夹壳 / CTA 铆钉与卡扣偏工业设备，应改为现代压纹纸板与普通编辑夹具。另有 locked 静态事实和 Schedule FrontCarrier / BackDecor 分层待功能阶段证明。本图状态为 `macro_style_direction_candidate / pending_user_visual_decision`，不是 production visual target、asset master 或 Godot landing 许可。
+- **Loop Log**：`docs/plans/world-map-benchmark-landing/2026-08-17-world-map-semantic-copy-mistaken-for-macro-style-loop-log.md`。
+- **cross-read tags**：`A256/A291/A292/A305/A306/A307/A308`、accepted-rejection、brand-identity、clean-lowpoly-weekly、component-family、macro-silhouette、macro-style、mid-tone-mass、night-press-color-key-desk、semantic-proof-only、ui、ux、visual-direction、world-map、workflow。
+
+### A310. 世界地图淘汰折页特刊与蓝光灯箱，夜班剪版台进入内部路线深化
+
+- **来源**：2026-08-17 用户审阅三套真实 ImageGen 宏观风格演示后明确裁决：“方案1不太好，杂志不应该用在这个界面。方案三有点科幻了。方案二还行，基于方案二，还有什么扩展方向。”
+- **方向裁决**：A「本期折页特刊」因把杂志成品作为世界地图界面主媒介而淘汰，不再作为整屏母方向；C「蓝光校片灯箱」因冷青透光、透明套片与实物器材产生过强科幻 / 实验室首读而淘汰，不再作为整屏母方向。B「夜班剪版台」保留并进入内部路线深化，其核心身份是“内容正在被编辑、裁切、组合和送印”，而非归档、成刊或实验校片。
+- **内部扩展池**：保留五条剪版阶段路线——地图先行·初剪底稿、分色校样·套印拼版、图片编辑·接触样剪版、标题赛稿·选题剪版、轮转前夜·最终拼版。前三条分别解决中央地图职责、综合色 / GIS 感和同源新闻图趣味；后两条仅作为标题与送印状态的局部语言，不优先独立生成整屏。
+- **推荐主线**：以“地图先行·初剪底稿”为宏观底座：地图占中央责任区至少约 `60%`，selected 照片＋标题整体不超过约 `22%`，移除中央嵌套硬框、连续软件网格和巨型标题横条。受控吸收“分色校样”的 `3–4` 组宽色版与轻微套印偏移，以及“图片编辑”的唯一一张 `69:44` selected 校样照片和纸边修改意见。
+- **禁止混入**：整本杂志折页、全屏透光灯箱、多层透明套片、多张 contact sheet、巨型标题压地图、满屏 CMYK 参数、红线 / 图钉证据关系、硬框网格和工业设备壳均不得回流。
+- **下一产物**：先生成一张完整 `1920×1080`「地图先行·初剪底稿」主线，再以同一张为共同基准做两个只改中央＋右栏的局部 ImageGen 变体：分色校样与接触样剪版。顶部、左栏、Schedule、真实内容和外部责任区保持不变，避免把 ImageGen 随机重采误判为方案差异。
+- **状态**：`night_newsroom_pasteup_selected / internal_direction_expansion_pending_visual_demos`；继续禁止组件拆分、atlas、manifest、Godot 与 `WeeklyRunGame`。
+- **cross-read tags**：`A291/A292/A305/A306/A309`、accepted-direction、acetate-light-table-rejected、component-family、gatefold-rejected、imagegen、map-first、night-newsroom-pasteup、pasteup-desk、selected-direction、ui、ux、visual-direction、world-map、workflow。
+
+### A311. 夜班剪版台组件不得用微细节堆完成度，综合色须共享冷石板灰底
+
+- **来源**：2026-08-18 用户把两张正式 benchmark 的四个文件夹 / 文书裁切与 02「分色校样」并排后指出：标杆的文件夹构成与绘制更手绘、更低多边形、细节更少；当前界面组件画得太完整、完成度太高、细节太多，同时综合色似乎缺少灰度。
+- **用户判断成立**：benchmark 属于“高完成度的粗概括”——完成度集中在大轮廓、少数宽块面、简化纸形和一处手工偏移；02 则把完整边框、纸堆、五金、状态签、条码、准星、校准线、微型版号和逐层阴影同时做满，因而更像精制机构业务组件。02 降级为 `overresolved_component_language / insufficient_shared_gray / diagnostic_only`；只保留地图主次、跨栏综合色与分色材料证据。
+- **组件减法方向**：功能合同保持不动；每个主组件只保留一个主壳、一个内容面和最多一个状态结构。右稿最多一张主纸＋一张综合色背纸＋一处接触阴影＋一枚大夹；左卡不再逐张加五金；中央照片的夹子 / 胶带二选一；Schedule 保留环装就不再叠加铆钉。非功能微元素、连续双框、精密校准符与多余纸层整体削减，完成度重新集中到大形、综合色和压叠关系。
+- **低多边形方向**：中央地图每个大洲先读 `3–6` 个主要明度面，套印偏移只出现在局部边缘；不得使用均匀细三角和完整双边描线制造 low-poly。新闻图与纸件也以宽明度块表达，不靠高频颗粒或细节滤镜。
+- **灰度方向**：不是新增灰色组件或整体变暗，而是让钴蓝、冷青、橄榄、芥末和暖白共同向一层低彩度冷石板灰靠拢。当前候选可先以综合色彩度降低约 `15%–25%`、暖白彩度降低约 `35%–45%` 作为待标杆裁切校准的视觉假设；禁止用棕色蒙版、sepia、泛黄、污渍、磨损或整体暖滤镜制造灰感。selected 仍可保留相对较高钴蓝，warning 只使用小面积灰锈红，locked 语义继续由独立标签承担。
+- **下一步边界**：先用标杆与候选同类组件裁切做抽象度 / 可见层数 / 五金 / 内部线稿 / 综合色灰底对照，再决定下一张完整生图；当前不进入 Godot、atlas、资产 manifest 或 `WeeklyRunGame`。
+- **Loop Log**：`docs/plans/world-map-benchmark-landing/2026-08-18-world-map-pasteup-overresolved-component-grayness-loop-log.md`。
+- **cross-read tags**：`A256/A273/A291/A292/A309/A310`、abstraction-budget、accepted-correction、clean-lowpoly-weekly、color-gray-bridge、component-detail-budget、downgraded-candidate、folder-language、handdrawn、low-poly、ui、ux、visual-direction、world-map、workflow。
+
+### A312. 粗概括合同纠正版未命中标杆气质，下一轮改为多方向并行探索
+
+- **来源**：2026-08-18 用户审阅 `10-final-filled-state-visual-target-1920x1080.png` 后明确反馈“感觉也不太对劲”，要求按两张美术风格标杆给出几个不同版本。
+- **产物降级**：该图虽然关闭了 RegionCard 同构、`69:44` 同源图窗、selected / warning 分轨和 footer 安全区，并通过 UI / UX 的静态功能审查，但用户美术 Gate 未通过。当前只保留为 `contract_corrected_composite_proof / visual_direction_rejected`；不得作为 clean-low-poly weekly 风格母版、下一版视觉目标或资产化输入。
+- **误判修正**：把“减掉表格线、减少纸层、加入综合色灰底”误当成已经获得标杆风格，仍然把界面组织成规整纸卡＋地图＋稿件的标准三栏 UI。标杆的关键不只是减法，而是大字号出版图形、粗切纸轮廓、强综合色块、非对称工作物件关系、少量宽低多边形面和松弛但有控制的拼贴节奏。
+- **下一轮授权**：不继续对上一张定点修饰；保持三栏职责、统一 RegionCard、canonical 新闻图、状态语义、Disclosure、CTA、Schedule passive 与功能面 `0°`，但从标杆图重新转译三套宏观风格差异明显的完整 `1920×1080` 方案。方案差异必须来自主物件、组件轮廓、色块面积、纸物关系和整屏节奏，不得只是换色、改阴影或增加贴纸。
+- **阶段边界**：三套均为 `visual_direction_exploration`，只供用户比较，不进入组件拆分、atlas、manifest、Godot 或 `WeeklyRunGame`。用户选中一套前，不冻结新组件家族。
+- **Loop Log**：`docs/plans/world-map-benchmark-landing/2026-08-18-world-map-single-synthesis-before-style-branching-loop-log.md`。
+- **cross-read tags**：`A291/A305/A306/A309/A310/A311`、accepted-rejection、benchmark-first、clean-lowpoly-weekly、contract-proof-only、full-screen-variants、imagegen、macro-style-branching、pending-user-choice、ui、ux、visual-direction、world-map、workflow。
+
+### A313. 三套完整 UI 方向仍未证明标杆氛围，改走参考图单源的纯风格验证
+
+- **来源**：2026-08-19 用户审阅 A / B / C 三方向后明确指出“还是没有还原美术标杆的氛围”，要求先解析两张标杆各组件与整体气氛，暂不考虑真实页面组件，只保留界面大概功能并用真实生图生成一张纯风格验证稿。
+- **产物降级**：A「连续桌面·巨幅地图母版」、B「扁平纸雕·综合色周刊拼贴」、C「夜班桌景·综合色灯光静物」统一降为 `benchmark_informed_ui_style_exploration / atmosphere_not_proven`。它们可保留主物件与综合色差异研究价值，但不能再作为下一视觉目标、标杆同族证明或资产化输入。
+- **验证对象修正**：本轮冻结但暂不使用 A305 / A306 等真实组件合同，不复刻三栏、RegionCard、Dossier、Schedule、Disclosure 或 CTA exact rect。只保留“浏览三组地区线报 → 选中一地 → 在世界地图确认位置 → 看本周主案图像钩子 → 进入地区”的粗叙事链，让文件袋抽取、照片压住地图、圈记与露签等物件关系承担功能暗示。
+- **参考权限**：`benchmark-board-01.png / benchmark-board-02.png` 是本轮唯一正向美术参考；A291、真实界面、被否决候选与程序合同板均不得继续作为正向生成输入。clean-low-poly weekly 临时例外继续有效，不调用旧像素 / 半调坐标系的 `angus_art_director`。
+- **首张结果**：Codex 内置 ImageGen 从两张 benchmark 参考生成 `image_gen/2026-08-19/world-map-benchmark-pure-style-validation-v1/01-pure-style-validation-imagegen-native.png`。原生 `1672×941 / 16:9` 保持不变，未程序重绘、拼接、裁切或重采样。UX 老哥与 UI Designer 均判 `CONDITIONAL PASS / P0=0`：多媒介编辑桌、超大刊头、综合色、物件接触、粗功能链与克制幽默已经成立；地图碎面偏密、主照片偏电影场景为下一轮两个明确 P1。
+- **阶段边界**：当前图仅为 `pure_style_validation / pending_user_art_direction_decision`。即使用户认可，也只说明“多媒介深夜怪新闻编辑桌拼贴”可作为世界地图的美术母语；不得直接升格为 filled-state、组件母版、atlas、manifest、Godot 或 `WeeklyRunGame`。用户确认后才定向压缩地图 / 主照片块面，再讨论如何转译回冻结的真实组件合同。
+- **Loop Log**：`docs/plans/world-map-benchmark-landing/2026-08-19-world-map-benchmark-atmosphere-still-missed-loop-log.md`。
+- **cross-read tags**：`A181/A185/A186/A187/A188/A291/A305/A306/A309/A310/A311/A312`、accepted-rejection、benchmark-only-reference、clean-lowpoly-weekly、imagegen、pure-style-validation、style-before-components、ui、ux、visual-direction、world-map、workflow。
+
+### A314. 纯风格方向成立但综合色偏灰土，下一张转为功能—标杆元素一对一转译
+
+- **来源**：2026-08-19 用户审阅首张纯风格验证候选后认为“方向对了一些”，同时指出颜色仍偏灰土，要求详细对比，并把当前世界地图各功能组件 / 区域逐一对应到正式 benchmark 或当前风格验证稿中的视觉母件，再给出一张完整界面风格稿。
+- **色彩判断**：偏灰土不是“饱和度普遍不足”，而是可见物件中间调过暗、芥末与暖纸滑向棕褐、中央地图成为最大灰团、钴蓝 / 冷青 / 橄榄 / 芥末缺少跨栏回声。上一稿可见内容 `V_mean=0.363 / L_mean=0.103`，明显低于两张 benchmark 的 `0.461/0.184` 与 `0.471/0.183`。修正原则是保持深海军蓝夜班主场，仅把可见物件中间调局部抬高约 `15%–20%`，把棕褐拆成现代灰米纸、干净芥末与灰橄榄；禁止全局增艳、泛白或改回泛黄旧档案。
+- **物件转译**：顶部对应大字周刊刊头＋粗线地球章＋ ISSUE 小票；三张 RegionCard 对应同母版正交简报纸＋不同综合色 BackDecor 稿夹；中央对应综合色宽块世界地图母纸； Beacon 对应粗断续锈红蜡笔圈； selected evidence 对应地点附近被夹住的同源新闻校样；右栏对应钴蓝 Dossier 背夹＋暖灰主稿纸；Disclosure 对应纸内折入信息条；唯一 CTA 对应橄榄进入签；Schedule 对应被动 WEEK / DAY 回执。功能职责仍为左选—中定位—右确认，不继承三块软件面板。
+- **首张转译结果**：Codex 内置 ImageGen 以两张正式 benchmark 为正向风格真值、功能线框仅作职责参考，生成 `image_gen/2026-08-19/world-map-functional-style-translation-v1/03-functional-style-translation-imagegen-native.png`。首轮三卡误复用了同一洗衣店图，已通过第二次真实 ImageGen 定点把 `02` / `03` 改成天文台与射电望远镜；未用程序重绘。最终原生 `1672×941 / 16:9`，可见内容 `V_mean=0.491 / L_mean=0.205`，已接近且略高于 benchmark，灰土问题实质关闭。
+- **终审**：UX 老哥与 UI Designer 均判 `CONDITIONAL PASS / P0=0`，认为该图已能证明 benchmark 语言可包住粗功能链，不需交付前整屏重生。已知 `P1=2`：右侧四行日期 / Desk / FIELD 等机构记录表仍会局部回流 SCP；`DISCLOSURE ＋` 与下方已显示四行内容存在折叠状态矛盾。若用户认可整体方向，下一轮只把右栏改成两条不等长编辑情报，并选择明确 collapsed 或 expanded 单一状态；不得重新随机重采整屏。
+- **合同边界**：三张 RegionCard 的同构与三幅地区图规格只在概念层成立；洗衣店在 selected Card、evidence、Dossier 三处只证明 `same-story / same-source concept`，不证明同一 `1104×704 / 69:44` 位图逐像素复用。FrontCarrier、动态文字槽、状态语义、Disclosure、CTA、hit rect、ISSUE exact rect 与 Schedule 运行行为继续冻结；本稿不得升格为 filled-state、组件母版、atlas、manifest、Godot 或 `WeeklyRunGame` 输入。
+- **cross-read tags**：`A291/A305/A306/A311/A312/A313`、accepted-direction-with-correction、benchmark-element-mapping、clean-lowpoly-weekly、color-midtones、conditional-pass、functional-style-translation、imagegen、no-godot、same-source-concept-only、ui、ux、world-map、workflow。
+
+### A315. 综合色灰度不等于地图提亮或全屏压暗，深色地图与离散亮岛必须同时成立
+
+- **来源**：2026-08-19 用户连续纠偏两次：先指出“不用为了不灰土把地图改成白色”，强调所说的是整体综合色的灰度；看到深色地图回修后又指出“整体好像压暗了，像关灯了”。
+- **对 A314 的修订**：A314 的功能—标杆物件映射继续有效，但“灰土已关闭”的色彩通过结论撤回。`03-functional-style-translation-imagegen-native.png` 只保留为 `functional_mapping_proof / color_direction_rejected`：它把 benchmark 的暗场主导反转成浅纸主导。综合色灰度指钴蓝、冷青、橄榄、芥末与暖纸共享低彩度冷石板灰桥，不等于提高地图 value，也不等于整体压暗。
+- **正确明度结构**：深海军蓝 / 深石板地图与背景约占第一面积；综合色在中暗区保留色相；暖灰纸、照片边、刊头和少量金属形成分散亮岛；锈红只作最小异常信号。排序固定为 `暗场 > 综合色 > 局部纸件 > 锈红`。地图转灰阶后仍须是深色大物件，恢复颜色后大陆又须辨认钴蓝、冷青、橄榄和芥末。
+- **迭代裁决**：v2 恢复深色地图但全屏高亮降为 `0%`，用户判“像关灯”；v3 仍未恢复亮岛而拒绝；v4 `02-functional-style-translation-lit-islands-imagegen-native.png` 保住地图裁切 `dark=57.7% / light=2.7%`，恢复刊头、三卡、evidence、Dossier、Schedule 和 CTA 文字亮岛，关灯问题关闭，但全屏高亮 `21.4%` 高于 benchmark 约 `13%`，双审判 `CONDITIONAL PASS`；v5 试图收纸面半档却再次把高亮压到 `2.0%`，拒绝。
+- **当前候选**：v4 作为 `dark-map-and-lit-islands functional-style concept / pending_user_direction_decision`。它只供用户判断“深色地图＋综合色灰桥＋局部亮纸”是否是正确母关系，不是最终校色、生产视觉目标或组件母版。地图、背景、 continente 综合色、selected evidence、三地区图片、Dossier 外壳、CTA 与构图从 v4 起冻结；纸面基础值仍高约一档。
+- **止损与后续**：不再用整屏 ImageGen追逐 `5%–8%` 的纸面亮度差。若用户认可 v4 母关系，后续使用 role-based paper token / 分区遮罩做可验证校准，并单独处理右栏机构表格与 Disclosure 状态；不得把两类修正重新混成整屏重采样。
+- **阶段边界**：继续冻结 canonical `1104×704 / 69:44` 像素同源、exact rect、动态文字、状态矩阵、hit rect、atlas、manifest、Godot 与 `WeeklyRunGame`。
+- **Loop Log**：`docs/plans/world-map-benchmark-landing/2026-08-19-world-map-shared-gray-misread-as-map-brightening-loop-log.md`。
+- **cross-read tags**：`A311/A313/A314`、accepted-correction、dark-map、distributed-highlights、functional-style-translation、gray-bridge-not-value、imagegen-stop-loss、pending-user-review、shared-chroma、ui、ux、world-map、workflow。
+
+### A316. 世界地图文件组件必须先读作开放编辑材料，不得用完整公司报表承载周刊功能
+
+- **来源**：2026-08-19 用户把两张正式 benchmark 的文件夹 / 文书局部与 v4 右侧 Dossier 并排后指出：标杆虽有办公属性，但整体仍是编辑部材料；当前右栏则是纯公司报表、官僚主义。用户要求重新深入研究标杆并重想组件样式。
+- **用户判断成立**：差距不在纸张颜色或批注数量，而在载体身份和信息组织。benchmark 使用“大母件＋少量插入物”：综合色文件夹、标题纸、照片校样、便签 / 索引、一次真实夹贴接触，且材料处于被翻、夹、贴、改的开放中间态；v4 把地区标题、`STATUS ACTIVE`、照片、摘要、Disclosure、四列记录表和 CTA 全收进一张四面闭合的完整白表单，因而先读成待审批 / 待提交的企业报告。
+- **右栏整体重做方向**：Dossier 外矩形、钴蓝母夹、同源 `69:44` 新闻图、Disclosure 与 CTA 的职责和 hit rect 继续冻结；内部改组为 `标题纸 → 新闻照片校样 → 编辑说明短签 → Disclosure 索引条 → 一张编辑资料索引纸 → 正交橄榄行动签`。标题、照片与索引必须读成不同物件，不得继续由单一完整表单收编。
+- **必须移除的画法**：四列表格 / 等高单元格、部门 / 人员 / 日期等无真实玩法来源的伪业务字段、`STATUS ACTIVE` 式企业状态框、整页连续外框、全栏统一企业大写语气，以及 `+` 与已展开条目同时出现的 Disclosure 状态矛盾。四条任务若展开，应在一张索引纸上以编号、短标题、短 metadata 和小状态签呈现，用不等长单线分隔，不画电子表格。
+- **可保留并局部修正**：顶部刊头、三张同构 RegionCard、深色综合色地图、北美圈与 selected evidence 的主体关系保留；左卡只减完整描边、强化稿夹露边和短印刷章；Schedule 改读为被稿夹压住的 WEEK / DAY 回执；CTA 仍为唯一强交互，只把皮肤改成从 Dossier 底袋抽出的正交行动签。FrontCarrier 一律 `0°`，只有 NO-HIT BackDecor 可倾 `1°–2°`。
+- **第一眼 Gate**：遮住全部文字后，右栏仍须能分辨“钴蓝母夹、标题纸、照片校样、资料索引、行动签”五层关系；若仍是一张完整白表单、仍能一眼看见四行等高表格，或只是给原报表增加胶带 / 问号 / 批注，直接失败。整屏五秒首读必须是“怪新闻周刊编辑部正在形成本期主报道”，不能是公司报表、工单审批、SCP 档案或科研调查表。
+- **阶段边界**：本轮只完成 benchmark 深读、UX / UI 双审与改造 brief；不继续生图，不进入 exact rect、组件拆分、atlas、manifest、Godot 或 `WeeklyRunGame`。下一张视觉稿必须先按 A316 重写右栏载体身份，再处理 A315 的纸面局部校色，两者不得重新混成整屏随机重采。
+- **Loop Log**：`docs/plans/world-map-benchmark-landing/2026-08-19-world-map-editorial-material-misread-as-corporate-report-loop-log.md`。
+- **方案 brief**：`docs/plans/world-map-benchmark-landing/2026-08-19-world-map-open-editorial-material-brief-v1.md`。
+- **cross-read tags**：`A256/A291/A301/A309/A311/A314/A315`、accepted-correction、benchmark-component-language、corporate-report-rejected、dossier、editorial-materials、folder-language、functional-style-translation、open-work-state、ui、ux、world-map、workflow。
+
+### A317. Dossier 版面样式方向成立，下一步用同壳同图槽验证真实内容容量
+
+- **来源**：2026-08-21 用户审阅 `image_gen/2026-08-19/world-map-dossier-orthogonal-component-board-v1/02-imagegen-native-art-board.png` 对应的 Dossier 正交组件方案后明确表示“版面样式没问题”，同时要求考虑实际应用：不同地区图片必须统一规格，各类文字需要真实放入，并制作真实内容填入版风格稿。
+- **采纳范围**：采纳钴蓝母夹、灰米标题纸、`69:44` 照片校样、短正文纸、Disclosure 索引、展开资料纸与橄榄行动签构成的开放编辑材料版面；这说明 A316 的载体身份修正方向成立。采纳不覆盖该组件板中按展示需要近似的父壳比例、内部 exact rect、CTA 外置关系或工程节点结构。
+- **真实内容验证合同**：下一张板使用三个同尺寸 Dossier 并排，从同一个 `468×1032` 母壳复制并采用完全相同的缩放；三张地区图继续使用现有 `1104×704 / 69:44` 母图，放入同一 `414×264` slot，只等比缩放、完整画幅，不裁切、不拉伸、不另做缩略图。北美以 expanded 验证正式前两条任务与“共 4 显 2”，东亚和太平洋以 locked / collapsed 验证长解锁缺口与空任务状态，不为画面密度伪造任务。
+- **内容身份边界**：地区名、正式任务名、任务数量、解锁缺口与 CTA 可作为正式数据；洗衣店、观测塔与监听碟的 story headline / body 仍属于视觉或容量 fixture，必须在 Dossier 外标注。`红线升温`仅用于 status 槽容量并标 `PENDING`，不得因此恢复为已冻结玩家语义；locked Disclosure 行为冲突也只在板外暴露，不由静态稿擅自裁决。
+- **制作方式**：先由真实 ImageGen 生成一次无字 BaseFrontCarrierSkin / paper / clip / CTA 美术母壳，再由程序像素级复制三次并准确放入 canonical 图片、中文动态文字、状态差异与 QA 说明。程序只负责排版、文字、复用与检测，不替代美术生成，也不得让 ImageGen 直接画三套近似壳来伪造同源证明。
+- **阶段边界**：当前产物只允许升格为 `filled_state_content / capacity / state_delta concept`，用于用户判断版面是否包得住真实内容并保持标杆氛围；不进入正式壳体、atlas、manifest、Godot、`WeeklyRunGame`，不解冻 ISSUE exact rect 或 RegionCard 2:1 / 86:41 冲突。
+- **cross-read tags**：`A291/A301/A305/A306/A316`、accepted-direction、capacity-proof、canonical-image-reuse、clean-lowpoly-weekly、dossier、filled-state、fixture-labeling、imagegen-first、no-godot、same-master、ui、ux、world-map、workflow。
+
+### A318. Dossier 内容必须注册到真实可见纸面，三联程序叠字稿降为诊断样本
+
+- **来源**：2026-08-21 用户审阅 `image_gen/2026-08-21/world-map-dossier-real-content-filled-state-v1/04-real-content-filled-state-style-target-1920x1080.png` 后明确指出：“感觉目前的拼贴很强行啊，文字内容都没有对准界面组件，文字在组件里的大小等都有问题。”
+- **裁决**：用户否决成立，并覆盖父级、UX 老哥与 UI Designer 上一轮 `PASS`。该图降级为 `programmatic content-overlay mismatch diagnostic / rejected filled-state target`，只保留三张 `69:44` 图片、正式内容矩阵、状态边界和同壳复用的技术证据；不得继续称为 filled-state 风格目标、内容容量通过或资产化来源。
+- **根因**：02b ImageGen 母壳的真实标题纸、照片孔、正文纸、Disclosure 父纸面、preview 纸和 CTA 票条没有与 frozen slots 注册。程序随后新增不透明纸块、硬图片框、封闭 Disclosure、expanded 矩形与 CTA 纹理条，并使用逐字段 `fit_text` 把内容塞入；文字对准程序矩形而非玩家看到的纸面。三个 Dossier 又被缩入三联板并与 proof rail 争夺空间，正文和 metadata 降为工程注释级字号。
+- **流程修正**：下一版停止三联 beauty target，先制作 `468×1032` 原生 North America 单页。生成后必须建立 `frozen slot / visual_write_rect / no_text_rect` 三层叠加，动态文字只允许落在真实交集；交集不足时依据 frozen slots 重生母壳，不新增程序纸块、不自由缩字、不改合同。固定统一 type tokens 后分别输出 collapsed / expanded 100% 玩家视图，North 通过后才能以同字号同坐标替换 East / Pacific。
+- **交付拆分**：玩家视觉目标只展示一个真实 Dossier 所处的界面，不携带 FORMAL / FIXTURE / PENDING badge 或 proof rail；三地区 content swap、状态矩阵、标题压力、pending 冲突和像素检测另放低美术权重 QA 板。QA 文字不得再被当作视觉通过证据。
+- **继续冻结**：桌面三栏、`right_dossier_page` / `right_mission_intel_button` v1.0.0、透明轻量 Disclosure、expanded 两条只读 preview、唯一 CTA、FrontCarrier `0°`、同一 `1104×704 / 69:44` 母图完整等比显示，以及不进入 atlas、manifest、Godot 或 `WeeklyRunGame`。
+- **2026-08-21 执行进展**：已按本裁决生成 North America `468×1032` collapsed / expanded 单卡候选。真实 ImageGen 提供 BaseSkin 与唯一 ExpandedPreviewSkin；程序只做既有美术模块注册、canonical 图片回填、固定 type token 文字与独立 QA。UX 条件项（正文 / Disclosure 对比、`＋/－` 强度、重复统计）已关闭，UI Designer 终审 `PASS / P0=0 / P1=0`。当前身份为 `north_single_dossier_text_registration_visual_target / pending_user_confirmation`；不得据此恢复已否决的三联稿，也不得提前复制 East / Pacific 或进入 Godot。
+- **Loop Log**：`docs/plans/world-map-benchmark-landing/2026-08-21-world-map-dossier-text-registration-mismatch-loop-log.md`。
+
+### A319. Dossier 袋口不得侵入完整动态写入区，当前短文案未遮住不等于容量安全
+
+- **来源**：2026-08-21 用户将 North expanded 初版与此前正交组件板并排后指出：“目前这两块的文件夹凸起，有点影响功能性，因为挡住文字部分了。之前你给的图里，好像没有这么严重？”
+- **裁决**：用户判断成立。expanded 初版左右钴蓝斜角约从 `y=829–837` 向上侵入冻结内容槽，侵入深度约 `51–59px`，占 `248px` 高 expanded 内容区约 `21%–24%`。即使 North 当前短标题仍可读，也会迫使后续长标题 / meta 上移、缩字或改行距，因此该版降为 `folder_protrusion_intrusion_diagnostic`。
+- **几何 Gate**：expanded slot 继续冻结为 `[27,640,414,248]`；至少保留 `x=43–425, y=652–876` 的零蓝色实体写入区。袋口中央最多只允许低矮压边表达接触，侧夹片只能进入 no-text gutter，不得要求动态文字避让。
+- **视觉修正**：以真实 ImageGen 定点编辑删除两块高斜角，恢复连续暖灰任务纸，并在最底部保留低矮钴蓝挡边。文字坐标、字号、行距、任务内容、Disclosure、CTA、图片与父壳均未改变；expanded 仍只新增一张连续索引纸。
+- **复审**：UX 老哥原稿判 `FAIL / P1=2`，明确要求改美术轮廓而非挪字；修正版经 UI Designer 复审为 `PASS / P0=0 / P1=0`，两条任务写入容量、纸袋接触和 collapsed / expanded 同壳关系成立。
+- **当前身份**：修正版继续作为 `north_single_dossier_text_registration_visual_target / pending_user_confirmation`；不进入 East / Pacific 扩展、atlas、manifest、Godot 或 `WeeklyRunGame`。
+- **Loop Log**：`docs/plans/world-map-benchmark-landing/2026-08-21-world-map-dossier-pocket-lip-text-intrusion-loop-log.md`。
+- **cross-read tags**：`A301/A305/A316/A317/A318`、accepted-correction、content-capacity、dossier、expanded-preview、folder-lip、imagegen-edit、no-text-rect、occlusion、single-component-first、typography、ui、ux、visual-write-rect、world-map、workflow。
+
+### A320. North 单卡文字注册获确认，授权同壳扩展 East / Pacific 并回填 A291 整屏
+
+- **来源**：2026-08-21 用户审阅 A319 低挡边修正版后明确回复“可以，继续”，确认 North `468×1032` collapsed / expanded 的文字注册、连续任务纸与低挡边方向，并授权按父级已说明的下一步继续：以完全相同的壳体、字号、基线和 `69:44` 图片槽扩展 East / Pacific，再装回完整 `1920×1080` filled-state。
+- **跨地区状态矩阵**：East 使用 `locked / collapsed`，只显示正式解锁缺口，不泄漏任何任务；Pacific 使用 `locked / expanded`，连续索引纸只显示两条只读解锁条件，不显示任务类型、耗时或推荐人数。两者 CTA 均保持同位 `暂不可进入 / locked_disabled`。locked Disclosure 的正式交互 owner 继续 pending。
+- **同壳结果**：East / Pacific 均使用 `468×1032` 同壳、固定 type token、`414×264 / 69:44` canonical 图片与相同纸层几何；真实 ImageGen 只新增 locked / disabled 色彩皮肤。所有文字容量探针通过，未使用 `fit_text`、水平压缩或程序补纸。A319 高袋角未回流。
+- **整屏结果**：最终首帧只显示 North `selected + warning + collapsed`，右侧 frozen rect 为 `[1416,24,468,1032]`；East / Pacific 只在左卡和地图显示 locked。A291 左卡中已撤销的“截稿倒计时7天”由真实 ImageGen 清理，不再与 Schedule 的全局“剩余7天”形成双时间源。底部 `进入地区任务台` 仍是唯一主 CTA。
+- **复审**：UX 首轮发现旧时间文案回流与 Pacific 正式条件缩写两个 P1；前者删除、后者恢复“北美禁区带连续追踪第 2 环”并按合同三行排版后，UX 回归 `PASS / P0=0 / P1=0 / P2=1`。UI Designer 最终终审 `PASS / P0=0 / P1=0`，确认同壳、fixed token、low lip、locked 皮肤、A291 融合与强行拼贴问题均通过。
+- **交付身份**：`08-fullscreen-filled-state-north-collapsed-1920x1080.png` 可作为当前 `filled_state_visual_target / pending_user_confirmation`；East / Pacific 单卡为跨地区文字注册与容量目标；QA 板和 JSON 只作证据。它们不是生产切片、atlas、manifest、Godot 接线或最终交互合同。
+- **继续冻结**：ISSUE exact rect、RegionCard `2:1 / 86:41` 冲突、locked Disclosure owner、kicker / story fixture 身份均未解冻；不进入 Godot、atlas、manifest 或 `WeeklyRunGame`。
+- **cross-read tags**：`A291/A296/A305/A316/A317/A318/A319`、accepted-direction、canonical-image-reuse、cross-region、dossier、filled-state、fixed-token、imagegen-edit、locked-disabled、low-lip、no-godot、same-shell、text-registration、ui、ux、visual-target、world-map、workflow。
+- **cross-read tags**：`A301/A305/A316/A317`、accepted-rejection、content-registration、dossier、filled-state-rejected、no-godot、programmatic-overlay、single-component-first、typography、ui、ux、visible-carrier、world-map、workflow。
+
+### A321. 右栏完成不等于整屏完成：A291 烘焙左栏必须重建为真实组件纵切片
+
+- **来源**：2026-08-24 用户在右侧 Dossier 组件完成后追问“目前做了右边组件，那左边呢”，明确指出上一轮整屏交付遗漏左栏真实组件。
+- **复核**：UX 对原文件做尺寸与像素差分，确认 08 的共同左栏区域与 A291 清理版 09 逐像素相同。08 实际只完成右侧 Dossier 回嵌，左侧 RegionIndex / Schedule 仍是烘焙参考像素。
+- **裁决**：08 从 `filled_state_visual_target` 降级为 `right_dossier_full_screen_reinsert_proof`；A291/09 左栏仅可作为 `reference-only`，不得作为 RegionCard、Schedule、动态槽或运行态完成证据。
+- **左栏下一步**：先制作一个独立 vertical slice：共享无字 RegionCard 母壳、三张同构实例、North `selected+warning`、East/Pacific `locked`、三张 canonical 图与 disabled Schedule；通过后再回嵌完整 `1920×1080`。
+- **功能边界**：三卡只保留编号、地区名、状态和统一图片槽，退役详情区不得恢复解锁缺口、任务摘要或倒计时；Schedule 依 A296 只显示“当前第 1 天 / 选题会尚未开始 / 当前版本不可操作”，不显示任何具体剩余天数。
+- **合同澄清**：A305 与 `design/ui-contracts/world-map/left_region_card.json` v1.0.0 的 `340×170`、`138×88` 为当前正式真源；A320 的“RegionCard 比例冲突未解”表述作废，旧 `86:41` 不得回流。ISSUE exact rect、locked Disclosure owner 与其他未冻项继续保持原状态。
+- **范围**：本轮只重建左栏组件美术与 filled-state 回嵌，不进入 atlas、manifest、Godot 或 `WeeklyRunGame`。
+- **Loop Log**：`docs/plans/world-map-benchmark-landing/2026-08-24-world-map-left-column-baked-reference-misclassified-as-filled-state-loop-log.md`。
+- **cross-read tags**：`A291/A296/A305/A306/A320`、accepted-correction、baked-reference、canonical-image-reuse、component-completeness、disabled-schedule、filled-state-downgraded、left-column、no-godot、region-card、screen-component-completion-integrity、ui、ux、vertical-slice、world-map、workflow。
+
+### A322. 世界地图最大内容态先以生图验证氛围，功能合同另由确定性层证明
+
+- **来源**：2026-08-25 用户确认“按目前这个方向”继续，并要求生成一张真实内容填充、模拟内容最大化状态的完整生图稿。
+- **视觉方向**：延续 clean-low-poly weekly 夜间编辑部工作台；刊头、深夜石板蓝地图、冷钴蓝文件夹、清洁暖白纸、灰度橄榄、芥末黄和少量锈红形成跨三栏节拍，避免 SCP、公司报表、GIS、赛博 HUD、泛黄旧档案与关灯式压暗。
+- **最大密度分配**：高密度只集中在一个 North selected evidence cluster 与右侧 expanded Dossier；东亚和太平洋只保留轻量地图标签。中央至少保留约一半地图与深色负空间，不扩展为多证据簇贴纸墙。
+- **左栏与 Schedule**：三张 RegionCard 继续共享 `340×170` 壳体与 `138×88 / 69:44` 图片槽，只保留 Eye、编号、地区名、状态和 canonical 图；不得恢复摘要、任务数、解锁缺口或倒计时。Schedule 只显示 `GLOBAL SCHEDULE / 全局日程`、`当前第 1 天`、`选题会尚未开始`、`选题会后开放`，整体 NO-HIT。
+- **右栏最大态**：Dossier 使用 expanded 状态，只显示两条真实任务预览；两条任务必须位于同一张只读索引纸内，不长成两个独立可点击任务卡。Disclosure 显示 `已显示 2 / 共 4 条` 与展开态 `－`，底部 `进入地区任务台 →` 仍为全屏唯一 CTA。
+- **产物分级**：完整 ImageGen 输出命名为 `max_content_imagegen_style_proof_pending_user_confirmation`，只证明综合色彩、材料、内容密度和编辑部氛围；不得将其称为 exact functional target、生产资产或运行态证据。
+- **精确合同边界**：若方向获确认，必须再以真实 `1104×704 / 69:44` canonical 图、冻结文字槽和精确组件矩形做确定性合成，输出真实 `1920×1080`；三处北美图只等比缩放、不裁切、不拉伸、不另做缩略图，并重新验证 Disclosure、CTA 与 hit rect。
+- **范围**：本轮不进入 atlas、manifest、Godot 或 `WeeklyRunGame`。
+- **Loop Log**：`docs/plans/world-map-benchmark-landing/2026-08-25-world-map-max-content-imagegen-contract-drift-loop-log.md`。
+- **cross-read tags**：`A291/A296/A305/A306/A321`、canonical-image-reuse、clean-low-poly-weekly、dossier-expanded、editorial-evidence-cluster、filled-state、imagegen、max-content、no-godot、region-card、schedule-no-hit、style-proof、ui、ux、world-map。
+
+### A323. 先剥离题材与功能，单独研究周刊视觉语法与官僚感差异
+
+- **来源**：2026-08-25 用户认为最大内容世界地图生图“效果大致可行”，但整屏仍有严肃官僚主义感；要求暂时不考虑未解之谜风格和实际界面内容，只凭印象给出几个周刊界面风格稿，先理解周刊元素与官僚感的根本区别。
+- **研究裁决**：本轮不复用世界地图三栏、Dossier、RegionCard、任务、状态、文件夹、证据簇或实际交互合同；只验证出版层级、刊头、主报道、栏目节奏、图片裁切、导语、页码、校样和编辑动作。产物身份统一为 `pure_weekly_style_proof`。
+- **A 报摊封面型**：以巨型刊头、单一主视觉、压倒性主标题、ISSUE 与短导读证明品牌第一眼；官僚感最低，但整张迁回会变成杂志商品展示。
+- **B 编辑部拼版校样型**：以双页版心、标题层级、主图—导语—侧栏关系、裁切线、色彩校样条、胶带、蓝铅笔和改稿线证明“正在制作一期周刊”；当前双审均判定为迁回价值最高的主源。
+- **C 栏目色页堆叠型**：以钴蓝、橄榄、芥末、珊瑚红大色页、超大栏目号和阶梯露边证明栏目性格；只宜借综合色节拍，整张迁回会像栏目导航卡、企业画册或品牌手册。
+- **根本区别**：周刊围绕“这一期讲什么、怎样让读者想看”组织视觉，依靠一主多辅、剧烈标题尺度、面向读者的标题句与开放编辑状态；官僚界面围绕“谁处理、当前到哪一步”组织视觉，依靠等权字段、封闭边框、编号、状态、权限、审批和归档。
+- **当前建议**：若后续迁回游戏，采用 `A 的刊头锁定 + B 的编辑动作语言 + C 的栏目综合色节拍`；不照搬任何一张完整构图。用户尚未确认最终组合，继续保持 `pending-user-choice`。
+- **范围**：不修改 A305/A306/A322 功能合同，不进入 atlas、manifest、Godot 或 `WeeklyRunGame`。
+- **cross-read tags**：`A291/A309/A313/A316/A322`、bureaucracy-gap、editorial-hierarchy、imagegen、magazine-risk、paste-up-proof、pending-user-choice、pure-weekly、style-proof、ui、ux、weekly-language、world-map。
+
+### A324. 未解之谜只进入周刊报道题材，不替换周刊出版语法
+
+- **来源**：2026-08-25 用户确认 A/B/C 纯风格稿“比较有周刊的感觉”，并要求进一步验证这些杂志周刊若改为未解之谜题材会有哪些小变化，再以真实 ImageGen 生图。
+- **最小嫁接原则**：至少保留原稿 85–90% 的出版剪影、刊头、主次层级、页面数量、综合色、纸张、亮度和 clean low-poly 画法；只替换“这一期讲什么”，不替换“它是一份周刊”的视觉语法。
+- **A 报摊封面变体**：保留巨型 `WEEKLY`、人物侧脸、ISSUE、往期封面和四色品牌；只把主报道改为城市道路违反透视地弯向天空，标题为 `THE STREET THAT MOVED`，笑脸只增加一个困惑眉毛与问号。
+- **B 拼版校样变体**：保留完整双页、版心、裁切/对版标记、色条、蓝铅笔和 `PROOF B`；只把报道改为 `THE STATION THAT SKIPS MIDNIGHT`，以错误时间、反向影子和上升雨滴表达公开都市奇闻，不增加证据材料。
+- **C 栏目色页变体**：保留四张阶梯色页、大号 `01–04` 和原综合色顺序；栏目改为 `URBAN TALES / ODD SCIENCE / NIGHT CITY / WEEKEND WEIRD`，每页只出现一个轻微不可能现象，编号仍表示栏目顺序而非异常对象编号。
+- **防回流硬线**：禁止 `CASE FILE / CLASSIFIED / SCP`、异常编号、机构徽章、证据编号、来源地点时间字段、红线关系网、批准/归档章、军事地图、雷达监控、危险警报阵列、恐怖血迹或秘密机构内部语气。
+- **产物身份**：三张均为 `mystery_weekly_style_proof_pending_user_choice`；只验证“周刊语法保持不变时，未解之谜题材可以多轻地进入”，不代表现有世界地图布局、组件合同或生产资产。
+- **范围**：不修改 A305/A306/A322 功能合同，不进入 atlas、manifest、Godot 或 `WeeklyRunGame`。
+
+### A325. 编辑部界面以“正在制作一期周刊”的拼版台为母语法
+
+- **来源**：2026-08-25 用户要求继续研究“杂志社的编辑界面要如何呈现、编辑部是什么样”，并明确该图将作为世界地图乃至整个游戏界面的参考，用于识别编辑部与杂志元素，而不是官僚主义元素。
+- **核心裁决**：编辑部感不等于办公室房间、桌上摆很多纸或旧文件夹；它必须让玩家第一眼读出 `选稿 → 改题 → 配图/裁切 → 拼入版面 → 检查整期节奏 → 校样/送印`。官僚感则来自登记、审批、归档、权限、责任人、状态和追责字段。
+- **纯参考构图**：生成 `weekly_pasteup_desk_pure_reference`：顶部为刊名、ISSUE、夜班编辑台、`PRINT PROOF` 与综合色条；左侧为三条有主次差异的来稿候选；中央为最大面积的未完成 `04—05` 跨页；右侧为标题纸条、同图 full/crop 裁切样与图注；底部为 `01—12` Flatplan 和唯一 `SEND PROOF` CTA。
+- **必须保留的编辑信号**：未完成版位、`PHOTO HOLD / CAPTION TK / PROOF B`、独立标题纸条、同内容多版本校样、照片裁切、蓝铅笔圈选、锈红删改、页码/裁切线/综合色条、Flatplan 与出版动词。
+- **防官僚硬线**：不得引入文件夹阵列、CASE/FILE/SECRET、异常编号、负责人/日期/优先级/审批状态表、权限与保密、等权任务行、红线证据墙、机构徽章、雷达监控或软件属性检查器。
+- **迁回原则**：该图只升格为“编辑部 UI 母语法参考”，不是世界地图的新布局。后续每个实际界面按职责抽取两到三类语法，不得让所有页面都复制完整来稿—跨页—校样—Flatplan 构图；世界地图三栏、FrontCarrier、动态文字槽、状态语义、Disclosure、CTA 与 hit rect 继续冻结。
+- **产物身份**：`editorial_ui_language_reference_pending_user_confirmation`；不进入 atlas、manifest、Godot 或 `WeeklyRunGame`。
+- **cross-read tags**：`A291/A323/A324`、editorial-actions、editorial-workbench、flatplan、headline-options、imagegen、no-bureaucracy、paste-up-desk、pending-user-confirmation、proofing、pure-reference、ui、ux、weekly-language、world-map。
+
+### A326. 编辑部氛围研究先于世界地图组件映射
+
+- **来源**：2026-08-25 用户明确纠正“不要过早进入界面内容一一对应”，要求当前只寻找编辑部的元素和感觉，并多生成几张进行比较。
+- **阶段修订**：暂停把刊头、来稿、跨页、Flatplan 等元素逐项对应到世界地图左/中/右栏；A325 只保留为编辑部动作语言样本，不再承担迁回方案。
+- **四个纯氛围方向**：A 夜班实体拼版桌，验证动手制作；B 选题会后的编辑会议长桌，验证集体争论与轻松气氛；C 图片编辑接触印样灯桌，验证图片判断、裁切与视觉专业性；D 美术总监整期排版墙，验证整期节奏、封面竞争与品牌统筹。
+- **共同边界**：只继承 clean-low-poly weekly 的宽块面、清洁纸张、粗线手绘、少量印刷错位与现代综合色；不使用现有世界地图三栏、RegionCard、Dossier、Schedule、CTA、状态或真实内容，也不生成软件 UI、档案室、企业会议或 SCP 证据台。
+- **下一闸门**：用户先判断四个方向中哪些真正像 Angus 的编辑部、哪些物件和气氛应保留；在用户明确选择前，不组合方向、不制作 filled-state、不做组件资产化或 Godot。
+- **产物**：`image_gen/2026-08-25/editorial-department-atmosphere-variants-v1/01-04`，身份统一为 `editorial_department_atmosphere_study_pending_user_choice`。
+- **Loop Log**：`docs/plans/world-map-benchmark-landing/2026-08-25-editorial-atmosphere-before-component-mapping-loop-log.md`。
+- **cross-read tags**：`A323/A324/A325`、accepted-correction、atmosphere-first、editorial-department、imagegen、no-component-mapping、no-godot、pure-reference、style-exploration、ui、ux、weekly-language、workflow。
+
+### A327. 用同一期出版链承载编辑部元素大风格稿
+
+- **来源**：2026-08-25 用户确认上一轮四张氛围稿“更像编辑部而非官僚”，并要求进一步扩充内容和元素，以便未来界面拥有充足的视觉取材；当前交付一张包含各类元素的大风格稿。
+- **组织原则**：大稿不是 UI 组件库、九宫格资产目录或企业品牌手册；所有物件属于同一期、同一个街道奇闻报道，同一母图从来稿缩略图进入联系表、裁切样、三张封面、中央 `04—05` 跨页与底部 `01—12` Flatplan，以出版过程制造丰富度。
+- **覆盖类别**：出版身份、标题与来稿、页面与版位、图片编辑、文字改稿、栏目与阅读节奏、Proof 与出版动作、物理拼版关系、编辑人格与幽默、夜班环境与时间。
+- **画面主次**：中央未完成跨页为唯一主视觉；左侧同题封面、右侧联系表/裁切样、底部 Flatplan 为三组次视觉；标题候选、动作语汇、读者来信、更正便签、笔尺夹剪与点心只作为小型发现项。
+- **双审结果**：UX `PASS / P0=0 / P1=0 / P2=2`，确认它先读作完整编辑生态而非素材目录；UI Designer 判定可作为丰富版待选参考，但顶部动作票与生活道具已到密度上限，下一轮若继续应做减法，不再增加类别。
+- **风险约束**：`SELECT / REWRITE / CUT 20%` 等词在实际界面不得并列成长成多个按钮；环境道具每屏最多两类；Proof A/B 表示版本而非操作；Flatplan 不叠软件 tab、进度点或 hover 阵列。
+- **产物身份**：`weekly_editorial_big_style_reference_candidate / editorial_ecosystem_style_motherboard`，文件为 `image_gen/2026-08-25/editorial-visual-language-master-board-v1/01-editorial-visual-language-master-board.png`；不是 exact rect、热区证明、可直接裁切资产或生产真源。
+- **范围**：继续冻结世界地图真实组件合同，不进入 atlas、manifest、Godot 或 `WeeklyRunGame`。
+- **cross-read tags**：`A323/A325/A326`、accepted-direction、editorial-ecosystem、imagegen、master-board、no-component-mapping、no-godot、pending-user-review、pure-reference、same-story-chain、ui、ux、visual-language、weekly-language。
+
+### A328. 编辑部大板需补齐全游戏功能家族，不再以桌面物件数量判断覆盖度
+
+- **来源**：2026-08-25 用户指出 A327 大板“元素有点少”，质疑其是否足够供全游戏界面使用，并要求重新结合两张正式 clean-low-poly weekly 标杆扩展元素。
+- **纠偏**：A327 从“元素类别已足够的总语言参考”降级为“编辑制作中段生态参考”。它充分覆盖选题、标题、选图、封面、拼版和 Flatplan，但不证明全游戏视觉语法覆盖完成。
+- **结构性缺口**：缺少或偏弱的不是更多咖啡、剪刀、夹子和便签，而是大型/中型/微型承载轮廓、栏目与期次导航、草稿/缺图/待改/校样/可印状态、溢出/换图/暂缓异常、截稿与校样轮次进度、成刊结果与读者回响。
+- **标杆补充源**：从 benchmark-board-01/02 转译彩色外套纸与插袋、切角/缺口/阶梯页边/书脊签、成册与透明媒介、圆形光盘或出版章、多尺度 WMW/地球/ISSUE 图形、点阵/方格/等高线/对版网格、综合色大页和同类物件的原稿/圈改/裁切/修补/半抽出/覆盖状态。
+- **扩展规模**：视觉语言扩为 16 个家族：刊物身份、主内容、短内容、编辑选择、编辑状态、反馈异常、候选比较、页面导航、时间进度、主动作确认、可操作部位、编辑素材、完成回响、物理接触、品牌图形和夜班生活；每屏只抽取高频 2–4 类、中频 1–3 类、低频 0–2 类。
+- **下一张大板要求**：至少同时出现巨大横跨页、竖封面、彩色封套/插袋、网格联系表、低矮 Flatplan、窄标题纸与圆形/透明媒介等六种以上大剪影；普通暖白矩形不得继续统治画面；重点展示同一纸件的五种制作状态和状态/异常/进度/结果闭环。
+- **边界**：仍不把 16 家族一一对应到世界地图区域，不制作九宫格组件目录，不恢复 CASE/SECRET/审批/权限/SCP 语法。
+- **产物身份**：A327 保留为 `mid-production-editorial-ecosystem-reference`；下一候选为 `expanded-weekly-visual-grammar-board-pending-generation`。
+- **范围**：不进入 atlas、manifest、Godot 或 `WeeklyRunGame`。
+- **Loop Log**：`docs/plans/world-map-benchmark-landing/2026-08-25-editorial-element-family-coverage-underestimated-loop-log.md`。
+
+### A329. 扩展周刊视觉语法板补齐形态与出版周期，但仍需策展删减
+
+- **来源**：2026-08-25 用户在 A328 元素家族扩充方案后回复“继续”，授权真实生图生成下一张扩展大板。
+- **新增形态**：切角钴蓝成册封套与书脊、City/Odd Science/Night 栏目页签、竖封面、短刊物、栏目折页、橄榄插袋、状态稿扇、联系表、独立照片、透明裁切片、胶片、圆形 WEEKLY 媒介、图解页、Flatplan、Proof/Print 序列、截稿日历、读者信、媒体剪报和成刊堆。
+- **周期覆盖**：同一期内容形成 `栏目/来稿 → 跨页制作 → 图片与文字处理 → 缺图/溢出/改写 → Flatplan/校样/截稿 → 送印 → 成刊/读者回响`，关闭 A328 指出的状态、异常、进度与结果缺口。
+- **综合色与材质**：综合色长在封套、插袋、栏目页签、封面和圆形/透明媒介上，不再只依赖暖白矩形与小票签；大轮廓已覆盖横、竖、圆、窄条、折页、插袋、成册和透明片。
+- **双审**：UX 与 UI Designer 均判 `CONDITIONAL PASS`；可升格为 `expanded_editorial_visual_language_candidate / curation_required`，但不能称生产元素真源。
+- **P1**：`DRAFT / PHOTO TK / OVERSET / REWRITE` 把阶段、异常和动作做成同形纸签，存在语义串类；后续须分为页签状态、版内校对异常和单一可撕动作票三族。
+- **P2**：底部 Flatplan、Proof/Print、Deadline、Reader Letter、剪报与成刊堆接近资产货架；圆形媒介需继续强化出版身份以免像存储设备。
+- **保留核心**：左切角成册封套、中央跨页＋橄榄插袋、右图片编辑媒介簇、底部 Flatplan、单枚圆形出版媒介和唯一 Send to Print。
+- **下一步边界**：下一候选保留约 80% 形态家族但只保留约 60–65% 可见物件；删除多余 Deadline、状态票、Proof/Print 票、剪报、短刊物和零散工具，完成状态/异常/动作语法分化后再竞争全游戏编辑部大风格标杆。
+
+### A330. 标杆丰富度来自完整出版文化，停止把 Art Bible 压进单期桌面
+
+- **来源**：2026-08-25 用户审阅 A329 后指出元素虽扩充，但方向和丰富度仍少于两张正式 clean-low-poly weekly 标杆，要求继续寻找可拓展元素。
+- **降级**：A329 从“扩展元素候选板”降级为 `single-issue-production-and-state-board`；它证明同一期的制作、异常、进度与结果，但不再证明全游戏视觉文化覆盖。
+- **根因**：此前坚持所有元素属于同一期、同一故事、同一桌面，并过度排斥分类陈列，实际把 Art Bible 错做成单场景叙事。标杆允许英雄场景与美术化标本区并存，丰富度来自出版产品、品牌图形、媒介、纹理、读者文化、编辑文化、环境与奇观题材共同存在。
+- **缺失层级**：刊物谱系与产品家族、栏目和内容类型、作者/编辑人格、读者与发行、订阅/广告/报摊商业文化、编辑部空间、模拟媒介、字体/图案/印刷语言、长期时间历史及公开奇观图谱。
+- **分歧合并**：UX 建议三张视觉圣经板，UI Designer 建议八张分板加一张总览；父级采用分阶段中间方案，先生成四张高收益分板，验证后再决定是否扩到完整九板体系。
+- **分板 01**：品牌与出版产品——旗舰主刊、特刊、短刊、折页、海报、邮寄版、成刊堆、刊头/缩写/地球/ISSUE/页脚印记的多尺度家族。
+- **分板 02**：纸件载体与字体图案——彩色封套、插袋、信封、书脊、标签页、撕票、透明片、照片纸，以及大标题、窄栏目字、大数字、点阵、方格、等高线、圆环、斜纹和套印。
+- **分板 03**：图片媒介与奇观——灯桌、联系表、胶片/负片/光盘/录音媒介、照片与插图混排，以及城市、天气、时间、建筑、交通、海洋、天空和广播等公开奇闻。
+- **分板 04**：读者发行与编辑文化——订阅卡、邮寄标签、报摊价签、读者信、小广告、赠品贴纸、媒体评论、往期刊物，以及编辑笔迹、署名、栏目吉祥物、内部笑话和夜班文化。
+- **合流方式**：A329 保留为第五张“编辑工作与状态板”；四张新分板通过后，再选每板 2–3 个强元素生成最终 Master Board，而不是要求一张桌面收录全部。
+- **边界**：继续不映射世界地图具体区域，不形成等面积白卡、HEX 色值或工程组件目录；公开刊物成品必须多于内部文件，标题/图片/正文多于元数据，读者痕迹多于部门责任。
+- **产物身份**：`multi-board-weekly-art-bible-plan / pending-generation`；不进入 atlas、manifest、Godot 或 `WeeklyRunGame`。
+- **Loop Log**：`docs/plans/world-map-benchmark-landing/2026-08-25-editorial-art-bible-scope-too-narrow-loop-log.md`。
+- **cross-read tags**：`A327/A328/A329`、accepted-correction、art-bible、benchmark-gap、editorial-culture、multi-board、no-component-mapping、no-godot、publication-worldbuilding、reader-culture、ui、ux、visual-richness、workflow。
+
+### A331. 四张 Art Bible 分板建立周刊视觉世界的第一轮宽度
+
+- **来源**：2026-08-25 用户在 A330 四分板方案后回复“继续”，授权以真实 ImageGen 生成并继续扩展标杆图级别的元素丰富度。
+- **已生成分板**：`01-brand-and-publication-products.png` 建立旗舰刊、特刊、周末版、图片年刊、邮寄版、往期书脊与多尺度 WMW 品牌；`02-paper-carriers-typography-patterns.png` 建立切角 folio、插袋、折页、透明袋、书脊、胶带、图案与排版语法；`03-image-media-and-oddity-atlas.png` 建立联系表、裁切样、底片、幻灯片、录音媒介及城市/天气/交通/宇宙奇观图谱；`04-readers-distribution-editorial-culture.png` 建立报刊架、订阅、读者来信、勘误、媒体评论、往期历史、编辑署名、栏目吉祥物与内部笑话。
+- **初步意义**：四张不再用同一期桌面重复堆物，而分别覆盖出版产品、纸件语法、图像题材与公共文化；与 A329 的“编辑工作与状态板”共同形成五类互补来源，元素丰富度开始来自完整周刊生态而非装饰数量。
+- **综合色与画法**：四张统一使用深夜石板蓝、明亮暖白纸、钴蓝、橄榄、芥末与珊瑚锈红；保持宽块面 clean-low-poly、少量粗线手绘和清洁现代纸感，不以泛黄、污损、写实摄影或密集碎三角制造质感。
+- **当前身份**：`weekly_art_bible_four_board_pilot / pending_user_review`。这些图是取材与方向验证，不是可直接裁切的生产资产、真实 UI、精确组件合同或 Master Board。
+- **下一闸门**：先由用户判断四板中哪些最接近正式 benchmark 的丰富度与趣味度，再从通过板各选 2–3 个大/中/小元素；未获确认前不回填世界地图，不进入 atlas、manifest、Godot 或 `WeeklyRunGame`。
+- **产物与标签**：`image_gen/2026-08-25/weekly-art-bible-four-boards-v1/01-04`；cross-read：`A329/A330`、art-bible、brand-family、clean-low-poly-weekly、editorial-culture、image-media、imagegen、multi-board、no-component-mapping、no-godot、paper-carriers、pending-user-review、publication-products、reader-culture、ui、ux、visual-richness、weekly-language。
+
+### A332. 四分板完成减法并合成为第三张 Art Bible Master 候选
+
+- **来源**：2026-08-25 用户在 A331 四分板首轮后回复“继续”，授权按双审结论修订 03/04 并生成 Master Board。
+- **03 修订**：图片与奇观板改为 `2 大 + 3 中 + 3 小` 的编辑层级；`02:17` 只出现一次；删除放大镜、磁带和圆盘，只保留半露底片及编辑用波形/裁切/图注，证据分析室语义关闭。
+- **04 修订**：读者文化板只保留 `LETTERS / CORRECTION / NEXT ISSUE` 三组；人格物压为黑猫与 `PET ROCK?`，品牌趣味压为 Eye/Globe/UFO 三族；报刊架与邮寄捆刊保持主次，深蓝留白增加。
+- **Master 架构**：中央暖白旗舰刊＋钴蓝切角 folio＋橄榄口袋占约 38–40% 并绝对主导；左侧为 SPECIAL/WEEKEND/ISSUE 与往期/邮寄谱系，右上为次级 PHOTO DESK，右下为读者与编辑文化，底部只保留一枚低频 WMW issue sampler。
+- **定点闭环**：ISSUE 票、小照片和底部文化簇建立三处物理跨区接触；方格、等高线和轨道短条长到 folio、口袋与印刷票上；圆盘偏轴并压纸，黑猫与巧合章依附编辑文化簇，四象限陈列、按钮误读与贴纸商店风险关闭。
+- **双审**：UX `PASS / P0=0 / P1=0 / P2=2`，确认官僚/SCP 风险低且 Master 不过满；UI Designer 在定点修正后给出最终 `PASS / P0=0 / P1=0`，建议停止继续添加元素。
+- **当前身份**：`clean_low_poly_weekly_master_board_candidate / pending_user_confirmation`。它可竞争两张正式 benchmark 之外的第三张 Art Bible 候选，但仍不是正式 benchmark、生产真源、UI 资产板或 Godot 落地依据。
+- **后续闸门**：只剩用户审美裁决是否升格为第三张 Art Bible 候选；获确认后才进入受控抽取与世界地图功能安全验证，每屏最多一个主载体、一个内容辅助簇、一个文化物和一个笑点。
+- **归档状态**：03/04 修正版已归档到 `image_gen/2026-08-25/weekly-art-bible-four-boards-v2-refined/`；最终 Master 的项目内复制因 Codex 审批服务 403 暂未完成，当前原图仍保存在生成缓存，禁止误报为已完成项目归档。
+- **cross-read tags**：`A329/A330/A331`、art-bible、clean-low-poly-weekly、editorial-culture、image-media、master-board、no-component-mapping、no-godot、pending-user-confirmation、publication-worldbuilding、reader-culture、ui、ux、visual-richness、weekly-language。
+
+### A333. 世界地图纸张改为当代新印暖白，低多边形不得伪装纸张褶皱
+
+- **来源**：2026-08-26 用户确认当前“编辑部厚纸层＋宽块面低多边形”方向可以继续，但明确追加两条硬线：纸张不能显旧；几何不能读成纸张褶皱。
+- **纸张真值**：所有功能 FrontCarrier 使用干净、平整、刚印刷的当代暖白无涂布纸，建议主区间为 `#EEE9E0–#F6F1E9`、基准 `#F2EDE4`。禁止泛黄、棕灰、sepia、污渍、旧档案、磨损边、裂纹、茶渍和明显纸纤维摄影感。
+- **几何归属**：低多边形只允许属于新闻图、地图大陆、编辑插图、印刷色块或有意设计的裁切轮廓；不得在暖白文字承载面上用三角明暗、斜向受光面或折纸结构表现材质。任何无法明确解释为内容图形的多边形均按错误纸褶处理。
+- **拟物保留**：禁止纸褶不等于退回纯平程序卡片。实体感继续由 `1–2px` 纸边、纸层厚度、folio 侧边、插袋、露边、夹持、胶带、压住关系与克制接触影建立；FrontCarrier 仍保持 `0°` 正交，只有独立 BackDecor 可以轻微倾斜。
+- **区域落地**：左侧三张 `340×170` RegionCard 共用同一平整暖白壳，`138×88` 图槽内部才出现宽块面低多边形；中央深色地图的几何只属于地图印刷内容；右侧 Dossier 主校样纸与动态文字安全区保持连续、安静、无折面，厚度由背后 folio 与错位纸边承担。
+- **状态语义**：selected、warning、locked 不得再由纸张脏旧程度区分，继续使用松青、珊瑚锈红与灰鼠尾草的印刷状态层表达。
+- **当前产物裁决**：最近一张整屏材质重构稿保留为“材料接触与厚度方向样本”；其中偏旧暖纸和纸面几何折痕必须重做，不能作为 filled-state visual target 或资产真源。
+- **范围**：不改变三栏、FrontCarrier、动态文字槽、状态语义、Disclosure、CTA、hit rect 或 canonical 母图合同；不进入 atlas、manifest、Godot 或 `WeeklyRunGame`。
+- **cross-read tags**：`A291/A305/A306/A321/A322`、accepted-correction、clean-paper、clean-lowpoly-weekly、contemporary-print、contact-shadow、editorial-material、flat-paper、imagegen、low-poly-boundary、no-crease、no-godot、ui、ux、world-map。
+
+### A334. Clean-paper 修正必须锁定上一张 WMW 底图，禁止借材质修改重绘整屏
+
+- **来源**：2026-08-26 用户指出 clean-paper 验证稿“改了太多”，明确要求必须在刚刚确认的 WMW 整屏基础上修改，而不是重新生成另一套布局与组件。
+- **唯一目标底图**：`C:/Users/gzfangyue/.codex/generated_images/019fe9bb-6bca-71b3-822b-69174b4f780a/exec-13401a7b-6212-48c5-82ca-007235f0bef5.png`；其三栏、刊头、左栏三卡、Schedule、中央地图与证据簇、右 Dossier、猫、便签、夹子、胶带、folio、插袋、文字与遮挡关系全部属于必须保留项。
+- **允许修改**：仅允许把现有暖纸轻微调向当代新印暖白，并软化暖白纸面上被读成褶皱的三角明暗；既有纸边、纸层厚度、局部接触影和印刷颗粒继续保留。
+- **禁止修改**：不得重排、重画、翻译、增删、放大或替换任何组件、图片、地图、文字、装饰物与状态；不得把整屏改造成大地图信息板、白纸展示墙、军事面板、公司报表或另一套 WMW 构图。
+- **产物裁决**：`clean-paper material sample` 以及随后未能锁回目标底图的重试均降级为“纸材语义样本／源图绑定失败样本”，不能继续作为视觉目标迭代底图。
+- **执行门槛**：图像工具必须实际读取唯一目标底图后才允许继续；无法读取时停止盲目生成，并请求重新附加目标图，不得用近似图代替。
+- **范围**：仍不进入 atlas、manifest、Godot 或 `WeeklyRunGame`；功能合同保持冻结。
+- **cross-read tags**：`A291/A321/A322/A333`、accepted-correction、base-image-lock、clean-paper、edit-not-regenerate、imagegen、no-godot、source-binding、strict-invariants、ui、ux、world-map。
+
+### A335. 世界地图所有白色功能纸统一为同一当代暖白纸家族
+
+- **来源**：2026-09-01 用户指出 RegionCard、Schedule、中央地图纸框与右 Dossier 虽然都表现为白纸，但颜色和质感明显不统一。
+- **统一真值**：四类 FrontCarrier 使用同一“当代暖白、平整无涂布编辑纸”基准，不再分别呈现奶油纸、灰棕旧表单、偏黄折纸和冷白校样纸。当前确定性基准为 `RGB 232/227/216`，正文安全区只保留低对比、无方向的细微印刷颗粒。
+- **层级边界**：层级只能通过纸边厚度、背纸露边、插袋、夹持、压接与接触影建立；不得再用纸张黄变、污痕、灰暗或不同年代感区分 RegionCard、Schedule、地图边框和 Dossier。
+- **Schedule 修订**：撤回 UX / UI 提议的额外 `2%–4%` 暗化，按用户“同为白纸应统一”的直接反馈，Schedule 正面与主纸使用同一基色；禁用语义继续由冻结文字与状态表达。
+- **地图纸框修订**：地图正面纸框归入主纸家族；折边与侧边可因厚度自然变暗，但正面污痕、偏黄三角折面和斑驳残块归零。
+- **确定性落地**：程序只在语义纸张蒙版内统一低频底色并保留 30% 高频纸纹残差；全部文字、图标、印章、手写批注、图片、地图、状态色、CTA、胶带、夹子、蓝色 folio、橄榄插袋、纸边与接触影排除。蒙版外像素必须为 `0` 变化。
+- **当前预览裁决（2026-09-01 修订）**：用户明确否决 `image_gen/2026-09-01/world-map-paper-family-unified-v4/01-world-map-paper-family-unified.png`，原因是确定性蒙版统一留下严重涂抹、刷白与补丁痕迹。该图降级为 `deterministic paper-mask smear failure sample`，不得继续作为视觉目标或纸材美术样本。
+- **范围**：不改变三栏、组件矩形、动态文字槽、状态语义、Disclosure、CTA、hit rect 或 canonical 图片合同；不进入 atlas、manifest、Godot 或 `WeeklyRunGame`。
+- **cross-read tags**：`A291/A321/A333/A334`、accepted-correction、clean-paper、deterministic-postprocess、editorial-material、front-carrier、no-godot、paper-family、paper-unification、pixel-preserve、ui、ux、world-map。
+
+### A336. 纸材美术统一必须重新生图，程序蒙版只可用于 QA 不可承担表面重绘
+
+- **来源**：2026-09-01 用户指出确定性 v4 纸材处理粗糙、涂抹痕迹严重，并明确要求重新生图。
+- **方法修订**：当目标是纸面质感、连续色彩与自然印刷纹理时，必须使用真实图像生成模型重新绘制完整视觉候选；禁止再用大面积色块覆盖、模糊、克隆、刷白或低频平滑冒充成品美术。程序后期只允许承担精确排版、文字回填、差异检测、蒙版 QA 与最终规格装配。
+- **新候选**：`image_gen/2026-09-01/world-map-paper-family-imagegen-regenerated-v1/01-world-map-paper-family-imagegen-regenerated.png`。该图重新生成完整三栏画面，目标是让 RegionCard、Schedule、地图纸框和 Dossier 共享同一当代暖白无涂布纸家族，同时消除涂抹边界、重复纹理与脏补丁。
+- **身份与限制**：新图仅为 `imagegen full-screen visual candidate / pending user review`。由于整屏生图会重新采样文字和细节，不能直接成为 FrontCarrier、canonical 内容图或 Godot 资产；功能合同、矩形和真实文字仍须在方向确认后由确定性层装配。
+- **双审状态**：UX 老哥与 UI Designer 均因 Windows `view_image helper_unknown_error` 无法读取像素，裁决为“预览证据缺失 HOLD”，不是对画面本身判 FAIL；因此不得在用户目视确认前升格。
+- **范围**：不进入 atlas、manifest、Godot 或 `WeeklyRunGame`；三栏、FrontCarrier、动态文字槽、状态语义、Disclosure、CTA、hit rect 与 canonical 母图合同继续冻结。
+- **cross-read tags**：`A291/A321/A333/A334/A335`、accepted-correction、actual-imagegen、clean-paper、editorial-material、imagegen-visual-candidate、no-godot、paper-family、paper-unification、programmatic-qa-only、rejected-smear、ui、ux、world-map。
+
+### A337. 已确认纸材方向进入精确 filled-state 装配，最大内容态使用展开式只读任务预览
+
+- **来源**：2026-09-01 用户在 A336 重生整屏后回复“好的，继续”，明确确认当前纸材、配色、明亮度和编辑部氛围可作为精确化方向。
+- **美术来源**：RegionCard、Schedule 与 Dossier 分别重新生成无字、正交的真实 ImageGen 母壳，并继承 A336 的当代暖白纸、深夜石板蓝、墨蓝 folio、橄榄 CTA 与克制锈红语法。程序不生成纸纹或表面质感，只负责源图裁配、冻结坐标、真实文字、canonical 图片、状态层与 QA。
+- **精确装配**：整屏固定 `1920×1080`；RegionIndex `[36,154,372,640]`、Schedule `[36,810,372,246]`、MapField `[432,154,960,902]`、Dossier `[1416,24,468,1032]`。三张 RegionCard 固定 `340×170` 与 `138×88` 图槽；Dossier 固定 `468×1032`、`414×264` 图槽、`414×56` Disclosure 与 `414×76` CTA。
+- **最大内容态**：北美保持 `selected + warning`，东亚与太平洋保持 `locked + previewable`。Dossier 使用 expanded 状态，在冻结容量区只读展开两条任务预览，Disclosure 显示“已显示 2 / 共 4 条”与 `－`，CTA 零位移且仍是唯一主行动；不恢复截止日、剩余日、坐标、来源表、档案编号、伪表格或第二按钮。
+- **图片合同**：北美、东亚与太平洋三张 `1104×704 / 69:44` canonical 母图分别直接缩入左卡 `138×88`；北美同一母图直接缩入 Dossier `414×264`。独立像素核对四个显示槽均与直接 LANCZOS 缩放结果完全一致。
+- **候选与证据**：主图 `image_gen/2026-09-01/world-map-filled-state-precision-v1/01-filled-state-visual-target-1920x1080.png`；A291 同尺寸并排板、三处 100% 裁图、合同叠层和 JSON 审计位于同目录。机器 Gate 为 `all_pass=true`，但当前身份仍是 `precise filled-state visual target candidate / pending user visual gate`，不得把机器通过扩大为用户视觉通过。
+- **双审边界**：生成前 UX 老哥与 UI Designer 已互相校验阅读链、内容密度、删除字段和 PASS Gate；生成后的本机 `view_image helper_unknown_error` 仍阻断子 agent 像素复核，因此不宣称双审视觉 PASS。
+- **范围**：不进入 atlas、manifest、Godot 或 `WeeklyRunGame`；ISSUE 票签 exact rect 仍未资产化，本轮只作为刊头视觉层。
+- **cross-read tags**：`A291/A296/A305/A306/A333/A334/A335/A336`、accepted-direction、actual-imagegen、canonical-image、editorial-material、expanded-preview、filled-state、image-reuse、no-godot、paper-family、precise-composite、runtime-text、ui、ux、world-map。
+
+### A338. Filled-state 总体方向通过，但功能小字不得低于装饰权重
+
+- **来源**：2026-09-01 用户审阅 A337 后明确表示“总体来说是可以的”，同时指出 Dossier 导语、任务统计与任务元数据看不清，而下方仍有大量留白并放置纯装饰手写元素，要求整屏复检。
+- **总体裁决**：A337 的三栏构图、纸材家族、综合色、编辑部氛围与组件方向继续有效；A337 原图降为 legibility diagnostic baseline，不能作为最终 filled-state 文字目标。
+- **根因**：问题不是单一字号，而是决策信息与氛围装饰的权重倒挂。机器 all_pass 只证明矩形与 canonical 图片复用，不证明真实字形在 100% 尺寸下可读。
+- **字号合同**：功能文字下限为 14px；Dossier 导语 16/26，Disclosure 标题与摘要 15/22，任务标题 18/26，任务元数据 15/22，任务编号 14px。9–12px 只允许作为不可依赖阅读的烘焙印刷纹理，不得承载状态、计数、耗时或可进入性。
+- **槽内重排**：不改变 Dossier、Disclosure、CTA 或 hit rect。两条任务各使用约 104px 只读阅读行，行间保留 16px，第二条任务容量下缘与 CTA 之间保留 44px 呼吸区；删除“需更多目击记录”星号、手写字和横线，不以其他装饰补位。
+- **整屏同步**：RegionCard 状态与说明提高到 15px，删除 9px WMW · REGION 功能误读；Schedule 栏目头提高到 14px、禁用说明提高到 15px；左栏 1 / 3 可进入提高到 14px 并增加对比。当前阶段统一使用“候选稿”语义，停止同时出现“候选稿／本期主稿”。
+- **保留留白**：CTA 前 44px、Disclosure 后 36px、两条任务间 16px 及地图海洋负空间属于必要节奏，不再用表格、编号、坐标、手写批注或第三模块填满。
+- **P2 观察**：地图底部橄榄插袋仍占较大面积；当前不遮挡三地区标签，暂不改。若南美或南太平洋未来出现动态节点，应将其压缩 40%–50% 并重新过 MapField 容量 Gate。
+- **新候选**：image_gen/2026-09-01/world-map-filled-state-legibility-v2/01-filled-state-visual-target-1920x1080.png。三卡与 Dossier 四个 canonical 图片槽仍逐像素等同直接缩放，机器合同 all_pass=true；当前身份为 filled_state_legibility_v2 / pending user visual gate。
+- **范围**：仍不进入 atlas、manifest、Godot 或 WeeklyRunGame；本轮程序只调整运行时文字、内容排布、差异检查与规格装配，不重绘 ImageGen 纸材。
+- **cross-read tags**：A291/A305/A306/A336/A337、accepted-direction、candidate-copy-state、editorial-material、filled-state、font-floor、information-hierarchy、legibility、no-godot、runtime-text、ui、ux、world-map。
+
+### A339. Filled-state 视觉方向阶段通过，字体清晰度转为运行时拼接硬 Gate
+
+- **来源**：2026-09-01 用户审阅 A338 可读性 v2 后指出仍有部分字体不够清晰，但明确裁决“这个阶段不纠结，后续实现功能和拼接时再注意”，并要求规划下一步推进。
+- **阶段裁决**：A338 v2 可作为世界地图的视觉方向、综合色、纸材、三栏关系、内容密度和槽内排版参考；停止继续通过整屏合成图追求最终字体锐度。A338 不证明 Godot 字体渲染、缩放、hinting、运行时换字或动态状态清晰度。
+- **后续硬 Gate**：所有功能文字必须在 Godot 原生 Label/RichTextLabel 中以 1920×1080、UI scale 1.0、整数坐标和 100% 截图验收；禁止把功能文字烘焙进皮肤、禁止父级缩放字体层、禁止用低透明度制造印刷感。运行时功能字原则上不低于 14px，并须检查 CJK hinting、抗锯齿、字重、纸纹对比和最长文本。
+- **路线切换**：下一阶段不再生成新的完整视觉风格稿，先完成无字资产拆分与 Godot 装配规格：FrontCarrier/BackDecor/StateDecor/CanonicalPhoto/DynamicText/HitRect 分层、冻结矩形、safe rect、font token、状态矩阵和容量 fixture。
+- **隔离落地**：先在独立世界地图装配预览场景中实现最大内容态和状态切换，输出真实 1920×1080 截图进行视觉差异与可读性 Gate；通过用户确认后才接 WeeklyRunGame。ISSUE exact rect 仍须在资产化前另行冻结。
+- **当前身份**：filled_state_visual_direction_accepted_for_implementation_planning / runtime_typography_pending；不把当前合成图直接切片为带字生产资源。
+- **cross-read tags**：A305/A306/A337/A338、accepted-direction、assetization-planning、font-rendering、godot-gate、no-baked-functional-text、runtime-typography、ui、ux、world-map。
+
+- **2026-09-02 真源同步纠错**：A339 后续页面装配总合同与规格曾把 RegionCard `2:1 / 86:41` 继续列为生产阻断，但 A305、A306、`left_region_card.json v1.0.0 / frozen` 与资产线 `STATUS.md` 已明确关闭该问题：当前正式 FrontCarrier 为 `340×170`，旧 `86:41`、`204×160` 只保留历史 evidence。此次只清理陈旧阻断，不形成新产品裁决、不重开 frozen 几何。Dossier 视觉切片完成后，RegionCard 按 `340×170 / 138×88` 进入第二条 vertical slice；若未来恢复超出 2:1 的突出外轮廓，须由用户明确重开并升合同版本。
+
+### A340. RegionCard 第二纵切方向可继续，复用规格不等于生产冻结
+
+- **来源**：2026-09-02 用户审阅 RegionCard 第二条纵切候选后明确回复“继续”。
+- **采纳范围**：三张地区卡继续共用同一 `340×170` 无字 FrontCarrier；三张 `1104×704 / 69:44` canonical 母图只等比缩入统一 `138×88` 图片槽。不同地区或状态不得改变图片规格、裁切方式或卡片结构。
+- **状态分层**：selected、warning、locked 与 previewable 继续由独立 StateDecor、动态文字和 InteractionFeedback 表达，不烘焙进共享纸壳或 canonical 图片。锁定地区仍可选择并预览，CTA 才承担 blocked 语义。
+- **阶段边界**：本次“继续”只授权从 RegionCard 推进到 Schedule，不等于用户确认最终纸材、综合色、状态装饰或生产资产；RegionCard 仍保留 `pending_user_visual_gate` 身份。
+- **范围**：不进入 atlas、最终 manifest、Godot 或 `WeeklyRunGame`；不重开 A305 已关闭的 `2:1 / 86:41` 历史冲突。
+- **cross-read tags**：`A305/A306/A339`、accepted-direction、canonical-image、image-slot-reuse、no-godot、region-card、runtime-state、ui、ux、world-map。
+
+### A341. Schedule 第三纵切方向可继续，并启动 MapField 静态底图纵切
+
+- **来源**：2026-09-02 用户审阅 Schedule 第三条纵切候选后明确回复“继续”。
+- **采纳范围**：Schedule 继续保持 `372×246` 运行时外框、`744×492` 2×导出、整件 `NO-HIT / mouse_filter=IGNORE / focus_mode=NONE`，并只承载四行运行时信息：栏目名、当前日、阶段标题、禁用说明。
+- **禁止回流**：不得加入剩余天数、倒计时、日历格、箭头、加减号、chevron、按钮或任何可点击暗示；底部留白是呼吸区，不以装饰或伪功能填满。
+- **阶段边界**：本次“继续”授权下一刀进入 MapField 的无字静态底图，但 Schedule 仍是视觉候选，不等于生产冻结，也不证明最终原尺寸字形与纸层视觉已通过。
+- **下一纵切**：MapField 首轮只生成静态底图并保持 `960×902`、`BEACONS_ONLY`；beacon、label、selected/warning/locked、证据照片、文字和 hit rect 均不得烘焙。
+- **范围**：不进入 atlas、最终 manifest、Godot 或 `WeeklyRunGame`。
+- **cross-read tags**：`A339/A340`、accepted-direction、mapfield-next、no-godot、no-hit、schedule-carrier、static-base、ui、ux、world-map。
+### A342. MapField 中央主体方向可继续，优先关闭透明 gutter
+
+- **来源**：2026-09-02 用户审阅 MapField Static Base v1 的新旧对照、运行时底图与 preflight 后明确回复“继续”。
+- **采纳范围**：v1 的中央大陆布局、深夜石板蓝海洋、冷青 / 橄榄 / 芥末的宽块面综合色，以及无 GIS 网格、无动态状态烘焙的方向，允许作为横向修复基础。
+- **修复授权**：优先解决方形 ImageGen 源按 contain 装配后左右各 `29px` 透明 mounting gutter；必须保持 `960×902` 外框、中央大陆位置与动态分层，不用程序纯色补边冒充美术。
+- **实施结果身份**：两次真实 ImageGen 横向编辑均正确产生近方形横版画幅，但擅自重绘大陆并滑向政治地图 / GIS 细分，整图均否决；仅提取其外侧海洋和外纸边作为真实 ImageGen 配料，与 v1 中央地图做确定性合成。v2 达到 `full_bleed=true / transparent=0 / center_identity_exact=true`，但仍是用户视觉 Gate 候选。
+- **未采纳 / 未冻结**：用户尚未确认 v2 四边纸框、综合色接缝和大陆块面密度；不得把本次“继续”扩大解释为 beacon/state fixture、Godot、atlas、最终 manifest 或生产冻结授权。
+- **cross-read tags**：`A291/A339/A341`、accepted-direction、actual-imagegen、deterministic-composite、full-bleed-fix、mapfield、no-godot、static-base、ui、ux、world-map。
+### A343. MapField 采用完整四边薄纸框 A，并继续动态叠层视觉 fixture
+
+- **来源**：2026-09-03 用户审阅 MapField 四边纸框 A/B 对照后明确回复“那就选 A，继续”。
+- **采纳范围**：A 即完整四边薄纸框，作为当前 MapField Static Base 的静态容器方向；B 的断开纸边仅保留为对照，不再继续升格。静态大陆、深夜石板蓝海洋、`960×902` 外框、完整填充和无动态内容烘焙继续有效。
+- **继续授权**：允许进入 MapField dynamic overlay fixture，制作三枚共享 Beacon、selected / warning / locked 独立状态层、无字 label carrier，以及固定左上 Evidence 校样簇。
+- **实施边界**：Evidence 的 `207×132` 明确只作为 `69:44` canonical 照片口候选，不等于整个 cluster；North 与 East 照片分别直接复用对应 `1104×704` 母图。Evidence wrapper、caption、Beacon visual wrapper 与 label 坐标均仍是 provisional fixture；hit rect 尚未定义。
+- **用户尚未采纳**：本轮新生成的 Beacon 星形印刷章、muted cobalt 四角 selected、暖白 label、胶带与问号便签仍待用户视觉 Gate。不得把“选 A，继续”扩大解释为这些新视觉已经通过。
+- **范围**：不进入 Godot、atlas、manifest、`WeeklyRunGame`，不冻结 Beacon wrapper、label 或 hit rect，不把带字整屏切成生产资源。
+- **证据**：`image_gen/2026-09-03/world-map-mapfield-dynamic-overlay-fixture-v1/07-mapfield-state-ab-board-1920x1080.png`、`09-mapfield-dynamic-overlay-audit.json` 与 `10-user-visual-gate-note.md`。机器合同通过；UI/UX 子 agent 因本机 `view_image helper_unknown_error` 未完成像素目视复核，因此状态仍为 `pending_user_visual_gate`。
+- **cross-read tags**：`A291/A339/A342`、accepted-direction、closed-paper-frame、dynamic-overlay-fixture、mapfield、no-godot、pending-user-gate、ui、ux、world-map。
+
+### A344. 撤销 MapField 05/06 整屏重拼证据，收回到 MapField 局部与单区域上下文
+
+- **来源**：2026-09-03 用户审阅 05/06 整屏状态稿后明确指出“大量文字和图片不对应，拼贴感严重”。
+- **采纳裁决**：该反馈按可见事实成立。05/06 立即撤销，不再作为完整整屏候选、用户视觉 Gate、跨组件原子更新证明、综合色证据或生产依据；两张固定降级为 `invalidated_fullscreen_recomposition / registration_failure_sample / do_not_use`。
+- **根因**：为静态证明 East 跨组件原子换态，实施越过本轮 MapField 纵切边界，重新拼装左栏与 Dossier；但整件素材包含 bleed、clip、BackDecor、状态层与不同 alpha 原点，外部合同槽坐标不等于素材内部坐标，造成文字、图片与纸件载体注册失配。
+- **保留范围**：03 North、04 East、07 A/B、08 debug、09 audit 均只保留 `MAPFIELD_LOCAL_EVIDENCE_ONLY` 身份；09 的 `machine_pass=true` 仅证明 MapField 局部机器合同、69:44 aperture、canonical 图片复用和动态区边界，不证明左卡、Dossier 或全页原子同步。
+- **修正整屏**：12 是当前唯一有效整屏上下文 fixture，只把 03 放入已验证 baseline 的 `[432,154,960,902]` MapField；13 审计确认 MapField 外、左栏与 Dossier 均逐像素一致。它只供用户判断 North MapField 的 selected、Beacon、label、Evidence 与综合色，不能称为 full-screen redesign、runtime proof 或 visual pass。
+- **延后项**：East `selected+locked` 仅有 MapField 局部视觉证据。左卡、MapBeacon、MapLabel、Evidence、Dossier 与 CTA 的六消费者原子更新，必须在真实 runtime assembly 中由同一个 `selected_region_id` 驱动后再验证，不再用静态整屏重拼替代。
+- **范围**：不冻结 wrapper、label 或 hit rect；不进入 Godot、atlas、最终 manifest 或 `WeeklyRunGame`。当前状态仍为 `pending_user_visual_gate`。
+- **证据**：`image_gen/2026-09-03/world-map-mapfield-dynamic-overlay-fixture-v1/12-fullscreen-north-mapfield-only-corrected-1920x1080.png`、`13-corrected-fullscreen-scope-audit.json`、`14-invalidated-fullscreen-recomposition-note.md` 与 `docs/plans/world-map-benchmark-landing/2026-09-03-mapfield-side-content-registration-overreach-loop-log.md`。
+- **cross-read tags**：`A339/A343`、rejected-fullscreen-recomposition、registration-failure、mapfield-local-only、corrected-context-fixture、runtime-deferred、no-godot、ui、ux、world-map。
+
+### A345. 先锁原生画布注册，再继续任何跨组件装配
+
+- **来源**：2026-09-03 用户在撤销 05/06 错配整屏、确认修正版只保留 MapField 局部后明确回复“继续”。
+- **本轮授权**：不再生成或重拼完整玩家界面；先为 North RegionCard、North Dossier、Disclosure 与 CTA 建立原生原点注册纵切，关闭内容与组件根节点的装配歧义。
+- **注册硬线**：每个组件的完整运行时画布左上角固定为 root-local `[0,0]`；`global_slot = component_global_origin + local_slot`。alpha bbox、visible bbox、tight crop bbox 与首个非透明像素只能作为诊断数据，不能成为 mount offset、资源裁边或运行时原点。
+- **所有权硬线**：页面只挂 RegionCard root 与 Dossier root，不在全页层重新放置其照片、动态文字、StateDecor 或 BackDecor。RegionCard 只有整卡 root 命中；Dossier parent 与展开正文 `IGNORE`，只有 Disclosure `414×56` 和 CTA `414×76` 两个 child root 拥有 hit。
+- **图片复用**：North RegionCard 与 North Dossier 继续只读取同一张 `1104×704 / 69:44` 母图，分别直接 LANCZOS 等比缩至 `138×88` 与 `414×264`；无裁切、无拉伸、无独立缩略图。机器审计两槽逐像素等于同一母图直接缩放。
+- **新发现与撤销**：旧 `15-dossier-filled-warning-expanded-x2.png` 虽被历史审计记录为 Dossier 状态候选，但实际把“北美禁区带 / 洗衣店漂海”文字与东亚/金字塔照片混配，不能继续作为内容注册或整屏装配证据；其无字壳几何与状态层历史证据可保留。本轮生成的 `north-dossier-registered-x2.png` 仅是纠正后的合同 fixture，不是新美术资产。
+- **证据与阶段**：`01-world-map-component-registration-matrix-v1.json`、`02-north-carrier-native-origin-board-1920x1080.png`、`03-north-carrier-registration-audit.json`、`04-north-carrier-integrity-closeups-1920x1080.png` 位于 `image_gen/2026-09-03/world-map-native-origin-registration-slice-v1/`；机器 `14/14` 通过；UX 老哥与 UI Designer 均完成合同回读并给出 `P0=0 / P1=0 / P2=2`，两项 P2 术语歧义随后已改为 `asset_canvas_x2 / canonical photo source`；当前只待用户确认该注册方式。
+- **范围**：程序只负责纠正 fixture、标注与 QA，不替代生图美术；不改变冻结矩形，不进入 Godot、atlas、最终 manifest 或 `WeeklyRunGame`。
+- **cross-read tags**：`A339/A344`、accepted-process、alpha-origin、canonical-image、component-root、content-registration、dossier、native-canvas、no-godot、region-card、ui、ux、world-map。
+
+### A346. 三地区内容只能由唯一 content_bundle_id 原子绑定
+
+- **来源**：2026-09-03 用户审阅 A345 North Carrier 原生原点注册板后明确回复“继续”。该回复确认 root-only 注册方式，并授权把防线扩展到 North / East / Pacific 三地区；不等于允许整屏重拼或进入运行实现。
+- **唯一入口**：RegionCard 与 Dossier 只接受同一个 `content_bundle_id`；卡片标题/状态、Dossier 标题/正文/任务 fixture、canonical 图片、选择/风险/权限轴和 CTA 状态均从该 bundle 一次解析。禁止 `set_photo(photo_id)`、`set_headline(story_id)`、`set_status(state_id)`、按数组序号或文件名分别猜内容。
+- **三态闭环**：North 为 `selected + warning + available + CTA enabled`；East 与 Pacific 为 `selected + locked + previewable + CTA locked_disabled`。locked 不得推导为卡片不可选或 Dossier 不可读；权限只禁用底部 CTA。
+- **同源图片**：三地区分别使用唯一 `1104×704 / 69:44` canonical 母图；每个地区 Card `138×88` 与 Dossier `414×264` 均与同一母图 direct LANCZOS 缩放逐像素一致，`crop/stretch/thumbnail=false`。
+- **负向证明**：测试真实构造 East 基础 bundle，并注入 North 的 photo bundle 与 headline bundle；结果 `east_negative_case_pass=false`、`negative_failure_detected=true`、预期 `REJECT`。总套件以“成功拒绝错误样本”为通过条件，避免仅凭三个当前样本恰好一致而假放行。
+- **容量与内容成熟度**：Pacific 使用当前八字标题“南太平洋失航区域”，Card 2× glyph 宽 `288/320`、Dossier `512/572`，当前 fixture 通过；正式 runtime 字体、字重或 fallback 确定后必须重跑，不扩槽。三地区 headline/body/task 均标为 `provisional_fixture_not_final_story_copy`，不升格正式剧情。
+- **证据**：`image_gen/2026-09-03/world-map-content-identity-binding-slice-v1/` 内包含 01 binding matrix、02–04 三张同模板 pair board、05 closeups 与 06 audit；机器 `41/41`，UX 老哥 `P0=0/P1=0/P2=1`，UI Designer `P0=0/P1=0/P2=2`。显示比例标签 P2 已补写 `DISPLAY SCALE = 0.75`；共同 runtime P2 仅剩最终字体复测。
+- **范围**：本轮程序只负责既有 ImageGen 层的组件级装配、动态 fixture 文本、绑定验证、标注和 QA；未触碰任何完整 1920×1080 玩家界面像素。不进入新 ImageGen、Godot、atlas、最终 manifest 或 `WeeklyRunGame`。
+- **cross-read tags**：`A344/A345`、accepted-process、atomic-binding、canonical-image、content-bundle、negative-test、no-godot、provisional-copy、region-state-axis、ui、ux、world-map。
+
+### A347. RegionCard 内容合同通过不等于视觉整合通过
+
+- **来源**：2026-09-03 用户指出三张地区卡依然有很强的拼凑感，并要求 AI 自行找出问题。
+- **裁决**：保留三地区内容身份绑定与机器校验 PASS，但撤回玩家可见视觉通过结论；旧图只作合同诊断样本。下一候选必须整体重做连续 FrontCarrier、StateDecor 与纸层接触关系，不能靠阴影、净距、断线或小装饰掩盖原型问题。
+- **冻结范围**：`340×170`、动态文字槽、`69:44` canonical 图、状态语义、0° FrontCarrier 与整卡 hit 不变；不进入 Godot、atlas、manifest 或正式资产化。
+- **cross-read tags**：`A305/A306/A346`、assetization-gate、content-binding、no-godot、region-card、ui、ux、visual-integration、world-map。
+
+### A348. RegionCard 不使用精细白色地球水印
+
+- **来源**：2026-09-04 用户指出 RegionCard A 右侧白色地球水印过于细节，不符合既有 clean-low-poly weekly 标杆。
+- **裁决**：删除地球水印、经纬网、大陆轮廓和机构徽章式图形；低多边形若出现，只能是宽大印刷色面而非纸褶。不得用微型套准线、状态灯或按钮式短线填满留白；连续暖白地区简报纸保持主方向。
+- **功能边界**：不改变 `340×170`、动态文字槽、`69:44` 图片槽、状态语义、0° FrontCarrier 与整卡 hit。
+- **cross-read tags**：`A333/A347`、clean-low-poly-weekly、no-watermark、region-card、ui、wide-facets、world-map。
+
+### A349. RegionCard 右侧正式改为动态故事钩子文字区
+
+- **来源**：2026-09-04 用户指出 RegionCard 右侧需要放文字，宽块面背景过花，不能继续按装饰留白处理。
+- **合同化**：`left_region_card.json` 升为 `v1.1.0 / frozen`；右侧 `[168,56,156,90]` 更名为 `story_teaser_slot`，内部固定单行 headline、最多两行 deck 与底部 breathing rect。文字背后至少 80% 为连续安静暖白纸，不得叠水印、色块边缘、表格或独立控件。
+- **内容与输入**：title、status、photo、headline、deck 必须由同一 `content_bundle_id` 原子更新；故事钩子不重复风险、权限、任务数或解锁条件，不新增 hit，整卡仍是唯一交互面。
+- **候选状态**：Contract-Fit 收口版机器合同通过，UI / UX 双审为 `P0=0 / P1=0 / P2=1`；只可升为 `contract-fit visual candidate / pending user visual gate`，不自动升格为最终视觉真值或生产资产。
+- **cross-read tags**：`A346/A347/A348`、content-bundle、dynamic-text、no-godot、quiet-paper、region-card、story-teaser、ui、ux、world-map。
+
+### A350. RegionCard A/V1 左栏全屏回嵌视觉 Gate 通过
+
+- **来源**：2026-09-04 用户审阅 RegionCard A/V1 无预调全屏回嵌图与左栏 100% 裁片后明确回复“继续”。
+- **采纳范围**：三张 RegionCard 继续共用 `340×170` FrontCarrier 与 `138×88 / 69:44` canonical 图片槽；右侧保留单行事件 headline、最多两行 deck 与安静暖白底。North 为 `selected+warning`，East/Pacific 为 `unselected+locked+previewable`。三卡按 `[52,226]`、`[52,408]`、`[52,590]` 原生根坐标挂载。
+- **回嵌证据**：唯一基线为 corrected 12；旧完全不透明卡根在三个冻结 rect 内清除后整件挂载新卡。机器审计 `outside_difference_bbox=null`，Masthead、RegionIndex header、MapField、Schedule、Dossier、两段 12px 卡间距与 50px Schedule 间距均逐像素未变；UX 与 UI 终审均为 `P0=0 / P1=0 / P2=1`。
+- **保留 P2**：North selected 钴蓝左脊在静态画面中较克制，不增加完整蓝框、角标或静态装饰；未来真实 runtime 只允许通过整个 `340×170` root 的同色 hover/focus 补强，不改变 hit rect。
+- **阶段边界**：该裁决只把 RegionCard A/V1 升为 `static_visual_gate_passed / local_fullscreen_reinsert_verified`，不证明 hit、hover、focus、pressed、跨组件原子换态或最终运行字体。下一刀进入 Schedule 的真实整屏回嵌复核，继续禁止 Godot、atlas、final manifest 与 `WeeklyRunGame`。
+- **证据**：`image_gen/2026-09-04/world-map-region-card-a-v1-fullscreen-reinsert-v1/01-region-card-a-v1-fullscreen-reinsert-proof-1920x1080.png`、`06-region-card-fullscreen-reinsert-audit.json` 与 `07-delivery-manifest.md`。
+
+### A351. Schedule 删除无功能夹子，只保留不等宽纸层关系
+
+- **来源**：2026-09-04 用户看到 Schedule V2 左侧小夹子后直接询问“这个小夹子是干嘛用的”；父级判断该装饰已产生错误功能语义，建议删除而非解释，用户明确回复“继续”。
+- **撤回**：V2 的完整 binder clip 虽无 hit、无文字遮挡，却位于左侧中段并靠近“当前版本不可操作”，容易被理解为行首状态图标。此前“可进入用户视觉门禁”的结论撤回；V2 只保留为 `contactdecor_semantic_failure_diagnostic`。
+- **采纳方向**：V3 的 `ContactDecor=0`，不以回形针、胶带、图章、日历符号或其他小图标替代。石板蓝背纸运行时只在左 8px、上 2px、下 4px 不等宽露出，右侧 0；底边末端仅保留 `18×4px` 的低饱和灰橄榄纸边。纸层关系来自 FrontCarrier 的连续遮挡，而非独立装饰焦点。
+- **冻结范围**：Schedule 根仍为 `372×246`；FrontCarrier、四条动态文字、底部 breathing zone、0° 与 `NO-HIT / IGNORE / NONE / hit_rect_count=0` 全部不变。`当前版本不可操作` 仍是 provisional fixture，若改写必须另升合同版本。
+- **证据与审查**：V3 位于 `image_gen/2026-09-04/world-map-schedule-v3-no-clip-backdecor-v1/`；机器 `machine_pass=true / outside_schedule_root_pixel_equal=true`，三张 RegionCard、MapField、Dossier、刊头与间隙逐像素不变。UX 与 UI Designer 实图终审均为 `P0=0 / P1=0`，当前只允许进入用户视觉 Gate。
+- **阶段边界**：不得因本条直接冻结 Schedule 或 ContactDecor 合同，不进入 Godot、atlas、final manifest 或 `WeeklyRunGame`。
+
+### A352. Schedule V3 无夹具静态全屏回嵌视觉 Gate 通过
+
+- **来源**：2026-09-04 用户审阅 V3 的 `1920×1080` 全屏回嵌图与 100% Schedule 局部后明确回复“继续”。
+- **采纳范围**：Schedule 不再配置 `ContactDecor`、夹子或替代小图标；石板蓝背纸只在运行时左 8px、上 2px、下 4px 不等宽露出，右侧 0；底边末端保留 `18×4px` 低饱和灰橄榄纸边。FrontCarrier、四条动态文字、底部 breathing zone、`372×246`、0° 与 NO-HIT 不变。
+- **回嵌证据**：`image_gen/2026-09-04/world-map-schedule-v3-no-clip-backdecor-v1/`；机器 `machine_pass=true / outside_schedule_root_pixel_equal=true`，UX 与 UI Designer 实图终审均为 `P0=0 / P1=0`。
+- **保留边界**：本条只关闭 Schedule 静态全屏回嵌 Gate，不冻结运行时字体，也不把“当前版本不可操作”升格为最终世界内文案；不得进入 Godot、atlas、final manifest 或 `WeeklyRunGame`。
+- **下一刀**：Dossier 纵切与内容注册已有证据，不重复制作；回到 A343/A344 尚未完成用户视觉裁决的 MapField dynamic overlay，只允许审查或替换 `[432,154,960,902]` MapField 根，禁止重拼左右栏。
+
+### A353. 世界地图从大致功能与原始美术标杆重新设计
+
+- **来源**：2026-09-07 用户指出最新方案沿用太多原设计，要求只按界面大致 UI 功能重新设计，以两张原始美术标杆为主要参考，追求美术效果、风格化、趣味性和吸引力。
+- **修订范围**：承接此前“不受原有流程和规范约束”的明确授权，本轮概念探索不继承旧三栏、大稿夹、地区卡、固定矩形及先拆资产的设计路径。A352 等历史局部通过不限制新构图，也不是新方案通过证据；保留历史原型，不覆盖。
+- **保留功能**：桌面世界地图支持选地区、预览异常新闻、了解能否进入、进入调查；主要美术依据为 benchmark-board-01.png 和 benchmark-board-02.png。
+- **同轮风格纠偏**：用户明确指出首张全幅地图稿仍过于细节写实，低多边形感觉不强，小件缺少标杆的随性与幽默。风格目标是更大色块、概括造型、手绘装饰、轻松幽默；不得把细节堆积当作高级感，也不得只添加多边形纹理或笑话批注冒充风格转译。
+- **尚未采纳**：地图承载来稿及底部阅读区仅为父级概念，未获用户确认；修正版同样待审。不把生图视觉候选称为可运行或生产资产。
+- **cross-read tags**：first-principles-redesign、original-benchmarks、broad-planes、hand-drawn、editorial-humor、art、ui、world-map、process。
+
+### A354. 宽块面稿有所接近，先检查配色与元素丰富度
+
+- **来源**：2026-09-07 用户对第三张重绘稿反馈“有那么点意思”，但相比两张原始美术标杆元素较少，配色奇怪，要求重点分析配色。
+- **认可程度**：只认可绘制方向开始接近，不扩大解释为最终美术、构图、元素数量、颜色方案或生产资产已获确认。
+- **当前任务**：对照原始 benchmark-board-01.png、benchmark-board-02.png 与 03-broad-painted-style-candidate.png 分析色彩分工、面积、明暗与物件丰富度；本轮不自动再生图或修改网页。
+- **待定**：父级关于减轻地图绿色、补蓝灰中间层和调整纸面中性色的建议尚未获用户采纳，不在此登记为正式配色。
+- **cross-read tags**：A353、original-benchmarks、palette-review、visual-richness、partial-direction、art、ui、world-map。
+
+### A355. 按新的配色分工与物件丰富度方案继续
+
+- **来源**：2026-09-07 用户对 A354 的配色分析和调整建议明确回复“可以的，按照这个方案继续”。
+- **采纳方向**：保留深墨蓝背景和宽块面手绘；大陆减少连片黄绿，以蓝灰、灰青承接，保留少量橄榄变化；纸面更干净、减轻黄褐感；通过少量独立蓝/青/赭色编辑纸件补中间层，不靠增加小装饰堆丰富度。
+- **色彩职责**：黄色突出主要行动及少数故事焦点，选择圈和胶带退让；三张新闻插画共享画法，但允许不同局部冷暖和明度，不统一套蓝夜景加黄灯。
+- **本轮范围**：以当前 03 稿保留构图编辑，真实 ImageGen 输出 04 配色候选；不借机重排页面或恢复旧三栏，不修改现有网页。当前图的图片比例、纸形和运行时文字尚未生产验收。
+- **待确认**：用户采纳的是调整方向，不是 04 生成结果；地图偏冷灰及彩色物件层次仍需用户目视判断。
+- **cross-read tags**：A353、A354、accepted-palette-direction、editorial-materials、visual-richness、art、ui、world-map。
+
+### A356. 保持配色原则与当前构图，扩展多个配色版本
+
+- **来源**：2026-09-07 用户认为 04 配色稿方向正确，要求继续增加配色版本，配色原则不变，仍参考两张原始美术标杆。
+- **授权范围**：沿用当前构图、物件类型、宽块面手绘和深底／彩色中间层／干净浅纸／行动强调色的分工，只探索不同色彩组合；不借机改布局、增加组件或实现网页。
+- **本轮候选**：A 墨青／矿物青／蜂蜜黄，B 炭黑／烟蓝／陶橙，C 石墨蓝／灰橄榄／杏黄。三张均独立由 04 底稿进行真实 ImageGen 编辑，未获用户选定。
+- **保留边界**：生成过程中部分期号、状态和新闻小字发生漂移，均非玩法或文案变更，不作为内容真源；图片比例及运行时字体不在本轮冻结。
+- **cross-read tags**：A353、A354、A355、palette-variants、same-layout、original-benchmarks、art、ui、world-map。
+
+### A357. 选定 A 版绘制效果，回到边界柔性的原三栏功能
+
+- **来源**：2026-09-07 用户明确选定 exec-ed6792ba 对应 A 配色稿，认为效果更好，并要求把该效果落到原三栏结构中；强调 UI 分区不用那么严格，实现原功能效果即可。
+- **采纳**：A 的墨青／矿物青／暖白／蜜黄、宽块面低多边形与随性手绘作为本轮主要视觉依据；B/C 留作对照，不继续并行推进。
+- **结构修订**：从此前全幅地图加底部阅读条，恢复左侧地区选择与日程、中央地图、右侧选中新闻／任务情报／进入入口的职责；允许纸边、底饰跨虚拟栏界，不要求三个硬框，不把旧 exact rect 和旧美术壳自动恢复为新稿约束。
+- **功能保留**：地区卡与地图都可选择，锁定地区仍可预览；右侧内容对应唯一选中地区；任务共4项而当前仅预览2项；日程只读；三卡图片同规格，状态不改变图片比例，正式复用仍须同一内容母图等比装配。
+- **本轮处理**：先以现有 North/East/Pacific fixture 文案和异常新闻内容制作真实 ImageGen 三栏 filled 候选；不把 A 中的示例灯塔／收音机／电话亭自动变成正式剧情。新图本身未获用户确认，不覆盖旧网页或修改正式几何合同。
+- **cross-read tags**：A353、A355、A356、selected-a-colorway、soft-three-columns、functional-restoration、canonical-image、ui、ux、art、world-map。
+
+### A359. 三栏候选进入正式 Godot，扩区与图片复用不能牺牲风格
+
+- **来源**：2026-09-07 用户认为 02 最新三栏候选效果不错，要求排查落地前问题，兼容大于 3 个地区，左卡、右侧大图和地图缩略图复用同一美术资源，并强调正式落地不能明显劣于风格稿；随后明确选择“直接接入 Godot 游戏界面”。
+- **采纳范围**：02 作为本轮实施视觉依据；沿用 A357 墨青／矿物青／暖白／蜜黄、宽块面与编辑部气氛。允许为容量、字体和真实内容调整装配，不恢复旧 exact rect 和三栏硬框。
+- **功能要求**：左栏不固定为 3 个地区；每地区三处图共用一张母资源；正式任务、权限、地区 ID 与进入／返回使用真实游戏数据及事件，不用静态样片冒充。
+- **父级实施取舍**：独立滚动富卡、固定只读日程、图片与框体分层、2 条真实任务预览及同尺度截图对照是实施方案，不登记为用户逐项指定。
+- **复盘要求**：过去“风格稿好看、实现退化”的反馈本轮继续有效；原因与实际验收写在本轮落地记录，不能以技术检查通过代替用户美术认可。
+- **状态**：已授权实施；运行结果仍需真实截图与用户观感确认。详见 [落地记录](../plans/world-map-benchmark-landing/2026-09-07-soft-columns-landing.md)。
+- **cross-read tags**：A357、A358、art、ui、ux、world-map、godot、multi-region、canonical-image、runtime-fidelity、content-binding。
+
+
+### A360. Godot 世界地图总体效果可接受，选中地区识别需加强
+
+- **来源**：2026-09-07 用户反馈“总体效果还可以，但是目前选定的地区的界面效果不明显，给个方案”。
+- **明确表态**：认可整体落地方向；当前选区的辨识度不足，需要强化。不能把整体认可扩写成所有状态美术通过。
+- **当前范围**：本轮先提出选中态方案，未授权据此直接修改运行界面；具体颜色、纸签、衬纸与动效建议尚未获用户采纳。
+- **接续**：保留 A359 已验证功能与资源复用基础，问题诊断记于现有落地记录；下一步依据用户对方案的反馈推进。
+- **cross-read tags**：A359、art、ui、ux、world-map、selected-state、visual-hierarchy、proposal-only。
+
+- **同日修订：授权试做**：用户在收到蜜黄标题纸签／外露衬纸、同步地图标签、右侧“当前查看”和约 160ms 纸张落定方案后回复“可以试试”。据此允许在 Godot 试做并展示真实运行结果；前文“仅提方案”的阶段限制结束，仍不等于最终视觉批准。已完成实现与 32 项运行验证，证据见 [选中态实图](../screenshots/2026-09-07-world-map-selection/index.md)。三处新闻图继续共享原素材。
+
+- **同日局部反馈与修正**：用户用截图指出标题左端衔接粗糙。检查发现纸签盖住回形针下段，编号又贴着纸签左缘；已将纸签起点右移，并为标题保留独立左内距。选中态、热区和图片复用维持原功能，32 项运行复核通过；局部观感仍交用户判断。证据见 [标题衔接修正版](../screenshots/2026-09-07-world-map-title-seam/index.md)。
+
+### A361. 左栏需要让玩家看出下方还有地区、可以滚动
+
+- **来源**：用户指出左边像三个独立栏目，下方不像可以拖动；收到滚动提示方案后回复“可以的”，2026-09-08 接续实施。
+- **采纳方向**：内容超出时露出下一张卡片，增加纸尺轨道与可拖纸签，用“更多地区 ↓”提示下方内容；到底后隐藏提示，日程保持固定。卡片点击选择，滚轮或拖动滚动条浏览。完整放下时不制造虚假的滚动提示。
+- **实施取舍**：超过三地区时压缩卡间透明留白，照片和纸卡尺寸保留；第四张完整标题露在初始视口底部。原生滚动条采用已有纸件纹理，滑块长度表达当前可见比例；具体间距与采样边距是实现选择，并非用户逐项指定。
+- **结果与边界**：已接入正式 Godot，39 项运行检查通过，包含四地区最小溢出、十地区真实拖动、滚轮、到底提示与恢复三地区。正式内容仍为原三地区，新增地区仅为测试数据。用户同意实施方案，不等于最终视觉批准。
+- **证据**：[真实截图与拖动抽帧](../screenshots/2026-09-08-world-map-scroll-affordance/index.md)。
+- **cross-read tags**：A359、A360、ui、ux、art、world-map、scroll-affordance、multi-region、fixed-schedule。
+
+- **同日审阅接续**：用户看过滚动效果后表示“可以的，那这个界面已经差不多了”，认可当前界面基本成形，随后要求与旧成熟版本核对功能。前文“待审阅”由此接续为观感基本认可、功能审计阶段；不扩大解释成所有系统已完成。只读审计确认主操作已接入，但分类汇总、风险解释、剩余天数等信息未完全对齐；具体补齐建议尚未获实施授权。详见 [功能对照审计](../plans/world-map-benchmark-landing/2026-09-08-functional-parity-audit.md)。补充 cross-read tag：functional-parity。
+
+### A362. 补齐世界地图决策信息，任务需要与新闻明显区分
+
+- **来源**：2026-09-08 用户在功能对照后明确“可以补齐内容”，允许右下空间不足时适当缩小图片或调整布局；指出任务不能与上方纯信息使用相同表现，以免漏看。
+- **已授权范围**：补齐现有分类汇总、风险／追踪解释和周剩余天数；提高任务识别，保持当前总体风格、真实游戏接入与三处图片复用。没有授权改变任务选择层级或新增推进日、动态新闻系统。
+- **父级实施取舍**：右图完整等比缩小；任务使用一张浅矿物青纸、深色标题签、类型墨条、真实任务名和耗时。分类及提醒不随折叠隐藏，任务行保持只读，进入地区后选择具体任务。尺寸和具体纸面方案是实施判断，不登记为用户逐项指定。
+- **结果与边界**：正式 Godot 已实现，57 项运行检查通过，包含两行真实字体可见性、分类刷新、锁定、开放空态、只读点击、图片身份及原滚动／选择回归。UI Designer 与 UX 老哥实图复核无阻止交付的问题；本轮任务区的新观感仍待用户审阅，保留 A361 对总体界面的已有认可。
+- **证据**：[实际运行、前后对照与展开收起](../screenshots/2026-09-08-world-map-task-readability/index.md)。分类展示与 GDD 的出入已通过补实现关闭；其余系统边界见功能审计的 A362 接续。
+- **cross-read tags**：A359、A361、ui、ux、art、world-map、functional-parity、task-readability、canonical-image、read-only-preview。
+
+### A363. 任务区功能基本满足，但文字与美术资源的组合质量需要重新判断
+
+- **来源**：2026-09-08 用户提供右下任务区截图，认为“功能差不多了”，但文字、图片与界面资源配合不好，显得质量不高；要求先父级独立分析，再以传统流程调用 subagent 分析，比较分析和处理方式。
+- **明确表态**：功能基本满足不等于当前任务区视觉质量获认可。A362 的运行验证保留，任务区视觉状态接续为需要改进；没有撤回整体色彩、图片复用或原三栏功能方向。
+- **当前授权范围**：先完成两种分析与处理建议的比较，不据本次诊断自动修改 Godot、重画资产或宣布某新方案已采纳。父级先保存独立稿，再让新上下文的 UX 老哥与 UI Designer 按传统顺序工作，不把父级结论提前提供给它们。
+- **结果身份**：比较仅支持本次诊断取舍，不是两套落地成品的 A/B 实验，不据单次结果修改全局协作规则。
+- **证据与接续**：[独立分析、传统路径原文及比较](../plans/world-map-benchmark-landing/2026-09-08-task-panel-quality-comparison/README.md)。用户截图随报告保留；上一轮质量判断遗漏写回已有落地记录。
+- **cross-read tags**：A358、A362、ui、ux、art、world-map、task-readability、visual-integration、independent-analysis、process-comparison。
+
+### A364. 按父级方案修复任务附页，并检查纸边锯齿
+
+- **来源**：2026-09-08 用户在两种分析比较后明确“按照你的方案去做”，并指出界面纸边有锯齿，要求检查原因。
+- **采纳与授权**：以父级独立方案的范围为主，采用共同阅读边线和折叠收短纸面的补充；任务文字与一张浅矿物青附页整体排版，取消通栏深条、完整框和类型独占列。允许处理相关纸边问题，保留功能、图片身份和已认可的总体风格。
+- **实施结果**：任务标题下紧接类型／耗时，行高按实际文字决定；小标题签与底部／右侧衬纸建立物件关系；折叠只缩短附页，照片与进入入口保持固定，分类和提醒保留。锁定和空态移除无效折叠热区。新闻照片、正文和任务文字共用阅读边线，普通右图宽450，仍完整等比且三处同源。
+- **锯齿原因与处理**：六类纸件在旧透明提取后只剩0/255两级透明度；中央倾斜照片另有矩形几何边界锯齿。局部 Godot 材质分别补边缘覆盖率和几何边界过渡；透明颜色先预乘再混合，避免底色污染。原PNG、文字、插画主体和全局渲染设置未改。
+- **验证与限制**：最终68项图形运行检查通过，含1280×720桌面缩放；真实开关对照确认抽查纸面／插画内部逐像素不变。最长新闻、提醒、两条长任务同时出现时，照片可缩至约266宽，属于极端容量兜底，构图弱于常态，不宣称同等美术通过。当前落地观感待用户审阅。
+- **证据**：[最新运行、折叠及边缘对照](../screenshots/2026-09-08-world-map-task-polish-v5/index.md)。
+- **cross-read tags**：A362、A363、ui、ux、art、world-map、task-layout、paper-edge、antialiasing、canonical-image。
+
+
+#### A364 修订：纸边仍有锯齿（2026-09-08）
+
+- **用户反馈**：截图用箭头指出右侧主纸左侧蓝色衬纸仍有锯齿，询问如何避免；未确认纸边视觉通过。
+- **诊断证据**：`dossier-paper.png` 为578×1078的纸／衬纸／夹具合成资源，透明度仍只有0/255；当前NinePatchRect已开启线性过滤，局部shader在0.75源像素半径内混合覆盖率。它软化原台阶的边缘，不重建连续轮廓；不透明区域里的纸层色块边界也保留原样。贴图未生成mipmap，缩小尺度还需另行验证，不能直接视为本次残余台阶的唯一原因。
+- **状态修订**：A364的68项功能／几何检查继续有效，不能替代纸边质量判断。此次没有修改Godot或PNG。轮廓与纸纹分离、修整轮廓后再提供屏幕尺度抗锯齿是父级建议，尚未实施／获用户确认。
+
+
+### A365. 继续修复右侧底纸左长边，保留原纸纹与叠纸关系
+
+- **来源与授权**：2026-09-08 用户在“先修右侧大底纸轮廓，确认后再用于其他纸件”的建议后回复“继续”，授权代表件实施；尚未确认新成品美术。
+- **实施范围**：右侧底纸的蓝衬纸外缘及相邻白纸内缘，读取原图坐标并构建连续曲线，局部覆盖率随实际屏幕像素变化。原PNG、主纸纹、夹具、三处同源新闻图、文字布局与交互保留，没有扩改其他纸件。
+- **成品与验证**：1080p、900p、720p分别真实渲染；11项针对性检查及68项原功能回归通过。三种尺寸的变化像素均限于两条左长边附近，带外逐像素一致；原纸件SHA保持。
+- **过程修正**：第一版取色带出了旧纸边描线，已改为沿连续曲线在两侧干净纸纹取色。尺寸检查改为GPU读回图的实际像素，避免将ViewportTexture逻辑尺寸与物理窗口混用。
+- **边界**：当前为已接入、待用户视觉审阅；只处理这张代表件的两条左长边，不能声称所有纸边零锯齿。曲线由Godot运行时计算并缓存，不以程序生成新美术图冒充生图。
+- **证据**：[真实运行、箭头处前后对照与三尺寸核验](../screenshots/2026-09-08-world-map-contour-v2/index.md)。
+- **cross-read tags**：A364、ui、art、world-map、paper-edge、continuous-contour、antialiasing、runtime-fidelity。
+
+
+#### A365 接续：世界地图基本完成（2026-09-08）
+
+用户明确“目前这个界面已经差不多了，要做下个界面了”。当前世界地图可作为下界面接续基础；用户先要求讨论适合GPT-6的UI资产链规范，兼顾自主判断与经验保留。本轮不扩改地图，不把总体认可外推为全部纸件均已实施连续轮廓；A365实际范围保留。工作流讨论见流程分册A358本日修订。

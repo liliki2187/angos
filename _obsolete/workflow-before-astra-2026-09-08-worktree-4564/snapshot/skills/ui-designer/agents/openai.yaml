@@ -1,0 +1,4 @@
+﻿interface:
+  display_name: "UI Designer"
+  short_description: "从 UI brief 生成桌面 16:9 元素表、布局 mock，并交给 UX 老哥评审。"
+  default_prompt: "使用 ui-designer 从 brief 产出元素表、桌面 16:9 布局 mock 和给 UX 老哥的交接摘要。"

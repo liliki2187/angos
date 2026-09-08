@@ -1,6 +1,6 @@
 # Godot 视觉反馈 Smoke
 
-这是 Angus 给 Godot agent 工作补的一层最小视觉验收。
+这是针对现有探索/派遣路径的图像采集与基本有效性检查；需要这条路径的证据时使用，不是任意 Godot 改动的固定后续步骤。
 
 一句话：`godot-agent-smoke` 证明场景能跑，这个脚本证明同一条真实路径能产出可看的运行截图。
 
@@ -11,7 +11,7 @@ Godot 改动常有两类假通过：
 1. 代码没报错，节点也存在，但画面是黑的、空的、脏帧或关键区域没渲染出来。
 2. 只跑了 headless / 逻辑 smoke，就声称 UI 没问题，但玩家看到的真实窗口没有证据。
 
-这个 smoke 不判断美术好坏，也不替代 UX / UI 复审。它只挡住最基础的视觉假阳性：截图文件必须真实生成、分辨率正确、非黑帧、颜色多样性正常、主要屏幕区域有可见内容。
+这个 smoke 不判断美术好坏；父级仍需查看实际图像并说明判断依据，角色协作按当前任务选择。它只挡住最基础的视觉假阳性：截图文件必须真实生成、分辨率正确、非黑帧、颜色多样性正常、主要屏幕区域有可见内容。
 
 ## 命令
 
@@ -54,9 +54,9 @@ capture-manifest.json
 
 里面记录每张截图的尺寸、采样颜色数、黑色采样比例、透明采样数和通过状态。
 
-## 通过条件
+## 此脚本的通过条件
 
-每张截图必须满足：
+下列阈值只对这条既有采集路径有效，不作为新页面的通用亮度、配色或尺寸限制。此脚本要求：
 
 - 尺寸为 `1920x1080`。
 - 透明采样数为 `0`。
@@ -67,21 +67,7 @@ capture-manifest.json
 
 ## 什么时候调用
 
-当 Godot 改动影响以下内容时，先跑 `godot-agent-smoke`，再跑本脚本：
-
-- weekly-run phase 切换；
-- 世界地图；
-- 地区任务台；
-- 派遣界面；
-- 重要 UI 节点层级；
-- 任何“代码能跑但画面是否正常”不确定的改动。
-
-最小顺序：
-
-```powershell
-powershell.exe -ExecutionPolicy Bypass -File .\scripts\run_godot_agent_smoke.ps1 -GdaOffline -PythonPath C:\Python314\python.exe
-powershell.exe -ExecutionPolicy Bypass -File .\scripts\run_godot_visual_feedback_smoke.ps1
-```
+改动影响本文四个状态、对应阶段切换或共享渲染层，且需要确认实际窗口图像时调用。其他界面或单个局部可以使用已有专项采集，按 [截图指引](../onboarding/功能改动截图指引.md) 覆盖受影响内容。运行接线仍有疑问时选 [运行检查](godot-agent-smoke.md)，不强制先后顺序或重复已有证据。
 
 ## 它不能证明什么
 
@@ -106,6 +92,6 @@ powershell.exe -ExecutionPolicy Bypass -File .\scripts\run_godot_gui_startup_che
 
 - `godot-agent-smoke passed`：代码 / 节点 / 最小运行路径通过。
 - `godot-visual-feedback-smoke passed`：真实运行截图可用。
-- `visual quality approved`：只有用户或对应 UI / UX / 美术 gate 明确通过后才能这么说。
+- `visual quality approved`：必须说明由谁、基于哪张图、对什么范围作出判断；内部审查不能冒称用户认可，角色名不自动证明质量。
 
 不要把第二项冒充第三项。

@@ -1,90 +1,26 @@
-# Model Routing
+# 当前生图路由与接口边界
 
-Use this file whenever you need to choose a model, normalize size parameters, or reject an invalid request.
+## 项目支持的路径
 
-## Supported Routes
+| 请求 | 当前路径 |
+| --- | --- |
+| 普通生成、参考编辑、界面、场景、透明图 | 当前会话内置 `image_gen` |
+| 用户明确选择 OpenRouter 的透明母件 | `scripts/openrouter_image_gen.py`，`openai/gpt-5-image` |
 
-| Route | Backend | Use For | Notes |
-| --- | --- | --- | --- |
-| `gpt-5-image` | `openai/gpt-5-image` | Transparent PNG/WebP assets, clean cutout assets, precise isolated game objects | The only OpenRouter path in this skill |
-| `built-in-imagegen-opaque` | built-in `image_gen` tool | Non-transparent textures, concepts, posters, UI banners, portraits, environments, and other opaque outputs | Default opaque path; does not require OpenRouter config |
+默认内置模式与当前系统 imagegen 技能一致；若工具不可用，说明可选路径及配置/费用差异，等用户明确选择后才转外部 API。不是对其他模型的永久能力限制。不因新文本模型出现而随意替换图像供应商。用户明确指定不受支持的工具/型号时说明差异，不静默替换。
 
-## Hard Routing Rule
+## helper 专属参数
 
-- `background=transparent` -> only `openai/gpt-5-image`
-- `background=opaque` -> only built-in `image_gen`
-- If built-in `image_gen` is unavailable, fail directly and tell the user the current session cannot complete opaque image generation.
+- count：1–8，由客户端逐次请求。
+- resolution：`1024x1024`、`1536x1024`、`1024x1536`、`auto`。
+- 最多 4 张本地 PNG/JPG/JPEG/WebP/GIF 参考。
+- 透明输出 PNG/WebP，不支持透明 JPEG。
+- helper 不接不透明请求；不透明图无需 OpenRouter 配置。
 
-## Legacy Terms
+上述数量、尺寸和参考限制只约束这个 helper，不约束内置 imagegen。内置工具的参考传递、等待和编辑方式按当前工具说明与技能执行，不能丢弃必要参考或猜测 API 字段。
 
-- `nano-banana`
-- `nano-banana-2`
+## 保存与追溯
 
-Treat those as legacy user phrasing only. They should still resolve to this skill, but the actual opaque execution path must be built-in `image_gen`, not a third-party OpenRouter image model.
+项目结果存 `image_gen/YYYY-MM-DD/`。采用工具返回的真实源路径，记录原始请求、最终 prompt、参考职责、路由、结果与限制；不要硬编码 `$CODEX_HOME/generated_images` 必然存在。
 
-## Supported Count Range
-
-This skill supports `count` values from `1` to `8`.
-
-Generation count is orchestrated client-side as repeated single-image requests so the skill does not depend on provider-specific multi-image semantics.
-
-## Transparent Request Validation
-
-For `openai/gpt-5-image` in this skill:
-
-- Allowed literal `resolution` values:
-  - `1024x1024`
-  - `1536x1024`
-  - `1024x1536`
-  - `auto`
-- Allowed `background` values:
-  - `transparent`
-  - `opaque`
-  - `auto`
-- If `background=transparent`, the script forces:
-  - `model=openai/gpt-5-image`
-  - `output_format=png` unless the user explicitly asks for `webp`
-- Reject non-square panoramic transparent requests that cannot map cleanly to the supported GPT Image sizes.
-
-## Opaque Request Handling
-
-For opaque requests in this skill:
-
-- do not call `scripts/openrouter_image_gen.py`
-- do not require `config.env`
-- do not mention or choose Nano Banana / Nano Banana 2
-- use built-in `image_gen`
-- express size or framing needs in the prompt bundle instead of OpenRouter `image_config`
-- if the result is project-bound, copy the selected built-in output into workspace `image_gen/YYYY-MM-DD/` and write a sidecar JSON
-- if built-in `image_gen` is unavailable, stop and report failure instead of falling back to OpenRouter
-
-## Reference Images
-
-- Accept up to `4` local reference images in this skill.
-- Supported file types:
-  - `png`
-  - `jpg`
-  - `jpeg`
-  - `webp`
-  - `gif`
-- Reference images are sent through `messages[].content[]` entries with `type=image_url`.
-- The script uses base64 data URLs for local files.
-
-## Provider Routing
-
-Set:
-
-- `provider.require_parameters=true`
-
-This asks OpenRouter to route only to providers that support the parameters in the request, which is especially important when using:
-
-- transparent-background GPT Image fields
-- provider-specific transparent-image options
-
-## Storage Contract
-
-- Output root: workspace `image_gen/`
-- Date partition: `YYYY-MM-DD`
-- File pattern: `YYYYMMDD-HHMMSS_slug_01.png`
-- Sidecar pattern: `YYYYMMDD-HHMMSS_slug_01.json`
-- For built-in opaque requests, include the original `$CODEX_HOME/generated_images/...` source path in the JSON metadata.
+现有 helper 元数据格式保留；其 API 配置、供应商路由和密钥不属于本次工作流优化的修改范围。参数可先 `--dry-run`，真正生成才需要配置。

@@ -1,0 +1,949 @@
+# Lightweight workflow gate table for Angus.
+# This file is intentionally simple so it can become script input later.
+#
+# 真源分工（2026-07-08 起）：
+# - 本文件是产物类型（artifact_types）、阶段跳转（stage_transitions）与 hard gate 的机器可读真源。
+# - docs/onboarding/assetized-ui-production-chain.md 负责资产化 UI 的操作细则与解释。
+# - docs/workflows/angus-workflow-harness.md 负责风险分级、回复格式与 loop 生命周期。
+# - docs/workflows/ui-geometry-and-text-safety-gates.md 负责几何 / 正交 / 文字安全的统一阈值。
+# - 新增或修改 gate 必须同时落本文件与对应文档，只落一处视为未生效。
+
+risk_levels:
+  tiny:
+    default_required:
+      - concise_summary
+    default_not_required:
+      - router_card
+      - subagent_review
+      - screenshot
+  normal:
+    default_required:
+      - decision_strip
+      - human_brief
+      - router_card
+      - task_specific_validation
+      # trial 2026-07-08（A165 二次复发升级律配套）：交付前三问
+      # 1 产物诚实（F1）2 范围一致（F3）3 同类扫描（F4），详见 harness Level 1
+      - pre_delivery_three_questions
+  risky:
+    default_required:
+      - decision_strip
+      - human_brief
+      - router_card
+      - delivery_manifest
+      - relevant_source_read
+      - target_specific_gate
+      - screenshot_or_test_evidence
+  production:
+    default_required:
+      - decision_strip
+      - human_brief
+      - router_card
+      - delivery_manifest
+      - relevant_source_read
+      - required_subagent_review
+      - hard_gate
+      - screenshot_or_test_evidence
+      - drift_check
+  experimental:
+    default_required:
+      - decision_strip
+      - human_brief
+      - narrow_question
+      - minimum_output
+      - stop_condition
+      - non_source_status_label
+
+feedback_contract:
+  applies_to_modes:
+    - workflow_gate
+    - loop_log
+    - blocked_or_user_decision
+    - pass_fail_judgment
+  not_for_modes:
+    - direct_answer
+    - completion_report
+    - progress_update
+    - casual_discussion
+  required_order:
+    - decision_status
+    - user_impact
+    - concrete_next_action
+  max_decision_lines: 3
+  detail_order_after_decision:
+    - actual_work_done
+    - current_blocker
+    - blocker_reason
+    - minimum_next_validation
+    - do_not_do_this_round
+  max_brief_bullets: 5
+  plain_language_rules:
+    - decision_strip_before_human_brief
+    - no_jargon_as_main_subject
+    - jargon_only_in_parentheses_or_detail_layer
+    - explain_user_action_before_gate_names
+    - state_actual_done_separately_from_planned_next
+  detail_after_brief:
+    - router_card
+    - delivery_manifest
+    - loop_log
+    - gate_checklist
+  blockers:
+    - decision_strip_used_for_ordinary_reply
+    - checklist_without_conclusion
+    - human_brief_before_decision_strip
+    - jargon_first_response
+    - human_brief_as_field_dump
+    - planned_work_written_as_done
+    - gate_name_without_user_action
+    - mixed_current_deliverable_and_routed_artifact
+
+loop_log_contract:
+  auto_required_when:
+    user_message_contains_any_of:
+      - 这次错在
+      - 哪里错了
+      - 为什么还是
+      - 为什么又
+      - 复盘
+      - 怎么避免
+      - 防复发
+      - 先别落地
+      - 不要继续
+      - 不改文件
+      - 错题本
+      - 这个要进错题本
+      - 转成 eval case
+      - workflow 没跑完整
+      - 没触发 gate
+      - 没有按流程
+      - 你误判了
+      - 你跳步了
+      - 你漏调 agent
+      - 你乱调 agent
+    system_or_self_detects_any_of:
+      - delivery_claim_retracted
+      - user_corrects_pass_fail_judgment
+      - stage_transition_was_wrong
+      - artifact_type_was_overclaimed
+      - required_gate_was_missing
+      - required_evidence_was_missing
+      - required_agent_was_missing
+      - unnecessary_agent_was_called
+      - final_answer_was_unreadable
+      - implementation_started_after_user_requested_no_implementation
+  required_sections:
+    - decision_strip
+    - trigger_source
+    - original_problem
+    - failure_cause
+    # trial 2026-07-08（A165）：先查 guidance §7.0 错误家族索引做复发判定；
+    # 同族第二次复发时沉淀判断必须按 harness §5.2 升级防线，不得只补文档规则。
+    - recurrence_check
+    - current_handling
+    - recurrence_protection
+    - sedimentation_decision
+  blockers:
+    - apology_without_loop_log
+    - explanation_without_failure_cause
+    - future_rule_without_current_handling
+    - no_sedimentation_decision_for_repeatable_error
+    - user_requested_no_file_changes_but_files_changed
+    - loop_log_missing_decision_strip
+
+artifact_types:
+  structure_wireframe:
+    proves:
+      - functional_partition
+      - rough_capacity
+    cannot_claim:
+      - visual_pass
+      - production_candidate
+      - cuttable_assets
+  problem_overlay:
+    proves:
+      - problem_layer
+      - target_layer
+    cannot_claim:
+      - real_ui_effect
+      - runtime_pass
+  interaction_fix_sketch:
+    proves:
+      - operation_relationship
+      - local_correction
+    cannot_claim:
+      - filled_state_text_mock
+      - no_text_asset_master
+  safe_zone_capacity_validation:
+    proves:
+      - text_capacity
+      - rect_pressure
+    cannot_claim:
+      - typography_integration
+      - formal_ui_quality
+  logic_smoke:
+    proves:
+      - p0_condition_triggered
+      - blocker_or_state_machine_runs
+    cannot_claim:
+      - visual_acceptance
+      - target_ui_landed
+  visual_style_reference:
+    proves:
+      - style_potential
+      - material_direction
+    cannot_claim:
+      - functional_capacity
+      - dynamic_text_fit
+  color_locked_style_draft:
+    proves:
+      - color_contract_stage_passed
+    cannot_claim:
+      - asset_split_ready
+      - production_candidate
+  no_text_style_draft:
+    proves:
+      - no_text_composition
+      - writable_area_direction
+    cannot_claim:
+      - real_content_screenshot
+      - runtime_background
+  filled_state_text_mock:
+    proves:
+      - text_image_integration
+      - information_density
+      - typography_mood
+    cannot_claim:
+      - manifest_source
+      - runtime_background
+  component_aspect_taxonomy:
+    proves:
+      - role_based_shape_families
+      - square_permission_per_role
+    cannot_claim:
+      - class_contract
+      - cuttable_assets
+      - production_candidate
+  component_class_contract:
+    proves:
+      - normalized_export_size_and_slots
+      - state_skins_share_geometry
+      - resolution_and_export_scale_declared
+    cannot_claim:
+      - final_art
+      - atlas_ready
+      - runtime_pass
+  full_screen_reinsert_proof:
+    proves:
+      - class_fits_full_page_layout
+      - no_overlap_with_reserved_zones
+    cannot_claim:
+      - page_structure_source_of_truth
+      - functional_necessity
+      - visual_acceptance
+      - production_candidate
+  screen_structure_target:
+    proves:
+      - functional_partition
+      - column_and_band_ownership
+      - primary_action_location
+    cannot_claim:
+      - component_runtime_pass
+      - final_asset_quality
+  component_reinsert_review_board:
+    proves:
+      - component_scale_relationship
+      - local_alignment
+      - component_inventory_visibility
+    cannot_claim:
+      - page_structure_source_of_truth
+      - functional_necessity
+      - runtime_host_identity
+  text_capacity_stress:
+    proves:
+      - fields_fit_normal_and_stress_copy
+      - visible_carrier_contains_runtime_text_slot
+    cannot_claim:
+      - final_typography
+      - final_font_metrics
+  vertical_slice_proof:
+    proves:
+      - one_class_full_chain_from_art_to_engine
+      - art_production_can_obey_contract
+      - manifest_to_engine_binding_works
+    cannot_claim:
+      - full_page_production_pass
+      - all_states_covered
+  no_text_asset_master:
+    proves:
+      - dynamic_text_slots
+      - component_boundaries
+    cannot_claim:
+      - final_player_screenshot
+  runtime_skeleton:
+    proves:
+      - dynamic_fields_can_bind
+      - hit_rects_can_attach
+    cannot_claim:
+      - final_visual_quality
+  runtime_state_preview:
+    proves:
+      - one_or_few_runtime_states
+    cannot_claim:
+      - all_states_production_pass
+  production_candidate:
+    proves:
+      - assets_dynamic_layer_state_matrix_and_screenshots_are_basically_ready
+    cannot_claim:
+      - source_of_truth_without_review
+  godot_agent_smoke:
+    proves:
+      - gdscript_parse_and_compile_health
+      - weekly_run_scene_minimum_runtime_path
+    cannot_claim:
+      - visual_acceptance
+      - all_gameplay_states_covered
+      - production_candidate
+
+stage_transitions:
+  idea:
+    allowed_next:
+      - router_card
+      - structure_wireframe
+      - design_brief
+  structure_wireframe:
+    allowed_next:
+      - capacity_table
+      - problem_overlay
+      - visual_style_reference
+    forbidden_next:
+      - manifest
+      - atlas
+      - production_candidate
+  visual_style_reference:
+    allowed_next:
+      - color_contract
+      - no_text_style_draft
+      - component_aspect_taxonomy
+      - lightweight_content_contract
+    forbidden_next:
+      - atlas
+      - manifest
+      - production_candidate
+  color_locked_style_draft:
+    allowed_next:
+      - component_aspect_taxonomy
+      - lightweight_content_contract
+      - filled_state_text_mock
+    forbidden_next:
+      - atlas
+      - manifest
+      - production_candidate
+  no_text_style_draft:
+    allowed_next:
+      - component_aspect_taxonomy
+      - lightweight_content_contract
+      - filled_state_text_mock
+    forbidden_next:
+      - runtime_background
+      - manifest
+      - production_candidate
+  component_aspect_taxonomy:
+    allowed_next:
+      - page_contract_board
+    forbidden_next:
+      - clean_sprite_brief
+      - atlas
+      - manifest
+      - production_candidate
+  # page_contract_board 是批处理阶段：同页全部主 class 在一轮内完成
+  # 量测、归一、整屏回填、文案压力，用户裁决一次过整板。
+  page_contract_board:
+    allowed_next:
+      - vertical_slice
+      - light_contract_parallel_completion
+    forbidden_next:
+      - full_page_clean_sprite_production_before_vertical_slice
+      - atlas
+      - production_candidate
+  # vertical_slice 是风险前置阶段：先用 1 个已锁 class 打通
+  # 无字素材 -> gate -> 切图 -> Godot 单组件 -> 运行截图。
+  vertical_slice:
+    allowed_next:
+      - clean_sprite_brief_batch
+      - contract_revision_with_version_bump
+      - godot_debug_lookup
+    forbidden_next:
+      - production_candidate
+  filled_state_text_mock:
+    allowed_next:
+      - ui_ux_art_review
+      - no_text_asset_master_brief
+      - content_rect_revision
+    forbidden_next:
+      - runtime_background
+  no_text_asset_master:
+    allowed_next:
+      - component_atlas
+      - manifest
+      - runtime_skeleton
+    forbidden_next:
+      - final_visual_claim_without_runtime
+  runtime_skeleton:
+    allowed_next:
+      - runtime_state_preview
+      - binding_fix
+    forbidden_next:
+      - visual_acceptance_without_target_comparison
+  runtime_state_preview:
+    allowed_next:
+      - multi_state_screenshot
+      - production_candidate
+      - rollback_to_content_rects
+
+hard_gates:
+  editorial_media_identity:
+    status: trial
+    introduced: 2026-07-22
+    auto_required_when:
+      - review_target_is_newspaper_magazine_or_editorial_spread
+      - editorial_region_is_claimed_ready_for_freeze_or_reverse_split
+    required:
+      - reference_and_previous_structure_side_by_side
+      - explicit_grouping_replacement_for_removed_ui_frames
+      - unlabeled_hierarchy_five_second_test
+      - blurred_image_media_identity_test
+      - editorial_gutter_content_value_check
+      - explicit_editorial_media_identity_pass_or_fail
+    blockers:
+      - paper_texture_claimed_as_publication_identity
+      - contract_rects_claimed_as_editorial_composition
+      - main_secondary_and_standard_roles_require_labels_to_be_distinguished
+      - spread_reads_as_album_gallery_portfolio_or_ui_card_wall
+      - removed_program_frames_have_no_grid_rules_baselines_or_caption_system_replacement
+      - low_information_folio_gutter_consumes_twenty_percent_or_more_of_story_width
+  screen_identity:
+    status: trial
+    introduced: 2026-07-16
+    auto_required_when:
+      - component_preview_is_integrated_into_full_runtime_page
+      - response_claims_target_ui_landed
+    required:
+      - target_scene_or_page_path
+      - current_full_screen_source_of_truth
+      - target_reference_artifact_type
+      - positive_identity_anchors
+      - forbidden_legacy_anchors
+      - functional_partition_matches_structure_source
+      - first_runtime_screenshot_side_by_side_with_target
+      - explicit_screen_identity_pass_or_fail
+    blockers:
+      - component_passes_inside_wrong_host
+      - component_reinsert_board_claimed_as_page_structure
+      - decorative_icon_inventory_presented_as_runtime_function
+      - auxiliary_module_enters_exclusive_decision_column
+      - legacy_page_anchor_visible_in_target_capture
+      - old_shell_hidden_by_backdrop_without_host_decision
+      - subagent_review_prompt_assumes_unconfirmed_host
+  scope_invariant:
+    status: trial
+    introduced: 2026-07-14
+    auto_required_when:
+      - task_contains_local_visual_correction_or_image_edit
+      - request_or_prompt_declares_preserve_existing_composition
+    required:
+      - editable_roi_definition
+      - immutable_region_or_invariant_list
+      - before_after_full_frame_comparison
+      - outside_roi_drift_check
+      - explicit_scope_pass_or_fail
+    blockers:
+      - full_frame_resampling_claimed_as_local_edit
+      - immutable_land_silhouette_or_layout_changed
+      - outside_roi_changes_unclassified
+      - second_same_scope_failure_without_stop_loss
+  visible_field_semantic_necessity:
+    status: trial
+    introduced: 2026-07-14
+    auto_required_when:
+      - assetized_ui_runtime_preview_or_production_candidate
+      - user_review_screenshot_contains_dynamic_text_or_numbers
+    required:
+      - visible_component_expected_ids
+      - visible_component_audit
+      - visible_field_semantics
+      - player_question_and_decision_value_per_field
+      - unique_owner_scope_and_production_data_source_per_field
+      - production_runtime_fixture_shared_by_preview_and_engine
+      - removed_fixture_fields_record
+      - validate_visible_field_semantics_pass
+    blockers:
+      - stress_fixture_visible_in_user_review_screenshot
+      - placeholder_number_claimed_as_runtime_value
+      - field_has_no_stable_data_source
+      - downstream_decision_field_shown_on_upstream_page
+      - same_fact_has_multiple_primary_owners
+      - only_user_named_field_checked_without_full_visible_component_audit
+    validator: scripts/ui-contracts/validate_visible_field_semantics.py
+  assetized_ui:
+    required:
+      - screen_identity
+      - functional_partition_table
+      - accepted_decision_cross_read_and_exact_structure_wireframe_before_filled_state_mock
+      - visible_field_semantic_necessity
+      - information_capacity_table
+      - longest_copy_cases
+      - component_aspect_taxonomy
+      - page_contract_board_with_resolution_and_export_scale
+      - full_screen_reinsert_proof
+      - frozen_vs_provisional_field_split
+      - vertical_slice_before_batch_sprite_production
+      - content_rects
+      - no_text_rects
+      - hit_rects
+      - ui_geometry_gate
+      - text_carrier_capacity
+      - filled_state_mock_or_layered_refill_preview
+      - ui_ux_art_review
+      - runtime_target_comparison
+      - status_md_updated_each_round
+    blockers:
+      - logic_smoke_claimed_as_visual_acceptance
+      - filled_state_mock_generated_before_real_function_inventory_and_exact_structure_wireframe
+      - accepted_interaction_or_layout_decision_omitted_from_imagegen_brief
+      - runtime_command_gap_presented_as_already_implemented_interaction
+      - readonly_short_state_claims_full_card_volume_without_decision_value
+      - noninteractive_closure_material_reads_as_secondary_panel
+      - frozen_class_reused_when_role_requires_new_density_variant
+      - component_removal_exposes_equivalent_unowned_void_in_bounded_column
+      - status_strip_repeats_schedule_and_dossier_without_unique_player_question
+      - safe_zone_claimed_as_formal_ui_quality
+      - no_text_draft_claimed_as_text_integration
+      - default_label_feel_in_filled_state_mock
+      - information_bearing_surface_tilted
+      - cta_or_text_slot_skewed
+      - orthogonal_claim_without_local_crops_or_guides
+      - glyph_fits_ideal_slot_but_visible_carrier_is_too_small
+      - retired_carrier_text_hidden_but_contract_slot_runtime_node_or_visible_shell_remains
+      - square_component_defining_non_badge_roles
+      - per_component_serial_contract_rounds_instead_of_page_board
+      - contract_frozen_without_full_screen_reinsert
+      - contract_missing_resolution_or_export_scale
+      - batch_sprite_production_before_vertical_slice
+      - art_output_silently_changing_frozen_contract_fields
+      - evidence_script_referenced_from_tmp
+      - review_doc_not_in_chinese
+  image_color:
+    auto_required_when:
+      - task_contains_any_of:
+          - color correction
+          - color mood exploration
+          - palette exploration
+          - 调色
+          - 去黄
+          - 去绿
+          - 提亮
+          - 压暗
+          - 色调
+          - 氛围
+          - 更接近标杆配色
+      - prompt_contains_any_of:
+          - globally darken
+          - globally desaturate
+          - compressed palette
+          - charcoal navy
+          - cool gray paper
+          - reduce green
+          - reduce yellow
+    required:
+      - unique_reference_image
+      - fixed_roi
+      - color_tokens
+      - failure_boundaries
+      - post_check_same_roi
+      - semantic_region_luminance_distribution
+      - no_global_regrade_when_local_palette_fix
+    blockers:
+      - no_sampling_table
+      - broad_pass_without_token_results
+      - user_says_color_differs_and_no_contract_revision
+      - local_hue_fix_causes_global_l_drop_over_3
+      - active_map_or_paper_regions_darkened_by_global_grade
+  cross_screen_style_lock:
+    status: trial
+    introduced: 2026-07-22
+    auto_required_when:
+      - user_requests_two_or_more_screens_in_one_unified_art_style
+      - response_claims_cross_screen_style_consistency
+      - imagegen_batch_contains_two_or_more_ui_screens
+    required:
+      - one_joint_multi_screen_style_proof_before_separate_full_screen_outputs
+      - identical_original_benchmark_set_for_every_screen
+      - shared_style_kernel_and_negative_contract
+      - shared_palette_area_hierarchy
+      - shared_low_poly_block_scale
+      - shared_lighting_and_image_flattening_method
+      - shared_paper_material_and_symbol_vocabulary
+      - benchmark_and_all_candidates_side_by_side
+      - twenty_five_percent_thumbnail_comparison
+      - benchmark_emotional_promise_first_read_comparison
+      - anomaly_story_hook_before_institutional_workflow
+      - mixed_editorial_media_and_scale_rhythm
+      - explicit_pass_or_fail_per_screen_and_for_whole_batch
+    evidence_required:
+      - joint_style_proof_or_contact_sheet
+      - benchmark_plus_all_screen_contact_sheet
+      - palette_area_notes_per_screen
+      - block_scale_and_realism_notes_per_screen
+      - first_three_nouns_and_action_tendency_for_benchmark_and_candidate
+      - institution_pressure_vs_story_curiosity_visual_weight_note
+    blockers:
+      - unapproved_generated_screen_used_as_style_truth_for_next_screen
+      - separate_serial_prompts_claimed_as_joint_generation
+      - shared_border_font_or_button_color_claimed_as_full_style_consistency
+      - any_screen_reads_as_photorealistic_scene_gis_cinematic_render_or_software_dashboard
+      - dense_uniform_micro_facets_on_map_or_story_image
+      - benchmark_comparison_done_one_screen_at_a_time_only
+      - ui_or_ux_functional_pass_used_as_art_style_pass
+      - candidate_first_reads_as_bureaucratic_approval_intelligence_control_or_crisis_response
+      - blocking_risk_or_rejection_signals_outweigh_anomaly_story_hooks
+      - humor_exists_only_as_penalty_rejection_or_unavailable_copy
+      - color_variety_exists_only_in_swatches_status_dots_or_footer
+  component_render_language_lock:
+    status: trial
+    introduced: 2026-07-24
+    auto_required_when:
+      - clean_lowpoly_weekly_artifact_contains_mixed_object_classes
+      - response_claims_component_style_alignment
+      - user_flags_handdrawn_sticker_or_low_poly_image_mismatch
+      - local_component_art_rework_is_requested
+    required:
+      - object_to_rendering_language_map
+      - same_class_visible_component_scan
+      - handdrawn_sticker_contract
+      - coarse_low_poly_story_image_contract
+      - institutional_print_contract
+      - restrained_newsroom_prop_contract
+      - shared_source_image_for_repeated_story_subject
+      - local_roi_and_scope_invariants_when_overall_direction_is_retained
+    evidence_required:
+      - benchmark_and_candidate_component_crops
+      - one_hundred_percent_crop_for_handdrawn_and_prop_language
+      - twenty_five_percent_thumbnail_for_story_image_silhouette
+      - per_component_pass_or_fail_table
+      - list_of_retained_unmodified_elements
+    blockers:
+      - handdrawn_sticker_reads_as_smooth_symmetric_vector_clip_art
+      - story_image_reads_as_photographic_cinematic_or_detailed_low_poly_filter
+      - repeated_story_subject_is_independently_regenerated_across_screen
+      - functional_newsroom_prop_reads_as_photorealistic_product_render
+      - institutional_mark_is_randomly_handdrawn_or_low_poly
+      - symbol_sample_reads_as_equal_weight_software_toolbar
+      - standard_dashed_placeholder_used_as_mystery_symbol
+      - only_user_named_instances_are_checked
+      - full_board_regeneration_used_for_local_component_rework
+  ui_geometry:
+    auto_required_when:
+      - artifact_type_in:
+          - visual_style_reference
+          - color_locked_style_draft
+          - no_text_style_draft
+          - filled_state_text_mock
+          - no_text_asset_master
+          - runtime_state_preview
+          - production_candidate
+      - task_contains_assetized_ui_or_imagegen
+      - response_claims_any_of:
+          - orthogonal_pass
+          - can_continue_to_asset_split
+          - can_continue_to_manifest
+          - can_continue_to_runtime
+          - production_candidate
+          - visual_acceptance_pass
+      - visible_surface_contains_any_of:
+          - dynamic_text
+          - button_label
+          - cta
+          - hit_rect
+          - avatar_state
+          - numeric_state
+          - task_card
+          - ticket_or_receipt
+          - dossier_or_paper_sheet
+          - map_pin_label
+      - prompt_or_feedback_mentions_any_of:
+          - tilted
+          - skewed
+          - perspective
+          - angled
+          - slanted
+          - 斜
+          - 歪
+          - 倾斜
+          - 透视
+      - stage_transition_to_any_of:
+          - filled_state_text_mock
+          - no_text_asset_master
+          - manifest
+          - runtime_background
+          - production_candidate
+    not_required_when:
+      - pure_text_discussion_without_visual_claim
+      - structure_wireframe_without_visual_acceptance_claim
+      - decorative_illustration_with_no_content_or_hit_rects
+      - existing_gate_result_only_being_summarized
+    required:
+      - information_surface_inventory
+      - core_surface_crops
+      - horizontal_vertical_guides
+      - edge_angle_check
+      - decorative_vs_content_surface_split
+      - explicit_tilt_pass_or_fail
+    evidence_required:
+      min_core_surface_crops: 3
+      required_crop_targets_if_present:
+        - primary_text_panel
+        - right_dossier_or_ticket
+        - task_card_or_list_item
+        - cta_or_button_plate
+        - bottom_receipt_or_status_strip
+      reference_lines:
+        - horizontal_guides
+        - vertical_guides
+      must_state:
+        - pass_or_fail_per_core_surface
+        - whether_tilt_is_content_surface_or_decoration
+        - allowed_next_step_after_geometry_result
+    thresholds:
+      dynamic_text_surface_max_tilt_degrees: 1
+      cta_or_hit_rect_surface_max_tilt_degrees: 1
+      decorative_surface_allowed_only_in: no_text_rects
+    blockers:
+      - claimed_orthogonal_without_crop_or_guides
+      - dynamic_text_surface_tilt_over_threshold
+      - tilted_writable_surface_in_style_draft
+      - skewed_cta_or_button_plate
+      - perspective_paper_carrying_dynamic_text
+      - decorative_tilt_inside_content_rects
+      - whole_screen_only_no_core_surface_crops
+  text_carrier_capacity:
+    auto_required_when:
+      - visible_dynamic_text_carrier_present
+      - text_slot_or_font_token_changed
+      - response_claims_text_fit_or_runtime_visual_pass
+    required:
+      - visible_color_module_rect
+      - carrier_rect
+      # 2026-07-22 A263 false-pass 复发升级：不能再让作者自画 safe rect 自证正确。
+      - owner_carrier_id_per_text_field
+      - semantic_group_id_per_text_field
+      - inner_rect
+      - runtime_glyph_bbox
+      - font_left_top_bearing_preserved
+      - raster_alpha_glyph_bbox
+      - replayable_font_source
+      - overlay_bbox_matches_raster_bbox
+      - actual_glyph_bbox_inside_inner_rect
+      - no_synthetic_bbox_from_draw_origin_plus_size
+      - normal_and_longest_copy_fit_without_wrap_or_compression
+      - target_engine_font_and_scale_evidence
+      - carrier_texture_continuity_after_resize_or_rebuild
+      # 2026-07-22 A263 v0.2：名义 carrier 与文字居中均通过，真实状态签仍被 cover-fit 裁掉一半。
+      - source_target_aspect_ratio_report_for_raster_carrier_patch
+      - fit_crop_effective_source_window_xyxy
+      - protected_visual_object_bbox_before_transform
+      - protected_visual_object_crop_loss_px_per_edge
+      - protected_visual_object_pixel_retention_ratio
+      - mapped_visible_carrier_bbox_or_color_mask
+      - left_and_right_endcap_presence
+      - carrier_edge_margin_and_closed_contour
+      - safe_rect_pairwise_intersection_scan
+      - minimum_semantic_group_gap_px_by_role
+      - state_text_center_inside_visible_state_carrier
+      - changed_text_or_patch_neighborhood_100px_review
+    evidence_required:
+      - carrier_closeup
+      - independently_cropped_100_percent_carrier_closeup
+      - changed_region_100px_neighborhood_crop
+      - ingredient_source_crop_fit_final_comparison
+      - protected_object_bbox_overlay
+      - final_100_and_200_percent_endcap_closeup
+      - exact_scale_text_slot_stress
+      - bbox_probe_per_font_size_and_copy
+      - text_bbox_evidence_validator_pass
+      - independent_font_raster_replay_pass
+      - target_engine_runtime_screenshot
+    blockers:
+      - ideal_safe_zone_not_contained_by_visible_carrier
+      - author_declared_safe_rect_has_no_verified_visible_carrier
+      - semantically_distinct_safe_rects_overlap
+      - semantic_group_gap_below_declared_role_minimum
+      - state_text_center_outside_visible_state_carrier
+      - aggregate_safe_rect_pass_claimed_as_visual_pass_without_independent_local_crop
+      - proxy_font_claimed_as_final_font_metrics
+      - text_squeezed_by_font_shrink_or_manual_y_offset
+      - font_metric_offset_discarded
+      - qa_overlay_uses_synthetic_bbox
+      - fit_only_compares_width_height_without_absolute_containment
+      - manual_y_offset_used_to_fake_centering
+      - resized_carrier_has_seam_smear_or_flat_color_band
+      - fit_or_cover_used_without_effective_source_window_report
+      - source_target_aspect_mismatch_without_crop_loss_review
+      - protected_visual_object_bbox_not_inside_effective_source_window
+      - protected_visual_object_pixel_retention_below_99_percent
+      - declared_carrier_rect_used_without_actual_visible_pixel_bbox_or_mask
+      - carrier_endcap_missing_or_closed_contour_broken
+      - carrier_visible_pixels_touch_patch_edge_when_source_has_margin
+  retired_carrier_absence:
+    auto_required_when:
+      - visible_text_carrier_or_information_lane_retired
+      - contract_text_slot_removed
+      - runtime_text_node_removed
+    required:
+      - contract_slot_absent_without_zero_sized_dead_slot
+      - runtime_node_absent
+      - visible_carrier_absent
+      - retired_footprint_old_carrier_pixels_eq_0
+      - retired_footprint_alpha_holes_eq_0
+      - full_substrate_rebuild_from_traceable_master
+      - retired_footprint_spans_at_least_3_explicit_facets
+      - retired_footprint_max_single_facet_share_le_45_percent
+      - nonperiodic_grain_coverage_ge_7_5_percent
+      - old_rectangle_boundary_has_no_visible_seam
+      - retained_overlays_and_pixels_outside_rebuild_unchanged
+      - target_engine_runtime_screenshot
+    evidence_required:
+      - before_after_full_card_comparison
+      - retired_footprint_200_to_300pct_closeup
+      - target_engine_runtime_screenshot
+    blockers:
+      - text_hidden_but_empty_carrier_remains
+      - zero_sized_dead_contract_slot_remains
+      - runtime_node_remains_hidden_or_empty
+      - local_rectangular_cover_patch_used
+      - inpaint_blur_diffusion_or_flat_color_band_used
+      - old_carrier_outline_shadow_or_second_seam_still_locatable
+  badge_core_facet_symmetry:
+    auto_required_when:
+      - programmatic_symmetric_badge_core_facets_present
+    required:
+      - facets_derived_from_shared_bbox_and_center
+      - mirrored_vertex_error_le_1px_at_2x
+      - center_convergence_error_le_0_5px
+      - left_right_structural_area_delta_le_1_percent
+      - structural_mirror_iou_ge_0_985
+      - empty_base_400pct_evidence
+      - runtime_overlay_evidence
+    blockers:
+      - independently_handwritten_non_mirrored_facet_endpoints
+      - periodic_per_pixel_noise_used_as_material
+      - runtime_icon_hides_unreviewed_empty_base
+  godot_agent_smoke:
+    auto_required_when:
+      - changed_files_match_any_of:
+          - gd_project/scenes/**/*.gd
+          - gd_project/scenes/**/*.tscn
+          - gd_project/project.godot
+      - task_touches_any_of:
+          - weekly_run
+          - world_map
+          - region_task
+          - dispatch
+          - editorial
+          - summary
+          - phase_switching
+          - node_paths
+          - autoload
+          - preload_paths
+    not_required_when:
+      - markdown_only
+      - ai_radar_only
+      - html_only_without_godot_changes
+      - design_discussion_without_file_changes
+    required:
+      - gda_script_validate_json
+      - parse_gda_valid_field
+      - godot_headless_weekly_run_smoke
+      - godot_debug_skill_lookup_on_failure
+    blockers:
+      - gda_valid_false
+      - godot_headless_nonzero_exit
+      - node_not_found
+      - null_method_call
+      - preload_or_autoload_runtime_error
+      - native_godot_process_crash_requires_separate_gui_exe_check
+  godot_gui_startup:
+    auto_required_when:
+      - user_reports_any_of:
+          - windows_application_error
+          - memory_could_not_be_read
+          - godot_gui_crash
+          - editor_crash
+      - task_requires_any_of:
+          - open_godot_editor
+          - verify_exact_godot_exe
+          - compare_godot_versions
+      - screenshot_or_log_mentions_any_of:
+          - Godot_v4.6.2-stable_win64.exe
+          - 应用程序错误
+          - 内存不能为 read
+    required:
+      - exact_godot_exe_path
+      - gui_startup_check_script
+      - timeout_or_quit_after_result
+      - log_file_path
+    blockers:
+      - exact_gui_exe_exits_nonzero
+      - exact_gui_exe_hangs_or_modal_crash_dialog
+      - headless_smoke_used_as_gui_crash_proof
+  handoff_completeness:
+    status: trial
+    auto_required_when:
+      - user_requests_cross_endpoint_continuation
+      - user_requests_multi_remote_push
+      - response_claims_seamless_handoff
+    classifications:
+      - GIT_INCLUDED
+      - ACTIVE
+      - REPRODUCIBLE
+      - EXTERNALIZED
+      - SECRET
+      - DISPOSABLE
+      - LOCAL_ONLY_REQUIRED
+      - UNKNOWN
+    required:
+      - explicit_target_remotes_and_branches
+      - fetched_remote_tracking_refs
+      - fast_forward_check_per_remote
+      - handoff_manifest_for_all_unstaged_related_paths
+      - reason_for_every_non_git_classification
+      - evidence_for_reproducible_externalized_and_secret
+      - separate_submission_ready_and_seamless_ready_results
+    active_exception:
+      allowed_only_when: user_explicitly_allows_current_running_work_to_remain_local
+      permits_submission_ready: true
+      permits_seamless_ready: false
+    blockers:
+      - UNKNOWN
+      - LOCAL_ONLY_REQUIRED
+      - missing_classification_reason
+      - missing_reproduction_or_externalization_evidence
+      - active_without_explicit_authorization
+      - target_remote_not_configured
+      - target_remote_not_fetched
+      - target_remote_non_fast_forward
+
+# gate 生命周期（2026-07-08 起）：防止 gate 只增不减导致流程僵化。
+gate_lifecycle:
+  new_gate_default_status: trial
+  promotion_condition: survives_one_full_asset_line_or_two_weeks
+  consolidation_trigger:
+    - asset_line_completed
+    - every_two_weeks
+  consolidation_actions:
+    - merge_duplicate_gates
+    - mark_superseded_rules
+    - narrow_overly_broad_triggers
+    - retire_gates_with_no_recent_catches
+  sync_rule: gate_changes_must_land_in_yaml_and_owning_doc_together
+  batching_rule: same_page_same_kind_work_merges_into_one_board_one_decision

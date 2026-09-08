@@ -1,12 +1,13 @@
 {
   "id": "",
   "name": "ux-kb-principles",
-  "display_name": "UX 原则库（32 条）",
-  "description": "32 条 UX 原则详细说明（Tier 1-3 全集）",
-  "version": "1.0.0",
+  "display_name": "UX 原则参考",
+  "description": "为具体 UX 问题解释机制的按需参考，保留语境，不把经验数字或启发式当通用物理定律。",
+  "version": "2.0.0",
   "category": "planning",
   "url": null,
   "status": null,
   "installed_at": null,
-  "updated_at": 1779763238000
+  "updated_at": 1788710400000,
+  "source": "SKILL.md"
 }

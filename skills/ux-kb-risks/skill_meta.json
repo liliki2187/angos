@@ -1,12 +1,13 @@
 {
   "id": "",
   "name": "ux-kb-risks",
-  "display_name": "UX 业务风险库",
-  "description": "10 类业务风险 + 8 问扫描清单（商城/付费类必加载）",
-  "version": "1.0.0",
+  "display_name": "UX 风险参考",
+  "description": "当界面涉及付费、不可逆后果、隐私或真实权限风险时，按需辅助 UX 审查。",
+  "version": "2.0.0",
   "category": "planning",
   "url": null,
   "status": null,
   "installed_at": null,
-  "updated_at": 1779763238000
+  "updated_at": 1788710400000,
+  "source": "SKILL.md"
 }

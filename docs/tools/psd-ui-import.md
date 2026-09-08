@@ -8,7 +8,7 @@
 ## 为什么选择这条路径
 
 旧版 Godot PSD 导入器（资产库条目 `555`）已经失效，只支持 Godot `3.2`，而且仅限 Windows。
-`Importality` 是 Godot `4.x` 下目前仍可行的路径，它支持通过 CLI 工具把其他图形格式导入为常规图片资源。
+`Importality` 是本项目已选用的 Godot `4.x` 导入路径（此处不是最新兼容性调查），它支持通过 CLI 工具把其他图形格式导入为常规图片资源。
 
 参考来源：
 
@@ -28,10 +28,12 @@
 
 ## 推荐入口
 
+只读可行性咨询不执行下面的命令；preview 也会复制 PSD 和写生成场景，不是只读探针。实际导入前确认输出归属与覆盖范围。默认跳过编辑器配置，只有明确需要配置 Importality 且用户授权时才改编辑器设置。
+
 当目标是“把这份 PSD 变成一个可复用的 Godot UI 资产包”时，请使用高层封装脚本：
 
 ```powershell
-python scripts/import/build_psd_ui_bundle.py path\\to\\mockup.psd
+python scripts/import/build_psd_ui_bundle.py path\\to\\mockup.psd --mode reusable --skip-configure-editor
 ```
 
 默认会生成：
@@ -44,7 +46,7 @@ python scripts/import/build_psd_ui_bundle.py path\\to\\mockup.psd
 如果只需要验证输出：
 
 ```powershell
-python scripts/import/build_psd_ui_bundle.py path\\to\\mockup.psd --mode preview
+python scripts/import/build_psd_ui_bundle.py path\\to\\mockup.psd --mode preview --skip-configure-editor
 ```
 
 该模式会写入 `gd_project/Assets/ui/psd_samples/<slug>/...` 和 `gd_project/scenes/dev/<Slug>ImportedPreview.tscn`。

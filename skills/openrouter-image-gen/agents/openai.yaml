@@ -1,4 +1,4 @@
 interface:
-  display_name: "OpenRouter Image Gen"
-  short_description: "Route transparent assets to OpenRouter and opaque assets to built-in imagegen."
-  default_prompt: "Use $openrouter-image-gen to route transparent assets through OpenRouter GPT-5 Image and opaque assets through built-in imagegen, then save project-ready outputs under image_gen/."
+  display_name: "图像生成与资产路由"
+  short_description: "根据当前任务选择真实生图路径，支持风格探索、参考图编辑和透明资产"
+  default_prompt: "使用 $openrouter-image-gen，依据当前参考和本轮目标生成图像，检查结果并说明实际用途。"
