@@ -1,22 +1,22 @@
 {
   "schema_version": 1,
-  "contract_version": "0.8.6",
-  "status": "locked_candidate",
+  "contract_version": "1.0.0",
+  "status": "frozen",
   "page": "world_map",
   "class_id": "right_action_lane",
   "role": "右侧 dossier 底部唯一主 CTA（保留旧 class id，A189 起只允许单实例）",
   "parent_class": "right_dossier_page",
-  "reference_resolution": [1280, 720],
+  "reference_resolution": [1920, 1080],
   "runtime_resolution": [1920, 1080],
   "export_scale": 2,
   "frozen": {
-    "export_size": [284, 50],
-    "positions": [[950, 474]],
-    "hit_rect": [0, 0, 284, 50],
+    "export_size": [414, 76],
+    "positions": [[1443, 956]],
+    "hit_rect": [0, 0, 414, 76],
     "slots": {
-      "left_icon_zone": [12, 8, 34, 34],
-      "label_plate": [62, 9, 170, 32],
-      "right_action_badge": [238, 5, 42, 40]
+      "left_risk_stripe": [0, 0, 8, 76],
+      "label_plate": [24, 10, 330, 56],
+      "right_action_badge": [358, 8, 48, 60]
     }
   },
   "provisional": {
@@ -29,7 +29,7 @@
   "states": ["default", "hover", "pressed", "locked_disabled"],
   "state_may_change": ["颜色皮肤", "left_icon_zone 图案", "right_action_badge 图案", "启用 / 禁用反馈"],
   "state_may_not_change": ["export_size", "行高", "label_plate 尺寸与位置", "right_action_badge 位置", "hit_rect"],
-  "notes": "A189 起旧 enter / info / warning 三实例结构退役；A196 起与任务情报热区统一为 284px 外部动作栈，A209 / A211 起本 class 成为其中唯一可见实体按钮。本 class id 只保留为 primary_enter_cta 的单实例生产合同。任务摘要使用透明 disclosure；风险与缺口进入只读正文或展开抽屉。",
+  "notes": "A189 起旧 enter / info / warning 三实例结构退役；A305 升为 414×76 的唯一可见实体主 CTA。任务摘要使用透明 disclosure；风险与解锁缺口进入 region_body / expanded_body_capacity。locked 地区选中时本 CTA 保持同位并进入 locked_disabled，不可点击。",
   "evidence": {
     "reviews": [
       "docs/plans/world-map-benchmark-landing/2026-07-08-world-map-wmw-right-dossier-cta-contract-v0-8-3-review.md",

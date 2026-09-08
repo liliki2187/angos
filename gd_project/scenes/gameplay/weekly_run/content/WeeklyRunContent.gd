@@ -86,7 +86,7 @@ const REGION_DATA := [
 		"hint": "需要：完成一条连续追踪的第二环。",
 		"unlock_rule": "pacific_chain",
 		"map_pos": {"x": 0.56, "y": 0.60},
-		"unlock_gap": "缺口：完成北美禁区带连续追踪第 2 环，或取得可靠线人许可。",
+		"unlock_gap": "缺口：完成北美禁区带连续追踪第 2 环。",
 		"nodes": [],
 	},
 ]

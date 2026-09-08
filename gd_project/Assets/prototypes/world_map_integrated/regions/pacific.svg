@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1104" height="704" viewBox="0 0 1104 704">
+  <defs>
+    <pattern id="scan" width="12" height="12" patternUnits="userSpaceOnUse">
+      <path d="M0 11.5H12" stroke="#d8d6c5" stroke-opacity=".10"/>
+    </pattern>
+  </defs>
+  <rect width="1104" height="704" fill="#172932"/>
+  <path d="M22 169L464 56L971 155L1060 465L640 634L155 507Z" fill="#355d68"/>
+  <path d="M22 169L464 56L398 409L155 507Z" fill="#244753"/>
+  <path d="M398 409L971 155L1060 465L640 634Z" fill="#64705a"/>
+  <path d="M398 409L640 634L155 507Z" fill="#2d5360"/>
+  <g fill="none" stroke="#d8d6c5" stroke-width="13">
+    <path d="M474 386A122 122 0 0 1 750 386"/>
+    <path d="M408 386A188 188 0 0 1 816 386"/>
+    <path d="M320 386A276 276 0 0 1 904 386"/>
+    <path d="M342 521H876"/>
+  </g>
+  <circle cx="612" cy="386" r="24" fill="#d8d6c5"/>
+  <rect width="1104" height="704" fill="url(#scan)"/>
+  <rect x="4" y="4" width="1096" height="696" fill="none" stroke="#d8d6c5" stroke-opacity=".28" stroke-width="8"/>
+</svg>

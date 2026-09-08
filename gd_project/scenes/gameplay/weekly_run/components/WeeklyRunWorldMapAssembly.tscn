@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://scenes/gameplay/weekly_run/components/WeeklyRunWorldMapAssembly.gd" id="1_assembly"]
+[ext_resource type="Script" path="res://scenes/gameplay/weekly_run/components/WeeklyRunWorldMapSoftColumns.gd" id="1_assembly"]
 
 [node name="WeeklyRunWorldMapAssembly" type="Control"]
 layout_mode = 3

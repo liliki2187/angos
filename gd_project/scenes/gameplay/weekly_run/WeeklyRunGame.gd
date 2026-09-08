@@ -520,7 +520,7 @@ func _build_explore_payload() -> Dictionary:
 		region_unlocked = Systems.is_region_unlocked(run_state, region)
 		region_title = str(region.name)
 		region_hint = str(region.get("hint", ""))
-		region_unlock_gap = str(region.get("unlock_gap", "缺少进入该区域的线索缺口。"))
+		region_unlock_gap = _world_region_access_progress(region)
 		selected_region_counts = _build_region_counts(region)
 		region_summary_line = _build_region_detail_summary_line(selected_region_counts)
 		region_brief = _build_region_brief(region, region_unlocked)
@@ -716,11 +716,21 @@ func _build_region_counts(region: Dictionary) -> Dictionary:
 				counts["clue"] = int(counts.get("clue", 0)) + 1
 	return counts
 
+func _world_region_access_progress(region: Dictionary) -> String:
+	if Systems.is_region_unlocked(run_state, region):
+		return "地区已开放。"
+	match str(region.get("unlock_rule", "")):
+		"east_asia":
+			return "声望 %d / 55，或取得罗斯威尔残页证据。\n当前尚未取得该证据。" % int(run_state.macro_stats.reputation)
+		"pacific_chain":
+			return "完成北美连续追踪第 2 环。\n当前尚未完成该环节。"
+	return str(region.get("unlock_gap", "尚未满足进入条件。"))
+
 func _build_region_card_status_line(region: Dictionary, counts: Dictionary, unlocked: bool) -> String:
 	if not unlocked:
 		return "锁定  %s" % _compact_region_card_gap(str(region.get("unlock_gap", "缺少线索许可")))
 	if int(counts.get("deadline", 0)) > 0:
-		return "红线升温  剩 %d 天" % int(run_state.remaining_days)
+		return "红线升温"
 	if int(counts.get("chain", 0)) > 0:
 		return "青线追踪  可推进"
 	return "可进入  普通线报"
@@ -764,7 +774,7 @@ func _build_region_warning_text(region: Dictionary, counts: Dictionary, unlocked
 	if not unlocked:
 		return "缺口：%s" % _compact_region_card_gap(str(region.get("unlock_gap", "缺少线索许可")))
 	if int(counts.get("deadline", 0)) > 0:
-		return "红线稿需在 %d 天内处理。" % int(run_state.remaining_days)
+		return "存在限时任务，请进入地区查看具体截止条件。"
 	if int(counts.get("chain", 0)) > 0:
 		return "青线追踪会推进后续地区。"
 	return "暂无额外惩罚。"
@@ -776,7 +786,7 @@ func _build_region_preview_rows(region: Dictionary, counts: Dictionary, unlocked
 	var rows: Array = []
 	if unlocked:
 		if int(counts.get("deadline", 0)) > 0:
-			rows.append({"tone": "deadline", "text": "红线稿需在 %d 天内处理。" % int(run_state.remaining_days)})
+			rows.append({"tone": "deadline", "text": "存在限时任务，请查看具体截止条件。"})
 		if int(counts.get("chain", 0)) > 0:
 			rows.append({"tone": "chain", "text": "青线追踪会推进地区缺口。"})
 		rows.append({"tone": "selected", "text": "进入后再选择具体线报。"})

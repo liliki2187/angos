@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "asset_set_id": "world_map_a_runtime_slice_v1",
+  "classification": "runtime_state_preview",
+  "visual_reference": "image_gen/2026-08-05/world-map-a-style-real-ui-v2-thick-sticker-ink/01-world-map-a-style-real-ui-v2-thick-sticker-ink.png",
+  "generation_mode": "built-in imagegen reference-driven no-text assets",
+  "assets": [
+    {
+      "id": "north_america_story",
+      "path": "res://Assets/prototypes/world_map_integrated/a_style_v2_runtime/north_america_story_1104x704.png",
+      "source": "image_gen/2026-08-05/world-map-a-runtime-slice-v1/sources/01-north-america-news-source.png",
+      "size": [1104, 704],
+      "dynamic_text_baked": false,
+      "runtime_uses": {
+        "left_card": [138, 88],
+        "right_dossier": [414, 264],
+        "strict_scale_ratio": 3
+      }
+    },
+    {
+      "id": "world_map_board",
+      "path": "res://Assets/prototypes/world_map_integrated/a_style_v2_runtime/world_map_board_960x902.png",
+      "source": "image_gen/2026-08-05/world-map-a-runtime-slice-v1/sources/03-world-map-board-source.png",
+      "size": [960, 902],
+      "dynamic_text_baked": false,
+      "runtime_overlay_owns": ["beacon", "region_label", "selected_loop", "locked_feedback", "editorial_connection"]
+    },
+    {
+      "id": "material_swatches",
+      "source": "image_gen/2026-08-05/world-map-a-runtime-slice-v1/sources/04-material-swatches-source.png",
+      "derived_paths": [
+        "res://Assets/prototypes/world_map_integrated/a_style_v2_runtime/paper_warm_ivory_512.png",
+        "res://Assets/prototypes/world_map_integrated/a_style_v2_runtime/paper_cool_locked_512.png",
+        "res://Assets/prototypes/world_map_integrated/a_style_v2_runtime/paper_olive_ticket_512.png",
+        "res://Assets/prototypes/world_map_integrated/a_style_v2_runtime/paper_steel_blue_512.png"
+      ],
+      "dynamic_text_baked": false
+    }
+  ],
+  "program_processing_only": ["center_crop", "resize", "quadrant_crop", "png_export", "gif_assembly"],
+  "not_proven": ["production_art_final", "all_region_story_images_final", "weekly_run_game_navigation_wired", "hover_timing_final"]
+}

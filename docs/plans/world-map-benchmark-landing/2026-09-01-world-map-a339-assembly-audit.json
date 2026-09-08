@@ -1,0 +1,26 @@
+{
+  "audit_id": "world_map_a339_assembly_contract",
+  "date": "2026-09-01",
+  "contract": "design/ui-contracts/world-map/world_map_page_assembly.json",
+  "checks": {
+    "json_parse": "pass",
+    "reference_resolution": "1920x1080",
+    "interactive_node_count": 8,
+    "canonical_image_ratio": "69:44",
+    "schedule_rect": [36, 810, 372, 246],
+    "dossier_rect": [1416, 24, 468, 1032],
+    "spec_exists": true,
+    "visualization_exists": true
+  },
+  "unresolved_count": 6,
+  "errors": [],
+  "all_pass": true,
+  "scope": "contract_shape_and_key_invariants_only",
+  "does_not_prove": [
+    "production_asset_quality",
+    "runtime_font_legibility",
+    "map_beacon_exact_rects",
+    "Godot_assembly",
+    "atlas_or_manifest_readiness"
+  ]
+}

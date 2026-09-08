@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>世界未解之谜周刊 · 夜班选题桌</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="stage" aria-label="世界未解之谜周刊，夜班选题桌">
+    <img class="master" src="assets/nightdesk-master.png" alt="一幅完整绘制的夜班编辑桌：左侧主稿工作夹，右侧世界地图，底部三张来稿签" draggable="false">
+    <div class="desk-state"><span>NIGHT DESK / 夜班编辑台</span><strong>第 1 天</strong><small>选题会尚未开始</small></div>
+
+    <section id="story" aria-labelledby="headline" data-region="north">
+      <div class="story-label"><div class="kicker" id="story-kicker">PHOTO DESK / 当前来稿 01</div><h2 id="region-name">北美禁区带</h2></div>
+      <img id="story-photo" src="assets/north.png" alt="北美来稿：三台洗衣机的窗内出现同一条海平面" draggable="false">
+      <div class="story-copy" id="story-copy">
+        <div class="story-heading"><span id="risk">红线升温</span><h1 id="headline">洗衣店里<br>出现了一片海</h1></div>
+        <p id="deck"></p>
+        <ol id="task-list" aria-label="已知任务预览" hidden></ol>
+        <p id="entry-copy" hidden>这里是独立样片的地区任务台入口，尚未连接正式游戏。<br>你可以返回选题桌，继续查看其他来稿。</p>
+      </div>
+      <button id="disclosure" aria-expanded="false" aria-controls="task-list"><span id="disclosure-title">任务情报 · 4</span><span id="disclosure-hint">查看已知任务 ＋</span></button>
+      <button id="enter" type="button">进入地区 →</button>
+      <span id="access-note">可进入调查</span>
+    </section>
+
+    <nav class="map-nav" aria-label="按地图地点选择来稿">
+      <button class="map-place" data-region="north" style="--x:795px;--y:290px" aria-label="选择北美禁区带，可进入"><span class="place-number">01</span><span class="place-title">北美禁区带</span><span class="place-sub">当前来稿</span></button>
+      <button class="map-place" data-region="east" style="--x:1340px;--y:335px" aria-label="选择东亚神秘地带，可预览，暂不可进入"><span class="place-number">02</span><span class="place-title">东亚神秘地带</span><span class="place-sub">锁定 · 可预览</span></button>
+      <button class="map-place" data-region="pacific" style="--x:1430px;--y:571px" aria-label="选择南太平洋失航区域，可预览，暂不可进入"><span class="place-number">03</span><span class="place-title">南太平洋失航区域</span><span class="place-sub">锁定 · 可预览</span></button>
+    </nav>
+
+    <nav id="incoming" aria-label="本周地区来稿">
+      <button class="ticket" data-region="north" style="--tx:702px;--ty:691px;--tw:283px;--th:184px;--cut:polygon(2% 0,100% 5%,99% 100%,9% 97%,0 83%)"><span class="ticket-top"><b>01</b><span>可进入</span></span><strong>北美禁区带</strong><span class="ticket-hook">洗衣店里出现了一片海</span><span class="ticket-status">红线升温</span></button>
+      <button class="ticket" data-region="east" style="--tx:1017px;--ty:695px;--tw:294px;--th:186px;--cut:polygon(1% 0,99% 4%,100% 100%,0 97%)"><span class="ticket-top"><b>02</b><span>可预览</span></span><strong>东亚神秘地带</strong><span class="ticket-hook">天文台在凌晨向北移动</span><span class="ticket-status">尚未解锁</span></button>
+      <button class="ticket" data-region="pacific" style="--tx:1344px;--ty:700px;--tw:284px;--th:188px;--cut:polygon(0 0,97% 0,100% 80%,91% 100%,0 98%)"><span class="ticket-top"><b>03</b><span>可预览</span></span><strong>南太平洋失航区域</strong><span class="ticket-hook">深海电波正在重复呼号</span><span class="ticket-status">尚未解锁</span></button>
+    </nav>
+    <span class="caption" id="map-caption">01 / 北美来稿正在左侧工作夹中展开</span>
+    <div class="sample-mark">独立美术交互样片 <span>1–3 切换 · E 展开 · Esc 返回</span></div>
+    <div id="announcer" class="sr-only" aria-live="polite"></div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

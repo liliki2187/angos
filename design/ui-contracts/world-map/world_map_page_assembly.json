@@ -1,0 +1,539 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "world_map_page_assembly",
+  "contract_version": "0.9.4",
+  "status": "implementation_planning_candidate",
+  "artifact_stage": "component_class_contract",
+  "reference_resolution": [
+    1920,
+    1080
+  ],
+  "runtime_resolution": [
+    1920,
+    1080
+  ],
+  "export_scale": 2,
+  "visual_reference_only": "image_gen/2026-09-01/world-map-filled-state-legibility-v2/01-filled-state-visual-target-1920x1080.png",
+  "visual_reference_policy": "REFERENCE_ONLY_DO_NOT_CROP_AS_RUNTIME_ASSET",
+  "screen_zones": {
+    "masthead": {
+      "rect": [
+        36,
+        24,
+        1356,
+        106
+      ],
+      "geometry": "frozen",
+      "interaction": "NONE"
+    },
+    "region_index": {
+      "rect": [
+        36,
+        154,
+        372,
+        640
+      ],
+      "geometry": "frozen",
+      "interaction": "CHILDREN_ONLY"
+    },
+    "schedule": {
+      "rect": [
+        36,
+        810,
+        372,
+        246
+      ],
+      "geometry": "frozen",
+      "interaction": "NONE"
+    },
+    "map_field": {
+      "rect": [
+        432,
+        154,
+        960,
+        902
+      ],
+      "geometry": "frozen",
+      "interaction": "BEACONS_ONLY"
+    },
+    "dossier": {
+      "rect": [
+        1416,
+        24,
+        468,
+        1032
+      ],
+      "geometry": "frozen",
+      "interaction": "DISCLOSURE_AND_CTA_ONLY"
+    }
+  },
+  "component_contracts": {
+    "region_card": "design/ui-contracts/world-map/left_region_card.json",
+    "schedule": "design/ui-contracts/world-map/schedule_carrier.json",
+    "dossier_page": "design/ui-contracts/world-map/right_dossier_page.json",
+    "mission_intel_disclosure": "design/ui-contracts/world-map/right_mission_intel_button.json",
+    "action_lane": "design/ui-contracts/world-map/right_action_lane.json"
+  },
+  "excluded_legacy_contracts": [
+    {
+      "path": "design/ui-contracts/world-map/bottom_receipt_card.json",
+      "reason": "旧版 1280 基准的历史候选，不属于 A339 1920×1080 当前可见组件树。"
+    }
+  ],
+  "layer_stack": [
+    {
+      "z": 0,
+      "id": "backdrop",
+      "owner": "art",
+      "input": "IGNORE",
+      "description": "深夜石板蓝底与整屏基底。"
+    },
+    {
+      "z": 10,
+      "id": "back_decor",
+      "owner": "art",
+      "input": "IGNORE",
+      "max_rotation_degrees": 3,
+      "description": "夹子、胶带、露边、猫、照片背衬等独立装饰。"
+    },
+    {
+      "z": 20,
+      "id": "front_carrier",
+      "owner": "ui_asset",
+      "input": "IGNORE",
+      "max_rotation_degrees": 0,
+      "description": "承载动态文字与图片槽的正交纸壳、文件夹壳、功能条。"
+    },
+    {
+      "z": 30,
+      "id": "canonical_images",
+      "owner": "content",
+      "input": "IGNORE",
+      "fit": "KEEP_ASPECT_CENTERED",
+      "source_ratio": "69:44",
+      "description": "三张 1104×704 母图的完整等比显示实例。"
+    },
+    {
+      "z": 40,
+      "id": "state_decor",
+      "owner": "ui_state",
+      "input": "IGNORE",
+      "description": "选中、锁定、风险与展开状态的非文字装饰。"
+    },
+    {
+      "z": 50,
+      "id": "dynamic_text",
+      "owner": "runtime",
+      "input": "IGNORE",
+      "rotation_degrees": 0,
+      "description": "全部功能文字；不得烘焙进美术资产。"
+    },
+    {
+      "z": 60,
+      "id": "interaction_feedback",
+      "owner": "runtime",
+      "input": "IGNORE",
+      "description": "hover、pressed、focus 与 blocked feedback；不得改变命中矩形。"
+    },
+    {
+      "z": 70,
+      "id": "hit_rects",
+      "owner": "runtime",
+      "input": "CAPTURE",
+      "visible_in_shipping": false,
+      "description": "仅 8 个既有交互节点。"
+    }
+  ],
+  "canonical_image_contract": {
+    "master_size": [
+      1104,
+      704
+    ],
+    "aspect_ratio": "69:44",
+    "fit": "KEEP_ASPECT_CENTERED",
+    "crop": false,
+    "stretch": false,
+    "thumbnail_derivatives": false,
+    "slots": {
+      "region_card": [
+        138,
+        88
+      ],
+      "dossier": [
+        414,
+        264
+      ]
+    }
+  },
+  "interactive_nodes": [
+    {
+      "id": "region_card_01",
+      "kind": "region_card",
+      "rect": [
+        52,
+        226,
+        340,
+        170
+      ]
+    },
+    {
+      "id": "region_card_02",
+      "kind": "region_card",
+      "rect": [
+        52,
+        408,
+        340,
+        170
+      ]
+    },
+    {
+      "id": "region_card_03",
+      "kind": "region_card",
+      "rect": [
+        52,
+        590,
+        340,
+        170
+      ]
+    },
+    {
+      "id": "map_beacon_01",
+      "kind": "map_beacon",
+      "rect": null,
+      "rect_status": "provisional_requires_current_scene_measurement",
+      "core_size": [
+        72,
+        72
+      ]
+    },
+    {
+      "id": "map_beacon_02",
+      "kind": "map_beacon",
+      "rect": null,
+      "rect_status": "provisional_requires_current_scene_measurement",
+      "core_size": [
+        72,
+        72
+      ]
+    },
+    {
+      "id": "map_beacon_03",
+      "kind": "map_beacon",
+      "rect": null,
+      "rect_status": "provisional_requires_current_scene_measurement",
+      "core_size": [
+        72,
+        72
+      ]
+    },
+    {
+      "id": "mission_intel_disclosure",
+      "kind": "disclosure",
+      "rect": [
+        1443,
+        596,
+        414,
+        56
+      ]
+    },
+    {
+      "id": "action_lane",
+      "kind": "cta",
+      "rect": [
+        1443,
+        956,
+        414,
+        76
+      ]
+    }
+  ],
+  "non_interactive_regions": [
+    {
+      "id": "schedule",
+      "rect": [
+        36,
+        810,
+        372,
+        246
+      ],
+      "mouse_filter": "IGNORE",
+      "focus_mode": "NONE"
+    },
+    {
+      "id": "dossier_task_rows",
+      "rect": [
+        1443,
+        664,
+        414,
+        248
+      ],
+      "mouse_filter": "IGNORE",
+      "focus_mode": "NONE"
+    },
+    {
+      "id": "map_evidence_cluster",
+      "rect": [
+        462,
+        178,
+        310,
+        202
+      ],
+      "rect_status": "provisional_fixture_only",
+      "mouse_filter": "IGNORE",
+      "focus_mode": "NONE"
+    },
+    {
+      "id": "map_evidence_photo",
+      "rect": [
+        478,
+        196,
+        207,
+        132
+      ],
+      "rect_status": "provisional_photo_aperture_candidate",
+      "mouse_filter": "IGNORE",
+      "focus_mode": "NONE"
+    },
+    {
+      "id": "map_evidence_caption",
+      "rect": [
+        470,
+        336,
+        294,
+        32
+      ],
+      "rect_status": "provisional_dynamic_text_no_hit",
+      "mouse_filter": "IGNORE",
+      "focus_mode": "NONE"
+    }
+  ],
+  "state_truth": {
+    "selected_region_id": "single_source_of_truth",
+    "region_access_state": [
+      "available",
+      "locked"
+    ],
+    "region_urgency_state": [
+      "normal",
+      "warning"
+    ],
+    "disclosure_expanded": "boolean",
+    "legal_combinations": [
+      "selected+available",
+      "selected+locked",
+      "unselected+available",
+      "unselected+locked"
+    ],
+    "atomic_consumers": [
+      "region_card",
+      "map_beacon",
+      "map_label",
+      "map_evidence",
+      "dossier",
+      "action_lane"
+    ],
+    "locked_selection_rule": "锁定地区仍可选择并预览；CTA 同位进入 locked_disabled。",
+    "dossier_disclosure_rule": "展开/收起只切换现有内容与符号，不移动 CTA，不新增任务行 hit rect。"
+  },
+  "runtime_type_tokens": {
+    "functional_min": {
+      "size": 14,
+      "line_height": 20,
+      "status": "frozen_floor"
+    },
+    "meta": {
+      "size": 15,
+      "line_height": 22,
+      "status": "planning_candidate"
+    },
+    "body": {
+      "size": 16,
+      "line_height": 26,
+      "status": "planning_candidate"
+    },
+    "component_title": {
+      "size": 18,
+      "line_height": 26,
+      "status": "planning_candidate"
+    },
+    "news_title": {
+      "size": 22,
+      "line_height": 30,
+      "status": "planning_candidate"
+    },
+    "primary_action": {
+      "size": 22,
+      "line_height": 30,
+      "status": "planning_candidate"
+    },
+    "dossier_title": {
+      "size": 36,
+      "line_height": 44,
+      "status": "planning_candidate"
+    },
+    "decorative_microtype": {
+      "size_max": 12,
+      "status": "baked_art_only_no_gameplay_information"
+    }
+  },
+  "unresolved": [
+    "ISSUE 票签 exact rect 尚未冻结，禁止单独资产化。",
+    "三枚 map beacon 的最终 hit rect、label rect 与 wrapper rect 需从当前实现逐项测量后冻结。",
+    "Schedule 的无字纸壳 content/no_text 安全区需以最终无字母版测量，当前仅冻结外框与 no-hit 语义。",
+    "MapField Evidence 的 207×132 已收束为 69:44 canonical 照片 aperture 候选；仍为 provisional / NO-HIT，不等于整个 cluster。",
+    "Evidence cluster 310×202 与 caption 294×32 仅用于 visual fixture，用户确认前不得冻结。",
+    "运行时中文字体、字重与 glyph bbox 需在隔离 Godot 装配阶段验证。"
+  ],
+  "completed_vertical_slices": [
+    {
+      "component": "right_dossier_page",
+      "status": "geometry_state_candidate_old_filled_fixture_superseded",
+      "evidence": "image_gen/2026-09-01/world-map-dossier-vertical-slice-v1/18-dossier-state-matrix-audit.json",
+      "registration_correction": "image_gen/2026-09-03/world-map-native-origin-registration-slice-v1/03-north-carrier-registration-audit.json",
+      "note": "旧 15-dossier-filled-warning-expanded-x2.png 的北美文字错误配入东亚/金字塔照片，不能再作内容注册证据；几何与状态层历史证据保留，内容配对改由 native-origin registration slice 验证。"
+    },
+    {
+      "component": "map_field_static_base",
+      "status": "closed_thin_paper_frame_a_direction_accepted_runtime_pending",
+      "evidence": "image_gen/2026-09-02/world-map-mapfield-static-base-v2/12-closed-vs-interrupted-paper-frame-1920x1080.png"
+    }
+  ],
+  "pending_user_visual_gates": [
+    {
+      "component": "left_region_card",
+      "status": "visual_candidate_pending_user_gate",
+      "evidence": "image_gen/2026-09-02/world-map-region-card-vertical-slice-v1/19-delivery-manifest.md"
+    },
+    {
+      "component": "schedule_carrier",
+      "status": "visual_candidate_pending_user_gate",
+      "evidence": "image_gen/2026-09-02/world-map-schedule-vertical-slice-v1/11-schedule-vertical-slice-audit.json"
+    }
+  ],
+  "next_vertical_slice": {
+    "component": "map_field_dynamic_overlay_fixture",
+    "status": "corrected_context_fixture_pending_user_visual_gate",
+    "evidence": {
+      "state_ab_board": "image_gen/2026-09-03/world-map-mapfield-dynamic-overlay-fixture-v1/07-mapfield-state-ab-board-1920x1080.png",
+      "debug_overlay": "image_gen/2026-09-03/world-map-mapfield-dynamic-overlay-fixture-v1/08-mapfield-provisional-debug-overlay-960x902.png",
+      "audit": "image_gen/2026-09-03/world-map-mapfield-dynamic-overlay-fixture-v1/09-mapfield-dynamic-overlay-audit.json",
+      "user_gate_note": "image_gen/2026-09-03/world-map-mapfield-dynamic-overlay-fixture-v1/10-user-visual-gate-note.md",
+      "north_local": "image_gen/2026-09-03/world-map-mapfield-dynamic-overlay-fixture-v1/03-mapfield-north-selected-warning-960x902.png",
+      "east_local": "image_gen/2026-09-03/world-map-mapfield-dynamic-overlay-fixture-v1/04-mapfield-east-selected-locked-960x902.png",
+      "corrected_fullscreen_context": "image_gen/2026-09-03/world-map-mapfield-dynamic-overlay-fixture-v1/12-fullscreen-north-mapfield-only-corrected-1920x1080.png",
+      "corrected_scope_audit": "image_gen/2026-09-03/world-map-mapfield-dynamic-overlay-fixture-v1/13-corrected-fullscreen-scope-audit.json",
+      "invalidation_note": "image_gen/2026-09-03/world-map-mapfield-dynamic-overlay-fixture-v1/14-invalidated-fullscreen-recomposition-note.md"
+    },
+    "reason": "用户选择完整四边薄纸框 A。动态 fixture 的 MapField 局部机器合同已通过，但 05/06 因越界重拼左栏与 Dossier 并产生图文注册失败而撤销。12 是唯一有效整屏上下文，只替换 [432,154,960,902] MapField，左右栏逐像素不动；03/04/07/08/09 均仅为 MapField 局部证据。Beacon、selected、label 与 Evidence 仍待用户目视确认，wrapper、label 与 hit rect 均不冻结，East 跨组件原子更新延后到真实 runtime assembly。",
+    "withdrawn_evidence": [
+      "05-fullscreen-north-selected-warning-1920x1080.png",
+      "06-fullscreen-east-selected-locked-1920x1080.png"
+    ],
+    "proof_scope": "North 仅证明 MapField 放回已验证整屏后的上下文；East 仅有 MapField 局部证据；跨组件原子换态延后到真实 runtime assembly。"
+  },
+  "forbidden_next_steps": [
+    "atlas",
+    "manifest_finalization",
+    "WeeklyRunGame integration",
+    "crop_visual_reference_into_assets",
+    "ISSUE_ticket_assetization",
+    "alpha_bbox_or_tight_crop_bbox_as_component_origin",
+    "page_level_reassembly_of_component_internal_photo_text_or_state_layers"
+  ],
+  "registration_policy": {
+    "component_root_origin": "native_canvas_top_left_[0,0]",
+    "alpha_bbox_role": "diagnostic_only_never_layout_origin",
+    "page_mount_rule": "page_places_component_roots_only",
+    "internal_assembly_owner": "component_package",
+    "runtime_rect_formula": "global_slot = component_global_origin + local_slot",
+    "asset_scale_rule": "runtime_canvas * export_scale = source_canvas",
+    "legacy_export_size_warning": "left_region_card / right_dossier_page / right_mission_intel_button / right_action_lane 的 frozen.export_size 实际语义是 runtime canvas；Schedule 的 export_size 才是 2× source canvas。进入实现前必须通过 registration matrix 归一化，禁止按旧键名直接推断缩放或原点。",
+    "evidence": "image_gen/2026-09-03/world-map-native-origin-registration-slice-v1/01-world-map-component-registration-matrix-v1.json"
+  },
+  "registration_slices": [
+    {
+      "id": "north_carrier_native_origin_registration_v1",
+      "status": "contract_gate_user_confirmed",
+      "scope": [
+        "north_region_card",
+        "north_dossier",
+        "mission_intel_disclosure",
+        "primary_cta"
+      ],
+      "matrix": "image_gen/2026-09-03/world-map-native-origin-registration-slice-v1/01-world-map-component-registration-matrix-v1.json",
+      "board": "image_gen/2026-09-03/world-map-native-origin-registration-slice-v1/02-north-carrier-native-origin-board-1920x1080.png",
+      "audit": "image_gen/2026-09-03/world-map-native-origin-registration-slice-v1/03-north-carrier-registration-audit.json",
+      "closeups": "image_gen/2026-09-03/world-map-native-origin-registration-slice-v1/04-north-carrier-integrity-closeups-1920x1080.png",
+      "machine_pass": true,
+      "page_reassembles_component_internals": false,
+      "alpha_bbox_used_as_origin": false,
+      "canonical_photo_reuse_pixel_equal": true,
+      "does_not_authorize": [
+        "Godot",
+        "atlas",
+        "manifest_finalization",
+        "WeeklyRunGame"
+      ]
+    },
+    {
+      "id": "three_region_content_identity_binding_v1",
+      "status": "machine_and_dual_agent_pass_pending_user_visual_gate",
+      "scope": [
+        "north_region_card_and_dossier",
+        "east_region_card_and_dossier",
+        "pacific_region_card_and_dossier",
+        "disclosure",
+        "cta_state"
+      ],
+      "matrix": "image_gen/2026-09-03/world-map-content-identity-binding-slice-v1/01-region-content-binding-matrix-v1.json",
+      "boards": [
+        "image_gen/2026-09-03/world-map-content-identity-binding-slice-v1/02-north-region-dossier-pair-board-1920x1080.png",
+        "image_gen/2026-09-03/world-map-content-identity-binding-slice-v1/03-east-region-dossier-pair-board-1920x1080.png",
+        "image_gen/2026-09-03/world-map-content-identity-binding-slice-v1/04-pacific-region-dossier-pair-board-1920x1080.png"
+      ],
+      "closeups": "image_gen/2026-09-03/world-map-content-identity-binding-slice-v1/05-three-region-binding-closeups-1920x1080.png",
+      "audit": "image_gen/2026-09-03/world-map-content-identity-binding-slice-v1/06-region-content-binding-audit.json",
+      "machine_pass": true,
+      "check_count": 41,
+      "negative_tamper_test": {
+        "base_bundle": "east",
+        "injected_photo_bundle": "north",
+        "injected_headline_bundle": "north",
+        "negative_case_pass": false,
+        "failure_detected": true
+      },
+      "page_pixels_touched": false,
+      "copy_maturity": "provisional_fixture_not_final_story_copy",
+      "does_not_authorize": [
+        "full_screen_recomposition",
+        "Godot",
+        "atlas",
+        "manifest_finalization",
+        "WeeklyRunGame"
+      ]
+    }
+  ],
+  "content_binding_policy": {
+    "identity_key": "content_bundle_id",
+    "resolve_rule": "one content_bundle_id atomically resolves all RegionCard and Dossier copy, canonical photo, selection/risk/access semantics, and CTA state",
+    "allowed_binding_api": [
+      "RegionCard.bind(content_bundle_id)",
+      "Dossier.bind(content_bundle_id)"
+    ],
+    "forbidden_independent_overrides": [
+      "set_photo(photo_id)",
+      "set_headline(story_id)",
+      "set_status(state_id)",
+      "component_lookup_by_array_index"
+    ],
+    "state_axes": [
+      "selection_state",
+      "risk_state",
+      "access_state",
+      "cta_state"
+    ],
+    "locked_preview_rule": "locked RegionCard remains selectable and previewable; CTA alone becomes locked_disabled",
+    "copy_maturity": "provisional_fixture_not_final_story_copy",
+    "evidence": "image_gen/2026-09-03/world-map-content-identity-binding-slice-v1/01-region-content-binding-matrix-v1.json"
+  }
+}

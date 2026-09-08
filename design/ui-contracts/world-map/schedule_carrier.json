@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "contract_version": "0.1.0",
+  "status": "visual_candidate_pending_user_gate",
+  "artifact_stage": "component_class_contract_candidate",
+  "visual_pass": false,
+  "page": "world_map",
+  "class_id": "schedule_carrier",
+  "role": "左下全局排期信息纸；只说明当前日与选题会阶段，不承担推进时间、倒计时、日历或任何操作。",
+  "reference_resolution": [1920, 1080],
+  "runtime_resolution": [1920, 1080],
+  "export_scale": 2,
+  "frozen": {
+    "global_rect": [36, 810, 372, 246],
+    "runtime_size": [372, 246],
+    "export_size": [744, 492],
+    "frontcarrier_origin": [0, 0],
+    "frontcarrier_rotation_degrees": 0,
+    "interaction": "NONE",
+    "mouse_filter": "IGNORE",
+    "focus_mode": "NONE",
+    "hit_rect_count": 0,
+    "dynamic_text": [
+      "GLOBAL SCHEDULE / 全局日程",
+      "当前第 1 天",
+      "选题会尚未开始",
+      "当前版本不可操作"
+    ],
+    "forbidden_time_facts": ["剩余天数", "倒计时", "具体日期", "日历格", "七格进度"]
+  },
+  "candidate_measured_from_visual": {
+    "frontcarrier_visible_rect": [14, 10, 346, 226],
+    "text_slots": {
+      "kicker": [44, 26, 288, 18],
+      "current_day": [44, 56, 280, 34],
+      "stage": [50, 110, 274, 32],
+      "unavailable": [50, 148, 274, 24]
+    },
+    "no_text_rects": {
+      "clip": [6, 137, 40, 36],
+      "left_edge": [0, 0, 14, 246],
+      "right_edge": [360, 0, 12, 246],
+      "top_edge": [0, 0, 372, 10],
+      "bottom_edge": [0, 232, 372, 14],
+      "breathing_zone": [44, 180, 288, 38]
+    },
+    "state_decor": "intentionally_transparent",
+    "measurement_status": "provisional_until_user_visual_gate_and_runtime_font_gate"
+  },
+  "layer_rules": {
+    "back_decor": "一层低饱和石板蓝背页、少量橄榄露边与一枚左侧普通装订夹；NO-HIT；可轻微倾斜；不得承载状态事实。",
+    "front_carrier": "同 A335 的当代暖白纸家族；0°；无字；不得烘焙夹子、按钮、日历或动态内容。",
+    "state_decor": "本候选保持透明；只有在未来状态合同明确且不产生按钮误读时才可新增。",
+    "dynamic_text": "运行时正交文字；功能字号不得低于 14px；不得烘焙进 PNG。"
+  },
+  "forbidden_visual_language": [
+    "按钮框",
+    "输入框",
+    "箭头",
+    "加减号",
+    "chevron",
+    "日历表格",
+    "审批表",
+    "企业报表",
+    "SCP 或政府档案",
+    "泛黄旧纸",
+    "污渍与褶皱",
+    "密集碎多边形"
+  ],
+  "provisional": {
+    "visual_gate": "需用户在 372×246 原尺寸判断可读性、按钮误读、企业表单感、背饰完整性与底部留白。",
+    "runtime_font_gate": "最终中文字体、字重与真实 glyph bbox 必须在隔离 Godot 装配阶段重跑。",
+    "production_boundary": "当前不得标记 frozen，不得进入 atlas、最终 manifest、Godot 或 WeeklyRunGame。"
+  },
+  "evidence": {
+    "directory": "image_gen/2026-09-02/world-map-schedule-vertical-slice-v1",
+    "runtime_preview": "image_gen/2026-09-02/world-map-schedule-vertical-slice-v1/07b-schedule-filled-runtime-372x246.png",
+    "state_board": "image_gen/2026-09-02/world-map-schedule-vertical-slice-v1/08-schedule-state-board-1920x1080.png",
+    "contract_overlay": "image_gen/2026-09-02/world-map-schedule-vertical-slice-v1/09-schedule-contract-overlay-744x492.png",
+    "integrity_closeups": "image_gen/2026-09-02/world-map-schedule-vertical-slice-v1/10-schedule-integrity-closeups-1920x1080.png",
+    "machine_audit": "image_gen/2026-09-02/world-map-schedule-vertical-slice-v1/11-schedule-vertical-slice-audit.json",
+    "build_script": "tmp/ui-screens/build_schedule_vertical_slice_v1.py"
+  }
+}

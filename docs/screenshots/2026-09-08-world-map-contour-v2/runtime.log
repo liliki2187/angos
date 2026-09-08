@@ -1,0 +1,15 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 582.66 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce GTX 1060 6GB
+
+CHECK true 正式地图已启用独立底纸曲线材质
+CHECK true 底纸仍使用原Texture2D
+CHECK true 1920x1080实际渲染尺寸一致
+CHECK true 1920x1080进入按钮和底部说明完整可见
+CHECK true 1920x1080三图共用及真实任务数保持
+CHECK true 1600x900实际渲染尺寸一致
+CHECK true 1600x900进入按钮和底部说明完整可见
+CHECK true 1600x900三图共用及真实任务数保持
+CHECK true 1280x720实际渲染尺寸一致
+CHECK true 1280x720进入按钮和底部说明完整可见
+CHECK true 1280x720三图共用及真实任务数保持
+CONTOUR_RESULT true checks=11

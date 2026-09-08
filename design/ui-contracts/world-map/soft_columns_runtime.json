@@ -1,0 +1,159 @@
+{
+  "version": "1.4.1",
+  "status": "dossier_left_contour_implemented_pending_user_visual_review",
+  "功能对齐审计": "docs/plans/world-map-benchmark-landing/2026-09-08-functional-parity-audit.md：A362 已关闭分类汇总、风险说明、剩余天数展示缺口；扩区位置与未实现系统边界仍有效。",
+  "说明": "A359 柔性三栏的独立运行合同。旧 B2/A5 组件保留，不宣称与其旧矩形兼容。",
+  "runtime_scene": "res://scenes/gameplay/weekly_run/components/WeeklyRunWorldMapAssembly.tscn",
+  "implementation": "WeeklyRunWorldMapSoftColumns.gd",
+  "reference_size": [
+    1920,
+    1080
+  ],
+  "platform": "desktop_16_9",
+  "regions": {
+    "count": "0..N",
+    "container": "ScrollContainer/VBoxContainer",
+    "schedule_outside_scroll": true,
+    "locked_selectable": true,
+    "scroll_viewport": [
+      20,
+      140,
+      564,
+      758
+    ],
+    "overflow_affordance": {
+      "decision": "A361 用户同意实施，随后认可当前界面基本成形",
+      "card_separation": {
+        "up_to_three": 7,
+        "more_than_three": -26
+      },
+      "next_card": "超出三地区时初始视口露出第四张完整标题，照片和纸卡尺寸保留",
+      "scrollbar": "28px 原生纸尺滚动条，暖白滑块按可见比例变化，支持拖动和滚轮",
+      "hint": "下方有内容才显示更多地区，到底隐藏；内容完整放下时无滚动提示",
+      "layout_refresh": "卡片排版完成后的下一帧更新外层滚动范围"
+    }
+  },
+  "photos": {
+    "source": "WorldMapNewsCatalog.gd",
+    "one_texture_per_region": true,
+    "consumers": [
+      "RegionCard/PaperFace/SharedPhoto",
+      "DossierSharedPhoto",
+      "CurrentRegionEvidence/SharedPhoto"
+    ],
+    "stretch_mode": "STRETCH_KEEP_ASPECT_CENTERED",
+    "full_uv": true,
+    "missing": "明确显示配图待补，禁止回退为其他地区图片",
+    "right_layout": {
+      "x": 1296,
+      "y": 210,
+      "normal_max_width": 450,
+      "min_height": 150,
+      "sizing": "根据展开态最长内容所需高度等比收纳，折叠不改变照片尺寸",
+      "extreme_content_limit": "约266宽为压力兜底，不作为常态同等美术通过"
+    }
+  },
+  "news": {
+    "role": "独立地区来稿，不等于已存在的同名任务",
+    "runtime_text": true,
+    "layout": "照片、新闻与任务文字使用x1296阅读边线；标题及摘要按实际一至两行高度排列"
+  },
+  "tasks": {
+    "source": "WeeklyRunGame._build_region_mission_preview",
+    "preview_limit": 2,
+    "default_expanded": true,
+    "empty_distinct_from_locked": true,
+    "disclosure_moves_cta": false,
+    "rows_read_only": true,
+    "decision": "A364 用户采纳父级方案并授权实施，新成品待审阅",
+    "counts_source": "payload.region_counts：deadline / clue / chain",
+    "warning_source": "payload.region_warning_text",
+    "collapsed_keeps_counts_and_warning": true,
+    "visual_group": "单张浅矿物青附页、局部墨青页签、底部/右侧衬纸；无类型独占列或条目按钮底板",
+    "row_title_max_lines": 2,
+    "types": {
+      "deadline": "锈红限时",
+      "chain": "青色深链",
+      "default": "中性线索"
+    },
+    "locked_hides_counts_and_rows": true,
+    "paper_layout": {
+      "x": 1270,
+      "width": 558,
+      "y_and_height": "依新闻与任务实际行高计算"
+    },
+    "row_layout": "名称下4px接类型与耗时，组间12px；短标题不预留第二行",
+    "disclosure": "仅右上展开/收起提示为折叠热区；无任务时隐藏并清空tooltip",
+    "collapsed_shrinks_paper": true
+  },
+  "interaction": {
+    "region_selected": "保留正式地区ID",
+    "enter_region_requested": "既有周循环事件链",
+    "selection_day_cost": 0,
+    "entry_day_cost": 0,
+    "schedule": "read_only",
+    "primary_rect": [
+      1278,
+      914,
+      550,
+      76
+    ],
+    "task_row_click": "不选节点、不导航、不扣天数"
+  },
+  "selection": {
+    "decision": "A360 用户授权试做；A361 接续认可当前界面基本成形",
+    "persistent": true,
+    "card": "蜜黄标题纸签、左侧和底部外露蜜黄衬纸及阴影",
+    "map": "蜜黄标签、墨青编号块",
+    "dossier": "当前查看与同源地区编号",
+    "locked_keeps_selection_strength": true,
+    "hover_changes_selection": false,
+    "focus_changes_selection": false,
+    "paper_offset": [
+      7,
+      -3
+    ],
+    "settle_ms": 160,
+    "hit_rect_stationary": true,
+    "existing_assets_reused": [
+      "action-paper.png",
+      "region-tag.png"
+    ],
+    "title_seam": "回形针占用暖白左边，标题纸签起点84、标题起点104，避免覆盖夹具及编号贴边"
+  },
+  "assets": "res://Assets/ui/angus_packaging/world_map/soft_columns_v1/",
+  "visual_reference": "image_gen/2026-09-07/world-map-a-soft-three-columns-v1/02-filled-soft-three-column-candidate.png",
+  "验收范围": "实际运行截图、三处纹理实例、10地区首尾、真实锁定/空态/任务刷新、进入返回及动态演示；程序通过不等于用户视觉批准。",
+  "evidence": "docs/screenshots/2026-09-08-world-map-contour-v2/",
+  "verified_checks": 68,
+  "verified_environment": "Godot 4.6.2 / Windows / OpenGL 3.3；1920x1080、1600x900、1280x720分别真实渲染",
+  "motion_evidence": "docs/screenshots/2026-09-08-world-map-task-polish-v5/task-disclosure.gif（三张真实点击后画面，即时切换、延长停留）",
+  "selection_motion_evidence": "docs/screenshots/2026-09-07-world-map-selection/selection.gif（原160ms补间，本轮保留）",
+  "schedule": {
+    "remaining_days_source": "payload.remaining_days",
+    "read_only": true,
+    "not_task_deadline": true
+  },
+  "scroll_motion_evidence": "docs/screenshots/2026-09-08-world-map-scroll-affordance/scroll.gif（25张真实鼠标拖动渲染抽帧，展示时间调整）",
+  "paper_edges": {
+    "shader": "res://scenes/gameplay/weekly_run/components/WorldMapPaperEdge.gdshader",
+    "source_alpha": "六类原纸件只有0/255两级，原PNG不变",
+    "paper_smoothing": "只在轮廓混合覆盖率及预乘颜色，完整不透明区域直通",
+    "rotated_evidence_photo": "约一像素UV导数几何覆盖率，不更换Texture2D",
+    "global_render_settings_changed": false,
+    "dossier_left_contour": {
+      "decision": "A365 用户授权继续实施，成品待视觉审阅",
+      "data_builder": "WorldMapDossierContour.gd",
+      "source_size": [
+        578,
+        1078
+      ],
+      "region": "仅DossierPaper蓝衬纸外缘和白纸内缘两条左长边；源y100—1020渐入渐出，夹具／底角及其他纸件保留",
+      "sampling": "浮点连续曲线与屏幕导数覆盖率；两侧取原纸纹，避开旧描线",
+      "original_png_changed": false,
+      "evidence": "docs/screenshots/2026-09-08-world-map-contour-v2/",
+      "pixel_scope": "三尺寸同场景开关对照中，两条左长边以外逐像素一致"
+    }
+  },
+  "focused_contour_checks": 11
+}

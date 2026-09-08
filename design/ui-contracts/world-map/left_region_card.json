@@ -1,34 +1,44 @@
 {
   "schema_version": 1,
-  "contract_version": "0.8.5",
-  "status": "locked_candidate",
+  "contract_version": "1.1.0",
+  "status": "frozen",
   "page": "world_map",
   "class_id": "left_region_card",
-  "role": "左侧地区摘要卡（紧凑横卡家族，比例目标 1.20-1.35）",
-  "reference_resolution": [1280, 720],
+  "role": "左侧地区选择卡（统一 2:1 横卡家族；承载地区身份、照片、状态、选中反馈与简短选题钩子）",
+  "reference_resolution": [1920, 1080],
   "runtime_resolution": [1920, 1080],
   "export_scale": 2,
   "frozen": {
-    "export_size": [204, 160],
-    "positions": [[44, 24], [44, 196], [44, 368], [44, 540]],
+    "export_size": [340, 170],
+    "positions": [[52, 226], [52, 408], [52, 590]],
     "stack_gap": 12,
-    "transparent_bleed": 6,
-    "hit_rect": [0, 0, 204, 160],
+    "transparent_bleed": 8,
+    "hit_rect": [0, 0, 340, 170],
     "slots": {
-      "photo_slot": [21, 24, 174, 64],
-      "label_plate": [22, 104, 114, 32],
-      "icon_badge": [8, 8, 32, 32],
-      "action_badge": [144, 101, 44, 44]
+      "number_slot": [42, 10, 34, 32],
+      "title_slot": [80, 8, 160, 38],
+      "status_slot": [244, 10, 80, 30],
+      "photo_slot": [16, 56, 138, 88],
+      "story_teaser_slot": [168, 56, 156, 90],
+      "story_headline_slot": [168, 58, 156, 22],
+      "story_deck_slot": [168, 84, 156, 42],
+      "story_breathing_rect": [168, 130, 156, 16]
+    },
+    "no_text_rects": {
+      "photo_and_frame": [12, 52, 146, 96],
+      "transparent_bleed_left": [0, 0, 8, 170],
+      "transparent_bleed_right": [332, 0, 8, 170]
     }
   },
   "provisional": {
-    "font_assumptions": "地区标题压力测试基于脚本字体渲染；最终 UI 字体确定后若更宽，必须重跑 title text_capacity_stress 再进 atlas。",
-    "retired_meta_note": "A184 已显式退役 meta_line 与可见纸条 carrier；状态只由 action_badge 承担，风险、目标、推荐与解锁缺口下沉 right_dossier_page。不得重新利用原纸条区域承载文字或装饰。"
+    "font_assumptions": "地区标题最长 8 个汉字；story headline 最多 10 个全角汉字并保持单行，deck 最多 2 行且不得自动缩字。最终 UI 字体确定后必须重跑 title / story text_capacity_stress，再进入任何 FrontCarrier / atlas 流程。",
+    "story_teaser_note": "A349 起，旧 retired_meta_safe_rect 的非文字解释失效；同一几何正式更名为 story_teaser_slot。这里只承载事件 headline 与最多两行真实摘要，不重复风险、权限、任务数、解锁门槛或推荐语。右侧仍无独立 hit，完整内容继续下沉 right_dossier_page。",
+    "source_migration_note": "v1.0.0 由 A282 1920×1080 实测几何与 A305 用户裁决升版；v1.1.0 只按 A349 修改右侧承载语义并新增 story 子槽，外部几何与既有冻结槽不变。旧 204×160 / 86:41 壳仅保留在历史 evidence，不再作为当前生产真源。"
   },
   "states": ["selected", "available", "warning", "locked"],
-  "state_may_change": ["颜色皮肤", "低多边形块面色调", "lock / warning / target / check 符号", "selected 发光", "bleed 内纸影透明度"],
-  "state_may_not_change": ["export_size", "photo_slot 尺寸与 y 位置", "label_plate 尺寸与 y 位置", "action_badge 位置", "hit_rect", "堆叠间距", "图片等比处理"],
-  "notes": "选中态如需更大体量，必须新建 class（如 left_region_card_expanded）并重排左列，不得混入本 class 状态矩阵。透明 bleed 6px 不计入布局尺寸。A184 起左卡仅保留地区标题与状态徽章；原 meta 区域是无信息的干净底板呼吸区。",
+  "state_may_change": ["颜色皮肤", "低多边形块面色调", "selected / available / warning / locked 状态符号", "selected 露边", "bleed 内纸影透明度"],
+  "state_may_not_change": ["export_size", "number_slot", "title_slot", "status_slot", "photo_slot", "story_teaser_slot", "story_headline_slot", "story_deck_slot", "story_breathing_rect", "hit_rect", "堆叠间距", "图片等比处理", "FrontCarrier origin"],
+  "notes": "三实例必须共享同一 340×170 FrontCarrier、同一局部槽位与同一 hit rect。FrontCarrier origin 永远为 [0,0]；实例差异纸层只能放入 BackDecor，不得再使用 paper_offset 推动功能内容。photo_slot 只允许同一地区 1104×704 canonical 母图 KEEP_ASPECT_CENTERED 完整画幅等比缩小，不裁切、不拉伸、不另做缩略图。story headline / deck 与 title / status / photo 必须由同一 content_bundle_id 原子更新，全部子层 NO-HIT。锁定地区仍可选中并在 Dossier 预览解锁缺口，但不可进入。",
   "evidence": {
     "reviews": [
       "docs/plans/world-map-benchmark-landing/2026-07-07-world-map-wmw-left-region-card-class-contract-v0-8-1-review.md",

@@ -1,0 +1,95 @@
+Godot Engine v4.6.2.stable.official.71f334935 - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 582.66 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce GTX 1060 6GB
+
+CHECK true 正式周循环已挂载并显示新地图
+CHECK true 旧世界地图标题栏未叠加
+CHECK true 初始三地区及三处共用 Texture2D
+CHECK true 北美预览使用当前真实 4 个可见任务
+CHECK true 初始真实任务分类为限时1、线索2、深链1，与4项总数一致
+CHECK true 限时提醒说明截止条件并使用风险色
+CHECK true 左侧日程明确显示真实周剩余天数
+CHECK true 右图缩小后仍完整等比且三处共用同一Texture2D
+CHECK true 点击任务预览文字不会选任务、进入派遣或扣天数
+CHECK true 三地区完整放下时不显示滚动条和更多提示
+CHECK true 移开鼠标且释放焦点后，仍恰有一个地区保留蜜黄选中层
+CHECK true 地图与右侧栏目头指向同一选中地区
+CHECK true 常态短任务名与耗时紧密成组，不预留空白标题行
+CHECK true 任务组间留白大于组内距离
+CHECK true 任务标题使用局部页签而非通栏深色横杠
+CHECK true 图片、新闻与任务文字使用共同阅读边线
+CAPTURE 14-edge-sampling-before.png
+CAPTURE 01-live-default.png
+CHECK true 纸张补间期间点击热区保持稳定
+CHECK true 锁定左卡可选，三图同步且 CTA 禁用
+CHECK true 东亚没有误用北美图片
+CHECK true 锁定地区不泄露任务分类和任务行，真实声望缺口保留
+CHECK true 锁定状态隐藏无效折叠热区并清空提示
+CHECK true 锁定地区保留完整选中强度，原选区高亮已清除
+CHECK true 纸张落定后停在预期位置
+CHECK true 选中不改变图片规格
+CAPTURE 02-live-locked.png
+CHECK true 悬停与键盘焦点不冒充选中，也不转移当前地区
+CAPTURE 07-hover-focus-not-selection.png
+CHECK true 键盘 Enter 可选择地区
+CHECK true 纸张补间期间点击热区保持稳定
+CHECK true 地图标签真实鼠标输入回传正式地区 ID
+CHECK true 任务折叠按钮真实可操作
+CHECK true 任务折叠不移动 CTA
+CHECK true 折叠时任务附页随内容收短，不保留整块空底
+CHECK true 折叠收纸不移动或缩放上方图片
+CHECK true 折叠只收起任务行，分类与提醒继续可见
+CAPTURE 10-task-collapsed.png
+CAPTURE 11-task-reopened.png
+CHECK true 主 CTA 进入正式地区任务台
+CHECK true 浏览和进入不扣天数
+CHECK true 从地区任务台返回同一世界地图选区
+CHECK true 已开放空地区显示暂无任务，允许进入
+CHECK true 已开放空区显示真实零分类，不保留上一地区的任务行
+CHECK true 开放空态不残留折叠手形或无效提示
+CAPTURE 03-live-open-empty.png
+CHECK true 到期任务消失后预览总数实时刷新
+CHECK true 限时任务到期后分类、追踪说明同步更新，无残留截止警告
+CHECK true 青线状态和左卡同步显示推进机会，颜色不沿用危险红
+CHECK true 剩余天数刷新独立于任务耗时和限时截止信息
+CAPTURE 12-live-chain-after-expiry.png
+TEXT_METRICS NewsHeadline size=(514.0, 99.0) font_height=47.0 lines=2 visible=2
+CHECK true 长文实际可见行数充足：NewsHeadline
+TEXT_METRICS NewsDeck size=(514.0, 53.0) font_height=24.0 lines=2 visible=2
+CHECK true 长文实际可见行数充足：NewsDeck
+TEXT_METRICS MissionWarning size=(514.0, 51.0) font_height=23.0 lines=2 visible=2
+CHECK true 长文实际可见行数充足：MissionWarning
+TEXT_METRICS TaskName0 size=(514.0, 61.0) font_height=28.0 lines=2 visible=2
+CHECK true 长文实际可见行数充足：TaskName0
+CHECK true 两条长任务名均获得两行承载
+CHECK true 两行新闻标题与摘要不侵入任务纸面
+CHECK true 两行提醒、长任务名、耗时与主CTA保持各自可读空间
+CHECK true 最长内容的任务纸面与进入按钮仍有独立段距
+CHECK true 末条耗时留在纸内并保留底部余量
+CAPTURE 13-long-content-layout-fixture.png
+SCROLL four { "visible": true, "hint": true, "max": 914.0, "page": 758.0, "value": 0.0, "rect": [P: (556.0, 140.0), S: (28.0, 758.0)], "container": [P: (20.0, 140.0), S: (564.0, 758.0)], "list_min": (528.0, 914.0), "list_size": (536.0, 914.0) }
+CHECK true 四地区时初始视口露出第四张完整标题，提示下方还有内容
+CHECK true 最小溢出时纸尺滚动条与更多地区提示可见
+CAPTURE 08-capacity-four-top.png
+CHECK true 10 地区全部创建，没有 mini 截断
+CHECK true 列表与地图地区数量一致
+SCROLL ten { "visible": true, "hint": true, "max": 2246.0, "page": 758.0, "value": 0.0, "rect": [P: (556.0, 140.0), S: (28.0, 758.0)], "container": [P: (20.0, 140.0), S: (564.0, 758.0)], "list_min": (528.0, 2246.0), "list_size": (536.0, 2246.0) }
+CAPTURE 04-capacity-ten-top.png
+SCROLL drag_end { "visible": true, "hint": false, "max": 2246.0, "page": 758.0, "value": 1488.0, "rect": [P: (556.0, 140.0), S: (28.0, 758.0)], "container": [P: (20.0, 140.0), S: (564.0, 758.0)], "list_min": (528.0, 2246.0), "list_size": (536.0, 2246.0) }
+CHECK true 真实拖动纸签到末尾后列表抵底且更多提示消失
+CHECK true 拖动列表不移动只读日程，也不改变选中地区
+CAPTURE 09-drag-ten-bottom.png
+CHECK true 从末尾向上滚动后更多提示恢复
+CAPTURE 05-capacity-ten-bottom.png
+CHECK true 真实鼠标滚轮能浏览至第十地区末尾
+CHECK true 未知地区缺图不冒用其他地区资源
+CHECK true 同选区数据刷新保留滚动位置
+CHECK true 末尾地区有真实键盘焦点
+CAPTURE 06-capacity-long-name-missing-art.png
+CHECK true 第十地区缺图与锁定时仍独立显示选中状态
+CHECK true 缺图状态三处仍保持同一身份
+CHECK true 选回首地区时对应卡自动滚回可见范围
+SCROLL restored { "visible": false, "hint": false, "max": 758.0, "page": 758.0, "value": 0.0, "rect": [P: (584.0, 140.0), S: (28.0, 758.0)], "container": [P: (20.0, 140.0), S: (564.0, 758.0)], "list_min": (528.0, 758.0), "list_size": (564.0, 758.0) }
+CHECK true 恢复真实三地区后滚动条、提示和滚动偏移均清除
+CHECK true 1280×720桌面等比缩放后进入按钮仍在视口内
+CAPTURE 15-desktop-1280x720.png
+SOFT_COLUMNS_RESULT true checks=68
