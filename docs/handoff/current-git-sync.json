@@ -1,89 +1,23 @@
 {
   "schema_version": "1.0",
-  "allow_active": true,
-  "active_authorization": "用户于 2026-07-31 明确要求把近期所有改动提交到云端；下列 ACTIVE 仅表示本次提交暂存前的短暂工作区状态，计划全部进入 Git，不作为提交后的本机残留例外。",
+  "status": "completed",
+  "repository": "D:/angos",
+  "branch": "main",
+  "submission_receipt": "docs/handoff/2026-09-08-git-submission-receipt.md",
+  "historical_manifest": "docs/handoff/2026-07-31-current-git-sync-historical.json",
   "target_remotes": [
-    {
-      "name": "origin",
-      "branch": "main"
-    },
-    {
-      "name": "daydreamer",
-      "branch": "main"
-    }
+    { "name": "origin", "branch": "main", "head": "99d7c8d63d478bf2e5c59d1c4e4d495a4b401ea0" },
+    { "name": "daydreamer", "branch": "main", "head": "99d7c8d63d478bf2e5c59d1c4e4d495a4b401ea0" }
   ],
-  "entries": [
-    {
-      "pattern": "design/art-direction/clean-lowpoly-weekly-branch-style-guide.md",
-      "classification": "ACTIVE",
-      "reason": "本次将提交发刊最终显示尺度 Gate 与重复错误防线。",
-      "evidence": "docs/design-decisions/art-direction-decisions.md#A276"
-    },
-    {
-      "pattern": "design/art-direction/references/clean-lowpoly-weekly-branch/interface-inputs/**",
-      "classification": "ACTIVE",
-      "reason": "本次将提交用户提供的三张功能稿、符号裁片与偏差证据，避免输入只存于本机临时目录。",
-      "evidence": "design/art-direction/references/clean-lowpoly-weekly-branch/interface-inputs/README.md"
-    },
-    {
-      "pattern": "docs/design-decisions/art-direction-decisions.md",
-      "classification": "ACTIVE",
-      "reason": "本次将提交 A274 至 A276 的美术裁决。",
-      "evidence": "docs/设计采纳记录.md"
-    },
-    {
-      "pattern": "docs/设计采纳记录.md",
-      "classification": "ACTIVE",
-      "reason": "本次将提交 A274 至 A276 的总索引记录。",
-      "evidence": "docs/design-decisions/art-direction-decisions.md"
-    },
-    {
-      "pattern": "docs/onboarding/ai-collaboration-guidance.md",
-      "classification": "ACTIVE",
-      "reason": "本次将提交美术失败家族计数与新防线。",
-      "evidence": "docs/design-decisions/art-direction-decisions.md#A276"
-    },
-    {
-      "pattern": "docs/plans/world-map-benchmark-landing/**",
-      "classification": "ACTIVE",
-      "reason": "本次将提交世界地图组件语言、蓝色层级和六版配色记录。",
-      "evidence": "docs/plans/world-map-benchmark-landing/STATUS.md"
-    },
-    {
-      "pattern": "docs/plans/region-map-style-board/**",
-      "classification": "ACTIVE",
-      "reason": "本次将提交区域地图 A2 系列校准、Loop Log、R21 切片状态与 prompt 记录。",
-      "evidence": "docs/plans/region-map-style-board/STATUS.md"
-    },
-    {
-      "pattern": "docs/research/social-cold-start/**",
-      "classification": "ACTIVE",
-      "reason": "本次将提交 2026-W30 周报、2026-07-31 原始扫描与监测状态。",
-      "evidence": "docs/research/social-cold-start/监测状态.md"
-    },
-    {
-      "pattern": "docs/workflows/**",
-      "classification": "ACTIVE",
-      "reason": "本次将提交 Godot 最小视觉反馈 smoke 规程及索引。",
-      "evidence": "docs/workflows/godot-visual-feedback-smoke.md"
-    },
-    {
-      "pattern": "gd_project/tests/capture_godot_visual_feedback_smoke.gd",
-      "classification": "ACTIVE",
-      "reason": "本次将提交 Godot 真实窗口截图 smoke 脚本。",
-      "evidence": "docs/workflows/godot-visual-feedback-smoke.md"
-    },
-    {
-      "pattern": "scripts/run_godot_visual_feedback_smoke.ps1",
-      "classification": "ACTIVE",
-      "reason": "本次将提交 Godot 视觉反馈 smoke 运行入口。",
-      "evidence": "docs/workflows/godot-visual-feedback-smoke.md"
-    },
-    {
-      "pattern": "docs/handoff/current-git-sync.json",
-      "classification": "ACTIVE",
-      "reason": "本文件记录本次双远端提交前的交接分类。",
-      "evidence": "skills/git-cloud-submit/references/handoff-completeness.md"
-    }
-  ]
+  "commits": ["0890c668", "731d10bf", "cb892ae4", "198334cc", "99d7c8d6"],
+  "handoff": {
+    "git_included": "活动代码、GDD、合同、资源、必要视觉候选与运行证据、4564 原件快照均已提交。",
+    "disposable": "一次性 tmp 迁移材料、无引用日志、__pycache__、空附件缓存与无当前引用的历史过程截图保留本机但不影响续做。",
+    "unknown": 0,
+    "local_only_required": 0,
+    "active": 0,
+    "submission_ready": true,
+    "seamless_ready": true,
+    "diff_check_exception": "历史原件快照的保真尾空白，以及 A347-A349 原有 EOF 空行；详见 submission_receipt。"
+  }
 }
